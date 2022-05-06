@@ -7,6 +7,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         width: 100%;
         min-width: 200px;
         height: $height-huge;
+        background: $bg-popup;
 
         .#{$jigsaw-toast}-icon {
             display: flex;
@@ -14,7 +15,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
             align-items: center;
             width: 32px;
             height: 100%;
-            font-size: $icon-size-med;
+            font-size: $icon-size-status-sm;
         }
 
         .#{$jigsaw-toast}-message {

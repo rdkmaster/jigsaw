@@ -5,10 +5,10 @@
 .demo-cntr {
     display: grid;
     grid-template-rows: repeat(3, auto);
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
     column-gap: 5px;
 }
 
 .demo-cntr .demo-5 {
-    grid-column: span 2;
+    grid-column: span 3;
 }

@@ -1,5 +1,6 @@
 $jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
 $jigsaw-input: #{$jigsaw-prefix}-input;
+$jigsaw-tag: #{$jigsaw-prefix}-tag;
 
 .#{$jigsaw-combo-select}-host {
     @include inline-block;
@@ -30,7 +31,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         &-selection {
             min-height: $height-base;
             padding: 0 30px 0 8px;
-            background: $bg-component;
+            background: $bg-transparent;
             border-width: 1px;
             border-style: solid;
             border-color: $border-color-default;
@@ -43,13 +44,6 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 
             &:active {
                 border-color: $brand-active;
-            }
-
-            .#{$jigsaw-combo-select}-error & {
-                border-color: $error-default;
-                &:hover {
-                    border-color: $error-default;
-                }
             }
         }
 
@@ -93,12 +87,17 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
 
         &-disabled {
+            background: $bg-disabled;
             color: $font-color-disabled-spec;
 
             .#{$jigsaw-combo-select}-selection {
                 border-color: $border-color-disabled;
 
                 .#{$jigsaw-combo-select}-selection-rendered {
+                    .#{$jigsaw-combo-select}-placeholder{
+                        color: $font-color-disabled;
+                    }
+
                     .jigsaw-tag-host {
                         color: $font-color-disabled;
                         pointer-events: none;
@@ -108,6 +107,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
 
             .iconfont {
                 color: $icon-color-disabled;
+                line-height: 1;
                 pointer-events: none;
             }
         }
@@ -160,6 +160,28 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
             color: $icon-color-disabled;
             &:hover {
                 color: $icon-color-disabled;
+            }
+        }
+    }
+
+    &.#{$jigsaw-combo-select}-error {
+        .#{$jigsaw-combo-select}-selection {
+            border-color: $error-default;
+
+            &:hover {
+                border-color: $error-default;
+            }
+        }
+    }
+
+    &.#{$jigsaw-combo-select}-hide-text-tag {
+        .#{$jigsaw-combo-select} {
+            .#{$jigsaw-combo-select}-selection-rendered {
+                .#{$jigsaw-tag}-host {
+                    padding: 0;
+                    max-width: 100%;
+                    background: none;
+                }
             }
         }
     }

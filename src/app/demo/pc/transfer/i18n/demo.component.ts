@@ -1,12 +1,19 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
-import {ArrayCollection, LocalPageableArray, TableData, TranslateHelper} from "jigsaw/public_api";
+import {ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer, TranslateHelper} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TransferArrayI18nDemoComponent {
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListDestRenderer;
+    public labelField = 'zhName';
+    public subLabelField = 'shortName'
+    public trackItemBy = 'zhName';
+
+
     constructor(private _http: HttpClient,private _translateService:TranslateService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
@@ -39,7 +46,6 @@ export class TransferArrayI18nDemoComponent {
     handleSelectChange($event) {
         this.selectedCountriesStr = $event.map(item => item.zhName).join(',');
     }
-
 
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this._translateService, lang);

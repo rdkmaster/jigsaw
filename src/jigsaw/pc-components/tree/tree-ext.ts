@@ -27,6 +27,7 @@ export class TreeEventData {
     `],
     host: {
         '[class.jigsaw-tree-host]': 'true',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-tree-large]': 'size === "large"',
         '[class.jigsaw-tree-medium]': 'size === "medium"',
         '[class.jigsaw-tree-default]': 'size === "default"',
@@ -352,6 +353,63 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
         this._updateInputWidth(node);
         this.ztree.editName(node);
+    }
+
+    public getCheckedNodes(checked:boolean){
+        if (!this.ztree) {
+            return;
+        }
+        return this.ztree.getCheckedNodes(checked);
+    }
+
+    public updateNode(node){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.updateNode(node);
+        this._updateTree();
+    }
+
+    public hideNode(node){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.hideNode(node);
+    }
+
+    public showNode(node){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.showNode(node);
+    }
+
+    public getNodesByParam(key, value, parentNode?): [] {
+        if (!this.ztree) {
+            return;
+        }
+        return this.ztree.getNodesByParam(key, value, parentNode);
+    }
+
+    public checkNode(node, checked, checkTypeFlag, callbackFlag?) {
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.checkNode(node, checked, checkTypeFlag, callbackFlag);
+    }
+
+    public setEditable(editable) {
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.setEditable(editable);
+    }
+
+    public checkAllNodes(checked){
+        if (!this.ztree) {
+            return;
+        }
+        this.ztree.checkAllNodes(checked);
     }
 
     private _defaultSetting() {

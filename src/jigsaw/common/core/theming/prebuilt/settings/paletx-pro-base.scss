@@ -35,14 +35,21 @@ $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-med: $font-size-base - 1px;
 $font-size-lg: $font-size-base + 2px;
-$font-size-text-base: 12px;
+/*@public*/ $font-size-text-base: 12px;
 
 $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
-/* icon size */
-$icon-size-lg: 48px;
+/**
+ * icon size
+ * $icon-size-status-lg => 表示状态（alert）
+ * $icon-size-status-sm => 表示状态（toast）
+ * $icon-size-med => 侧边导航
+ * $icon-size-sm => 页面系统图标
+ */
+$icon-size-status-lg: 48px;
+$icon-size-status-sm: 24px;
 $icon-size-med: 20px;
 $icon-size-sm: 16px;
 

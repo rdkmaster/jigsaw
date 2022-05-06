@@ -19,6 +19,9 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any, theme?:'light' | 'dark'};
 export type TooltipRenderAs = 'plain-text' | 'html';
 
+/**
+ * @internal
+ */
 @Component({
     template: `
         <div class="jigsaw-tooltip"

@@ -3,13 +3,7 @@ export const lightGraphTheme = {
     // backgroundColor: 'rgba(0,0,0,0)',
 
     // 默认色板
-    // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    //color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
     color: ['#1e7ffb', '#e67608', '#07bb74', '#4ac6d7', '#c156f3', '#f5d23d', '#30404f','#778cef'],
-    // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
-    //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
-    //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
-    //         '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'],
     // 图表标题
     textStyle: {
         fontWeight: 'normal',
@@ -732,15 +726,10 @@ export const darkGraphTheme = {
     // backgroundColor: 'rgba(0,0,0,0)',
 
     // 默认色板
-    // color:['#ff0000','#00ff00','#0000ff','#F8D282','#D2BC5A','#CEA67C','#429698','#57B8B0'],
-    //color: ['#8AC8C8', '#DA8782', '#F8D282', '#3cb371','#CEA67C', '#429698', '#b8860b', '#ff6347'],
     color: ['#207ef8', '#ed8a2b', '#06ba74', '#4ac6d7', '#c156f3', '#f5d23d', '#778cef', '#f26c82', '#186bd2'],
-    // color: ['#325bdb','#87cefa','#da70d6','#32cd32','#6495ed',
-    //         '#ff69b4','#ba55d3','#cd5c5c','#ffa500','#40e0d0',
-    //         '#1e90ff','#ff6347','#7b68ee','#00fa9a','#ffd700',
-    //         '#6699FF','#ff6666','#3cb371','#b8860b','#30e0e0'],
     // 图表标题
     textStyle: {
+        color: 'rgba(255,255,255,0.75)',
         fontWeight: 'normal',
         fontStyle: 'normal',
         fontFamily: '微软雅黑, Arial, Verdana, sans-serif',
@@ -769,7 +758,7 @@ export const darkGraphTheme = {
             color: '#fff'
         },
         subtextStyle: {
-            color: '#fff' // 副标题文字颜色
+            color: 'rgba(255,255,255,0.75)' // 副标题文字颜色
         }
     },
 
@@ -793,7 +782,10 @@ export const darkGraphTheme = {
         itemWidth: 20, // 图例图形宽度
         itemHeight: 14, // 图例图形高度
         textStyle: {
-            color: '#666'
+            color: 'rgba(255,255,255,0.75)'
+        },
+        pageTextStyle: {
+            color: 'rgba(255,255,255,0.75)'
         }
     },
 
@@ -878,7 +870,7 @@ export const darkGraphTheme = {
                 color: 'rgba(150,150,150,0.3)' // 阴影颜色
             }
         },
-        color: '#fff'
+        color: 'rgba(255,255,255,0.75)'
 
     },
 
@@ -919,7 +911,7 @@ export const darkGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#30414c',
+                color: '#474a59',
                 width: 1,
                 type: 'solid'
             }
@@ -941,14 +933,14 @@ export const darkGraphTheme = {
             margin: 8,
             // formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
-            color: '#666'
+            color: 'rgba(255,255,255,0.75)'
 
         },
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             // onGap: null,
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ["#30414c"],
+                color: ["#474a59"],
                 width: 1,
                 type: 'solid'
             }
@@ -971,10 +963,13 @@ export const darkGraphTheme = {
         // 坐标轴文字样式，默认取全局样式
         boundaryGap: [0, 0], // 数值起始和结束两端空白策略
         splitNumber: 5, // 分割段数，默认为5
+        nameTextStyle: {
+            color: 'rgba(255,255,255,0.3)'
+        },
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: '#30414c',
+                color: '#474a59',
                 width: 1,
                 type: 'solid'
             }
@@ -992,7 +987,7 @@ export const darkGraphTheme = {
             show: true,
             rotate: 0,
             margin: 8,
-            color: '#666',
+            color: 'rgba(255,255,255,0.75)',
             formatter: null,
             // 其余属性默认使用全局文本样式，详见TEXTSTYLE
 
@@ -1000,7 +995,7 @@ export const darkGraphTheme = {
         splitLine: { // 分隔线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle（详见lineStyle）控制线条样式
-                color: ['#30414c'],
+                color: ['#474a59'],
                 width: 1,
                 type: 'solid'
             }
@@ -1010,6 +1005,12 @@ export const darkGraphTheme = {
             areaStyle: { // 属性areaStyle（详见areaStyle）控制区域样式
                 color: ['rgba(250,250,250,0.3)', 'rgba(200,200,200,0.3)']
             }
+        }
+    },
+
+    visualMap: {
+        textStyle:{
+            color: 'rgba(255,255,255,0.75)'
         }
     },
 
@@ -1280,7 +1281,7 @@ export const darkGraphTheme = {
                     color: 'rgba(139,69,19,1)'
                 }
             }
-        }
+        },
     },
 
     force: {

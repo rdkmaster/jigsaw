@@ -20,10 +20,14 @@
             <j-editable-box #rootBox direction="v" height="600" width="800" [padding]="10" [gap]="10" id="box_0">
                 <j-editable-box style="min-height: 50px" grow="2" id="box_0_0" [gap]="10">
                     <j-editable-box id="box_0_0_">
-                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                        <div class="jigsaw-editable-box-content-wrapper">
+                            <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                        </div>
                     </j-editable-box>
                     <j-editable-box id="box_0_0_0">
-                        <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                        <div class="jigsaw-editable-box-content-wrapper">
+                            <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                        </div>
                     </j-editable-box>
                     <j-editable-box id="box_0_0_1">
                         <j-editable-box id="box_0_0_1_0"></j-editable-box>
@@ -46,14 +50,20 @@
                     </j-editable-box>
                     <j-editable-box grow="4" id="box_0_1_1">
                         <j-editable-box id="box_0_1_1_0_">
-                            <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                            <div class="jigsaw-editable-box-content-wrapper">
+                                <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                            </div>
                         </j-editable-box>
                         <j-editable-box id="box_0_1_1_0" direction="v" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
                             <j-editable-box id="box_0_1_1_0_1" height="300">
-                                <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                                <div class="jigsaw-editable-box-content-wrapper">
+                                    <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                                </div>
                             </j-editable-box>
                             <j-editable-box id="box_0_1_1_0_2" height="300">
-                                <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                                <div class="jigsaw-editable-box-content-wrapper">
+                                    <jigsaw-graph [data]="graphData" height="100%"></jigsaw-graph>
+                                </div>
                             </j-editable-box>
                         </j-editable-box>
                     </j-editable-box>

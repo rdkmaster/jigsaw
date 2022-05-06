@@ -160,6 +160,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         });
     }
 
+    protected _setItemTheme(items: QueryList<AbstractJigsawOptionComponent>): void {
+        items.forEach(item => {
+            item.theme = this.theme;
+        });
+    }
+
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>) {
         items.forEach(item => {
             // 取消可能重复的订阅事件
@@ -188,10 +194,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     ngAfterContentInit() {
         this._setItemState(this._items);
+        this._setItemTheme(this._items);
         this._subscribeItemSelectedChange(this._items);
         this._removeItemsChanges = this._items.changes.subscribe(items => {
             // 异步变更data数据
             this._setItemState(items);
+            this._setItemTheme(this._items);
             this._subscribeItemSelectedChange(items);
         });
         if (this._items.length && this.autoRemoveInvalidValue) {

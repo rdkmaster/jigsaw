@@ -23,7 +23,8 @@ function printUsageAndExit() {
 }
 
 command=$1
-if [[ "$command" != "new" && "$command" != "fix" && "$command" != "opt" && "$command" != "bc" && "$command" != "push" ]];then
+if [[ "$command" != "new" && "$command" != "fix" && "$command" != "opt" && \
+    "$command" != "ot" && "$command" != "bc" && "$command" != "push" ]];then
     printUsageAndExit '未支持的指令 ['$command']，必须是 new / fix / opt / bc / push 之一'
 fi
 
@@ -50,6 +51,10 @@ fi
 
 if [[ "$command" == "opt" ]]; then
     message="[优化] $message"
+fi
+
+if [[ "$command" == "ot" ]]; then
+    message="[其他] $message"
 fi
 
 if [[ "$command" == "bc" ]]; then

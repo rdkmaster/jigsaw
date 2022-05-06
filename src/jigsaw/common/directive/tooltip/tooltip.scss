@@ -6,10 +6,10 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
     max-width: 320px;
     
     border-radius: $border-radius-sm;
-    color: $font-color-default-light;
+    color: #4d4d4d;
 
     &.#{$tooltip-prefix-cls}-light {
-        background: $bg-body-light;
+        background: #FFFFFF;
     }
 
     &.#{$tooltip-prefix-cls}-dark {

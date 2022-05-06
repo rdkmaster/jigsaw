@@ -19,13 +19,13 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
     host: {
+        '[style.width]': 'showToggleButton && collapsed ? null : width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-nav-menu-host]': 'true',
-        '[class.jigsaw-nav-menu-light]': 'theme == "light"',
-        '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
         '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
         '[class.jigsaw-nav-menu-default]': 'theme == "default"',
-        '[style.height]': 'height',
-        '[style.width]': 'showToggleButton && collapsed ? null : width'
+        '[class.jigsaw-nav-menu-inline]': '!showToggleButton'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -155,5 +155,9 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     public _$handleCollapsed() {
         this.collapsed = !this.collapsed;
         this.collapsedChange.emit(this.collapsed);
+    }
+
+    public update(): void {
+        this._cdr.markForCheck();
     }
 }

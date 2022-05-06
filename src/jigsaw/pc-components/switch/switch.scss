@@ -1,7 +1,8 @@
 $jigsaw-switch: #{$jigsaw-prefix}-switch;
 
 .#{$jigsaw-switch}-host {
-    @include inline-block;
+    display: inline-flex;
+
     &.#{$jigsaw-switch}-error .#{$jigsaw-switch} {
         border-color: $error-default;
     }
@@ -15,7 +16,7 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
         line-height: calc(var(--switch-height) - 2px);
         border-radius: calc(var(--switch-height) - 2px);
         border: 1px solid $border-color-default;
-        background-color: $bg-body;
+        background-color: $bg-component;
         cursor: pointer;
         transition: all $animation-duration-slow;
         -ms-transition: none;
@@ -37,7 +38,7 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
             left: 1px;
             top: 1px;
             border-radius: 50%;
-            background-color: $bg-body-light;
+            background-color: $bg-gray-spec;
             box-shadow: 1px 1px 3px hsla(0, 0%, 0%, 0.2);
             content: " ";
             cursor: pointer;
@@ -113,7 +114,7 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
             font-size: $font-size-sm;
         }
     }
-    
+
     .#{$jigsaw-switch}-small {
         --switch-height: 12px;
         .#{$jigsaw-switch}-inner {
@@ -121,5 +122,3 @@ $jigsaw-switch: #{$jigsaw-prefix}-switch;
         }
     }
 }
-
-

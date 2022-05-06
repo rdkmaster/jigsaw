@@ -1,29 +1,60 @@
 <div *ngIf="disabled" class="jigsaw-transfer-disabled">
 </div>
-<div class="jigsaw-transfer-wrapper" [ngClass]="_$transferClass">
-    <div  class="jigsaw-transfer-left-box jigsaw-transfer-box">
-        <div *ngIf="_$data?.busy" class="jigsaw-transfer-loading" @loading>
-            <span class="iconfont iconfont-e67d jigsaw-am-rotation"></span>
-        </div>
-        <j-transfer-list [data]="data" [trackItemBy]="trackItemBy" [labelField]="labelField"
-                         [subLabelField]="subLabelField" [searchable]="searchable"
-                         [(selectedItems)]="_$sourceSelectedItems"></j-transfer-list>
+<div class="jigsaw-transfer-cntr">
+    <div *ngIf="data?.busy" class="jigsaw-transfer-loading" @loading>
+        <jigsaw-circle-loading [theme]="theme" [size]="'small'"></jigsaw-circle-loading>
     </div>
-    <div class="jigsaw-transfer-option-box">
-        <a class="jigsaw-transfer-to-right-bar jigsaw-transfer-option-bar"
-           [class.jigsaw-transfer-option-disabled]="!_$sourceSelectedItems || !_$sourceSelectedItems.length"
-           (click)="_$transferTo('target')">
+    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-source">
+        <div class="jigsaw-transfer-header">
+            <div class="jigsaw-transfer-select-all">
+                <jigsaw-checkbox *ngIf="_$sourceCheckbox" [theme]="theme" [(checked)]="_$sourceSelectAllChecked"
+                    (checkedChange)="_$sourceSelectAll()">
+                </jigsaw-checkbox>
+                <span class="jigsaw-transfer-title">{{getSourceTitle}}</span>
+                <span class="jigsaw-transfer-subTitle">{{getSourceSubTitle}}</span>
+            </div>
+            <div class="jigsaw-transfer-search-cntr">
+                <jigsaw-search-input [theme]="theme" width="100%" [disabled]="!searchable" [searchDebounce]="300"
+                    [(value)]="_$sourceSearchKey" (search)="_$sourceSearching($event)">
+                </jigsaw-search-input>
+            </div>
+        </div>
+        <div class="jigsaw-transfer-body" [ngClass]="{'jigsaw-transfer-body-short': isPageable}">
+            <ng-template #transferSourceRendererHost></ng-template>
+        </div>
+        <div class="jigsaw-transfer-footer" *ngIf="isPageable">
+            <jigsaw-pagination [theme]="theme" [size]="'small'" [data]="data" mode="simple">
+            </jigsaw-pagination>
+        </div>
+    </div>
+    <div class="jigsaw-transfer-option-cntr">
+        <a class="jigsaw-transfer-option jigsaw-transfer-option-source"
+            [class.jigsaw-transfer-option-disabled]="!_$sourceButton" (click)="_$sourceTransfer()">
             <i class="iconfont iconfont-e144"></i>
         </a>
-        <a class="jigsaw-transfer-to-left-bar jigsaw-transfer-option-bar"
-           [class.jigsaw-transfer-option-disabled]="!_$targetSelectedItems || !_$targetSelectedItems.length"
-           (click)="_$transferTo('source')">
+        <a class="jigsaw-transfer-option jigsaw-transfer-option-dest"
+            [class.jigsaw-transfer-option-disabled]="!_$destButton" (click)="_$destTransfer()">
             <i class="iconfont iconfont-e143"></i>
         </a>
     </div>
-    <div class="jigsaw-transfer-right-box jigsaw-transfer-box">
-        <j-transfer-list [data]="selectedItems" [trackItemBy]="trackItemBy" [labelField]="labelField"
-                         [subLabelField]="subLabelField" [searchable]="searchable"
-                         [(selectedItems)]="_$targetSelectedItems" [isTarget]="true"></j-transfer-list>
+    <div class="jigsaw-transfer-item-cntr jigsaw-transfer-dest">
+        <div class="jigsaw-transfer-header">
+            <div class="jigsaw-transfer-select-all">
+                <jigsaw-checkbox *ngIf="_$destCheckbox" [theme]="theme" [(checked)]="_$destSelectAllChecked"
+                    (checkedChange)="_$destSelectAll()">
+                </jigsaw-checkbox>
+                <span class="jigsaw-transfer-title">{{getDestTitle}}</span>
+                <span class="jigsaw-transfer-subTitle"></span>
+            </div>
+            <div class="jigsaw-transfer-search-cntr">
+                <jigsaw-search-input [theme]="theme" width="100%" [disabled]="!searchable" [searchDebounce]="300"
+                    [(value)]="_$destSearchKey" (search)="_$destSearching($event)">
+                </jigsaw-search-input>
+            </div>
+        </div>
+        <div class="jigsaw-transfer-body">
+            <ng-template #transferDestRendererHost></ng-template>
+        </div>
+        <div class="jigsaw-transfer-footer"></div>
     </div>
 </div>

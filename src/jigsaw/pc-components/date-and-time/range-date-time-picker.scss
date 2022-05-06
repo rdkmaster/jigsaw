@@ -3,7 +3,7 @@ $jigsaw-range-date-time-picker: #{$jigsaw-prefix}-range-date-time-picker;
 .#{$jigsaw-range-date-time-picker}-host {
     @include inline-block();
     position: relative;
-    background: $bg-component;
+    background: $bg-transparent;
     color: $font-color-default;
     font-size: 0;
     border-width: 1px;
@@ -56,14 +56,14 @@ $jigsaw-range-date-time-picker: #{$jigsaw-prefix}-range-date-time-picker;
         justify-content: center;
         padding: 8px 8px 0;
         font-size: $font-size-base;
-        background: $bg-container;
+        background: $bg-component-darken;
 
         & > span {
             display: inline-block;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $bg-body;
+            background: $bg-component;
             border: 1px solid $border-color-default;
             cursor: pointer;
 

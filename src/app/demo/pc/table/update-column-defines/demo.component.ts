@@ -19,7 +19,7 @@ export class TableUpdateColumnDefinesDemoComponent {
                     "542"
                 ],
                 [
-                    "Garrett Winflters1",
+                    "Garrett Winters1",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",

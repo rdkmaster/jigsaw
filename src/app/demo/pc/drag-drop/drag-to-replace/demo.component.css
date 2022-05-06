@@ -9,10 +9,12 @@
     height: 100px;
     line-height: 100px;
     text-align: center;
+    color: #fff;
 }
 
 .box1 {
     background: #fcdbd9;
+    color: #000;
 }
 
 .box2 {
@@ -25,4 +27,5 @@
 
 .box4 {
     background: #ffbf00;
+    color: #000;
 }

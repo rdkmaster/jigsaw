@@ -3,10 +3,11 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
 .#{$jigsaw-dialog}-host {
     @include inline-block;
     width: 100%;
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-dialog} {
         position: relative;
-        background: $bg-component;
+        background: $bg-popup;
         border-radius: $border-radius-base;
         box-shadow: $box-shadow-lv3;
 
@@ -19,7 +20,7 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             padding: 0 16px;
             height: $height-huge;
             min-height: $height-huge;
-            background: $bg-component;
+            background: $bg-transparent;
             font-size: $font-title-lg;
             font-weight: bold;
             color: $font-color-heading-bold;
@@ -39,9 +40,10 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             .#{$jigsaw-dialog}-close {
                 position: absolute;
                 right: 16px;
-                font-size: 24px;
+                font-size: $icon-size-sm;
                 color: $icon-color-default;
                 cursor: pointer;
+
                 &:hover {
                     color: $brand-hover;
                 }
@@ -50,7 +52,7 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
 
         .#{$jigsaw-dialog}-content {
             padding: 16px 16px 32px 16px;
-            background: $bg-component;
+            background: $bg-transparent;
         }
 
         .#{$jigsaw-dialog}-button-group {
@@ -59,7 +61,7 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             align-items: flex-start;
             height: 56px;
             min-height: 56px;
-            background: $bg-component;
+            background: $bg-transparent;
 
             & > div {
                 display: flex;

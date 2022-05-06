@@ -24,7 +24,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
-            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
+            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled || disabled">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-radio-option>
         </j-radios>`,
@@ -56,14 +56,32 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
      * @NoMarkForCheckRequired
      */
     @Input()
+    public disabled: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+
+    private _value: any;
 
     /**
      * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
      */
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        if (this._value === newValue) {
+            return;
+        }
+        this._value = newValue;
+        this._propagateChange(this._value);
+    }
 
     private _trackItemBy: string | string[];
 

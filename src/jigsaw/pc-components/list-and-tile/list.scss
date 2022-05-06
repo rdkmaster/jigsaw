@@ -5,7 +5,7 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     width: 300px;
     border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
-    background: $bg-component;
+    background: $bg-transparent;
     position: relative;
     
     &.#{$list-prefix-cls}-error {

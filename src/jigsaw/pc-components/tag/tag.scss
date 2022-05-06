@@ -88,7 +88,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     }
 
     &.#{$jigsaw-tag}-add {
-        background: $bg-component;
+        background: $bg-transparent;
         color: $font-color-tag;
         border-width: 1px;
         border-style: dashed;

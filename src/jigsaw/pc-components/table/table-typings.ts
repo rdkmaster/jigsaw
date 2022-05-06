@@ -460,4 +460,4 @@ export class AdditionalTableData extends TableData {
     }
 }
 
-
+export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};

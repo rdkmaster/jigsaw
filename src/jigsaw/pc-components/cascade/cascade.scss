@@ -5,6 +5,7 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     display: inline-block;
     border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
+    color: $font-color-default;
 
     .#{$jigsaw-tile}-host {
         border: none;
@@ -12,6 +13,7 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
         .#{$jigsaw-tile}-option {
             width: 70px;
             border: none;
+            color: $font-color-default;
 
             &:hover {
                 color: $font-color-default;

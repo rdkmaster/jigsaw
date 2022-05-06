@@ -1,0 +1,18 @@
+<div class="jigsaw-transfer-renderer jigsaw-transfer-list-renderer"
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+    <jigsaw-list [theme]="theme" width="100%" #listGroup [multipleSelect]="true" [trackItemBy]="trackItemBy"
+        [(selectedItems)]="selectedItems" (selectedItemsChange)="_$updateSelectedItems()">
+        <j-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled">
+            <ng-container j-title>
+                <j-checkbox [theme]="theme" [(checked)]="listItem.selected" [disabled]="item.disabled"
+                    (checkedChange)="listGroup.update(item, $event)"></j-checkbox>
+                <span class="jigsaw-transfer-list-renderer-title">
+                    {{item && item[labelField] ? item[labelField] : item}}
+                </span>
+            </ng-container>
+            <span j-sub-title class="jigsaw-transfer-list-renderer-sub-title">
+                {{item && item[subLabelField] ? item[subLabelField]: ''}}
+            </span>
+        </j-list-option>
+    </jigsaw-list>
+</div>

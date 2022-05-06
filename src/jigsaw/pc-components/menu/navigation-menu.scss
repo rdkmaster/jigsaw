@@ -12,12 +12,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items {
         flex: 1;
-        background: $bg-container;
+        background: $nav-navigation;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;
             min-width: 40px;
-            color: $font-color-default;
+            color: $nav-color;
 
             .#{$jigsaw-nav-menu}-item-top {
                 display: flex;
@@ -34,12 +34,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     align-items: center;
                     width: 40px;
                     height: 100%;
-                    margin-right: 10px;
+                    font-size: 18px;
                     text-align: center;
                 }
 
                 &:hover {
-                    background: $bg-hover;
+                    background: $nav-hover;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -51,22 +51,8 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
             .#{$jigsaw-nav-menu}-submenus {
                 border: none;
-                background: $bg-gray;
+                background: $nav-navigation-darken;
                 overflow: hidden;
-
-                &-actived {
-                    .#{$jigsaw-nav-menu}-sub-item:first-child {
-                        border-top-width: 1px;
-                        border-top-style: solid;
-                        border-top-color: $border-color-default;
-                    }
-
-                    .#{$jigsaw-nav-menu}-sub-item:last-child {
-                        border-bottom-width: 1px;
-                        border-bottom-style: solid;
-                        border-bottom-color: $border-color-default;
-                    }
-                }
 
                 .#{$jigsaw-nav-menu}-sub-item {
                     position: relative;
@@ -85,16 +71,16 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                         width: 14px;
                         height: 100%;
                         margin-right: 10px;
+                        font-size: 18px;
                         text-align: center;
                     }
 
                     &:hover {
-                        background: $bg-hover;
+                        background: $nav-hover;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-selected {
-                        background-color: $bg-body;
-                        color: $brand-default;
+                        background-color: $nav-active;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-collapsed {
@@ -114,8 +100,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background-color: $bg-body;
-                color: $brand-default;
+                background-color: $nav-active;
             }
         }
 
@@ -127,7 +112,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected {
-                background-color: $bg-body !important;
+                background-color: $nav-navigation !important;
             }
 
             .#{$jigsaw-nav-menu}-item-top {
@@ -140,7 +125,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items-inline {
         flex: 1;
-        background: $bg-component;
+        background: $bg-transparent;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;
@@ -165,10 +150,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
                 &:hover {
                     background: $bg-hover;
-                }
-
-                &.#{$jigsaw-nav-menu}-item-selected-top {
-                    color: $brand-default;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -197,17 +178,12 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 }
             }
 
-            .#{$jigsaw-nav-menu}-item-selected {
-                color: $brand-default;
-            }
-
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background: $bg-body;
+                background: $bg-component;
             }
 
             .#{$jigsaw-nav-menu}-sub-item-selected {
-                color: $brand-default;
-                background: $bg-body;
+                background: $bg-component;
             }
         }
     }
@@ -235,17 +211,19 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
     }
 
     .#{$jigsaw-nav-menu}-toggle-button {
-        cursor: pointer;
-        width: 100%;
-        min-width: 40px;
-        height: 40px;
-        background: $bg-container;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        border-top: 1px solid $border-color-default;
+        width: 100%;
+        min-width: 40px;
+        height: 40px;
+        background: $nav-navigation;
+        border-top: 1px solid $nav-border;
+        color: $nav-color;
+        cursor: pointer;
+
         &:hover {
-            color: $brand-default;
+            color: $nav-color-active;
         }
 
         span {
@@ -264,322 +242,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
         .#{$jigsaw-nav-menu}-toggle-button-arrow {
             @include prefixer(transform, rotate(180deg));
-        }
-    }
-
-    &.#{$jigsaw-nav-menu}-default {
-        .#{$jigsaw-nav-menu}-items {
-            background: $bg-container;
-
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    background: $bg-gray;
-
-                    &-actived {
-                        .#{$jigsaw-nav-menu}-sub-item:first-child {
-                            border-top-color: $border-color-default;
-                        }
-
-                        .#{$jigsaw-nav-menu}-sub-item:last-child {
-                            border-bottom-color: $border-color-default;
-                        }
-                    }
-
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover;
-                        }
-
-                        &.#{$jigsaw-nav-menu}-sub-item-selected {
-                            background-color: $bg-body;
-                            color: $brand-default;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background-color: $bg-body;
-                    color: $brand-default;
-                }
-            }
-
-            .#{$jigsaw-nav-menu}-item-collapsed {
-                .#{$jigsaw-nav-menu}-item-selected {
-                    background-color: $bg-body !important;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items-inline {
-            background: $bg-component;
-
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover;
-                    }
-
-                    &.#{$jigsaw-nav-menu}-item-selected-top {
-                        color: $brand-default;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected {
-                    color: $brand-default;
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background: $bg-body;
-                }
-
-                .#{$jigsaw-nav-menu}-sub-item-selected {
-                    color: $brand-default;
-                    background: $bg-body;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-item-selected-top:before,
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-sub-item-selected:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-item-selected-before:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-sub-item-selected:before {
-            background-color: $brand-default;
-        }
-
-        .#{$jigsaw-nav-menu}-toggle-button {
-            background: $bg-container;
-            border-top: 1px solid $border-color-default;
-            &:hover {
-                color: $brand-default;
-            }
-        }
-    }
-
-    &.#{$jigsaw-nav-menu}-light {
-        .#{$jigsaw-nav-menu}-items {
-            background: $bg-container-light;
-
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default-light;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover-light;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    background: $bg-gray-light;
-
-                    &-actived {
-                        .#{$jigsaw-nav-menu}-sub-item:first-child {
-                            border-top-color: $border-color-default-light;
-                        }
-
-                        .#{$jigsaw-nav-menu}-sub-item:last-child {
-                            border-bottom-color: $border-color-default-light;
-                        }
-                    }
-
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover-light;
-                        }
-
-                        &.#{$jigsaw-nav-menu}-sub-item-selected {
-                            background-color: $bg-body-light;
-                            color: $brand-default-light;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background-color: $bg-body-light;
-                    color: $brand-default-light;
-                }
-            }
-
-            .#{$jigsaw-nav-menu}-item-collapsed {
-                .#{$jigsaw-nav-menu}-item-selected {
-                    background-color: $bg-body-light !important;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items-inline {
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default-light;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover-light;
-                    }
-
-                    &.#{$jigsaw-nav-menu}-item-selected-top {
-                        color: $brand-default-light;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover-light;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected {
-                    color: $brand-default-light;
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background: $bg-body-light;
-                }
-
-                .#{$jigsaw-nav-menu}-sub-item-selected {
-                    color: $brand-default-light;
-                    background: $bg-body-light;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-item-selected-top:before,
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-sub-item-selected:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-item-selected-before:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-sub-item-selected:before {
-            background-color: $brand-default-light;
-        }
-
-        .#{$jigsaw-nav-menu}-toggle-button {
-            background: $bg-container-light;
-            border-top: 1px solid $border-color-default-light;
-            &:hover {
-                color: $brand-default-light;
-            }
-        }
-    }
-
-    &.#{$jigsaw-nav-menu}-dark {
-        .#{$jigsaw-nav-menu}-items {
-            background: $bg-container-dark;
-
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default-dark;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover-dark;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    background: $bg-gray-dark;
-
-                    &-actived {
-                        .#{$jigsaw-nav-menu}-sub-item:first-child {
-                            border-top-color: $border-color-default-dark;
-                        }
-
-                        .#{$jigsaw-nav-menu}-sub-item:last-child {
-                            border-bottom-color: $border-color-default-dark;
-                        }
-                    }
-
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover-dark;
-                        }
-
-                        &.#{$jigsaw-nav-menu}-sub-item-selected {
-                            background-color: $bg-hover-dark;
-                            color: $brand-default-dark;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background-color: $bg-body-dark;
-                    color: $brand-default-dark;
-                }
-            }
-
-            .#{$jigsaw-nav-menu}-item-collapsed {
-                .#{$jigsaw-nav-menu}-item-selected {
-                    background-color: $bg-body-dark !important;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items-inline {
-            .#{$jigsaw-nav-menu}-item {
-                color: $font-color-default-dark;
-
-                .#{$jigsaw-nav-menu}-item-top {
-                    &:hover {
-                        background: $bg-hover-dark;
-                    }
-
-                    &.#{$jigsaw-nav-menu}-item-selected-top {
-                        color: $brand-default-dark;
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-submenus {
-                    .#{$jigsaw-nav-menu}-sub-item {
-                        &:hover {
-                            background: $bg-hover-dark;
-                        }
-                    }
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected {
-                    color: $brand-default-dark;
-                }
-
-                .#{$jigsaw-nav-menu}-item-selected-top {
-                    background: $bg-body-dark;
-                }
-
-                .#{$jigsaw-nav-menu}-sub-item-selected {
-                    color: $brand-default-dark;
-                    background: $bg-body-dark;
-                }
-            }
-        }
-
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-item-selected-top:before,
-        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-sub-item-selected:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-item-selected-before:before,
-        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-sub-item-selected:before {
-            background-color: $brand-default-dark;
-        }
-
-        .#{$jigsaw-nav-menu}-toggle-button {
-            background: $bg-container-dark;
-            border-top: 1px solid $border-color-default-dark;
-            color: $font-color-default-dark;
-
-            &:hover {
-                color: $brand-default;
-            }
         }
     }
 

@@ -84,7 +84,7 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     selector: 'jigsaw-pie-chart-icon, j-pie-chart-icon',
     templateUrl: './chart-icon.html',
     host: {
-        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-chart-icon-host]': 'true',
         '[class.jigsaw-pie-chart-icon]': 'true',
     },
     changeDetection: ChangeDetectionStrategy.OnPush

@@ -26,6 +26,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     selector: 'jigsaw-drawer, j-drawer',
     templateUrl: './drawer.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-drawer-host]': 'true',
         '[class.jigsaw-drawer-in-dom]': '!floating',
         '[class.jigsaw-drawer-auto-size]': '!floating && autoSize'

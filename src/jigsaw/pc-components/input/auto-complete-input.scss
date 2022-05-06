@@ -27,7 +27,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             padding: 6px 16px;
             cursor: pointer;
             font-size: 12px;
-            background: $bg-body;
+            background: $bg-component;
 
             label {
                 margin: 0;
@@ -46,7 +46,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         margin: 0;
         padding: 3px 10px;
         width: 100%;
-        background: $bg-popup;
+        background: $bg-component-darken;
         font-size: $font-title-med;
         color: $font-color-heading;
     }

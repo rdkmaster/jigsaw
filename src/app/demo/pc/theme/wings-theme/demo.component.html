@@ -249,7 +249,7 @@
             <jigsaw-header [theme]="darkTheme">list</jigsaw-header>
             <div class="item-div start">
                 <j-list [theme]="darkTheme" width="200" trackItemBy="title">
-                    <j-list-option [theme]="darkTheme" *ngFor="let title of _$titles" [value]="title">
+                    <j-list-option *ngFor="let title of _$titles" [value]="title">
                         <span j-title>{{title.title}}</span>
                         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
                                 class="iconfont iconfont-e144"></span>
@@ -262,7 +262,7 @@
             <jigsaw-header [theme]="lightTheme">list</jigsaw-header>
             <div class="item-div start">
                 <j-list [theme]="lightTheme" width="200" trackItemBy="title">
-                    <j-list-option [theme]="lightTheme" *ngFor="let title of _$titles" [value]="title">
+                    <j-list-option *ngFor="let title of _$titles" [value]="title">
                         <span j-title>{{title.title}}</span>
                         <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu"
                                 class="iconfont iconfont-e144"></span>
@@ -397,7 +397,7 @@
                 <jigsaw-combo-select [theme]="lightTheme" placeholder="请输入姓名~" autoWidth="true" [clearable]="true"
                     maxWidth="500">
                     <ng-template>
-                        <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
+                        <jigsaw-tile [theme]="lightTheme" [(selectedItems)]="selectedCity" trackItemBy="label">
                             <jigsaw-tile-option *ngFor="let city of _$cityList" [value]="city" width="21.4%">
                                 {{city.label}}
                             </jigsaw-tile-option>
@@ -411,13 +411,15 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList"></jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                </jigsaw-select>
             </div>
         </section>
     </li>
@@ -603,18 +605,704 @@
             </div>
         </section>
     </li>
-<!--    <li class="list-li xxxx">-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+    <li class="list-li navigation-menu">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="darkTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">navigation-menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-navigation-menu [theme]="lightTheme" [data]="_$navigationData"></jigsaw-navigation-menu>
+            </div>
+        </section>
+    </li>
+    <li class="list-li table">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">table</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-table [theme]="darkTheme" [data]="_$tableData" [columnDefines]="_$columnDefine" height="400px"></jigsaw-table>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">table</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-table [theme]="lightTheme" [data]="_$tableData" [columnDefines]="_$columnDefine" height="400px"></jigsaw-table>
+            </div>
+        </section>
+    </li>
+    <li class="list-li graph">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">graph</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-graph [theme]="darkTheme" [data]="_$graphData"></jigsaw-graph>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">graph</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-graph [theme]="lightTheme" [data]="_$graphData"></jigsaw-graph>
+            </div>
+        </section>
+    </li>
+    <li class="list-li pagination">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">pagination</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="complex" widh="710px" size='large'>
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="folding" widh="710px">
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="darkTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    mode="simple" widh="710px">
+                </jigsaw-pagination>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">pagination</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="complex" widh="710px" size='large'>
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    searchable="true" showQuickJumper="true" mode="folding" widh="710px">
+                </jigsaw-pagination>
+                <jigsaw-pagination [theme]="lightTheme" [data]="_$pageableData" [pageSizeOptions]="[5, 10, 20]"
+                    mode="simple" widh="710px">
+                </jigsaw-pagination>
+            </div>
+        </section>
+    </li>
+    <li class="list-li cascade">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">cascade</jigsaw-header>
+            <div class="item-div start">
+                <j-cascade [theme]="darkTheme" [data]="_$cascadeData" [searchable]="true" [pageSize]="5"></j-cascade>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">cascade</jigsaw-header>
+            <div class="item-div start">
+                <j-cascade [theme]="lightTheme" [data]="_$cascadeData" [searchable]="true" [pageSize]="5"></j-cascade>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tabs-bar">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tabs-bar</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs-bar [theme]="darkTheme" [data]="_$tabbarData"></jigsaw-tabs-bar>
+                <jigsaw-tabs-bar [theme]="darkTheme" [data]="_$tabbarData" tabType="page"></jigsaw-tabs-bar>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tabs-bar</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs-bar [theme]="lightTheme" [data]="_$tabbarData"></jigsaw-tabs-bar>
+                <jigsaw-tabs-bar [theme]="lightTheme" [data]="_$tabbarData" tabType="page"></jigsaw-tabs-bar>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tabs">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tabs</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs [theme]="darkTheme" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
 
-<!--            </div>-->
-<!--        </section>-->
-<!--        <section class="item-section">-->
-<!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
-<!--            <div class="item-div start">-->
+                <jigsaw-tabs [theme]="darkTheme" [tabType]="'page'" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tabs</jigsaw-header>
+            <div class="item-div startY column">
+                <jigsaw-tabs [theme]="lightTheme" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
 
-<!--            </div>-->
-<!--        </section>-->
-<!--    </li>-->
+                <jigsaw-tabs [theme]="lightTheme" [tabType]="'page'" editable="true">
+                    <jigsaw-tab-pane title="tab1">
+                        <ng-template>tab content 1</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab2" [disabled]="true">
+                        <ng-template>tab content 2</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab3">
+                        <ng-template>tab content 3</ng-template>
+                    </jigsaw-tab-pane>
+                    <jigsaw-tab-pane title="tab4">
+                        <ng-template>tab content 4</ng-template>
+                    </jigsaw-tab-pane>
+                </jigsaw-tabs>
+            </div>
+        </section>
+    </li>
+    <li class="list-li color-select">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">color-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-color-select [theme]="darkTheme" color="#e57409" enableConfirm="true"></jigsaw-color-select>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">color-select</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-color-select [theme]="lightTheme" color="#e57409" enableConfirm="true"></jigsaw-color-select>
+            </div>
+        </section>
+    </li>
+    <li class="list-li fish-bone">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">fish-bone</jigsaw-header>
+            <div class="item-div start">
+                <j-fish-bone [theme]="darkTheme" [data]="_$fishboneData"></j-fish-bone>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">fish-bone</jigsaw-header>
+            <div class="item-div start">
+                <j-fish-bone [theme]="lightTheme" [data]="_$fishboneData"></j-fish-bone>
+            </div>
+        </section>
+    </li>
+    <li class="list-li upload">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">upload</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-upload [theme]="darkTheme"></jigsaw-upload>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">upload</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-upload [theme]="lightTheme"></jigsaw-upload>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tree">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tree</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tree-ext [theme]="darkTheme" [(data)]="_$treeData">
+                </jigsaw-tree-ext>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tree</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-tree-ext [theme]="lightTheme" [(data)]="_$treeData">
+                </jigsaw-tree-ext>
+            </div>
+        </section>
+    </li>
+    <li class="list-li rate">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">rate</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-rate [theme]="darkTheme" max="5" [allowHalf]="true" [value]="2.5" style="font-size: 20px;">
+                </jigsaw-rate>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">rate</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-rate [theme]="lightTheme" max="5" [allowHalf]="true" [value]="2.5" style="font-size: 20px;">
+                </jigsaw-rate>
+            </div>
+        </section>
+    </li>
+    <li class="list-li circle-progress">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">circle-progress</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'processing'" [value]="100">
+                </jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'success'" [value]="0"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="darkTheme" [status]="'error'" [value]="53.89"></jigsaw-circle-progress>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">circle-progress</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'processing'" [value]="100">
+                </jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'success'" [value]="0"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
+                <jigsaw-circle-progress [theme]="lightTheme" [status]="'error'" [value]="53.89">
+                </jigsaw-circle-progress>
+            </div>
+        </section>
+    </li>
+    <li class="list-li process-status">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">process-status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-process-status [theme]="darkTheme" width="100%">
+                    <jigsaw-process-status-item *ngFor="let step of _$processStatusData" [status]="step.status">
+                        {{step.title}}
+                    </jigsaw-process-status-item>
+                </jigsaw-process-status>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">process-status</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-process-status [theme]="lightTheme" width="100%">
+                    <jigsaw-process-status-item *ngFor="let step of _$processStatusData" [status]="step.status">
+                        {{step.title}}
+                    </jigsaw-process-status-item>
+                </jigsaw-process-status>
+            </div>
+        </section>
+    </li>
+    <li class="list-li step">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">step</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-steps [theme]="darkTheme" [data]="_$stepData"></jigsaw-steps>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">step</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-steps [theme]="lightTheme" [data]="_$stepData"></jigsaw-steps>
+            </div>
+        </section>
+    </li>
+    <li class="list-li progress">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">progress</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-progress [theme]="darkTheme" [value]="32" status="processing"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="block"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="error"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" status="success"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    status="block" labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    labelPosition="followLeft" showMarker="true"></j-progress>
+                <j-progress [theme]="darkTheme" [value]="32" width="100%" preSize="large" [animate]="false"
+                    status="error" labelPosition="followLeft" showMarker="true"></j-progress>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">progress</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-progress [theme]="lightTheme" [value]="32" status="processing"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="block"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="error"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" status="success"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    status="block" labelPosition="followRight" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    labelPosition="followLeft" showMarker="true"></j-progress>
+                <j-progress [theme]="lightTheme" [value]="32" width="100%" preSize="large" animate="false"
+                    status="error" labelPosition="followLeft" showMarker="true"></j-progress>
+            </div>
+        </section>
+    </li>
+    <li class="list-li transfer">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">transfer</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$cityList" trackItemBy="id"
+                    labelField="label" [sourceRenderer]="transferListSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$treeData"
+                    [sourceRenderer]="transferTreeSourceRenderer" trackItemBy="label" labelField="label"
+                    [destRenderer]="transferListDestRenderer"></j-transfer>
+                <j-transfer [theme]="darkTheme" width="100%" height="500" [data]="_$tableData" trackItemBy="name"
+                    labelField="name" [sourceRenderer]="transferTableSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">transfer</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$cityList" trackItemBy="id"
+                    labelField="label" [sourceRenderer]="transferListSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$treeData"
+                    [sourceRenderer]="transferTreeSourceRenderer" trackItemBy="label" labelField="label"
+                    [destRenderer]="transferListDestRenderer"></j-transfer>
+                <j-transfer [theme]="lightTheme" width="100%" height="500" [data]="_$tableData" trackItemBy="name"
+                    labelField="name" [sourceRenderer]="transferTableSourceRenderer"
+                    [destRenderer]="transferListDestRenderer">
+                </j-transfer>
+            </div>
+        </section>
+    </li>
+    <li class="list-li time-section">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">time-section</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-time-section-picker [theme]="darkTheme"></j-time-section-picker>
+                <j-week-section-picker [theme]="darkTheme"></j-week-section-picker>
+                <j-day-section-picker [theme]="darkTheme"></j-day-section-picker>
+                <j-time-section [theme]="darkTheme"></j-time-section>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">time-section</jigsaw-header>
+            <div class="item-div startY column overflowX">
+                <j-time-section-picker [theme]="lightTheme"></j-time-section-picker>
+                <j-week-section-picker [theme]="lightTheme"></j-week-section-picker>
+                <j-day-section-picker [theme]="lightTheme"></j-day-section-picker>
+                <j-time-section [theme]="lightTheme"></j-time-section>
+            </div>
+        </section>
+    </li>
+    <li class="list-li menu">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" jigsaw-cascading-menu [jigsawCascadingMenuData]="_$menuData"
+                    [jigsawCascadingMenuTheme]='darkTheme'>弹出菜单
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">menu</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" jigsaw-cascading-menu [jigsawCascadingMenuData]="_$menuData"
+                    [jigsawCascadingMenuTheme]='lightTheme'>弹出菜单
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li header">
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="darkTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+        <section class="item-section">
+            <div class="center">
+                <jigsaw-header [theme]="lightTheme" [level]="1">无内置主题组件</jigsaw-header>
+            </div>
+        </section>
+    </li>
+    <li class="list-li alert">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="commonInfoAlert()">
+                    信息提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="darkTheme" (click)="commonConfirmAlert()">
+                    确认提示框
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">alert</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="commonInfoAlert()">
+                    信息提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonWarningAlert()">
+                    警告提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonErrorAlert()">
+                    错误提示框
+                </jigsaw-button>
+                <jigsaw-button [theme]="lightTheme" (click)="commonConfirmAlert()">
+                    确认提示框
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+
+    <li class="list-li badge">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">badge</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24" jigsaw-badge
+                    jigsawBadgeValue="5" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="1000" jigsawBadgeSize="small"
+                    jigsawBadgeMaxValue="999">
+                </jigsaw-icon>
+
+                <span jigsaw-badge jigsawBadgeValue="5" jigsawBadgeSize="normal" jigsawBadgePosition="right"
+                    jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]=-15 style="margin-right: 50px;">异常</span>
+                <span jigsaw-badge jigsawBadgeValue="99" jigsawBadgeSize="normal" jigsawBadgeMaxValue="1000"
+                    jigsawBadgePosition="right" jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]=-15
+                    style="margin-right: 50px;">告警</span>
+
+                <jigsaw-button [theme]="darkTheme" jigsaw-badge jigsawBadgeSize="small" jigsawBadgeValue="dot"
+                    style="margin-right: 50px">确定
+                </jigsaw-button>
+
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="HOT" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="darkTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="NEW" jigsawBadgeSize="small">
+                </jigsaw-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">badge</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24" jigsaw-badge
+                    jigsawBadgeValue="5" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="1000" jigsawBadgeSize="small"
+                    jigsawBadgeMaxValue="999">
+                </jigsaw-icon>
+
+                <span jigsaw-badge jigsawBadgeValue="5" jigsawBadgeSize="normal" jigsawBadgePosition="right"
+                    jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]=-15 style="margin-right: 50px;">异常</span>
+                <span jigsaw-badge jigsawBadgeValue="99" jigsawBadgeSize="normal" jigsawBadgeMaxValue="1000"
+                    jigsawBadgePosition="right" jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]=-15
+                    style="margin-right: 50px;">告警</span>
+
+                <jigsaw-button [theme]="lightTheme" jigsaw-badge jigsawBadgeSize="small" jigsawBadgeValue="dot"
+                    style="margin-right: 50px">确定
+                </jigsaw-button>
+
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="HOT" jigsawBadgeSize="small">
+                </jigsaw-icon>
+                <jigsaw-icon [theme]="lightTheme" [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
+                    [jigsawBadgeHorizontalOffset]=20 jigsaw-badge jigsawBadgeValue="NEW" jigsawBadgeSize="small">
+                </jigsaw-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li chart-icon">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">chart-icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-pie-chart-icon [data]="_$shortData" radius="32"></jigsaw-pie-chart-icon>
+                <jigsaw-donut-chart-icon [data]="_$shortData" radius="32"></jigsaw-donut-chart-icon>
+                <jigsaw-line-chart-icon [data]="_$longData" height="64"></jigsaw-line-chart-icon>
+                <jigsaw-bar-chart-icon [data]="_$longData" height="64"></jigsaw-bar-chart-icon>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">chart-icon</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-pie-chart-icon [data]="_$shortData" radius="32"></jigsaw-pie-chart-icon>
+                <jigsaw-donut-chart-icon [data]="_$shortData" radius="32"></jigsaw-donut-chart-icon>
+                <jigsaw-line-chart-icon [data]="_$longData" height="64"></jigsaw-line-chart-icon>
+                <jigsaw-bar-chart-icon [data]="_$longData" height="64"></jigsaw-bar-chart-icon>
+            </div>
+        </section>
+    </li>
+    <li class="list-li dialog">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">dialog</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="popupDialog(dialog1)">点击我
+                </jigsaw-button>
+                <ng-template #dialog1>
+                    <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title"
+                        icon="iconfont iconfont-e3f0" (close)="showInfo()">
+                        <ul class="dialog-content">
+                            <li>Dialog content...</li>
+                            <li>Dialog content...</li>
+                            <li>Dialog content...</li>
+                        </ul>
+
+                        <div jigsaw-button-bar>
+                            <jigsaw-button colorType="primary" (click)="showInfo()">OK</jigsaw-button>
+                            <jigsaw-button (click)="showInfo()">Cancel</jigsaw-button>
+                            <a class="button-bar-link" (click)="showInfo()">需要帮助？</a>
+                        </div>
+                    </jigsaw-dialog>
+                </ng-template>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">dialog</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="popupDialog(dialog1)">点击我
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li drawer">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">drawer</jigsaw-header>
+            <div class="item-div start">
+                <j-drawer [theme]="darkTheme" [floating]="false" position="left" width="300" height="200" autoSize="false">
+                    <div class="drawer-content">
+                        这是一个展示内容的box
+                    </div>
+                </j-drawer>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">drawer</jigsaw-header>
+            <div class="item-div start">
+                <j-drawer [theme]="lightTheme" [floating]="false" position="left" width="300" height="200" autoSize="false">
+                    <div class="drawer-content">
+                        这是一个展示内容的box
+                    </div>
+                </j-drawer>
+            </div>
+        </section>
+    </li>
+    <li class="list-li float">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">float</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea">Hover Me!
+                </jigsaw-button>
+                <ng-template #jigsawFloatArea>
+                    <div class="jigsawFloatArea" style="width: 150px; height: 60px;">
+                        dropdown placeholder
+                    </div>
+                </ng-template>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">float</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea">Hover Me!
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li toast">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" width="200" (click)="showToast()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">toast</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" width="200" (click)="showToast()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li tooltip">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">tooltip</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个深色的的Tooltip"
+                    [jigsawTooltipTheme]="darkTheme">
+                    Tooltip
+                </jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">tooltip</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" jigsawTooltipPosition="top" jigsawTooltip="这是一个浅色的的Tooltip"
+                    [jigsawTooltipTheme]="lightTheme">
+                    Tooltip
+                </jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <li class="list-li notification">
+        <section class="item-section">
+            <jigsaw-header [theme]="darkTheme">notification</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="darkTheme" (click)="showNotification()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+        <section class="item-section">
+            <jigsaw-header [theme]="lightTheme">notification</jigsaw-header>
+            <div class="item-div start">
+                <jigsaw-button [theme]="lightTheme" (click)="showNotification()">弹出默认消息框</jigsaw-button>
+            </div>
+        </section>
+    </li>
+    <!--    <li class="list-li xxxx">-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="darkTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
+
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--        <section class="item-section">-->
+    <!--            <jigsaw-header [theme]="lightTheme">xxxx</jigsaw-header>-->
+    <!--            <div class="item-div start">-->
+
+    <!--            </div>-->
+    <!--        </section>-->
+    <!--    </li>-->
 </ul>
+<div class="demo-nav" (click)="openNav()">
+    <i class="iconfont iconfont-e175"></i>
+</div>
+<div class="demo-nav-menu-cntr" [ngStyle]="{'display': navMenuVis ? 'flex' : 'none'}">
+    <div class="demo-nav-menu-cntr-panel">
+        <span>共{{navMenu?.length}}项</span>
+        <div class="icon-cntr">
+            <i class="iconfont iconfont-e415" (click)="scrollToBottom()"></i>
+            <i class="iconfont iconfont-e14b" (click)="closeNav()"></i>
+        </div>
+    </div>
+    <ul class="demo-nav-menu">
+        <li class="nav-menu-item" *ngFor="let item of navMenu">
+            <span class="icon-vis" (click)="visClick(item)">
+                <i *ngIf="item.vis" class="iconfont iconfont-e9d2"></i>
+                <i *ngIf="!item.vis" class="iconfont iconfont-e9d3"></i>
+            </span>
+            <span class="text" [title]="item.name" (click)="navClick(item)">{{item.name}}</span>
+        </li>
+    </ul>
+</div>

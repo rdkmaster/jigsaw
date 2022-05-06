@@ -144,6 +144,13 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     public hostInstance: any;
 
     /**
+     * 宿主表格主题
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public theme: string;
+
+    /**
      * 渲染器制造工厂
      */
     protected rendererFactory(renderer: Type<TableCellRendererBase> | TemplateRef<any>, initData: any): ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any> {
@@ -163,6 +170,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             componentRef.instance.additionalData = this.additionalData;
             componentRef.instance.cellData = this.cellData;
             componentRef.instance.hostInstance = this.hostInstance;
+            componentRef.instance.theme = this.theme;
             componentRef.instance.initData = initData;
             return componentRef;
         }

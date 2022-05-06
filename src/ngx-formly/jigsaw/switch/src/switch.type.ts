@@ -18,6 +18,9 @@ import {JigsawSwitch} from "@rdkmaster/jigsaw";
         ></jigsaw-switch>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    host: {
+        '[style.display]': "'flex'",
+    },
 })
 export class FormlyFieldSwitch extends FormlyFieldType<JigsawSwitch> {
     defaultOptions = {

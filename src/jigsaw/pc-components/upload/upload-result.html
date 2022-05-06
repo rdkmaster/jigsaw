@@ -1,4 +1,4 @@
-<jigsaw-collapse class="jigsaw-upload-result-collapse" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
+<jigsaw-collapse class="jigsaw-upload-result-collapse" [theme]="theme" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}">
     <jigsaw-collapse-pane
         *ngFor="let file of files"
         class="jigsaw-upload-result-log"
@@ -16,6 +16,7 @@
         <div jigsaw-body class="jigsaw-upload-result-log-detail">
             <jigsaw-progress
                 class="jigsaw-upload-result-log-progress"
+                [theme]="theme"
                 [value]="file.progress ? file.progress : 0"
                 preSize="small"
                 status="processing"
