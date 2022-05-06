@@ -1,0 +1,84 @@
+.jigsaw-header-host.jigsaw-header-level-2 {
+    .jigsaw-header-content {
+        color: $brand-default;
+        font-size: 16px;
+
+        &::before {
+            width: 2px;
+            height: 16px;
+            margin-right: 8px;
+            line-height: 16px;
+        }
+
+        &::after {
+            content: "";
+            height: 10px;
+            width: 66px;
+            margin-left: 8px;
+            background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAAAeCAYAAAB39mEfAAAABHNCSVQICAgIfAhkiAAABOlJREFUeF7tXL9PFEEUfrMHYkiMFhx3kFhogRhN1GiildL4oxB/3qJir1Za0JoIiS2NlfIHgN6eP6IWGhu0otAEEo1CoYUJ7HEUGhICwu34ZnGXy90NczNn1iy+SY7jYOabuTf7zbfzNvMxCEom3w8MzuLH/fgaBw7PIJcaCP9v8ksm34eYJ7HpXnx9RMzXiDloAhW2sd1rAOwYAN+F75P4/hac9FCdmL3ArcM41p04xq9gsTHIJkfqwrzodiPePmBsO3D+HSAxDrnky7owMzNdOM5OSEAaiuAC875Arm20LsxLhQ7gy2kAayuA9xNYowuPklN1YV4otAFn26CBN8MKWwDGf8CT5ExdmGcKW6BpZTMkGhqhuLIMSw2L8Dw5XxemzTfB4kwDfucExqAIm9tWwGG/BCbzge38OP7cV6WTcXBSB4w6t/NvsN2eKm0/IuYJI8yMO4wj7qhsiwRxUlcNMe8Bs3ZUtBUEybXeMsOcvY0Xw/ZKTCRILn3XCLMnfwPb4QVcVgRBHqfum2HOHkUyICHKCxIk2/7OCPP83G6fEOVFEORpy2cjTHsm6ROi4rsjQZy2ghFm93SzT4jyIgjyon2BwapS3JGCcxjAVb5fq/NVpehbB3NQWzl8pQDxkpUhbeWw3V5cKa/IIb0RxBzW+u5CKSx2WtrG4y/hcfqFFqZQCsvqkmN6o9rK4StFEVVXUlhiUls5hFIkoF2KWYRpbeUQStEMW6SYCzCvrRxCKZbmmqSYTS1LbB21CNrpq4ZcLQJMfdWQqkUAaaAaGbe6WgSQJqqRkahFiGmgGjK1CDBNVKNHphYBqIFqyNQigDRRDZlahN/dQDVkahHO0XJREIMrVy8ntXrLVWux89PKqk5KvrJUa2y779WY6UPKOqUV7Fn1yu20duth5h8o6zup68o6pRV6UNVVJaup6j2obKqS1VQ2u3BQBQlO8oOyTmmFywX1dfIwqb7eSjGFCilKLYoxgffvYkNee1ErxifEPF47INZUKQaHKbx/x1sjjaJUDO8bYt7UQMRxqhSD4T6jVW+foVIMwH1GVnOfoVQMC/cZrXr7jA2lGLTHoD1GNeb/93sMERR5VkpfLYIgy1VDXy0CTJlqmKjFGqYkK2WgFiGmLCtloBYBplw19NUixJTtMwzUIsDcMFmpcDL97NQ5/CjSthN/nmP0a91GlFdezU6dwj+LtO0nxHylnY0qxxTZKQ5dftpWEILBqHY2qhITn2PAET9ty5EQDMa0s1HlmP5zDAufY2DaliMhuDehnY2qiKefnerEP4u0rQve33qOwRFPpG2REIzRcwwMrt6mui6WUGOKQHwiQMSIz1zRSCOMABEjwmBTV/GJABEjPnNFI40wAkSMCINNXcUnAkSM+MwVjTTCCBAxIgw2dRWfCBAx4jNXNNIII0DEiDDY1FV8IkDEiM9c0UgjjAARI8JgU1fxiQARIz5zRSONMAJrxCAzBDJDIDMEMkMIFx/ZYSWTY60BqOywknALITME/XWfzBDWiRmZIXRJo+ORGYIW28gMQREu5dFWAwsd5dFWA9VQHW0lMwQ9Cx0yQ1AQg8wQ1g8QmSFUNVsLgqZ/vJXMECrN1oJoitN8ZIZQ+53PP7PPITMEMkOodpmSGQJGhcwQqlh0khlC7ct6SU0yQ6ghbGSGQGYIMTV1/g1uANc0mKcwmQAAAABJRU5ErkJggg==");
+            background-size: 66px;
+        }
+    }
+}
+
+.jigsaw-button-host {
+    color: $font-color-default;
+
+    &:hover {
+        color: $brand-hover;
+    }
+}
+
+.jigsaw-radios-host {
+    .jigsaw-radio-option {
+        .jigsaw-radio-option-inner {
+            &:after {
+                content: " ";
+                position: absolute;
+                width: 6px;
+                height: 6px;
+                left: 3px;
+                top: 3px;
+                border-radius: 4px;
+                display: table;
+                border-top: 0;
+                border-left: 0;
+                background-color: $brand-default;
+                opacity: 0;
+                @include prefixer(transfrom, scale(0));
+                @include prefixer(transition, all 0.3s $ease-in-out-circ);
+            }
+
+            &.jigsaw-radio-option-checked {
+                border-width: 1px;
+                border-color: $brand-default;
+
+                &:after {
+                    @include prefixer(transform, scale(1.4));
+                    @include prefixer(transition, all 0.3s $ease-in-out-circ);
+                    opacity: 1;
+                }
+
+                + .jigsaw-radio-option-content {
+                    color: $brand-default;
+                }
+            }
+        }
+
+        .jigsaw-radio-option-content {
+            color: $font-color-hint;
+        }
+    }
+}
+
+.jigsaw-checkbox-host .jigsaw-checkbox-wrapper {
+    .jigsaw-checkbox-label {
+        color: $font-color-hint;
+    }
+
+    .jigsaw-checkbox-checked {
+        + .jigsaw-checkbox-label {
+            color: $brand-default;
+        }
+    }
+}
