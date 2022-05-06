@@ -4,13 +4,17 @@ import {IUploader, UploadFileInfo} from '../../common/directive/upload/uploader-
 import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/upload/upload.directive';
 import {DragDropInfo} from '../../common/directive/dragdrop/types';
 import {CommonUtils} from '../../common/core/utils/common-utils';
+import {WingsTheme} from "../../common/common";
+import { JigsawUploadResult } from './upload-result';
 
+@WingsTheme('upload.scss')
 @Component({
     selector: "jigsaw-upload, j-upload",
     templateUrl: "upload.html",
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-upload-host]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -53,6 +57,9 @@ export class JigsawUpload extends JigsawUploadBase {
      */
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
     public _$uploader: IUploader;
+
+    @ViewChild("uploadResultEle", { read: JigsawUploadResult })
+    private _uploadResultEle: JigsawUploadResult;
 
     public get files(): UploadFileInfo[] {
         return this._$uploader.files;
@@ -119,7 +126,35 @@ export class JigsawUpload extends JigsawUploadBase {
             return;
         }
         this._$uploader.appendFiles(fileList);
-        this._$uploader.upload();
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
+        if (this.uploadImmediately) {
+            this._$uploader.upload();
+        }
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public uploadImmediately: boolean = true;
+
+    public upload() {
+        this._$uploader.upload();
+    }
+
+    public appendFiles(fileList: UploadFileInfo[]) {
+        this._$uploader.appendFiles(fileList);
+    }
+
+    public retryUpload(file: UploadFileInfo) {
+        this._$uploader.retryUpload(file);
+    }
+
+    /**
+     * 清空所有已上传的文件
+     */
+    public clear(){
+        this._$uploader.files.splice(0, this.files.length);
+        this._uploadResultEle._$cdr.markForCheck();
     }
 }

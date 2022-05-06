@@ -1,11 +1,14 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Input, NgZone} from "@angular/core";
 import {ProgressBase, Status} from "./base";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('circle-progress.scss')
 @Component({
     selector: "jigsaw-circle-progress, j-circle-progress",
     templateUrl: "circle-progress.html",
     host: {
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-circle-progress-host]": "true",
         "[class.jigsaw-circle-progress-processing]": "status === 'processing'",
         "[class.jigsaw-circle-progress-success]": "status === 'success'",

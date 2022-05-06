@@ -1,51 +1,52 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-date-time-picker: #{$jigsaw-prefix}-date-time-picker;
+$jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
+$jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
+$jigsaw-button: #{$jigsaw-prefix}-button;
 
-$date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
-
-.#{$date-time-prefix-cls} {
+.#{$jigsaw-date-time-picker}-host {
     @include inline-block();
     overflow: hidden;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-default;
     border-radius: $border-radius-base;
-    background: $bg-component;
+    background: $bg-transparent;
     font-size: $font-size-base;
     user-select: none;
 
-    jigsaw-date-picker {
+    .#{$jigsaw-date-picker}-host {
         border: none;
     }
 
-    &-bottom {
+    .#{$jigsaw-date-time-picker}-bottom {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding: 0 8px 8px;
 
-        j-time-picker {
+        .#{$jigsaw-time-picker}-host {
             max-width: 124px;
         }
 
-        jigsaw-button {
+        .#{$jigsaw-button}-host {
             min-width: 60px;
         }
     }
 
-    &-gr-switch {
+    .#{$jigsaw-date-time-picker}-gr-switch {
         display: flex;
         justify-content: center;
         text-align: center;
         width: 100%;
         padding: 8px 8px 0;
-        background: $bg-container;
+        background: $bg-component-darken;
 
         & > span {
             display: inline-block;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $bg-body;
+            background: $bg-component;
             border: 1px solid $border-color-default;
             cursor: pointer;
 
@@ -67,11 +68,11 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         }
     }
 
-    &-error {
+    &.#{$jigsaw-date-time-picker}-error {
         border-color: $error-default;
     }
 
-    &-disabled {
+    &.#{$jigsaw-date-time-picker}-disabled {
         position: relative;
         &:before {
             content: " ";
@@ -87,7 +88,7 @@ $date-time-prefix-cls: #{$jigsaw-prefix}-date-time-picker;
         }
     }
 
-    &-confirm {
+    .#{$jigsaw-date-time-picker}-confirm {
         max-width: 60px;
     }
 }

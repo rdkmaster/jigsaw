@@ -1,98 +1,352 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-tabs: #{$jigsaw-prefix}-tabs;
+$jigsaw-tabs-bar: #{$jigsaw-prefix}-tabs-bar;
+$jigsaw-list: #{$jigsaw-prefix}-list;
 
-$tab-prefix: #{$jigsaw-prefix}-tabs;
-
-.#{$tab-prefix}-host {
+.#{$jigsaw-tabs}-host {
     display: block;
     height: auto;
+
+    .#{$jigsaw-tabs} {
+        position: relative;
+        display: block;
+        overflow: hidden;
+        @include clearfix;
+        color: $font-color-default;
+        background: $bg-transparent;
+
+        &.#{$jigsaw-tabs}-vertical-response {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+
+            .#{$jigsaw-tabs}-content {
+                flex: 1;
+                overflow: hidden;
+            }
+        }
+
+        .#{$jigsaw-tabs}-content {
+            width: 100%;
+            background-color: var(--jigsaw-nav-background, transparent);
+
+            .#{$jigsaw-tabs}-tabpane {
+                display: block;
+                flex-shrink: 0;
+                width: 100%;
+                height: 100%;
+                opacity: 1;
+
+                &.#{$jigsaw-tabs}-tabpane-inactive {
+                    opacity: 0;
+                    height: 0;
+                    overflow: hidden;
+                }
+
+                &.#{$jigsaw-tabs}-tabpane-hidden {
+                    display: none;
+                }
+            }
+        }
+    }
 }
 
-.#{$tab-prefix} {
+.#{$jigsaw-tabs-bar}-host {
+    @include clearfix;
     display: block;
     position: relative;
     overflow: hidden;
-    @include clearfix;
     color: $font-color-default;
-    background: $bg-component;
+    background: $bg-transparent;
 
-    &.#{$tab-prefix}-vertical-response {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-
-        .#{$tab-prefix}-content {
-            flex: 1;
-            overflow: hidden;
-        }
-    }
-
-    &-bar {
+    .#{$jigsaw-tabs-bar} {
         border-bottom-width: 1px;
         border-bottom-style: solid;
         border-bottom-color: $splitline-default;
         outline: none;
-    }
 
-    &-remove-bar {
-        display: flex;
-        align-items: center;
-        position: absolute;
-        right: 0;
-        top: 0;
-        height: 100%;
-        font-size: 18px;
-        color: $icon-color-default;
+        .#{$jigsaw-tabs}-nav-container {
+            position: relative;
+            font-size: $font-size-lg;
+            line-height: 1.5;
+            white-space: nowrap;
+            box-sizing: border-box;
 
-        &:hover {
-            color: $brand-default;
+            .#{$jigsaw-tabs}-ink-bar {
+                position: absolute;
+                display: block;
+                z-index: $zindex-level-1;
+                left: 0;
+                bottom: -1px;
+                height: 2px;
+                background-color: $brand-default;
+                transition: transform 0.3s $ease-in-out;
+                transform-origin: 0 0;
+
+                &:after {
+                    position: absolute;
+                    top: 2px;
+                    left: 50%;
+                    margin-left: -4px;
+                    width: 0;
+                    height: 0;
+                    border: {
+                        width: 4px 4px;
+                        style: solid;
+                        color: $brand-default transparent transparent transparent;
+                    }
+                    content: "";
+                    display: none;
+                }
+            }
+
+            .#{$jigsaw-tabs}-nav-wrap {
+                @include clearfix();
+                width: calc(100% - 40px);
+                overflow: hidden;
+
+                .#{$jigsaw-tabs}-nav {
+                    position: relative;
+                    float: left; /*用于width为auto，并能撑开tab nav*/
+                    background-color: var(--jigsaw-nav-background, transparent);
+                    transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
+
+                    .#{$jigsaw-tabs}-tab {
+                        display: inline-flex;
+                        align-items: center;
+                        position: relative;
+                        padding: 8px 20px;
+                        height: 100%;
+                        transition: color 0.3s $ease-in-out;
+                        cursor: pointer;
+                        text-decoration: none;
+
+                        &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
+                            background: $brand-lighten;
+                        }
+
+                        &:active {
+                            color: $brand-active;
+                        }
+
+                        &.#{$jigsaw-tabs}-tab-hidden {
+                            display: none;
+                        }
+
+                        &.#{$jigsaw-tabs}-tab-disabled {
+                            color: $font-color-disabled-spec;
+                            cursor: not-allowed;
+                        }
+
+                        &.#{$jigsaw-tabs}-tab-active {
+                            color: $brand-default;
+                        }
+
+                        .#{$jigsaw-tabs}-remove-bar {
+                            position: absolute;
+                            right: 0;
+                            top: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            height: 100%;
+                            font-size: 18px;
+                            color: $icon-color-default;
+
+                            &:hover {
+                                color: $brand-default;
+                            }
+                        }
+
+                        span.iconfont {
+                            margin-right: 6px;
+                            line-height: 50%;
+                        }
+
+                        a:hover {
+                            text-decoration: none;
+                            color: $brand-default;
+                        }
+
+                        * {
+                            outline: 0;
+                        }
+
+                        .#{$jigsaw-tabs}-title-editor {
+                            display: flex;
+                            align-items: center;
+
+                            .#{$jigsaw-tabs}-title-editor-bar {
+                                margin-left: 5px;
+                            }
+                        }
+
+                        .#{$jigsaw-tabs}-title-editor-input {
+                            margin: -4px 0;
+                            height: 26px;
+
+                            .jigsaw-input-icon-item {
+                                margin-left: 0 !important;
+                                margin-right: 0 !important;
+                            }
+                        }
+                    }
+
+                    .#{$jigsaw-tabs}-add-bar {
+                        font-size: 18px;
+                        vertical-align: middle;
+                        color: $icon-color-default;
+                        cursor: pointer;
+
+                        &:hover {
+                            color: $brand-default;
+                        }
+                    }
+                }
+            }
+
+            .#{$jigsaw-tabs}-overflow-button {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 40px;
+                height: 100%;
+                background-color: var(--jigsaw-nav-background, $bg-component);
+                font-size: 24px;
+                color: $icon-color-default;
+                text-align: center;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: $brand-default;
+                    color: $font-color-white;
+                }
+            }
+        }
+
+        .#{$jigsaw-tabs}-remove-bar {
+            display: flex;
+            align-items: center;
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            font-size: 18px;
+            color: $icon-color-default;
+
+            &:hover {
+                color: $brand-default;
+            }
+        }
+
+        .#{$jigsaw-tabs}-add-bar {
+            font-size: 18px;
+            vertical-align: middle;
+            color: $icon-color-default;
+            cursor: pointer;
+
+            &:hover {
+                color: $brand-default;
+            }
+        }
+
+        .#{$jigsaw-tabs}-overflow-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 100%;
+            background-color: var(--jigsaw-nav-background, $bg-component);
+            font-size: 24px;
+            color: $icon-color-default;
+            text-align: center;
+            cursor: pointer;
+
+            &:hover {
+                background-color: $brand-default;
+                color: $font-color-white;
+            }
         }
     }
 
-    &-add-bar {
-        font-size: 18px;
-        vertical-align: middle;
-        color: $icon-color-default;
-        cursor: pointer;
+    &.#{$jigsaw-tabs}-page {
+        .#{$jigsaw-tabs-bar} {
+            .#{$jigsaw-tabs}-nav-container {
+                .#{$jigsaw-tabs}-ink-bar {
+                    height: 1px;
+                    background-color: var(--jigsaw-nav-background, $bg-component);
+                    transition: unset;
+                }
 
-        &:hover {
-            color: $brand-default;
+                .#{$jigsaw-tabs}-nav-wrap {
+                    background-color: transparent;
+
+                    .#{$jigsaw-tabs}-nav {
+                        background-color: transparent;
+
+                        .#{$jigsaw-tabs}-tab {
+                            background-color: var(--jigsaw-nav-background, transparent);
+                            border-width: 1px;
+                            border-style: solid;
+                            border-color: $border-color-default;
+                            border-radius: $border-radius-base $border-radius-base 0 0;
+                            border-bottom: none;
+                            margin-right: 2px;
+                            padding: 0 16px;
+                            line-height: 32px;
+
+                            &.#{$jigsaw-tabs}-tab-active {
+                                border-top-width: 2px;
+                                border-top-color: $brand-default;
+                            }
+
+                            &.#{$jigsaw-tabs}-tab-disabled {
+                                background: $bg-disabled;
+                                color: $font-color-disabled-spec;
+                            }
+
+                            &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
+                                background: $brand-lighten;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.#{$jigsaw-tabs}-editable {
+            .#{$jigsaw-tabs}-remove-bar {
+                right: 4px;
+            }
+
+            .#{$jigsaw-tabs}-nav-container {
+                .#{$jigsaw-tabs}-nav-wrap {
+                    .#{$jigsaw-tabs}-nav {
+                        .#{$jigsaw-tabs}-tab {
+                            padding-right: 20px;
+                        }
+                    }
+                }
+            }
         }
     }
+}
 
-    &-overflow-button {
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 40px;
-        height: 100%;
-        background-color: var(--jigsaw-nav-background, $bg-body);
-        font-size: 24px;
-        color: $icon-color-default;
-        text-align: center;
-        cursor: pointer;
-
-        &:hover {
-            background-color: $brand-default;
-            color: $font-color-white;
-        }
-    }
-
-    &-list {
-        box-shadow: none !important;
-        border-radius: 0;
-        border: none;
+.#{$jigsaw-list}-host {
+    &.#{$jigsaw-tabs}-list {
         width: 200px !important;
         max-height: 300px;
+        border-radius: 0;
+        border: none;
 
-        .#{$tab-prefix}-bar-list-option {
+        .#{$jigsaw-tabs}-bar-list-option {
             display: flex;
 
-            .#{$tab-prefix}-bar-list-content {
+            .#{$jigsaw-tabs}-bar-list-content {
                 display: inline-block;
             }
         }
 
-        .#{$tab-prefix}-bar-add-option {
+        .#{$jigsaw-tabs}-bar-add-option {
             display: flex;
             justify-content: center;
 
@@ -101,14 +355,14 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
             }
         }
 
-        .jigsaw-list-option {
+        .#{$jigsaw-list}-option-host {
             .span-margin {
                 margin: 0 4px;
                 width: 10px;
                 height: 9px;
             }
 
-            &-selected {
+            .#{$jigsaw-list}-option-selected {
                 display: flex;
                 align-items: center;
                 color: $brand-default;
@@ -118,218 +372,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
                 }
             }
 
-            &-hidden {
+            .#{$jigsaw-list}-option-hidden {
                 display: none;
             }
-        }
-    }
-
-    &-nav-container {
-        position: relative;
-        font-size: $font-size-lg;
-        line-height: 1.5;
-        white-space: nowrap;
-        box-sizing: border-box;
-
-        .#{$tab-prefix}-ink-bar {
-            position: absolute;
-            display: block;
-            z-index: $zindex-level-1;
-            left: 0;
-            bottom: -1px;
-            height: 2px;
-            background-color: $brand-default;
-            transition: transform 0.3s $ease-in-out;
-            transform-origin: 0 0;
-
-            &:after {
-                position: absolute;
-                top: 2px;
-                left: 50%;
-                margin-left: -4px;
-                width: 0;
-                height: 0;
-                border: {
-                    width: 4px 4px;
-                    style: solid;
-                    color: $brand-default transparent transparent transparent;
-                }
-                content: "";
-                display: none;
-            }
-        }
-
-        .#{$tab-prefix}-nav-wrap {
-            @include clearfix();
-            width: calc(100% - 40px);
-            overflow: hidden;
-
-            .#{$tab-prefix}-nav {
-                position: relative;
-                float: left; /*用于width为auto，并能撑开tab nav*/
-                background-color: var(--jigsaw-nav-background, transparent);
-                transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
-
-                .#{$tab-prefix}-tab-disabled {
-                    color: $font-color-disabled;
-                    cursor: not-allowed !important;
-                    pointer-events: none;
-                }
-
-                jigsaw-tab-label {
-                    a:hover {
-                        text-decoration: none;
-                        color: $brand-default;
-                    }
-
-                    * {
-                        outline: 0;
-                    }
-                }
-
-                .#{$tab-prefix}-tab {
-                    display: inline-flex;
-                    align-items: center;
-                    position: relative;
-                    padding: 8px 20px;
-                    height: 100%;
-                    margin-right: 24px;
-                    transition: color 0.3s $ease-in-out;
-                    cursor: pointer;
-                    text-decoration: none;
-
-                    &:hover {
-                        color: $brand-hover;
-                    }
-
-                    &:active {
-                        color: $brand-active;
-                    }
-
-                    &-hidden {
-                        display: none;
-                    }
-
-                    span.iconfont {
-                        margin-right: 6px;
-                        line-height: 50%;
-                    }
-
-                    a:hover {
-                        text-decoration: none;
-                        color: $brand-default;
-                    }
-
-                    * {
-                        outline: 0;
-                    }
-                }
-
-                .#{$tab-prefix}-tab-active {
-                    color: $brand-default;
-                }
-            }
-        }
-    }
-
-    &-content {
-        width: 100%;
-        padding-top: 6px;
-        background-color: var(--jigsaw-nav-background, transparent);
-
-        .#{$tab-prefix}-tabpane {
-            display: block;
-            flex-shrink: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 1;
-
-            &-inactive {
-                opacity: 0;
-                height: 0;
-                overflow: hidden;
-            }
-
-            &-hidden {
-                display: none;
-            }
-        }
-    }
-}
-
-.#{$tab-prefix}-page {
-    .#{$tab-prefix}-nav-container {
-        .#{$tab-prefix}-ink-bar {
-            height: 1px;
-            background-color: var(--jigsaw-nav-background, $bg-body);
-            transition: unset;
-        }
-
-        .#{$tab-prefix}-nav-wrap {
-            background-color: transparent;
-
-            .#{$tab-prefix}-nav {
-                background-color: transparent;
-
-                .#{$tab-prefix}-tab {
-                    background-color: var(--jigsaw-nav-background, transparent);
-                    border-width: 1px;
-                    border-style: solid;
-                    border-color: $border-color-default;
-                    border-radius: $border-radius-base $border-radius-base 0 0;
-                    border-bottom: none;
-                    margin-right: 2px;
-                    padding: 0 16px;
-                    line-height: 32px;
-
-                    &-active {
-                        border-top-width: 2px;
-                        border-top-color: $brand-default;
-                    }
-                }
-
-                .#{$tab-prefix}-tab-disabled {
-                    background: $bg-disabled;
-                    color: $font-color-disabled-spec;
-                }
-            }
-        }
-    }
-
-    &.#{$tab-prefix}-editable {
-        .#{$tab-prefix}-remove-bar {
-            right: 4px;
-        }
-
-        .#{$tab-prefix}-nav-container {
-            .#{$tab-prefix}-nav-wrap {
-                .#{$tab-prefix}-nav {
-                    .#{$tab-prefix}-tab {
-                        padding-right: 20px;
-                    }
-                }
-            }
-        }
-    }
-}
-
-.#{$tab-prefix} {
-    &-title-editor {
-        display: flex;
-        align-items: center;
-
-        &-bar {
-            margin-left: 5px;
-        }
-    }
-
-    &-title-editor-input {
-        margin: -4px 0;
-        height: 26px;
-
-        .jigsaw-input-icon-item {
-            margin-left: 0 !important;
-            margin-right: 0 !important;
         }
     }
 }

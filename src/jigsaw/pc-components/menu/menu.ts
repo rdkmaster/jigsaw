@@ -13,10 +13,9 @@ import {
 } from "@angular/core";
 import {IPopupable, PopupInfo, PopupOptions, PopupPositionType, PopupService} from "../../common/service/popup.service";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
-import {JigsawTheme} from "../../common/core/theming/theme";
 
 export type MenuTheme = 'light' | 'dark' | 'navigation';
 
@@ -78,12 +77,14 @@ export class JigsawMenuHelper implements IPopupable {
     }
 }
 
+@WingsTheme('menu.scss')
 @Component({
     selector: 'jigsaw-menu, j-menu',
     template: `
-        <j-list #menuList [width]="_$realWidth" [height]="_$realHeight"
+        <j-list #menuList [theme]="_$realTheme" [width]="_$realWidth" [height]="_$realHeight"
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
             <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
+                           [theme]="_$realTheme"
                            jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
                            [jigsawCascadingMenuWidth]="_$realWidth"
@@ -126,10 +127,10 @@ export class JigsawMenuHelper implements IPopupable {
             </j-list-option>
         </j-list>`,
     host: {
-        '(click)': "_$onClick($event)",
-        '[class.jigsaw-menu-dark]': "_$realTheme == 'dark'",
-        '[class.jigsaw-menu-light]': "_$realTheme == 'light'",
+        '[attr.data-theme]': '_$realTheme',
+        '[class.jigsaw-menu-host]': 'true',
         '[class.jigsaw-menu-navigation]': "_$realTheme == 'navigation'",
+        '(click)': "_$onClick($event)",
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -182,7 +183,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         if (theme !== 'light' && theme !== 'dark' && theme !== 'navigation') {
             theme = 'light';
         }
-        return theme;
+        return <MenuTheme>theme;
     }
 
     /**
@@ -213,12 +214,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     @Input()
     public showBorder: boolean = true;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public theme: MenuTheme = JigsawTheme.majorStyle || 'light';
 
     /**
      * @internal
@@ -259,6 +254,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
 
     ngAfterViewInit() {
         this._setBorder();
+        this.theme = this.initData?.theme;
     }
 
     ngAfterContentInit() {

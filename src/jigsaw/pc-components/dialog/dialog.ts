@@ -19,7 +19,7 @@ import {
     Renderer2
 } from "@angular/core";
 import {ButtonInfo, IPopupable} from "../../common/service/popup.service";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -228,6 +228,7 @@ export abstract class AbstractDialogComponentBase
     }
 }
 
+@WingsTheme('dialog.scss')
 @Component({
     selector: 'jigsaw-dialog, j-dialog',
     templateUrl: 'dialog.html',

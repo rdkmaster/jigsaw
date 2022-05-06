@@ -9,17 +9,19 @@ import {
     ElementRef,
     Injector
 } from "@angular/core";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {PopupOptions} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('color-select.scss')
 @Component({
     selector: 'jigsaw-color-select',
     templateUrl: "./color-select.html",
     changeDetection: ChangeDetectionStrategy.OnPush,
     host: {
-        '[class.jigsaw-color-select]': 'true',
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-color-select-host]': 'true',
         '[class.jigsaw-color-select-size-small]': "preSize === 'small'",
         '[class.jigsaw-color-select-size-large]': "preSize === 'large'",
         '[class.jigsaw-color-select-size-normal]': "preSize === 'normal'"

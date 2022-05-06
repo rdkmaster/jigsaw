@@ -10,9 +10,11 @@ import {
     Renderer2
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AbstractDialogComponentBase, DialogCallback, NoticeLevel } from "../dialog/dialog";
 import {
     ButtonInfo,
@@ -27,8 +29,7 @@ import { CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawButtonModule } from "../button/button";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
-import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {WingsTheme} from "../../common/common";
 
 /**
  * 提示框所处的位置，目前支持左上、左下、右上、右下4个方向。
@@ -122,6 +123,7 @@ const notificationInstances = {
 };
 
 // @dynamic
+@WingsTheme('notification.scss')
 @Component({
     selector: 'jigsaw-notification,j-notification',
     templateUrl: 'notification.html',

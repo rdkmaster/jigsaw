@@ -1,39 +1,23 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-progress: #{$jigsaw-prefix}-progress;
 
-$progress-prefix-cls: #{$jigsaw-prefix}-progress;
-
-.#{$progress-prefix-cls} {
+.#{$jigsaw-progress}-host {
     @include inline-block();
     width: 200px;
+    color: $font-color-default;
 
-    &-bar {
+    .#{$jigsaw-progress}-bar {
         display: flex;
         line-height: 1;
         align-items: center;
 
-        &-track {
+        .#{$jigsaw-progress}-bar-track {
             flex: 1;
             height: 6px;
             border-radius: 2px;
             background: $splitline-default;
             overflow: hidden;
 
-            .#{$progress-prefix-cls}-default & {
-                height: 6px;
-                border-radius: 2px;
-            }
-
-            .#{$progress-prefix-cls}-small & {
-                height: 2px;
-                border-radius: 1px;
-            }
-
-            .#{$progress-prefix-cls}-large & {
-                height: 64px;
-                border-radius: 4px;
-            }
-
-            &-value {
+            .#{$jigsaw-progress}-bar-track-value {
                 height: 100%;
                 background: $brand-default;
                 position: relative;
@@ -45,132 +29,202 @@ $progress-prefix-cls: #{$jigsaw-prefix}-progress;
                     height: 100%;
                     background: $brand-hover;
                     z-index: $zindex-level-1;
+                    left: 0;
                 }
 
-                .#{$progress-prefix-cls}-processing & {
+                .#{$jigsaw-progress}-bar-track-label-wrapper {
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    transform: translateY(-50%);
+                    font-size: 24px;
+                    padding: 0 8px;
+                    z-index: $zindex-level-2;
+
+                    .#{$jigsaw-progress}-bar-icon {
+                        font-size: inherit;
+                    }
+
+                    &.#{$jigsaw-progress}-bar-track-label-left {
+                        color: $font-color-white;
+
+                        .#{$jigsaw-progress}-bar-icon {
+                            color: inherit !important;
+                        }
+                    }
+
+                    &.#{$jigsaw-progress}-bar-track-label-right {
+                        transform: translate(100%, -50%);
+                        color: $primary-default;
+                    }
+                }
+            }
+        }
+
+        .#{$jigsaw-progress}-bar-label-wrapper {
+            width: 40px;
+            text-align: center;
+
+            .#{$jigsaw-progress}-bar-label {
+                padding: 2px 0;
+                color: $font-color-default;
+            }
+
+            .#{$jigsaw-progress}-bar-icon {
+                font-size: $icon-size-sm;
+            }
+        }
+    }
+
+    .#{$jigsaw-progress}-top-label-wrapper {
+        text-align: center;
+        padding-bottom: 4px;
+
+        .#{$jigsaw-progress}-top-label {
+            font-size: 14px;
+        }
+
+        .#{$jigsaw-progress}-top-icon {
+            font-size: 16px;
+            margin-bottom: -4px;
+        }
+    }
+
+    .#{$jigsaw-progress}-mark {
+        padding-top: 4px;
+        display: flex;
+        justify-content: space-between;
+        color: $font-color-hint;
+    }
+
+    &.#{$jigsaw-progress}-default {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                height: 6px;
+                border-radius: 2px;
+            }
+        }
+    }
+
+    &.#{$jigsaw-progress}-small {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                height: 2px;
+                border-radius: 1px;
+            }
+        }
+    }
+
+    &.#{$jigsaw-progress}-large {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                height: 64px;
+                border-radius: 4px;
+            }
+        }
+    }
+
+    &.#{$jigsaw-progress}-processing {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                .#{$jigsaw-progress}-bar-track-value {
                     background: $primary-default;
-                }
 
-                .#{$progress-prefix-cls}-block & {
-                    background: $warning-default;
-                }
-
-                .#{$progress-prefix-cls}-error & {
-                    background: $error-default;
-                }
-
-                .#{$progress-prefix-cls}-success & {
-                    background: $success-default;
+                    .#{$jigsaw-progress}-bar-track-label-wrapper {
+                        &.#{$jigsaw-progress}-bar-track-label-right {
+                            color: $primary-default;
+                        }
+                    }
                 }
             }
 
-            &-label-wrapper {
-                position: absolute;
-                top: 50%;
-                right: 0;
-                transform: translateY(-50%);
-                font-size: 24px;
-                padding: 0 8px;
-                z-index: $zindex-level-2;
-                .#{$progress-prefix-cls}-bar-icon {
-                    font-size: inherit;
-                }
-            }
-
-            &-label-left {
-                color: $font-color-white;
-                .#{$progress-prefix-cls}-bar-icon {
-                    color: inherit !important;
-                }
-            }
-
-            &-label-right {
-                transform: translate(100%, -50%);
-                color: $primary-default;
-
-                .#{$progress-prefix-cls}-processing & {
+            .#{$jigsaw-progress}-bar-label-wrapper {
+                .#{$jigsaw-progress}-bar-icon {
                     color: $primary-default;
                 }
+            }
+        }
 
-                .#{$progress-prefix-cls}-block & {
+        .#{$jigsaw-progress}-top-label-wrapper {
+            color: $primary-default;
+        }
+    }
+
+    &.#{$jigsaw-progress}-block {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                .#{$jigsaw-progress}-bar-track-value {
+                    background: $warning-default;
+
+                    .#{$jigsaw-progress}-bar-track-label-wrapper {
+                        &.#{$jigsaw-progress}-bar-track-label-right {
+                            color: $warning-default;
+                        }
+                    }
+                }
+            }
+
+            .#{$jigsaw-progress}-bar-label-wrapper {
+                .#{$jigsaw-progress}-bar-icon {
                     color: $warning-default;
                 }
+            }
+        }
 
-                .#{$progress-prefix-cls}-error & {
+        .#{$jigsaw-progress}-top-label-wrapper {
+            color: $warning-default;
+        }
+    }
+
+    &.#{$jigsaw-progress}-error {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                .#{$jigsaw-progress}-bar-track-value {
+                    background: $error-default;
+
+                    .#{$jigsaw-progress}-bar-track-label-wrapper {
+                        &.#{$jigsaw-progress}-bar-track-label-right {
+                            color: $error-default;
+                        }
+                    }
+                }
+            }
+
+            .#{$jigsaw-progress}-bar-label-wrapper {
+                .#{$jigsaw-progress}-bar-icon {
                     color: $error-default;
                 }
+            }
+        }
 
-                .#{$progress-prefix-cls}-success & {
+        .#{$jigsaw-progress}-top-label-wrapper {
+            color: $error-default;
+        }
+    }
+
+    &.#{$jigsaw-progress}-success {
+        .#{$jigsaw-progress}-bar {
+            .#{$jigsaw-progress}-bar-track {
+                .#{$jigsaw-progress}-bar-track-value {
+                    background: $success-default;
+
+                    .#{$jigsaw-progress}-bar-track-label-wrapper {
+                        &.#{$jigsaw-progress}-bar-track-label-right {
+                            color: $success-default;
+                        }
+                    }
+                }
+            }
+
+            .#{$jigsaw-progress}-bar-label-wrapper {
+                .#{$jigsaw-progress}-bar-icon {
                     color: $success-default;
                 }
             }
         }
 
-        &-label-wrapper {
-            width: 40px;
-            text-align: center;
-        }
-
-        &-label {
-            padding: 2px 0;
-            color: $font-color-default;
-        }
-
-        &-icon {
-            font-size: $icon-size-sm;
-
-            .#{$progress-prefix-cls}-processing & {
-                color: $primary-default;
-            }
-
-            .#{$progress-prefix-cls}-block & {
-                color: $warning-default;
-            }
-
-            .#{$progress-prefix-cls}-error & {
-                color: $error-default;
-            }
-
-            .#{$progress-prefix-cls}-success & {
-                color: $success-default;
-            }
-        }
-    }
-
-    &-top-label-wrapper {
-        text-align: center;
-        padding-bottom: 4px;
-
-        .#{$progress-prefix-cls}-processing & {
-            color: $primary-default;
-        }
-
-        .#{$progress-prefix-cls}-block & {
-            color: $warning-default;
-        }
-
-        .#{$progress-prefix-cls}-error & {
-            color: $error-default;
-        }
-
-        .#{$progress-prefix-cls}-success & {
+        .#{$jigsaw-progress}-top-label-wrapper {
             color: $success-default;
         }
-    }
-
-    &-top-label {
-        font-size: 14px;
-    }
-
-    &-top-icon {
-        font-size: 16px;
-        margin-bottom: -4px;
-    }
-
-    &-mark {
-        padding-top: 4px;
-        display: flex;
-        justify-content: space-between;
-        color: $font-color-hint;
     }
 }

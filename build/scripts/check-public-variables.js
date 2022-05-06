@@ -11,7 +11,7 @@ if (hasError) {
 
 // checkPublicVariables('D:\\Codes\\jigsaw\\src\\jigsaw\\mobile-components\\alert\\alert.ts');
 
-function checkAll(folder) {
+function checkAll() {
     const cmpHome = path.resolve(`${__dirname}/../../src/jigsaw`);
     const cmpFolders = fs.readdirSync(cmpHome);
     cmpFolders.forEach(cmpFolder => {

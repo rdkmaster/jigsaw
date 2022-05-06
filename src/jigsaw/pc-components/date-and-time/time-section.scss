@@ -1,40 +1,43 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-time-section: #{$jigsaw-prefix}-time-section;
+$jigsaw-time-section-picker: #{$jigsaw-prefix}-time-section-picker;
+$jigsaw-week-section-picker: #{$jigsaw-prefix}-week-section-picker;
+$jigsaw-day-section-picker: #{$jigsaw-prefix}-day-section-picker;
+$jigsaw-tile: #{$jigsaw-prefix}-tile;
 
-$time-section-prefix-cls: #{$jigsaw-prefix}-time-section;
-$time-section-picker-prefix-cls: #{$jigsaw-prefix}-time-section-picker;
-$week-section-picker-prefix-cls: #{$jigsaw-prefix}-week-section-picker;
-$day-section-picker-prefix-cls: #{$jigsaw-prefix}-day-section-picker;
-$tile-prefix-cls: #{$jigsaw-prefix}-tile;
-
-.#{$time-section-prefix-cls} {
+.#{$jigsaw-time-section}-host {
     @include inline-block();
+    color: $font-color-default;
 
-    &-time {
+    .#{$jigsaw-time-section}-time {
+        display: flex;
+        flex-direction: column;
         padding-right: 8px;
 
-        &-title {
+        .#{$jigsaw-time-section}-title {
             display: block;
             font-size: 12px;
             margin-bottom: 6px;
         }
     }
 
-    &-horizontal {
+    .#{$jigsaw-time-section}-horizontal {
         display: flex;
         flex-direction: row;
     }
 }
 
-.#{$time-section-picker-prefix-cls} {
+.#{$jigsaw-time-section-picker}-host {
     @include inline-block();
+    color: $font-color-default;
 
-    &-line {
+    .#{$jigsaw-time-section-picker}-line {
         margin-bottom: 6px;
-        &.#{$time-section-picker-prefix-cls}-multiple {
+
+        &.#{$jigsaw-time-section-picker}-multiple {
             ul {
                 margin-left: 24px;
             }
-            .#{$time-section-picker-prefix-cls}-hour {
+            .#{$jigsaw-time-section-picker}-hour {
                 margin-left: 26px;
             }
         }
@@ -58,7 +61,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
                     background: $bg-hover;
                 }
 
-                &.#{$time-section-picker-prefix-cls}-selected {
+                &.#{$jigsaw-time-section-picker}-selected {
                     border: 1px solid $primary-default;
                     background: $brand-lighten;
                     z-index: $zindex-level-1;
@@ -67,7 +70,7 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
         }
     }
 
-    &-hour {
+    .#{$jigsaw-time-section-picker}-hour {
         margin-top: -2px;
 
         span {
@@ -76,36 +79,39 @@ $tile-prefix-cls: #{$jigsaw-prefix}-tile;
     }
 }
 
-.#{$week-section-picker-prefix-cls} {
+.#{$jigsaw-week-section-picker}-host {
     @include inline-block();
     min-width: 208px;
+    color: $font-color-default;
 }
 
-.#{$day-section-picker-prefix-cls} {
+.#{$jigsaw-day-section-picker}-host {
     @include inline-block();
+    color: $font-color-default;
 
-    &-wrapper {
+    .#{$jigsaw-day-section-picker}-wrapper {
         display: flex;
         width: 100%;
         min-width: 478px;
     }
 
-    &-checkbox {
+    .#{$jigsaw-day-section-picker}-checkbox {
         width: 60px;
         padding-top: 12px;
     }
 
-    &-tile {
+    .#{$jigsaw-day-section-picker}-tile {
         flex: 1;
     }
 
-    &-tooltip {
+    .#{$jigsaw-day-section-picker}-tooltip {
         padding: 6px;
     }
 }
 
-.#{$week-section-picker-prefix-cls}, .#{$day-section-picker-prefix-cls} {
-    .#{$tile-prefix-cls} {
+.#{$jigsaw-week-section-picker}-host,
+.#{$jigsaw-day-section-picker}-host {
+    .#{$jigsaw-tile}-host {
         border: none;
     }
 }

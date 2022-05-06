@@ -15,13 +15,17 @@ import {IPopupable, PopupInfo, PopupPositionType, PopupService} from "../../comm
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawCircleProgress} from "./circle-progress";
 import {LabelPosition, PreSize, ProgressBase, ProgressInitData, Status} from "./base";
+import {WingsTheme} from "../../common/common";
 
 // @dynamic
+@WingsTheme('progress.scss')
 @Component({
     selector: 'jigsaw-progress, j-progress',
     templateUrl: './progress.html',
     host: {
-        '[class.jigsaw-progress]': 'true',
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-progress-host]': 'true',
         '[class.jigsaw-progress-processing]': 'status == "processing"',
         '[class.jigsaw-progress-block]': 'status == "block"',
         '[class.jigsaw-progress-error]': 'status == "error"',
@@ -29,7 +33,6 @@ import {LabelPosition, PreSize, ProgressBase, ProgressInitData, Status} from "./
         '[class.jigsaw-progress-default]': 'preSize == "default"',
         '[class.jigsaw-progress-small]': 'preSize == "small"',
         '[class.jigsaw-progress-large]': 'preSize == "large"',
-        '[style.width]': 'width',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

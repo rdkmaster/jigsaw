@@ -21,18 +21,19 @@ import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 
+@WingsTheme('date-time-select.scss')
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `
-        <jigsaw-combo-select #comboSelect [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150"
+        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
+                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150" [textTag]="false"
                              (openChange)="_$onComboOpenChange($event)" [selectIcon]="selectIcon" [selectIconRotate]="selectIconRotate">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
@@ -44,8 +45,9 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
         </jigsaw-combo-select>
     `,
     host: {
-        '[class.jigsaw-date-time-select]': 'true',
-        '[style.min-width]': 'width'
+        '[style.min-width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-date-time-select-host]': 'true',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimeSelect), multi: true},
@@ -277,6 +279,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     public writeValue(date: WeekTime): void {
         this._date = date;
+        if (this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week) {
+            this._comboSelect.open = false;
+        }
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);
         this._propagateChange(this._date);

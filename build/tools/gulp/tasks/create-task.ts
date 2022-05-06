@@ -24,6 +24,7 @@ export function createTask(packageName: string) {
 
     const allScssGlob = join(jigsawPath, '**/*.scss');
     const allThemingStyleGlob = join(jigsawPath, 'theming/prebuilt/*.scss');
+    const allComponentThemingStyleGlob = join(jigsawCommonPath, 'core/theming/prebuilt/wings-theme/*.scss');
     const prebuiltThemeSettingsGlob = join(jigsawCommonPath, 'core/theming/prebuilt/settings/*.scss');
     const themingApiGlob = join(jigsawCommonPath, 'core/theming/theming-api.scss');
 
@@ -35,7 +36,8 @@ export function createTask(packageName: string) {
         `:build:${packageName}-all-theme-file`,
         `:build:${packageName}-bundle-theming-scss`,
         `:build:${packageName}-copy-prebuilt-theme-settings`,
-        `:build:${packageName}-copy-theming-api`
+        `:build:${packageName}-copy-theming-api`,
+        `:build:${packageName}-all-component-styles`
     ]);
 
     task(`:build:${packageName}-all-theme-file`,function () {
@@ -69,6 +71,16 @@ export function createTask(packageName: string) {
         copyFiles('./', 'README.md', releasePath);
     });
 
+    task(`:build:${packageName}-all-component-styles`,() => {
+        return src([allComponentThemingStyleGlob])
+        .pipe(gulpSass().on('error', (err: any) => {
+            console.error('Failed to build theme, detail:\n', err.stack);
+            throw err;
+        }))
+        .pipe(gulpCleanCss())
+        .pipe(dest(join(releasePath, 'prebuilt-themes', 'wings-theme')));
+    });
+
     task(`validate:check-${packageName}-bundles`, () => {
         const releaseFailures = checkReleasePackage(packageName);
 
@@ -84,6 +96,7 @@ export function createTask(packageName: string) {
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
+        ':create-component-wings-theme',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
@@ -104,7 +117,11 @@ export function createTask(packageName: string) {
     ));
 
     task(':extract-theme-variables', () => {
-        gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
+        return gulpRun(`node build/scripts/extract-theme-variables.js`, {}).exec();
+    });
+
+    task(':create-component-wings-theme', () => {
+        return gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
     });
 }
 

@@ -35,14 +35,21 @@ $font-size-base: 12px;
 $font-size-sm: $font-size-base - 2px;
 $font-size-med: $font-size-base - 1px;
 $font-size-lg: $font-size-base + 2px;
-$font-size-text-base: 12px;
+/*@public*/ $font-size-text-base: 12px;
 
 $font-title-lg: 16px;
 $font-title-med: 14px;
 $font-title-sm: 12px;
 
-/* icon size */
-$icon-size-lg: 48px;
+/**
+ * icon size
+ * $icon-size-status-lg => 表示状态（alert）
+ * $icon-size-status-sm => 表示状态（toast）
+ * $icon-size-med => 侧边导航
+ * $icon-size-sm => 页面系统图标
+ */
+$icon-size-status-lg: 48px;
+$icon-size-status-sm: 24px;
 $icon-size-med: 20px;
 $icon-size-sm: 16px;
 
@@ -84,4 +91,87 @@ $animation-duration-fast: 0.1s; // Tooltip
 // see issue https://github.com/zefoy/ngx-perfect-scrollbar/issues/121
 .ps {
     position: relative;
+}
+
+@mixin clearfix() {
+    *zoom: 1;
+    &:after {
+        clear: both;
+        content: "";
+        display: block;
+    }
+}
+
+@mixin inline-block() {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    vertical-align: middle;
+}
+
+@mixin opacity($opacity) {
+    // IE8 filter
+    $opacity-ie: ($opacity * 100);
+
+    opacity: $opacity;
+    filter: alpha(opacity=$opacity-ie);
+}
+
+@mixin line-ellipsis($width) {
+    width: $width;
+    @include line-ellipsis-style();
+}
+
+@mixin line-ellipsis-style() {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@mixin word-break() {
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+@mixin prefixer($property, $value) {
+    -webkit-#{$property}: $value;
+    -moz-#{$property}: $value;
+    -ms-#{$property}: $value;
+    -o-#{$property}: $value;
+    #{$property}: $value;
+}
+
+@mixin compatible($property, $value, $compatibleValue) {
+    #{$property}: $value;
+    @include compatibleIE($property, $compatibleValue);
+}
+
+@mixin compatibleIE($property, $value) {
+    @include ie11Hack {
+        #{$property}: $value;
+    }
+}
+
+@mixin ie11Hack() {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        @content;
+    }
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} {
+        @content;
+    }
+    @-moz-keyframes #{$name} {
+        @content;
+    }
+    @-o-keyframes #{$name} {
+        @content;
+    }
+    @-ms-keyframes #{$name} {
+        @content;
+    }
+    @keyframes #{$name} {
+        @content;
+    }
 }

@@ -1,11 +1,11 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-page: #{$jigsaw-prefix}-page;
 
-$page-prefix-cls: #{$jigsaw-prefix}-page;
-
-.#{$page-prefix-cls}-item {
-    @include inline-block();
+.#{$jigsaw-page}-item-host {
+    display: inline-flex;
     margin-right: 8px;
     vertical-align: top;
+    color: $font-color-default;
+
     span {
         @include inline-block();
         min-width: var(--height-paging);
@@ -21,19 +21,23 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         cursor: pointer;
         vertical-align: top;
         @include prefixer(transition, all 0.3s ease);
+
         &:hover {
             border-color: $brand-default;
             color: $brand-default;
         }
     }
-    &.#{$page-prefix-cls}-current span {
+
+    &.#{$jigsaw-page}-current span {
         background: $brand-lighten;
         border: 1px solid $brand-default;
         color: $brand-default;
     }
-    &.#{$page-prefix-cls}-hidden {
+
+    &.#{$jigsaw-page}-hidden {
         display: none;
     }
+
     i {
         @include inline-block();
         width: var(--height-paging);
@@ -47,6 +51,7 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
         border-radius: $border-radius-sm;
         font-style: normal;
         cursor: pointer;
+
         &:after {
             display: block;
             content: "\e6a8";
@@ -57,24 +62,27 @@ $page-prefix-cls: #{$jigsaw-prefix}-page;
             line-height: var(--height-paging);
             text-align: center;
         }
-        &.#{$page-prefix-cls}-prevs {
+
+        &.#{$jigsaw-page}-prevs {
             margin-left: 8px;
         }
-        &.#{$page-prefix-cls}-nexts {
+
+        &.#{$jigsaw-page}-nexts {
             margin-right: 8px;
         }
+
         &:hover {
             border-color: $brand-default;
-            &.#{$page-prefix-cls}-prevs:after,
-            &.#{$page-prefix-cls}-nexts:after {
+            &.#{$jigsaw-page}-prevs:after,
+            &.#{$jigsaw-page}-nexts:after {
                 color: $brand-default;
             }
 
-            &.#{$page-prefix-cls}-prevs:after {
+            &.#{$jigsaw-page}-prevs:after {
                 content: "\e4c0";
             }
 
-            &.#{$page-prefix-cls}-nexts:after {
+            &.#{$jigsaw-page}-nexts:after {
                 content: "\e4c1";
             }
         }

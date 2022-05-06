@@ -1,7 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
 import { IPopupable } from "../../service/popup.service";
 import { CommonModule } from "@angular/common";
-import { AbstractJigsawComponent } from "../../common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common";
 import { JigsawBlock, JigsawBlockModule } from "../block/block";
 
 /**
@@ -67,6 +67,7 @@ export class JigsawLoadingBase extends AbstractJigsawComponent implements IPopup
 
 }
 
+@WingsTheme('circle-loading.scss')
 @Component({
     selector: 'jigsaw-loading, j-loading',
     templateUrl: 'loading-ring.html'
@@ -84,6 +85,7 @@ export class JigsawLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('loading-font.scss')
 @Component({
     selector: 'jigsaw-font-loading, j-font-loading',
     templateUrl: 'loading-font.html'
@@ -123,6 +125,7 @@ export class JigsawFontLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('loading-bubble.scss')
 @Component({
     selector: 'jigsaw-bubble-loading, j-bubble-loading',
     templateUrl: 'loading-bubble.html'
@@ -145,6 +148,7 @@ export class JigsawBubbleLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('loading-ball.scss')
 @Component({
     selector: 'jigsaw-ball-loading, j-ball-loading',
     templateUrl: 'loading-ball.html'
@@ -164,9 +168,14 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
 
 }
 
+@WingsTheme('circle-loading.scss')
 @Component({
     selector: "jigsaw-circle-loading, j-circle-loading",
-    templateUrl: "loading-circle.html"
+    templateUrl: "loading-circle.html",
+    host: {
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-circle-loading-host]': 'true',
+    }
 })
 export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     constructor(private renderer: Renderer2, private elementRef: ElementRef) {
@@ -174,10 +183,6 @@ export class JigsawCircleLoading extends JigsawLoadingBase implements OnInit {
     }
 
     ngOnInit() {
-        this.renderer.addClass(
-            this.elementRef.nativeElement,
-            "jigsaw-circle-loading-host"
-        );
         let parent = this.renderer.parentNode(this.elementRef.nativeElement);
         let sibling = parent.querySelector('jigsaw-block');
         if (sibling){

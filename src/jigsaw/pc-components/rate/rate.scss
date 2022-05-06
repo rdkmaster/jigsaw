@@ -1,87 +1,90 @@
-@import "../../common/assets/scss/core/base";
 $jigsaw-rate: #{$jigsaw-prefix}-rate;
 
-// vars need check
-.#{$jigsaw-prefix}-rate {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: inline-block;
-    vertical-align: middle;
-    &-disabled &-star {
-        cursor: not-allowed;
-
-        &:hover {
-            transform: scale(1);
-        }
-
-        &-half {
-            .#{$jigsaw-rate}-star-first {
-                color: $danger-disabled;
-            }
-
-            &:hover {
-                .#{$jigsaw-rate}-star-first {
-                    color: $danger-disabled;
-                }
-            }
-        }
-
-        &-full {
-            .#{$jigsaw-rate}-star-second {
-                color: $danger-disabled;
-            }
-
-            &:hover {
-                .#{$jigsaw-rate}-star-second {
-                    color: $danger-disabled;
-                }
-            }
-        }
-    }
-
-    &-star {
+.#{$jigsaw-rate}-host {
+    .#{$jigsaw-rate} {
+        margin: 0;
         padding: 0;
+        list-style: none;
         display: inline-block;
-        margin: 0 4px 0 0;
-        position: relative;
-        transition: all 0.3s;
-        color: $border-color-default;
-        cursor: pointer;
+        vertical-align: middle;
 
-        &-first,
-        &-second {
-            user-select: none;
+        &.#{$jigsaw-rate}-disabled {
+            .#{$jigsaw-rate}-star {
+                cursor: not-allowed;
+
+                &:hover {
+                    transform: scale(1);
+                }
+
+                &.#{$jigsaw-rate}-star-half {
+                    .#{$jigsaw-rate}-star-first {
+                        color: $danger-disabled;
+                    }
+
+                    &:hover {
+                        .#{$jigsaw-rate}-star-first {
+                            color: $danger-disabled;
+                        }
+                    }
+                }
+
+                &.#{$jigsaw-rate}-star-full {
+                    .#{$jigsaw-rate}-star-second {
+                        color: $danger-disabled;
+                    }
+
+                    &:hover {
+                        .#{$jigsaw-rate}-star-second {
+                            color: $danger-disabled;
+                        }
+                    }
+                }
+            }
+        }
+
+        .#{$jigsaw-rate}-star {
+            padding: 0;
+            display: inline-block;
+            margin: 0 4px 0 0;
+            position: relative;
             transition: all 0.3s;
-        }
+            color: $border-color-default;
+            cursor: pointer;
 
-        &:hover {
-            transform: scale(1.1);
-        }
+            .#{$jigsaw-rate}-star-first,
+            .#{$jigsaw-rate}-star-second {
+                user-select: none;
+                transition: all 0.3s;
+            }
 
-        &-first {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 50%;
-            height: 100%;
-            overflow: hidden;
-            opacity: 0;
-        }
+            &:hover {
+                transform: scale(1.1);
+            }
 
-        &-half &-first,
-        &-half &-second {
-            opacity: 1;
-        }
+            .#{$jigsaw-rate}-star-first {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+                opacity: 0;
+            }
 
-        &-half &-first,
-        &-full &-second {
-            color: $danger-default;
-        }
+            &.#{$jigsaw-rate}-star-half .#{$jigsaw-rate}-star-first,
+            &.#{$jigsaw-rate}-star-half .#{$jigsaw-rate}-star-second {
+                opacity: 1;
+            }
 
-        &-half:hover &-first,
-        &-full:hover &-second {
-            color: $danger-default;
+            &.#{$jigsaw-rate}-star-half .#{$jigsaw-rate}-star-first,
+            &.#{$jigsaw-rate}-star-full .#{$jigsaw-rate}-star-second {
+                color: $danger-default;
+            }
+
+            &.#{$jigsaw-rate}-star-half:hover .#{$jigsaw-rate}-star-first,
+            &.#{$jigsaw-rate}-star-full:hover .#{$jigsaw-rate}-star-second {
+                color: $danger-default;
+            }
         }
     }
 }

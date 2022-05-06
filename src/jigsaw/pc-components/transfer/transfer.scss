@@ -1,164 +1,144 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-transfer: #{$jigsaw-prefix}-transfer;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+$jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-$transfer-prefix-cls: #{$jigsaw-prefix}-transfer;
-$list-prefix-cls: #{$jigsaw-prefix}-list;
-$list-option-prefix-cls: #{$jigsaw-prefix}-list-option;
+.#{$jigsaw-transfer}-host {
+    $cntr-padding-top: 4px;
+    $header-padding-bottom: 8px;
 
-.#{$transfer-prefix-cls} {
-    display: inline-block;
+    position: relative;
+    display: inline-flex;
     width: 400px;
     height: 200px;
-    position: relative;
-    &-loading {
+    color: $font-color-default;
+
+    &.#{$jigsaw-transfer}-error {
+        .#{$jigsaw-transfer}-cntr {
+            outline: 1px solid $error-default;
+        }
+    }
+
+    .#{$jigsaw-transfer}-loading {
         position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 100%;
         height: 100%;
         background: #000;
         z-index: $zindex-level-2;
         opacity: 0.6;
-        span {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            line-height: 20px;
-            font-size: 20px;
-            color: #fff;
-            left: 50%;
-            top: 50%;
-            margin-left: -10px;
-            margin-top: -10px;
-        }
     }
-    & > div {
-        transition-duration: 300ms;
-    }
-    &.#{$transfer-prefix-cls}-error > div {
-        transition-duration: 300ms;
-        border: 1px solid $error-default;
-    }
-    &-wrapper {
+
+    .#{$jigsaw-transfer}-cntr {
         display: flex;
         flex: 1 1 0;
         width: 100%;
         height: 100%;
-        background-color: $bg-component;
+        background-color: $bg-transparent;
     }
-    &-disabled {
-        cursor: not-allowed;
-        border-color: $border-color-disabled !important;
+
+    .#{$jigsaw-transfer}-disabled {
+        position: absolute;
+        border-color: $border-color-disabled;
         background-color: $bg-disabled;
         width: 100%;
         height: 100%;
         opacity: 0.6;
-        position: absolute;
+        cursor: not-allowed;
         z-index: $zindex-level-3;
     }
-    &-box {
+
+    .#{$jigsaw-transfer}-item-cntr {
+        position: relative;
+        flex: 1 1 0;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: $cntr-padding-top 8px;
         border: 1px solid $border-color-default;
         border-radius: $border-radius-base;
-        flex: 1 1 0;
-        position: relative;
-        background-color: $bg-component;
+        background-color: $bg-transparent;
         overflow: hidden;
+
+        .#{$jigsaw-transfer}-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 8px;
+
+            .#{$jigsaw-transfer}-select-all {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                width: 100%;
+                height: 32px;
+
+                .#{$jigsaw-transfer}-subTitle {
+                    margin-left: auto;
+                }
+            }
+
+            .#{$jigsaw-transfer}-search-cntr {
+                width: 100%;
+            }
+        }
+
+        .#{$jigsaw-transfer}-body {
+            height: calc(100% - 64px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom});
+
+            &.#{$jigsaw-transfer}-body-short {
+                height: calc(
+                    100% - 64px - 18px - #{$cntr-padding-top} - #{$cntr-padding-top} - #{$header-padding-bottom}
+                );
+            }
+        }
+
+        .#{$jigsaw-transfer}-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 24px;
+        }
     }
-    &-option-box {
+
+    .#{$jigsaw-transfer}-option-cntr {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-    }
-    &-option-bar {
-        border: 1px solid $brand-default;
-        background: $brand-default;
-        color: $font-color-white;
-        border-radius: $border-radius-base;
-        margin: 0 8px 4px;
-        padding: 2px 12px;
-        font-size: $font-size-base;
-        &:hover {
-            background: $brand-hover;
+
+        .jigsaw-transfer-option {
+            margin: 0 8px 4px;
+            padding: 2px 12px;
+            font-size: $font-size-base;
+            border-radius: $border-radius-base;
+            border: 1px solid $brand-default;
+            background: $brand-default;
             color: $font-color-white;
-        }
-        &:active {
-            background: $brand-active;
-            color: $font-color-white;
-        }
-    }
-    &-option-disabled {
-        cursor: not-allowed;
-        border: 1px solid $border-color-default;
-        background: $bg-disabled;
-        color: $icon-color-stress;
-        &:hover,
-        &:active {
-            background: $bg-disabled;
-            color: $icon-color-stress;
-        }
-    }
-    &-head {
-        position: relative;
-        height: 32px;
-        padding: 0 4px;
-        border-bottom: 1px solid $border-color-default;
-        &:before {
-            content: "";
-            display: inline-block;
-            vertical-align: middle;
-            height: 100%;
-        }
-    }
-    &-list-wrapper {
-        max-height: 100%;
-        &.#{$transfer-prefix-cls}-list-searchable {
-            max-height: calc(100% - #{$height-base + 16px});
-        }
-        .#{$list-prefix-cls} {
-            border: none;
-        }
-        .#{$list-option-prefix-cls} {
-            &-title {
-                min-width: 50%;
-                span.#{$transfer-prefix-cls}-middle-title {
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                }
+
+            &:hover {
+                background: $brand-hover;
+                color: $font-color-white;
             }
 
-            &-sub-title {
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                span.#{$transfer-prefix-cls}-sub-title {
-                    white-space: nowrap;
+            &:active {
+                background: $brand-active;
+                color: $font-color-white;
+            }
+
+            &.jigsaw-transfer-option-disabled {
+                border: 1px solid $border-color-default;
+                background: $bg-disabled;
+                color: $icon-color-stress;
+                cursor: not-allowed;
+
+                &:hover,
+                &:active {
+                    background: $bg-disabled;
+                    color: $icon-color-stress;
                 }
             }
-        }
-    }
-    &-search-wrapper {
-        padding: 8px;
-    }
-    &-middle-title {
-        vertical-align: middle;
-        margin-left: 4px;
-    }
-    &-right-title {
-        position: absolute;
-        top: 8px;
-        right: 8px;
-    }
-    &-list-frame {
-        display: block;
-        height: 100%;
-    }
-    &-foot {
-        height: 28px;
-        text-align: center;
-        &:before {
-            content: "";
-            display: inline-block;
-            height: 100%;
-            vertical-align: middle;
         }
     }
 }

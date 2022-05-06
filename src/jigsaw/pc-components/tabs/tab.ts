@@ -25,7 +25,7 @@ import {
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
-import {AbstractJigsawComponent, IDynamicInstantiatable} from "../../common/common";
+import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
@@ -415,14 +415,15 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 }
 
+@WingsTheme('tab.scss')
 @Component({
     selector: 'jigsaw-tab-bar, j-tab-bar, jigsaw-tabs-bar, j-tabs-bar',
     templateUrl: 'tab-bar.html',
     host: {
-        '[class.jigsaw-tabs]': 'true',
-        '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tabs-bar-host]': 'true',
         '[class.jigsaw-tabs-page]': 'tabType == "page"',
         '[class.jigsaw-tabs-editable]': 'editable'
     },
@@ -502,13 +503,15 @@ export class JigsawTabBar extends JigsawTabBase {
  * $demo = tab/update-title
  * $demo = tab/with-input
  */
+@WingsTheme('tab.scss')
 @Component({
     selector: 'jigsaw-tab, j-tab, jigsaw-tabs, j-tabs',
     templateUrl: 'tab.html',
     host: {
         '[class.jigsaw-tabs-host]': 'true',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

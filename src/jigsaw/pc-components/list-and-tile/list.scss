@@ -1,17 +1,18 @@
 $list-prefix-cls: #{$jigsaw-prefix}-list;
 
-.#{$list-prefix-cls} {
+.#{$list-prefix-cls}-host {
     @include inline-block();
     width: 300px;
     border: 1px solid $border-color-default;
     border-radius: $border-radius-base;
-    background: $bg-component;
+    background: $bg-transparent;
     position: relative;
+    
     &.#{$list-prefix-cls}-error {
         border-color: $error-default;
     }
 
-    &-disabled {
+    .#{$list-prefix-cls}-disabled {
         position: absolute;
         width: 100%;
         height: 100%;

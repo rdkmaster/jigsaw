@@ -17,8 +17,7 @@ import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-
-import {JigsawTheme} from "../core/theming/theme";
+import { JigsawTheme } from '../core/theming/theme';
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut

@@ -1,27 +1,25 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
-$nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
-
-.#{$nav-menu-prefix-cls} {
+.#{$jigsaw-nav-menu}-host {
     @include inline-block();
 
-    &-container {
+    .#{$jigsaw-nav-menu}-container {
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
-    &-items {
+    .#{$jigsaw-nav-menu}-items {
         flex: 1;
-        background: $bg-container;
+        background: $nav-navigation;
 
-        .#{$nav-menu-prefix-cls}-item {
+        .#{$jigsaw-nav-menu}-item {
             width: 100%;
             min-width: 40px;
-            color: $font-color-default;
+            color: $nav-color;
 
-            .#{$nav-menu-prefix-cls}-item-top {
+            .#{$jigsaw-nav-menu}-item-top {
                 display: flex;
                 align-items: center;
                 position: relative;
@@ -30,47 +28,33 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 height: $height-huge;
                 cursor: pointer;
 
-                i:not(.#{$nav-menu-prefix-cls}-item-arrow) {
+                i:not(.#{$jigsaw-nav-menu}-item-arrow) {
                     display: flex;
                     justify-content: center;
                     align-items: center;
                     width: 40px;
                     height: 100%;
-                    margin-right: 10px;
+                    font-size: 18px;
                     text-align: center;
                 }
 
                 &:hover {
-                    background: $bg-hover;
+                    background: $nav-hover;
                 }
 
-                .#{$nav-menu-prefix-cls}-item-arrow {
+                .#{$jigsaw-nav-menu}-item-arrow {
                     position: absolute;
                     right: 16px;
                     @include prefixer(transition, all 0.3s ease);
                 }
             }
 
-            .#{$nav-menu-prefix-cls}-submenus {
+            .#{$jigsaw-nav-menu}-submenus {
                 border: none;
-                background: $bg-gray;
+                background: $nav-navigation-darken;
                 overflow: hidden;
 
-                &-actived {
-                    .#{$nav-menu-prefix-cls}-sub-item:first-child {
-                        border-top-width: 1px;
-                        border-top-style: solid;
-                        border-top-color: $border-color-default;
-                    }
-
-                    .#{$nav-menu-prefix-cls}-sub-item:last-child {
-                        border-bottom-width: 1px;
-                        border-bottom-style: solid;
-                        border-bottom-color: $border-color-default;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-sub-item {
+                .#{$jigsaw-nav-menu}-sub-item {
                     position: relative;
                     height: 40px;
                     display: flex;
@@ -87,19 +71,19 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                         width: 14px;
                         height: 100%;
                         margin-right: 10px;
+                        font-size: 18px;
                         text-align: center;
                     }
 
                     &:hover {
-                        background: $bg-hover;
+                        background: $nav-hover;
                     }
 
-                    &.#{$nav-menu-prefix-cls}-sub-item-selected {
-                        background-color: $bg-body;
-                        color: $brand-default;
+                    &.#{$jigsaw-nav-menu}-sub-item-selected {
+                        background-color: $nav-active;
                     }
 
-                    &.#{$nav-menu-prefix-cls}-sub-item-collapsed {
+                    &.#{$jigsaw-nav-menu}-sub-item-collapsed {
                         width: 40px !important;
                         padding-left: 0;
 
@@ -115,41 +99,40 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
             }
 
-            .#{$nav-menu-prefix-cls}-item-selected-top {
-                background-color: $bg-body;
-                color: $brand-default;
+            .#{$jigsaw-nav-menu}-item-selected-top {
+                background-color: $nav-active;
             }
         }
 
-        .#{$nav-menu-prefix-cls}-item-collapsed {
+        .#{$jigsaw-nav-menu}-item-collapsed {
             width: 40px !important;
 
             span {
                 display: none;
             }
 
-            .#{$nav-menu-prefix-cls}-item-selected {
-                background-color: $bg-body !important;
+            .#{$jigsaw-nav-menu}-item-selected {
+                background-color: $nav-navigation !important;
             }
 
-            .#{$nav-menu-prefix-cls}-item-top {
-                i:not(.#{$nav-menu-prefix-cls}-item-arrow) {
+            .#{$jigsaw-nav-menu}-item-top {
+                i:not(.#{$jigsaw-nav-menu}-item-arrow) {
                     margin-right: 0;
                 }
             }
         }
     }
 
-    &-items-inline {
+    .#{$jigsaw-nav-menu}-items-inline {
         flex: 1;
-        background: $bg-component;
+        background: $bg-transparent;
 
-        .#{$nav-menu-prefix-cls}-item {
+        .#{$jigsaw-nav-menu}-item {
             width: 100%;
             min-width: 40px;
             color: $font-color-default;
 
-            .#{$nav-menu-prefix-cls}-item-top {
+            .#{$jigsaw-nav-menu}-item-top {
                 position: relative;
                 font-size: 12px;
                 display: flex;
@@ -169,21 +152,17 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                     background: $bg-hover;
                 }
 
-                &.#{$nav-menu-prefix-cls}-item-selected-top {
-                    color: $brand-default;
-                }
-
-                .#{$nav-menu-prefix-cls}-item-arrow {
+                .#{$jigsaw-nav-menu}-item-arrow {
                     position: absolute;
                     right: 16px;
                     @include prefixer(transition, all 0.3s ease);
                 }
             }
 
-            .#{$nav-menu-prefix-cls}-submenus {
+            .#{$jigsaw-nav-menu}-submenus {
                 overflow: hidden;
 
-                .#{$nav-menu-prefix-cls}-sub-item {
+                .#{$jigsaw-nav-menu}-sub-item {
                     position: relative;
                     height: 32px;
                     display: flex;
@@ -199,34 +178,29 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
                 }
             }
 
-            .#{$nav-menu-prefix-cls}-item-selected {
-                color: $brand-default;
+            .#{$jigsaw-nav-menu}-item-selected-top {
+                background: $bg-component;
             }
 
-            .#{$nav-menu-prefix-cls}-item-selected-top {
-                background: $bg-body;
-            }
-
-            .#{$nav-menu-prefix-cls}-sub-item-selected {
-                color: $brand-default;
-                background: $bg-body;
+            .#{$jigsaw-nav-menu}-sub-item-selected {
+                background: $bg-component;
             }
         }
     }
 
-    &-items &-item-inactive,
-    &-items-inline &-item-inactive {
-        > .#{$nav-menu-prefix-cls}-item-top {
-            .#{$nav-menu-prefix-cls}-item-arrow {
+    .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item-inactive,
+    .#{$jigsaw-nav-menu}-items-inline .#{$jigsaw-nav-menu}-item-inactive {
+        > .#{$jigsaw-nav-menu}-item-top {
+            .#{$jigsaw-nav-menu}-item-arrow {
                 @include prefixer(transform, rotate(180deg));
             }
         }
     }
 
-    &-items &-item &-item-selected-top:before,
-    &-items &-item &-sub-item-selected:before,
-    &-detail &-item-selected-before:before,
-    &-detail &-sub-item-selected:before {
+    .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-item-selected-top:before,
+    .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-sub-item-selected:before,
+    .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-item-selected-before:before,
+    .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-sub-item-selected:before {
         height: 100%;
         content: "";
         position: absolute;
@@ -236,18 +210,20 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         background-color: $brand-default;
     }
 
-    &-toggle-button {
-        cursor: pointer;
-        width: 100%;
-        min-width: 40px;
-        height: 40px;
-        background: $bg-container;
+    .#{$jigsaw-nav-menu}-toggle-button {
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        border-top: 1px solid $border-color-default;
+        width: 100%;
+        min-width: 40px;
+        height: 40px;
+        background: $nav-navigation;
+        border-top: 1px solid $nav-border;
+        color: $nav-color;
+        cursor: pointer;
+
         &:hover {
-            color: $brand-default;
+            color: $nav-color-active;
         }
 
         span {
@@ -255,395 +231,79 @@ $nav-menu-prefix-cls: #{$jigsaw-prefix}-nav-menu;
         }
     }
 
-    &-toggle-button &-toggle-button-arrow {
+    .#{$jigsaw-nav-menu}-toggle-button .#{$jigsaw-nav-menu}-toggle-button-arrow {
         font-size: 16px;
         @include prefixer(transition, all 0.3s ease);
     }
 
-    &-toggle-button-collapsed {
+    .#{$jigsaw-nav-menu}-toggle-button-collapsed {
         justify-content: center;
         width: 40px;
 
-        .#{$nav-menu-prefix-cls}-toggle-button-arrow {
+        .#{$jigsaw-nav-menu}-toggle-button-arrow {
             @include prefixer(transform, rotate(180deg));
         }
     }
 
-    &.#{$nav-menu-prefix-cls}-default {
-        .#{$nav-menu-prefix-cls}-items {
-            background: $bg-container;
-
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    background: $bg-gray;
-
-                    &-actived {
-                        .#{$nav-menu-prefix-cls}-sub-item:first-child {
-                            border-top-color: $border-color-default;
-                        }
-
-                        .#{$nav-menu-prefix-cls}-sub-item:last-child {
-                            border-bottom-color: $border-color-default;
-                        }
-                    }
-
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover;
-                        }
-
-                        &.#{$nav-menu-prefix-cls}-sub-item-selected {
-                            background-color: $bg-body;
-                            color: $brand-default;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background-color: $bg-body;
-                    color: $brand-default;
-                }
-            }
-
-            .#{$nav-menu-prefix-cls}-item-collapsed {
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    background-color: $bg-body !important;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items-inline {
-            background: $bg-component;
-
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover;
-                    }
-
-                    &.#{$nav-menu-prefix-cls}-item-selected-top {
-                        color: $brand-default;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    color: $brand-default;
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background: $bg-body;
-                }
-
-                .#{$nav-menu-prefix-cls}-sub-item-selected {
-                    color: $brand-default;
-                    background: $bg-body;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-item-selected-top:before,
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
-            background-color: $brand-default;
-        }
-
-        .#{$nav-menu-prefix-cls}-toggle-button {
-            background: $bg-container;
-            border-top: 1px solid $border-color-default;
-            &:hover {
-                color: $brand-default;
-            }
-        }
-    }
-
-    &.#{$nav-menu-prefix-cls}-light {
-        .#{$nav-menu-prefix-cls}-items {
-            background: $bg-container-light;
-
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-light;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover-light;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    background: $bg-gray-light;
-
-                    &-actived {
-                        .#{$nav-menu-prefix-cls}-sub-item:first-child {
-                            border-top-color: $border-color-default-light;
-                        }
-
-                        .#{$nav-menu-prefix-cls}-sub-item:last-child {
-                            border-bottom-color: $border-color-default-light;
-                        }
-                    }
-
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover-light;
-                        }
-
-                        &.#{$nav-menu-prefix-cls}-sub-item-selected {
-                            background-color: $bg-body-light;
-                            color: $brand-default-light;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background-color: $bg-body-light;
-                    color: $brand-default-light;
-                }
-            }
-
-            .#{$nav-menu-prefix-cls}-item-collapsed {
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    background-color: $bg-body-light !important;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items-inline {
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-light;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover-light;
-                    }
-
-                    &.#{$nav-menu-prefix-cls}-item-selected-top {
-                        color: $brand-default-light;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover-light;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    color: $brand-default-light;
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background: $bg-body-light;
-                }
-
-                .#{$nav-menu-prefix-cls}-sub-item-selected {
-                    color: $brand-default-light;
-                    background: $bg-body-light;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-item-selected-top:before,
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
-            background-color: $brand-default-light;
-        }
-
-        .#{$nav-menu-prefix-cls}-toggle-button {
-            background: $bg-container-light;
-            border-top: 1px solid $border-color-default-light;
-            &:hover {
-                color: $brand-default-light;
-            }
-        }
-    }
-
-    &.#{$nav-menu-prefix-cls}-dark {
-        .#{$nav-menu-prefix-cls}-items {
-            background: $bg-container-dark;
-
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-dark;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover-dark;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    background: $bg-gray-dark;
-
-                    &-actived {
-                        .#{$nav-menu-prefix-cls}-sub-item:first-child {
-                            border-top-color: $border-color-default-dark;
-                        }
-
-                        .#{$nav-menu-prefix-cls}-sub-item:last-child {
-                            border-bottom-color: $border-color-default-dark;
-                        }
-                    }
-
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover-dark;
-                        }
-
-                        &.#{$nav-menu-prefix-cls}-sub-item-selected {
-                            background-color: $bg-hover-dark;
-                            color: $brand-default-dark;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background-color: $bg-body-dark;
-                    color: $brand-default-dark;
-                }
-            }
-
-            .#{$nav-menu-prefix-cls}-item-collapsed {
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    background-color: $bg-body-dark !important;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items-inline {
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-dark;
-
-                .#{$nav-menu-prefix-cls}-item-top {
-                    &:hover {
-                        background: $bg-hover-dark;
-                    }
-
-                    &.#{$nav-menu-prefix-cls}-item-selected-top {
-                        color: $brand-default-dark;
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-submenus {
-                    .#{$nav-menu-prefix-cls}-sub-item {
-                        &:hover {
-                            background: $bg-hover-dark;
-                        }
-                    }
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected {
-                    color: $brand-default-dark;
-                }
-
-                .#{$nav-menu-prefix-cls}-item-selected-top {
-                    background: $bg-body-dark;
-                }
-
-                .#{$nav-menu-prefix-cls}-sub-item-selected {
-                    color: $brand-default-dark;
-                    background: $bg-body-dark;
-                }
-            }
-        }
-
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-item-selected-top:before,
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
-            background-color: $brand-default-dark;
-        }
-
-        .#{$nav-menu-prefix-cls}-toggle-button {
-            background: $bg-container-dark;
-            border-top: 1px solid $border-color-default-dark;
-            color: $font-color-default-dark;
-
-            &:hover {
-                color: $brand-default;
-            }
-        }
-    }
-
-    &.#{$nav-menu-prefix-cls}-gray {
-        .#{$nav-menu-prefix-cls}-items {
+    &.#{$jigsaw-nav-menu}-gray {
+        .#{$jigsaw-nav-menu}-items {
             background: #516273;
 
-            .#{$nav-menu-prefix-cls}-item {
-                color: $font-color-default-dark;
+            .#{$jigsaw-nav-menu}-item {
+                color: $font-color-white;
 
-                .#{$nav-menu-prefix-cls}-item-top {
+                .#{$jigsaw-nav-menu}-item-top {
                     &:hover {
                         background: #212a33;
                     }
                 }
 
-                .#{$nav-menu-prefix-cls}-submenus {
+                .#{$jigsaw-nav-menu}-submenus {
                     background: #3c4c5a;
 
                     &-actived {
-                        .#{$nav-menu-prefix-cls}-sub-item:first-child,
-                        .#{$nav-menu-prefix-cls}-sub-item:last-child {
+                        .#{$jigsaw-nav-menu}-sub-item:first-child,
+                        .#{$jigsaw-nav-menu}-sub-item:last-child {
                             border: none;
                         }
                     }
 
-                    .#{$nav-menu-prefix-cls}-sub-item {
+                    .#{$jigsaw-nav-menu}-sub-item {
                         &:hover {
                             background: #212a33;
                         }
 
-                        &.#{$nav-menu-prefix-cls}-sub-item-selected {
+                        &.#{$jigsaw-nav-menu}-sub-item-selected {
                             background-color: #212a33;
-                            color: $font-color-default-dark;
+                            color: $font-color-white;
                         }
                     }
                 }
 
-                .#{$nav-menu-prefix-cls}-item-selected-top {
+                .#{$jigsaw-nav-menu}-item-selected-top {
                     background-color: #212a33;
-                    color: $font-color-default-dark;
+                    color: $font-color-white;
                 }
             }
 
-            .#{$nav-menu-prefix-cls}-item-collapsed {
-                .#{$nav-menu-prefix-cls}-item-selected {
+            .#{$jigsaw-nav-menu}-item-collapsed {
+                .#{$jigsaw-nav-menu}-item-selected {
                     background-color: #516273 !important;
                 }
             }
         }
 
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-item-selected-top:before,
-        .#{$nav-menu-prefix-cls}-items .#{$nav-menu-prefix-cls}-item .#{$nav-menu-prefix-cls}-sub-item-selected:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-item-selected-before:before,
-        .#{$nav-menu-prefix-cls}-detail .#{$nav-menu-prefix-cls}-sub-item-selected:before {
-            background-color: $brand-default-dark;
+        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-item-selected-top:before,
+        .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item .#{$jigsaw-nav-menu}-sub-item-selected:before,
+        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-item-selected-before:before,
+        .#{$jigsaw-nav-menu}-detail .#{$jigsaw-nav-menu}-sub-item-selected:before {
+            background-color: #029af2;
         }
 
-        .#{$nav-menu-prefix-cls}-toggle-button {
+        .#{$jigsaw-nav-menu}-toggle-button {
             background: #516273;
             border-top: 1px solid rgba(221, 221, 221, 0.5);
-            color: $font-color-default-dark;
+            color: $font-color-white;
         }
     }
 }

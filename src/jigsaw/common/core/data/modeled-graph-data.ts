@@ -676,7 +676,7 @@ export class GaugeSeries extends SeriesBase {
     public more?: any;
 
     public center?: number[] = [50, 50];
-    public radius?: number = 75;
+    public radius?: number = 90;
     public startAngle?: number = 225;
     public endAngle?: number = -45;
     public min?: number = 0;
@@ -717,7 +717,7 @@ export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
         name: '',
         type: 'gauge',
         center: ['50%', '50%'],
-        radius: '75%',
+        radius: '90%',
         startAngle: 225,
         endAngle: -45,
         min: 0,
@@ -883,8 +883,8 @@ export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
     };
 
     radarItem: RadarItem = {
-        radius: '60%', //radius 在awade中给数组，不识别
-        center: ['50%', '50%'],
+        radius: '70%', //radius 在awade中给数组，不识别
+        center: ['50%', '58%'],
         indicator: []
     };
 

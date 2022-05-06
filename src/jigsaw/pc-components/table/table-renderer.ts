@@ -13,13 +13,14 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
 import {_getColumnIndex, AdditionalTableData} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch/index";
+import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
+import {JigsawProgressModule} from "../progress/progress";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { DragDropInfo } from "../../common/directive/dragdrop/types";
-import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
+import {DragDropInfo} from "../../common/directive/dragdrop/types";
+import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -51,6 +52,12 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
      */
     @Input()
     public initData: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public theme: string;
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
@@ -132,6 +139,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 }
 
 /**
+ * @internal
  * 默认表格渲染组件
  */
 @Component({
@@ -141,10 +149,14 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 export class DefaultCellRenderer extends TableCellRendererBase {
 }
 
+/**
+ * @internal
+ * 表格密码单元格渲染组件
+ */
 @Component({
     template: `
-        <jigsaw-input class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
-        [password]="true" [clearable]="false" [disabled]="true" (blur)="dispatchChangeEvent(cellData)">
+        <jigsaw-input [theme]="theme" class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
+                      [password]="true" [clearable]="false" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
     styles: [`
@@ -175,24 +187,28 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 }
 
 /**
+ * @internal
  * 编辑单元格渲染器
  */
 @Component({
     template: `
-        <jigsaw-input #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+        <jigsaw-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                       (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password"
-                      [preIcon]="_$preIcon" [clearable]="_$clearable" >
+                      [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-    constructor( protected _injector: Injector) {
+    constructor(protected _injector: Injector, private _renderer: Renderer2) {
         super(_injector);
     }
 
     @ViewChild(JigsawInput)
-    protected input: JigsawInput;
+    private _input: JigsawInput;
+
+    @ViewChild('input', {read: ElementRef})
+    private _inputEl: ElementRef;
 
     public get _$placeholder() {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
@@ -214,17 +230,38 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
         return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
+    public get _$disabled() {
+        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof this.initData.disabled == 'function' ?
+            !!this.initData.disabled(this.tableData, this.row, this.column) : !!this.initData.disabled : false;
+    }
+
+    private _removeListener: Function;
+
     ngAfterViewInit() {
-        this.input.focus();
+        if (this._$disabled) {
+            this._inputEl.nativeElement.focus();
+            this._removeListener = this._renderer.listen(this._inputEl.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
+        } else {
+            this._input.focus();
+        }
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._removeListener) {
+            this._removeListener();
+            this._removeListener = null;
+        }
     }
 }
 
 /**
+ * @internal
  * 编辑单元格自动完成渲染器
  */
 @Component({
     template: `
-        <jigsaw-auto-complete-input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
+        <jigsaw-auto-complete-input [theme]="theme" [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
                                     (blur)="dispatchChangeEvent(cellData)" [data]="_$dropDownData"
                                     [filterOnFocus]="false"
                                     [maxDropDownHeight]="_$maxDropDownHeight"
@@ -262,11 +299,12 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
 }
 
 /**
+ * @internal
  * 编辑单元格数字输入渲染器
  */
 @Component({
     template: `
-        <jigsaw-numeric-input #input [(value)]="cellData" width="100%" height="28px"
+        <jigsaw-numeric-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px"
                               [placeholder]="_$placeholder"
                               (blur)="dispatchChangeEvent(cellData)" [min]="_$min" [max]="_$max" [step]="_$step">
         </jigsaw-numeric-input>
@@ -299,11 +337,12 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 }
 
 /**
+ * @internal
  * head checkbox renderer
  */
 @Component({
     template: `
-        <jigsaw-checkbox [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
+        <jigsaw-checkbox [theme]="theme" [(checked)]="checked" [disabled]="_$disabled" [valid]="_$valid"
                          [title]="_$title" mode="minimalist">
         </jigsaw-checkbox>`,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -311,13 +350,15 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
 export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+    constructor(private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_injector);
     }
 
     private _initDataJson: any;
+
+    private _realColumn: number;
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
@@ -344,16 +385,34 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         this._checked = value;
         this.targetData.data.forEach((row, index) => {
             row[this.column] = value;
-            if (this.targetData instanceof AdditionalTableData) {
+            if (this.targetData instanceof AdditionalTableData && !this._isCheckboxDisabled(index, this._realColumn)) {
                 this.targetData.touchValueByRow(this.field, index, value);
             }
         });
         this.targetData.refresh();
     }
 
+    private _isCheckboxDisabled(rowIndex: number, columnIndex: number): boolean {
+        if (!this.hostInstance || !this.hostInstance._rowElementRefs || !this.hostInstance._rowElementRefs._results || !this.hostInstance._rowElementRefs._results[rowIndex]) {
+            return false;
+        }
+        const checkboxEle = this.hostInstance._rowElementRefs._results[rowIndex].nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host')
+        return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
+    }
+
+    private _getRealColumnIndex(element: ElementRef): void {
+        const td = element.nativeElement.closest('td');
+        const tds = Array.from(element.nativeElement.closest('tr').querySelectorAll(':scope > td'));
+        this._realColumn = tds.findIndex(item => item === td);
+    }
+
     protected onDataRefresh(): void {
+        this._getRealColumnIndex(this._elementRef);
         let type = 0;
         this.targetData.data.forEach((row, index) => {
+            if (this._isCheckboxDisabled(index, this._realColumn)) {
+                return;
+            }
             let value = this.targetData instanceof AdditionalTableData ?
                 this.targetData.getTouchedValueByRow(this.field, index) : undefined;
             value = CommonUtils.isDefined(value) ? value : !!row[this.column];
@@ -376,6 +435,9 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 }
 
+/**
+ * @internal
+ */
 export class TableCellToggleRendererBase extends TableCellRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
@@ -459,11 +521,12 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 }
 
 /**
+ * @internal
  * cell checkbox renderer
  */
 @Component({
     template: `
-        <jigsaw-checkbox [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
+        <jigsaw-checkbox [theme]="theme" [checked]="checked" [disabled]="_$disabled" [valid]="_$valid"
                          mode="minimalist" (checkedChange)="onChange($event)">
         </jigsaw-checkbox>
     `,
@@ -471,26 +534,28 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 })
 export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-        protected _injector: Injector, protected _zone: NgZone) {
+                protected _injector: Injector, protected _zone: NgZone) {
         super(_changeDetectorRef, _injector, _zone);
     }
 }
 
 /**
+ * @internal
  * switch renderer
  */
 @Component({
     template: `
-        <j-switch [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
+        <j-switch [theme]="theme" [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
                   (checkedChange)="onChange($event)">
         </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-        protected _injector: Injector, protected _zone: NgZone) {
+                protected _injector: Injector, protected _zone: NgZone) {
         super(_changeDetectorRef, _injector, _zone);
     }
+
     /**
      * @internal
      */
@@ -499,16 +564,49 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
     }
 }
 
+/**
+ * @internal
+ * cell Progress renderer
+ */
+@Component({
+    template: `
+        <j-progress [theme]="theme" [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
+                    [animate]="_$animate" [status]="_$status"></j-progress>
+    `,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellProgressRenderer extends TableCellRendererBase {
+    constructor(protected _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector, protected _zone: NgZone) {
+        super(_injector);
+    }
+
+    public get _$animate() {
+        return this.initData?.animate || '';
+    }
+
+    public get _$status() {
+        return this.initData?.status || 'processing';
+    }
+
+    public get _$labelPosition() {
+        return this.initData?.labelPosition || 'none';
+    }
+}
+
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
 /**
+ * @internal
  * Select renderer
  */
 // @dynamic
 @Component({
     template: `
-        <jigsaw-select [value]="selected" [data]="data" height="28px"
+        <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px"
                        (valueChange)="_$handleValueChange($event)"
                        [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
@@ -517,16 +615,16 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     `,
     styles: [
         `
-        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
-            min-height: 28px;
-            height: 28px;
-            border-color: transparent;
-        }
+            .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
+                min-height: 28px;
+                height: 28px;
+                border-color: transparent;
+            }
 
-        .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
-            min-height: 26px;
-            height: 26px;
-        }
+            .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
+                min-height: 26px;
+                height: 26px;
+            }
         `
     ],
     encapsulation: ViewEncapsulation.None,
@@ -640,6 +738,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
 export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, data: string };
 
+/**
+ * @internal
+ */
 @Component({
     template: `
         <div class="jigsaw-table-tree-cell">
@@ -655,10 +756,10 @@ export type TreeTableCellData = { id: string, open: boolean, isParent: boolean, 
     `,
     styles: [
         `
-        .jigsaw-table-tree-cell {
-            justify-content: flex-start;
-            margin-left: 8px;
-        }
+            .jigsaw-table-tree-cell {
+                justify-content: flex-start;
+                margin-left: 8px;
+            }
         `
     ],
 })
@@ -667,45 +768,47 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
-        return (this.cellData.id.length - 1) * 20 + 'px';
+        return (this.cellData.id.split("-").length - 2) * 20 + 'px';
     }
 
     /**
      * @internal
      */
     public _$toggleOpenNode() {
-        const indexes = this.cellData.id.split('');
+        const indexes = this.cellData.id.split('-');
+        indexes.shift();
         this.tableData.toggleOpenNode(indexes, !this.cellData.open);
     }
 }
 
-/*
+/**
+ * @internal
  * 换行
- * */
+ */
 @Component({
     template: `
         <div class="jigsaw-table-option-box"
-            jigsaw-draggable
-            jigsaw-droppable
-            [title]="_$title"
-            (jigsawDragStart)="_$dragStartHandle($event)"
-            (jigsawDragEnd)="_$dragEndHandle()">
+             jigsaw-draggable
+             jigsaw-droppable
+             [title]="_$title"
+             (jigsawDragStart)="_$dragStartHandle($event)"
+             (jigsawDragEnd)="_$dragEndHandle()">
             <span class="drop-top"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
             </span>
             <span class="drop-mid"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
                 <i [class]="_$icon"></i>
                 <p>{{_$label}}</p>
             </span>
             <span class="drop-bottom"
-                jigsaw-droppable
-                (jigsawDragEnter)="_$dragEnterHandle($event)"
-                (jigsawDrop)="_$dropHandle($event)">
+                  jigsaw-droppable
+                  (jigsawDragEnter)="_$dragEnterHandle($event)"
+                  (jigsawDrop)="_$dropHandle($event)">
             </span>
         </div>
     `
@@ -824,7 +927,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     ngAfterViewInit() {
-        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll( "tr" );
+        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll("tr");
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
     }
 }
@@ -833,11 +936,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
-        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow
+        TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow,
+        TableCellProgressRenderer
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
-        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule
+        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule
     ]
 })
 export class JigsawTableRendererModule {

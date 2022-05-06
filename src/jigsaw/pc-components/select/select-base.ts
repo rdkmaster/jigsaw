@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild, Renderer2, ElementRef} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
@@ -264,6 +264,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
 
         this._value = newValue;
+        this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
@@ -274,6 +275,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._changeDetector.detectChanges();
         })
     }
+
+    /**
+     * 设置select的size大小
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public size: "small" | "medium" | "large" = "large";
 
     /**
      * 选择结果发生变化时，向外面发送事件
@@ -477,6 +486,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public remove: EventEmitter<any> = new EventEmitter<any>();
 
+    @Output()
+    public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -506,9 +518,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$onComboOpenChange(optionState: boolean) {
+    public _$onComboOpenChange(openState: boolean) {
+        this.openChange.emit(openState);
         this._onTouched();
-        if (optionState || !this.searchable) return;
+        if (openState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
     }
@@ -555,7 +568,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 export type GroupSelectOption = {
     data: ArrayCollection<SelectOption>
 }
-
+@Directive()
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * 设置组名的显示字段
@@ -652,6 +665,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             return;
         }
         if (CommonUtils.isUndefined(newValue)) {
+            this.runMicrotask(() => {
+                this._$handleClearable();
+            })
             return;
         }
         if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
@@ -673,6 +689,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             if (emit) {
                 this.valueChange.emit(this.value);
             }
+            this._propagateChange(this.value);
+            this._changeDetector.detectChanges();
             this._$checkSelectAll();
         });
     }

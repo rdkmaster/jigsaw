@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
+import {Subscription} from 'rxjs';
 import {
     AdditionalColumnDefine,
-    ColumnDefine, DataFilterInfo,
+    ColumnDefine,
     PageableTreeTableData,
     TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer,
@@ -16,6 +17,8 @@ export class TreeTableDemoComponent {
 
     public treeTableData: TreeTableData;
     public localPageableTreeTableData: PageableTreeTableData;
+    private _removeTreeNodeOpenSubscription1: Subscription;
+    private _removeTreeNodeOpenSubscription2: Subscription;
 
     getRow(level: number) {
         return Array.from(new Array(4).keys()).map(num => `cell${level}-${num}`)
@@ -39,7 +42,17 @@ export class TreeTableDemoComponent {
                                 {data: this.getRow(111)},
                                 {data: this.getRow(112)},
                                 {data: this.getRow(113)},
-                                {data: this.getRow(114)}
+                                {data: this.getRow(114)},
+                                {data: this.getRow(115)},
+                                {data: this.getRow(116)},
+                                {data: this.getRow(117)},
+                                {data: this.getRow(118)},
+                                {data: this.getRow(119)},
+                                {data: this.getRow(120)},
+                                {data: this.getRow(121)},
+                                {data: this.getRow(122)},
+                                {data: this.getRow(123)},
+                                {data: this.getRow(124)}
                             ]
                         },
                         {
@@ -94,6 +107,10 @@ export class TreeTableDemoComponent {
                 {isParent: true, data: this.getRow(3)}
             ]
         });
+
+        this._removeTreeNodeOpenSubscription1 = this.treeTableData.nodeOpenChange.subscribe(param => {
+            console.log('tree node open change: ', param);
+        })
 
         this.localPageableTreeTableData = new PageableTreeTableData();
         this.localPageableTreeTableData.pagingInfo.pageSize = 5;
@@ -168,6 +185,10 @@ export class TreeTableDemoComponent {
                 {isParent: true, data: this.getRow(3)}
             ]
         });
+
+        this._removeTreeNodeOpenSubscription2 = this.localPageableTreeTableData.nodeOpenChange.subscribe(param => {
+            console.log('tree node open change: ', param);
+        })
     }
 
     columns: ColumnDefine[] = [
@@ -193,13 +214,23 @@ export class TreeTableDemoComponent {
 
     search($event) {
         this.localPageableTreeTableData.filter($event, ['field1']);
-        //this.localPageableTreeTableData.filter(new DataFilterInfo($event, ['field1']));
     }
 
     searchForRequire() {
         this.localPageableTreeTableData.filter((value, index, arr) => {
             return parseInt(value[1].split('-')[0].replace('cell', '')) < 100
         });
+    }
+
+    ngOnDestroy() {
+        if (this._removeTreeNodeOpenSubscription1) {
+            this._removeTreeNodeOpenSubscription1.unsubscribe();
+            this._removeTreeNodeOpenSubscription1 = null;
+        }
+        if (this._removeTreeNodeOpenSubscription2) {
+            this._removeTreeNodeOpenSubscription2.unsubscribe();
+            this._removeTreeNodeOpenSubscription2 = null;
+        }
     }
 
     // ====================================================================

@@ -16,7 +16,7 @@ import {NavigationEnd, Router, RouterModule} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 
 type CompoundedBreadcrumbData = string | BreadcrumbNode | (string | BreadcrumbNode)[];
 
@@ -46,13 +46,13 @@ export type BreadcrumbNode = {
 
 export type BreadcrumbGenerator = (routeNode: string) => CompoundedBreadcrumbData;
 
+@WingsTheme('breadcrumb.scss')
 @Component({
     selector: "jigsaw-breadcrumb, j-breadcrumb",
     templateUrl: "breadcrumb.html",
     host: {
-        "[class.jigsaw-breadcrumb]": "true",
-        "[class.jigsaw-breadcrumb-light]": 'theme == "light"',
-        "[class.jigsaw-breadcrumb-dark]": 'theme == "dark"',
+        "[attr.data-theme]": "theme",
+        "[class.jigsaw-breadcrumb-host]": "true",
         "[class.jigsaw-breadcrumb-inner]": 'theme == "inner"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -82,12 +82,6 @@ export class JigsawBreadcrumb extends AbstractJigsawComponent implements OnDestr
      */
     @Input()
     public generatorContext: any;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public theme: "light" | "dark" | "inner" = "light";
 
     /**
      * 超过这个值的时候面包屑会折叠中间的部分

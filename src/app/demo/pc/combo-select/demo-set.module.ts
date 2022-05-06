@@ -12,14 +12,12 @@ import {ComboSelectSetWidthDemoModule} from "./set-width/demo.module";
 import {ComboSelectAutoCompleteDemoModule} from "./searchable/demo.module";
 import {ComboSelectFullModule} from "./full/demo.module";
 import {ComboSelectTriggerDemoModule} from "./trigger/demo.module";
-import {ComboSelectSelectIconDemoModule} from "./select-icon/demo.module";
 
 import {ComboSelectChangeTriggerDemo} from "./events/demo.component";
 import {ComboSelectMultipleDemo} from "./multiple/demo.component";
 import {ComboSelectAutoWidthDemo} from "./auto-width/demo.component";
 import {ComboSelectLabelFieldDemo} from "./label-field/demo.component";
 import {ComboSelectChangeDemo} from "./change/demo.component";
-import {ComboSelectSelectIconDemo} from "./select-icon/demo.component";
 import {OpenComboSelectDemo} from "./open/demo.component";
 import {DisabledComboSelectDemo} from "./disable/demo.component";
 import {ComboSelectAutoCompleteDemo} from "./searchable/demo.component";
@@ -29,6 +27,10 @@ import {ComboSelectFullComponent} from "./full/demo.component";
 import {ComboSelectTriggerDemo} from "./trigger/demo.component";
 import {ComboSelectMaxHeightDemo} from "./max-height/demo.component";
 import {ComboSelectMaxHeightDemoModule} from "./max-height/demo.module";
+import { ComboSelectValidDemoComponent } from './valid/demo.component';
+import { ComboSelectValidDemoModule } from './valid/demo.module';
+import { ComboSelectTextTagDemoModule } from './text-tag/demo.module';
+import { ComboSelectTextTagDemoComponent } from './text-tag/demo.component';
 
 export const routerConfig = [
     {
@@ -71,7 +73,10 @@ export const routerConfig = [
         path: 'max-height', component: ComboSelectMaxHeightDemo
     },
     {
-        path: 'select-icon', component: ComboSelectSelectIconDemo
+        path: 'valid', component: ComboSelectValidDemoComponent
+    },
+    {
+        path: 'text-tag', component: ComboSelectTextTagDemoComponent
     }
 ];
 
@@ -80,7 +85,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         ComboSelectAutoWidthDemoModule,
         ComboSelectChangeTriggerDemoModule,
-        ComboSelectSelectIconDemoModule,
+        ComboSelectChangeDemoModule,
         ComboDropDownStatusDemoModule,
         DisabledComboSelectDemoModule,
         ComboSelectAutoCompleteDemoModule,
@@ -91,6 +96,8 @@ export const routerConfig = [
         ComboSelectFullModule,
         ComboSelectTriggerDemoModule,
         ComboSelectMaxHeightDemoModule,
+        ComboSelectValidDemoModule,
+        ComboSelectTextTagDemoModule
     ]
 })
 export class ComboSelectDemoModule {

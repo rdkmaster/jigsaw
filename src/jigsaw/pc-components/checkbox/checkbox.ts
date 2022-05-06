@@ -18,7 +18,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 
-import {AbstractJigsawComponent} from '../../common/common';
+import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CheckBoxStatus} from "./typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -33,16 +33,19 @@ export type CheckBoxValue = boolean | CheckBoxStatus;
  * $demo = checkbox/full
  * $demo = checkbox/basic
  */
+@WingsTheme('checkbox.scss')
 @Component({
     selector: 'jigsaw-checkbox, j-checkbox',
     templateUrl: './checkbox.html',
     host: {
         '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-checkbox-host]': 'true',
-        '[class.jigsaw-checkbox-error]': '!valid'
+        '[class.jigsaw-checkbox-error]': '!valid',
+        '[class.jigsaw-checkbox-disabled]': 'disabled',
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawCheckBox), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })

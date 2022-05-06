@@ -3,116 +3,75 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
     --jigsaw-zTree-input-width: 120px;
 }
 
-.ztree li span:not(.node_name) {
-    color: $font-color-default;
-    &.button {
-        &.edit,
-        &.remove,
-        &.ico_open,
-        &.ico_close,
-        &.ico_docu,
-        &.chk.checkbox_false_full,
-        &.chk.checkbox_false_full_focus,
-        &.chk.checkbox_true_full,
-        &.chk.checkbox_true_full_focus,
-        &.switch.noline_open,
-        &.switch.noline_close,
-        &.switch.root_open,
-        &.switch.root_close,
-        &.switch.roots_open,
-        &.switch.roots_close,
-        &.switch.center_open,
-        &.switch.center_close,
-        &.switch.bottom_open,
-        &.switch.bottom_close,
-        &.chk.checkbox_true_part,
-        &.chk.checkbox_true_part_focus,
-        &[class*="ico_open"],
-        &[class*="ico_close"],
-        &[class*="ico_docu"] {
-            position: relative;
-            width: 16px;
-            height: 16px;
-            background-image: none;
+.#{$jigsaw-tree}-host {
+    .ztree li span:not(.node_name) {
+        color: $font-color-default;
 
-            &::after {
-                position: absolute;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-                font-family: "iconfont" !important;
-                font-size: $font-title-lg;
-                color: $icon-color-default;
-                cursor: pointer;
-                overflow: hidden;
+        &.button {
+            &.edit,
+            &.remove,
+            &.ico_open,
+            &.ico_close,
+            &.ico_docu,
+            &.chk.checkbox_false_full,
+            &.chk.checkbox_false_full_focus,
+            &.chk.checkbox_true_full,
+            &.chk.checkbox_true_full_focus,
+            &.switch.noline_open,
+            &.switch.noline_close,
+            &.switch.root_open,
+            &.switch.root_close,
+            &.switch.roots_open,
+            &.switch.roots_close,
+            &.switch.center_open,
+            &.switch.center_close,
+            &.switch.bottom_open,
+            &.switch.bottom_close,
+            &.chk.checkbox_true_part,
+            &.chk.checkbox_true_part_focus,
+            &[class*="ico_open"],
+            &[class*="ico_close"],
+            &[class*="ico_docu"] {
+                position: relative;
+                width: 16px;
+                height: 16px;
+                background-image: none;
+
+                &::after {
+                    position: absolute;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    font-family: "iconfont" !important;
+                    font-size: $font-title-lg;
+                    color: $icon-color-default;
+                    cursor: pointer;
+                    overflow: hidden;
+                }
+
+                &:hover {
+                    &::after {
+                        color: $brand-default;
+                    }
+                }
             }
 
-            &:hover {
+            &.chk.checkbox_false_full_focus,
+            &.chk.checkbox_true_full,
+            &.chk.checkbox_true_full_focus,
+            &.chk.checkbox_true_part,
+            &.chk.checkbox_true_part_focus {
                 &::after {
                     color: $brand-default;
                 }
             }
         }
-
-        &.chk.checkbox_false_full_focus,
-        &.chk.checkbox_true_full,
-        &.chk.checkbox_true_full_focus,
-        &.chk.checkbox_true_part,
-        &.chk.checkbox_true_part_focus {
-            &::after {
-                color: $brand-default;
-            }
-        }
-    }
-}
-
-.ztree li {
-    span {
-        &.button.switch {
-            height: 24px !important;
-        }
     }
 
-    a {
-        display: inline-flex;
-        align-items: center;
-        height: 24px !important;
-        color: $font-color-default;
-
-        &:hover {
-            background: $bg-hover;
-            .node_name {
-                text-decoration: none;
-            }
-        }
-        &.curSelectedNode {
-            background: $bg-hover;
-            border-color: $bg-hover;
-            color: $brand-default;
-            opacity: 1;
-
-            .node_name {
-                color: $brand-default;
-            }
-        }
-    }
-}
-
-.ztree li a input.rename {
-    width: 120px;
-    width: var(--jigsaw-zTree-input-width);
-    letter-spacing: 0;
-
-    &:focus {
-        outline: none;
-    }
-}
-
-.#{$jigsaw-tree}-default {
-    .ztree * {
-        font-size: $font-size-base;
+    .ztree li span.node_name {
+        margin-right: 16px;
     }
 
     .ztree li {
@@ -120,89 +79,137 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
             &.button.switch {
                 height: 24px !important;
             }
-
-            &.button.center_docu {
-                background-position: -56px -16px;
-            }
-
-            &.button.bottom_docu {
-                background-position: -56px -34px;
-            }
         }
 
         a {
+            display: inline-flex;
+            align-items: center;
             height: 24px !important;
+            color: $font-color-default;
 
-            input.rename {
-                height: 16px;
-                font-size: $font-size-base;
+            &:hover {
+                background: $bg-hover;
+                .node_name {
+                    text-decoration: none;
+                }
+            }
+            &.curSelectedNode {
+                background: $bg-hover;
+                border-color: $bg-hover;
+                color: $brand-default;
+                opacity: 1;
+
+                .node_name {
+                    color: $brand-default;
+                }
             }
         }
     }
-}
 
-.#{$jigsaw-tree}-medium {
-    .ztree * {
-        font-size: $font-size-base;
+    .ztree li a input.rename {
+        width: 120px;
+        width: var(--jigsaw-zTree-input-width);
+        letter-spacing: 0;
+
+        &:focus {
+            outline: none;
+        }
     }
 
-    .ztree li {
-        span {
-            &.button.switch {
+    .ztree * {
+        font-size: $font-size-text-base;
+    }
+
+    &.#{$jigsaw-tree}-default {
+        .ztree * {
+            font-size: $font-size-base;
+        }
+
+        .ztree li {
+            span {
+                &.button.switch {
+                    height: 24px !important;
+                }
+
+                &.button.center_docu {
+                    background-position: -56px -16px;
+                }
+
+                &.button.bottom_docu {
+                    background-position: -56px -34px;
+                }
+            }
+
+            a {
+                height: 24px !important;
+
+                input.rename {
+                    height: 16px;
+                    font-size: $font-size-base;
+                }
+            }
+        }
+    }
+
+    &.#{$jigsaw-tree}-medium {
+        .ztree * {
+            font-size: $font-size-base;
+        }
+
+        .ztree li {
+            span {
+                &.button.switch {
+                    height: 28px !important;
+                }
+
+                &.button.center_docu {
+                    background-position: -56px -13.5px;
+                }
+
+                &.button.bottom_docu {
+                    background-position: -56px -31px;
+                }
+            }
+
+            a {
                 height: 28px !important;
-            }
 
-            &.button.center_docu {
-                background-position: -56px -13.5px;
-            }
-
-            &.button.bottom_docu {
-                background-position: -56px -31px;
-            }
-        }
-
-        a {
-            height: 28px !important;
-
-            input.rename {
-                height: 16px;
-                font-size: $font-size-base;
+                input.rename {
+                    height: 16px;
+                    font-size: $font-size-base;
+                }
             }
         }
     }
-}
 
-.#{$jigsaw-tree}-large {
-    .ztree * {
-        font-size: $font-size-lg;
-    }
+    &.#{$jigsaw-tree}-large {
+        .ztree * {
+            font-size: $font-size-lg;
+        }
 
-    .ztree li {
-        span {
-            &.button.switch {
+        .ztree li {
+            span {
+                &.button.switch {
+                    height: 32px !important;
+                }
+
+                &.button.center_docu {
+                    background-position: -56px -12px;
+                }
+
+                &.button.bottom_docu {
+                    background-position: -56px -30px;
+                }
+            }
+
+            a {
                 height: 32px !important;
-            }
 
-            &.button.center_docu {
-                background-position: -56px -12px;
-            }
-
-            &.button.bottom_docu {
-                background-position: -56px -30px;
-            }
-        }
-
-        a {
-            height: 32px !important;
-
-            input.rename {
-                height: 20px;
-                font-size: $font-size-lg;
+                input.rename {
+                    height: 20px;
+                    font-size: $font-size-lg;
+                }
             }
         }
     }
-}
-
-.ztree * {
-    font-size: $font-size-text-base;
 }

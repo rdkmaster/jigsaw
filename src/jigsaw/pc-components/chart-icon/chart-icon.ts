@@ -1,4 +1,4 @@
-import {Component, ElementRef, Injector, Input, NgModule, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Injector, Input, NgModule, OnInit, Directive, ChangeDetectionStrategy, NgZone} from '@angular/core';
 import {
     ChartIconBar,
     ChartIconDonut,
@@ -7,13 +7,14 @@ import {
     ChartIconPie,
     ChartType
 } from "./chart-icon-factory";
-import {AbstractJigsawViewBase} from "../../common/common";
+import {AbstractJigsawViewBase, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-export abstract class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit, OnChanges {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector) {
-        super();
+@Directive()
+export abstract class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector, protected _zone: NgZone) {
+        super(_zone);
     }
 
     private _data: number[];
@@ -26,6 +27,12 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
 
     public set data(value: number[]) {
         this._data = typeof value == 'string' ? (<string>value).split(',').map(v => Number(v)) : value;
+        if (this.initialized) {
+            this.runAfterMicrotasks(() => {
+                // 等待span内绑定的data刷新
+                this._change();
+            })
+        }
     }
 
     protected _chartType: ChartType;
@@ -57,18 +64,6 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
         this._chartIcon = ChartIconFactory.create(span, this._chartType, this.createOptions());
     }
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (!this.initialized) {
-            return;
-        }
-        const keys = Object.keys(changes);
-        if (keys.length == 1 && keys[0] == 'data') {
-            this._change();
-        } else {
-            this._init();
-        }
-    }
-
     private _change() {
         if (this._chartIcon) {
             this._chartIcon.change();
@@ -89,11 +84,13 @@ export abstract class JigsawChartIconBase extends AbstractJigsawViewBase impleme
     selector: 'jigsaw-pie-chart-icon, j-pie-chart-icon',
     templateUrl: './chart-icon.html',
     host: {
-        '[class.jigsaw-chart-icon]': 'true',
+        '[class.jigsaw-chart-icon-host]': 'true',
         '[class.jigsaw-pie-chart-icon]': 'true',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawPieChartIcon extends JigsawChartIconBase {
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -121,7 +118,8 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
     host: {
         '[class.jigsaw-chart-icon]': 'true',
         '[class.jigsaw-donut-chart-icon]': 'true',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawDonutChartIcon extends JigsawChartIconBase {
     /**
@@ -158,22 +156,24 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
     host: {
         '[class.jigsaw-chart-icon]': 'true',
         '[class.jigsaw-line-chart-icon]': 'true',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawLineChartIcon extends JigsawChartIconBase {
+
     protected _chartType: ChartType = ChartType.line;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string;
+    public fill: string = JigsawTheme.getGraphTheme().color[3];
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public width: number = 100;
+    public width: number = 50;
 
     /**
      * @NoMarkForCheckRequired
@@ -219,9 +219,11 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
     host: {
         '[class.jigsaw-chart-icon]': 'true',
         '[class.jigsaw-bar-chart-icon]': 'true',
-    }
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawBarChartIcon extends JigsawChartIconBase {
+
     protected _chartType: ChartType = ChartType.bar;
 
     /**
@@ -252,7 +254,7 @@ export class JigsawBarChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public width: number = 100;
+    public width: number = 50;
 
     /**
      * @NoMarkForCheckRequired

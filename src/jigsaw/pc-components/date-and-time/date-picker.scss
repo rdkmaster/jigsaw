@@ -1,31 +1,30 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
 
-$date-prefix-cls: #{$jigsaw-prefix}-date-picker;
-
-.#{$date-prefix-cls} {
+.#{$jigsaw-date-picker}-host {
     @include inline-block();
     width: 210px;
     height: 100%;
     border-radius: $border-radius-sm;
-    background: $bg-component;
+    background: $bg-transparent;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-default;
     border-radius: $border-radius-base;
+    color: $font-color-default;
     overflow: hidden;
     user-select: none;
 
-    &-header {
+    .#{$jigsaw-date-picker}-header {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         width: 100%;
         min-height: $height-huge;
-        background: $bg-container;
+        background: $bg-component-darken;
     }
 
-    &-gr-switch {
+    .#{$jigsaw-date-picker}-gr-switch {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -38,7 +37,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $bg-body;
+            background: $bg-component;
             border: 1px solid $border-color-default;
             cursor: pointer;
 
@@ -60,7 +59,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         }
     }
 
-    &-control {
+    .#{$jigsaw-date-picker}-control {
         position: relative;
         display: flex;
         justify-content: space-between;
@@ -70,7 +69,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         line-height: $height-huge;
         font-size: $font-size-base;
 
-        .#{$date-prefix-cls}-control-bar {
+        .#{$jigsaw-date-picker}-control-bar {
             display: inline-flex;
             align-items: center;
             width: 56px;
@@ -107,7 +106,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         }
     }
 
-    &-content {
+    .#{$jigsaw-date-picker}-content {
         text-align: center;
 
         &-day {
@@ -138,7 +137,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 height: $height-med;
                 border-bottom: 1px solid $border-color-disabled;
                 line-height: $height-med;
-                background: $bg-container;
+                background: $bg-component-darken;
                 vertical-align: initial;
 
                 th {
@@ -245,7 +244,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
 
             &-inRange {
                 background: $brand-lighten;
-                &.#{$date-prefix-cls}-content-day-cell-selected {
+                &.#{$jigsaw-date-picker}-content-day-cell-selected {
                     background: none;
                 }
             }
@@ -306,6 +305,7 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
                 span,
                 span:hover {
                     background: none;
+                    color: $font-color-disabled;
                     cursor: not-allowed;
                 }
             }
@@ -316,11 +316,11 @@ $date-prefix-cls: #{$jigsaw-prefix}-date-picker;
         }
     }
 
-    &-error {
+    .#{$jigsaw-date-picker}-error {
         border-color: $error-default;
     }
 
-    &-disabled {
+    .#{$jigsaw-date-picker}-disabled {
         position: relative;
         &:before {
             content: " ";

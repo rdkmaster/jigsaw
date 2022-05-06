@@ -105,7 +105,10 @@ import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.componen
 import { TableAutoPageableDemoModule } from "./auto-page-sizing/demo.module"
 import {TableColumnWidthDemoModule} from "./column-width/demo.module";
 import {TableColumnWidthDemoComponent} from "./column-width/demo.component";
-
+import {TableProgressDemoComponent} from "./progress/demo.component";
+import {TableProgressDemoModule} from "./progress/demo.module";
+import { TableExpandDemoComponent } from './expand/demo.component';
+import { TableExpandDemoModule } from './expand/demo.module';
 
 export const routerConfig = [
     {
@@ -247,6 +250,9 @@ export const routerConfig = [
         path: "draggable-table", component: TableDraggableDemoComponent
     },
     {
+        path: "progress", component: TableProgressDemoComponent
+    },
+    {
         path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
     },
     {
@@ -263,6 +269,9 @@ export const routerConfig = [
     },
     {
         path: 'column-width', component: TableColumnWidthDemoComponent
+    },
+    {
+        path: 'expand', component: TableExpandDemoComponent
     },
     {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
@@ -283,7 +292,7 @@ export const routerConfig = [
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
-        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule
+        TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule
     ]
 })
 export class TableDemoModule {

@@ -1,0 +1,11 @@
+$jigsaw-range-date-time-select: #{$jigsaw-prefix}-range-date-time-select;
+$jigsaw-combo-select: #{$jigsaw-prefix}-combo-select;
+$jigsaw-tag: #{$jigsaw-prefix}-tag;
+
+.#{$jigsaw-range-date-time-select}-host {
+    @include inline-block();
+    .#{$jigsaw-combo-select}-selection-rendered .#{$jigsaw-tag}-host {
+        border: none;
+        max-width: none;
+    }
+}

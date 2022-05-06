@@ -6,6 +6,8 @@ import { SelectGroupEditResultDemoComponent } from './edit-selected-items/demo.c
 import { SelectGroupEditResultDemoModule } from './edit-selected-items/demo.module';
 import {SelectGroupCustomizeGroupFieldDemoModule} from "./customize-group-field/demo.module";
 import {SelectGroupCustomizeGroupFieldDemoComponent} from "./customize-group-field/demo.component";
+import { SelectGroupValidDemoComponent } from './valid/demo.component';
+import { SelectGroupValidDemoModule } from './valid/demo.module';
 
 export const routerConfig = [
     {
@@ -16,6 +18,9 @@ export const routerConfig = [
     },
     {
         path: 'customize-group-field', component: SelectGroupCustomizeGroupFieldDemoComponent
+    },
+    {
+        path: 'valid', component: SelectGroupValidDemoComponent
     }
 ];
 
@@ -24,7 +29,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         SelectGroupDemoModule,
         SelectGroupEditResultDemoModule,
-        SelectGroupCustomizeGroupFieldDemoModule
+        SelectGroupCustomizeGroupFieldDemoModule,
+        SelectGroupValidDemoModule
     ]
 })
 export class SelectGroupDemoSetModule {

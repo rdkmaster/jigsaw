@@ -1,24 +1,21 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-range-date-time-picker: #{$jigsaw-prefix}-range-date-time-picker;
 
-$range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
+.#{$jigsaw-range-date-time-picker}-host {
+    @include inline-block();
+    position: relative;
+    background: $bg-transparent;
+    color: $font-color-default;
+    font-size: 0;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
+    border-radius: $border-radius-base;
 
-.#{$range-date-time-prefix-cls} {
-    &-host {
-        @include inline-block();
-        position: relative;
-        background: $bg-component;
-        font-size: 0;
-        border-width: 1px;
-        border-style: solid;
-        border-color: $border-color-default;
-        border-radius: $border-radius-base;
-    }
-
-    &-error {
+    &.#{$jigsaw-range-date-time-picker}-error {
         border: 1px solid $error-default;
     }
 
-    &-disabled {
+    &.#{$jigsaw-range-date-time-picker}-disabled {
         position: relative;
         &:before {
             content: " ";
@@ -34,21 +31,21 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
         }
     }
 
-    &-startTime {
+    .#{$jigsaw-range-date-time-picker}-startTime {
         border: none;
         .jigsaw-date-time-picker-bottom jigsaw-button {
             display: none;
         }
     }
 
-    &-endTime {
+    .#{$jigsaw-range-date-time-picker}-endTime {
         border: none;
         .jigsaw-date-time-picker-gr-switch span {
             visibility: hidden;
         }
     }
 
-    &-shortcuts {
+    .#{$jigsaw-range-date-time-picker}-shortcuts {
         position: absolute;
         width: 210px;
         right: 1px;
@@ -59,14 +56,14 @@ $range-date-time-prefix-cls: #{$jigsaw-prefix}-range-date-time-picker;
         justify-content: center;
         padding: 8px 8px 0;
         font-size: $font-size-base;
-        background: $bg-container;
+        background: $bg-component-darken;
 
         & > span {
             display: inline-block;
             flex: 1;
             height: 24px;
             line-height: 22px;
-            background: $bg-body;
+            background: $bg-component;
             border: 1px solid $border-color-default;
             cursor: pointer;
 

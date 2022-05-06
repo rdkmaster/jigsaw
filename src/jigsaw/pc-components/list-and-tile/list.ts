@@ -14,15 +14,18 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('list.scss')
 @Component({
     selector: 'jigsaw-list, j-list',
     template: '<div *ngIf="disabled" class="jigsaw-list-disabled"></div><ng-content></ng-content>',
     host: {
-        '[class.jigsaw-list]': 'true',
-        '[class.jigsaw-list-error]': '!valid',
         '[style.width]': 'width',
-        '[style.height]': 'height'
+        '[style.height]': 'height',
+        '[attr.data-theme]':'theme',
+        '[class.jigsaw-list-host]': 'true',
+        '[class.jigsaw-list-error]': '!valid',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
@@ -49,13 +52,15 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
     public _items: QueryList<JigsawListOption>;
 }
 
+@WingsTheme('list-option.scss')
 @Component({
     selector: 'jigsaw-list-option,j-list-option',
     templateUrl: 'list-option.html',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-list-option]': 'true',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-list-option-host]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
         '[class.jigsaw-list-option-disabled]': 'disabled',
         '[class.jigsaw-list-option-separator]': '!value',

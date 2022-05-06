@@ -9,22 +9,23 @@ import {
     Output
 } from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {collapseMotion} from "../../common/components/animations/collapse";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('navigation-menu.scss')
 @Component({
     selector: 'jigsaw-navigation-menu, j-navigation-menu',
     templateUrl: 'navigation-menu.html',
     host: {
-        '[class.jigsaw-nav-menu]': 'true',
-        '[class.jigsaw-nav-menu-light]': 'theme == "light"',
-        '[class.jigsaw-nav-menu-dark]': 'theme == "dark"',
+        '[style.width]': 'showToggleButton && collapsed ? null : width',
+        '[style.height]': 'height',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-nav-menu-host]': 'true',
         '[class.jigsaw-nav-menu-gray]': 'theme == "gray"',
         '[class.jigsaw-nav-menu-default]': 'theme == "default"',
-        '[style.height]': 'height',
-        '[style.width]': 'showToggleButton && collapsed ? null : width'
+        '[class.jigsaw-nav-menu-inline]': '!showToggleButton'
     },
     animations: [collapseMotion],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -147,12 +148,16 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._removeDataRefresh = null;
         }
     }
-    
+
     /**
      * @internal
      */
     public _$handleCollapsed() {
         this.collapsed = !this.collapsed;
         this.collapsedChange.emit(this.collapsed);
+    }
+
+    public update(): void {
+        this._cdr.markForCheck();
     }
 }

@@ -1,13 +1,15 @@
-import {Component, NgModule, forwardRef, Input, ChangeDetectionStrategy, ChangeDetectorRef} from "@angular/core";
+import {Component, NgModule, forwardRef, Input, ChangeDetectionStrategy} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawTileSelectModule} from "./tile";
 import {NG_VALUE_ACCESSOR} from "@angular/forms";
+import {JigsawTileSelectModule} from "./tile";
 import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
+import {WingsTheme} from "../../common/common";
 
+@WingsTheme('tile-lite.scss')
 @Component({
     selector: 'jigsaw-tile-lite, j-tile-lite',
     template: `
-        <j-tile [(selectedItems)]="selectedItems"
+        <j-tile [theme]="theme" [(selectedItems)]="selectedItems"
                 [trackItemBy]="trackItemBy" [valid]="valid"
                 [multipleSelect]="multipleSelect"
                 (selectedItemsChange)="_$handleSelectChange($event)"
@@ -19,8 +21,9 @@ import {AbstractJigsawGroupLiteComponent} from "./group-lite-common";
             </j-tile-option>
         </j-tile>`,
     host: {
-        '[class.jigsaw-tile-lite]': 'true',
-        '[style.width]': 'width'
+        '[style.width]': 'width',
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-tile-lite-host]': 'true'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTileLite), multi: true},

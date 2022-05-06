@@ -12,27 +12,29 @@ import {
 } from "@angular/core";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {CommonModule} from "@angular/common";
-import {JigsawRadioModule} from "./radio";
+import {JigsawRadioModule} from "./radios";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {ArrayCollection} from "../../common/core/data/array-collection";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+@WingsTheme('radios-lite.scss')
 @Component({
     selector: 'jigsaw-radios-lite, j-radios-lite',
     template: `
         <j-radios [(value)]="value" (valueChange)="radioChange($event)" [trackItemBy]="trackItemBy">
-            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled">
+            <j-radio-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item" [disabled]="item?.disabled || disabled">
                 {{item && item[labelField] ? item[labelField] : item}}
             </j-radio-option>
         </j-radios>`,
     host: {
-        '[class.jigsaw-radios-lite]': 'true',
-        '[class.jigsaw-radios-error]': '!valid'
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-radios-lite-host]': 'true',
+        '[class.jigsaw-radios-lite-error]': '!valid'
     },
     providers: [
-        {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true},
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRadiosLite), multi: true },
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -54,14 +56,32 @@ export class JigsawRadiosLite extends AbstractJigsawComponent implements Control
      * @NoMarkForCheckRequired
      */
     @Input()
+    public disabled: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public data: ArrayCollection<GroupOptionValue> | GroupOptionValue[];
+
+    private _value: any;
 
     /**
      * value的实际类型是 `string | RadiosGroupValue`，由于一些兼容性原因，保留any作为类型定义
      */
     @RequireMarkForCheck()
     @Input()
-    public value: any;
+    public get value(): any {
+        return this._value;
+    }
+
+    public set value(newValue: any) {
+        if (this._value === newValue) {
+            return;
+        }
+        this._value = newValue;
+        this._propagateChange(this._value);
+    }
 
     private _trackItemBy: string | string[];
 

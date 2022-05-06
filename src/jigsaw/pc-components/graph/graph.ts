@@ -18,7 +18,7 @@ import {
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
@@ -31,6 +31,7 @@ try {
 } catch(e) {
 }
 
+@WingsTheme('graph.scss')
 @Component({
     selector: 'jigsaw-graph, j-graph',
     templateUrl: 'graph.html',
@@ -132,6 +133,22 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get theme(): 'light' | 'dark' | string {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark' | string) {
+        this._wingsTheme(theme);
+        if (this._graph) {
+            this._graph._theme = JigsawTheme.getGraphTheme(theme);
+            this.data.refresh();
+        }
+    }
+
     private _globalTheme: any;
 
     /**
@@ -139,10 +156,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public get globalTheme() {
-        if (!this._globalTheme) {
-            this._globalTheme = JigsawTheme.getGraphTheme();
-        }
-        return this._globalTheme;
+        // this._globalTheme用于保存用户自定义echart全局皮肤，jigsaw自带的皮肤不保存在this._globalTheme里
+        return this._globalTheme || JigsawTheme.getGraphTheme(this.theme);
     };
 
     public set globalTheme(value) {

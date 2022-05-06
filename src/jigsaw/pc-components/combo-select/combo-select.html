@@ -12,13 +12,13 @@
          [perfectScrollbar]="{suppressScrollX: true, wheelPropagation: true, wheelSpeed: 0.1, minScrollbarLength: 20}"
          [style.max-height]="maxHeight">
         <div class="jigsaw-combo-select-selection-rendered">
-            <jigsaw-tag *ngFor="let tagItem of value; trackBy: _$trackByFn"
-                        [closable]='tagItem?.closable'
+            <jigsaw-tag [theme]="theme" *ngFor="let tagItem of value; trackBy: _$trackByFn"
+                        [closable]='textTag && tagItem?.closable'
                         (selectChange)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
                 {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}
             </jigsaw-tag>
-            <jigsaw-input #editor *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
+            <jigsaw-input #editor [theme]="theme" *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
                           width="100%" (valueChange)="_$handleSearchBoxChange()"
                           [clearable]="false" [placeholder]="value.length == 0 ? placeholder : ''">
             </jigsaw-input>

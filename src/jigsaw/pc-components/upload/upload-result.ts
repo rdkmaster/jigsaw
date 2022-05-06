@@ -7,23 +7,28 @@ import {
 } from "@angular/core";
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from "rxjs";
-import {AbstractJigsawComponent} from "../../common/common";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {IUploader, UploadFileInfo} from "../../common/directive/upload/uploader-typings";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
+@WingsTheme('upload-result.scss')
 @Component({
     selector: "jigsaw-upload-result, j-upload-result",
     templateUrl: "upload-result.html",
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
+        '[attr.data-theme]': 'theme',
         "[class.jigsaw-upload-result-host]": "true"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawUploadResult extends AbstractJigsawComponent implements OnDestroy {
     constructor(private _translateService: TranslateService,
-                protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+        /**
+        * @internal
+        */
+        public _$cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -54,7 +59,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
 
     public clear() {
         this.files.splice(0, this.files.length);
-        this._cdr.markForCheck();
+        this._$cdr.markForCheck();
     }
 
     /**
@@ -88,7 +93,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._startUploadSubscription = this._uploader.start.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._changeUploadSubscription) {
@@ -96,7 +101,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._changeUploadSubscription = this._uploader.change.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._completeSubscription) {
@@ -104,7 +109,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._completeSubscription = this._uploader.complete.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._progressSubscription) {
@@ -119,7 +124,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
             this._dataSendProgressSubscription.unsubscribe();
         }
         this._dataSendProgressSubscription = this._uploader.dataSendProgress.subscribe(() => {
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
     }
 

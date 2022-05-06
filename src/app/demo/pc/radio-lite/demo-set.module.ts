@@ -4,6 +4,8 @@ import {RadioLiteBasicDemoModule} from "./basic/demo.module";
 import {RadioLiteBasicDemoComponent} from "./basic/demo.component";
 import { RadioLiteTypeDemoComponent } from './type/demo.component';
 import { RadioLiteTypeDemoModule } from './type/demo.module';
+import { RadioLiteDisabledDemoModule } from './disabled/demo.module';
+import { RadioLiteDisabledDemoComponent } from './disabled/demo.component';
 
 export const routerConfig = [
     {
@@ -11,6 +13,9 @@ export const routerConfig = [
     },
     {
         path: 'type', component: RadioLiteTypeDemoComponent
+    },
+    {
+        path: 'disabled', component: RadioLiteDisabledDemoComponent
     }
 ];
 
@@ -18,7 +23,8 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         RadioLiteBasicDemoModule,
-        RadioLiteTypeDemoModule
+        RadioLiteTypeDemoModule,
+        RadioLiteDisabledDemoModule
     ]
 })
 export class RadioLiteDemoModule { }

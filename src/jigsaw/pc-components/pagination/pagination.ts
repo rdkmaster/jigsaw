@@ -16,11 +16,11 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
 
 import { JigsawSelectModule } from "../select/index";
 import { JigsawInputModule } from "../input/input";
-import { AbstractJigsawComponent } from "../../common/common";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
@@ -33,13 +33,15 @@ export class PageSizeData {
     label: string;
 }
 
+@WingsTheme('pagination.scss')
 @Component({
     selector: "jigsaw-pagination, j-pagination",
     templateUrl: "pagination.html",
     host: {
         "[style.width]": "width",
         "[style.height]": "height",
-        "[class.jigsaw-paging]": "true",
+        '[attr.data-theme]': 'theme',
+        "[class.jigsaw-paging-host]": "true",
         "[class.jigsaw-paging-simple]": 'mode == "simple"',
         "[class.jigsaw-paging-complex]": 'mode == "complex" || mode == "folding"',
         "[class.jigsaw-paging-small]": 'size == "small"',
@@ -540,20 +542,19 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     }
 }
 
-/**
- * @internal
- */
+@WingsTheme('pagination-item.scss')
 @Component({
     selector: "jigsaw-paging-item, j-paging-item",
     templateUrl: "pagination-item.html",
     host: {
-        "(click)": "_onClick()",
+        '[attr.data-theme]': 'theme',
+        "[class.jigsaw-page-item-host]": "true",
         "[class.jigsaw-page-current]": "current",
-        "[class.jigsaw-page-item]": "true"
+        "(click)": "_onClick()",
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawPagingItem {
+export class JigsawPagingItem extends AbstractJigsawComponent {
     public current: boolean = false;
     public showPrev: boolean = false;
     public showNext: boolean = false;
@@ -567,10 +568,11 @@ export class JigsawPagingItem {
     public pageNumber: number;
 
     constructor(@Optional() pagination: JigsawPagination,
-                /**
-                 * @internal
-                 */
-                public _changeDetectorRef: ChangeDetectorRef) {
+        /**
+         * @internal
+         */
+        public _changeDetectorRef: ChangeDetectorRef) {
+        super();
         this._pagination = pagination;
     }
 
