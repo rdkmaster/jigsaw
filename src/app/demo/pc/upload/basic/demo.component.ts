@@ -35,6 +35,9 @@ export class UploadBasicDemoComponent {
     @ViewChild("demo6", { read: JigsawUpload })
     public uploader6: JigsawUpload;
 
+    @ViewChild("demo7", { read: JigsawUpload })
+    public uploader7: JigsawUpload;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

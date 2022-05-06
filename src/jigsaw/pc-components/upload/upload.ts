@@ -5,6 +5,7 @@ import {JigsawUploadBase, JigsawUploadDirective} from '../../common/directive/up
 import {DragDropInfo} from '../../common/directive/dragdrop/types';
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {WingsTheme} from "../../common/common";
+import { JigsawUploadResult } from './upload-result';
 
 @WingsTheme('upload.scss')
 @Component({
@@ -56,6 +57,9 @@ export class JigsawUpload extends JigsawUploadBase {
      */
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
     public _$uploader: IUploader;
+
+    @ViewChild("uploadResultEle", { read: JigsawUploadResult })
+    private _uploadResultEle: JigsawUploadResult;
 
     public get files(): UploadFileInfo[] {
         return this._$uploader.files;
@@ -144,5 +148,13 @@ export class JigsawUpload extends JigsawUploadBase {
 
     public retryUpload(file: UploadFileInfo) {
         this._$uploader.retryUpload(file);
+    }
+
+    /**
+     * 清空所有已上传的文件
+     */
+    public clear(){
+        this._$uploader.files.splice(0, this.files.length);
+        this._uploadResultEle._$cdr.markForCheck();
     }
 }

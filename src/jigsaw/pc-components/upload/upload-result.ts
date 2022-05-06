@@ -25,7 +25,10 @@ import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 })
 export class JigsawUploadResult extends AbstractJigsawComponent implements OnDestroy {
     constructor(private _translateService: TranslateService,
-                protected _cdr: ChangeDetectorRef, protected _zone?: NgZone) {
+        /**
+        * @internal
+        */
+        public _$cdr: ChangeDetectorRef, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -56,7 +59,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
 
     public clear() {
         this.files.splice(0, this.files.length);
-        this._cdr.markForCheck();
+        this._$cdr.markForCheck();
     }
 
     /**
@@ -90,7 +93,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._startUploadSubscription = this._uploader.start.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._changeUploadSubscription) {
@@ -98,7 +101,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._changeUploadSubscription = this._uploader.change.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._completeSubscription) {
@@ -106,7 +109,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
         }
         this._completeSubscription = this._uploader.complete.subscribe(() => {
             this.change.emit(this.files);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
 
         if (this._progressSubscription) {
@@ -121,7 +124,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
             this._dataSendProgressSubscription.unsubscribe();
         }
         this._dataSendProgressSubscription = this._uploader.dataSendProgress.subscribe(() => {
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         });
     }
 
