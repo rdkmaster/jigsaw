@@ -58,9 +58,6 @@ export class JigsawUpload extends JigsawUploadBase {
     @ViewChild("uploadEle", { read: JigsawUploadDirective })
     public _$uploader: IUploader;
 
-    /**
-     * @internal
-     */
     @ViewChild("uploadResultEle", { read: JigsawUploadResult })
     private _uploadResultEle: JigsawUploadResult;
 
