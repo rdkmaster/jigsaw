@@ -1,0 +1,14 @@
+<div class="jigsaw-alphabetical-index">
+    <jigsaw-list #dataList [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+        [(selectedItems)]="value" (selectedItemsChange)="_$selectedItemsChange($event)">
+        <div #indexTitle *ngFor="let group of _$sortedData" class="jigsaw-alphabetical-index-group">
+            <div class="jigsaw-alphabetical-index-title">{{group.letter}}</div>
+            <jigsaw-list-option *ngFor="let item of group.data" [value]="item">
+                {{item}}
+            </jigsaw-list-option>
+        </div>
+    </jigsaw-list>
+    <ul #indexList class="jigsaw-alphabetical-index-panel">
+        <li #indexListItem *ngFor="let letter of _$alphabeticalIndex; index as i" (click)="_$jumpTo(i)">{{letter}}</li>
+    </ul>
+</div>
