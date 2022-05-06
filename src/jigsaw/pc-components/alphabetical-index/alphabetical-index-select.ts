@@ -1,5 +1,5 @@
 import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
-import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, ChangeDetectorRef, Injector, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgModule, Input, Output, EventEmitter, Injector, NgZone } from '@angular/core';
 import { JigsawAlphabeticalIndexModule } from './alphabetical-index';
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 import { DropDownTrigger } from '../../common/directive/float/float';
@@ -19,7 +19,7 @@ import { CommonUtils } from '../../common/core/utils/common-utils';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
-    public constructor(protected _changeDetector: ChangeDetectorRef, protected _injector: Injector, protected _zone?: NgZone) {
+    public constructor(protected _injector: Injector, protected _zone?: NgZone) {
         super(_zone);
     }
 
@@ -43,10 +43,9 @@ export class JigsawAlphabeticalIndexSelect extends AbstractJigsawComponent {
 
     /**
      * 组件选择的结果，数组形式
-     *
-     * @NoMarkForCheckRequired
      */
     @Input()
+    @RequireMarkForCheck()
     public get value(): ArrayCollection<string> {
         return this._value;
     }
