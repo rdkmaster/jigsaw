@@ -7,8 +7,14 @@ import {FieldType} from "@ngx-formly/core";
 @Component({
     selector: 'jigsaw-formly-template',
     template: `
-        <div [trustedHtml]="to.innerHTML"></div>
+        <div class="jigsaw-formly-template" [trustedHtml]="to.innerHTML"></div>
     `,
+    styles: [`
+        .jigsaw-formly-template {
+            font-size: var(--font-size-text-base);
+            color: var(--font-color-default);
+        }
+    `]
 })
 export class FormlyTemplateFieldType extends FieldType {
 }
