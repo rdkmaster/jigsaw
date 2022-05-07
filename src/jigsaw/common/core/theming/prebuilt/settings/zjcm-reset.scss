@@ -24,8 +24,10 @@
 .jigsaw-button-host {
     color: $font-color-default;
 
-    &:hover {
-        background: $brand-hover;
+    &.jigsaw-button-color-primary {
+        &:hover {
+            background: $brand-hover;
+        }
     }
 }
 
