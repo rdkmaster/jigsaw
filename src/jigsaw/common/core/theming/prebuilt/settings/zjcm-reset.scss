@@ -87,17 +87,22 @@
 
 .jigsaw-input-host {
     .jigsaw-input-wrapper {
-        border-radius: 2px;
-
         .iconfont-e14b:before {
             content: "\e9b9";
         }
     }
 }
 
-.jigsaw-dialog-host .jigsaw-dialog .jigsaw-dialog-head {
-    height: 56px;
-    min-height: 56px;
+.jigsaw-dialog-host .jigsaw-dialog {
+    .jigsaw-dialog-head {
+        height: 56px;
+        min-height: 56px;
+    }
+
+    .jigsaw-dialog-button-group {
+        justify-content: flex-end;
+        margin-right: 32px;
+    }
 }
 
 .jigsaw-table-host {
@@ -115,9 +120,44 @@
             color: #2d3658;
         }
 
-        thead tr td {
-            border: none;
-            color: #69749c;
+        thead {
+            font-weight: unset;
+
+            tr td {
+                border: none;
+                color: #69749c;
+            }
         }
+    }
+
+    .jigsaw-table-no-data-img {
+        width: 64px;
+        background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjQiIGhlaWdodD0iNDEiIHZpZXdCb3g9IjAgMCA2NCA0MSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDEpIiBmaWxsPSJub25lIiBmaWxsUnVsZT0iZXZlbm9kZCI+PGVsbGlwc2UgZmlsbD0iI0Y1RjVGNSIgY3g9IjMyIiBjeT0iMzMiIHJ4PSIzMiIgcnk9IjciPjwvZWxsaXBzZT48ZyBmaWxsUnVsZT0ibm9uemVybyIgc3Ryb2tlPSIjRDlEOUQ5Ij48cGF0aCBkPSJNNTUgMTIuNzZMNDQuODU0IDEuMjU4QzQ0LjM2Ny40NzQgNDMuNjU2IDAgNDIuOTA3IDBIMjEuMDkzYy0uNzQ5IDAtMS40Ni40NzQtMS45NDcgMS4yNTdMOSAxMi43NjFWMjJoNDZ2LTkuMjR6Ij48L3BhdGg+PHBhdGggZD0iTTQxLjYxMyAxNS45MzFjMC0xLjYwNS45OTQtMi45MyAyLjIyNy0yLjkzMUg1NXYxOC4xMzdDNTUgMzMuMjYgNTMuNjggMzUgNTIuMDUgMzVoLTQwLjFDMTAuMzIgMzUgOSAzMy4yNTkgOSAzMS4xMzdWMTNoMTEuMTZjMS4yMzMgMCAyLjIyNyAxLjMyMyAyLjIyNyAyLjkyOHYuMDIyYzAgMS42MDUgMS4wMDUgMi45MDEgMi4yMzcgMi45MDFoMTQuNzUyYzEuMjMyIDAgMi4yMzctMS4zMDggMi4yMzctMi45MTN2LS4wMDd6IiBmaWxsPSIjRkFGQUZBIj48L3BhdGg+PC9nPjwvZz48L3N2Zz4=");
+        background-repeat: no-repeat;
+        background-size: 64px 41px;
+        background-position: 0px 4px;
+
+        img {
+            visibility: hidden;
+        }
+
+        .jigsaw-table-no-data-text {
+            color: rgba(0, 0, 0, 0.25);
+        }
+    }
+}
+
+.jigsaw-alert-host .jigsaw-alert {
+    .jigsaw-alert-content {
+        justify-content: flex-start;
+
+        .content-icon {
+            font-size: 24px;
+        }
+    }
+
+    .jigsaw-alert-button-group {
+        justify-content: flex-end;
+        margin-right: 32px;
     }
 }
