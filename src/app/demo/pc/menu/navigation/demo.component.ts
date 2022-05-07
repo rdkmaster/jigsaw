@@ -1,13 +1,17 @@
-import {Component, ViewChild} from "@angular/core";
-import {JigsawNavigationMenu, SimpleTreeData} from "jigsaw/public_api";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {JigsawNavigationMenu, JigsawProgress, SimpleNode, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
         .block {
             display: inline-block;
-            width: 300px;
+            width: 200px;
             vertical-align: top;
+        }
+        .block a {
+            margin: 4px 0;
+            display: block;
         }
     `]
 })
@@ -95,6 +99,16 @@ export class NavigationMenuNavDemo {
         `);
     }
 
+    @ViewChildren(JigsawNavigationMenu)
+    menus: QueryList<JigsawNavigationMenu>;
+    selectedMenuLabel = '';
+
+    selectMenu(): void {
+        this.menus.forEach(menu => {
+            menu.selectMenu('label', this.selectedMenuLabel);
+        });
+    }
+
     @ViewChild('menu')
     navigationMenu: JigsawNavigationMenu;
 
@@ -113,7 +127,7 @@ export class NavigationMenuNavDemo {
         this.navigationMenu.update();
     }
 
-    menuSelect(node: SimpleTreeData) {
+    onMenuSelect(node: SimpleNode) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
@@ -121,7 +135,7 @@ export class NavigationMenuNavDemo {
         this.collapsed = !this.collapsed;
     }
 
-    collapsedChanged(event: boolean) {
+    onCollapsedChanged(event: boolean) {
         console.log(event, this.collapsed);
     }
 
