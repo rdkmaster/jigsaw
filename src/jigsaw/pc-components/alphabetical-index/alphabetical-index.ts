@@ -32,18 +32,14 @@ export type PinyinDictionary = {
     [chineseChar: string]: Letter
 };
 
-const _enLetters: Letter[] = ['#', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'];
-const _zhLetters = ['阿', '八', '嚓', '哒', '妸', '发', '旮', '哈', '讥', '咔', '垃', '痳', '拏', '噢', '妑', '七', '呥', '扨', '它', '穵', '夕', '丫', '帀'];
-// 常用3千汉字在自动归类时的错漏修正表
-// 采用下面这个结构更节约代码空间，但需要将其转换为 PinyinDictionary 所需的结构
-const _tmpDict = {
-    Z: "椎", D: "搭达", K: "咳", T: "他", R: '韧仍日戎绒荣容溶蓉熔融柔揉肉如儒乳辱入软锐瑞润若弱',
-    L: '磷鳞凛伶灵玲凌铃陵菱蛉零龄岭领令溜刘流留硫馏榴瘤柳六龙笼聋隆垄拢搂漏卢芦炉虏鲁陆录鹿碌路露驴吕旅屡缕履律虑率绿氯滤卵乱掠略仑伦轮罗萝逻锣箩骡螺裸洛络骆落另楼铝论',
+const _zhBorderChars = [
+    '帀Z', '丫Y', '夕X', '屲W', '他T', '仨S', '呥R', '七Q', '妑P', '喔O', '嗯N', '呣M',
+    '垃L', '咔K', '丌J', '哈H', '旮G', '发F', '妸E', '咑D', '嚓C', '丷B', '阿A'
+];
+// 常用汉字在自动归类时的惯用修正表
+const _commonChinesePinyinReviser = {
+    "嗯": "E", "咳": "K", "椎": "Z"
 };
-const _commonChinesePinyinReviser: PinyinDictionary = {};
-for (let py in _tmpDict) {
-    _tmpDict[py].split('').forEach(char => _commonChinesePinyinReviser[char] = <Letter>py);
-}
 
 
 @WingsTheme('alphabetical-index.scss')
@@ -203,13 +199,8 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
                 return;
             }
             // 剩下的是字典里没有的，使用通用方式处理
-            const letter = _enLetters.find((letter, idx) => {
-                if (idx > 0 && _zhLetters[idx - 1].localeCompare(firstChar, 'zh-CN') > 0) {
-                    return false;
-                }
-                return firstChar.localeCompare(_zhLetters[idx], 'zh-CN') == -1;
-            });
-            letterGroup[letter].push(item);
+            const char = _zhBorderChars.find(ch => ch[0].localeCompare(firstChar, 'zh-CN') <= 0);
+            letterGroup[char?.[1] || '#'].push(item);
         });
 
         const result: SortedIndexData = new ArrayCollection([]);
