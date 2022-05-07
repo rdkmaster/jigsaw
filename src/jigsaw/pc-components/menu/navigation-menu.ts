@@ -80,59 +80,83 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     @Output()
     public select: EventEmitter<SimpleNode> = new EventEmitter<SimpleNode>();
 
-    /**
-     * @internal
-     */
-    public _$menuSelect(menuItem: any): void {
-        if (menuItem.nodes && menuItem.nodes.length > 0) {
-            // 有子菜单，只展开
-            menuItem.isActive = !menuItem.isActive;
-            return;
+    public selectMenu(item: SimpleNode): boolean;
+    public selectMenu(property1: string, value1: string | number,
+                      property2?: string, value2?: string | number,
+                      property3?: string, value3?: string | number): boolean;
+    public selectMenu(...args): boolean {
+        if (!this.data?.nodes?.length) {
+            return false;
         }
-        if (menuItem.selected) {
-            // 已选中，直接返回
-            return;
-        }
-        // 没有子菜单，选中当前点击项，发出事件
-        this.data.nodes.forEach(menu => {
-            if (menu.selected) {
-                menu.selected = false;
-                menu.nodes.forEach(item => item.selected = false);
+        let lv1: SimpleNode, lv2: SimpleNode;
+        if (args[0] instanceof SimpleNode) {
+            [lv1, lv2] = this._findNode(args[0]);
+        } else {
+            const target: any = {}, trackItemBy = [];
+            for (let i = 0; i < args.length; i += 2) {
+                if (args[i]) {
+                    target[args[i]] = args[i + 1];
+                    trackItemBy.push(args[i]);
+                }
             }
-        });
-        menuItem.selected = !menuItem.selected;
-        this.select.emit(menuItem);
+            [lv1, lv2] = this._findNode(target, trackItemBy);
+        }
+        if (!lv1 && !lv2) {
+            return false;
+        }
+
+        if (lv2) {
+            if (lv2.selected) {
+                // 已选中，直接返回
+                return;
+            }
+            this._resetMenuSelected();
+            lv2.selected = true;
+            lv1.isActive = true;
+            this._cdr.markForCheck();
+            this.select.emit(lv2);
+            return;
+        }
+
+        if (lv1) {
+            if (lv1.nodes?.length) {
+                // 有子菜单，只切换开闭状态
+                lv1.isActive = !lv1.isActive;
+                this._cdr.markForCheck();
+                return;
+            }
+            if (lv1.selected) {
+                // 已选中，直接返回
+                return;
+            }
+            this._resetMenuSelected();
+            lv1.selected = true;
+            this.select.emit(lv1);
+        }
     }
 
-    /**
-     * @internal
-     */
-    public _$subMenuSelect(menu: SimpleNode): void {
-        if (menu.selected) {
-            // 已选中，直接返回
-            return;
-        }
-        menu.selected = !menu.selected;
-        this.select.emit(menu);
+    private _resetMenuSelected(): void {
         this.data.nodes.forEach(node => {
-            let currentIndex = -1;
-            node.nodes.forEach((item, index) => {
-                if (item.label == menu.label) {
-                    currentIndex = index;
-                } else {
-                    item.selected = false;
-                }
-            });
-            if (currentIndex != -1) {
-                // 当前点击菜单的上一级菜单
-                node.selected = menu.selected;
-            }
-            if (currentIndex == -1 && node.selected) {
-                // 其它菜单，置为非选择状态
+            if (!node.nodes?.length) {
                 node.selected = false;
-                node.nodes.forEach(item => item.selected = false);
             }
-        })
+            node.nodes.forEach(n => n.selected = false);
+        });
+    }
+
+    private _findNode(target: {[property: string]: string}, trackItemBy?: string[], parent?: SimpleNode): [SimpleNode, SimpleNode] {
+        parent = parent || this.data;
+        const node = parent.nodes.find(n => CommonUtils.compareWithKeyProperty(n, target, trackItemBy));
+        if (node) {
+            return parent == this.data ? [node, null] : [null, node];
+        }
+        for (let lv1 of parent.nodes) {
+            const [, lv2] = this._findNode(target, trackItemBy, lv1);
+            if (lv2) {
+                return [lv1, lv2];
+            }
+        }
+        return [null, null];
     }
 
     /**
