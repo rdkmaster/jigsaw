@@ -59,6 +59,11 @@
                 "input": "src/jigsaw/common/core/theming/themes/masbd-light.scss",
                 "bundleName": "themes/masbd-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/zjcm-light.scss",
+                "bundleName": "themes/zjcm-light",
+                "inject": false
               }
             ],
             "scripts": [
