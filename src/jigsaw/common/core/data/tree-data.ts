@@ -5,7 +5,7 @@ const iconUrlCache: string[] = [];
 
 export const rxIconUrl = /.+\.(svg|png|jpe?g|gif)\s*$/i;
 
-export function iconUrl2className(urlOrFontIcon: string): string {
+export function toClassName(urlOrFontIcon: string): string {
     if (!rxIconUrl.test(urlOrFontIcon)) {
         return urlOrFontIcon;
     }
@@ -78,6 +78,7 @@ export class TreeData extends GeneralCollection<any> {
 
 export class SimpleNode {
     [prop: string]: any;
+
     label: string;
     nodes?: SimpleNode[];
     iconUnicode?: string;
@@ -87,9 +88,9 @@ export class SimpleNode {
 // 把这个属性单独拎出来在这里定义，避免这个问题，同时也避免当做public暴露给应用
 Object.defineProperty(SimpleNode.prototype, 'iconSkin', {
     get: function () {
-        return iconUrl2className(this.iconUnicode);
+        return toClassName(this.iconUnicode);
     },
-    set: function(value: string) {
+    set: function (value: string) {
         this.iconUnicode = value;
     },
     enumerable: true,

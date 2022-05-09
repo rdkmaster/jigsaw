@@ -3,7 +3,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
-import {iconUrl2className, rxIconUrl, SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
+import {toClassName, rxIconUrl, SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
 
@@ -215,14 +215,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     private _setZTreeNodeIcon(sheet: CSSStyleSheet) {
         const customIcon = [];
         this._getZTreeNodeIcon(this.data, customIcon);
-        customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon: string) => {
-            const iconClass = iconUrl2className(icon);
-            const rule = iconClass == icon ? `{content: "\\${icon}"}` : // iconClass和icon相等意味着不是url
-                `{content: ""; background: url(${icon}) no-repeat center;}`;
+        customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((iconOrUrl: string) => {
+            const iconClass = toClassName(iconOrUrl);
+            const rule = iconClass == iconOrUrl ? `{content: "\\${iconOrUrl}"}` : // iconClass和iconOrUrl相等意味着不是url
+                `{content: ""; background: url(${iconOrUrl}) no-repeat center;}`;
             sheet.insertRule(
                 `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_open::after,` +
-                    `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_close::after,` +
-                    `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_docu::after ${rule}`,
+                `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_close::after,` +
+                `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_docu::after ${rule}`,
                 sheet.cssRules.length
             );
         });
@@ -570,16 +570,13 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 let extraInfo = {"newName": newName, "isCancel": isCancel};
                 that._setTreeEvent.call(that, "beforeRename", treeId, treeNode, undefined, extraInfo);
                 return that._callCustomCallbackEvent("beforeRename", undefined, treeId, treeNode, newName, isCancel);
-
             }
-
         }
 
         function before_rightClick(treeId, treeNode) {
             that._setTreeEvent.call(that, "beforeRightClick", treeId, treeNode);
             return that._callCustomCallbackEvent("beforeRightClick", undefined, treeId, treeNode);
         }
-
 
         function on_asyncError(event, treeId, treeNode, _XMLHttpRequest, textStatus, errorThrown) {
             event.stopPropagation();
