@@ -24,7 +24,6 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     cursor: default;
 }
 
-
 .#{$badge-prefix-cls}-size-large {
     height: 24px;
     min-width: 24px;
@@ -125,7 +124,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 .#{$badge-prefix-cls}-border-error {
     background: transparent;
     color: $error-default;
-    border: 1px solid $error-default;;
+    border: 1px solid $error-default;
 }
 
 .#{$badge-prefix-cls}-dot {
@@ -159,6 +158,14 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     height: 0px;
     border-style: solid;
     z-index: $zindex-popover-level-1;
+}
+
+.#{$badge-prefix-cls}-mask-default {
+    border-color: $mask-default;
+}
+
+.#{$badge-prefix-cls}-mask-background-default {
+    background-color: $mask-default;
 }
 
 .#{$badge-prefix-cls}-mask-light {
