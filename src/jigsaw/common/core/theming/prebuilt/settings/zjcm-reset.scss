@@ -109,12 +109,10 @@
 }
 
 .jigsaw-table-host {
-    border-top: 1px solid #cedbef;
-    border-left: 1px solid #cedbef;
-    border-right: 1px solid #cedbef;
+    outline: 1px solid #cedbef;
 
     table {
-        tr {
+        tr:not(:last-of-type) {
             border-bottom: 1px solid #cedbef;
         }
 
@@ -126,9 +124,15 @@
         thead {
             font-weight: unset;
 
-            tr td {
-                border: none;
-                color: #69749c;
+            tr {
+                &:last-of-type {
+                    border-bottom: 1px solid #cedbef;
+                }
+
+                td {
+                    border: none;
+                    color: #69749c;
+                }
             }
         }
     }
