@@ -25,7 +25,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
-import {JigsawTag} from "../tag/tag";
+import {JigsawTag, PresetColor} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -34,6 +34,7 @@ export class ComboSelectValue {
     [index: string]: any;
 
     closable?: boolean;
+    selectedColor?: string | PresetColor;
 }
 
 @WingsTheme('combo-select.scss')
