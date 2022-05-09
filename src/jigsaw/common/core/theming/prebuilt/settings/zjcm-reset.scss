@@ -73,6 +73,20 @@
         .jigsaw-radio-option-content {
             color: $font-color-hint;
         }
+
+        &.jigsaw-radio-option-disabled {
+            .jigsaw-radio-option-checked {
+                opacity: 0.3;
+
+                + .jigsaw-radio-option-content {
+                    opacity: 0.3;
+                }
+
+                &.jigsaw-radio-option-inner {
+                    border-color: $brand-default;
+                }
+            }
+        }
     }
 }
 

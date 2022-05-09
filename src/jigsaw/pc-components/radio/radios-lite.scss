@@ -20,19 +20,22 @@ $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
             .#{$jigsaw-radio-option}-inner {
                 background: $bg-disabled;
                 border-color: $border-color-disabled;
+
                 &.#{$jigsaw-radio-option}-checked {
                     border-color: $brand-disabled;
                     background: $bg-transparent;
-                    &:hover {
-                        border-color: $brand-disabled;
-                    }
-                }
-                &:hover {
-                    border-color: $border-color-disabled;
                 }
             }
             .#{$jigsaw-radio-option}-content {
                 color: $font-color-disabled;
+            }
+        }
+
+        &:not(.#{$jigsaw-radio-option}-disabled) {
+            .#{$jigsaw-radio-option}-inner {
+                &:hover {
+                    border-color: $primary-default;
+                }
             }
         }
 
@@ -58,9 +61,6 @@ $jigsaw-radio-option: #{$jigsaw-prefix}-radio-option;
             &.#{$jigsaw-radio-option}-checked {
                 border-width: 4px;
                 border-color: $brand-default;
-            }
-            &:hover {
-                border-color: $primary-default;
             }
         }
 
