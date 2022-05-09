@@ -76,10 +76,10 @@
 
         &.jigsaw-radio-option-disabled {
             .jigsaw-radio-option-checked {
-                opacity: 0.5;
+                opacity: 0.3;
 
                 + .jigsaw-radio-option-content {
-                    opacity: 0.5;
+                    opacity: 0.3;
                 }
 
                 &.jigsaw-radio-option-inner {
