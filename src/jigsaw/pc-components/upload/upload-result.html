@@ -10,7 +10,7 @@
             <jigsaw-font-loading *ngIf="file.state == 'loading'" width="16px" height="16px" color="#666" style="padding-right: 6px;">
             </jigsaw-font-loading>
             <i *ngIf="file.state === 'pause'" class="iconfont iconfont-e9f2 pause-icon"></i>
-            <i *ngIf="file.state === 'error'" class="iconfont iconfont-ea4e error-icon"></i>
+            <i *ngIf="file.state === 'error'" class="iconfont iconfont-e1a5 error-icon"></i>
             <i class="iconfont iconfont-e9b8 delete-icon" (click)="this._$removeFile(file)"></i>
         </div>
         <div jigsaw-body class="jigsaw-upload-result-log-detail">

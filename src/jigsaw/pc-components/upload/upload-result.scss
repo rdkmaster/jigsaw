@@ -8,6 +8,10 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
 
     .#{$upload-result-prefix-cls}-collapse {
         .#{$upload-result-prefix-cls}-log {
+            .jigsaw-collapse-arrow {
+                font-weight: 400;
+            }
+
             &.#{$upload-result-prefix-cls}-error {
                 .#{$upload-result-prefix-cls}-log-header .file-name,
                 .#{$upload-result-prefix-cls}-log-header .file-icon {
@@ -17,8 +21,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 .#{$upload-result-prefix-cls}-log-detail
                     .#{$upload-result-prefix-cls}-log-progress
                     .jigsaw-progress-bar {
-                    .jigsaw-progress-bar-track
-                        .jigsaw-progress-bar-track-value {
+                    .jigsaw-progress-bar-track .jigsaw-progress-bar-track-value {
                         background: $error-default;
                         .jigsaw-am-processing {
                             background: $error-default;
@@ -39,6 +42,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 height: 28px;
                 padding: 0 28px 0 10px;
                 line-height: 28px;
+                font-weight: 400;
 
                 .file-icon,
                 .error-icon {
@@ -51,7 +55,7 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                 }
 
                 .file-name {
-                    font-size: $font-size-text-base;
+                    font-size: $font-size-base;
                     color: $font-color-default;
                     padding-right: 4px;
                     overflow: hidden;
@@ -105,12 +109,14 @@ $upload-result-prefix-cls: #{$jigsaw-prefix}-upload-result;
                     align-items: center;
                     height: 28px;
                     line-height: 28px;
-                    font-size: $font-size-text-base;
+                    font-size: $font-size-base;
                     color: $font-color-hint;
+
                     .detail-time {
                         margin-right: 8px;
                         white-space: nowrap;
                     }
+
                     .detail-content {
                         white-space: nowrap;
                         overflow: hidden;
