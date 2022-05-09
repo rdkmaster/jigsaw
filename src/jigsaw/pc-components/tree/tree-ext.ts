@@ -3,14 +3,11 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
-import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
+import {iconUrl2className, rxIconUrl, SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 
 declare const $;
 
-type IconDataItem = {
-    content: string,
-    url: string
-}
+type IconDataItem = { content?: string, url?: string };
 
 type IconData = {
     edit?: IconDataItem;
@@ -106,8 +103,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     /**
-    * @NoMarkForCheckRequired
-    */
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public size: "default" | "medium" | "large" = "default";
 
@@ -151,7 +148,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     private _setZTreeIcon() {
         const iconData: IconData = {};
         for (let key in this.iconSuit) {
-            iconData[key] = this.iconSuit[key].endsWith(".svg") ? { content: "", url: this.iconSuit[key] } : { content: `\\${this.iconSuit[key]}`, url: "" };
+            iconData[key] = rxIconUrl.test(this.iconSuit[key]) ?
+                {content: "", url: this.iconSuit[key]} : {content: `\\${this.iconSuit[key]}`, url: ""};
         }
 
         const id = this._getStyleNodeId();
@@ -217,23 +215,16 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     private _setZTreeNodeIcon(sheet: CSSStyleSheet) {
         const customIcon = [];
         this._getZTreeNodeIcon(this.data, customIcon);
-        customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon) => {
-            if (/.svg\s*$/.test(icon)) {
-                const iconClass = icon.replace("/", "-").replace(".svg", "").trim();
-                sheet.insertRule(
-                    `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_open::after,
-                    .ztree#${this._$uniqueId} li span.button.${iconClass}_ico_close::after,
-                    .ztree#${this._$uniqueId} li span.button.${iconClass}_ico_docu::after {content: ""; background: url(${icon}) no-repeat center;}`,
-                    sheet.cssRules.length
-                );
-            } else {
-                sheet.insertRule(
-                    `.ztree#${this._$uniqueId} li span.button.${icon}_ico_open::after,
-                    .ztree#${this._$uniqueId} li span.button.${icon}_ico_close::after,
-                    .ztree#${this._$uniqueId} li span.button.${icon}_ico_docu::after {content: "\\${icon}"}`,
-                    sheet.cssRules.length
-                );
-            }
+        customIcon.filter((val, i) => customIcon.indexOf(val) === i).forEach((icon: string) => {
+            const iconClass = iconUrl2className(icon);
+            const rule = iconClass == icon ? `{content: "\\${icon}"}` : // iconClass和icon相等意味着不是url
+                `{content: ""; background: url(${icon}) no-repeat center;}`;
+            sheet.insertRule(
+                `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_open::after,` +
+                    `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_close::after,` +
+                    `.ztree#${this._$uniqueId} li span.button.${iconClass}_ico_docu::after ${rule}`,
+                sheet.cssRules.length
+            );
         });
     }
 
@@ -387,14 +378,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this.ztree.editName(node);
     }
 
-    public getCheckedNodes(checked:boolean){
+    public getCheckedNodes(checked: boolean) {
         if (!this.ztree) {
             return;
         }
         return this.ztree.getCheckedNodes(checked);
     }
 
-    public updateNode(node){
+    public updateNode(node) {
         if (!this.ztree) {
             return;
         }
@@ -402,14 +393,14 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this._updateTree();
     }
 
-    public hideNode(node){
+    public hideNode(node) {
         if (!this.ztree) {
             return;
         }
         this.ztree.hideNode(node);
     }
 
-    public showNode(node){
+    public showNode(node) {
         if (!this.ztree) {
             return;
         }
@@ -437,7 +428,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this.ztree.setEditable(editable);
     }
 
-    public checkAllNodes(checked){
+    public checkAllNodes(checked) {
         if (!this.ztree) {
             return;
         }

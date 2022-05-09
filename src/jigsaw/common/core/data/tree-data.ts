@@ -1,6 +1,23 @@
 import {GeneralCollection} from "./general-collection";
 import {CommonUtils} from "../utils/common-utils";
 
+const iconUrlCache: string[] = [];
+
+export const rxIconUrl = /.+\.(svg|png|jpe?g|gif)\s*$/i;
+
+export function iconUrl2className(urlOrFontIcon: string): string {
+    if (!rxIconUrl.test(urlOrFontIcon)) {
+        return urlOrFontIcon;
+    }
+    // 看起来是一个图片url
+    let idx = iconUrlCache.indexOf(urlOrFontIcon);
+    if (idx == -1) {
+        iconUrlCache.push(urlOrFontIcon);
+        idx = iconUrlCache.length - 1;
+    }
+    return `c${idx}`;
+}
+
 /**
  * 用于处理树状关系的数据，目前只实现了最基础的功能，后续会增加子级数据懒加载等功能。
  *
@@ -70,10 +87,7 @@ export class SimpleNode {
 // 把这个属性单独拎出来在这里定义，避免这个问题，同时也避免当做public暴露给应用
 Object.defineProperty(SimpleNode.prototype, 'iconSkin', {
     get: function () {
-        if (/.svg\s*$/.test(this.iconUnicode)) {
-            return this.iconUnicode.replace("/", "-").replace(".svg", "").trim();
-        }
-        return this.iconUnicode;
+        return iconUrl2className(this.iconUnicode);
     },
     set: function(value: string) {
         this.iconUnicode = value;
