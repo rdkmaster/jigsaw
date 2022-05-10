@@ -63,7 +63,6 @@ export class SelectGroupEditResultDemoComponent {
             });
         });
         data.refresh();
-        this._selectGroup.refresh();
     }
 
     clearSelectedItems() {
