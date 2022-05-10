@@ -36,12 +36,12 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
     public iconSuit3: ZTreeIconSuit = {
         edit: "e166",
         remove: "e17b",
-        open: "assets/web.svg",
-        close: "assets/web.svg",
+        open: "/app/demo/pc/tree/icon/assets/web.svg",
+        close: "/app/demo/pc/tree/icon/assets/web.svg",
         document: "e9dc",
-        checkboxChecked: "assets/checkbox-checked.svg",
-        checkboxNotCheck: "assets/checkbox-square.svg",
-        checkboxHalf: "assets/checkbox-minus.svg",
+        checkboxChecked: "/app/demo/pc/tree/icon/assets/checkbox-checked.svg",
+        checkboxNotCheck: "/app/demo/pc/tree/icon/assets/checkbox-square.svg",
+        checkboxHalf: "/app/demo/pc/tree/icon/assets/checkbox-minus.svg",
         nodeOpen: "ea24",
         nodeClose: "ea57"
     };
@@ -151,8 +151,8 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
 
         this.xml2.fromXML(`
             <node>
-                <node label="Web代码" open="true" iconUnicode="assets/pc.svg">
-                    <node label="页面1" open="false" iconUnicode="assets/web.svg">
+                <node label="Web代码" open="true" iconUnicode="/app/demo/pc/tree/icon/assets/pc.svg">
+                    <node label="页面1" open="false" iconUnicode="/app/demo/pc/tree/icon/assets/web.svg">
                         <node label="src" open="true">
                             <node label="index.html" iconUnicode="e5a2"></node>
                             <node label="styles.css" iconUnicode="e5a1"></node>
@@ -164,7 +164,7 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                             <node label="build.sh" iconUnicode="e494"></node>
                         </node>
                     </node>
-                    <node label="页面2" open="true" iconUnicode="assets/web.svg">
+                    <node label="页面2" open="true" iconUnicode="/app/demo/pc/tree/icon/assets/web.svg">
                         <node label="src" open="true">
                             <node label="index.html" iconUnicode="e5a2"></node>
                             <node label="styles1.css" iconUnicode="e5a1"></node>
@@ -181,10 +181,10 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                 </node>
                 <node label="服务端" open="true" iconUnicode="e3a0">
                     <node label="src" open="true">
-                        <node label="查询服务1.sql" iconUnicode="assets/file.svg"></node>
-                        <node label="查询服务2.sql" iconUnicode="assets/file.svg"></node>
-                        <node label="查询服务3.sql" iconUnicode="assets/file.svg"></node>
-                        <node label="查询服务4.sql" iconUnicode="assets/file.svg"></node>
+                        <node label="查询服务1.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务2.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务3.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务4.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
                     </node>
                 </node>
             </node>
