@@ -17,10 +17,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     user-select: none;
     cursor: pointer;
 
-    &.#{$jigsaw-tag}-color {
-        color: $font-color-white;
-    }
-
     &.#{$jigsaw-tag}-preset {
         &-blue {
             color: $blue-7;
