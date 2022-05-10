@@ -1,11 +1,14 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import { Component, ViewChild } from "@angular/core";
+import { ArrayCollection, JigsawSelectGroup } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html"
 })
 export class SelectGroupEditResultDemoComponent {
-    data = [
+    @ViewChild('selectGroup')
+    private _selectGroup: JigsawSelectGroup;
+
+    dataList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
         {
             groupName: "分组标题2",
@@ -16,11 +19,20 @@ export class SelectGroupEditResultDemoComponent {
             ]
         },
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
-    ];
+    ]);
 
-    dataList = new ArrayCollection(this.data);
-
-    dataList2 = new ArrayCollection(this.data);
+    dataList2 = new ArrayCollection([
+        { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+        {
+            groupName: "分组标题2",
+            data: [
+                { label: "禁用选项4", disabled: true },
+                { label: "禁用选项5", disabled: true },
+                { label: "文本选项6" }
+            ]
+        },
+        { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
+    ]);
 
     selectedOptions = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项2" }, { label: "文本选项3" }] },
@@ -35,13 +47,23 @@ export class SelectGroupEditResultDemoComponent {
         console.log($event);
     }
 
-    editSelectedItems() {
-        this.selectedOptions.forEach((groupItem, i) => {
+    editSelectedItems(type) {
+        let data;
+        switch (type) {
+            case 'single':
+                data = this.selectedOption;
+                break;
+            case 'multiple':
+            default:
+                data = this.selectedOptions;
+        }
+        data.forEach((groupItem, i) => {
             groupItem.data.forEach((item, j) => {
                 item.label = `修改结果-${i}-${j}`;
             });
         });
-        this.selectedOptions.refresh();
+        data.refresh();
+        this._selectGroup.refresh();
     }
 
     clearSelectedItems() {
@@ -66,11 +88,33 @@ export class SelectGroupEditResultDemoComponent {
     resetData(type: string) {
         switch (type) {
             case 'single':
-                this.dataList2 = new ArrayCollection(this.data);
+                this.dataList2 = new ArrayCollection([
+                    { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+                    {
+                        groupName: "分组标题2",
+                        data: [
+                            { label: "禁用选项4", disabled: true },
+                            { label: "禁用选项5", disabled: true },
+                            { label: "文本选项6" }
+                        ]
+                    },
+                    { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
+                ]);
                 break;
             case 'multiple':
             default:
-                this.dataList = new ArrayCollection(this.data);
+                this.dataList = new ArrayCollection([
+                    { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+                    {
+                        groupName: "分组标题2",
+                        data: [
+                            { label: "禁用选项4", disabled: true },
+                            { label: "禁用选项5", disabled: true },
+                            { label: "文本选项6" }
+                        ]
+                    },
+                    { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
+                ]);
         }
     }
 

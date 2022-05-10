@@ -61,7 +61,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector,
-                private _cdr: ChangeDetectorRef) {
+                public _$cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -440,7 +440,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (value && this._value != value) {
             // 初始表单值的赋值
             this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-            this._cdr.markForCheck();
+            this._$cdr.markForCheck();
         }
         if (emit) {
             this.runMicrotask(() => this.valueChange.emit(this._value));
