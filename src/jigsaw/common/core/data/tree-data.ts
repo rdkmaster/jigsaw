@@ -12,8 +12,8 @@ export function toClassName(urlOrFontIcon: string): string {
     // 看起来是一个图片url
     let idx = iconUrlCache.indexOf(urlOrFontIcon);
     if (idx == -1) {
+        idx = iconUrlCache.length;
         iconUrlCache.push(urlOrFontIcon);
-        idx = iconUrlCache.length - 1;
     }
     return `c${idx}`;
 }
