@@ -14,6 +14,8 @@
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag [theme]="theme" *ngFor="let tagItem of value; trackBy: _$trackByFn"
                         [closable]='textTag && tagItem?.closable'
+                        [selectedColor]="textTag && tagItem.selectedColor"
+                        [select]="textTag && tagItem.selectedColor"
                         (selectChange)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
                 {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}

@@ -27,14 +27,13 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.line-height]': 'height',
-        '[style.background]': '_$realColor',
-        '[style.border-color]': '_$realColor',
+        '[style.background]': '_$commonColor',
+        '[style.border-color]': '_$commonColor',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-tag-host]': 'true',
         '[class.jigsaw-tag-closable]': 'closable && !isAdd',
         '[class.jigsaw-tag-disabled]': 'disabled',
         '[class.jigsaw-tag-add]': 'isAdd',
-        '[class.jigsaw-tag-color]': '_$realColor?.startsWith("preset-")',
         '[class.jigsaw-tag-preset-blue]': '_$realColor == "preset-blue"',
         '[class.jigsaw-tag-preset-cyan]': '_$realColor == "preset-cyan"',
         '[class.jigsaw-tag-preset-green]': '_$realColor == "preset-green"',
@@ -121,6 +120,15 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
         } else {
             return this.color;
         }
+    }
+
+    /**
+     * 当使用普通原色时，需要在切换选中时，通过设置null值，清除之前的值
+     * @internal
+     */
+    public get _$commonColor(): string {
+        const realColor = this._$realColor;
+        return realColor.startsWith("preset-") ? null : realColor;
     }
 
     private _closable: boolean;
