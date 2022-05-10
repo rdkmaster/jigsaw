@@ -674,6 +674,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             return;
         }
 
+        this._setEmptyValue(this.data);
+
         this.runMicrotask(() => {
             newValue.forEach((groupData: GroupSelectOption) => {
                 const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
