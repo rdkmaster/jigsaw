@@ -2,13 +2,15 @@ import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: "./demo.component.html"
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"]
 })
 export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData = new SimpleTreeData();
     public xml: SimpleTreeData = new SimpleTreeData();
+    public xml2: SimpleTreeData = new SimpleTreeData();
 
     public iconSuit1: ZTreeIconSuit = {
         edit: "e166",
@@ -22,12 +24,26 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
         nodeOpen: "ea24",
         nodeClose: "ea57"
     };
+
     public iconSuit2: ZTreeIconSuit = {
         edit: "e166",
         remove: "e17b",
         document: "e9dc",
         nodeOpen: "ea48",
         nodeClose: "e9e0"
+    };
+
+    public iconSuit3: ZTreeIconSuit = {
+        edit: "e166",
+        remove: "e17b",
+        open: "/app/demo/pc/tree/icon/assets/web.svg",
+        close: "/app/demo/pc/tree/icon/assets/web.svg",
+        document: "e9dc",
+        checkboxChecked: "/app/demo/pc/tree/icon/assets/checkbox-checked.svg",
+        checkboxNotCheck: "/app/demo/pc/tree/icon/assets/checkbox-square.svg",
+        checkboxHalf: "/app/demo/pc/tree/icon/assets/checkbox-minus.svg",
+        nodeOpen: "ea24",
+        nodeClose: "ea57"
     };
 
     constructor() {
@@ -80,17 +96,17 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                         nodes: [
                             {
                                 label: "src", open: true, nodes: [
-                                    {label: 'index.html', iconUnicode: 'e5a2'},
-                                    {label: 'styles.css', iconUnicode: 'e5a1'},
-                                    {label: 'component1.ts', iconUnicode: 'e5a0'},
-                                    {label: 'component2.ts', iconUnicode: 'e5a0'},
+                                    { label: 'index.html', iconUnicode: 'e5a2' },
+                                    { label: 'styles.css', iconUnicode: 'e5a1' },
+                                    { label: 'component1.ts', iconUnicode: 'e5a0' },
+                                    { label: 'component2.ts', iconUnicode: 'e5a0' },
                                 ]
                             },
                             {
                                 label: "build", open: true,
                                 nodes: [
-                                    {label: 'check.sh', iconUnicode: 'e494'},
-                                    {label: 'build.sh', iconUnicode: 'e494'},
+                                    { label: 'check.sh', iconUnicode: 'e494' },
+                                    { label: 'build.sh', iconUnicode: 'e494' },
                                 ]
                             },
                         ]
@@ -100,17 +116,17 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                         nodes: [
                             {
                                 label: "src", open: true, nodes: [
-                                    {label: 'index.html', iconUnicode: 'e5a2'},
-                                    {label: 'styles.css', iconUnicode: 'e5a1'},
-                                    {label: 'component1.ts', iconUnicode: 'e5a0'},
-                                    {label: 'component2.ts', iconUnicode: 'e5a0'},
+                                    { label: 'index.html', iconUnicode: 'e5a2' },
+                                    { label: 'styles.css', iconUnicode: 'e5a1' },
+                                    { label: 'component1.ts', iconUnicode: 'e5a0' },
+                                    { label: 'component2.ts', iconUnicode: 'e5a0' },
                                 ]
                             },
                             {
                                 label: "build", open: true,
                                 nodes: [
-                                    {label: 'check.sh', iconUnicode: 'e494'},
-                                    {label: 'build.sh', iconUnicode: 'e494'},
+                                    { label: 'check.sh', iconUnicode: 'e494' },
+                                    { label: 'build.sh', iconUnicode: 'e494' },
                                 ]
                             },
                         ]
@@ -132,6 +148,47 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
                 ]
             }
         ]);
+
+        this.xml2.fromXML(`
+            <node>
+                <node label="Web代码" open="true" iconUnicode="/app/demo/pc/tree/icon/assets/pc.svg">
+                    <node label="页面1" open="false" iconUnicode="/app/demo/pc/tree/icon/assets/web.svg">
+                        <node label="src" open="true">
+                            <node label="index.html" iconUnicode="e5a2"></node>
+                            <node label="styles.css" iconUnicode="e5a1"></node>
+                            <node label="component1.ts" iconUnicode="e5a0"></node>
+                            <node label="component2.ts" iconUnicode="e5a0"></node>
+                        </node>
+                        <node label="build" open="true">
+                            <node label="check.sh" iconUnicode="e494"></node>
+                            <node label="build.sh" iconUnicode="e494"></node>
+                        </node>
+                    </node>
+                    <node label="页面2" open="true" iconUnicode="/app/demo/pc/tree/icon/assets/web.svg">
+                        <node label="src" open="true">
+                            <node label="index.html" iconUnicode="e5a2"></node>
+                            <node label="styles1.css" iconUnicode="e5a1"></node>
+                            <node label="styles2.css" iconUnicode="e5a1"></node>
+                            <node label="component1.ts" iconUnicode="e5a0"></node>
+                            <node label="component2.ts" iconUnicode="e5a0"></node>
+                        </node>
+                        <node label="build" open="true">
+                            <node label="check1.sh" iconUnicode="e494"></node>
+                            <node label="check2.sh" iconUnicode="e494"></node>
+                            <node label="build.sh" iconUnicode="e494"></node>
+                        </node>
+                    </node>
+                </node>
+                <node label="服务端" open="true" iconUnicode="e3a0">
+                    <node label="src" open="true">
+                        <node label="查询服务1.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务2.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务3.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务4.sql" iconUnicode="/app/demo/pc/tree/icon/assets/file.svg"></node>
+                    </node>
+                </node>
+            </node>
+        `);
     }
 
     public onClick(msg: any) {
