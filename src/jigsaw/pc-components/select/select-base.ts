@@ -6,7 +6,7 @@ import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common
 import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { CheckBoxStatus } from "../checkbox/typings";
-import { JigsawComboSelect } from '../combo-select';
+import { JigsawComboSelect } from '../combo-select/index';
 
 export type SelectOption = {
     disabled?: boolean;
