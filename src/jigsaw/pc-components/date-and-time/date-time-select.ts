@@ -13,28 +13,28 @@ import {
     ViewChild,
     AfterViewInit
 } from '@angular/core';
-import {JigsawDateTimePickerModule} from "./date-time-picker";
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 import {ComboSelectValue, JigsawComboSelectModule, JigsawComboSelect} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
-import {GrItem, MarkDate} from "./date-picker";
-import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {debounceTime} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawDateTimePickerModule} from "./date-time-picker";
+import {GrItem, MarkDate} from "./date-picker";
+import {TimeStep} from "./time-picker";
 
 @WingsTheme('date-time-select.scss')
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
     template: `
         <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 150" [textTag]="false"
-                             (openChange)="_$onComboOpenChange($event)">
+                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : '150'" [textTag]="false"
+                             (openChange)="_$onComboOpenChange($event)" selectIcon="iconfont iconfont-e177">
             <ng-template>
                 <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                          (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton"

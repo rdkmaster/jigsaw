@@ -37,6 +37,8 @@ export class ComboSelectValue {
     selectedColor?: string | PresetColor;
 }
 
+const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
+
 @WingsTheme('combo-select.scss')
 @Component({
     selector: 'jigsaw-combo-select, j-combo-select',
@@ -87,7 +89,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
-    @Output() public valueChange = new EventEmitter<any[]>();
+    @Output()
+    public valueChange = new EventEmitter<any[]>();
 
     /**
      * @NoMarkForCheckRequired
@@ -227,6 +230,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public get showBorder(): boolean {
         return this._showBorder;
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public selectIcon: string = 'iconfont iconfont-e24c';
+
+    public get selectArrowClass() {
+        return !this.selectIcon ? null : {
+            [this.selectIcon]: true, 'jigsaw-combo-select-arrow-rotate': _noRotateIcons.indexOf(this.selectIcon) == -1
+        };
     }
 
     /**
