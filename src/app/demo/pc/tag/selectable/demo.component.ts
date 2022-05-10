@@ -11,6 +11,7 @@ export class TagSelectableDemoComponent {
         {label: 'Tag1', selected: true}, {label: 'Tag2'}, {label: 'Tag3'},
         {label: 'Tag4'}, {label: 'Tag5'}, {label: 'Disabled1'}, {label: 'Disabled2'}
     ];
+    selectedColor = ['preset-magenta'];
 
     onSelect(tag: string, selected: boolean) {
         console.log(tag, ':', selected);
