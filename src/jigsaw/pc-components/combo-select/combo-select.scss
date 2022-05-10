@@ -147,7 +147,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         &-clear {
             position: absolute;
             top: 50%;
-            right: 20px;
             transform: translateY(-50%);
             font-size: $icon-size-sm;
             color: $icon-color-default;

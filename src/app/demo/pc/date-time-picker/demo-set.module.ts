@@ -10,8 +10,6 @@ import {DateTimePickerLimitDemoModule} from "./limit/demo.module";
 import {DateTimePickerMarkDemoModule} from "./mark/demo.module";
 import {DateTimePickerMarkDemoComponent} from "./mark/demo.component";
 import {DateTimePickerLimitComponent} from "./limit/demo.component";
-import {WithComboSelectDemoComponent} from "./with-combo-select/demo.component";
-import {WithComboSelectDemoModule} from "./with-combo-select/demo.module";
 import {DateTimePickerStepDemoComponent} from "./step/demo.component";
 import {DateTimePickerStepDemoModule} from "./step/demo.module";
 import {DateTimePickerValidDemoComponent} from "./valid/demo.component";
@@ -44,9 +42,6 @@ export const routerConfig = [
         path: 'mark', component: DateTimePickerMarkDemoComponent
     },
     {
-        path: 'with-combo-select', component: WithComboSelectDemoComponent
-    },
-    {
         path: 'step', component: DateTimePickerStepDemoComponent
     },
     {
@@ -77,7 +72,6 @@ export const routerConfig = [
         DateTimePickerGrItemDemoModule,
         DateTimePickerLimitDemoModule,
         DateTimePickerMarkDemoModule,
-        WithComboSelectDemoModule,
         DateTimePickerStepDemoModule,
         DateTimePickerValidDemoModule,
         WithFloatDemoModule,
