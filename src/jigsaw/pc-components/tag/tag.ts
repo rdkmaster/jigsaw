@@ -128,7 +128,7 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      */
     public get _$commonColor(): string {
         const realColor = this._$realColor;
-        if (typeof realColor?.startsWith == 'function' && realColor.startsWith("preset-")) {
+        if (realColor.startsWith("preset-")) {
             return null;
         }
         return realColor;
