@@ -36,7 +36,7 @@ export class ComboSelectValue {
     closable?: boolean;
 }
 
-const _defaultSelectIcon: string = 'iconfont iconfont-e24c';
+const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
 
 @WingsTheme('combo-select.scss')
 @Component({
@@ -88,7 +88,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
-    @Output() public valueChange = new EventEmitter<any[]>();
+    @Output()
+    public valueChange = new EventEmitter<any[]>();
 
     /**
      * @NoMarkForCheckRequired
@@ -234,12 +235,11 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
-    public selectIcon: string = _defaultSelectIcon;
+    public selectIcon: string = 'iconfont iconfont-e24c';
 
     public get selectArrowClass() {
         return !this.selectIcon ? null : {
-            [this.selectIcon]: true,
-            'jigsaw-combo-select-arrow-rotate': this.selectIcon == _defaultSelectIcon
+            [this.selectIcon]: true, 'jigsaw-combo-select-arrow-rotate': _noRotateIcons.indexOf(this.selectIcon) == -1
         };
     }
 
