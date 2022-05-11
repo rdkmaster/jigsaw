@@ -731,7 +731,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = this._value.onRefresh(() => {
-            this._comboSelect._$cdr.markForCheck();
+            this._comboSelect._cdr.markForCheck();
         })
     }
 
@@ -786,12 +786,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removeOnRefresh) {
-            this._removeOnRefresh();
-        }
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
-            this._removeOnRefreshListener = null;
         }
     }
 }

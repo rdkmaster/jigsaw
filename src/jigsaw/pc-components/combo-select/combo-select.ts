@@ -64,7 +64,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 /**
                 * @internal
                 */
-                public _$cdr: ChangeDetectorRef) {
+                public _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
@@ -443,7 +443,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         if (value && this._value != value) {
             // 初始表单值的赋值
             this._value = value instanceof ArrayCollection ? value : new ArrayCollection(value);
-            this._$cdr.markForCheck();
+            this._cdr.markForCheck();
         }
         if (emit) {
             this.runMicrotask(() => this.valueChange.emit(this._value));
