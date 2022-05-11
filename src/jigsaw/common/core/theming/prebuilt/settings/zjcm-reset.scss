@@ -123,10 +123,12 @@
 }
 
 .jigsaw-table-host {
-    outline: 1px solid #cedbef;
+    border-top: 1px solid #cedbef;
 
     table {
-        tr:not(:last-of-type) {
+        tr {
+            border-right: 1px solid #cedbef;
+            border-left: 1px solid #cedbef;
             border-bottom: 1px solid #cedbef;
         }
 
