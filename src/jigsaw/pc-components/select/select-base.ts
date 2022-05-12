@@ -728,11 +728,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         });
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
-            this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = this._value.onRefresh(() => {
             this._comboSelect._cdr.markForCheck();
-        })
+        });
     }
 
     private _updateSelectedItems(): void {
