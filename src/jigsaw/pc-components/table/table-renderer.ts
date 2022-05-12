@@ -21,6 +21,7 @@ import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/a
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DragDropInfo} from "../../common/directive/dragdrop/types";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
+import {JigsawIconModule} from "../icon/icon";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -351,8 +352,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
     constructor(private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+                // @RequireMarkForCheck 需要用到，勿删
+                protected _injector: Injector) {
         super(_injector);
     }
 
@@ -570,8 +571,12 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
  */
 @Component({
     template: `
-        <j-progress [theme]="theme" [value]="cellData" width="80%" [labelPosition]="_$labelPosition" [showMarker]="false"
-                    [animate]="_$animate" [status]="_$status"></j-progress>
+        <ng-container [ngSwitch]="_$viewType">
+            <j-progress *ngSwitchCase="'processing'" [theme]="theme" [value]="cellData" width="80%" [status]="_$status"
+                        [labelPosition]="_$labelPosition" [showMarker]="false" [animate]="_$animate">
+            </j-progress>
+            <jigsaw-icon *ngSwitchDefault [status]="_$viewType" style="font-size:var(--font-size-text-base)"></jigsaw-icon>
+        </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -581,6 +586,17 @@ export class TableCellProgressRenderer extends TableCellRendererBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector, protected _zone: NgZone) {
         super(_injector);
+    }
+
+    public get _$viewType(): 'processing' | 'success' | 'warning' | 'error' | 'finish' | 'disabled' {
+        if (['success', 'warning', 'error', 'finish', 'disabled'].indexOf(this.cellData) != -1) {
+            return this.cellData;
+        }
+        const n = parseFloat(this.cellData);
+        if (isNaN(n) || n < 0) {
+            return 'error';
+        }
+        return n > 100 ? 'success' : 'processing';
     }
 
     public get _$animate() {
@@ -941,7 +957,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     ],
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
-        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule
+        JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule, JigsawIconModule
     ]
 })
 export class JigsawTableRendererModule {

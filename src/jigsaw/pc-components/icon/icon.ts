@@ -1,10 +1,20 @@
-import {Component, Input, NgModule,ChangeDetectionStrategy, Injector, OnInit, Renderer2, ElementRef, Optional} from '@angular/core';
+import {
+    Component,
+    Input,
+    NgModule,
+    ChangeDetectionStrategy,
+    Injector,
+    OnInit,
+    Renderer2,
+    ElementRef,
+    Optional
+} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
+import { TranslateService } from '@ngx-translate/core';
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
-import {DomSanitizer} from "@angular/platform-browser";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { TranslateService } from '@ngx-translate/core';
 import { InternalUtils } from '../../common/core/utils/internal-utils';
 
 const defaultHrefValue = 'javascript:void(0);';
@@ -28,10 +38,18 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
 })
 
 export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
+    constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, private _element: ElementRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector,
+                @Optional() private _translateService: TranslateService) {
+        super();
+        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
+    }
+
     /**
      * @internal
      */
-    public _$secureUrl;
+    public _$secureUrl: SafeResourceUrl;
     private _href: string = defaultHrefValue;
     private _target: string = '_blank';
 
@@ -148,67 +166,71 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
             return;
         }
         this._status = value;
-        switch (value) {
+        this.updateStatus(value, this.initialized ? null : this.text, this.initialized ? null : this.icon);
+    }
+
+    public updateStatus(newStatus: StatusType, text?: string, icon?: string): void {
+        if (CommonUtils.isUndefined(newStatus)) {
+            return;
+        }
+        this._status = newStatus;
+        const defaultStatus = this._getDefaultStatus(newStatus);
+        this.text = CommonUtils.isDefined(text) ? text : defaultStatus.text;
+        this.icon = CommonUtils.isDefined(icon) ? icon : defaultStatus.icon;
+        this.iconColor = defaultStatus.color;
+        this.iconSize = !!this.iconSize ? this.iconSize : 10;
+
+        for (const cn of this._element.nativeElement.classList) {
+            if (/^jigsaw-status-\w+$/.test(cn)) {
+                this._renderer.removeClass(this._element.nativeElement, cn);
+            }
+        }
+        this._renderer.addClass(this._element.nativeElement, defaultStatus.className);
+    }
+
+    private _getDefaultStatus(status: StatusType): {icon: string, color: string, text: string, className: string} {
+        switch (status) {
             case 'success':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--success-default)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.success`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-success');
-                break;
+                return {
+                    color: 'var(--success-default)', text: this._translateService.instant(`icon.success`),
+                    className: 'jigsaw-status-success', icon: 'iconfont iconfont-e9f1'
+                };
             case 'warning':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--danger-default)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.warning`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-warning');
-                break;
+                return {
+                    color: 'var(--danger-default)', text: this._translateService.instant(`icon.warning`),
+                    className: 'jigsaw-status-warning', icon: 'iconfont iconfont-e9f1'
+                };
             case 'error':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--error-default)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.error`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-error');
-                break;
+                return {
+                    color: 'var(--error-default)', text: this._translateService.instant(`icon.error`),
+                    className: 'jigsaw-status-error', icon: 'iconfont iconfont-e9f1'
+                };
             case 'finish':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--primary-default)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.finish`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-finish');
-                break;
+                return {
+                    color: 'var(--primary-default)', text: this._translateService.instant(`icon.finish`),
+                    className: 'jigsaw-status-finish', icon: 'iconfont iconfont-e9f1'
+                };
             case 'disabled':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--font-color-disabled)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.disabled`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-disabled');
-                break;
+                return {
+                    color: 'var(--font-color-disabled)', text: this._translateService.instant(`icon.disabled`),
+                    className: 'jigsaw-status-disabled', icon: 'iconfont iconfont-e9f1'
+                };
             case 'process':
-                this._setStautsStyle();
-                this.iconColor = !!this.iconColor ? this.iconColor : 'var(--process-default)';
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.process`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-process');
-                break;
+                return {
+                    color: 'var(--process-default)', text: this._translateService.instant(`icon.process`),
+                    className: 'jigsaw-status-process', icon: 'iconfont iconfont-e9f1'
+                };
             case 'custom':
-                this._setStautsStyle();
-                this.text = !!this.text ? this.text : this._translateService.instant(`icon.custom`);
-                this._renderer.addClass(this.element.nativeElement, 'jigsaw-status-custom');
-                break;
             default:
-                break;
+                return {
+                    color: 'inherit', text: this._translateService.instant(`icon.custom`),
+                    className: 'jigsaw-status-custom', icon: 'iconfont iconfont-e9f1'
+                };
         }
     }
 
-    private _setStautsStyle() {
-        this.icon = !!this.icon ? this.icon : 'iconfont iconfont-e9f1';
-        this.iconSize = !!this.iconSize ? this.iconSize : 10;
-    }
-
-    constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, public element: ElementRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector,
-                @Optional() private _translateService: TranslateService,) {
-        super();
-        this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
-    }
-
     ngOnInit () {
+        super.ngOnInit();
         this.iconSize = !!this.iconSize ? this.iconSize : 'inherit';
         this.iconColor = !!this.iconColor ? this.iconColor : 'inherit';
         this.text = !!this.text ? this.text : '';
