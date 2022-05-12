@@ -23,7 +23,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         }
 
         &[ng-reflect-jigsaw-float-open="true"] {
-            .#{$jigsaw-combo-select}-arrow {
+            .#{$jigsaw-combo-select}-arrow-rotate {
                 @include prefixer(transform, translateY(-50%) rotate(180deg));
             }
         }
@@ -31,7 +31,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         &-selection {
             min-height: $height-base;
             padding: 0 30px 0 8px;
-            background: $bg-component;
+            background: $bg-transparent;
             border-width: 1px;
             border-style: solid;
             border-color: $border-color-default;
@@ -87,12 +87,17 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         }
 
         &-disabled {
+            background: $bg-disabled;
             color: $font-color-disabled-spec;
 
             .#{$jigsaw-combo-select}-selection {
                 border-color: $border-color-disabled;
 
                 .#{$jigsaw-combo-select}-selection-rendered {
+                    .#{$jigsaw-combo-select}-placeholder{
+                        color: $font-color-disabled;
+                    }
+
                     .jigsaw-tag-host {
                         color: $font-color-disabled;
                         pointer-events: none;
@@ -102,6 +107,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
 
             .iconfont {
                 color: $icon-color-disabled;
+                line-height: 1;
                 pointer-events: none;
             }
         }
@@ -141,7 +147,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         &-clear {
             position: absolute;
             top: 50%;
-            right: 20px;
             transform: translateY(-50%);
             font-size: $icon-size-sm;
             color: $icon-color-default;

@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import { NG_VALUE_ACCESSOR } from "@angular/forms";
 import { JigsawSelectBase } from "./select-base";
-import {WingsTheme} from "../../common/common";
+import { WingsTheme } from "../../common/common";
 
 /**
  * 选择控件
@@ -23,15 +23,18 @@ import {WingsTheme} from "../../common/common";
     selector: "jigsaw-select, j-select",
     templateUrl: "select.html",
     host: {
-        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
-        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
-        "[style.width]": '!multipleSelect ? width : "none"',
         "[attr.data-theme]": "theme",
         "[class.jigsaw-select-host]": "true",
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
-        "[class.jigsaw-select-with-max-width]": "!!maxWidth"
+        "[class.jigsaw-select-with-max-width]": "!!maxWidth",
+        "[class.jigsaw-select-small]": 'size == "small"',
+        "[class.jigsaw-select-medium]": 'size == "medium"',
+        "[class.jigsaw-select-large]": 'size == "large"',
+        "[style.min-width]": 'multipleSelect ? minWidth : "none"',
+        "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
+        "[style.width]": '!multipleSelect ? width : "none"',
     },
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush

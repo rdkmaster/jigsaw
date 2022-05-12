@@ -14,6 +14,8 @@
         <div class="jigsaw-combo-select-selection-rendered">
             <jigsaw-tag [theme]="theme" *ngFor="let tagItem of value; trackBy: _$trackByFn"
                         [closable]='textTag && tagItem?.closable'
+                        [selectedColor]="textTag && tagItem.selectedColor"
+                        [select]="textTag && tagItem.selectedColor"
                         (selectChange)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
                 {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}
@@ -27,8 +29,9 @@
             </div>
         </div>
     </div>
-    <i class="iconfont iconfont-e14b jigsaw-combo-select-clear"
-       *ngIf="clearable && value && value.length != 0" (click)="_$clearValue()"></i>
-    <i class="iconfont iconfont-e24c jigsaw-combo-select-arrow jigsaw-combo-select-down"></i>
+    <i class="iconfont iconfont-e14b jigsaw-combo-select-clear" [ngStyle]="{right: this.selectIcon ? '20px' : '7px'}"
+       *ngIf="clearable && value && value.length != 0" (click)="_$clearValue()">
+    </i>
+    <i class="jigsaw-combo-select-arrow jigsaw-combo-select-down" [ngClass]="selectArrowClass"></i>
 </div>
 <ng-content></ng-content>

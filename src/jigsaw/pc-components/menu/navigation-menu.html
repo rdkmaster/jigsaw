@@ -4,23 +4,23 @@
                     'jigsaw-nav-menu-items-inline': !showToggleButton}">
         <div *ngFor="let menuItem of data?.nodes; let i = index" class="jigsaw-nav-menu-item" [ngClass]="{'jigsaw-nav-menu-item-inactive': !menuItem.isActive,
                         'jigsaw-nav-menu-item-collapsed': collapsed}">
-            <div class="jigsaw-nav-menu-item-top" (click)="_$menuSelect(menuItem)" [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,
+            <div class="jigsaw-nav-menu-item-top" (click)="selectMenu(menuItem)" [ngClass]="{'jigsaw-nav-menu-item-selected': menuItem.selected && menuItem?.nodes?.length > 0,
                  'jigsaw-nav-menu-item-selected-top': menuItem.selected && menuItem?.nodes?.length == 0}">
                 <i *ngIf="collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="menuItem.label" jigsawTooltipTheme="dark"
                     jigsawTooltipPosition="right"></i>
                 <i *ngIf="!collapsed" [ngClass]="menuItem.icon || 'iconfont iconfont-e231'"></i>
-                <span>{{menuItem.label}}</span>
+                <span jigsaw-badge [jigsawBadgeValue]="menuItem?.badgeValue" jigsawBadgeSize="small" jigsawBadgeHorizontalOffset="10">{{menuItem.label}}</span>
                 <i *ngIf="menuItem?.nodes?.length > 0 && !collapsed"
                     class="iconfont iconfont-e24f jigsaw-nav-menu-item-arrow"></i>
             </div>
-            <div class="jigsaw-nav-menu-submenus" [ngClass]="{'jigsaw-nav-menu-submenus-actived': menuItem.isActive}"
+            <div class="jigsaw-nav-menu-submenus" [ngClass]="{'jigsaw-nav-menu-submenus-activated': menuItem.isActive}"
                 [@collapseMotion]="menuItem.isActive ? 'expanded' : 'collapsed' ">
                 <div *ngFor="let subMenu of menuItem?.nodes" class="jigsaw-nav-menu-sub-item" [ngClass]="{'jigsaw-nav-menu-sub-item-selected': subMenu.selected,
-                                'jigsaw-nav-menu-sub-item-collapsed': collapsed}" (click)="_$subMenuSelect(subMenu)">
+                                'jigsaw-nav-menu-sub-item-collapsed': collapsed}" (click)="selectMenu(subMenu)">
                     <i *ngIf="collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'" [jigsawTooltip]="subMenu.label" jigsawTooltipTheme="dark"
                         jigsawTooltipPosition="right"></i>
                     <i *ngIf="!collapsed" [ngClass]="subMenu.icon || 'iconfont iconfont-e231'"></i>
-                    <span>{{subMenu.label}}</span>
+                    <span jigsaw-badge [jigsawBadgeValue]="subMenu?.badgeValue" jigsawBadgeSize="small" jigsawBadgeHorizontalOffset="10">{{subMenu.label}}</span>
                 </div>
             </div>
         </div>

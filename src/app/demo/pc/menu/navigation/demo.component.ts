@@ -1,13 +1,17 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/public_api";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {JigsawNavigationMenu, JigsawProgress, SimpleNode, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styles: [`
         .block {
             display: inline-block;
-            width: 300px;
+            width: 200px;
             vertical-align: top;
+        }
+        .block a {
+            margin: 4px 0;
+            display: block;
         }
     `]
 })
@@ -15,6 +19,7 @@ export class NavigationMenuNavDemo {
     public data1: SimpleTreeData = new SimpleTreeData();
     public data2: SimpleTreeData = new SimpleTreeData();
     public data3: SimpleTreeData = new SimpleTreeData();
+    public data4: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
 
     constructor() {
@@ -52,6 +57,25 @@ export class NavigationMenuNavDemo {
         `;
         this.data2.fromXML(xmlData);
         this.data3.fromXML(xmlData);
+
+        this.data4.fromXML(`
+            <node>
+                <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" badgeValue="12">
+                    <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" badgeValue="3"></node>
+                    <node label="告警统计"></node>
+                    <node label="定时导出" icon="iconfont iconfont-e601"></node>
+                    <node label="告警同步"></node>
+                    <node label="告警提示" icon="iconfont iconfont-e52a" badgeValue="9"></node>
+                </node>
+                <node label="历史告警" icon="iconfont iconfont-e5f7" badgeValue="dot">
+                    <node label="告警查询"></node>
+                </node>
+                <node label="通知" icon="iconfont iconfont-e605">
+                    <node label="通知监控"></node>
+                </node>
+                <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+            </node>
+        `)
     }
 
     updateMenu() {
@@ -75,7 +99,35 @@ export class NavigationMenuNavDemo {
         `);
     }
 
-    menuSelect(node: SimpleTreeData) {
+    @ViewChildren(JigsawNavigationMenu)
+    menus: QueryList<JigsawNavigationMenu>;
+    selectedMenuLabel = '';
+
+    selectMenu(): void {
+        this.menus.forEach(menu => {
+            menu.selectMenu('label', this.selectedMenuLabel);
+        });
+    }
+
+    @ViewChild('menu')
+    navigationMenu: JigsawNavigationMenu;
+
+    updateMenu1() {
+        const root = this.navigationMenu.data.nodes;
+        root[0].nodes.forEach(node => {
+            const r = parseInt(String(Math.random() * 20));
+            node.badgeValue = r < 5 ? '' : r;
+        });
+        root[0].badgeValue = root[0].nodes.reduce(
+            (sum, node) => sum + (node.badgeValue ? parseInt(node.badgeValue) : 0), 0);
+
+        // 去掉徽标状态
+        root[1].badgeValue = root[1].badgeValue ? '' : 'dot';
+        root[2].badgeValue = root[2].badgeValue ? '' : 'dot';
+        this.navigationMenu.update();
+    }
+
+    onMenuSelect(node: SimpleNode) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
@@ -83,7 +135,7 @@ export class NavigationMenuNavDemo {
         this.collapsed = !this.collapsed;
     }
 
-    collapsedChanged(event: boolean) {
+    onCollapsedChanged(event: boolean) {
         console.log(event, this.collapsed);
     }
 

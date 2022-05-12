@@ -1,0 +1,70 @@
+$jigsaw-alphabetical-index: #{$jigsaw-prefix}-alphabetical-index;
+$jigsaw-list: #{$jigsaw-prefix}-list;
+
+.#{$jigsaw-alphabetical-index}-host {
+    position: relative;
+    display: flex;
+    min-width: 200px;
+    height: 448px;
+    padding: 8px 0;
+    color: $font-color-default;
+
+    .#{$jigsaw-alphabetical-index} {
+        width: 100%;
+
+        .#{$jigsaw-alphabetical-index}-group {
+            position: relative;
+            padding-bottom: 16px;
+        }
+
+        .#{$jigsaw-alphabetical-index}-title {
+            position: sticky;
+            top: 0;
+            padding-left: 8px;
+            background: $bg-body;
+            font-size: $icon-size-med;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .#{$jigsaw-list}-host {
+            width: 100%;
+            min-width: 200px;
+            height: 100%;
+            border: none;
+        }
+
+        .#{$jigsaw-alphabetical-index}-panel {
+            position: absolute;
+            top: 0;
+            right: 16px;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+            width: 12px;
+
+            li {
+                display: flex;
+                justify-content: center;
+                height: 16px;
+                font-size: $font-size-base;
+                color: $brand-default;
+                cursor: pointer;
+
+                &:hover {
+                    font-weight: bold;
+                }
+
+                &.index-item-active {
+                    font-weight: bold;
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .ps__rail-y,
+        .ps__rail-x {
+            z-index: 2;
+        }
+    }
+}

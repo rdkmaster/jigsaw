@@ -5,7 +5,7 @@ $jigsaw-fish-bone: #{$jigsaw-prefix}-fish-bone;
     @include inline-block();
     width: 100%;
     height: 400px;
-    background: $bg-body;
+    background: $bg-component;
     color: $font-color-default;
 
     .#{$jigsaw-fish-bone}-head p:before,
@@ -97,6 +97,6 @@ $jigsaw-fish-bone: #{$jigsaw-prefix}-fish-bone;
     }
 
     .#{$jigsaw-fish-bone}-item {
-        background: $font-color-white-darken-light;
+        background: $font-color-white-darken;
     }
 }

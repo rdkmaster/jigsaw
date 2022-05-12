@@ -18,7 +18,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         flex: 1;
         height: 100%;
         overflow: hidden;
-        background: $bg-component;
+        background: $bg-transparent;
         border-width: 1px;
         border-style: solid;
         border-color: $border-color-default;
@@ -31,6 +31,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         align-items: center;
         flex: none;
         padding: 0 4px;
+        color: $icon-color-stress;
         line-height: 1;
 
         a {
@@ -128,10 +129,10 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     .#{$jigsaw-input}-clear-bar {
-        cursor: pointer;
+        color: $icon-color-stress;
         font-size: 16px;
         line-height: 1;
-        color:$icon-color-stress;
+        cursor: pointer;
 
         &:hover {
             color: $brand-default;

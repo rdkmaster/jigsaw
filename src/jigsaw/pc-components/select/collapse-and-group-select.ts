@@ -1,10 +1,10 @@
-import {ChangeDetectionStrategy, Component, forwardRef, OnInit} from "@angular/core";
-import {NG_VALUE_ACCESSOR} from "@angular/forms";
-import {JigsawSelectGroupBase} from "./select-base";
+import { ChangeDetectionStrategy, Component, forwardRef, OnInit } from "@angular/core";
+import { NG_VALUE_ACCESSOR } from "@angular/forms";
+import { JigsawSelectGroupBase } from "./select-base";
 import { CommonUtils } from '../../common/core/utils/common-utils';
-import {WingsTheme} from "../../common/common";
+import { WingsTheme } from "../../common/common";
 
-@WingsTheme('group-select.scss')
+@WingsTheme('select.scss')
 @Component({
     selector: "jigsaw-group-select, j-group-select",
     templateUrl: "collapse-and-group-select.html",
@@ -13,9 +13,12 @@ import {WingsTheme} from "../../common/common";
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
+        "[class.jigsaw-select-small]": 'size == "small"',
+        "[class.jigsaw-select-medium]": 'size == "medium"',
+        "[class.jigsaw-select-large]": 'size == "large"',
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
-        "[style.width]": '!multipleSelect ? width : "none"'
+        "[style.width]": '!multipleSelect ? width : "none"',
     },
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelectGroup), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -35,7 +38,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     }
 }
 
-@WingsTheme('collapse-select.scss')
+@WingsTheme('select.scss')
 @Component({
     selector: "jigsaw-collapse-select, j-select-collapse",
     templateUrl: "collapse-and-group-select.html",
@@ -44,6 +47,9 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
         "[class.jigsaw-select-single-select]": "!multipleSelect",
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
+        "[class.jigsaw-select-small]": 'size == "small"',
+        "[class.jigsaw-select-medium]": 'size == "medium"',
+        "[class.jigsaw-select-large]": 'size == "large"',
         "[style.min-width]": 'multipleSelect ? minWidth : "none"',
         "[style.max-width]": 'multipleSelect ? maxWidth : "none"',
         "[style.width]": '!multipleSelect ? width : "none"'

@@ -42,7 +42,7 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
  * - 如果需要选择的是一个时刻，则请使用`JigsawDateTimePicker`；
  * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=table/calendar)，通过表格+渲染器的方式来模拟；
  * - 时间选择器常常是收纳到下拉框中以解决视图空间，则请使用 `JigsawDateTimeSelect` 和 `JigsawRangeDateTimeSelect`，
- * 参考[这个demo]($demo=date-time-picker/with-combo-select)；
+ * 参考[这个demo]($demo=date-time-picker/date-time-select)；
  *
  * $demo = time-picker/basic
  * $demo = time-picker/step
@@ -736,20 +736,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-/**
- * @internal
- */
+
+@WingsTheme('time-pop.scss')
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
     templateUrl: 'time-pop.html',
     host: {
+        '[attr.data-theme]': 'theme',
         '[class.jigsaw-time-popup-host]': 'true',
         '(mousedown)': '_$stopBlur($event)'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawTimePopup implements IPopupable {
+export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupable {
     constructor(private _cdr: ChangeDetectorRef) {
+        super();
     }
 
     private _value: TimePopupValue;

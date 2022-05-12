@@ -13,20 +13,20 @@ import {
     AfterViewInit,
     ViewChild
 } from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
 import {ComboSelectValue, JigsawComboSelectModule, JigsawComboSelect} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
-import {GrItem, MarkDate} from "./date-picker";
-import {TimeStep} from "./time-picker";
 import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
-import {Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { CommonUtils } from '../../common/core/utils/common-utils';
+import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
+import {GrItem, MarkDate} from "./date-picker";
+import {TimeStep} from "./time-picker";
 
 export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 
@@ -36,7 +36,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
     template: `
         <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
                              [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200" [textTag]="false"
-                             (openChange)="_$onComboOpenChange($event)">
+                             (openChange)="_$onComboOpenChange($event)" selectIcon="iconfont iconfont-e177">
             <ng-template>
                 <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
                                                [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"

@@ -17,8 +17,7 @@ import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-
-import {JigsawTheme} from "../core/theming/theme";
+import { JigsawTheme } from '../core/theming/theme';
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -584,7 +583,7 @@ export class PopupService {
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
-            const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
+            const borderColor = options.borderColor ? options.borderColor : 'var($border-color-default, #dcdcdc)';
             InternalUtils.renderer.setStyle(element, "border-width", "1px");
             InternalUtils.renderer.setStyle(element, "border-style", "solid");
             InternalUtils.renderer.setStyle(element, "border-color", borderColor);

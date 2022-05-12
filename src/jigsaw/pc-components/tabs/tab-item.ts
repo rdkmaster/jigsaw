@@ -127,7 +127,9 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
             <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
         </div>
         <ng-template #body></ng-template>
-        <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">&times;</span>
+        <span class="jigsaw-tabs-remove-bar" *ngIf="editable" (click)="_$handleRemove($event)">
+            <i class="iconfont iconfont-e9b8"></i>
+        </span>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })

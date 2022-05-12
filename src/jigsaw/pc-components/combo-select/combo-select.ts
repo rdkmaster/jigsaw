@@ -25,7 +25,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {ArrayCollection} from "../../common/core/data/array-collection";
 import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
-import {JigsawTag} from "../tag/tag";
+import {JigsawTag, PresetColor} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
 import {PopupOptions, PopupService} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -34,7 +34,10 @@ export class ComboSelectValue {
     [index: string]: any;
 
     closable?: boolean;
+    selectedColor?: string | PresetColor;
 }
+
+const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
 
 @WingsTheme('combo-select.scss')
 @Component({
@@ -86,7 +89,8 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
         }
     }
 
-    @Output() public valueChange = new EventEmitter<any[]>();
+    @Output()
+    public valueChange = new EventEmitter<any[]>();
 
     /**
      * @NoMarkForCheckRequired
@@ -226,6 +230,18 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public get showBorder(): boolean {
         return this._showBorder;
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public selectIcon: string = 'iconfont iconfont-e24c';
+
+    public get selectArrowClass() {
+        return !this.selectIcon ? null : {
+            [this.selectIcon]: true, 'jigsaw-combo-select-arrow-rotate': _noRotateIcons.indexOf(this.selectIcon) == -1
+        };
     }
 
     /**

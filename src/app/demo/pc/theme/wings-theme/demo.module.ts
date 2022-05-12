@@ -33,7 +33,29 @@ import {
     JigsawDateTimeSelectModule,
     JigsawRangeDateTimePickerModule,
     JigsawRangeDateTimeSelectModule,
-    JigsawTableModule, JigsawGraphModule
+    JigsawTableModule,
+    JigsawGraphModule,
+    JigsawAlertModule,
+    JigsawCascadeModule,
+    JigsawTabsModule,
+    JigsawPaginationModule,
+    JigsawColorSelectModule,
+    JigsawBadgeModule,
+    JigsawUploadModule,
+    JigsawTreeExtModule,
+    JigsawChartIconModule,
+    JigsawDialogModule,
+    PopupService,
+    JigsawDrawerModule,
+    JigsawFloatModule,
+    JigsawTransferModule,
+    JigsawTooltipModule,
+    JigsawRateModule,
+    JigsawProgressModule,
+    JigsawProcessStatusModule,
+    JigsawStepsModule,
+    JigsawTimeSectionModule,
+    JigsawNotificationModule
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { ThemeBuildInThemeDemoComponent } from "./demo.component";
@@ -73,10 +95,32 @@ import { ThemeBuildInThemeDemoComponent } from "./demo.component";
         JigsawRangeDateTimeSelectModule,
         JigsawMenuModule,
         JigsawTableModule,
-        JigsawGraphModule
+        JigsawGraphModule,
+        JigsawAlertModule,
+        JigsawCascadeModule,
+        JigsawTabsModule,
+        JigsawPaginationModule,
+        JigsawColorSelectModule,
+        JigsawFishBoneModule,
+        JigsawBadgeModule,
+        JigsawUploadModule,
+        JigsawTreeExtModule,
+        JigsawChartIconModule,
+        JigsawDialogModule,
+        JigsawDrawerModule,
+        JigsawFloatModule,
+        JigsawTransferModule,
+        JigsawTooltipModule,
+        JigsawRateModule,
+        JigsawProgressModule,
+        JigsawProcessStatusModule,
+        JigsawStepsModule,
+        JigsawTimeSectionModule,
+        JigsawNotificationModule
     ],
     declarations: [ThemeBuildInThemeDemoComponent],
-    exports: [ThemeBuildInThemeDemoComponent]
+    exports: [ThemeBuildInThemeDemoComponent],
+    providers: [PopupService]
 })
 export class ThemeBuildInThemeDemoModule {
 }

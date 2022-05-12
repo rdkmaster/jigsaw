@@ -93,7 +93,8 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "OES Light", name: 'paletx-pro', majorStyle: 'light' },
         { label: "OES Dark", name: 'paletx-pro', majorStyle: 'dark' },
         { label: "Ux2.0 Light", name: 'idea', majorStyle: 'light' },
-        { label: "MASBD Light", name: 'masbd', majorStyle: 'light' }
+        { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
+        { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' }
     ]);
 
     constructor(private _translateService: TranslateService) {

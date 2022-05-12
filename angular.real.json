@@ -26,7 +26,7 @@
             "extractCss": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/app/demo/pc/tree/icon/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
@@ -58,6 +58,11 @@
               {
                 "input": "src/jigsaw/common/core/theming/themes/masbd-light.scss",
                 "bundleName": "themes/masbd-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/zjcm-light.scss",
+                "bundleName": "themes/zjcm-light",
                 "inject": false
               }
             ],

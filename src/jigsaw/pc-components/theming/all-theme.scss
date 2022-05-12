@@ -31,8 +31,6 @@
 @import "../radio/radios";
 @import "../radio/radios-lite";
 @import "../select/select";
-@import "../select/group-select";
-@import "../select/collapse-select";
 @import "../slider/slider";
 @import "../steps/step";
 @import "../switch/switch";
@@ -78,6 +76,8 @@
 @import "../../common/directive/tooltip/tooltip";
 @import "../menu/navigation-menu";
 @import "../date-and-time/time-section";
+@import "../alphabetical-index/alphabetical-index";
+@import "../alphabetical-index/alphabetical-index-select";
 @import "../header/header";
 @import "../tree/tree";
 @import "../process-status/process-status";

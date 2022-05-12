@@ -125,7 +125,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items-inline {
         flex: 1;
-        background: $bg-component;
+        background: $bg-transparent;
 
         .#{$jigsaw-nav-menu}-item {
             width: 100%;
@@ -179,11 +179,11 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
             }
 
             .#{$jigsaw-nav-menu}-item-selected-top {
-                background: $bg-body;
+                background: $bg-component;
             }
 
             .#{$jigsaw-nav-menu}-sub-item-selected {
-                background: $bg-body;
+                background: $bg-component;
             }
         }
     }
@@ -261,7 +261,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 .#{$jigsaw-nav-menu}-submenus {
                     background: #3c4c5a;
 
-                    &-actived {
+                    &-activated {
                         .#{$jigsaw-nav-menu}-sub-item:first-child,
                         .#{$jigsaw-nav-menu}-sub-item:last-child {
                             border: none;

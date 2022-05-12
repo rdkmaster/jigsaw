@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { JigsawUpload } from 'jigsaw/public_api';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -30,6 +31,12 @@ export class UploadBasicDemoComponent {
     uploadRemove($event) {
         console.log("uploadRemove触发了", $event)
     }
+
+    @ViewChild("demo6", { read: JigsawUpload })
+    public uploader6: JigsawUpload;
+
+    @ViewChild("demo7", { read: JigsawUpload })
+    public uploader7: JigsawUpload;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

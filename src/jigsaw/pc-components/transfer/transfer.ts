@@ -409,6 +409,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         this.destComponent = destComponentRef.instance;
         this.sourceComponent.transferHost = this;
         this.destComponent.transferHost = this;
+        this.sourceComponent.theme = this.theme;
+        this.destComponent.theme = this.theme;
 
         this.sourceComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.sourceComponent.labelField;
         this.destComponent.labelField = CommonUtils.isDefined(this.labelField) ? this.labelField : this.destComponent.labelField;

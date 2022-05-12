@@ -1,0 +1,38 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<jigsaw-header level="1">字母索引 Alphabetical-Index</jigsaw-header>
+
+<ul class="demo-setting">
+    <li class="demo-setting-item">
+        <div>随机数据：</div>
+        <jigsaw-button (click)="changeDataType('en')">英文数据</jigsaw-button>
+        <jigsaw-button (click)="changeDataType('zh')">中文数据</jigsaw-button>
+        <jigsaw-button (click)="changeDataType('mix')">中英文数据</jigsaw-button>
+    </li>
+    <li class="demo-setting-item">
+        <div>修正数据：</div>
+        <jigsaw-button (click)="changeDataType('revise-data')">多音字</jigsaw-button>
+    </li>
+    <li class="demo-setting-item">
+        <div>清空数据：</div>
+        <jigsaw-button (click)="changeDataType('blank')">清空数据</jigsaw-button>
+    </li>
+    <li class="demo-setting-item">
+        <div>输入数据：</div>
+        <jigsaw-input icon="iconfont iconfont-ea2a" (iconSelect)="addData()" [(value)]="inputStr"></jigsaw-input>
+    </li>
+</ul>
+
+<div class="demo-cntr">
+    <section class="demo-section">
+        <jigsaw-header>默认归类算法</jigsaw-header>
+        <jigsaw-alphabetical-index width="200px" [data]="data"></jigsaw-alphabetical-index>
+    </section>
+    <section class="demo-section">
+        <jigsaw-header>自定义修正字典</jigsaw-header>
+        <jigsaw-alphabetical-index width="200px" [data]="data" [pinyinDictionary]="pinyinDictionary">
+        </jigsaw-alphabetical-index>
+    </section>
+</div>

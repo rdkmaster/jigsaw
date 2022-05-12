@@ -10,6 +10,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     display: inline-flex;
     width: 400px;
     height: 200px;
+    color: $font-color-default;
 
     &.#{$jigsaw-transfer}-error {
         .#{$jigsaw-transfer}-cntr {
@@ -34,7 +35,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         flex: 1 1 0;
         width: 100%;
         height: 100%;
-        background-color: $bg-component;
+        background-color: $bg-transparent;
     }
 
     .#{$jigsaw-transfer}-disabled {
@@ -57,7 +58,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         padding: $cntr-padding-top 8px;
         border: 1px solid $border-color-default;
         border-radius: $border-radius-base;
-        background-color: $bg-component;
+        background-color: $bg-transparent;
         overflow: hidden;
 
         .#{$jigsaw-transfer}-header {

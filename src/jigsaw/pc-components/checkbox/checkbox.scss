@@ -50,7 +50,7 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
             border-style: solid;
             border-color: $border-color-default;
             border-radius: $border-radius-sm;
-            background-color: $bg-component;
+            background-color: $bg-transparent;
             transition: all 0.3s;
     
             &::after {
@@ -60,7 +60,7 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
                 top: 1px;
                 width: 5px;
                 height: 8px;
-                border: 2px solid $bg-component;
+                border: 2px solid $bg-transparent;
                 border-top: 0;
                 border-left: 0;
                 transform: rotate(45deg) scale(0);
@@ -74,7 +74,7 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
                 top: 1px;
                 width: 5px;
                 height: 8px;
-                border: 2px solid $bg-component;
+                border: 2px solid $bg-transparent;
                 border-top: 0;
                 border-left: 0;
                 transform: rotate(45deg) scale(0);
@@ -119,10 +119,10 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
     
             &-indeterminate {
                 border-color: $border-color-default;
-                background-color: $bg-component;
+                background-color: $bg-transparent;
                 &.#{$jigsaw-checkbox}-disabled {
                     &.#{$jigsaw-checkbox}-disabled {
-                        background: $bg-component;
+                        background: $bg-transparent;
                         border-color: $border-color-disabled;
                         &:after {
                             border-color: $brand-disabled;
@@ -141,7 +141,7 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
                 }
     
                 &::before {
-                    border-color: $bg-component;
+                    border-color: $bg-transparent;
                 }
             }
     

@@ -13,6 +13,7 @@ export interface IJigsawTabTitleRenderer extends IDynamicInstantiatable {
 }
 
 /**
+ * @internal
  * 此组件用于tab的可编辑的标题，主要通过addTab方法添加。
  */
 @Component({
