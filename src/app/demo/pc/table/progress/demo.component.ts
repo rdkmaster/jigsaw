@@ -20,7 +20,12 @@ export class TableProgressDemoComponent {
             rendererInitData: {
                 animate: true,
                 status: 'processing',
-                labelPosition: 'left'
+                labelPosition: 'left',
+                statusConfig: {
+                    'success': {text: '搞定了', icon: 'iconfont iconfont-ea39'},
+                    'warning': {text: '好像有问题', icon: 'iconfont iconfont-ea50'},
+                    'error': {text: '出错啦', icon: 'iconfont iconfont-e8e3'},
+                }
             }
         }
     }];
@@ -44,12 +49,11 @@ export class TableProgressDemoComponent {
             ["name", "position", "salary", "enroll-date", "office", "progress"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
         );
-        this._processing();
     }
 
     private _interval: any;
 
-    private _processing() {
+    public startProcessing() {
         clearInterval(this._interval);
         this._interval = setInterval(() => {
             this.tableData.data.forEach((row, idx) => {

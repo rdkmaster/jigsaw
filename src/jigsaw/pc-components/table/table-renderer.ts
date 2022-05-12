@@ -21,7 +21,8 @@ import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/a
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DragDropInfo} from "../../common/directive/dragdrop/types";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
-import {JigsawIconModule} from "../icon/icon";
+import {JigsawIcon, JigsawIconModule, StatusType} from "../icon/icon";
+import {LabelPosition, Status} from "../progress/base";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -566,29 +567,37 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
 }
 
 /**
+ * key值必须是 `StatusType` 类型
+ */
+export type ProgressStatusConfig = {
+    [status: string]: {text: string, icon: string}
+};
+
+/**
  * @internal
  * cell Progress renderer
  */
 @Component({
     template: `
         <ng-container [ngSwitch]="_$viewType">
-            <j-progress *ngSwitchCase="'processing'" [theme]="theme" [value]="cellData" width="80%" [status]="_$status"
+            <j-progress *ngSwitchCase="'process'" [theme]="theme" [value]="cellData" width="80%" [status]="_$status"
                         [labelPosition]="_$labelPosition" [showMarker]="false" [animate]="_$animate">
             </j-progress>
-            <jigsaw-icon *ngSwitchDefault [status]="_$viewType" style="font-size:var(--font-size-text-base)"></jigsaw-icon>
+            <jigsaw-icon *ngSwitchDefault #status style="font-size:var(--font-size-text-base)">
+            </jigsaw-icon>
         </ng-container>
     `,
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableCellProgressRenderer extends TableCellRendererBase {
+export class TableCellProgressRenderer extends TableCellRendererBase implements AfterViewInit {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector, protected _zone: NgZone) {
         super(_injector);
     }
 
-    public get _$viewType(): 'processing' | 'success' | 'warning' | 'error' | 'finish' | 'disabled' {
+    public get _$viewType(): StatusType {
         if (['success', 'warning', 'error', 'finish', 'disabled'].indexOf(this.cellData) != -1) {
             return this.cellData;
         }
@@ -596,8 +605,23 @@ export class TableCellProgressRenderer extends TableCellRendererBase {
         if (isNaN(n) || n < 0) {
             return 'error';
         }
-        return n > 100 ? 'success' : 'processing';
+        return n > 100 ? 'success' : 'process';
     }
+
+    @ViewChild('status')
+    private _status: JigsawIcon;
+
+    protected onDataRefresh(): void {
+        const type: StatusType = this._$viewType;
+        const config = this.initData?.statusConfig?.[type];
+        this._status?.updateStatus(type, config?.text, config?.icon);
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public initData: {animate?: boolean, status?: Status, labelPosition?: LabelPosition, statusConfig: ProgressStatusConfig};
 
     public get _$animate() {
         return this.initData?.animate || '';
@@ -609,6 +633,10 @@ export class TableCellProgressRenderer extends TableCellRendererBase {
 
     public get _$labelPosition() {
         return this.initData?.labelPosition || 'none';
+    }
+
+    ngAfterViewInit() {
+        this.onDataRefresh();
     }
 }
 
