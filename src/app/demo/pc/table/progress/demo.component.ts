@@ -20,7 +20,12 @@ export class TableProgressDemoComponent {
             rendererInitData: {
                 animate: true,
                 status: 'processing',
-                labelPosition: 'left'
+                labelPosition: 'left',
+                statusConfig: {
+                    'success': {text: '搞定了', icon: 'iconfont iconfont-ea39'},
+                    'warning': {text: '好像有问题', icon: 'iconfont iconfont-ea50'},
+                    'error': {text: '出错啦', icon: 'iconfont iconfont-e8e3'},
+                }
             }
         }
     }];
@@ -28,9 +33,9 @@ export class TableProgressDemoComponent {
     public constructor(public renderer: Renderer2, public elementRef: ElementRef) {
         this.tableData = new TableData(
             [
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 36],
+                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 'success'],
+                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 'warning'],
+                ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 'error'],
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 65],
                 ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 71],
                 ["Easton", "Coder", "$17636", "2017/4/24", "Marketing I", 56],
@@ -44,17 +49,28 @@ export class TableProgressDemoComponent {
             ["name", "position", "salary", "enroll-date", "office", "progress"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "工作进度"]
         );
-        this._processing();
     }
 
     private _interval: any;
 
-    private _processing() {
+    public startProcessing() {
         clearInterval(this._interval);
         this._interval = setInterval(() => {
-            this.tableData.data.forEach(row => {
-                const value = InternalUtils.randomNumber(10, 20);
-                row[5] = (row[5] + value) % 100;
+            this.tableData.data.forEach((row, idx) => {
+                const statuses = ['success', 'warning', 'error', 'finish', 'disabled'];
+                if (idx < 3) {
+                    row[5] = statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
+                } else if (idx < 5) {
+                    if (InternalUtils.randomNumber(1, 2) == 1) {
+                        // 一半概率显示状态图标
+                        row[5] = statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
+                    } else {
+                        row[5] = InternalUtils.randomNumber(9, 99);
+                    }
+                } else {
+                    const value = InternalUtils.randomNumber(10, 20);
+                    row[5] = (row[5] + value) % 100;
+                }
             });
             this.tableData.refresh();
         }, 1000);
