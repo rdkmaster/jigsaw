@@ -76,7 +76,7 @@ import {routerConfigPC} from "./router-config";
             <span>筛选</span>
             <jigsaw-select [optionCount]="12" [data]="jComponents" (valueChange)="showHideDemos($event)"
                            placeholder="显示隐藏Demo集" [multipleSelect]="true" [searchable]="true"
-                           [(value)]="selectedItems" width="300">
+                           [(value)]="selectedItems" (openChange)="onOpenChange($event)" width="300">
             </jigsaw-select>
         </div>
         <div *ngFor="let router of routes">
@@ -138,6 +138,15 @@ export class PCDemoListComponent implements OnInit {
     ngOnInit(): void {
         this.selectedItems = JSON.parse(localStorage.getItem('jigsaw-demo-show-list')) || [];
         this.showHideDemos(this.selectedItems);
+    }
+
+    onOpenChange(open: boolean) {
+        if (open) {
+            return;
+        }
+        if (this.jComponents.length == this.selectedItems.length) {
+            this.selectedItems = [];
+        }
     }
 }
 

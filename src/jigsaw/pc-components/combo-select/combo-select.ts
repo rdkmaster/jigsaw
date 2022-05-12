@@ -64,7 +64,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
                 protected _zone: NgZone,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector,
-                private _cdr: ChangeDetectorRef) {
+                /**
+                * @internal
+                */
+                public _cdr: ChangeDetectorRef) {
         super(_zone);
     }
 
