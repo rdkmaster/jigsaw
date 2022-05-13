@@ -267,6 +267,10 @@ export const routerConfigPC = [
         path: "pc/toast",
         loadChildren: () => import('./demo/pc/toast/demo-set.module').then(m => m.ToastDemoModule),
     },
+    {
+        path: "pc/novice-guide",
+        loadChildren: () => import('./demo/pc/novice-guide/demo-set.module').then(m => m.NoviceGuideDemoModule),
+    },
     {   
         path: "pc/chart-icon",
         loadChildren: () => import('./demo/pc/chart-icon/demo-set.module').then(m => m.ChartIconDemoModule),

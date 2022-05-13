@@ -67,6 +67,7 @@ import {routerConfig as headerConfig} from "./demo/pc/header/demo-set.module";
 import {routerConfig as themeConfig} from "./demo/pc/theme/demo-set.module";
 import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo-set.module";
 import {routerConfig as toastConfig} from "./demo/pc/toast/demo-set.module";
+import {routerConfig as noviceGuideConfig} from "./demo/pc/novice-guide/demo-set.module";
 import {routerConfig as chartIconConfig} from "./demo/pc/chart-icon/demo-set.module";
 import {routerConfigPC} from "./router-config";
 
@@ -217,6 +218,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'theme', themeConfig);
         this._addRouterConfig(routerConfig, 'process-status', processStatusConfig);
         this._addRouterConfig(routerConfig, 'toast', toastConfig);
+        this._addRouterConfig(routerConfig, 'novice-guide', noviceGuideConfig);
         this._addRouterConfig(routerConfig, 'chart-icon', chartIconConfig);
     }
 
