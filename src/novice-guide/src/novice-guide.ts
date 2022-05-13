@@ -60,6 +60,7 @@ export type NoviceGuideConfig = {
 }
 
 export function noviceGuide(guides: NoviceGuide[], config?: NoviceGuideConfig): void {
+    console.log(1)
     if (!guides?.length) {
         console.error('There is no available guide data.');
         return;
@@ -78,19 +79,19 @@ export function noviceGuide(guides: NoviceGuide[], config?: NoviceGuideConfig): 
         return;
     }
     const observer = new MutationObserver(observe);
-    observer.observe(document.body, {childList: true, subtree: true});
+    observer.observe(document.body, { childList: true, subtree: true });
 
     function observe(mutations) {
         const addedNodes = mutations.filter(m => m.addedNodes?.length > 0);
         if (addedNodes.length == 0) {
             return;
         }
-        addedNodes.filter(node => {
-            node.tagName == guide.tagName
-            if (guide.id) {
-                node.id == guide.id
-            }
-        })
+        // addedNodes.filter(node => {
+        //     node.tagName == guide.tagName
+        //     if (guide.id) {
+        //         node.id == guide.id
+        //     }
+        // })
     }
 }
 

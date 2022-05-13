@@ -1,3 +1,23 @@
-.demo-container p {
-    margin-bottom: 5px;
+.demo-cntr header {
+    display: flex;
+    margin-bottom: 4px;
+    height: 40px;
+    font-size: 24px;
+}
+
+.demo-cntr header>div {
+    display: flex;
+    align-items: center;
+    width: 200px;
+    font-size: 32px;
+}
+
+.demo-cntr header>ul {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.demo-cntr header>ul li {
+    margin-right: 16px;
 }
