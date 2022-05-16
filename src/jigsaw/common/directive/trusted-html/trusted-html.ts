@@ -183,6 +183,7 @@ export class JigsawTrustedHtml implements OnInit, OnDestroy {
     }
 
     public set trustedHtml(value: string) {
+        value = /^\d+$/.test(value) ? value.toString() : value;
         this._trustedHtml = CommonUtils.isDefined(value) ? value.trim() : '';
         this._updateHtml();
     }
