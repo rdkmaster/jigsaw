@@ -3,12 +3,17 @@
 </jigsaw-demo-description>
 
 <div class="demo-cntr">
+    <a (click)="getPos()">xxxxxxxxxxx</a>
+    <a (click)="getGuideContainer()">test</a>
+    <a (click)="changeSize()">changeSize</a>
     <header>
         <div>Logo</div>
         <ul>
             <li>菜单1</li>
             <li>菜单2</li>
-            <li id="guide1">菜单3</li>
+            <li id="guide1">
+                <span>菜单3</span>
+            </li>
             <li>菜单4</li>
             <li>菜单5</li>
             <li>菜单6</li>
@@ -16,4 +21,5 @@
     </header>
     <jigsaw-navigation-menu height="100%" width="180" [data]="navData">
     </jigsaw-navigation-menu>
+
 </div>
