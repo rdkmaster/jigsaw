@@ -21,3 +21,9 @@
 .demo-cntr header>ul li {
     margin-right: 16px;
 }
+
+#setting {
+    position: absolute;
+    bottom: 0;
+    z-index: 99999;
+}

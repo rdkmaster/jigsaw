@@ -3,9 +3,12 @@
 </jigsaw-demo-description>
 
 <div class="demo-cntr">
-    <a (click)="getPos()">xxxxxxxxxxx</a>
-    <a (click)="getGuideContainer()">test</a>
-    <a (click)="changeSize()">changeSize</a>
+    <div id="setting">
+        <a (click)="getPos()">获取菜单节点位置</a>
+        <a (click)="changeSize()">改变菜单宽度</a>
+        <a (click)="deleteEle()">删除菜单节点</a>
+    </div>
+
     <header>
         <div>Logo</div>
         <ul>

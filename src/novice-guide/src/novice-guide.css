@@ -4,8 +4,63 @@
     left: 0;
     width: 100%;
     height: 100%;
+    /* z-index: -1; */
 }
 
 .novice-guide-clone {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* background: cyan; */
+}
+
+.novice-guide-clone .spot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 8px;
+    outline: 2px solid var(--brand-default);
+}
+
+.novice-guide-clone .spot .line {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+}
+
+.novice-guide-clone .spot .line>div {
+    width: 1px;
+    height: 100%;
+    background: var(--brand-default);
+}
+
+.novice-guide-clone .spot .notice-cntr {
+    position: absolute;
+    top: 88px;
+    left: -192px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 400px;
+    padding: 16px;
+    border-radius: 3px;
+    background: var(--brand-default);
+    box-shadow: var(--box-shadow-lv3);
+}
+
+.novice-guide-clone .spot .notice-cntr .text {
+    width: 95%;
+    color: #fff;
+    font-size: var(--font-size-text-base);
+}
+
+.novice-guide-clone .spot .notice-cntr .close {
+    color: #fff;
+    cursor: pointer;
 }
