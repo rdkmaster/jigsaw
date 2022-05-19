@@ -4,7 +4,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    /* z-index: -1; */
+    overflow: hidden;
+    z-index: var(--zindex-novice-guide);
 }
 
 .novice-guide-clone {
@@ -15,7 +16,7 @@
     /* background: cyan; */
 }
 
-.novice-guide-clone .spot {
+.novice-guide-clone .bubble {
     position: relative;
     width: 8px;
     height: 8px;
@@ -23,27 +24,60 @@
     outline: 2px solid var(--brand-default);
 }
 
-.novice-guide-clone .spot .line {
+.novice-guide-clone .bubble .line {
     position: absolute;
-    top: 8px;
-    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background: cyan; */
+}
+
+.novice-guide-clone .bubble .line>div {
+    background: var(--brand-default);
+}
+
+.novice-guide-clone .bubble.bubble-bottom .line {
+    top: 8px;
+    left: 0;
     width: 100%;
     height: 80px;
 }
 
-.novice-guide-clone .spot .line>div {
-    width: 1px;
-    height: 100%;
-    background: var(--brand-default);
+.novice-guide-clone .bubble.bubble-top .line {
+    left: 0;
+    bottom: 8px;
+    width: 100%;
+    height: 80px;
 }
 
-.novice-guide-clone .spot .notice-cntr {
+.novice-guide-clone .bubble.bubble-bottom .line>div,
+.novice-guide-clone .bubble.bubble-top .line>div {
+    width: 1px;
+    height: 100%;
+}
+
+.novice-guide-clone .bubble.bubble-right .line {
+    top: 0;
+    left: 8px;
+    width: 80px;
+    height: 100%;
+}
+
+.novice-guide-clone .bubble.bubble-left .line {
+    top: 0;
+    right: 8px;
+    width: 80px;
+    height: 100%;
+}
+
+.novice-guide-clone .bubble.bubble-right .line>div,
+.novice-guide-clone .bubble.bubble-left .line>div {
+    width: 100%;
+    height: 1px;
+}
+
+.novice-guide-clone .bubble .notice-cntr {
     position: absolute;
-    top: 88px;
-    left: -192px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -54,13 +88,35 @@
     box-shadow: var(--box-shadow-lv3);
 }
 
-.novice-guide-clone .spot .notice-cntr .text {
+.novice-guide-clone .bubble .notice-cntr .text {
     width: 95%;
     color: #fff;
     font-size: var(--font-size-text-base);
 }
 
-.novice-guide-clone .spot .notice-cntr .close {
+.novice-guide-clone .bubble .notice-cntr .close {
     color: #fff;
     cursor: pointer;
+}
+
+.novice-guide-clone .bubble.bubble-bottom .notice-cntr {
+    top: 88px;
+    left: -192px;
+}
+
+.novice-guide-clone .bubble.bubble-top .notice-cntr {
+    bottom: 88px;
+    left: -192px;
+}
+
+.novice-guide-clone .bubble.bubble-right .notice-cntr {
+    top: 50%;
+    left: 88px;
+    transform: translateY(-50%);
+}
+
+.novice-guide-clone .bubble.bubble-left .notice-cntr {
+    top: 50%;
+    right: 88px;
+    transform: translateY(-50%);
 }

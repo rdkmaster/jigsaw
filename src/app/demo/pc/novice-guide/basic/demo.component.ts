@@ -1,13 +1,13 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
 import { SimpleTreeData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, noviceGuide, NoviceGuideConfig } from 'novice-guide/src/novice-guide';
+import { SingularNoviceGuide, noviceGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css", "../../../../../novice-guide/src/novice-guide.css"],
     encapsulation: ViewEncapsulation.None
 })
-export class JigsawNoviceGuideBasicDemoComponent implements OnInit, AfterViewInit {
+export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     public navData: SimpleTreeData = new SimpleTreeData();
 
     getPos() {
@@ -43,46 +43,25 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit, AfterViewIni
         this.navData.fromXML(xmlData);
     }
 
-    // singularGuideData: SingularNoviceGuide[] = [
-    //     { tagName: 'li', id: "guide1", notice: '这是一条新手指引', version: '0.0.1' },
-    //     { tagName: 'div', property1: { property: 'innerText', value: '标准图标2' }, notice: '这是一条新手指引', version: '0.0.1' }
-    // ];
+    singularGuideData: SingularNoviceGuide = { tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, notice: '这是一条新手指引', version: '0.0.1', position: 'bottom' };
 
-    singularGuideData: SingularNoviceGuide = { tagName: 'li', id: "guide1", notice: '这是一条新手指引', version: '0.0.1' };
+    singularGuideData2: SingularNoviceGuide = { tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标8' }, notice: '这是一条新手指引', version: '0.0.1', position: "right" }
 
-    singularGuideData2: SingularNoviceGuide = { tagName: 'div', property1: { property: 'innerText', value: '标准图标2' }, notice: '这是一条新手指引', version: '0.0.1' }
+    singularGuideData3: SingularNoviceGuide = { tagName: 'div', classes: 'footer copyright', notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, version: '0.0.1', position: "top" }
 
-    guideData = [
-        { tagName: 'li', id: "guide1", notice: '这是一条新手指引', version: '0.0.1' },
-        { tagName: 'div', property1: { property: 'innerText', value: '标准图标2' }, notice: '这是一条新手指引', version: '0.0.1' }
-    ]
+    singularGuideData4: SingularNoviceGuide = { tagName: 'div', id: "ad", notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, version: '0.0.1', position: 'left' }
+
+    guideData = [this.singularGuideData, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4]
+    // guideData = [this.singularGuideData2]
+
     noviceGuideEleArr = [];
 
     ngOnInit() {
-        // console.log(document.body.querySelectorAll("div"))
-        // console.log(document.body.querySelectorAll("li"))
-
-        /* 在调用方法后，查询页面匹配元素 */
-        /* 拼接selector */
-
-        // 可以直接在获取数据之后处理
-
-
-        // this.guideData.forEach(guide => {
-        //     /* 拼接selector */
-        //     const tagName = guide.tagName ? guide.tagName : '';
-        //     const id = guide.id ? guide.id : '';
-        //     const classes = guide.classes ? guide.id : '';
-        // })
         const config: NoviceGuideConfig = {
             localStorageItem: 'jigsaw.noviceGuide',
             resetLocalStorage: true
         }
         noviceGuide(this.guideData, config);
-    }
-
-    ngAfterViewInit() {
-        // this.xy()
     }
 
     xy() {

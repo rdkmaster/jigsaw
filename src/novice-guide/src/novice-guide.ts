@@ -35,6 +35,7 @@ export interface DiscoverableNoviceGuide {
  */
 export interface BasicNoviceGuide extends DiscoverableNoviceGuide {
     version: string;
+    position: 'top' | 'left' | 'right' | 'bottom'
     timeout?: number;
 }
 
@@ -77,7 +78,6 @@ export function noviceGuide(guides: NoviceGuide[], config?: NoviceGuideConfig): 
 
     let guideKeys;
     [guides, guideKeys] = _filterShownGuides(guides, localStorageItem);
-    console.log(guides, guideKeys)
     guides = _deduplicate(guides, guideKeys);
     if (guides.length == 0) {
         console.warn('All guides were shown.');
@@ -87,41 +87,74 @@ export function noviceGuide(guides: NoviceGuide[], config?: NoviceGuideConfig): 
     guides.forEach(guide => {
         const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
         const id = guide.id ? '#' + guide.id : '';
-        const classes = guide.classes ? guide.id : '';
-        const selector = `${tagName}${id}`;
+        const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
+        const selector = `${tagName}${id}${classes}`;
         const queryResult = document.body.querySelectorAll(selector);
 
-        if (queryResult.length === 1) {
-            _createNoviceGuide(guide, queryResult[0], localStorageItem);
-
-            // const observer = new IntersectionObserver(entries => {
-            // })
-            // observer.observe(queryResult[0])
-
-        } else {
-            const mutationObserver = new MutationObserver(entries => {
-                const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-                if (addedNodes.length == 0) {
-                    return;
-                }
-                const filterResult = addedNodes.filter(node => {
-                    const tagFilter = node.target.nodeName === tagName;
-                    const idFilter = node.target["id"] === id;
-                    const classFilter = node.target["classList"] === classes;
-                    const property1Filter = node.target[guide.property1.property] === guide.property1.value;
-                    return tagFilter && idFilter && property1Filter;
-                })
-
-                if (filterResult.length !== 1) {
-                    return
-                }
-
-                _createNoviceGuide(guide, (filterResult[0].target as HTMLElement), localStorageItem)
-
+        if (queryResult.length > 0) {
+            const result = Array.from(queryResult).filter(node => {
+                const property1Checker = node[guide.property1?.property] === guide.property1?.value;
+                const property2Checker = node[guide.property2?.property] === guide.property2?.value;
+                return property1Checker && property2Checker;
             })
-            mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+
+            if (result.length === 1) {
+                _createNoviceGuide(guide, result[0], localStorageItem);
+                return;
+            }
+
+            if (result.length > 1) {
+                console.warn('Find more than 1 target element.');
+                return;
+            }
         }
-    })
+
+        const mutationObserver = new MutationObserver(entries => {
+            const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+            if (addedNodes.length == 0) {
+                return;
+            }
+            const filterResult = addedNodes.filter(node => {
+                if (tagName && node.target.nodeName !== tagName) {
+                    return false
+                }
+
+                if (id && node.target["id"] !== id) {
+                    return false
+                }
+
+                if (guide.property1 && node.target[guide.property1.property] !== guide.property1.value) {
+                    return false
+                }
+
+                if (guide.property2 && node.target[guide.property2.property] !== guide.property2.value) {
+                    return false
+                }
+
+                let classesChecker = true;
+                if (classes) {
+                    const classArr = classes.split(".");
+                    classArr.shift();
+                    classArr.forEach(item => {
+                        if (!node.target["classList"].contains(item)) {
+                            classesChecker = false;
+                        }
+                    })
+                }
+                return classesChecker;
+            })
+
+            if (filterResult.length !== 1) {
+                return
+            }
+
+            _createNoviceGuide(guide, (filterResult[0].target as HTMLElement), localStorageItem, mutationObserver)
+
+            resize();
+        })
+        mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+    }
+    )
 }
 
 noviceGuide.noviceGuideEleArr = [];
@@ -232,18 +265,21 @@ function _relocateClone(target, clone) {
     clone.style.height = height + 'px';
 }
 
-function _createNoviceGuide(guide, targetEle, localStorageItem) {
+function _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
     let guideEle = document.createElement('div');
     _getGuideContainer().appendChild(guideEle);
     _relocateClone(targetEle, guideEle);
+    if (typeof guide.notice === 'string') {
+        guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
+    }
     guideEle.classList.add('novice-guide-clone');
     guideEle.innerHTML = `
-    <div class="spot">
+    <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
         <div class="line">
             <div></div>
         </div>
         <div class="notice-cntr">
-            <div class="text">${guide.notice}</div>
+            <div class="text">${guide.notice.notice}</div>
             <i class="close iconfont iconfont-e14b"></i>
         </div>
     </div>`;
@@ -258,6 +294,9 @@ function _createNoviceGuide(guide, targetEle, localStorageItem) {
         const index = guideEle.getAttribute('guideIndex');
         noviceGuide.noviceGuideCloneArr[index] = false;
         guideEle.remove();
+        if (mutationObserver) {
+            mutationObserver.disconnect();
+        }
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
         shownKeys.push(_toKeyString(guide));
         localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
