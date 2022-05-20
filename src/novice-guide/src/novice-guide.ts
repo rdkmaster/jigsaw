@@ -301,12 +301,13 @@ class JigsawGuide {
     }
 
     public resize(): void {
-        this._noviceGuideCloneArr.forEach((clone, i) => {
+        console.log(1)
+        jigsawGuide._noviceGuideCloneArr.forEach((clone, i) => {
             if (!clone) {
                 return;
             }
 
-            this._relocateClone(this._noviceGuideEleArr[i], clone)
+            jigsawGuide._relocateClone(jigsawGuide._noviceGuideEleArr[i], clone)
         });
     }
 
