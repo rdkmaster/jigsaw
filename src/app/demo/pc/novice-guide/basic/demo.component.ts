@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
 import { SimpleTreeData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, noviceGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType } from 'novice-guide/src/novice-guide';
+import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -61,7 +61,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             localStorageItem: 'jigsaw.noviceGuide',
             resetLocalStorage: true
         }
-        noviceGuide(this.guideData, config);
+        jigsawGuide.show(this.guideData, config);
     }
 
     xy() {

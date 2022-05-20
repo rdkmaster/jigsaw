@@ -60,254 +60,260 @@ export type NoviceGuideConfig = {
     localStorageItem: string, resetLocalStorage: boolean
 }
 
-export function noviceGuide(guides: NoviceGuide[], config?: NoviceGuideConfig): void {
-    if (!guides?.length) {
-        console.error('There is no available guide data.');
-        return;
-    }
+class JigsawGuide {
+    public show(guides: NoviceGuide[], config?: NoviceGuideConfig): void {
+        if (!guides?.length) {
+            console.error('There is no available guide data.');
+            return;
+        }
 
-    if (noviceGuide.noviceGuideEleArr.length === 0) {
-        const cancelDebounce = debounce(resize, 500);
-        window.addEventListener('resize', cancelDebounce)
-    }
+        if (this._noviceGuideEleArr.length === 0) {
+            const cancelDebounce = this.debounce(this.resize, 500);
+            window.addEventListener('resize', cancelDebounce)
+        }
 
-    const localStorageItem = config?.localStorageItem || 'jigsaw.noviceGuide';
-    if (config?.resetLocalStorage) {
-        localStorage.setItem(localStorageItem, '[]');
-    }
+        const localStorageItem = config?.localStorageItem || 'jigsaw.noviceGuide';
+        if (config?.resetLocalStorage) {
+            localStorage.setItem(localStorageItem, '[]');
+        }
 
-    let guideKeys;
-    [guides, guideKeys] = _filterShownGuides(guides, localStorageItem);
-    guides = _deduplicate(guides, guideKeys);
-    if (guides.length == 0) {
-        console.warn('All guides were shown.');
-        return;
-    }
+        let guideKeys;
+        [guides, guideKeys] = this._filterShownGuides(guides, localStorageItem);
+        guides = this._deduplicate(guides, guideKeys);
 
-    guides.forEach(guide => {
-        const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
-        const id = guide.id ? '#' + guide.id : '';
-        const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
-        const selector = `${tagName}${id}${classes}`;
-        const queryResult = document.body.querySelectorAll(selector);
+        if (guides.length == 0) {
+            console.warn('All guides were shown.');
+            return;
+        }
 
-        if (queryResult.length > 0) {
-            const result = Array.from(queryResult).filter(node => {
-                const property1Checker = node[guide.property1?.property] === guide.property1?.value;
-                const property2Checker = node[guide.property2?.property] === guide.property2?.value;
-                return property1Checker && property2Checker;
+        guides.forEach(guide => {
+            const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
+            const id = guide.id ? '#' + guide.id : '';
+            const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
+            const selector = `${tagName}${id}${classes}`;
+            const queryResult = document.body.querySelectorAll(selector);
+
+            if (queryResult.length > 0) {
+                const result = Array.from(queryResult).filter(node => {
+                    const property1Checker = node[guide.property1?.property] === guide.property1?.value;
+                    const property2Checker = node[guide.property2?.property] === guide.property2?.value;
+                    return property1Checker && property2Checker;
+                })
+
+                if (result.length === 1) {
+                    this._createNoviceGuide(guide, result[0], localStorageItem);
+                    return;
+                }
+
+                if (result.length > 1) {
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+            }
+
+            const mutationObserver = new MutationObserver(entries => {
+                const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+                if (addedNodes.length == 0) {
+                    return;
+                }
+                const filterResult = addedNodes.filter(node => {
+                    if (tagName && node.target.nodeName !== tagName) {
+                        return false
+                    }
+
+                    if (id && node.target["id"] !== id) {
+                        return false
+                    }
+
+                    if (guide.property1 && node.target[guide.property1.property] !== guide.property1.value) {
+                        return false
+                    }
+
+                    if (guide.property2 && node.target[guide.property2.property] !== guide.property2.value) {
+                        return false
+                    }
+
+                    let classesChecker = true;
+                    if (classes) {
+                        const classArr = classes.split(".");
+                        classArr.shift();
+                        classArr.forEach(item => {
+                            if (!node.target["classList"].contains(item)) {
+                                classesChecker = false;
+                            }
+                        })
+                    }
+                    return classesChecker;
+                })
+
+                if (filterResult.length !== 1) {
+                    return
+                }
+
+                this._createNoviceGuide(guide, (filterResult[0].target as HTMLElement), localStorageItem, mutationObserver)
+
+                this.resize();
             })
-
-            if (result.length === 1) {
-                _createNoviceGuide(guide, result[0], localStorageItem);
-                return;
-            }
-
-            if (result.length > 1) {
-                console.warn('Find more than 1 target element.');
-                return;
-            }
+            mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
         }
-
-        const mutationObserver = new MutationObserver(entries => {
-            const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-            if (addedNodes.length == 0) {
-                return;
-            }
-            const filterResult = addedNodes.filter(node => {
-                if (tagName && node.target.nodeName !== tagName) {
-                    return false
-                }
-
-                if (id && node.target["id"] !== id) {
-                    return false
-                }
-
-                if (guide.property1 && node.target[guide.property1.property] !== guide.property1.value) {
-                    return false
-                }
-
-                if (guide.property2 && node.target[guide.property2.property] !== guide.property2.value) {
-                    return false
-                }
-
-                let classesChecker = true;
-                if (classes) {
-                    const classArr = classes.split(".");
-                    classArr.shift();
-                    classArr.forEach(item => {
-                        if (!node.target["classList"].contains(item)) {
-                            classesChecker = false;
-                        }
-                    })
-                }
-                return classesChecker;
-            })
-
-            if (filterResult.length !== 1) {
-                return
-            }
-
-            _createNoviceGuide(guide, (filterResult[0].target as HTMLElement), localStorageItem, mutationObserver)
-
-            resize();
-        })
-        mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+        )
     }
-    )
-}
 
-noviceGuide.noviceGuideEleArr = [];
-noviceGuide.noviceGuideCloneArr = [];
+    private _noviceGuideEleArr = [];
+    private _noviceGuideCloneArr = [];
 
-function _filterShownGuides(guides: NoviceGuide[], localStorageItem: string): [NoviceGuide[], string[]] {
-    const keys = guides.map(g => _toKeyString(g));
-    const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-    const guidesCopy = [...guides];
-    keys.forEach((key, idx) => {
-        if (shownKeys.indexOf(key) == -1) {
-            return;
-        }
-        guidesCopy[idx] = null;
-        keys[idx] = null;
-    });
-    return [guidesCopy.filter(g => !!g), keys.filter(k => !!k)];
-}
-
-function _deduplicate(guides: NoviceGuide[], keys: string[]): NoviceGuide[] {
-    const len = guides.length;
-    const duplicates: number[][] = keys.map((key, idx) => {
-        const arr = [idx];
-        for (let i = idx + 1; i < len; i++) {
-            if (keys[i] == key) {
-                arr.push(i);
-            }
-        }
-        return arr;
-    }).filter(i => i.length > 1);
-    if (duplicates.length > 0) {
-        console.warn('The following guides are duplicated:\n', duplicates);
-        duplicates.forEach(row => row.forEach((pos, idx) => {
-            if (idx == row.length - 1) {
-                return;
-            }
-            guides[pos] = null;
-        }));
-        guides = guides.filter(g => !!g);
-    }
-    return guides;
-}
-
-function _toKeyString(guide: BasicNoviceGuide): string {
-    let fields = [guide.version || 'v0'];
-    fields.push(guide.tagName || '');
-    fields.push(guide.id || '');
-    fields.push(guide.classes || '');
-    fields.push(guide.tagName || '');
-    if (guide.property1 && guide.property1.hasOwnProperty('property') && guide.property1.hasOwnProperty('value')) {
-        fields.push(`${guide.property1.property}=${guide.property1.value}`);
-    }
-    if (guide.property2 && guide.property2.hasOwnProperty('property') && guide.property2.hasOwnProperty('value')) {
-        fields.push(`${guide.property2.property}=${guide.property2.value}`);
-    }
-    return fields.join('$_$');
-}
-
-function _getGuideContainer() {
-    const cntr = document.getElementById('novice-guide-container');
-    if (cntr === null) {
-        const guideCntr = document.createElement('div');
-        guideCntr.id = 'novice-guide-container';
-        document.body.appendChild(guideCntr);
-        return guideCntr;
-    }
-    return cntr;
-}
-
-function _removeGuideContainer() {
-    const cntr = document.getElementById('novice-guide-container');
-    if (cntr === null) {
-        return
-    }
-    cntr.remove();
-}
-
-function debounce(fn, delay) {
-    let timer;
-    return function () {
-        if (timer) {
-            clearTimeout(timer)
-        }
-        timer = setTimeout(() => {
-            fn();
-        }, delay)
-    }
-}
-
-function resize() {
-    noviceGuide.noviceGuideCloneArr.forEach((clone, i) => {
-        if (!clone) {
-            return;
-        }
-
-        _relocateClone(noviceGuide.noviceGuideEleArr[i], clone)
-    });
-}
-
-function _relocateClone(target, clone) {
-    const { left, top, width, height } = target.getBoundingClientRect();
-    if (left + top + width + height === 0) {
-        return;
-    }
-    clone.style.top = top + 'px';
-    clone.style.left = left + 'px';
-    clone.style.width = width + 'px';
-    clone.style.height = height + 'px';
-}
-
-function _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
-    let guideEle = document.createElement('div');
-    _getGuideContainer().appendChild(guideEle);
-    _relocateClone(targetEle, guideEle);
-    if (typeof guide.notice === 'string') {
-        guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
-    }
-    guideEle.classList.add('novice-guide-clone');
-    guideEle.innerHTML = `
-    <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
-        <div class="line">
-            <div></div>
-        </div>
-        <div class="notice-cntr">
-            <div class="text">${guide.notice.notice}</div>
-            <i class="close iconfont iconfont-e14b"></i>
-        </div>
-    </div>`;
-    guideEle.setAttribute('guideIndex', noviceGuide.noviceGuideCloneArr.length + '')
-    noviceGuide.noviceGuideEleArr.push(targetEle)
-    noviceGuide.noviceGuideCloneArr.push(guideEle)
-
-    guideEle.onclick = function (e) {
-        if (!(e.target as HTMLElement).classList.contains('close')) {
-            return;
-        }
-        const index = guideEle.getAttribute('guideIndex');
-        noviceGuide.noviceGuideCloneArr[index] = false;
-        guideEle.remove();
-        if (mutationObserver) {
-            mutationObserver.disconnect();
-        }
+    private _filterShownGuides(guides: NoviceGuide[], localStorageItem: string): [NoviceGuide[], string[]] {
+        const keys = guides.map(g => this._toKeyString(g));
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-        shownKeys.push(_toKeyString(guide));
-        localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+        const guidesCopy = [...guides];
+        keys.forEach((key, idx) => {
+            if (shownKeys.indexOf(key) == -1) {
+                return;
+            }
+            guidesCopy[idx] = null;
+            keys[idx] = null;
+        });
+        return [guidesCopy.filter(g => !!g), keys.filter(k => !!k)];
+    }
 
-        const leftGuideCloneArr = noviceGuide.noviceGuideCloneArr.filter(clone => {
-            return clone;
-        })
-        if (leftGuideCloneArr.length === 0) {
-            _removeGuideContainer();
-            noviceGuide.noviceGuideEleArr = [];
-            noviceGuide.noviceGuideCloneArr = [];
+    private _deduplicate(guides: NoviceGuide[], keys: string[]): NoviceGuide[] {
+        const len = guides.length;
+        const duplicates: number[][] = keys.map((key, idx) => {
+            const arr = [idx];
+            for (let i = idx + 1; i < len; i++) {
+                if (keys[i] == key) {
+                    arr.push(i);
+                }
+            }
+            return arr;
+        }).filter(i => i.length > 1);
+        if (duplicates.length > 0) {
+            console.warn('The following guides are duplicated:\n', duplicates);
+            duplicates.forEach(row => row.forEach((pos, idx) => {
+                if (idx == row.length - 1) {
+                    return;
+                }
+                guides[pos] = null;
+            }));
+            guides = guides.filter(g => !!g);
+        }
+        return guides;
+    }
+
+    private _toKeyString(guide: BasicNoviceGuide): string {
+        let fields = [guide.version || 'v0'];
+        fields.push(guide.tagName || '');
+        fields.push(guide.id || '');
+        fields.push(guide.classes || '');
+        fields.push(guide.tagName || '');
+        if (guide.property1 && guide.property1.hasOwnProperty('property') && guide.property1.hasOwnProperty('value')) {
+            fields.push(`${guide.property1.property}=${guide.property1.value}`);
+        }
+        if (guide.property2 && guide.property2.hasOwnProperty('property') && guide.property2.hasOwnProperty('value')) {
+            fields.push(`${guide.property2.property}=${guide.property2.value}`);
+        }
+        return fields.join('$_$');
+    }
+
+    private _getGuideContainer(): HTMLElement {
+        const cntr = document.getElementById('novice-guide-container');
+        if (cntr === null) {
+            const guideCntr = document.createElement('div');
+            guideCntr.id = 'novice-guide-container';
+            document.body.appendChild(guideCntr);
+            return guideCntr;
+        }
+        return cntr;
+    }
+
+    private _removeGuideContainer(): void {
+        const cntr = document.getElementById('novice-guide-container');
+        if (cntr === null) {
+            return
+        }
+        cntr.remove();
+    }
+
+    private debounce(fn: Function, delay: number) {
+        let timer;
+        return function () {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            timer = setTimeout(() => {
+                fn();
+            }, delay)
+        }
+    }
+
+    private resize(): void {
+        this._noviceGuideCloneArr.forEach((clone, i) => {
+            if (!clone) {
+                return;
+            }
+
+            this._relocateClone(this._noviceGuideEleArr[i], clone)
+        });
+    }
+
+    private _relocateClone(target, clone) {
+        const { left, top, width, height } = target.getBoundingClientRect();
+        if (left + top + width + height === 0) {
+            return;
+        }
+        clone.style.top = top + 'px';
+        clone.style.left = left + 'px';
+        clone.style.width = width + 'px';
+        clone.style.height = height + 'px';
+    }
+
+    private _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
+        let guideEle = document.createElement('div');
+        this._getGuideContainer().appendChild(guideEle);
+        this._relocateClone(targetEle, guideEle);
+        if (typeof guide.notice === 'string') {
+            guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
+        }
+        guideEle.classList.add('novice-guide-clone');
+        guideEle.innerHTML = `
+        <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+            <div class="line">
+                <div></div>
+            </div>
+            <div class="notice-cntr">
+                <div class="text">${guide.notice.notice}</div>
+                <i class="close iconfont iconfont-e14b"></i>
+            </div>
+        </div>`;
+        guideEle.setAttribute('guideIndex', this._noviceGuideCloneArr.length + '')
+        this._noviceGuideEleArr.push(targetEle)
+        this._noviceGuideCloneArr.push(guideEle)
+
+        guideEle.onclick = function (e) {
+            if (!(e.target as HTMLElement).classList.contains('close')) {
+                return;
+            }
+            const index = guideEle.getAttribute('guideIndex');
+            jigsawGuide._noviceGuideCloneArr[index] = false;
+            guideEle.remove();
+            if (mutationObserver) {
+                mutationObserver.disconnect();
+            }
+            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+            shownKeys.push(jigsawGuide._toKeyString(guide));
+            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+            const leftGuideCloneArr = jigsawGuide._noviceGuideCloneArr.filter(clone => {
+                return clone;
+            })
+            if (leftGuideCloneArr.length === 0) {
+                jigsawGuide._removeGuideContainer();
+                jigsawGuide._noviceGuideEleArr = [];
+                jigsawGuide._noviceGuideCloneArr = [];
+            }
         }
     }
 }
+export const jigsawGuide = new JigsawGuide();
+
+
