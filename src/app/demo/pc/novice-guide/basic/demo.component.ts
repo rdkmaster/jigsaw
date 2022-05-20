@@ -60,12 +60,13 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     noviceGuideEleArr = [];
 
+    config: NoviceGuideConfig = {
+        localStorageItem: 'jigsaw.noviceGuide',
+        resetLocalStorage: true
+    }
+
     ngOnInit() {
-        const config: NoviceGuideConfig = {
-            localStorageItem: 'jigsaw.noviceGuide',
-            resetLocalStorage: true
-        }
-        jigsawGuide.show(this.guideData, config);
+        jigsawGuide.show(this.guideData, this.config);
     }
 
     xy() {
@@ -83,6 +84,13 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         cntr.remove();
     }
 
+    clear() {
+        jigsawGuide.clear();
+    }
+
+    bubbleGuide() {
+        jigsawGuide.show(this.guideData, this.config);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

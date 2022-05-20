@@ -63,6 +63,10 @@
     z-index: 99999;
 }
 
+#setting a:hover {
+    text-decoration: underline;
+}
+
 #ad {
     font-size: 20px;
 }

@@ -170,14 +170,16 @@ class JigsawGuide {
                 this.resize();
             })
             mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+            this._showing.mutation.push(mutationObserver)
         }
         )
     }
 
-    private _showing: { guideEle: HTMLElement[], cloneEle: HTMLElement[], guideKey: string[] } = {
+    private _showing: { guideEle: HTMLElement[], cloneEle: HTMLElement[], guideKey: string[], mutation: MutationObserver[] } = {
         guideEle: [],
         cloneEle: [],
-        guideKey: []
+        guideKey: [],
+        mutation: []
     }
 
     private _createNoviceGuide(guide, targetEle: HTMLElement, localStorageItem: string) {
@@ -332,7 +334,7 @@ class JigsawGuide {
         });
     }
 
-    private _relocateClone(target, clone) {
+    private _relocateClone(target: HTMLElement, clone: HTMLElement) {
         const { left, top, width, height } = target.getBoundingClientRect();
         if (left + top + width + height === 0) {
             return;
@@ -343,7 +345,21 @@ class JigsawGuide {
         clone.style.height = height + 'px';
     }
 
-
+    public clear(): void {
+        this._removeGuideContainer();
+        this._showing.cloneEle.forEach(clone => {
+            if (clone) {
+                clone.remove();
+            }
+        })
+        this._showing.mutation.forEach(mutation => {
+            if (mutation) {
+                mutation.disconnect();
+            }
+        })
+        this._showing.guideKey = [];
+        this._showing.guideEle = [];
+    }
 }
 export const jigsawGuide = new JigsawGuide();
 
