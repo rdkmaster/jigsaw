@@ -47,13 +47,15 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     bubbleNotice: BubbleNoviceGuideNotice = { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' };
     singularGuide: SingularNoviceGuide = { notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
 
-    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标8' }, version: '0.0.1', position: "right" }
+    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, version: '0.0.1', position: "right" }
 
     singularGuideData3: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: "top" }
 
     singularGuideData4: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', id: "ad", version: '0.0.1', position: 'left' }
 
-    guideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4]
+    singularGuideData5: SingularNoviceGuide = { notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', version: '0.0.1', position: "right" }
+
+    guideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4, this.singularGuideData5]
     // guideData = [this.singularGuideData2]
 
     noviceGuideEleArr = [];

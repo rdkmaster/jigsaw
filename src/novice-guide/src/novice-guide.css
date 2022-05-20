@@ -16,6 +16,10 @@
     /* background: cyan; */
 }
 
+.novice-guide-clone:hover {
+    z-index: 1;
+}
+
 .novice-guide-clone .bubble {
     position: relative;
     width: 8px;

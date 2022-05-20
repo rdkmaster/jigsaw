@@ -67,7 +67,7 @@ class JigsawGuide {
             return;
         }
 
-        if (this._noviceGuideEleArr.length === 0) {
+        if (this._showing.guideEle.length === 0) {
             const cancelDebounce = this._debounce(this.resize, 500);
             window.addEventListener('resize', cancelDebounce)
         }
@@ -91,8 +91,9 @@ class JigsawGuide {
             const id = guide.id ? '#' + guide.id : '';
             const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
             const selector = `${tagName}${id}${classes}`;
-            const queryResult = document.body.querySelectorAll(selector);
+            const opt = selector !== tagName && !guide.property1 && !guide.property2;
 
+            const queryResult = document.body.querySelectorAll(selector);
             if (queryResult.length > 0) {
                 const result = Array.from(queryResult).filter(node => {
                     const property1Checker = node[guide.property1?.property] === guide.property1?.value;
@@ -101,17 +102,30 @@ class JigsawGuide {
                 })
 
                 if (result.length === 1) {
-                    this._createNoviceGuide(guide, result[0], localStorageItem);
+                    this._createNoviceGuide(guide, result[0] as HTMLElement, localStorageItem);
                     return;
                 }
 
-                if (result.length > 1) {
-                    console.warn('Find more than 1 target element.');
-                    return;
-                }
+                console.warn('Find more than 1 target element.');
+                return;
             }
 
             const mutationObserver = new MutationObserver(entries => {
+                if (opt) {
+                    console.log('xxxx')
+                    const queryResult = document.body.querySelectorAll(selector);
+                    if (queryResult.length > 0) {
+                        mutationObserver.disconnect();
+                        if (queryResult.length === 1) {
+                            this._createNoviceGuide(guide, queryResult[0] as HTMLElement, localStorageItem);
+                            return;
+                        }
+
+                        console.warn('Find more than 1 target element.');
+                        return;
+                    }
+                }
+
                 const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
                 if (addedNodes.length == 0) {
                     return;
@@ -150,7 +164,8 @@ class JigsawGuide {
                     return
                 }
 
-                this._createNoviceGuide(guide, (filterResult[0].target as HTMLElement), localStorageItem, mutationObserver)
+                mutationObserver.disconnect();
+                this._createNoviceGuide(guide, filterResult[0].target as HTMLElement, localStorageItem)
 
                 this.resize();
             })
@@ -159,19 +174,26 @@ class JigsawGuide {
         )
     }
 
-    private _noviceGuideEleArr: HTMLElement[] = [];
-    private _noviceGuideCloneArr: HTMLElement[] = [];
+    private _showing: { guideEle: HTMLElement[], cloneEle: HTMLElement[], guideKey: string[] } = {
+        guideEle: [],
+        cloneEle: [],
+        guideKey: []
+    }
 
-    private _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
+    private _createNoviceGuide(guide, targetEle: HTMLElement, localStorageItem: string) {
+        const guideKey = this._toKeyString(guide);
+
+        if (this._showing.guideKey.indexOf(guideKey) !== -1) {
+            return;
+        }
+
         let guideEle = document.createElement('div');
         this._getGuideContainer().appendChild(guideEle);
         this._relocateClone(targetEle, guideEle);
 
-
         // if ( guide.hasOwnProperty('notice') ){
         //     guide.notice =1;
         // }
-
 
         if (typeof guide.notice === 'string') {
             guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
@@ -187,31 +209,31 @@ class JigsawGuide {
                 <i class="close iconfont iconfont-e14b"></i>
             </div>
         </div>`;
-        guideEle.setAttribute('guideIndex', this._noviceGuideCloneArr.length + '')
-        this._noviceGuideEleArr.push(targetEle)
-        this._noviceGuideCloneArr.push(guideEle)
+        guideEle.setAttribute('guideIndex', this._showing.cloneEle.length + '')
+
+        this._showing.guideEle.push(targetEle)
+        this._showing.cloneEle.push(guideEle)
+        this._showing.guideKey.push(guideKey)
 
         guideEle.onclick = function (e) {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
             const index = guideEle.getAttribute('guideIndex');
-            jigsawGuide._noviceGuideCloneArr[index] = false;
+            jigsawGuide._showing.cloneEle[index] = false;
+            jigsawGuide._showing.guideKey[index] = '';
             guideEle.remove();
-            if (mutationObserver) {
-                mutationObserver.disconnect();
-            }
             const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-            shownKeys.push(jigsawGuide._toKeyString(guide));
+            shownKeys.push(guideKey);
             localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
 
-            const leftGuideCloneArr = jigsawGuide._noviceGuideCloneArr.filter(clone => {
+            const leftGuideCloneArr = jigsawGuide._showing.cloneEle.filter(clone => {
                 return clone;
             })
             if (leftGuideCloneArr.length === 0) {
                 jigsawGuide._removeGuideContainer();
-                jigsawGuide._noviceGuideEleArr = [];
-                jigsawGuide._noviceGuideCloneArr = [];
+                jigsawGuide._showing.guideEle = [];
+                jigsawGuide._showing.cloneEle = [];
             }
         }
     }
@@ -301,13 +323,12 @@ class JigsawGuide {
     }
 
     public resize(): void {
-        console.log(1)
-        jigsawGuide._noviceGuideCloneArr.forEach((clone, i) => {
+        jigsawGuide._showing.cloneEle.forEach((clone, i) => {
             if (!clone) {
                 return;
             }
 
-            jigsawGuide._relocateClone(jigsawGuide._noviceGuideEleArr[i], clone)
+            jigsawGuide._relocateClone(jigsawGuide._showing.guideEle[i], clone)
         });
     }
 
