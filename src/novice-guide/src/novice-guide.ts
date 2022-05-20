@@ -68,7 +68,7 @@ class JigsawGuide {
         }
 
         if (this._noviceGuideEleArr.length === 0) {
-            const cancelDebounce = this.debounce(this.resize, 500);
+            const cancelDebounce = this._debounce(this.resize, 500);
             window.addEventListener('resize', cancelDebounce)
         }
 
@@ -159,8 +159,62 @@ class JigsawGuide {
         )
     }
 
-    private _noviceGuideEleArr = [];
-    private _noviceGuideCloneArr = [];
+    private _noviceGuideEleArr: HTMLElement[] = [];
+    private _noviceGuideCloneArr: HTMLElement[] = [];
+
+    private _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
+        let guideEle = document.createElement('div');
+        this._getGuideContainer().appendChild(guideEle);
+        this._relocateClone(targetEle, guideEle);
+
+
+        // if ( guide.hasOwnProperty('notice') ){
+        //     guide.notice =1;
+        // }
+
+
+        if (typeof guide.notice === 'string') {
+            guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
+        }
+        guideEle.classList.add('novice-guide-clone');
+        guideEle.innerHTML = `
+        <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+            <div class="line">
+                <div></div>
+            </div>
+            <div class="notice-cntr">
+                <div class="text">${guide.notice.notice}</div>
+                <i class="close iconfont iconfont-e14b"></i>
+            </div>
+        </div>`;
+        guideEle.setAttribute('guideIndex', this._noviceGuideCloneArr.length + '')
+        this._noviceGuideEleArr.push(targetEle)
+        this._noviceGuideCloneArr.push(guideEle)
+
+        guideEle.onclick = function (e) {
+            if (!(e.target as HTMLElement).classList.contains('close')) {
+                return;
+            }
+            const index = guideEle.getAttribute('guideIndex');
+            jigsawGuide._noviceGuideCloneArr[index] = false;
+            guideEle.remove();
+            if (mutationObserver) {
+                mutationObserver.disconnect();
+            }
+            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+            shownKeys.push(jigsawGuide._toKeyString(guide));
+            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+            const leftGuideCloneArr = jigsawGuide._noviceGuideCloneArr.filter(clone => {
+                return clone;
+            })
+            if (leftGuideCloneArr.length === 0) {
+                jigsawGuide._removeGuideContainer();
+                jigsawGuide._noviceGuideEleArr = [];
+                jigsawGuide._noviceGuideCloneArr = [];
+            }
+        }
+    }
 
     private _filterShownGuides(guides: NoviceGuide[], localStorageItem: string): [NoviceGuide[], string[]] {
         const keys = guides.map(g => this._toKeyString(g));
@@ -234,7 +288,7 @@ class JigsawGuide {
         cntr.remove();
     }
 
-    private debounce(fn: Function, delay: number) {
+    private _debounce(fn: Function, delay: number) {
         let timer;
         return function () {
             if (timer) {
@@ -246,7 +300,7 @@ class JigsawGuide {
         }
     }
 
-    private resize(): void {
+    public resize(): void {
         this._noviceGuideCloneArr.forEach((clone, i) => {
             if (!clone) {
                 return;
@@ -267,52 +321,7 @@ class JigsawGuide {
         clone.style.height = height + 'px';
     }
 
-    private _createNoviceGuide(guide, targetEle, localStorageItem, mutationObserver?) {
-        let guideEle = document.createElement('div');
-        this._getGuideContainer().appendChild(guideEle);
-        this._relocateClone(targetEle, guideEle);
-        if (typeof guide.notice === 'string') {
-            guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
-        }
-        guideEle.classList.add('novice-guide-clone');
-        guideEle.innerHTML = `
-        <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
-            <div class="line">
-                <div></div>
-            </div>
-            <div class="notice-cntr">
-                <div class="text">${guide.notice.notice}</div>
-                <i class="close iconfont iconfont-e14b"></i>
-            </div>
-        </div>`;
-        guideEle.setAttribute('guideIndex', this._noviceGuideCloneArr.length + '')
-        this._noviceGuideEleArr.push(targetEle)
-        this._noviceGuideCloneArr.push(guideEle)
 
-        guideEle.onclick = function (e) {
-            if (!(e.target as HTMLElement).classList.contains('close')) {
-                return;
-            }
-            const index = guideEle.getAttribute('guideIndex');
-            jigsawGuide._noviceGuideCloneArr[index] = false;
-            guideEle.remove();
-            if (mutationObserver) {
-                mutationObserver.disconnect();
-            }
-            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-            shownKeys.push(jigsawGuide._toKeyString(guide));
-            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
-
-            const leftGuideCloneArr = jigsawGuide._noviceGuideCloneArr.filter(clone => {
-                return clone;
-            })
-            if (leftGuideCloneArr.length === 0) {
-                jigsawGuide._removeGuideContainer();
-                jigsawGuide._noviceGuideEleArr = [];
-                jigsawGuide._noviceGuideCloneArr = [];
-            }
-        }
-    }
 }
 export const jigsawGuide = new JigsawGuide();
 

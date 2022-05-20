@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
 import { SimpleTreeData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType } from 'novice-guide/src/novice-guide';
+import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuideNotice } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -43,15 +43,17 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         this.navData.fromXML(xmlData);
     }
 
-    singularGuideData: SingularNoviceGuide = { tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, notice: '这是一条新手指引', version: '0.0.1', position: 'bottom' };
+    // singularGuideData: BubbleNoviceGuideNotice = { tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, notice: '这是一条新手指引', version: '0.0.1', position: 'bottom' };
+    bubbleNotice: BubbleNoviceGuideNotice = { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' };
+    singularGuide: SingularNoviceGuide = { notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
 
-    singularGuideData2: SingularNoviceGuide = { tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标8' }, notice: '这是一条新手指引', version: '0.0.1', position: "right" }
+    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标8' }, version: '0.0.1', position: "right" }
 
-    singularGuideData3: SingularNoviceGuide = { tagName: 'div', classes: 'footer copyright', notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, version: '0.0.1', position: "top" }
+    singularGuideData3: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: "top" }
 
-    singularGuideData4: SingularNoviceGuide = { tagName: 'div', id: "ad", notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, version: '0.0.1', position: 'left' }
+    singularGuideData4: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', id: "ad", version: '0.0.1', position: 'left' }
 
-    guideData = [this.singularGuideData, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4]
+    guideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4]
     // guideData = [this.singularGuideData2]
 
     noviceGuideEleArr = [];
