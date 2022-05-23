@@ -1,6 +1,6 @@
 .demo-cntr {
     display: grid;
-    grid-template-columns: 1fr 4fr;
+    grid-template-columns: 220px 1fr;
     grid-template-areas:
         'header header'
         'menu main'
@@ -19,7 +19,7 @@
 .demo-cntr header>div {
     display: flex;
     align-items: center;
-    width: 240px;
+    width: 220px;
     font-size: 24px;
     background: -webkit-linear-gradient(45deg, var(--brand-default), #eee);
     -webkit-background-clip: text;
@@ -55,6 +55,12 @@
     justify-content: space-between;
     align-items: center;
     grid-area: main;
+}
+
+.demo-cntr .main .content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 #setting {

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
-import { SimpleTreeData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuideNotice } from 'novice-guide/src/novice-guide';
+import { SimpleTreeData, ArrayCollection, TableData } from 'jigsaw/public_api';
+import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuideNotice, DialogNoviceGuideNotice } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -9,6 +9,17 @@ import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuid
 })
 export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     public navData: SimpleTreeData = new SimpleTreeData();
+    public tabBarData: Array<string>;
+    public tableData: TableData;
+
+    cityList = new ArrayCollection([
+        { label: "北京" },
+        { label: "上海" },
+        { label: "南京" },
+        { label: "深圳" },
+        { label: "长沙" },
+        { label: "西安" }
+    ]);
 
     getPos() {
         const ele = document.querySelector("li#guide1");
@@ -23,6 +34,45 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     deleteEle() {
         const ele = document.querySelector("li#guide1");
         ele.remove();
+    }
+
+    bubbleNotice: BubbleNoviceGuideNotice = { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' };
+    singularGuide: SingularNoviceGuide = { notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
+    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, version: '0.0.1', position: "right" }
+    singularGuideData3: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: "top" }
+    singularGuideData4: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', id: "ad", version: '0.0.1', position: 'left' }
+    singularGuideData5: SingularNoviceGuide = { notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', version: '0.0.1', position: "right" }
+
+    dialogNotice: DialogNoviceGuideNotice = { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本' }
+    singularGuide:SingularNoviceGuide={ notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
+
+    guideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4, this.singularGuideData5]
+    // guideData = [this.singularGuideData2]
+
+    noviceGuideEleArr = [];
+
+    config: NoviceGuideConfig = {
+        localStorageItem: 'jigsaw.noviceGuide',
+        resetLocalStorage: true
+    }
+
+    ngOnInit() {
+        // jigsawGuide.show(this.guideData, this.config);
+    }
+
+    xy() {
+        const queryResult = document.body.querySelectorAll('li#guide1');
+        const { left, top, width, height } = queryResult[0].getBoundingClientRect();
+        const centerX = left + width / 2;
+        const centerY = top + height / 2;
+    }
+
+    clear() {
+        jigsawGuide.clear();
+    }
+
+    bubbleGuide() {
+        jigsawGuide.show(this.guideData, this.config);
     }
 
     constructor() {
@@ -41,55 +91,166 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         </node>
     `;
         this.navData.fromXML(xmlData);
-    }
 
-    // singularGuideData: BubbleNoviceGuideNotice = { tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, notice: '这是一条新手指引', version: '0.0.1', position: 'bottom' };
-    bubbleNotice: BubbleNoviceGuideNotice = { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' };
-    singularGuide: SingularNoviceGuide = { notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
+        this.tabBarData = ["Tab 1", "Tab 2", `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`, "Tab 4"];
 
-    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, version: '0.0.1', position: "right" }
-
-    singularGuideData3: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: "top" }
-
-    singularGuideData4: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', id: "ad", version: '0.0.1', position: 'left' }
-
-    singularGuideData5: SingularNoviceGuide = { notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', version: '0.0.1', position: "right" }
-
-    guideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4, this.singularGuideData5]
-    // guideData = [this.singularGuideData2]
-
-    noviceGuideEleArr = [];
-
-    config: NoviceGuideConfig = {
-        localStorageItem: 'jigsaw.noviceGuide',
-        resetLocalStorage: true
-    }
-
-    ngOnInit() {
-        jigsawGuide.show(this.guideData, this.config);
-    }
-
-    xy() {
-        const queryResult = document.body.querySelectorAll('li#guide1');
-        const { left, top, width, height } = queryResult[0].getBoundingClientRect();
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
-    }
-
-    delteGuideContainer() {
-        const cntr = document.getElementById('novice-guide-container');
-        if (cntr === null) {
-            return;
-        }
-        cntr.remove();
-    }
-
-    clear() {
-        jigsawGuide.clear();
-    }
-
-    bubbleGuide() {
-        jigsawGuide.show(this.guideData, this.config);
+        this.tableData = new TableData(
+            [
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "$320,00",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "542"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winslters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,8000",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Wintsers2",
+                    "Accountant",
+                    "$170,50",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tiger Nixon3",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon3",
+                    "System Architect",
+                    "$3,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon3",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "$320,80",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "542111"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,750",
+                    "2011/07/25",
+                    "Tokyo",
+                    "84212"
+                ],
+                [
+                    "Tiger Nixon2",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Tigesr Nixon1",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,750",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ],
+                [
+                    "Tigers Nixon2",
+                    "System Architect",
+                    "$320,800",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "5421"
+                ]
+            ],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

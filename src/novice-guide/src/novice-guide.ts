@@ -7,6 +7,7 @@ export interface NoviceGuideNotice {
     title?: string;
     notice?: string;
     useHtml?: boolean;
+    button?: string;
     trigger?: 'click' | 'mouseover';
 }
 

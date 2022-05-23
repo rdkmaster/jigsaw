@@ -30,7 +30,12 @@
     </div>
     <div class="main">
         <div class="content">
-            页面内容
+            <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
+            <jigsaw-header>单选框</jigsaw-header>
+            <jigsaw-select [data]="cityList" placeholder="请选择城市">
+            </jigsaw-select>
+            <jigsaw-header>数据表</jigsaw-header>
+            <jigsaw-table height="450" [data]="tableData"></jigsaw-table>
         </div>
         <div id="ad">
             <i class="iconfont iconfont-ea04"></i>
