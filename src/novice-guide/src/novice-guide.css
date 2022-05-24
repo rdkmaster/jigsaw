@@ -8,12 +8,19 @@
     z-index: var(--zindex-novice-guide);
 }
 
+#novice-guide-svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%
+}
+
 .novice-guide-clone {
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background: cyan; */
 }
 
 .novice-guide-clone:hover {

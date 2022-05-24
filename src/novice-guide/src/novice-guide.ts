@@ -300,8 +300,27 @@ class JigsawGuide {
             const guideCntr = document.createElement('div');
             guideCntr.id = 'novice-guide-container';
             document.body.appendChild(guideCntr);
+
+            var svgNS = "http://www.w3.org/2000/svg";
+            var xlinkns = "http://www.w3.org/1999/xlink";
+            const svg = document.createElementNS(svgNS, 'svg');
+            guideCntr.appendChild(svg)
+            svg.setAttributeNS(xlinkns, 'width', '100%');
+            svg.setAttributeNS(xlinkns, 'height', '100%');
+            svg.setAttribute('id', 'novice-guide-svg');
+
+            svg.innerHTML = `
+            <mask id="novice-guide-mask"></mask>
+            <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
+
+            // const mask = document.getElementById('novice-guide-mask');
+            // mask.innerHTML = `
+            // <rect fill="white" width="100%" height="100%"/>
+            // <rect x="200" y="200" width="100" height="100"/>`
             return guideCntr;
         }
+
+
         return cntr;
     }
 
@@ -326,16 +345,19 @@ class JigsawGuide {
     }
 
     public resize(): void {
+        const mask = document.getElementById('novice-guide-mask');
+        mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
+
         jigsawGuide._showing.cloneEle.forEach((clone, i) => {
             if (!clone) {
                 return;
             }
 
-            jigsawGuide._relocateClone(jigsawGuide._showing.guideEle[i], clone)
+            jigsawGuide._relocateClone(jigsawGuide._showing.guideEle[i], clone, mask)
         });
     }
 
-    private _relocateClone(target: HTMLElement, clone: HTMLElement) {
+    private _relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HTMLElement) {
         const { left, top, width, height } = target.getBoundingClientRect();
         if (left + top + width + height === 0) {
             return;
@@ -344,6 +366,10 @@ class JigsawGuide {
         clone.style.left = left + 'px';
         clone.style.width = width + 'px';
         clone.style.height = height + 'px';
+
+        if (mask) {
+            mask.innerHTML += `<rect x="${left}" y="${top}" width="${width}" height="${height}"/>`
+        }
     }
 
     public clear(): void {
