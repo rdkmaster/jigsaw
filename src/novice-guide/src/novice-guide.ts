@@ -238,6 +238,22 @@ class JigsawGuide {
                     
                 </div>
             </div>`
+
+            const mask = document.getElementById('novice-guide-mask');
+
+            if (!mask) {
+                var svgNS = "http://www.w3.org/2000/svg";
+                var xlinkns = "http://www.w3.org/1999/xlink";
+                const svg = document.createElementNS(svgNS, 'svg');
+                this._getGuideContainer().appendChild(svg)
+                svg.setAttributeNS(xlinkns, 'width', '100%');
+                svg.setAttributeNS(xlinkns, 'height', '100%');
+                svg.setAttribute('id', 'novice-guide-svg');
+
+                svg.innerHTML = `
+                <mask id="novice-guide-mask"></mask>
+                <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
+            }
         }
 
         guideEle.innerHTML = html;
@@ -262,6 +278,13 @@ class JigsawGuide {
             const leftGuideCloneArr = jigsawGuide._showing.cloneEle.filter(clone => {
                 return clone;
             })
+            const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+            if (dialogClone.length === 0) {
+                const mask = document.getElementById('novice-guide-mask');
+                if (mask) {
+                    mask.remove();
+                }
+            }
             if (leftGuideCloneArr.length === 0) {
                 jigsawGuide._removeGuideContainer();
                 jigsawGuide._showing.guideEle = [];
@@ -329,18 +352,6 @@ class JigsawGuide {
             const guideCntr = document.createElement('div');
             guideCntr.id = 'novice-guide-container';
             document.body.appendChild(guideCntr);
-
-            var svgNS = "http://www.w3.org/2000/svg";
-            var xlinkns = "http://www.w3.org/1999/xlink";
-            const svg = document.createElementNS(svgNS, 'svg');
-            guideCntr.appendChild(svg)
-            svg.setAttributeNS(xlinkns, 'width', '100%');
-            svg.setAttributeNS(xlinkns, 'height', '100%');
-            svg.setAttribute('id', 'novice-guide-svg');
-
-            svg.innerHTML = `
-            <mask id="novice-guide-mask"></mask>
-            <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
 
             // const mask = document.getElementById('novice-guide-mask');
             // mask.innerHTML = `
