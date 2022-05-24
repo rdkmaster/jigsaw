@@ -131,3 +131,62 @@
     right: 88px;
     transform: translateY(-50%);
 }
+
+.novice-guide-clone .dialog .notice-cntr {
+    position: absolute;
+    width: 400px;
+    padding: 16px;
+    background: cyan;
+}
+
+.novice-guide-clone .dialog .notice-cntr .title {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.novice-guide-clone .dialog .notice-cntr .text {
+    min-height: 64px;
+    font-size: var(--font-size-text-base);
+}
+
+.novice-guide-clone .dialog .notice-cntr .button-cntr {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.novice-guide-clone .dialog .notice-cntr .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 16px;
+    min-width: 80px;
+    height: 32px;
+    border-radius: 3px;
+    background: var(--brand-default);
+    color: white;
+    cursor: pointer;
+}
+
+.novice-guide-clone .dialog.dialog-right .notice-cntr {
+    top: 50%;
+    left: calc(100% + 20px);
+    transform: translateY(-50%);
+}
+
+.novice-guide-clone .dialog.dialog-left .notice-cntr {
+    top: 50%;
+    right: calc(100% + 20px);
+    transform: translateY(-50%);
+}
+
+.novice-guide-clone .dialog.dialog-bottom .notice-cntr {
+    top: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.novice-guide-clone .dialog.dialog-top .notice-cntr {
+    bottom: calc(100% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+}

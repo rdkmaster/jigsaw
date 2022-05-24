@@ -45,10 +45,12 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     dialogNotice: DialogNoviceGuideNotice = { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本' }
     singularGuide6: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'jigsaw-navigation-menu', classes: 'jigsaw-nav-menu-host', version: '0.0.1', position: 'right' }
-    singularGuide7: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'jigsaw-tabs-bar', classes: 'jigsaw-tabs-bar-host', version: '0.0.1', position: 'right' }
+    singularGuide7: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'ul', id: 'header-menu', version: '0.0.1', position: 'bottom' }
+    singularGuide8: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'div', id: 'ad', version: '0.0.1', position: 'left' }
+    singularGuide9: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: 'top' }
 
     bubbleGuideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4, this.singularGuideData5]
-    dialogGuideData = [this.singularGuide6, this.singularGuide7]
+    dialogGuideData = [this.singularGuide6, this.singularGuide7, this.singularGuide8, this.singularGuide9]
     // guideData = [this.singularGuideData2]
 
     noviceGuideEleArr = [];
@@ -59,8 +61,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        // jigsawGuide.show(this.bubbleGuideData, this.config);
-        jigsawGuide.show(this.dialogGuideData, this.config);
+        jigsawGuide.show(this.bubbleGuideData, this.config);
+        // jigsawGuide.show(this.dialogGuideData, this.config);
     }
 
     xy() {
@@ -75,7 +77,11 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     bubbleGuide() {
-        jigsawGuide.show(this.guideData, this.config);
+        jigsawGuide.show(this.bubbleGuideData, this.config);
+    }
+
+    dialogGuide() {
+        jigsawGuide.show(this.dialogGuideData, this.config);
     }
 
     constructor() {

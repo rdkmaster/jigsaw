@@ -202,7 +202,7 @@ class JigsawGuide {
             guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
         }
         guideEle.classList.add('novice-guide-clone');
-        guideEle.innerHTML = `
+        let html = `
         <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
             <div class="line">
                 <div></div>
@@ -211,7 +211,36 @@ class JigsawGuide {
                 <div class="text">${guide.notice.notice}</div>
                 <i class="close iconfont iconfont-e14b"></i>
             </div>
-        </div>`;
+        </div>`
+
+        if (guide.notice.type === NoviceGuideNoticeType.bubble) {
+            html = `
+            <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+                <div class="line">
+                    <div></div>
+                </div>
+                <div class="notice-cntr">
+                    <div class="text">${guide.notice.notice}</div>
+                    <i class="close iconfont iconfont-e14b"></i>
+                </div>
+            </div>`
+        }
+
+        if (guide.notice.type === NoviceGuideNoticeType.dialog) {
+            html = `
+            <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+                <div class="notice-cntr">
+                    <div class="title">${guide.notice.title}</div>
+                    <div class="text">${guide.notice.notice}</div>
+                    <div class="button-cntr">
+                        <div class="close button">${guide.notice.button}</div>
+                    </div>
+                    
+                </div>
+            </div>`
+        }
+
+        guideEle.innerHTML = html;
         guideEle.setAttribute('guideIndex', this._showing.cloneEle.length + '')
 
         this._showing.guideEle.push(targetEle)
@@ -346,7 +375,9 @@ class JigsawGuide {
 
     public resize(): void {
         const mask = document.getElementById('novice-guide-mask');
-        mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
+        if (mask) {
+            mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
+        }
 
         jigsawGuide._showing.cloneEle.forEach((clone, i) => {
             if (!clone) {
@@ -384,6 +415,8 @@ class JigsawGuide {
                 mutation.disconnect();
             }
         })
+        this._showing.cloneEle = [];
+        this._showing.mutation = [];
         this._showing.guideKey = [];
         this._showing.guideEle = [];
     }
