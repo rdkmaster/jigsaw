@@ -68,7 +68,7 @@ class JigsawGuide {
             return;
         }
 
-        if (this._showing.guideEle.length === 0) {
+        if (this._showing.guideEles.length === 0) {
             const cancelDebounce = this._debounce(this.resize, 500);
             window.addEventListener('resize', cancelDebounce)
         }
@@ -171,48 +171,31 @@ class JigsawGuide {
                 this.resize();
             })
             mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
-            this._showing.mutation.push(mutationObserver)
+            this._showing.mutations.push(mutationObserver)
         }
         )
     }
 
-    private _showing: { guideEle: HTMLElement[], cloneEle: HTMLElement[], guideKey: string[], mutation: MutationObserver[] } = {
-        guideEle: [],
-        cloneEle: [],
-        guideKey: [],
-        mutation: []
+    private _showing: { guideEles: HTMLElement[], cloneEles: HTMLElement[], guideKeys: string[], mutations: MutationObserver[] } = {
+        guideEles: [],
+        cloneEles: [],
+        guideKeys: [],
+        mutations: []
     }
 
     private _createNoviceGuide(guide, targetEle: HTMLElement, localStorageItem: string) {
         const guideKey = this._toKeyString(guide);
 
-        if (this._showing.guideKey.indexOf(guideKey) !== -1) {
+        if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
-
-        let guideEle = document.createElement('div');
-        this._getGuideContainer().appendChild(guideEle);
-        this._relocateClone(targetEle, guideEle);
-
-        // if ( guide.hasOwnProperty('notice') ){
-        //     guide.notice =1;
-        // }
 
         if (typeof guide.notice === 'string') {
             guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
         }
-        guideEle.classList.add('novice-guide-clone');
-        let html = `
-        <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
-            <div class="line">
-                <div></div>
-            </div>
-            <div class="notice-cntr">
-                <div class="text">${guide.notice.notice}</div>
-                <i class="close iconfont iconfont-e14b"></i>
-            </div>
-        </div>`
 
+        let html = '';
+        let hasMask = false;
         if (guide.notice.type === NoviceGuideNoticeType.bubble) {
             html = `
             <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
@@ -227,6 +210,7 @@ class JigsawGuide {
         }
 
         if (guide.notice.type === NoviceGuideNoticeType.dialog) {
+            hasMask = true;
             html = `
             <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
                 <div class="notice-cntr">
@@ -235,47 +219,32 @@ class JigsawGuide {
                     <div class="button-cntr">
                         <div class="close button">${guide.notice.button}</div>
                     </div>
-                    
                 </div>
-            </div>`
-
-            const mask = document.getElementById('novice-guide-mask');
-
-            if (!mask) {
-                var svgNS = "http://www.w3.org/2000/svg";
-                var xlinkns = "http://www.w3.org/1999/xlink";
-                const svg = document.createElementNS(svgNS, 'svg');
-                this._getGuideContainer().appendChild(svg)
-                svg.setAttributeNS(xlinkns, 'width', '100%');
-                svg.setAttributeNS(xlinkns, 'height', '100%');
-                svg.setAttribute('id', 'novice-guide-svg');
-
-                svg.innerHTML = `
-                <mask id="novice-guide-mask"></mask>
-                <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
-            }
+            </div>`;
         }
 
-        guideEle.innerHTML = html;
-        guideEle.setAttribute('guideIndex', this._showing.cloneEle.length + '')
+        let cloneEle = document.createElement('div');
+        cloneEle.classList.add('novice-guide-clone');
+        cloneEle.innerHTML = html;
+        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
 
-        this._showing.guideEle.push(targetEle)
-        this._showing.cloneEle.push(guideEle)
-        this._showing.guideKey.push(guideKey)
+        this._showing.guideEles.push(targetEle)
+        this._showing.cloneEles.push(cloneEle)
+        this._showing.guideKeys.push(guideKey)
 
-        guideEle.onclick = function (e) {
+        cloneEle.onclick = function (e) {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
-            const index = guideEle.getAttribute('guideIndex');
-            jigsawGuide._showing.cloneEle[index] = false;
-            jigsawGuide._showing.guideKey[index] = '';
-            guideEle.remove();
+            const index = cloneEle.getAttribute('guideIndex');
+            jigsawGuide._showing.cloneEles[index] = false;
+            jigsawGuide._showing.guideKeys[index] = '';
+            cloneEle.remove();
             const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
             shownKeys.push(guideKey);
             localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
 
-            const leftGuideCloneArr = jigsawGuide._showing.cloneEle.filter(clone => {
+            const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
                 return clone;
             })
             const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
@@ -287,10 +256,13 @@ class JigsawGuide {
             }
             if (leftGuideCloneArr.length === 0) {
                 jigsawGuide._removeGuideContainer();
-                jigsawGuide._showing.guideEle = [];
-                jigsawGuide._showing.cloneEle = [];
+                jigsawGuide._showing.guideEles = [];
+                jigsawGuide._showing.cloneEles = [];
             }
         }
+
+        this._getGuideContainer(hasMask).appendChild(cloneEle);
+        this.resize();
     }
 
     private _filterShownGuides(guides: NoviceGuide[], localStorageItem: string): [NoviceGuide[], string[]] {
@@ -346,20 +318,24 @@ class JigsawGuide {
         return fields.join('$_$');
     }
 
-    private _getGuideContainer(): HTMLElement {
+    private _getGuideContainer(hasMask: boolean): HTMLElement {
         const cntr = document.getElementById('novice-guide-container');
         if (cntr === null) {
             const guideCntr = document.createElement('div');
             guideCntr.id = 'novice-guide-container';
             document.body.appendChild(guideCntr);
 
-            // const mask = document.getElementById('novice-guide-mask');
-            // mask.innerHTML = `
-            // <rect fill="white" width="100%" height="100%"/>
-            // <rect x="200" y="200" width="100" height="100"/>`
+            if (hasMask) {
+                guideCntr.appendChild(this._createMask())
+            }
+
             return guideCntr;
         }
 
+        const mask = document.getElementById('novice-guide-mask');
+        if (hasMask && mask === null) {
+            cntr.appendChild(this._createMask());
+        }
 
         return cntr;
     }
@@ -370,6 +346,22 @@ class JigsawGuide {
             return
         }
         cntr.remove();
+    }
+
+    private _createMask(): Element {
+        var svgNS = "http://www.w3.org/2000/svg";
+        var xlinkns = "http://www.w3.org/1999/xlink";
+        const svg = document.createElementNS(svgNS, 'svg');
+
+        svg.setAttributeNS(xlinkns, 'width', '100%');
+        svg.setAttributeNS(xlinkns, 'height', '100%');
+        svg.setAttribute('id', 'novice-guide-svg');
+
+        svg.innerHTML = `
+        <mask id="novice-guide-mask"></mask>
+        <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
+
+        return svg;
     }
 
     private _debounce(fn: Function, delay: number) {
@@ -390,12 +382,12 @@ class JigsawGuide {
             mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
         }
 
-        jigsawGuide._showing.cloneEle.forEach((clone, i) => {
+        jigsawGuide._showing.cloneEles.forEach((clone, i) => {
             if (!clone) {
                 return;
             }
 
-            jigsawGuide._relocateClone(jigsawGuide._showing.guideEle[i], clone, mask)
+            jigsawGuide._relocateClone(jigsawGuide._showing.guideEles[i], clone, mask)
         });
     }
 
@@ -416,20 +408,20 @@ class JigsawGuide {
 
     public clear(): void {
         this._removeGuideContainer();
-        this._showing.cloneEle.forEach(clone => {
+        this._showing.cloneEles.forEach(clone => {
             if (clone) {
                 clone.remove();
             }
         })
-        this._showing.mutation.forEach(mutation => {
+        this._showing.mutations.forEach(mutation => {
             if (mutation) {
                 mutation.disconnect();
             }
         })
-        this._showing.cloneEle = [];
-        this._showing.mutation = [];
-        this._showing.guideKey = [];
-        this._showing.guideEle = [];
+        this._showing.cloneEles = [];
+        this._showing.mutations = [];
+        this._showing.guideKeys = [];
+        this._showing.guideEles = [];
     }
 }
 export const jigsawGuide = new JigsawGuide();

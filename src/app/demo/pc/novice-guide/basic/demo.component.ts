@@ -61,8 +61,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        jigsawGuide.show(this.bubbleGuideData, this.config);
-        // jigsawGuide.show(this.dialogGuideData, this.config);
+        // jigsawGuide.show(this.bubbleGuideData, this.config);
+        jigsawGuide.show(this.dialogGuideData, this.config);
     }
 
     xy() {

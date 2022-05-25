@@ -136,7 +136,8 @@
     position: absolute;
     width: 400px;
     padding: 16px;
-    background: cyan;
+    border-radius: 3px;
+    background: var(--bg-component);
 }
 
 .novice-guide-clone .dialog .notice-cntr .title {
@@ -167,10 +168,26 @@
     cursor: pointer;
 }
 
+.novice-guide-clone .dialog .notice-cntr::after {
+    content: '';
+    position: absolute;
+    background: var(--bg-component);
+    height: 20px;
+    width: 20px;
+    transform: rotate(45deg);
+    z-index: -1;
+}
+
 .novice-guide-clone .dialog.dialog-right .notice-cntr {
     top: 50%;
     left: calc(100% + 20px);
     transform: translateY(-50%);
+}
+
+.novice-guide-clone .dialog.dialog-right .notice-cntr::after {
+    top: 50%;
+    left: -10px;
+    margin-top: -10px;
 }
 
 .novice-guide-clone .dialog.dialog-left .notice-cntr {
@@ -179,14 +196,32 @@
     transform: translateY(-50%);
 }
 
+.novice-guide-clone .dialog.dialog-left .notice-cntr::after {
+    top: 50%;
+    right: -10px;
+    margin-top: -10px;
+}
+
 .novice-guide-clone .dialog.dialog-bottom .notice-cntr {
     top: calc(100% + 20px);
     left: 50%;
     transform: translateX(-50%);
 }
 
+.novice-guide-clone .dialog.dialog-bottom .notice-cntr::after {
+    top: -10px;
+    left: 50%;
+    margin-left: -5px;
+}
+
 .novice-guide-clone .dialog.dialog-top .notice-cntr {
     bottom: calc(100% + 20px);
     left: 50%;
     transform: translateX(-50%);
+}
+
+.novice-guide-clone .dialog.dialog-top .notice-cntr::after {
+    bottom: -10px;
+    left: 50%;
+    margin-left: -5px;
 }
