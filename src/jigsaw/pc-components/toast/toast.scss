@@ -5,9 +5,10 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         display: flex;
         align-items: center;
         width: 100%;
-        min-width: 200px;
+        min-width: 256px;
         height: $height-huge;
         background: $bg-popup;
+        border-radius: $border-radius-base;
 
         .#{$jigsaw-toast}-icon {
             display: flex;

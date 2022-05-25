@@ -131,7 +131,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             return;
         }
         const opt: ToastMessage = options ? options : {};
-        opt.width = opt.hasOwnProperty('width') ? (opt.width > 200 ? opt.width : 200) : 200;
+        opt.width = opt.hasOwnProperty('width') ? (opt.width > 256 ? opt.width : 256) : 256;
         opt.timeout = +opt.timeout >= 0 ? +opt.timeout : 8000;
 
         const popupOptions = {
