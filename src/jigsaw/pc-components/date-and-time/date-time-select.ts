@@ -210,7 +210,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     @Input()
     @RequireMarkForCheck()
-    public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
+    public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.click;
 
     @Input()
     @RequireMarkForCheck()

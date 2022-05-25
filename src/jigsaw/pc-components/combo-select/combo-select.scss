@@ -136,8 +136,8 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             position: absolute;
             top: 50%;
             right: 5px;
-            font-size: $icon-size-med;
-            color: $icon-color-default;
+            font-size: $icon-size-sm;
+            color: $icon-color-stress;
             transform: translateY(-50%);
             &:hover {
                 color: $brand-default;
