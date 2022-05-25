@@ -215,7 +215,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     @Input()
     @RequireMarkForCheck()
-    public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.mouseenter;
+    public openTrigger: 'mouseenter' | 'click' | 'none' | DropDownTrigger = DropDownTrigger.click;
 
     @Input()
     @RequireMarkForCheck()
