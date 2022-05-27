@@ -697,6 +697,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         // reset node label
         nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node[field])
             .forEach(node => {
+                if (!node[field].includes('jigsaw-tree-funzzy-search-identification')) {
+                    return;
+                }
                 node[field] = node.oldname;
                 this.ztree.updateNode(node);
             });
@@ -714,7 +717,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 node.oldname = node[field];
                 const rexGlobal = new RegExp(regKeywords, 'gi');
                 node[field] = node.oldname.replace(rexGlobal, originalText =>
-                    `<span style="background-color: var(--primary-disabled);">${originalText}</span>`);
+                    `<span class="jigsaw-tree-funzzy-search-identification" style="background-color: var(--primary-disabled);">${originalText}</span>`);
                 this.ztree.updateNode(node);
                 this.ztree.showNode(node);
 
