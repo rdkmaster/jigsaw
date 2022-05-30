@@ -48,13 +48,13 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         version: 'v0.0.1'
     }
 
-    dialogGuideData: MultipleNoviceGuide = {
-        type: NoviceGuideType.multiple,
+    dialogGuideData: SingularNoviceGuide = {
+        type: NoviceGuideType.singular,
         data: [
             { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'jigsaw-navigation-menu', classes: 'jigsaw-nav-menu-host', position: 'right' },
             { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'ul', id: 'header-menu', position: 'bottom' },
-            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', version: '0.0.1', position: 'left' },
-            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: 'top' }
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', position: 'left' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top' }
         ],
         version: 'v0.0.1'
     }

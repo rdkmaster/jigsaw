@@ -3,6 +3,7 @@ export enum NoviceGuideNoticeType {
 }
 
 export interface NoviceGuideContent {
+    type: NoviceGuideNoticeType;
     title?: string;
     notice: string;
     useHtml?: boolean;
@@ -80,12 +81,14 @@ class JigsawGuide {
         [guides, guideKeys] = this._filterShownGuides(guide, localStorageItem);
         guides = this._deduplicate(guides, guideKeys);
 
+        console.log(guides, guideKeys)
+
         if (guides.length == 0) {
             console.warn('All guides were shown.');
             return;
         }
 
-        guides.forEach(g => {
+        guides.forEach((g, i) => {
             const tagName = g.tagName ? g.tagName.toUpperCase() : '';
             const id = g.id ? '#' + g.id : '';
             const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
@@ -101,7 +104,7 @@ class JigsawGuide {
                 })
 
                 if (result.length === 1) {
-                    this._createNoviceGuide(g, result[0] as HTMLElement, localStorageItem);
+                    this._createNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys[i]);
                     return;
                 }
 
@@ -116,7 +119,7 @@ class JigsawGuide {
                     if (queryResult.length > 0) {
                         mutationObserver.disconnect();
                         if (queryResult.length === 1) {
-                            this._createNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem);
+                            this._createNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys[i]);
                             return;
                         }
 
@@ -164,7 +167,7 @@ class JigsawGuide {
                 }
 
                 mutationObserver.disconnect();
-                this._createNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem)
+                this._createNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys[i])
 
                 this.resize();
             })
@@ -181,9 +184,7 @@ class JigsawGuide {
         mutations: []
     }
 
-    private _createNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string) {
-        const guideKey = this._toKeyString(guide, "");
-
+    private _createNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string) {
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
@@ -242,17 +243,23 @@ class JigsawGuide {
                 return clone;
             })
             const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-            if (dialogClone.length === 0) {
-                const mask = document.getElementById('novice-guide-mask');
-                if (mask) {
-                    mask.remove();
-                }
+            const mask = document.getElementById('novice-guide-mask');
+            
+            if (dialogClone.length === 0 && mask) {
+                mask.remove();
             }
+
+            if (mask) {
+                mask.innerHTML = '';
+            }
+
             if (leftGuideCloneArr.length === 0) {
                 jigsawGuide._removeGuideContainer();
                 jigsawGuide._showing.guideEles = [];
                 jigsawGuide._showing.cloneEles = [];
             }
+
+            jigsawGuide.resize();
         }
 
         this._getGuideContainer(hasMask).appendChild(cloneEle);
@@ -304,6 +311,7 @@ class JigsawGuide {
 
     private _toKeyString(guide: BasicNoviceGuideNotice, version: string): string {
         let fields = [version || 'v0'];
+        fields.push(guide.type || '');
         fields.push(guide.tagName || '');
         fields.push(guide.id || '');
         fields.push(guide.classes || '');
