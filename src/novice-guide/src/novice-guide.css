@@ -141,6 +141,7 @@
 }
 
 .novice-guide-clone .dialog .notice-cntr .title {
+    position: relative;
     font-size: 14px;
     font-weight: bold;
 }
@@ -155,10 +156,18 @@
     justify-content: flex-end;
 }
 
+.novice-guide-clone .dialog .notice-cntr .title .close-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
 .novice-guide-clone .dialog .notice-cntr .button {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-left: 4px;
     padding: 0 16px;
     min-width: 80px;
     height: 32px;

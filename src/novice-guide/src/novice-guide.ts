@@ -81,14 +81,101 @@ class JigsawGuide {
         [guides, guideKeys] = this._filterShownGuides(guide, localStorageItem);
         guides = this._deduplicate(guides, guideKeys);
 
-        console.log(guides, guideKeys)
-
         if (guides.length == 0) {
             console.warn('All guides were shown.');
             return;
         }
 
-        guides.forEach((g, i) => {
+        if (guide.type === 'singular') {
+            guides.forEach((g, i) => {
+                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+                const id = g.id ? '#' + g.id : '';
+                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
+                const selector = `${tagName}${id}${classes}`;
+                const opt = selector !== tagName && !g.property1 && !g.property2;
+
+                const queryResult = document.body.querySelectorAll(selector);
+                if (queryResult.length > 0) {
+                    const result = Array.from(queryResult).filter(node => {
+                        const property1Checker = node[g.property1?.property] === g.property1?.value;
+                        const property2Checker = node[g.property2?.property] === g.property2?.value;
+                        return property1Checker && property2Checker;
+                    })
+
+                    if (result.length === 1) {
+                        this._createSingularNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys[i]);
+                        return;
+                    }
+
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+
+                const mutationObserver = new MutationObserver(entries => {
+                    if (opt) {
+                        const queryResult = document.body.querySelectorAll(selector);
+                        if (queryResult.length > 0) {
+                            mutationObserver.disconnect();
+                            if (queryResult.length === 1) {
+                                this._createSingularNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys[i]);
+                                return;
+                            }
+
+                            console.warn('Find more than 1 target element.');
+                            return;
+                        }
+                    }
+
+                    const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+                    if (addedNodes.length == 0) {
+                        return;
+                    }
+                    const filterResult = addedNodes.filter(node => {
+                        if (tagName && node.target.nodeName !== tagName) {
+                            return false
+                        }
+
+                        if (id && node.target["id"] !== id) {
+                            return false
+                        }
+
+                        if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
+                            return false
+                        }
+
+                        if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
+                            return false
+                        }
+
+                        let classesChecker = true;
+                        if (classes) {
+                            const classArr = classes.split(".");
+                            classArr.shift();
+                            classArr.forEach(item => {
+                                if (!node.target["classList"].contains(item)) {
+                                    classesChecker = false;
+                                }
+                            })
+                        }
+                        return classesChecker;
+                    })
+
+                    if (filterResult.length !== 1) {
+                        return
+                    }
+
+                    mutationObserver.disconnect();
+                    this._createSingularNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys[i])
+
+                    this.resize();
+                })
+                mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+                this._showing.mutations.push(mutationObserver)
+            })
+        }
+
+        if (guide.type === 'multiple') {
+            const g = guides[0];
             const tagName = g.tagName ? g.tagName.toUpperCase() : '';
             const id = g.id ? '#' + g.id : '';
             const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
@@ -104,7 +191,7 @@ class JigsawGuide {
                 })
 
                 if (result.length === 1) {
-                    this._createNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys[i]);
+                    this._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
                     return;
                 }
 
@@ -114,12 +201,11 @@ class JigsawGuide {
 
             const mutationObserver = new MutationObserver(entries => {
                 if (opt) {
-                    console.log('xxxx')
                     const queryResult = document.body.querySelectorAll(selector);
                     if (queryResult.length > 0) {
                         mutationObserver.disconnect();
                         if (queryResult.length === 1) {
-                            this._createNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys[i]);
+                            this._createMultipleNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
                             return;
                         }
 
@@ -167,14 +253,13 @@ class JigsawGuide {
                 }
 
                 mutationObserver.disconnect();
-                this._createNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys[i])
+                this._createMultipleNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
 
                 this.resize();
             })
             mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
             this._showing.mutations.push(mutationObserver)
         }
-        )
     }
 
     private _showing: { guideEles: HTMLElement[], cloneEles: HTMLElement[], guideKeys: string[], mutations: MutationObserver[] } = {
@@ -184,7 +269,7 @@ class JigsawGuide {
         mutations: []
     }
 
-    private _createNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string) {
+    private _createSingularNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string) {
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
@@ -244,7 +329,7 @@ class JigsawGuide {
             })
             const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
             const mask = document.getElementById('novice-guide-mask');
-            
+
             if (dialogClone.length === 0 && mask) {
                 mask.remove();
             }
@@ -266,22 +351,220 @@ class JigsawGuide {
         this.resize();
     }
 
+    private _createMultipleNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string[], current: number, guides: NoviceGuideNotice[]) {
+        if (this._showing.guideKeys.indexOf(guideKey[current]) !== -1) {
+            return;
+        }
+
+
+        let html = '';
+
+        let buttonHtml = '';
+        if (current === 0) {
+            buttonHtml = `<div class="next button">下一步</div>`
+        } else if (current === guides.length - 1) {
+            buttonHtml = `<div class="pre button">上一步</div><div class="close button">结束</div>`
+        } else {
+            buttonHtml = `<div class="pre button">上一步</div><div class="next button">下一步</div>`
+        }
+
+        html = `
+            <div class="${guide.type} ${guide.type}-${guide.position}">
+                <div class="notice-cntr">
+                    <div class="title">${guide.title}
+                        <div class="close iconfont iconfont-e14b close-arrow"></div>
+                    </div>
+                    <div class="text">${guide.notice}</div>
+                    <div class="button-cntr">
+                        ${buttonHtml}
+                    </div>
+                    
+                </div>
+            </div>`;
+
+        // if ()
+
+        let cloneEle = document.createElement('div');
+        cloneEle.classList.add('novice-guide-clone');
+        cloneEle.innerHTML = html;
+        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
+
+        this._showing.guideEles.push(targetEle)
+        this._showing.cloneEles.push(cloneEle)
+        this._showing.guideKeys.push(guideKey[current])
+
+        cloneEle.onclick = function (e) {
+            if ((e.target as HTMLElement).classList.contains('close')) {
+                const index = cloneEle.getAttribute('guideIndex');
+                jigsawGuide._showing.cloneEles[index] = false;
+                jigsawGuide._showing.guideKeys[index] = '';
+                cloneEle.remove();
+                const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                shownKeys.push(guideKey);
+                localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+                const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
+                    return clone;
+                })
+                const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+                const mask = document.getElementById('novice-guide-mask');
+
+                if (dialogClone.length === 0 && mask) {
+                    mask.remove();
+                }
+
+                if (mask) {
+                    mask.innerHTML = '';
+                }
+
+                if (leftGuideCloneArr.length === 0) {
+                    jigsawGuide._removeGuideContainer();
+                    jigsawGuide._showing.guideEles = [];
+                    jigsawGuide._showing.cloneEles = [];
+                }
+
+                jigsawGuide.resize();
+            }
+
+            if ((e.target as HTMLElement).classList.contains('next')) {
+                const g = guides[current + 1];
+                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+                const id = g.id ? '#' + g.id : '';
+                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
+                const selector = `${tagName}${id}${classes}`;
+                const opt = selector !== tagName && !g.property1 && !g.property2;
+
+                const queryResult = document.body.querySelectorAll(selector);
+                if (queryResult.length > 0) {
+                    const result = Array.from(queryResult).filter(node => {
+                        const property1Checker = node[g.property1?.property] === g.property1?.value;
+                        const property2Checker = node[g.property2?.property] === g.property2?.value;
+                        return property1Checker && property2Checker;
+                    })
+
+                    if (result.length === 1) {
+                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKey, current + 1, guides);
+
+                        const index = cloneEle.getAttribute('guideIndex');
+                        jigsawGuide._showing.cloneEles[index] = false;
+                        jigsawGuide._showing.guideKeys[index] = '';
+                        cloneEle.remove();
+                        const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                        shownKeys.push(guideKey);
+                        localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
+                            return clone;
+                        })
+                        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+                        const mask = document.getElementById('novice-guide-mask');
+
+                        if (dialogClone.length === 0 && mask) {
+                            mask.remove();
+                        }
+
+                        if (mask) {
+                            mask.innerHTML = '';
+                        }
+
+                        if (leftGuideCloneArr.length === 0) {
+                            jigsawGuide._removeGuideContainer();
+                            jigsawGuide._showing.guideEles = [];
+                            jigsawGuide._showing.cloneEles = [];
+                        }
+
+                        jigsawGuide.resize();
+                        return;
+                    }
+
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+
+
+            }
+
+            if ((e.target as HTMLElement).classList.contains('pre')) {
+                const g = guides[current - 1];
+                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+                const id = g.id ? '#' + g.id : '';
+                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
+                const selector = `${tagName}${id}${classes}`;
+                const opt = selector !== tagName && !g.property1 && !g.property2;
+
+                const queryResult = document.body.querySelectorAll(selector);
+                if (queryResult.length > 0) {
+                    const result = Array.from(queryResult).filter(node => {
+                        const property1Checker = node[g.property1?.property] === g.property1?.value;
+                        const property2Checker = node[g.property2?.property] === g.property2?.value;
+                        return property1Checker && property2Checker;
+                    })
+
+                    if (result.length === 1) {
+                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKey, current - 1, guides);
+
+                        const index = cloneEle.getAttribute('guideIndex');
+                        jigsawGuide._showing.cloneEles[index] = false;
+                        jigsawGuide._showing.guideKeys[index] = '';
+                        cloneEle.remove();
+                        const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                        shownKeys.push(guideKey);
+                        localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
+                            return clone;
+                        })
+                        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+                        const mask = document.getElementById('novice-guide-mask');
+
+                        if (dialogClone.length === 0 && mask) {
+                            mask.remove();
+                        }
+
+                        if (mask) {
+                            mask.innerHTML = '';
+                        }
+
+                        if (leftGuideCloneArr.length === 0) {
+                            jigsawGuide._removeGuideContainer();
+                            jigsawGuide._showing.guideEles = [];
+                            jigsawGuide._showing.cloneEles = [];
+                        }
+
+                        jigsawGuide.resize();
+                        return;
+                    }
+
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+            }
+        }
+
+        this._getGuideContainer(true).appendChild(cloneEle);
+        this.resize();
+    }
+
     private _filterShownGuides(guide: NoviceGuide, localStorageItem: string): [NoviceGuideNotice[], string[]] {
-        let keys = guide.data.map(g => this._toKeyString(g, guide.version));
+        const keys = guide.data.map(g => this._toKeyString(g, guide.version));
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
         const guidesCopy = [...guide.data];
 
-        if (guide.type !== 'singular') {
-            keys = [keys.join()];
+        if (guide.type === 'singular') {
+            keys.forEach((key, idx) => {
+                if (shownKeys.indexOf(key) == -1) {
+                    return;
+                }
+                guidesCopy[idx] = null;
+                keys[idx] = null;
+            });
+        } else {
+            const joinKey = [keys.join()];
+            if (shownKeys.indexOf(joinKey) !== -1) {
+                return [[], []];
+            }
         }
 
-        keys.forEach((key, idx) => {
-            if (shownKeys.indexOf(key) == -1) {
-                return;
-            }
-            guidesCopy[idx] = null;
-            keys[idx] = null;
-        });
         return [guidesCopy.filter(g => !!g), keys.filter(k => !!k)];
     }
 

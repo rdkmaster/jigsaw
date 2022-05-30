@@ -59,6 +59,17 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         version: 'v0.0.1'
     }
 
+    multipleNoviceGuideData: MultipleNoviceGuide = {
+        type: NoviceGuideType.multiple,
+        data: [
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'jigsaw-navigation-menu', classes: 'jigsaw-nav-menu-host', position: 'right' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'ul', id: 'header-menu', position: 'bottom' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', position: 'left' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top' }
+        ],
+        version: 'v0.0.1'
+    }
+
     config: NoviceGuideConfig = {
         localStorageItem: 'jigsaw.noviceGuide',
         resetLocalStorage: true
@@ -66,7 +77,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     ngOnInit() {
         // jigsawGuide.show(this.bubbleGuideData, this.config);
-        jigsawGuide.show(this.dialogGuideData, this.config);
+        // jigsawGuide.show(this.dialogGuideData, this.config);
+        jigsawGuide.show(this.multipleNoviceGuideData, this.config);
     }
 
     xy() {
@@ -86,6 +98,10 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     dialogGuide() {
         jigsawGuide.show(this.dialogGuideData, this.config);
+    }
+
+    multipuleGuide() {
+        jigsawGuide.show(this.multipleNoviceGuideData, this.config);
     }
 
     constructor() {
