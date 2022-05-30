@@ -2,28 +2,14 @@ export enum NoviceGuideNoticeType {
     bubble = 'bubble', dialog = 'dialog', wizard = 'wizard'
 }
 
-export interface NoviceGuideNotice {
-    type: NoviceGuideNoticeType;
+export interface NoviceGuideContent {
     title?: string;
-    notice?: string;
+    notice: string;
     useHtml?: boolean;
     button?: string;
     trigger?: 'click' | 'mouseover';
 }
-
-export interface BubbleNoviceGuideNotice extends NoviceGuideNotice {
-    type: NoviceGuideNoticeType.bubble;
-}
-
-export interface DialogNoviceGuideNotice extends NoviceGuideNotice {
-    type: NoviceGuideNoticeType.dialog;
-}
-
-export interface WizardNoviceGuideNotice extends NoviceGuideNotice {
-    type: NoviceGuideNoticeType.wizard;
-}
-
-export interface DiscoverableNoviceGuide {
+export interface NoviceGuidePicker {
     tagName?: string;
     id?: string;
     classes?: string;
@@ -31,39 +17,51 @@ export interface DiscoverableNoviceGuide {
     property2?: { property: string, value: string | number };
 }
 
-/**
- * version属性，再加上父类里的tagName等属性一起，共同组成了一个帮助内容的标识
- */
-export interface BasicNoviceGuide extends DiscoverableNoviceGuide {
-    version: string;
-    position: 'top' | 'left' | 'right' | 'bottom'
+export interface NoviceGuideOptions {
+    position: 'top' | 'left' | 'right' | 'bottom';
     timeout?: number;
 }
 
+export interface BasicNoviceGuideNotice extends NoviceGuideContent { }
+export interface BasicNoviceGuideNotice extends NoviceGuidePicker { }
+export interface BasicNoviceGuideNotice extends NoviceGuideOptions { }
+
+export interface BubbleNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.bubble; }
+export interface DialogNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.dialog; }
+export interface WizardNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.wizard; }
+
+
+export enum NoviceGuideType {
+    singular = 'singular', multiple = 'multiple', wizard = 'wizard'
+}
+
+export type NoviceGuideNotice = BubbleNoviceGuide | DialogNoviceGuide | WizardNoviceGuide;
+/**
+ * version属性，再加上父类里的tagName等属性一起，共同组成了一个帮助内容的标识
+ */
+export interface BasicNoviceGuide {
+    type: NoviceGuideType;
+    data: NoviceGuideNotice[];
+    version: string;
+}
 export interface SingularNoviceGuide extends BasicNoviceGuide {
-    notice: string | BubbleNoviceGuideNotice | DialogNoviceGuideNotice;
+    type: NoviceGuideType.singular;
 }
-
 export interface MultipleNoviceGuide extends BasicNoviceGuide {
-    notices: DialogNoviceGuideNotice[] | (BubbleNoviceGuideNotice | string)[]
+    type: NoviceGuideType.multiple;
+}
+export interface WizardNoviceGuideSteps extends BasicNoviceGuide {
+    type: NoviceGuideType.wizard;
 }
 
-export interface WizardNoviceGuideStep extends DiscoverableNoviceGuide {
-    notice: WizardNoviceGuideNotice;
-}
-
-export interface WizardNoviceGuide extends BasicNoviceGuide {
-    steps: (WizardNoviceGuideStep | BubbleNoviceGuideNotice | string)[];
-}
-
-export type NoviceGuide = SingularNoviceGuide | MultipleNoviceGuide | WizardNoviceGuide;
+export type NoviceGuide = SingularNoviceGuide | MultipleNoviceGuide | WizardNoviceGuideSteps;
 export type NoviceGuideConfig = {
     localStorageItem: string, resetLocalStorage: boolean
 }
 
 class JigsawGuide {
-    public show(guides: NoviceGuide[], config?: NoviceGuideConfig): void {
-        if (!guides?.length) {
+    public show(guide: NoviceGuide, config?: NoviceGuideConfig): void {
+        if (!guide || !guide.data?.length) {
             console.error('There is no available guide data.');
             return;
         }
@@ -78,8 +76,8 @@ class JigsawGuide {
             localStorage.setItem(localStorageItem, '[]');
         }
 
-        let guideKeys;
-        [guides, guideKeys] = this._filterShownGuides(guides, localStorageItem);
+        let guideKeys, guides: NoviceGuideNotice[];
+        [guides, guideKeys] = this._filterShownGuides(guide, localStorageItem);
         guides = this._deduplicate(guides, guideKeys);
 
         if (guides.length == 0) {
@@ -87,23 +85,23 @@ class JigsawGuide {
             return;
         }
 
-        guides.forEach(guide => {
-            const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
-            const id = guide.id ? '#' + guide.id : '';
-            const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
+        guides.forEach(g => {
+            const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+            const id = g.id ? '#' + g.id : '';
+            const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
             const selector = `${tagName}${id}${classes}`;
-            const opt = selector !== tagName && !guide.property1 && !guide.property2;
+            const opt = selector !== tagName && !g.property1 && !g.property2;
 
             const queryResult = document.body.querySelectorAll(selector);
             if (queryResult.length > 0) {
                 const result = Array.from(queryResult).filter(node => {
-                    const property1Checker = node[guide.property1?.property] === guide.property1?.value;
-                    const property2Checker = node[guide.property2?.property] === guide.property2?.value;
+                    const property1Checker = node[g.property1?.property] === g.property1?.value;
+                    const property2Checker = node[g.property2?.property] === g.property2?.value;
                     return property1Checker && property2Checker;
                 })
 
                 if (result.length === 1) {
-                    this._createNoviceGuide(guide, result[0] as HTMLElement, localStorageItem);
+                    this._createNoviceGuide(g, result[0] as HTMLElement, localStorageItem);
                     return;
                 }
 
@@ -118,7 +116,7 @@ class JigsawGuide {
                     if (queryResult.length > 0) {
                         mutationObserver.disconnect();
                         if (queryResult.length === 1) {
-                            this._createNoviceGuide(guide, queryResult[0] as HTMLElement, localStorageItem);
+                            this._createNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem);
                             return;
                         }
 
@@ -140,11 +138,11 @@ class JigsawGuide {
                         return false
                     }
 
-                    if (guide.property1 && node.target[guide.property1.property] !== guide.property1.value) {
+                    if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
                         return false
                     }
 
-                    if (guide.property2 && node.target[guide.property2.property] !== guide.property2.value) {
+                    if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
                         return false
                     }
 
@@ -166,7 +164,7 @@ class JigsawGuide {
                 }
 
                 mutationObserver.disconnect();
-                this._createNoviceGuide(guide, filterResult[0].target as HTMLElement, localStorageItem)
+                this._createNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem)
 
                 this.resize();
             })
@@ -183,41 +181,37 @@ class JigsawGuide {
         mutations: []
     }
 
-    private _createNoviceGuide(guide, targetEle: HTMLElement, localStorageItem: string) {
-        const guideKey = this._toKeyString(guide);
+    private _createNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string) {
+        const guideKey = this._toKeyString(guide, "");
 
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
 
-        if (typeof guide.notice === 'string') {
-            guide.notice = { type: NoviceGuideNoticeType.bubble, notice: guide.notice }
-        }
-
         let html = '';
         let hasMask = false;
-        if (guide.notice.type === NoviceGuideNoticeType.bubble) {
+        if (guide.type === NoviceGuideNoticeType.bubble) {
             html = `
-            <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+            <div class="${guide.type} ${guide.type}-${guide.position}">
                 <div class="line">
                     <div></div>
                 </div>
                 <div class="notice-cntr">
-                    <div class="text">${guide.notice.notice}</div>
+                    <div class="text">${guide.notice}</div>
                     <i class="close iconfont iconfont-e14b"></i>
                 </div>
             </div>`
         }
 
-        if (guide.notice.type === NoviceGuideNoticeType.dialog) {
+        if (guide.type === NoviceGuideNoticeType.dialog) {
             hasMask = true;
             html = `
-            <div class="${guide.notice.type} ${guide.notice.type}-${guide.position}">
+            <div class="${guide.type} ${guide.type}-${guide.position}">
                 <div class="notice-cntr">
-                    <div class="title">${guide.notice.title}</div>
-                    <div class="text">${guide.notice.notice}</div>
+                    <div class="title">${guide.title}</div>
+                    <div class="text">${guide.notice}</div>
                     <div class="button-cntr">
-                        <div class="close button">${guide.notice.button}</div>
+                        <div class="close button">${guide.button}</div>
                     </div>
                 </div>
             </div>`;
@@ -265,10 +259,15 @@ class JigsawGuide {
         this.resize();
     }
 
-    private _filterShownGuides(guides: NoviceGuide[], localStorageItem: string): [NoviceGuide[], string[]] {
-        const keys = guides.map(g => this._toKeyString(g));
+    private _filterShownGuides(guide: NoviceGuide, localStorageItem: string): [NoviceGuideNotice[], string[]] {
+        let keys = guide.data.map(g => this._toKeyString(g, guide.version));
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-        const guidesCopy = [...guides];
+        const guidesCopy = [...guide.data];
+
+        if (guide.type !== 'singular') {
+            keys = [keys.join()];
+        }
+
         keys.forEach((key, idx) => {
             if (shownKeys.indexOf(key) == -1) {
                 return;
@@ -279,7 +278,7 @@ class JigsawGuide {
         return [guidesCopy.filter(g => !!g), keys.filter(k => !!k)];
     }
 
-    private _deduplicate(guides: NoviceGuide[], keys: string[]): NoviceGuide[] {
+    private _deduplicate(guides: NoviceGuideNotice[], keys: string[]): NoviceGuideNotice[] {
         const len = guides.length;
         const duplicates: number[][] = keys.map((key, idx) => {
             const arr = [idx];
@@ -303,8 +302,8 @@ class JigsawGuide {
         return guides;
     }
 
-    private _toKeyString(guide: BasicNoviceGuide): string {
-        let fields = [guide.version || 'v0'];
+    private _toKeyString(guide: BasicNoviceGuideNotice, version: string): string {
+        let fields = [version || 'v0'];
         fields.push(guide.tagName || '');
         fields.push(guide.id || '');
         fields.push(guide.classes || '');

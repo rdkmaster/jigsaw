@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
 import { SimpleTreeData, ArrayCollection, TableData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuideNotice, DialogNoviceGuideNotice } from 'novice-guide/src/novice-guide';
+import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuide, NoviceGuideType, DialogNoviceGuide } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -36,24 +36,28 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         ele.remove();
     }
 
-    bubbleNotice: BubbleNoviceGuideNotice = { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' };
-    singularGuide: SingularNoviceGuide = { notice: this.bubbleNotice, tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, version: '0.0.1', position: 'bottom' }
-    singularGuideData2: SingularNoviceGuide = { notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, version: '0.0.1', position: "right" }
-    singularGuideData3: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: "top" }
-    singularGuideData4: SingularNoviceGuide = { notice: { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引' }, tagName: 'div', id: "ad", version: '0.0.1', position: 'left' }
-    singularGuideData5: SingularNoviceGuide = { notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', version: '0.0.1', position: "right" }
+    bubbleGuideData: SingularNoviceGuide = {
+        type: NoviceGuideType.singular,
+        data: [
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, position: 'bottom' },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, position: "right" },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'footer copyright', position: "top" },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', id: "ad", position: 'left' },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', position: "right" }
+        ],
+        version: 'v0.0.1'
+    }
 
-    dialogNotice: DialogNoviceGuideNotice = { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本' }
-    singularGuide6: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'jigsaw-navigation-menu', classes: 'jigsaw-nav-menu-host', version: '0.0.1', position: 'right' }
-    singularGuide7: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'ul', id: 'header-menu', version: '0.0.1', position: 'bottom' }
-    singularGuide8: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'div', id: 'ad', version: '0.0.1', position: 'left' }
-    singularGuide9: SingularNoviceGuide = { notice: this.dialogNotice, tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: 'top' }
-
-    bubbleGuideData = [this.singularGuide, this.singularGuideData2, this.singularGuideData3, this.singularGuideData4, this.singularGuideData5]
-    dialogGuideData = [this.singularGuide6, this.singularGuide7, this.singularGuide8, this.singularGuide9]
-    // guideData = [this.singularGuideData2]
-
-    noviceGuideEleArr = [];
+    dialogGuideData: MultipleNoviceGuide = {
+        type: NoviceGuideType.multiple,
+        data: [
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'jigsaw-navigation-menu', classes: 'jigsaw-nav-menu-host', position: 'right' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'ul', id: 'header-menu', position: 'bottom' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', version: '0.0.1', position: 'left' },
+            { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', version: '0.0.1', position: 'top' }
+        ],
+        version: 'v0.0.1'
+    }
 
     config: NoviceGuideConfig = {
         localStorageItem: 'jigsaw.noviceGuide',
