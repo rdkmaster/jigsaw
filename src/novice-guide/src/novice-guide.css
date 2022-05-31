@@ -8,6 +8,10 @@
     z-index: var(--zindex-novice-guide);
 }
 
+#novice-guide-container.wizard {
+    background: #00000099;
+}
+
 #novice-guide-svg {
     position: fixed;
     top: 0;
@@ -152,8 +156,19 @@
 }
 
 .novice-guide-clone .dialog .notice-cntr .button-cntr {
+    position: relative;
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+}
+
+.novice-guide-clone .dialog .notice-cntr .button-cntr .progress {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    height: 32px;
 }
 
 .novice-guide-clone .dialog .notice-cntr .title .close-arrow {

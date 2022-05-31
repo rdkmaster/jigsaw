@@ -11,6 +11,7 @@
         <a (click)="bubbleGuide()">气泡指引</a>
         <a (click)="dialogGuide()">对话框指引</a>
         <a (click)="multipuleGuide()">分步指引</a>
+        <a (click)="wizardGuide()">程序向导</a>
     </div>
 
     <header>
@@ -23,7 +24,7 @@
             <li>菜单5</li>
             <li>菜单6</li>
             <li>菜单7</li>
-            <li>菜单8</li>
+            <li id="dialog-btn" (click)="popupDialog(dialog)">对话框</li>
         </ul>
     </header>
     <div class="menu">
@@ -32,7 +33,7 @@
     </div>
     <div class="main">
         <div class="content">
-            <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
+            <!-- <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar> -->
             <jigsaw-header>单选框</jigsaw-header>
             <jigsaw-select [data]="cityList" placeholder="请选择城市">
             </jigsaw-select>
@@ -48,4 +49,25 @@
             <span>Copyright 1999-2022 by Jigsaw Demo. All Rights Reserved.</span>
         </div>
     </footer>
+
+    <ng-template #dialog>
+        <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="iconfont iconfont-e3f0"
+            (close)="showInfo()">
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+
+            <jigsaw-button-bar [selectedItems]="buttonbar[0]" [data]="buttonbar"
+                (selectedItemsChange)="selectedItemsChange($event)">
+            </jigsaw-button-bar>
+
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="showInfo('OK')">OK</jigsaw-button>
+                <jigsaw-button (click)="showInfo('Cancel')">Cancel</jigsaw-button>
+                <a class="button-bar-link" (click)="showInfo('Help')">需要帮助？</a>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
 </div>

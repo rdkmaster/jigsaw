@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation } from "@angular/core";
-import { SimpleTreeData, ArrayCollection, TableData } from 'jigsaw/public_api';
-import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuide, NoviceGuideType, DialogNoviceGuide } from 'novice-guide/src/novice-guide';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, TemplateRef } from "@angular/core";
+import { SimpleTreeData, ArrayCollection, TableData, PopupService, PopupInfo } from 'jigsaw/public_api';
+import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuide, NoviceGuideType, DialogNoviceGuide, WizardNoviceGuide } from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -43,7 +43,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, position: "right" },
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'footer copyright', position: "top" },
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', id: "ad", position: 'left' },
-            { type: NoviceGuideNoticeType.bubble, notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', position: "right" }
+            { type: NoviceGuideNoticeType.bubble, notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', position: "right" },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button-bar', classes: 'jigsaw-button-bar-host', position: 'bottom' },
         ],
         version: 'v0.0.1'
     }
@@ -70,6 +71,15 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         version: 'v0.0.1'
     }
 
+    wizardNoviceGuideData: WizardNoviceGuide = {
+        type: NoviceGuideType.wizard,
+        data: [
+            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'li', id: 'dialog-btn', position: 'bottom' },
+            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button-bar', classes: 'jigsaw-button-bar-host', position: 'bottom' },
+        ],
+        version: 'v0.0.1'
+    }
+
     config: NoviceGuideConfig = {
         localStorageItem: 'jigsaw.noviceGuide',
         resetLocalStorage: true
@@ -79,6 +89,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         // jigsawGuide.show(this.bubbleGuideData, this.config);
         // jigsawGuide.show(this.dialogGuideData, this.config);
         jigsawGuide.show(this.multipleNoviceGuideData, this.config);
+        // jigsawGuide.show(this.wizardNoviceGuideData, this.config);
     }
 
     xy() {
@@ -104,7 +115,32 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         jigsawGuide.show(this.multipleNoviceGuideData, this.config);
     }
 
-    constructor() {
+    wizardGuide() {
+        jigsawGuide.show(this.wizardNoviceGuideData, this.config);
+    }
+
+    dialogInfo: PopupInfo;
+
+    popupDialog(ele: TemplateRef<any>) {
+        this.dialogInfo = this.popupService.popup(ele);
+    }
+
+    showInfo(label: string) {
+        this.dialogInfo.dispose();
+    }
+
+    selectedItemsChange() {
+
+    }
+
+    buttonbar = new ArrayCollection([
+        { label: "成功", id: 1, icon: 'iconfont iconfont-e142' },
+        { label: "错误", id: 2, icon: 'iconfont iconfont-e132' },
+        { label: "警告", id: 3, icon: 'iconfont iconfont-e1a5' },
+        { label: "信息", id: 4, icon: 'iconfont iconfont-e22c' }
+    ]);
+
+    constructor(private popupService: PopupService) {
         const xmlData = `
         <node>
             <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

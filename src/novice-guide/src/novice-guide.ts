@@ -29,14 +29,14 @@ export interface BasicNoviceGuideNotice extends NoviceGuideOptions { }
 
 export interface BubbleNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.bubble; }
 export interface DialogNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.dialog; }
-export interface WizardNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.wizard; }
+export interface WizardStepNoviceGuide extends BasicNoviceGuideNotice { type: NoviceGuideNoticeType.wizard; }
 
 
 export enum NoviceGuideType {
     singular = 'singular', multiple = 'multiple', wizard = 'wizard'
 }
 
-export type NoviceGuideNotice = BubbleNoviceGuide | DialogNoviceGuide | WizardNoviceGuide;
+export type NoviceGuideNotice = BubbleNoviceGuide | DialogNoviceGuide | WizardStepNoviceGuide;
 /**
  * version属性，再加上父类里的tagName等属性一起，共同组成了一个帮助内容的标识
  */
@@ -51,11 +51,11 @@ export interface SingularNoviceGuide extends BasicNoviceGuide {
 export interface MultipleNoviceGuide extends BasicNoviceGuide {
     type: NoviceGuideType.multiple;
 }
-export interface WizardNoviceGuideSteps extends BasicNoviceGuide {
+export interface WizardNoviceGuide extends BasicNoviceGuide {
     type: NoviceGuideType.wizard;
 }
 
-export type NoviceGuide = SingularNoviceGuide | MultipleNoviceGuide | WizardNoviceGuideSteps;
+export type NoviceGuide = SingularNoviceGuide | MultipleNoviceGuide | WizardNoviceGuide;
 export type NoviceGuideConfig = {
     localStorageItem: string, resetLocalStorage: boolean
 }
@@ -112,6 +112,7 @@ class JigsawGuide {
                 }
 
                 const mutationObserver = new MutationObserver(entries => {
+                    console.log(entries);
                     if (opt) {
                         const queryResult = document.body.querySelectorAll(selector);
                         if (queryResult.length > 0) {
@@ -260,6 +261,189 @@ class JigsawGuide {
             mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
             this._showing.mutations.push(mutationObserver)
         }
+
+        if (guide.type === 'wizard') {
+            const cntr = this._getGuideContainer(false);
+            cntr.classList.add('wizard')
+
+            guides.forEach((g, i) => {
+                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+                const id = g.id ? '#' + g.id : '';
+                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
+                const selector = `${tagName}${id}${classes}`;
+                const opt = selector !== tagName && !g.property1 && !g.property2;
+
+                const queryResult = document.body.querySelectorAll(selector);
+                if (queryResult.length > 0) {
+                    const result = Array.from(queryResult).filter(node => {
+                        const property1Checker = node[g.property1?.property] === g.property1?.value;
+                        const property2Checker = node[g.property2?.property] === g.property2?.value;
+                        return property1Checker && property2Checker;
+                    })
+
+                    if (result.length === 1) {
+                        this._createWizardStepNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, i, guide.data);
+                        return;
+                    }
+
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+
+                const mutationObserver = new MutationObserver(entries => {
+                    if (opt) {
+                        const queryResult = document.body.querySelectorAll(selector);
+                        if (queryResult.length > 0) {
+                            mutationObserver.disconnect();
+                            if (queryResult.length === 1) {
+                                this._createWizardStepNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, i, guide.data);
+                                return;
+                            }
+
+                            console.warn('Find more than 1 target element.');
+                            return;
+                        }
+                    }
+
+                    const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+                    if (addedNodes.length == 0) {
+                        return;
+                    }
+                    const filterResult = addedNodes.filter(node => {
+                        if (tagName && node.target.nodeName !== tagName) {
+                            return false
+                        }
+
+                        if (id && node.target["id"] !== id) {
+                            return false
+                        }
+
+                        if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
+                            return false
+                        }
+
+                        if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
+                            return false
+                        }
+
+                        let classesChecker = true;
+                        if (classes) {
+                            const classArr = classes.split(".");
+                            classArr.shift();
+                            classArr.forEach(item => {
+                                if (!node.target["classList"].contains(item)) {
+                                    classesChecker = false;
+                                }
+                            })
+                        }
+                        return classesChecker;
+                    })
+
+                    if (filterResult.length !== 1) {
+                        return
+                    }
+
+                    mutationObserver.disconnect();
+                    this._createWizardStepNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, i, guide.data);
+
+                    this.resize();
+                })
+                mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+                this._showing.mutations.push(mutationObserver)
+            })
+        }
+
+        // if (guide.type === 'wizard') {
+        //     const cntr = this._getGuideContainer(false);
+        //     cntr.classList.add('wizard')
+
+        //     const g = guides[0];
+        //     const tagName = g.tagName ? g.tagName.toUpperCase() : '';
+        //     const id = g.id ? '#' + g.id : '';
+        //     const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
+        //     const selector = `${tagName}${id}${classes}`;
+        //     const queryResult = this._getTargetElement(g);
+
+        //     if (queryResult.length > 0) {
+        //         const result = Array.from(queryResult).filter(node => {
+        //             const property1Checker = node[g.property1?.property] === g.property1?.value;
+        //             const property2Checker = node[g.property2?.property] === g.property2?.value;
+        //             return property1Checker && property2Checker;
+        //         })
+
+        //         if (result.length === 1) {
+        //             this._createWizardStepNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
+        //             return;
+        //         }
+
+        //         console.warn('Find more than 1 target element.');
+        //         return;
+        //     }
+
+        //     const mutationObserver = new MutationObserver(entries => {
+        //         if (this._checkOptimizable(g)) {
+        //             const queryResult = this._getTargetElement(g);
+        //             if (queryResult.length > 0) {
+        //                 mutationObserver.disconnect();
+        //                 if (queryResult.length === 1) {
+        //                     this._createWizardStepNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
+        //                     return;
+        //                 }
+
+        //                 console.warn('Find more than 1 target element.');
+        //                 return;
+        //             }
+        //         }
+
+        //         const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+        //         if (addedNodes.length == 0) {
+        //             return;
+        //         }
+        //         const filterResult = addedNodes.filter(node => {
+        //             if (tagName && node.target.nodeName !== tagName) {
+        //                 return false
+        //             }
+
+        //             if (id && node.target["id"] !== id) {
+        //                 return false
+        //             }
+
+        //             if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
+        //                 return false
+        //             }
+
+        //             if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
+        //                 return false
+        //             }
+
+        //             let classesChecker = true;
+        //             if (classes) {
+        //                 const classArr = classes.split(".");
+        //                 classArr.shift();
+        //                 classArr.forEach(item => {
+        //                     if (!node.target["classList"].contains(item)) {
+        //                         classesChecker = false;
+        //                     }
+        //                 })
+        //             }
+        //             return classesChecker;
+        //         })
+
+        //         if (filterResult.length !== 1) {
+        //             return
+        //         }
+
+        //         mutationObserver.disconnect();
+        //         this._createWizardStepNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
+
+        //         this.resize();
+        //     })
+        //     mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+        //     this._showing.mutations.push(mutationObserver)
+
+        // }
+
+
     }
 
     private _showing: { guideEles: HTMLElement[], cloneEles: HTMLElement[], guideKeys: string[], mutations: MutationObserver[] } = {
@@ -376,13 +560,12 @@ class JigsawGuide {
                     </div>
                     <div class="text">${guide.notice}</div>
                     <div class="button-cntr">
+                        <div class="progress">${current + 1}/${guides.length}</div>
                         ${buttonHtml}
                     </div>
                     
                 </div>
             </div>`;
-
-        // if ()
 
         let cloneEle = document.createElement('div');
         cloneEle.classList.add('novice-guide-clone');
@@ -545,6 +728,68 @@ class JigsawGuide {
         this.resize();
     }
 
+    private _createWizardStepNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string[], current: number, guides: NoviceGuideNotice[]) {
+        if (this._showing.guideKeys.indexOf(guideKey[current]) !== -1) {
+            return;
+        }
+
+        let html = '123123123';
+
+        let cloneEle = document.createElement('div');
+        cloneEle.classList.add('novice-guide-clone');
+        cloneEle.innerHTML = html;
+        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
+
+        this._showing.guideEles.push(targetEle)
+        this._showing.cloneEles.push(cloneEle)
+        this._showing.guideKeys.push(guideKey[current])
+
+        if (current > 0) {
+            this._showing.cloneEles[current - 1].remove();
+        }
+
+        cloneEle.onclick = function (e) {
+            if (!(e.target as HTMLElement).classList.contains('close')) {
+                return;
+            }
+            const index = cloneEle.getAttribute('guideIndex');
+            jigsawGuide._showing.cloneEles[index] = false;
+            jigsawGuide._showing.guideKeys[index] = '';
+            cloneEle.remove();
+            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+            shownKeys.push(guideKey);
+            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+
+            const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
+                return clone;
+            })
+            const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+            const mask = document.getElementById('novice-guide-mask');
+
+            if (dialogClone.length === 0 && mask) {
+                mask.remove();
+            }
+
+            if (mask) {
+                mask.innerHTML = '';
+            }
+
+            if (leftGuideCloneArr.length === 0) {
+                jigsawGuide._removeGuideContainer();
+                jigsawGuide._showing.guideEles = [];
+                jigsawGuide._showing.cloneEles = [];
+            }
+
+            jigsawGuide.resize();
+        }
+
+        this._getGuideContainer(false).appendChild(cloneEle);
+        this.resize();
+
+        // const a = this._getGuideContainer(false);
+
+    }
+
     private _filterShownGuides(guide: NoviceGuide, localStorageItem: string): [NoviceGuideNotice[], string[]] {
         const keys = guide.data.map(g => this._toKeyString(g, guide.version));
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
@@ -654,6 +899,24 @@ class JigsawGuide {
         return svg;
     }
 
+    private _getTargetElement(guide: NoviceGuideNotice) {
+        const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
+        const id = guide.id ? '#' + guide.id : '';
+        const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
+        const selector = `${tagName}${id}${classes}`;
+
+        return document.body.querySelectorAll(selector);
+    }
+
+    private _checkOptimizable(guide: NoviceGuideNotice): boolean {
+        const tagName = guide.tagName ? guide.tagName.toUpperCase() : '';
+        const id = guide.id ? '#' + guide.id : '';
+        const classes = guide.classes ? "." + guide.classes.replace(" ", ".") : '';
+        const selector = `${tagName}${id}${classes}`;
+
+        return selector !== tagName && !guide.property1 && !guide.property2;
+    }
+
     private _debounce(fn: Function, delay: number) {
         let timer;
         return function () {
@@ -693,6 +956,11 @@ class JigsawGuide {
 
         if (mask) {
             mask.innerHTML += `<rect x="${left}" y="${top}" width="${width}" height="${height}"/>`
+        }
+
+        const cntr = this._getGuideContainer(false);
+        if (cntr.classList.contains('wizard')) {
+            cntr.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${left}px ${top + height}px, ${left + width}px ${top + height}px, ${left + width}px ${top}px, ${left}px ${top}px, ${left}px ${top + height}px`
         }
     }
 
