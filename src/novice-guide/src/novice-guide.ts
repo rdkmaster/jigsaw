@@ -314,35 +314,12 @@ class JigsawGuide {
 
         cloneEle.onclick = function (e) {
             if ((e.target as HTMLElement).classList.contains('close')) {
-                const index = cloneEle.getAttribute('guideIndex');
-                jigsawGuide._showing.cloneEles[index] = undefined;
-                jigsawGuide._showing.guideKeys[index] = '';
-                cloneEle.remove();
+
                 const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
                 shownKeys.push(guideKey);
                 localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
-                const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-                    return clone;
-                })
-                const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-                const mask = document.getElementById('novice-guide-mask');
-
-                if (dialogClone.length === 0 && mask) {
-                    mask.remove();
-                }
-
-                if (mask) {
-                    mask.innerHTML = '';
-                }
-
-                if (leftGuideCloneArr.length === 0) {
-                    jigsawGuide._removeGuideContainer();
-                    jigsawGuide._showing.guideEles = [];
-                    jigsawGuide._showing.cloneEles = [];
-                }
-
-                jigsawGuide.resize();
+                jigsawGuide._closeNoviceGuideNotice(cloneEle, guide.type === NoviceGuideNoticeType.dialog);
             }
 
             if ((e.target as HTMLElement).classList.contains('next')) {
