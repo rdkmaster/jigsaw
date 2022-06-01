@@ -72,13 +72,13 @@ class JigsawGuide {
             window.addEventListener('resize', cancelDebounce)
         }
 
-        const localStorageItem = config?.localStorageItem || 'jigsaw.noviceGuide';
+        this._localStorageItem = config?.localStorageItem || 'jigsaw.noviceGuide';
         if (config?.resetLocalStorage) {
-            localStorage.setItem(localStorageItem, '[]');
+            localStorage.setItem(this._localStorageItem, '[]');
         }
 
         let guideKeys, guides: NoviceGuideNotice[];
-        [guides, guideKeys] = this._filterShownGuides(guide, localStorageItem);
+        [guides, guideKeys] = this._filterShownGuides(guide, this._localStorageItem);
         guides = this._deduplicate(guides, guideKeys);
 
         if (guides.length == 0) {
@@ -88,178 +88,13 @@ class JigsawGuide {
 
         if (guide.type === 'singular') {
             guides.forEach((g, i) => {
-                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
-                const id = g.id ? '#' + g.id : '';
-                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
-                const selector = `${tagName}${id}${classes}`;
-                const opt = selector !== tagName && !g.property1 && !g.property2;
-
-                const queryResult = document.body.querySelectorAll(selector);
-                if (queryResult.length > 0) {
-                    const result = Array.from(queryResult).filter(node => {
-                        const property1Checker = node[g.property1?.property] === g.property1?.value;
-                        const property2Checker = node[g.property2?.property] === g.property2?.value;
-                        return property1Checker && property2Checker;
-                    })
-
-                    if (result.length === 1) {
-                        this._createSingularNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys[i]);
-                        return;
-                    }
-
-                    console.warn('Find more than 1 target element.');
-                    return;
-                }
-
-                const mutationObserver = new MutationObserver(entries => {
-                    console.log(entries);
-                    if (opt) {
-                        const queryResult = document.body.querySelectorAll(selector);
-                        if (queryResult.length > 0) {
-                            mutationObserver.disconnect();
-                            if (queryResult.length === 1) {
-                                this._createSingularNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys[i]);
-                                return;
-                            }
-
-                            console.warn('Find more than 1 target element.');
-                            return;
-                        }
-                    }
-
-                    const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-                    if (addedNodes.length == 0) {
-                        return;
-                    }
-                    const filterResult = addedNodes.filter(node => {
-                        if (tagName && node.target.nodeName !== tagName) {
-                            return false
-                        }
-
-                        if (id && node.target["id"] !== id) {
-                            return false
-                        }
-
-                        if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
-                            return false
-                        }
-
-                        if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
-                            return false
-                        }
-
-                        let classesChecker = true;
-                        if (classes) {
-                            const classArr = classes.split(".");
-                            classArr.shift();
-                            classArr.forEach(item => {
-                                if (!node.target["classList"].contains(item)) {
-                                    classesChecker = false;
-                                }
-                            })
-                        }
-                        return classesChecker;
-                    })
-
-                    if (filterResult.length !== 1) {
-                        return
-                    }
-
-                    mutationObserver.disconnect();
-                    this._createSingularNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys[i])
-
-                    this.resize();
-                })
-                mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
-                this._showing.mutations.push(mutationObserver)
+                this._createNoviceGuideNotice(guide.type, g, i, guideKeys, guides);
             })
         }
 
         if (guide.type === 'multiple') {
             const g = guides[0];
-            const tagName = g.tagName ? g.tagName.toUpperCase() : '';
-            const id = g.id ? '#' + g.id : '';
-            const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
-            const selector = `${tagName}${id}${classes}`;
-            const opt = selector !== tagName && !g.property1 && !g.property2;
-
-            const queryResult = document.body.querySelectorAll(selector);
-            if (queryResult.length > 0) {
-                const result = Array.from(queryResult).filter(node => {
-                    const property1Checker = node[g.property1?.property] === g.property1?.value;
-                    const property2Checker = node[g.property2?.property] === g.property2?.value;
-                    return property1Checker && property2Checker;
-                })
-
-                if (result.length === 1) {
-                    this._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-                    return;
-                }
-
-                console.warn('Find more than 1 target element.');
-                return;
-            }
-
-            const mutationObserver = new MutationObserver(entries => {
-                if (opt) {
-                    const queryResult = document.body.querySelectorAll(selector);
-                    if (queryResult.length > 0) {
-                        mutationObserver.disconnect();
-                        if (queryResult.length === 1) {
-                            this._createMultipleNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-                            return;
-                        }
-
-                        console.warn('Find more than 1 target element.');
-                        return;
-                    }
-                }
-
-                const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-                if (addedNodes.length == 0) {
-                    return;
-                }
-                const filterResult = addedNodes.filter(node => {
-                    if (tagName && node.target.nodeName !== tagName) {
-                        return false
-                    }
-
-                    if (id && node.target["id"] !== id) {
-                        return false
-                    }
-
-                    if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
-                        return false
-                    }
-
-                    if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
-                        return false
-                    }
-
-                    let classesChecker = true;
-                    if (classes) {
-                        const classArr = classes.split(".");
-                        classArr.shift();
-                        classArr.forEach(item => {
-                            if (!node.target["classList"].contains(item)) {
-                                classesChecker = false;
-                            }
-                        })
-                    }
-                    return classesChecker;
-                })
-
-                if (filterResult.length !== 1) {
-                    return
-                }
-
-                mutationObserver.disconnect();
-                this._createMultipleNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-
-                this.resize();
-            })
-            mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
-            this._showing.mutations.push(mutationObserver)
+            this._createNoviceGuideNotice(guide.type, g, 0, guideKeys, guides);
         }
 
         if (guide.type === 'wizard') {
@@ -267,183 +102,9 @@ class JigsawGuide {
             cntr.classList.add('wizard')
 
             guides.forEach((g, i) => {
-                const tagName = g.tagName ? g.tagName.toUpperCase() : '';
-                const id = g.id ? '#' + g.id : '';
-                const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
-                const selector = `${tagName}${id}${classes}`;
-                const opt = selector !== tagName && !g.property1 && !g.property2;
-
-                const queryResult = document.body.querySelectorAll(selector);
-                if (queryResult.length > 0) {
-                    const result = Array.from(queryResult).filter(node => {
-                        const property1Checker = node[g.property1?.property] === g.property1?.value;
-                        const property2Checker = node[g.property2?.property] === g.property2?.value;
-                        return property1Checker && property2Checker;
-                    })
-
-                    if (result.length === 1) {
-                        this._createWizardStepNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, i, guide.data);
-                        return;
-                    }
-
-                    console.warn('Find more than 1 target element.');
-                    return;
-                }
-
-                const mutationObserver = new MutationObserver(entries => {
-                    if (opt) {
-                        const queryResult = document.body.querySelectorAll(selector);
-                        if (queryResult.length > 0) {
-                            mutationObserver.disconnect();
-                            if (queryResult.length === 1) {
-                                this._createWizardStepNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, i, guide.data);
-                                return;
-                            }
-
-                            console.warn('Find more than 1 target element.');
-                            return;
-                        }
-                    }
-
-                    const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-                    if (addedNodes.length == 0) {
-                        return;
-                    }
-                    const filterResult = addedNodes.filter(node => {
-                        if (tagName && node.target.nodeName !== tagName) {
-                            return false
-                        }
-
-                        if (id && node.target["id"] !== id) {
-                            return false
-                        }
-
-                        if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
-                            return false
-                        }
-
-                        if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
-                            return false
-                        }
-
-                        let classesChecker = true;
-                        if (classes) {
-                            const classArr = classes.split(".");
-                            classArr.shift();
-                            classArr.forEach(item => {
-                                if (!node.target["classList"].contains(item)) {
-                                    classesChecker = false;
-                                }
-                            })
-                        }
-                        return classesChecker;
-                    })
-
-                    if (filterResult.length !== 1) {
-                        return
-                    }
-
-                    mutationObserver.disconnect();
-                    this._createWizardStepNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, i, guide.data);
-
-                    this.resize();
-                })
-                mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
-                this._showing.mutations.push(mutationObserver)
+                this._createNoviceGuideNotice(guide.type, g, i, guideKeys, guides);
             })
         }
-
-        // if (guide.type === 'wizard') {
-        //     const cntr = this._getGuideContainer(false);
-        //     cntr.classList.add('wizard')
-
-        //     const g = guides[0];
-        //     const tagName = g.tagName ? g.tagName.toUpperCase() : '';
-        //     const id = g.id ? '#' + g.id : '';
-        //     const classes = g.classes ? "." + g.classes.replace(" ", ".") : '';
-        //     const selector = `${tagName}${id}${classes}`;
-        //     const queryResult = this._getTargetElement(g);
-
-        //     if (queryResult.length > 0) {
-        //         const result = Array.from(queryResult).filter(node => {
-        //             const property1Checker = node[g.property1?.property] === g.property1?.value;
-        //             const property2Checker = node[g.property2?.property] === g.property2?.value;
-        //             return property1Checker && property2Checker;
-        //         })
-
-        //         if (result.length === 1) {
-        //             this._createWizardStepNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-        //             return;
-        //         }
-
-        //         console.warn('Find more than 1 target element.');
-        //         return;
-        //     }
-
-        //     const mutationObserver = new MutationObserver(entries => {
-        //         if (this._checkOptimizable(g)) {
-        //             const queryResult = this._getTargetElement(g);
-        //             if (queryResult.length > 0) {
-        //                 mutationObserver.disconnect();
-        //                 if (queryResult.length === 1) {
-        //                     this._createWizardStepNoviceGuide(g, queryResult[0] as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-        //                     return;
-        //                 }
-
-        //                 console.warn('Find more than 1 target element.');
-        //                 return;
-        //             }
-        //         }
-
-        //         const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
-        //         if (addedNodes.length == 0) {
-        //             return;
-        //         }
-        //         const filterResult = addedNodes.filter(node => {
-        //             if (tagName && node.target.nodeName !== tagName) {
-        //                 return false
-        //             }
-
-        //             if (id && node.target["id"] !== id) {
-        //                 return false
-        //             }
-
-        //             if (g.property1 && node.target[g.property1.property] !== g.property1.value) {
-        //                 return false
-        //             }
-
-        //             if (g.property2 && node.target[g.property2.property] !== g.property2.value) {
-        //                 return false
-        //             }
-
-        //             let classesChecker = true;
-        //             if (classes) {
-        //                 const classArr = classes.split(".");
-        //                 classArr.shift();
-        //                 classArr.forEach(item => {
-        //                     if (!node.target["classList"].contains(item)) {
-        //                         classesChecker = false;
-        //                     }
-        //                 })
-        //             }
-        //             return classesChecker;
-        //         })
-
-        //         if (filterResult.length !== 1) {
-        //             return
-        //         }
-
-        //         mutationObserver.disconnect();
-        //         this._createWizardStepNoviceGuide(g, filterResult[0].target as HTMLElement, localStorageItem, guideKeys, 0, guide.data);
-
-        //         this.resize();
-        //     })
-        //     mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
-        //     this._showing.mutations.push(mutationObserver)
-
-        // }
-
-
     }
 
     private _showing: { guideEles: HTMLElement[], cloneEles: HTMLElement[], guideKeys: string[], mutations: MutationObserver[] } = {
@@ -453,7 +114,106 @@ class JigsawGuide {
         mutations: []
     }
 
-    private _createSingularNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string) {
+    private _localStorageItem: string;
+
+    private _createNoviceGuideNotice(guideType: NoviceGuideType, notice: NoviceGuideNotice, index: number, guideKeys: string[], guides: NoviceGuideNotice[]) {
+        const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
+        const id = notice.id ? '#' + notice.id : '';
+        const classes = notice.classes ? "." + notice.classes.replace(" ", ".") : '';
+        const selector = `${tagName}${id}${classes}`;
+        const opt = selector !== tagName && !notice.property1 && !notice.property2;
+
+        const queryResult = document.body.querySelectorAll(selector);
+        if (queryResult.length > 0) {
+            const result = Array.from(queryResult).filter(node => {
+                const property1Checker = node[notice.property1?.property] === notice.property1?.value;
+                const property2Checker = node[notice.property2?.property] === notice.property2?.value;
+                return property1Checker && property2Checker;
+            })
+
+            if (result.length === 1) {
+                this._createNoviceGuide(guideType, notice, result[0] as HTMLElement, guideKeys, index, guides);
+                return;
+            }
+
+            console.warn('Find more than 1 target element.');
+            return;
+        }
+
+        const mutationObserver = new MutationObserver(entries => {
+            if (opt) {
+                const queryResult = document.body.querySelectorAll(selector);
+                if (queryResult.length > 0) {
+                    mutationObserver.disconnect();
+                    if (queryResult.length === 1) {
+                        this._createNoviceGuide(guideType, notice, queryResult[0] as HTMLElement, guideKeys, index, guides);
+                        return;
+                    }
+
+                    console.warn('Find more than 1 target element.');
+                    return;
+                }
+            }
+
+            const addedNodes = entries.filter(m => m.addedNodes?.length > 0);
+            if (addedNodes.length == 0) {
+                return;
+            }
+            const filterResult = addedNodes.filter(node => {
+                if (tagName && node.target.nodeName !== tagName) {
+                    return false
+                }
+
+                if (id && node.target["id"] !== id) {
+                    return false
+                }
+
+                if (notice.property1 && node.target[notice.property1.property] !== notice.property1.value) {
+                    return false
+                }
+
+                if (notice.property2 && node.target[notice.property2.property] !== notice.property2.value) {
+                    return false
+                }
+
+                let classesChecker = true;
+                if (classes) {
+                    const classArr = classes.split(".");
+                    classArr.shift();
+                    classArr.forEach(item => {
+                        if (!node.target["classList"].contains(item)) {
+                            classesChecker = false;
+                        }
+                    })
+                }
+                return classesChecker;
+            })
+
+            if (filterResult.length !== 1) {
+                return
+            }
+
+            mutationObserver.disconnect();
+            this._createNoviceGuide(guideType, notice, filterResult[0].target as HTMLElement, guideKeys, index, guides)
+
+            this.resize();
+        })
+        mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+        this._showing.mutations.push(mutationObserver)
+
+    }
+
+    private _createNoviceGuide(type: NoviceGuideType, guide: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], index: number, guides: NoviceGuideNotice[]) {
+        if (type === NoviceGuideType.singular) {
+            this._createSingularNoviceGuide(guide, targetEle, guideKeys[index]);
+        } else if (type === NoviceGuideType.multiple) {
+            this._createMultipleNoviceGuide(guide, targetEle, guideKeys, index, guides);
+        } else if (type === NoviceGuideType.wizard) {
+            this._createWizardStepNoviceGuide(guide, targetEle, guideKeys[index], index, guides)
+        }
+    }
+
+    private _createSingularNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string) {
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
@@ -500,46 +260,22 @@ class JigsawGuide {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
-            const index = cloneEle.getAttribute('guideIndex');
-            jigsawGuide._showing.cloneEles[index] = false;
-            jigsawGuide._showing.guideKeys[index] = '';
-            cloneEle.remove();
-            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+
+            const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
             shownKeys.push(guideKey);
-            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+            localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
-            const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-                return clone;
-            })
-            const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-            const mask = document.getElementById('novice-guide-mask');
-
-            if (dialogClone.length === 0 && mask) {
-                mask.remove();
-            }
-
-            if (mask) {
-                mask.innerHTML = '';
-            }
-
-            if (leftGuideCloneArr.length === 0) {
-                jigsawGuide._removeGuideContainer();
-                jigsawGuide._showing.guideEles = [];
-                jigsawGuide._showing.cloneEles = [];
-            }
-
-            jigsawGuide.resize();
+            jigsawGuide._closeNoviceGuideNotice(cloneEle, guide.type === NoviceGuideNoticeType.dialog);
         }
 
         this._getGuideContainer(hasMask).appendChild(cloneEle);
         this.resize();
     }
 
-    private _createMultipleNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string[], current: number, guides: NoviceGuideNotice[]) {
+    private _createMultipleNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string[], current: number, guides: NoviceGuideNotice[]) {
         if (this._showing.guideKeys.indexOf(guideKey[current]) !== -1) {
             return;
         }
-
 
         let html = '';
 
@@ -579,12 +315,12 @@ class JigsawGuide {
         cloneEle.onclick = function (e) {
             if ((e.target as HTMLElement).classList.contains('close')) {
                 const index = cloneEle.getAttribute('guideIndex');
-                jigsawGuide._showing.cloneEles[index] = false;
+                jigsawGuide._showing.cloneEles[index] = undefined;
                 jigsawGuide._showing.guideKeys[index] = '';
                 cloneEle.remove();
-                const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
                 shownKeys.push(guideKey);
-                localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+                localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
                 const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
                     return clone;
@@ -626,15 +362,15 @@ class JigsawGuide {
                     })
 
                     if (result.length === 1) {
-                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKey, current + 1, guides);
+                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, guideKey, current + 1, guides);
 
                         const index = cloneEle.getAttribute('guideIndex');
-                        jigsawGuide._showing.cloneEles[index] = false;
+                        jigsawGuide._showing.cloneEles[index] = undefined;
                         jigsawGuide._showing.guideKeys[index] = '';
                         cloneEle.remove();
-                        const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                        const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
                         shownKeys.push(guideKey);
-                        localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+                        localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
                         const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
                             return clone;
@@ -684,15 +420,15 @@ class JigsawGuide {
                     })
 
                     if (result.length === 1) {
-                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, localStorageItem, guideKey, current - 1, guides);
+                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, guideKey, current - 1, guides);
 
                         const index = cloneEle.getAttribute('guideIndex');
-                        jigsawGuide._showing.cloneEles[index] = false;
+                        jigsawGuide._showing.cloneEles[index] = undefined;
                         jigsawGuide._showing.guideKeys[index] = '';
                         cloneEle.remove();
-                        const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+                        const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
                         shownKeys.push(guideKey);
-                        localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+                        localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
                         const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
                             return clone;
@@ -728,12 +464,23 @@ class JigsawGuide {
         this.resize();
     }
 
-    private _createWizardStepNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, localStorageItem: string, guideKey: string[], current: number, guides: NoviceGuideNotice[]) {
-        if (this._showing.guideKeys.indexOf(guideKey[current]) !== -1) {
+    private _createWizardStepNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string, current: number, guides: NoviceGuideNotice[]) {
+        if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
 
-        let html = '123123123';
+        let html = '';
+        html = `
+        <div class="${guide.type} ${guide.type}-${guide.position}">
+            <div class="arrow-cntr">
+                <i class="arrow iconfont iconfont-e250"></i>
+            </div>
+            <div class="notice-cntr">
+                <div class="text">${guide.notice}</div>
+                <i class="close iconfont iconfont-e14b"></i>
+            </div>
+        </div>
+        `
 
         let cloneEle = document.createElement('div');
         cloneEle.classList.add('novice-guide-clone');
@@ -742,52 +489,27 @@ class JigsawGuide {
 
         this._showing.guideEles.push(targetEle)
         this._showing.cloneEles.push(cloneEle)
-        this._showing.guideKeys.push(guideKey[current])
+        this._showing.guideKeys.push(guideKey)
 
         if (current > 0) {
             this._showing.cloneEles[current - 1].remove();
+            this._showing.cloneEles[current - 1] = undefined;
         }
 
         cloneEle.onclick = function (e) {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
-            const index = cloneEle.getAttribute('guideIndex');
-            jigsawGuide._showing.cloneEles[index] = false;
-            jigsawGuide._showing.guideKeys[index] = '';
-            cloneEle.remove();
-            const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+
+            const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
             shownKeys.push(guideKey);
-            localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
+            localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
-            const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-                return clone;
-            })
-            const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-            const mask = document.getElementById('novice-guide-mask');
-
-            if (dialogClone.length === 0 && mask) {
-                mask.remove();
-            }
-
-            if (mask) {
-                mask.innerHTML = '';
-            }
-
-            if (leftGuideCloneArr.length === 0) {
-                jigsawGuide._removeGuideContainer();
-                jigsawGuide._showing.guideEles = [];
-                jigsawGuide._showing.cloneEles = [];
-            }
-
-            jigsawGuide.resize();
+            jigsawGuide._closeNoviceGuideNotice(cloneEle, false);
         }
 
         this._getGuideContainer(false).appendChild(cloneEle);
         this.resize();
-
-        // const a = this._getGuideContainer(false);
-
     }
 
     private _filterShownGuides(guide: NoviceGuide, localStorageItem: string): [NoviceGuideNotice[], string[]] {
@@ -795,7 +517,7 @@ class JigsawGuide {
         const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
         const guidesCopy = [...guide.data];
 
-        if (guide.type === 'singular') {
+        if (guide.type === 'singular' || guide.type === 'wizard') {
             keys.forEach((key, idx) => {
                 if (shownKeys.indexOf(key) == -1) {
                     return;
@@ -803,7 +525,7 @@ class JigsawGuide {
                 guidesCopy[idx] = null;
                 keys[idx] = null;
             });
-        } else {
+        } else if (guide.type === 'multiple') {
             const joinKey = [keys.join()];
             if (shownKeys.indexOf(joinKey) !== -1) {
                 return [[], []];
@@ -844,6 +566,7 @@ class JigsawGuide {
         fields.push(guide.id || '');
         fields.push(guide.classes || '');
         fields.push(guide.tagName || '');
+        fields.push(guide.position || '');
         if (guide.property1 && guide.property1.hasOwnProperty('property') && guide.property1.hasOwnProperty('value')) {
             fields.push(`${guide.property1.property}=${guide.property1.value}`);
         }
@@ -894,7 +617,8 @@ class JigsawGuide {
 
         svg.innerHTML = `
         <mask id="novice-guide-mask"></mask>
-        <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>`
+        <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>
+        `
 
         return svg;
     }
@@ -946,9 +670,11 @@ class JigsawGuide {
 
     private _relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HTMLElement) {
         const { left, top, width, height } = target.getBoundingClientRect();
+
         if (left + top + width + height === 0) {
             return;
         }
+
         clone.style.top = top + 'px';
         clone.style.left = left + 'px';
         clone.style.width = width + 'px';
@@ -980,6 +706,41 @@ class JigsawGuide {
         this._showing.mutations = [];
         this._showing.guideKeys = [];
         this._showing.guideEles = [];
+    }
+
+    private _closeNoviceGuideNotice(cloneEle: HTMLDivElement, checkMask: boolean) {
+        const index = cloneEle.getAttribute('guideIndex');
+        jigsawGuide._showing.cloneEles[index] = undefined;
+        jigsawGuide._showing.guideKeys[index] = '';
+        cloneEle.remove();
+
+        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
+            return clone;
+        })
+
+        if (leftGuideCloneArr.length === 0) {
+            jigsawGuide.clear();
+            return;
+        }
+
+        if (checkMask) {
+            const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+            const mask = document.getElementById('novice-guide-mask');
+
+            if (mask) {
+                mask.innerHTML = '';
+            }
+
+            if (dialogClone.length === 0 && mask) {
+                mask.remove();
+            }
+        }
+
+        jigsawGuide.resize();
+    }
+
+    private _saveClosedGuide() {
+
     }
 }
 export const jigsawGuide = new JigsawGuide();
