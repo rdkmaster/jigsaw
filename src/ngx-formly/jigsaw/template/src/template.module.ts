@@ -6,9 +6,10 @@ import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
 import {JigsawTrustedHtmlModule} from "@rdkmaster/jigsaw";
 
 import {FormlyTemplateFieldType} from "./template.type";
+import {FormlyFieldRepeat} from "./repeat.type";
 
 @NgModule({
-    declarations: [FormlyTemplateFieldType],
+    declarations: [FormlyTemplateFieldType, FormlyFieldRepeat],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -20,6 +21,10 @@ import {FormlyTemplateFieldType} from "./template.type";
                     name: 'custom-template',
                     component: FormlyTemplateFieldType,
                     wrappers: ['form-field'],
+                },
+                {
+                    name: 'repeat',
+                    component: FormlyFieldRepeat,
                 }
             ],
         }),
