@@ -14,7 +14,19 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             border-width: 1px;
             border-style: solid;
             border-color: $border-color-default;
+
+            .jigsaw-table-cell-text {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                align-content: flex-start;
+                padding: 0 8px;
+                width: 100%;
+                min-width: 0;
+                text-align: left;
+            }
         }
+
         thead {
             color: $font-color-heading-bold;
             font-weight: bold;
