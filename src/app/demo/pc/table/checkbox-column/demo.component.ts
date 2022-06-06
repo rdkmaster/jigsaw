@@ -28,7 +28,7 @@ export class TableAddCheckboxColumnDemoComponent {
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 1,
-        width: 20,
+        width: 30,
         header: {
             renderer: TableHeadCheckboxRenderer,
             rendererInitData: (td, row, col) => {
