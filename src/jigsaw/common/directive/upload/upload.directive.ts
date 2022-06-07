@@ -206,8 +206,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         }
         this._fileInputElement.setAttribute('accept', this.fileType);
 
-        this._removeFileChangeEvent?.();
-        this._removeFileChangeEvent = this._renderer.listen(this._fileInputElement, 'change', () => {
+        this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
+            this._renderer.listen(this._fileInputElement, 'change', () => {
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
