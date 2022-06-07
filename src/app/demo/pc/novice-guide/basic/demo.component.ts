@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, TemplateRef } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, TemplateRef } from "@angular/core";
 import { SimpleTreeData, ArrayCollection, TableData, PopupService, PopupInfo } from 'jigsaw/public_api';
 import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuide, NoviceGuideType, DialogNoviceGuide, WizardNoviceGuide } from 'novice-guide/src/novice-guide';
 
@@ -75,7 +75,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         type: NoviceGuideType.wizard,
         data: [
             { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'li', id: 'dialog-btn', position: 'bottom' },
-            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button-bar', classes: 'jigsaw-button-bar-host', position: 'bottom' },
+            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'j-tile-option', classes: 'jigsaw-tile-option', property1: { property: 'title', value: '错误' }, position: 'bottom' },
+            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button', classes: 'jigsaw-button-host jigsaw-button-color-primary jigsaw-button-icon-left', position: 'bottom' },
         ],
         version: 'v0.0.1'
     }
@@ -86,10 +87,10 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        // jigsawGuide.show(this.bubbleGuideData, this.config);
+        jigsawGuide.show(this.bubbleGuideData, this.config);
         // jigsawGuide.show(this.dialogGuideData, this.config);
         // jigsawGuide.show(this.multipleNoviceGuideData, this.config);
-        jigsawGuide.show(this.wizardNoviceGuideData, this.config);
+        // jigsawGuide.show(this.wizardNoviceGuideData, this.config);
     }
 
     xy() {
@@ -127,10 +128,6 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     showInfo(label: string) {
         this.dialogInfo.dispose();
-    }
-
-    selectedItemsChange() {
-
     }
 
     buttonbar = new ArrayCollection([
