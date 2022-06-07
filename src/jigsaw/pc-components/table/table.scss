@@ -10,72 +10,78 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         table-layout: fixed;
         font-size: $font-size-text-base;
 
-        td {
-            height: 30px;
-            color: $font-color-default;
-            border-width: 1px;
-            border-style: solid;
-            border-color: $border-color-default;
+        tr {
+            td {
+                height: 30px;
+                color: $font-color-default;
+                border-width: 1px;
+                border-style: solid;
+                border-color: $border-color-default;
+                line-height: 100%;
+                vertical-align: top;
 
-            .#{$jigsaw-table}-cell-content,
-            .#{$jigsaw-table}-header-cell {
-                display: inline-flex;
-                justify-content: flex-start;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-                padding: 0 8px;
-                text-align: left;
-
-                ng-component {
+                .#{$jigsaw-table}-cell-content,
+                .#{$jigsaw-table}-header-cell {
                     display: inline-flex;
                     justify-content: flex-start;
                     align-items: center;
                     width: 100%;
                     height: 100%;
-                }
-            }
-
-            &.align-left {
-                .#{$jigsaw-table}-cell-content,
-                .#{$jigsaw-table}-header-cell {
-                    justify-content: flex-start;
+                    padding: 0 8px;
                     text-align: left;
+                    line-height: 100%;
 
                     ng-component {
+                        display: inline-flex;
                         justify-content: flex-start;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 100%;
                     }
                 }
-            }
 
-            &.align-center {
-                .#{$jigsaw-table}-cell-content,
-                .#{$jigsaw-table}-header-cell {
-                    justify-content: center;
-                    text-align: center;
+                &.align-left {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-start;
+                        text-align: left;
 
-                    ng-component {
+                        ng-component {
+                            justify-content: flex-start;
+                        }
+                    }
+                }
+
+                &.align-center {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
                         justify-content: center;
+                        text-align: center;
+
+                        ng-component {
+                            justify-content: center;
+                        }
                     }
                 }
-            }
 
-            &.align-right {
-                .#{$jigsaw-table}-cell-content,
-                .#{$jigsaw-table}-header-cell {
-                    justify-content: flex-end;
-                    text-align: right;
-
-                    ng-component {
+                &.align-right {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
                         justify-content: flex-end;
+                        text-align: right;
+
+                        ng-component {
+                            justify-content: flex-end;
+                        }
                     }
                 }
-            }
 
-            &.no-padding {
-                .#{$jigsaw-table}-cell-content,
-                .#{$jigsaw-table}-header-cell {
-                    padding: 0px;
+                &.no-padding {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        padding: 0px;
+                    }
                 }
             }
         }
@@ -89,19 +95,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     background: $bg-gray;
 
                     .#{$jigsaw-table}-header-cell {
-                        display: inline-flex;
-                        justify-content: center;
-                        align-items: center;
-                        width: 100%;
-
                         .iconfont {
                             margin-right: 2px;
                         }
 
-                        ng-component {
-                            width: 100%;
-                            height: 100%;
-                        }
                     }
                 }
             }

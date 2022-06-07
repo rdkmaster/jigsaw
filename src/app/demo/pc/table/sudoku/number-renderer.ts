@@ -12,11 +12,15 @@ import {isTargetConflicted, CHECK_PUZZLE_STATUS, CLOSE_ALL_PAD, PUZZLE_SOLVED, P
     `,
     styles: [`
         .demo-container {
+            display:flex;
+            justify-content:center;
+            align-items:center;
             color: var(--font-color-default);
             font-size: 22px;
             text-align: center;
             cursor: pointer;
-            width: 30px;
+            width: 48px;
+            height: 48px;
         }
     `]
 })
