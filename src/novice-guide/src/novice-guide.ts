@@ -193,45 +193,57 @@ class JigsawGuide {
         this._showing.mutations.push(mutationObserver)
     }
 
-    private _createNoviceGuide(type: NoviceGuideType, guide: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], index: number, notices: NoviceGuideNotice[]) {
+    private _createNoviceGuide(type: NoviceGuideType, notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], index: number, notices: NoviceGuideNotice[]) {
         if (type === NoviceGuideType.singular) {
-            this._createSingularNoviceGuide(guide, targetEle, guideKeys[index]);
+            if (notice.type !== NoviceGuideNoticeType.bubble && notice.type !== NoviceGuideNoticeType.dialog) {
+                console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.singular} novice guide`)
+                return;
+            }
+            this._createSingularNoviceGuide(notice, targetEle, guideKeys[index]);
         } else if (type === NoviceGuideType.multiple) {
-            this._createMultipleNoviceGuide(guide, targetEle, guideKeys, index, notices);
+            if (notice.type !== NoviceGuideNoticeType.dialog) {
+                console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.multiple} novice guide`)
+                return;
+            }
+            this._createMultipleNoviceGuide(notice, targetEle, guideKeys, index, notices);
         } else if (type === NoviceGuideType.wizard) {
-            this._createWizardStepNoviceGuide(guide, targetEle, guideKeys, index, notices)
+            if (notice.type !== NoviceGuideNoticeType.wizard) {
+                console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.wizard} novice guide`)
+                return;
+            }
+            this._createWizardStepNoviceGuide(notice, targetEle, guideKeys, index, notices)
         }
     }
 
-    private _createSingularNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string) {
+    private _createSingularNoviceGuide(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string) {
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
 
         let html = '';
         let hasMask = false;
-        if (guide.type === NoviceGuideNoticeType.bubble) {
+        if (notice.type === NoviceGuideNoticeType.bubble) {
             html = `
-            <div class="${guide.type} ${guide.type}-${guide.position}">
+            <div class="${notice.type} ${notice.type}-${notice.position}">
                 <div class="line">
                     <div></div>
                 </div>
                 <div class="notice-cntr">
-                    <div class="text">${guide.notice}</div>
+                    <div class="text">${notice.notice}</div>
                     <i class="close iconfont iconfont-e14b"></i>
                 </div>
             </div>`
         }
 
-        if (guide.type === NoviceGuideNoticeType.dialog) {
+        if (notice.type === NoviceGuideNoticeType.dialog) {
             hasMask = true;
             html = `
-            <div class="${guide.type} ${guide.type}-${guide.position}">
+            <div class="${notice.type} ${notice.type}-${notice.position}">
                 <div class="notice-cntr">
-                    <div class="title">${guide.title}</div>
-                    <div class="text">${guide.notice}</div>
+                    <div class="title">${notice.title}</div>
+                    <div class="text">${notice.notice}</div>
                     <div class="button-cntr">
-                        <div class="close button">${guide.button}</div>
+                        <div class="close button">${notice.button}</div>
                     </div>
                 </div>
             </div>`;
@@ -251,14 +263,14 @@ class JigsawGuide {
                 return;
             }
             jigsawGuide._saveShownKeys(guideKey);
-            jigsawGuide._closeNoviceGuideNotice(cloneEle, guide.type === NoviceGuideNoticeType.dialog);
+            jigsawGuide._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
         }
 
         this._getGuideContainer(hasMask).appendChild(cloneEle);
         this.resize();
     }
 
-    private _createMultipleNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
+    private _createMultipleNoviceGuide(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
         if (this._showing.guideKeys.indexOf(guideKeys[current]) !== -1) {
             return;
         }
@@ -276,12 +288,12 @@ class JigsawGuide {
         }
 
         html = `
-            <div class="${guide.type} ${guide.type}-${guide.position}">
+            <div class="${notice.type} ${notice.type}-${notice.position}">
                 <div class="notice-cntr">
-                    <div class="title">${guide.title}
+                    <div class="title">${notice.title}
                         <div class="close iconfont iconfont-e14b close-arrow"></div>
                     </div>
-                    <div class="text">${guide.notice}</div>
+                    <div class="text">${notice.notice}</div>
                     <div class="button-cntr">
                         <div class="progress">${current + 1}/${notices.length}</div>
                         ${buttonHtml}
@@ -305,7 +317,7 @@ class JigsawGuide {
                     jigsawGuide._saveShownKeys(guideKeys.join());
                 }
 
-                jigsawGuide._closeNoviceGuideNotice(cloneEle, guide.type === NoviceGuideNoticeType.dialog);
+                jigsawGuide._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
             }
 
             if ((e.target as HTMLElement).classList.contains('next')) {
