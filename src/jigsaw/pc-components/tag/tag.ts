@@ -113,13 +113,15 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public get _$realColor(): string {
+        let color;
         if (this.disabled) {
-            return this.disabledColor || 'preset-gray';
+            color = this.disabledColor;
         } else if (this.select) {
-            return this.selectedColor || this.color;
+            color = this.selectedColor || this.color;
         } else {
-            return this.color;
+            color = this.color;
         }
+        return typeof color == 'string' ? color : 'preset-gray';
     }
 
     /**
