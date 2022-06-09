@@ -4,8 +4,8 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-header [level]="1">Table</jigsaw-header>
-<jigsaw-header [level]="2">expand</jigsaw-header>
+<jigsaw-header [level]="1">Table Expand</jigsaw-header>
+
 <div class="demo-buttons">
     <span>展开方式</span>
     <jigsaw-button-bar [data]="['toggle', 'show', 'hide']" [(selectedItems)]="action"></jigsaw-button-bar>
@@ -19,5 +19,16 @@
     <jigsaw-button (click)="resetData()">重置数据</jigsaw-button>
     <jigsaw-button (click)="expandRow(2)">展开/关闭第三行</jigsaw-button>
 </div>
-<jigsaw-table #tableCmp width="600px" [data]="tableData" (rowExpand)="rowClick($event)">
-</jigsaw-table>
+
+<div class="demo-table-cntr">
+    <div>
+        <jigsaw-header [level]="2">信息展示</jigsaw-header>
+        <jigsaw-table #tableCmp width="600px" [data]="tableData" (rowExpand)="rowClick($event)">
+        </jigsaw-table>
+    </div>
+    <div>
+        <jigsaw-header [level]="2">类表格数据</jigsaw-header>
+        <jigsaw-table #tableCmp width="600px" [data]="tableData" (rowExpand)="rowClick($event)">
+        </jigsaw-table>
+    </div>
+</div>

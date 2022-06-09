@@ -15,7 +15,10 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ComponentFactoryResolver,
+    ApplicationRef,
+    ViewContainerRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
@@ -40,7 +43,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
 import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
+import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer, TableCellSwitchRenderer} from "./table-renderer";
 import {TableUtils} from "./table-utils";
 
 @WingsTheme('table.scss')
@@ -59,9 +62,11 @@ import {TableUtils} from "./table-utils";
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+        protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector,
+        private _componentFactoryResolver: ComponentFactoryResolver,
+        private _applicationRef: ApplicationRef) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -324,7 +329,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$blankRow:string[] = [];
+    public _$blankRow: string[] = [];
 
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
@@ -397,7 +402,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
                 cd.target = field;
             }
-            columnDefines.push(cd ? cd : {target: field});
+            columnDefines.push(cd ? cd : { target: field });
         });
 
         if (this._additionalColumnDefines) {
@@ -566,7 +571,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.doubleClick.emit(rowIndex);
     }
 
-    @ViewChildren('tableRow', {read: ElementRef})
+    @ViewChildren('tableRow', { read: ElementRef })
     private _rowElementRefs: QueryList<ElementRef>;
 
     /**
@@ -711,10 +716,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -903,10 +908,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
+    @ViewChildren('expandRowHost', { read: ViewContainerRef })
+    protected expandRowsHost: QueryList<ViewContainerRef>
     /**
      * 展开行
      */
     public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
+        // const expandRowHost = this.expandRowsHost.toArray()[rowIndex];
+        // expandRowHost.clear();
+
+        // let rowComponentFactory: ComponentFactory<any>;
+        // rowComponentFactory = this.componentFactoryResolver.resolveComponentFactory(JigsawTableExpandRowComponent);
+        // const sourceComponentRef: ComponentRef<any> = expandRowHost.createComponent(rowComponentFactory);
+
+        // const sourceComponent = sourceComponentRef.instance;
+        // sourceComponent._$cellSettings = this._$cellSettings;
+
         const rowElement = this._rowElementRefs.toArray()[rowIndex]?.nativeElement;
         if (!rowElement) {
             return;
@@ -951,16 +968,43 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string, context: object, remainOpen: boolean, rowIndex: number): void {
         const tr = document.createElement('tr');
-        const trustedEle = document.createElement('td');
+       
         const headerEle = this._headerComponents.toArray();
-        trustedEle.colSpan = headerEle.length;
+        // trustedEle.colSpan = headerEle.length;
+        
         tr.classList.add('jigsaw-table-row-expansion');
-        tr.insertBefore(trustedEle, tr.lastElementChild);
+       
 
-        const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
-        trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+        for (let i = 0;i<headerEle.length;i++){
+            const trustedEle = document.createElement('td');
+            // let sourceComponentFactory: ComponentFactory<any>;
+            // sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
+            // const sourceComponentRef: ComponentRef<any> = tr.createComponent(sourceComponentFactory);
+    
+            // const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
+    
+            let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
+            const ref = factory.create(this._injector, [], trustedEle);
+            ref.instance.renderer = TableCellSwitchRenderer;
+            
+            console.log(this._$cellSettings[0][0])
+            const cell = this._$cellSettings[0][0];
+            ref.instance.tableData = this.data;
+            ref.instance.additionalData = this.additionalData;
+            ref.instance.cellData = 1;
+            ref.instance.row = 0;
+            ref.instance.field = cell.field;
+            ref.instance.renderer = TableCellSwitchRenderer;
+            ref.instance.editable = cell.editable;
+            ref.instance.hostInstance = this;
+            this._applicationRef.attachView(ref.hostView);
+            tr.insertBefore(trustedEle, tr.lastElementChild);
+        }
+
+        // const trustedHtml = ``;
+        // trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
         rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
-        this._allExpandedRows.push({element: tr, rowIndex, remainOpen});
+        this._allExpandedRows.push({ element: tr, rowIndex, remainOpen });
     }
 
     private _hideExpansion(rowElement: HTMLTableRowElement): void {

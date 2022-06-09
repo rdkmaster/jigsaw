@@ -5,3 +5,12 @@
 .demo-buttons span {
     margin-right: 4px;
 }
+
+.demo-table-cntr {
+    display: flex;
+    width: 100%;
+}
+
+.demo-table-cntr>div {
+    flex: 1;
+}
