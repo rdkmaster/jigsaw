@@ -20,14 +20,14 @@
     ApplicationRef,
     ViewContainerRef
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {Subscription} from "rxjs";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
-import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
-import {TableData} from "../../common/core/data/table-data";
-import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
+import { CommonModule } from "@angular/common";
+import { Subscription } from "rxjs";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { PerfectScrollbarDirective, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
+import { JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent } from "./table-inner.components";
+import { TableData } from "../../common/core/data/table-data";
+import { AffixUtils, InternalUtils } from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -39,12 +39,12 @@ import {
     TableDataChangeEvent,
     TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
-import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer, TableCellSwitchRenderer} from "./table-renderer";
-import {TableUtils} from "./table-utils";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { IPageable, PagingInfo, SortOrder } from "../../common/core/data/component-data";
+import { JigsawTrustedHtmlModule, TrustedHtmlHelper } from "../../common/directive/trusted-html/trusted-html";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer, TableCellSwitchRenderer } from "./table-renderer";
+import { TableUtils } from "./table-utils";
 
 @WingsTheme('table.scss')
 @Component({
@@ -913,7 +913,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * 展开行
      */
-    public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
+    public expand(rowIndex: number, rawHtml: string | TableData, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
         // const expandRowHost = this.expandRowsHost.toArray()[rowIndex];
         // expandRowHost.clear();
 
@@ -944,8 +944,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 已经打开了，但此时人家要求再打开，需要更新一下内容
             const rowInfo = this._allExpandedRows.find(i => i?.element === rowElement.nextSibling);
             rowInfo.remainOpen = options?.remainOpenAfterDataChanges;
-            rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
-                CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
+            if (typeof rawHtml === 'string') {
+                rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
+                    CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
+            }
             return;
         }
         if (!expanded && action == 'show') {
@@ -966,7 +968,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number }[] = [];
 
-    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string | [], context: object, remainOpen: boolean, rowIndex: number): void {
+    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string | TableData, context: object, remainOpen: boolean, rowIndex: number): void {
         const tr = document.createElement('tr');
         tr.classList.add('jigsaw-table-row-expansion');
 
@@ -975,32 +977,43 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (typeof rawHtml === 'string') {
             const trustedEle = document.createElement('td');
             trustedEle.colSpan = headerEle.length;
-            const trustedHtml = ``;
+            const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
             trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+            tr.insertBefore(trustedEle, tr.lastElementChild);
         }
 
-        if ( rawHtml instanceof Array) {
-            for (let i = 0;i<headerEle.length;i++){
+        if (rawHtml instanceof TableData) {
+            console.log(rawHtml)
+            for (let i = 0; i < headerEle.length; i++) {
                 const trustedEle = document.createElement('td');
-        
+
                 let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
                 const componentRef = factory.create(this._injector, [], trustedEle);
-                componentRef.instance.renderer = TableCellSwitchRenderer;
-                
-                console.log(this._$cellSettings[0][0])
-                const cell = this._$cellSettings[0][0];
+
+                let cell = rawHtml[i];
+                if (typeof rawHtml[i] === 'string') {
+                    cell = {
+                        renderer: DefaultCellRenderer,
+                        data: rawHtml[i]
+                    }
+                }
+
+                console.log(componentRef.instance.column)
+                console.log(this.data)
                 componentRef.instance.tableData = this.data;
                 componentRef.instance.additionalData = this.additionalData;
-                componentRef.instance.cellData = 1;
-                componentRef.instance.row = 0;
-                componentRef.instance.field = cell.field;   ``
-                componentRef.instance.renderer = TableCellSwitchRenderer;
-                componentRef.instance.editable = cell.editable;
-                componentRef.instance.hostInstance = this;
+                componentRef.instance.cellData = cell.data;
+                componentRef.instance.row = -1;
+                componentRef.instance.field = cell.field;
+                componentRef.instance.renderer = cell.renderer;
+                componentRef.instance.editable = false
+                // componentRef.instance.hostInstance = this;
+
                 this._applicationRef.attachView(componentRef.hostView);
-                tr.insertBefore(trustedEle, tr.lastElementChild);
+
+                tr.appendChild(trustedEle)
             }
-    
+
         }
 
         rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
+import { TableData, ColumnDefine, JigsawTable, TableCellSwitchRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -13,6 +13,9 @@ export class TableExpandDemoComponent {
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
 
+    @ViewChild('tableCmp2')
+    tableCmp2: JigsawTable;
+
     constructor() {
         this.resetData();
     }
@@ -23,6 +26,16 @@ export class TableExpandDemoComponent {
             return;
         }
         this.tableCmp.expand(rowIndex, html, this, {
+            remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
+        });
+    }
+
+    rowClick2(rowIndex: number) {
+        const html = ['data1', 'data2', 'data3', 'data4', 'data5', { data: false, renderer: TableCellSwitchRenderer,field:'progress' }];
+        if (!html) {
+            return;
+        }
+        this.tableCmp2.expand(rowIndex, html, this, {
             remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
         });
     }
