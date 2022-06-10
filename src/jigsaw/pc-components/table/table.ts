@@ -966,43 +966,43 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number }[] = [];
 
-    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string, context: object, remainOpen: boolean, rowIndex: number): void {
+    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string | [], context: object, remainOpen: boolean, rowIndex: number): void {
         const tr = document.createElement('tr');
-       
-        const headerEle = this._headerComponents.toArray();
-        // trustedEle.colSpan = headerEle.length;
-        
         tr.classList.add('jigsaw-table-row-expansion');
-       
 
-        for (let i = 0;i<headerEle.length;i++){
+        const headerEle = this._headerComponents.toArray();
+
+        if (typeof rawHtml === 'string') {
             const trustedEle = document.createElement('td');
-            // let sourceComponentFactory: ComponentFactory<any>;
-            // sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(TransferListSourceRenderer);
-            // const sourceComponentRef: ComponentRef<any> = tr.createComponent(sourceComponentFactory);
-    
-            // const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
-    
-            let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
-            const ref = factory.create(this._injector, [], trustedEle);
-            ref.instance.renderer = TableCellSwitchRenderer;
-            
-            console.log(this._$cellSettings[0][0])
-            const cell = this._$cellSettings[0][0];
-            ref.instance.tableData = this.data;
-            ref.instance.additionalData = this.additionalData;
-            ref.instance.cellData = 1;
-            ref.instance.row = 0;
-            ref.instance.field = cell.field;
-            ref.instance.renderer = TableCellSwitchRenderer;
-            ref.instance.editable = cell.editable;
-            ref.instance.hostInstance = this;
-            this._applicationRef.attachView(ref.hostView);
-            tr.insertBefore(trustedEle, tr.lastElementChild);
+            trustedEle.colSpan = headerEle.length;
+            const trustedHtml = ``;
+            trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
         }
 
-        // const trustedHtml = ``;
-        // trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+        if ( rawHtml instanceof Array) {
+            for (let i = 0;i<headerEle.length;i++){
+                const trustedEle = document.createElement('td');
+        
+                let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
+                const componentRef = factory.create(this._injector, [], trustedEle);
+                componentRef.instance.renderer = TableCellSwitchRenderer;
+                
+                console.log(this._$cellSettings[0][0])
+                const cell = this._$cellSettings[0][0];
+                componentRef.instance.tableData = this.data;
+                componentRef.instance.additionalData = this.additionalData;
+                componentRef.instance.cellData = 1;
+                componentRef.instance.row = 0;
+                componentRef.instance.field = cell.field;   ``
+                componentRef.instance.renderer = TableCellSwitchRenderer;
+                componentRef.instance.editable = cell.editable;
+                componentRef.instance.hostInstance = this;
+                this._applicationRef.attachView(componentRef.hostView);
+                tr.insertBefore(trustedEle, tr.lastElementChild);
+            }
+    
+        }
+
         rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
         this._allExpandedRows.push({ element: tr, rowIndex, remainOpen });
     }
