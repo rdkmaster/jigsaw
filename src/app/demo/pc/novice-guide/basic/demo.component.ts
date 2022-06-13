@@ -1,6 +1,14 @@
-import { Component, OnInit, ViewEncapsulation, TemplateRef } from "@angular/core";
-import { SimpleTreeData, ArrayCollection, TableData, PopupService, PopupInfo } from 'jigsaw/public_api';
-import { SingularNoviceGuide, jigsawGuide, NoviceGuideConfig, MultipleNoviceGuide, NoviceGuide, NoviceGuideNoticeType, BubbleNoviceGuide, NoviceGuideType, DialogNoviceGuide, WizardNoviceGuide } from 'novice-guide/src/novice-guide';
+import {Component, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
+import {ArrayCollection, PopupInfo, PopupService, SimpleTreeData, TableData} from 'jigsaw/public_api';
+import {
+    jigsawGuide,
+    MultipleNoviceGuide,
+    NoviceGuideConfig,
+    NoviceGuideNoticeType,
+    NoviceGuideType,
+    SingularNoviceGuide,
+    WizardNoviceGuide
+} from 'novice-guide/src/novice-guide';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -87,17 +95,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        jigsawGuide.show(this.bubbleGuideData, this.config);
-        // jigsawGuide.show(this.dialogGuideData, this.config);
-        // jigsawGuide.show(this.multipleNoviceGuideData, this.config);
-        // jigsawGuide.show(this.wizardNoviceGuideData, this.config);
-    }
-
-    xy() {
-        const queryResult = document.body.querySelectorAll('li#guide1');
-        const { left, top, width, height } = queryResult[0].getBoundingClientRect();
-        const centerX = left + width / 2;
-        const centerY = top + height / 2;
+        this.bubbleGuide();
     }
 
     clear() {
@@ -112,7 +110,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         jigsawGuide.show(this.dialogGuideData, this.config);
     }
 
-    multipuleGuide() {
+    multipleGuide() {
         jigsawGuide.show(this.multipleNoviceGuideData, this.config);
     }
 
@@ -126,8 +124,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         this.dialogInfo = this.popupService.popup(ele);
     }
 
-    showInfo(label: string) {
-        this.dialogInfo.dispose();
+    showInfo() {
     }
 
     buttonbar = new ArrayCollection([
@@ -139,19 +136,19 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     constructor(private popupService: PopupService) {
         const xmlData = `
-        <node>
-            <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>
-            <node label="标准图标2" icon="iconfont iconfont-e261"></node>
-            <node label="标准图标3" icon="iconfont iconfont-e2f6"></node>
-            <node label="标准图标4" icon="iconfont iconfont-e2d4"></node>
-            <node label="标准图标5" icon="iconfont iconfont-e17c"></node>
-            <node label="标准图标6" icon="iconfont iconfont-e0d1"></node>
-            <node label="标准图标7" icon="iconfont iconfont-e191"></node>
-            <node label="标准图标8" icon="iconfont iconfont-e54a"></node>
-            <node label="标准图标9" icon="iconfont iconfont-e212"></node>
-            <node label="标准图标10" icon="iconfont iconfont-e367"></node>
-        </node>
-    `;
+            <node>
+                <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>
+                <node label="标准图标2" icon="iconfont iconfont-e261"></node>
+                <node label="标准图标3" icon="iconfont iconfont-e2f6"></node>
+                <node label="标准图标4" icon="iconfont iconfont-e2d4"></node>
+                <node label="标准图标5" icon="iconfont iconfont-e17c"></node>
+                <node label="标准图标6" icon="iconfont iconfont-e0d1"></node>
+                <node label="标准图标7" icon="iconfont iconfont-e191"></node>
+                <node label="标准图标8" icon="iconfont iconfont-e54a"></node>
+                <node label="标准图标9" icon="iconfont iconfont-e212"></node>
+                <node label="标准图标10" icon="iconfont iconfont-e367"></node>
+            </node>
+        `;
         this.navData.fromXML(xmlData);
 
         this.tabBarData = ["Tab 1", "Tab 2", `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`, "Tab 4"];

@@ -10,7 +10,7 @@
         <a (click)="clear()">清理所有指引</a>
         <a (click)="bubbleGuide()">气泡指引</a>
         <a (click)="dialogGuide()">对话框指引</a>
-        <a (click)="multipuleGuide()">分步指引</a>
+        <a (click)="multipleGuide()">分步指引</a>
         <a (click)="wizardGuide()">程序向导</a>
     </div>
 
@@ -52,21 +52,20 @@
 
     <ng-template #dialog>
         <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="iconfont iconfont-e3f0"
-            (close)="showInfo()">
+            (close)="dialogInfo?.dispose()">
             <ul class="dialog-content">
                 <li>Dialog content...</li>
                 <li>Dialog content...</li>
                 <li>Dialog content...</li>
             </ul>
 
-            <jigsaw-button-bar [selectedItems]="buttonbar[0]" [data]="buttonbar"
-                (selectedItemsChange)="selectedItemsChange($event)">
+            <jigsaw-button-bar [selectedItems]="buttonbar[0]" [data]="buttonbar">
             </jigsaw-button-bar>
 
             <div jigsaw-button-bar>
-                <jigsaw-button colorType="primary" (click)="showInfo('OK')">OK</jigsaw-button>
-                <jigsaw-button (click)="showInfo('Cancel')">Cancel</jigsaw-button>
-                <a class="button-bar-link" (click)="showInfo('Help')">需要帮助？</a>
+                <jigsaw-button colorType="primary" (click)="dialogInfo?.dispose()">OK</jigsaw-button>
+                <jigsaw-button (click)="dialogInfo?.dispose()">Cancel</jigsaw-button>
+                <a class="button-bar-link" (click)="showInfo()">需要帮助？</a>
             </div>
         </jigsaw-dialog>
     </ng-template>

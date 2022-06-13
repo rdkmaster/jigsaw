@@ -77,7 +77,7 @@ class JigsawGuide {
             localStorage.setItem(this._localStorageItem, '[]');
         }
 
-        let guideKeys: string[], notices: NoviceGuideNotice[];
+        let notices: NoviceGuideNotice[], guideKeys: string[];
         [notices, guideKeys] = this._filterShownGuides(guide, this._localStorageItem);
         notices = this._deduplicate(notices, guideKeys);
 
@@ -98,8 +98,8 @@ class JigsawGuide {
         }
 
         if (guide.type === 'wizard') {
-            const cntr = this._getGuideContainer(false);
-            cntr.classList.add('wizard')
+            const container = this._getGuideContainer(false);
+            container.classList.add('wizard')
 
             const g = notices[0];
             this._createNoviceGuideNotice(guide.type, g, 0, guideKeys, notices);
@@ -117,9 +117,6 @@ class JigsawGuide {
 
     private _createNoviceGuideNotice(guideType: NoviceGuideType, notice: NoviceGuideNotice, index: number, guideKeys: string[], notices: NoviceGuideNotice[]) {
         const selector = this._getSelector(notice);
-        let tagName: string, id: string, classes: string, opt: boolean;
-        [opt, [tagName, id, classes]] = this._checkOptimizable(notice);
-
         const result = this._getResultBySelector(selector, notice);
         if (result.length === 1) {
             this._createNoviceGuide(guideType, notice, result[0] as HTMLElement, guideKeys, index, notices);
@@ -131,6 +128,7 @@ class JigsawGuide {
             return;
         }
 
+        const [opt, [tagName, id, classes]] = this._checkOptimizable(notice);
         const mutationObserver = new MutationObserver(entries => {
             if (opt) {
                 const queryResult = document.body.querySelectorAll(selector);
@@ -172,7 +170,8 @@ class JigsawGuide {
                     const classArr = classes.split(".");
                     classArr.shift();
                     classArr.forEach(item => {
-                        if (!node.target["classList"].contains(item)) {
+                        const target: any = node.target;
+                        if (!target.classList.contains(item)) {
                             classesChecker = false;
                         }
                     })
@@ -275,9 +274,7 @@ class JigsawGuide {
             return;
         }
 
-        let html = '';
         const isLast = current === notices.length - 1;
-
         let buttonHtml = '';
         if (current === 0) {
             buttonHtml = `<div class="next button">下一步</div>`
@@ -287,7 +284,7 @@ class JigsawGuide {
             buttonHtml = `<div class="pre button">上一步</div><div class="next button">下一步</div>`
         }
 
-        html = `
+        const html = `
             <div class="${notice.type} ${notice.type}-${notice.position}">
                 <div class="notice-cntr">
                     <div class="title">${notice.title}
@@ -298,7 +295,7 @@ class JigsawGuide {
                         <div class="progress">${current + 1}/${notices.length}</div>
                         ${buttonHtml}
                     </div>
-                    
+
                 </div>
             </div>`;
 
@@ -311,10 +308,11 @@ class JigsawGuide {
         this._showing.cloneEles.push(cloneEle)
         this._showing.guideKeys.push(guideKeys[current])
 
-        cloneEle.onclick = function (e) {
+        cloneEle.onclick = (e) => {
+            // 处理提示里的叉叉按钮，鼠标点击了它后，鼠标事件冒泡到最外头被这个函数抓住
             if ((e.target as HTMLElement).classList.contains('close')) {
                 if (isLast) {
-                    jigsawGuide._saveShownKeys(guideKeys.join());
+                    this._saveShownKeys(guideKeys.join());
                 }
 
                 jigsawGuide._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
@@ -340,9 +338,7 @@ class JigsawGuide {
                         jigsawGuide._showing.guideKeys[index] = '';
                         cloneEle.remove();
 
-                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-                            return clone;
-                        })
+                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => !!clone);
                         const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
                         const mask = document.getElementById('novice-guide-mask');
 
@@ -367,8 +363,6 @@ class JigsawGuide {
                     console.warn('Find more than 1 target element.');
                     return;
                 }
-
-
             }
 
             if ((e.target as HTMLElement).classList.contains('pre')) {
@@ -394,9 +388,7 @@ class JigsawGuide {
                         shownKeys.push(guideKeys[current]);
                         localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
 
-                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-                            return clone;
-                        })
+                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => !!clone);
                         const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
                         const mask = document.getElementById('novice-guide-mask');
 
@@ -433,18 +425,17 @@ class JigsawGuide {
             return;
         }
 
-        let html = '';
-        html = `
-        <div class="${guide.type} ${guide.type}-${guide.position}">
-            <div class="arrow-cntr">
-                <i class="arrow iconfont iconfont-e250"></i>
+        const html = `
+            <div class="${guide.type} ${guide.type}-${guide.position}">
+                <div class="arrow-cntr">
+                    <i class="arrow iconfont iconfont-e250"></i>
+                </div>
+                <div class="notice-cntr">
+                    <div class="text">${guide.notice}</div>
+                    <i class="close iconfont iconfont-e14b"></i>
+                </div>
             </div>
-            <div class="notice-cntr">
-                <div class="text">${guide.notice}</div>
-                <i class="close iconfont iconfont-e14b"></i>
-            </div>
-        </div>
-        `
+        `;
 
         let cloneEle = document.createElement('div');
         cloneEle.classList.add('novice-guide-clone');
@@ -473,14 +464,13 @@ class JigsawGuide {
         }
 
         targetEle.addEventListener('click', function handleClick() {
+            targetEle.removeEventListener('click', handleClick);
             if (current === notices.length - 1) {
                 jigsawGuide._saveShownKeys(guideKeys.join());
                 jigsawGuide._closeNoviceGuideNotice(cloneEle, false);
             } else {
                 jigsawGuide._createNoviceGuideNotice(NoviceGuideType.wizard, notices[current + 1], current + 1, guideKeys, notices);
             }
-
-            targetEle.removeEventListener('click', handleClick)
         });
 
         this._getGuideContainer(false).appendChild(cloneEle);
@@ -535,7 +525,7 @@ class JigsawGuide {
     }
 
     private _toKeyString(guide: BasicNoviceGuideNotice, version: string): string {
-        let fields = [version || 'v0'];
+        const fields = [version || 'v0'];
         fields.push(guide.type || '');
         fields.push(guide.tagName || '');
         fields.push(guide.id || '');
@@ -552,48 +542,48 @@ class JigsawGuide {
     }
 
     private _getGuideContainer(hasMask: boolean): HTMLElement {
-        const cntr = document.getElementById('novice-guide-container');
-        if (cntr === null) {
-            const guideCntr = document.createElement('div');
-            guideCntr.id = 'novice-guide-container';
-            document.body.appendChild(guideCntr);
+        const container = document.getElementById('novice-guide-container');
+        if (container === null) {
+            const guideContainer = document.createElement('div');
+            guideContainer.id = 'novice-guide-container';
+            document.body.appendChild(guideContainer);
 
             if (hasMask) {
-                guideCntr.appendChild(this._createMask())
+                guideContainer.appendChild(this._createMask())
             }
 
-            return guideCntr;
+            return guideContainer;
         }
 
         const mask = document.getElementById('novice-guide-mask');
         if (hasMask && mask === null) {
-            cntr.appendChild(this._createMask());
+            container.appendChild(this._createMask());
         }
 
-        return cntr;
+        return container;
     }
 
     private _removeGuideContainer(): void {
-        const cntr = document.getElementById('novice-guide-container');
-        if (cntr === null) {
+        const container = document.getElementById('novice-guide-container');
+        if (container === null) {
             return
         }
-        cntr.remove();
+        container.remove();
     }
 
     private _createMask(): Element {
-        var svgNS = "http://www.w3.org/2000/svg";
-        var xlinkns = "http://www.w3.org/1999/xlink";
+        const svgNS = "http://www.w3.org/2000/svg";
+        const xlink = "http://www.w3.org/1999/xlink";
         const svg = document.createElementNS(svgNS, 'svg');
 
-        svg.setAttributeNS(xlinkns, 'width', '100%');
-        svg.setAttributeNS(xlinkns, 'height', '100%');
+        svg.setAttributeNS(xlink, 'width', '100%');
+        svg.setAttributeNS(xlink, 'height', '100%');
         svg.setAttribute('id', 'novice-guide-svg');
 
         svg.innerHTML = `
-        <mask id="novice-guide-mask"></mask>
-        <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>
-        `
+            <mask id="novice-guide-mask"></mask>
+            <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>
+        `;
 
         return svg;
     }
@@ -601,7 +591,7 @@ class JigsawGuide {
     private _checkOptimizable(notice: NoviceGuideNotice): [boolean, string[]] {
         const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
         const id = notice.id ? '#' + notice.id : '';
-        const classes = notice.classes ? "." + notice.classes.split(" ").join(".") : '';
+        const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
 
         const selector = `${tagName}${id}${classes}`;
         const opt = selector !== tagName && !notice.property1 && !notice.property2;
@@ -612,9 +602,9 @@ class JigsawGuide {
     private _getSelector(notice: NoviceGuideNotice): string {
         const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
         const id = notice.id ? '#' + notice.id : '';
-        const classes = notice.classes ? "." + notice.classes.split(" ").join(".") : '';
+        const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
 
-        return `${tagName}${id}${classes}`;;
+        return `${tagName}${id}${classes}`;
     }
 
     private _getResultBySelector(selector: string, notice: NoviceGuideNotice) {
@@ -622,13 +612,11 @@ class JigsawGuide {
         if (queryResult.length === 0) {
             return [];
         }
-        const result = Array.from(queryResult).filter(node => {
+        return Array.from(queryResult).filter(node => {
             const property1Checker = node[notice.property1?.property] === notice.property1?.value;
             const property2Checker = node[notice.property2?.property] === notice.property2?.value;
             return property1Checker && property2Checker;
-        })
-
-        return result;
+        });
     }
 
     private _saveShownKeys(guideKey: string) {
@@ -637,15 +625,13 @@ class JigsawGuide {
         localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
     }
 
-    private _debounce(fn: Function, delay: number) {
+    private _debounce(fn: Function, delay: number): () => void {
         let timer;
         return function () {
             if (timer) {
                 clearTimeout(timer)
             }
-            timer = setTimeout(() => {
-                fn();
-            }, delay)
+            timer = setTimeout(fn, delay)
         }
     }
 
@@ -680,19 +666,15 @@ class JigsawGuide {
             mask.innerHTML += `<rect x="${left}" y="${top}" width="${width}" height="${height}"/>`
         }
 
-        const cntr = this._getGuideContainer(false);
-        if (cntr.classList.contains('wizard')) {
-            cntr.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${left}px ${top + height}px, ${left + width}px ${top + height}px, ${left + width}px ${top}px, ${left}px ${top}px, ${left}px ${top + height}px`
+        const container = this._getGuideContainer(false);
+        if (container.classList.contains('wizard')) {
+            container.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${left}px ${top + height}px, ${left + width}px ${top + height}px, ${left + width}px ${top}px, ${left}px ${top}px, ${left}px ${top + height}px`
         }
     }
 
     public clear(): void {
         this._clearWithoutMutations();
-        this._showing.mutations.forEach(mutation => {
-            if (mutation) {
-                mutation.disconnect();
-            }
-        })
+        this._showing.mutations.filter(m => !!m).forEach(mutation => mutation.disconnect());
     }
 
     private _clearWithoutMutations(): void {
@@ -714,11 +696,7 @@ class JigsawGuide {
         jigsawGuide._showing.guideKeys[index] = '';
         cloneEle.remove();
 
-        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => {
-            return clone;
-        })
-
-        if (leftGuideCloneArr.length === 0) {
+        if (!this._showing.cloneEles.find(clone => !!clone)) {
             jigsawGuide._clearWithoutMutations();
             return;
         }
