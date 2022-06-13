@@ -983,7 +983,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         if (rawHtml instanceof TableData) {
-            console.log(rawHtml)
+
+            const cellSetting = {};
             for (let i = 0; i < headerEle.length; i++) {
                 const trustedEle = document.createElement('td');
 

@@ -31,13 +31,21 @@ export class TableExpandDemoComponent {
     }
 
     rowClick2(rowIndex: number) {
-        const html = ['data1', 'data2', 'data3', 'data4', 'data5', { data: false, renderer: TableCellSwitchRenderer,field:'progress' }];
+        const tableData = new TableData();
+        tableData.fromObject({
+            data: [
+                ["expand1", "expand2", "expand3", "expand4", "expand5", false],
+            ],
+            field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
+            header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
+        })
+        const html = ['expand1', 'expand2', 'expand3', 'expand4', 'expand5', { data: false, renderer: TableCellSwitchRenderer, field: 'progress' }];
         if (!html) {
             return;
         }
-        this.tableCmp2.expand(rowIndex, html, this, {
-            remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
-        });
+        // this.tableCmp2.expand(rowIndex, html, this, {
+        //     remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
+        // });
     }
 
     getExpansionHtml(rowIndex: number) {
