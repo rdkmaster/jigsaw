@@ -395,10 +395,14 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     }
 
     private _isCheckboxDisabled(rowIndex: number, columnIndex: number): boolean {
-        if (!this.hostInstance || !this.hostInstance._rowElementRefs || !this.hostInstance._rowElementRefs._results || !this.hostInstance._rowElementRefs._results[rowIndex]) {
+        const element = this.hostInstance?._rowElementRefs?._results?.[rowIndex];
+        if (!element) {
             return false;
         }
-        const checkboxEle = this.hostInstance._rowElementRefs._results[rowIndex].nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host')
+        const checkboxEle = element.nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host');
+        if (!checkboxEle) {
+            return false;
+        }
         return checkboxEle?.classList.contains('jigsaw-checkbox-disabled')
     }
 
