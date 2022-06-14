@@ -399,7 +399,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             return false;
         }
         const checkboxEle = this.hostInstance._rowElementRefs._results[rowIndex].nativeElement.cells[columnIndex].querySelector('.jigsaw-checkbox-host')
-        return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
+        return checkboxEle?.classList.contains('jigsaw-checkbox-disabled')
     }
 
     private _getRealColumnIndex(element: ElementRef): void {
