@@ -403,7 +403,7 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
         if (!checkboxEle) {
             return false;
         }
-        return checkboxEle?.classList.contains('jigsaw-checkbox-disabled')
+        return checkboxEle.classList.contains('jigsaw-checkbox-disabled')
     }
 
     private _getRealColumnIndex(element: ElementRef): void {
