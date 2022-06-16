@@ -16,13 +16,45 @@ export abstract class KnowledgeToolsBase {
     }
 }
 
+type ActionData = {
+    exampleIndex: number, classList: string[]
+}
+
+type PointsData = {
+    point: string,
+    link?: { label: string, address: string },
+    action?: ActionData
+};
+
+type QAData = {
+    question: string,
+    answer: string,
+    action?: ActionData
+}
+
+type TipsData = {
+    message: string,
+    action?: ActionData
+}
+
+type KnowledgePointsData = PointsData[];
+type KnowledgeQAData = QAData[];
+type KnowledgeQATipsData = TipsData[];
+
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css", "./animation.css"],
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
-    animationPoints = [
+    introductionPoint: KnowledgePointsData = [
+        {
+            point: '动画（英语：Animation）是一种通过定时拍摄一系列多个静止的固态图像（帧）以一定频率连续变化、运动（播放）的速度（如每秒16张）而导致肉眼的视觉残象产生的错觉——而误以为图画或物体（画面）活动的作品及其视频技术。',
+            link: { label: '动画Wiki', address: 'https://zh.wikipedia.org/wiki/%E5%8A%A8%E7%94%BB' }
+        },
+    ]
+
+    animationPoints: KnowledgePointsData = [
         { point: '<code>animation-name</code>' },
         { point: '<code>animation-duration</code>' },
         { point: '<code>animation-timing-function</code>' },
@@ -33,7 +65,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         { point: '<code>animation-play-state</code>' }
     ]
 
-    keyframePoints = [
+    keyframePoints: KnowledgePointsData = [
         {
             point: '起止关键帧可以不设置',
             action: { exampleIndex: 0, classList: ['example-3'] }
@@ -64,7 +96,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    namePoint = [
+    namePoint: KnowledgePointsData = [
         {
             point: `命名须符合<code>custom-ident</code>数据类型语法`,
             subpoint: ["任意字母（a~z或A~Z）", "数字（0~9）", "短横线（-）", "下划线（_）", "转义字符（使用反斜杠\\转义）", "Unicode字符"],
@@ -88,14 +120,14 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    delayPoint = [
+    delayPoint: KnowledgePointsData = [
         {
             point: '<code>animation-delay</code>可以让动画延迟播放',
             action: { exampleIndex: 0, classList: ['example-10'] }
         },
     ]
 
-    delayPoint2 = [
+    delayPoint2: KnowledgePointsData = [
         {
             point: '<code>animation-delay</code>经典应用，波形图的实现',
             action: { exampleIndex: 1, classList: ['example-12'] }
@@ -106,7 +138,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    directionPoint = [
+    directionPoint: KnowledgePointsData = [
         {
             point: '<code>animation-direction</code>:normal /* 初始值 */',
             action: { exampleIndex: 0, classList: ['example-15'] }
@@ -125,7 +157,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    iterationPoint = [
+    iterationPoint: KnowledgePointsData = [
         {
             point: '可以指定动画播放的次数',
             action: { exampleIndex: 0, classList: ['example-19'] }
@@ -140,7 +172,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    fillPoint = [
+    fillPoint: KnowledgePointsData = [
         {
             point: '<code>animation-fill-mode</code>:none /* 初始值 */',
             action: { exampleIndex: 2, classList: ['example-22'] }
@@ -159,7 +191,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    playPoint = [
+    playPoint: KnowledgePointsData = [
         {
             point: '暂停',
             action: { exampleIndex: 3, classList: ['example-26'] }
@@ -170,7 +202,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    bezierPoint = [
+    bezierPoint: KnowledgePointsData = [
         {
             point: `<b>贝塞尔曲线</b>`,
             link: { label: '调试网站', address: 'https://cubic-bezier.com/#.17,.67,.83,.67"' }
@@ -199,7 +231,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    stepPoint = [
+    stepPoint: KnowledgePointsData = [
         { point: `<b>step()函数</b>` },
         {
             point: 'steps(10, end)',
@@ -211,7 +243,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ];
 
-    performPoints = [
+    performPoints: KnowledgePointsData = [
         { point: 'CSS 动画很卡，它的本质其实是在动画过程中，浏览器刷新渲染页面的帧率过低。' },
         { point: 'Web 动画很大一部分开销在于层的重绘。' },
         {
@@ -220,7 +252,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         }
     ]
 
-    examplePoints = [
+    examplePoints: KnowledgePointsData = [
         {
             point: '',
             link: { label: '动画按钮', address: 'https://codepen.io/yuhomyan/pen/OJMejWJ' }
@@ -243,7 +275,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    animationQA = [
+    animationQA: KnowledgeQAData = [
         {
             question: "一个CSS动画效果想要出现，必不可少的基本单元有哪些？",
             answer: "动画名称，动画时间，animation属性和<code>@keyframes</code>规则。",
@@ -260,7 +292,7 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
         },
     ]
 
-    animationTips = [
+    animationTips: KnowledgeQATipsData = [
         {
             message: `animation属性支持同时应用多个动画规则。<br/>实现多种动画效果时，正确的做法是分隔设置。`,
             action: { exampleIndex: 0, classList: ['example-2'] }
