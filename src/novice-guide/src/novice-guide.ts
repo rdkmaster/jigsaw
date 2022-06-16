@@ -149,19 +149,21 @@ class JigsawGuide {
                 return;
             }
             const filterResult = addedNodes.filter(node => {
-                if (tagName && node.target.nodeName !== tagName) {
+                const element = node.target as HTMLElement;
+
+                if (tagName && element.nodeName !== tagName) {
                     return false
                 }
 
-                if (id && node.target["id"] !== id) {
+                if (id && element.id !== id) {
                     return false
                 }
 
-                if (notice.property1 && node.target[notice.property1.property] !== notice.property1.value) {
+                if (notice.property1 && element[notice.property1.property] !== notice.property1.value) {
                     return false
                 }
 
-                if (notice.property2 && node.target[notice.property2.property] !== notice.property2.value) {
+                if (notice.property2 && element[notice.property2.property] !== notice.property2.value) {
                     return false
                 }
 
@@ -170,12 +172,14 @@ class JigsawGuide {
                     const classArr = classes.split(".");
                     classArr.shift();
                     classArr.forEach(item => {
-                        const target: any = node.target;
+                        const target: any = element;
                         if (!target.classList.contains(item)) {
                             classesChecker = false;
                         }
                     })
+                    classArr.find(item=>{})
                 }
+
                 return classesChecker;
             })
 
@@ -190,6 +194,7 @@ class JigsawGuide {
         })
         mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
         this._showing.mutations.push(mutationObserver)
+        console.log(this._showing.mutations)
     }
 
     private _createNoviceGuide(type: NoviceGuideType, notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], index: number, notices: NoviceGuideNotice[]) {
@@ -593,6 +598,7 @@ class JigsawGuide {
         const id = notice.id ? '#' + notice.id : '';
         const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
 
+
         const selector = `${tagName}${id}${classes}`;
         const opt = selector !== tagName && !notice.property1 && !notice.property2;
 
@@ -603,6 +609,7 @@ class JigsawGuide {
         const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
         const id = notice.id ? '#' + notice.id : '';
         const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
+        console.log(classes)
 
         return `${tagName}${id}${classes}`;
     }
@@ -674,6 +681,7 @@ class JigsawGuide {
 
     public clear(): void {
         this._clearWithoutMutations();
+        console.log(this._showing.mutations)
         this._showing.mutations.filter(m => !!m).forEach(mutation => mutation.disconnect());
     }
 
@@ -685,7 +693,6 @@ class JigsawGuide {
             }
         })
         this._showing.cloneEles = [];
-        this._showing.mutations = [];
         this._showing.guideKeys = [];
         this._showing.guideEles = [];
     }
@@ -718,5 +725,3 @@ class JigsawGuide {
     }
 }
 export const jigsawGuide = new JigsawGuide();
-
-
