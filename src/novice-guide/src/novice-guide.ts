@@ -177,8 +177,10 @@ class JigsawGuide {
                             classesChecker = false;
                         }
                     })
-                    classArr.find(item=>{})
+                    
+                    // return !!classArr.find(item => !element.classList.contains(item))
                 }
+                // console.log(classes)
 
                 return classesChecker;
             })
