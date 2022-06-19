@@ -1,10 +1,10 @@
 import { Component, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TableData, AdditionalColumnDefine, TableCellRendererBase, TableCellCheckboxRenderer, JigsawTable } from "jigsaw/public_api";
+import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.html']
+    styleUrls: ['./demo.component.css']
 })
 export class TableUpdateAdditionalColumnDefineDemoComponent {
     tableData: TableData;
