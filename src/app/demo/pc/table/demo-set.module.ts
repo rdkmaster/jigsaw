@@ -109,6 +109,8 @@ import {TableProgressDemoComponent} from "./progress/demo.component";
 import {TableProgressDemoModule} from "./progress/demo.module";
 import { TableExpandDemoComponent } from './expand/demo.component';
 import { TableExpandDemoModule } from './expand/demo.module';
+import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additional-column-define/demo.component";
+import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-define/demo.module";
 
 export const routerConfig = [
     {
@@ -256,6 +258,9 @@ export const routerConfig = [
         path: "update-column-defines", component: TableUpdateColumnDefinesDemoComponent
     },
     {
+        path: "update-additional-column-defines", component: TableUpdateAdditionalColumnDefineDemoComponent
+    },
+    {
         path: "auto-save", component: TableAutoSaveDemoComponent
     },
     {
@@ -291,7 +296,7 @@ export const routerConfig = [
         TableSelectRowDemoModule, TableCheckboxColumnObjectCellDemoModule, TableCalendarDemoModule, BigRowDemoModule, TableResizeDemoModule,
         TableScrollListenDemoModule, SodokuGameModule, TableAddCheckboxColumnPageableDemoModule, TableSwitchRendererDemoModule,
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
-        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
+        TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule
     ]
 })

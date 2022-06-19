@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>Update AdditionalColumnDefine</jigsaw-header>
+<div class="control-cntr">
+    <jigsaw-input [(value)]="inputValue"></jigsaw-input>
+    <jigsaw-button (click)="updateAdditionalColumnDefine()">修改第一列表头</jigsaw-button>
+</div>
+<jigsaw-table #table [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
