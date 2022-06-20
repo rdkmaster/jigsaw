@@ -15,7 +15,6 @@ export class TableAlignContentDemoComponent {
         },
         cell: {
             renderer: TableCellCheckboxRenderer,
-            clazz: "align-left"
         }
     }];
 
@@ -23,28 +22,31 @@ export class TableAlignContentDemoComponent {
         {
             target: ['name'],
             header: {
-                clazz: 'align-right'
+                alignment: 'right',
+                clazz:'xxxxxxx'
             },
             cell: {
-                clazz: 'align-right'
+                alignment: 'right'
             },
         },
         {
             target: ['salary'],
             header: {
-                clazz: 'align-center'
+                alignment: 'center'
             },
             cell: {
-                clazz: 'align-center'
+                alignment: 'center'
             },
         },
         {
             target: ['office'],
             header: {
-                clazz: 'no-padding align-left'
+                alignment: 'left',
+                noPadding: true
             },
             cell: {
-                clazz: 'no-padding align-left'
+                alignment: 'left',
+                noPadding: true
             },
         }
     ];
