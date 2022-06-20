@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { TableData, AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer, ColumnDefine } from "jigsaw/public_api";
+import { TableData, AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer, ColumnDefine, TableValueGenerators } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -23,7 +23,7 @@ export class TableAlignContentDemoComponent {
             target: ['name'],
             header: {
                 alignment: 'right',
-                clazz:'xxxxxxx'
+                clazz: 'xxxxxxx'
             },
             cell: {
                 alignment: 'right'
@@ -48,6 +48,12 @@ export class TableAlignContentDemoComponent {
                 alignment: 'left',
                 noPadding: true
             },
+        },
+        {
+            target: ['tooltip'],
+            cell: {
+                tooltip: TableValueGenerators.originCellDataGenerator
+            },
         }
     ];
 
@@ -60,7 +66,8 @@ export class TableAlignContentDemoComponent {
                     "$320,00",
                     "2011/04/25",
                     "Edinburgh",
-                    "542"
+                    "542",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winters1",
@@ -68,7 +75,8 @@ export class TableAlignContentDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon2",
@@ -76,7 +84,8 @@ export class TableAlignContentDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winslters1",
@@ -84,7 +93,8 @@ export class TableAlignContentDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon2",
@@ -92,7 +102,8 @@ export class TableAlignContentDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winters1",
@@ -100,7 +111,8 @@ export class TableAlignContentDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon2",
@@ -108,7 +120,8 @@ export class TableAlignContentDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winters1",
@@ -116,7 +129,8 @@ export class TableAlignContentDemoComponent {
                     "$170,7",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon2",
@@ -124,7 +138,8 @@ export class TableAlignContentDemoComponent {
                     "$320,8000",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Wintsers2",
@@ -132,7 +147,8 @@ export class TableAlignContentDemoComponent {
                     "$170,50",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon3",
@@ -140,31 +156,32 @@ export class TableAlignContentDemoComponent {
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
-                ],
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"],
                 [
                     "Tiger Nixon3",
                     "System Architect",
                     "$3,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
-                ],
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"],
                 [
                     "Tiger Nixon3",
                     "System Architect",
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
-                ],
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"],
                 [
                     "Tiger Nixon1",
                     "System Architect",
                     "$320,80",
                     "2011/04/25",
                     "Edinburgh",
-                    "542111"
+                    "54211",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winters1",
@@ -172,7 +189,7 @@ export class TableAlignContentDemoComponent {
                     "$170,750",
                     "2011/07/25",
                     "Tokyo",
-                    "84212"
+                    "84212", "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tiger Nixon2",
@@ -180,7 +197,8 @@ export class TableAlignContentDemoComponent {
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tigesr Nixon1",
@@ -188,7 +206,8 @@ export class TableAlignContentDemoComponent {
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Garrett Winters1",
@@ -196,7 +215,8 @@ export class TableAlignContentDemoComponent {
                     "$170,750",
                     "2011/07/25",
                     "Tokyo",
-                    "8422"
+                    "8422",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ],
                 [
                     "Tigers Nixon2",
@@ -204,11 +224,12 @@ export class TableAlignContentDemoComponent {
                     "$320,800",
                     "2011/04/25",
                     "Edinburgh",
-                    "5421"
+                    "5421",
+                    "超长文本超长文本超长文本超长文本超长文本超长文本"
                 ]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["name", "position", "salary", "enroll-date", "office", "extn", "tooltip"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他", "超长文本"]);
     }
 
     // ====================================================================
