@@ -105,8 +105,8 @@ import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.componen
 import { TableAutoPageableDemoModule } from "./auto-page-sizing/demo.module"
 import {TableColumnWidthDemoModule} from "./column-width/demo.module";
 import {TableColumnWidthDemoComponent} from "./column-width/demo.component";
-import {TableProgressDemoComponent} from "./progress/demo.component";
-import {TableProgressDemoModule} from "./progress/demo.module";
+import { TableProgressDemoComponent } from "./progress/demo.component";
+import { TableProgressDemoModule } from "./progress/demo.module";
 import { TableExpandDemoComponent } from './expand/demo.component';
 import { TableExpandDemoModule } from './expand/demo.module';
 import { TableAlignContentDemoComponent } from './align-content/demo.component';
