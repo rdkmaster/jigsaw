@@ -98,7 +98,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                         .iconfont {
                             margin-right: 2px;
                         }
-
                     }
                 }
             }
@@ -107,7 +106,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             .#{$jigsaw-table}-line-ellipsis {
                 .#{$jigsaw-table}-cell-content {
                     min-width: 0;
-                    @include line-ellipsis-style();
+                    
+                    .#{$jigsaw-table}-cell-text {
+                        @include line-ellipsis-style();
+                    }
                 }
             }
             tr {
