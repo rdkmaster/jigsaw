@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable } from "jigsaw/public_api";
+import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable, TableHeadCheckboxRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -23,15 +23,32 @@ export class TableUpdateAdditionalColumnDefineDemoComponent {
         this.table.update();
     }
 
-    additionalColumns: AdditionalColumnDefine[] = [{
-        pos: 0,
-        header: {
-            text: '单选框'
+    updateHeaderCheckboxValue(selectAll: boolean) {
+        this.additionalColumns[1].cell.data = (td, row, col) => {
+            return selectAll;
+        };
+        this.tableData.refresh();
+    }
+
+    additionalColumns: AdditionalColumnDefine[] = [
+        {
+            pos: 0,
+            header: {
+                text: '单选框'
+            },
+            cell: {
+                renderer: TableCellCheckboxRenderer
+            }
         },
-        cell: {
-            renderer: TableCellCheckboxRenderer
-        }
-    }];
+        {
+            pos: 0,
+            header: {
+                renderer: TableHeadCheckboxRenderer,
+            },
+            cell: {
+                renderer: TableCellCheckboxRenderer
+            }
+        }];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
