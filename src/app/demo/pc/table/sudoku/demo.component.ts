@@ -23,7 +23,7 @@ export class SudokuGameComponent {
     columnDefineGenerator() {
         return {
             cell: {
-                clazz:'no-padding',
+                noPadding: true,
                 renderer: NumberRenderer
             }
         }
