@@ -441,9 +441,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
-            this._allExpandedRows
-                .filter(rowInfo => rowInfo.remainOpen ? rowInfo.rowIndex >= this._data.data.length : true)
-                .forEach(rowInfo => rowInfo.element.remove());
+            this._clearExpansion();
         })
     }
 
@@ -948,7 +946,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         throw new Error('internal error, should not run here!');
     }
 
-    private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number }[] = [];
+    private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number, currentPage: number }[] = [];
 
     private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string, context: object, remainOpen: boolean, rowIndex: number): void {
         const tr = document.createElement('tr');
@@ -961,13 +959,29 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
         trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
         rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
-        this._allExpandedRows.push({element: tr, rowIndex, remainOpen});
+        const data: IPageable = <any>this.data;
+        const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
+        this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
     }
 
     private _hideExpansion(rowElement: HTMLTableRowElement): void {
         const index = this._allExpandedRows.findIndex(i => i?.element === rowElement.nextSibling);
         this._allExpandedRows.splice(index, 1);
         rowElement.nextSibling.remove();
+    }
+
+    private _clearExpansion() {
+        const data: IPageable = <any>this.data;
+        const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
+
+        this._allExpandedRows = this._allExpandedRows.filter(rowInfo => {
+            if (rowInfo.remainOpen && rowInfo.currentPage === currentPage && rowInfo.rowIndex < this._data.data.length) {
+                return true
+            } else {
+                rowInfo.element.remove();
+                return false;
+            }
+        })
     }
 
     ngAfterViewInit() {
