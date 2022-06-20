@@ -111,6 +111,8 @@ import { TableExpandDemoComponent } from './expand/demo.component';
 import { TableExpandDemoModule } from './expand/demo.module';
 import { TableAlignContentDemoComponent } from './align-content/demo.component';
 import { TableAlignContentDemoModule } from './align-content/demo.module';
+import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
+import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 
 export const routerConfig = [
     {
@@ -279,6 +281,9 @@ export const routerConfig = [
         path: "align-content", component: TableAlignContentDemoComponent
     },
     {
+        path: 'expand-pageable', component: TableExpandPageableDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -298,7 +303,7 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableAlignContentDemoModule
+        TableAlignContentDemoModule, TableExpandPageableDemoModule
     ]
 })
 export class TableDemoModule {

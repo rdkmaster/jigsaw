@@ -227,9 +227,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         if (!this.multiple) {
             this.files.splice(0, this.files.length);
             files.splice(1, files.length);
-        } else {
-            fileInput.value = null;
         }
+        fileInput.value = null;
         this.files.push(...files);
         if (files.length > 0) {
             this.change.emit(this.files);
