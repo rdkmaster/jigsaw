@@ -109,8 +109,8 @@ import {TableProgressDemoComponent} from "./progress/demo.component";
 import {TableProgressDemoModule} from "./progress/demo.module";
 import { TableExpandDemoComponent } from './expand/demo.component';
 import { TableExpandDemoModule } from './expand/demo.module';
-import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additional-column-define/demo.component";
-import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-define/demo.module";
+import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additional-column-defines/demo.component";
+import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-defines/demo.module";
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 
