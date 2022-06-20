@@ -22,6 +22,7 @@ type ActionData = {
 
 type PointsData = {
     point: string,
+    subpoint?: string[],
     link?: { label: string, address: string },
     action?: ActionData
 };
@@ -289,6 +290,10 @@ export class JigsawAnimationKnowledgeDemoComponent extends KnowledgeToolsBase {
             question: `<code>animation: fadeIn 1s linear -.25s</code> <br> 透明度变化是 0.75->1 还是 0.25->1 ?`,
             answer: "0.25 -> 1",
             action: { exampleIndex: 0, classList: ['example-14'] }
+        },
+        {
+            question: `<b>动画片</b>从小看到大，但你有没有想过，动画(Animation)究竟是什么?它与电影(Movie)有什么区别？`,
+            answer: "动画是“画出来的动”，关键不在于“画”的来源，而在于“动”的来源。<br/>如果这种动是记录了现实中发生过的运动，那它就是电影，如果这种动在现实中不曾存在，那它就是动画。"
         },
     ]
 
