@@ -12,6 +12,18 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
         text-decoration: none;
         color: $brand-default;
     }
+
+    &.#{$icon-prefix-cls}-disabled {
+        pointer-events: none;
+        a:link,
+        a:visited,
+        a:hover,
+        a:active,
+        div {
+            text-decoration: none;
+            color: $font-color-disabled;
+        }
+    }
 }
 
 .icon-position-left {
