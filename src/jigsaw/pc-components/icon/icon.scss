@@ -21,7 +21,9 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
         a:active,
         div {
             text-decoration: none;
-            color: $font-color-disabled;
+            i, span {
+                color: $font-color-disabled !important;
+            }
         }
     }
 }
