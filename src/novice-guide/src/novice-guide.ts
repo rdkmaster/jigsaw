@@ -128,7 +128,7 @@ class JigsawGuide {
             return;
         }
 
-        const [opt, [tagName, id, classes]] = this._checkOptimizable(notice);
+        const [opt, tagName, id, classes] = this._checkOptimizable(notice);
         const mutationObserver = new MutationObserver(entries => {
             if (opt) {
                 const queryResult = document.body.querySelectorAll(selector);
@@ -167,22 +167,10 @@ class JigsawGuide {
                     return false
                 }
 
-                let classesChecker = true;
                 if (classes) {
-                    const classArr = classes.split(".");
-                    classArr.shift();
-                    classArr.forEach(item => {
-                        const target: any = element;
-                        if (!target.classList.contains(item)) {
-                            classesChecker = false;
-                        }
-                    })
-                    
-                    // return !!classArr.find(item => !element.classList.contains(item))
+                    const target: any = element;
+                    return classes.find(item => !target.classList.contains(item)) === undefined ? true : false;
                 }
-                // console.log(classes)
-
-                return classesChecker;
             })
 
             if (filterResult.length !== 1) {
@@ -194,9 +182,8 @@ class JigsawGuide {
 
             this.resize();
         })
-        mutationObserver.observe(document.body, { childList: true, subtree: true, attributes: true })
+        mutationObserver.observe(document.body, { childList: true, subtree: true })
         this._showing.mutations.push(mutationObserver)
-        console.log(this._showing.mutations)
     }
 
     private _createNoviceGuide(type: NoviceGuideType, notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], index: number, notices: NoviceGuideNotice[]) {
@@ -205,23 +192,23 @@ class JigsawGuide {
                 console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.singular} novice guide`)
                 return;
             }
-            this._createSingularNoviceGuide(notice, targetEle, guideKeys[index]);
+            this._createSingular(notice, targetEle, guideKeys[index]);
         } else if (type === NoviceGuideType.multiple) {
             if (notice.type !== NoviceGuideNoticeType.dialog) {
                 console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.multiple} novice guide`)
                 return;
             }
-            this._createMultipleNoviceGuide(notice, targetEle, guideKeys, index, notices);
+            this._createMultiple(notice, targetEle, guideKeys, index, notices);
         } else if (type === NoviceGuideType.wizard) {
             if (notice.type !== NoviceGuideNoticeType.wizard) {
                 console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.wizard} novice guide`)
                 return;
             }
-            this._createWizardStepNoviceGuide(notice, targetEle, guideKeys, index, notices)
+            this._createWizardStep(notice, targetEle, guideKeys, index, notices)
         }
     }
 
-    private _createSingularNoviceGuide(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string) {
+    private _createSingular(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKey: string) {
         if (this._showing.guideKeys.indexOf(guideKey) !== -1) {
             return;
         }
@@ -264,19 +251,19 @@ class JigsawGuide {
         this._showing.cloneEles.push(cloneEle)
         this._showing.guideKeys.push(guideKey)
 
-        cloneEle.onclick = function (e) {
+        cloneEle.onclick = (e) => {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
-            jigsawGuide._saveShownKeys(guideKey);
-            jigsawGuide._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
+            this._saveShownKeys(guideKey);
+            this._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
         }
 
         this._getGuideContainer(hasMask).appendChild(cloneEle);
         this.resize();
     }
 
-    private _createMultipleNoviceGuide(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
+    private _createMultiple(notice: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
         if (this._showing.guideKeys.indexOf(guideKeys[current]) !== -1) {
             return;
         }
@@ -291,6 +278,7 @@ class JigsawGuide {
             buttonHtml = `<div class="pre button">上一步</div><div class="next button">下一步</div>`
         }
 
+        const cloneEle = this._createCloneEle(targetEle, guideKeys, current)
         const html = `
             <div class="${notice.type} ${notice.type}-${notice.position}">
                 <div class="notice-cntr">
@@ -305,15 +293,7 @@ class JigsawGuide {
 
                 </div>
             </div>`;
-
-        let cloneEle = document.createElement('div');
-        cloneEle.classList.add('novice-guide-clone');
         cloneEle.innerHTML = html;
-        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
-
-        this._showing.guideEles.push(targetEle)
-        this._showing.cloneEles.push(cloneEle)
-        this._showing.guideKeys.push(guideKeys[current])
 
         cloneEle.onclick = (e) => {
             // 处理提示里的叉叉按钮，鼠标点击了它后，鼠标事件冒泡到最外头被这个函数抓住
@@ -322,104 +302,15 @@ class JigsawGuide {
                     this._saveShownKeys(guideKeys.join());
                 }
 
-                jigsawGuide._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
+                this._closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
             }
 
             if ((e.target as HTMLElement).classList.contains('next')) {
-                const g = notices[current + 1];
-                const selector = jigsawGuide._getSelector(g);
-
-                const queryResult = document.body.querySelectorAll(selector);
-                if (queryResult.length > 0) {
-                    const result = Array.from(queryResult).filter(node => {
-                        const property1Checker = node[g.property1?.property] === g.property1?.value;
-                        const property2Checker = node[g.property2?.property] === g.property2?.value;
-                        return property1Checker && property2Checker;
-                    })
-
-                    if (result.length === 1) {
-                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, guideKeys, current + 1, notices);
-
-                        const index = cloneEle.getAttribute('guideIndex');
-                        jigsawGuide._showing.cloneEles[index] = undefined;
-                        jigsawGuide._showing.guideKeys[index] = '';
-                        cloneEle.remove();
-
-                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => !!clone);
-                        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-                        const mask = document.getElementById('novice-guide-mask');
-
-                        if (dialogClone.length === 0 && mask) {
-                            mask.remove();
-                        }
-
-                        if (mask) {
-                            mask.innerHTML = '';
-                        }
-
-                        if (leftGuideCloneArr.length === 0) {
-                            jigsawGuide._removeGuideContainer();
-                            jigsawGuide._showing.guideEles = [];
-                            jigsawGuide._showing.cloneEles = [];
-                        }
-
-                        jigsawGuide.resize();
-                        return;
-                    }
-
-                    console.warn('Find more than 1 target element.');
-                    return;
-                }
+                this._clickDialogButton('next', guideKeys, current, notices, cloneEle)
             }
 
             if ((e.target as HTMLElement).classList.contains('pre')) {
-                const g = notices[current - 1];
-                const selector = jigsawGuide._getSelector(g);
-
-                const queryResult = document.body.querySelectorAll(selector);
-                if (queryResult.length > 0) {
-                    const result = Array.from(queryResult).filter(node => {
-                        const property1Checker = node[g.property1?.property] === g.property1?.value;
-                        const property2Checker = node[g.property2?.property] === g.property2?.value;
-                        return property1Checker && property2Checker;
-                    })
-
-                    if (result.length === 1) {
-                        jigsawGuide._createMultipleNoviceGuide(g, result[0] as HTMLElement, guideKeys, current - 1, notices);
-
-                        const index = cloneEle.getAttribute('guideIndex');
-                        jigsawGuide._showing.cloneEles[index] = undefined;
-                        jigsawGuide._showing.guideKeys[index] = '';
-                        cloneEle.remove();
-                        const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
-                        shownKeys.push(guideKeys[current]);
-                        localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
-
-                        const leftGuideCloneArr = jigsawGuide._showing.cloneEles.filter(clone => !!clone);
-                        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-                        const mask = document.getElementById('novice-guide-mask');
-
-                        if (dialogClone.length === 0 && mask) {
-                            mask.remove();
-                        }
-
-                        if (mask) {
-                            mask.innerHTML = '';
-                        }
-
-                        if (leftGuideCloneArr.length === 0) {
-                            jigsawGuide._removeGuideContainer();
-                            jigsawGuide._showing.guideEles = [];
-                            jigsawGuide._showing.cloneEles = [];
-                        }
-
-                        jigsawGuide.resize();
-                        return;
-                    }
-
-                    console.warn('Find more than 1 target element.');
-                    return;
-                }
+                this._clickDialogButton('pre', guideKeys, current, notices, cloneEle)
             }
         }
 
@@ -427,11 +318,12 @@ class JigsawGuide {
         this.resize();
     }
 
-    private _createWizardStepNoviceGuide(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
+    private _createWizardStep(guide: NoviceGuideNotice, targetEle: HTMLElement, guideKeys: string[], current: number, notices: NoviceGuideNotice[]) {
         if (this._showing.guideKeys.indexOf(guideKeys[current]) !== -1) {
             return;
         }
 
+        const cloneEle = this._createCloneEle(targetEle, guideKeys, current);
         const html = `
             <div class="${guide.type} ${guide.type}-${guide.position}">
                 <div class="arrow-cntr">
@@ -443,31 +335,23 @@ class JigsawGuide {
                 </div>
             </div>
         `;
-
-        let cloneEle = document.createElement('div');
-        cloneEle.classList.add('novice-guide-clone');
         cloneEle.innerHTML = html;
-        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
-
-        this._showing.guideEles.push(targetEle)
-        this._showing.cloneEles.push(cloneEle)
-        this._showing.guideKeys.push(guideKeys[current])
 
         if (current > 0) {
             this._showing.cloneEles[current - 1].remove();
             this._showing.cloneEles[current - 1] = undefined;
         }
 
-        cloneEle.onclick = function (e) {
+        cloneEle.onclick = (e) => {
             if (!(e.target as HTMLElement).classList.contains('close')) {
                 return;
             }
 
             if (current === notices.length - 1) {
-                jigsawGuide._saveShownKeys(guideKeys.join());
+                this._saveShownKeys(guideKeys.join());
             }
 
-            jigsawGuide._closeNoviceGuideNotice(cloneEle, false);
+            this._closeNoviceGuideNotice(cloneEle, false);
         }
 
         targetEle.addEventListener('click', function handleClick() {
@@ -498,7 +382,7 @@ class JigsawGuide {
                 keys[idx] = null;
             });
         } else if (guide.type === 'multiple' || guide.type === 'wizard') {
-            const joinKey = [keys.join()];
+            const joinKey = keys.join();
             if (shownKeys.indexOf(joinKey) !== -1) {
                 return [[], []];
             }
@@ -595,23 +479,30 @@ class JigsawGuide {
         return svg;
     }
 
-    private _checkOptimizable(notice: NoviceGuideNotice): [boolean, string[]] {
+    private _createCloneEle(targetEle: HTMLElement, guideKeys: string[], current: number): HTMLDivElement {
+        const cloneEle = document.createElement('div');
+        cloneEle.classList.add('novice-guide-clone');
+        cloneEle.setAttribute('guideIndex', this._showing.cloneEles.length + '')
+
+        this._showing.guideEles.push(targetEle)
+        this._showing.cloneEles.push(cloneEle)
+        this._showing.guideKeys.push(guideKeys[current])
+        return cloneEle;
+    }
+
+    private _checkOptimizable(notice: NoviceGuideNotice): [boolean, string, string, string[]] {
         const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
         const id = notice.id ? '#' + notice.id : '';
-        const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
+        const classes = notice.classes?.split(/\s+/);
+        const opt = (id || notice.classes) && !notice.property1 && !notice.property2;
 
-
-        const selector = `${tagName}${id}${classes}`;
-        const opt = selector !== tagName && !notice.property1 && !notice.property2;
-
-        return [opt, [tagName, id, classes]]
+        return [opt, tagName, id, classes]
     }
 
     private _getSelector(notice: NoviceGuideNotice): string {
         const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
         const id = notice.id ? '#' + notice.id : '';
         const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
-        console.log(classes)
 
         return `${tagName}${id}${classes}`;
     }
@@ -629,9 +520,9 @@ class JigsawGuide {
     }
 
     private _saveShownKeys(guideKey: string) {
-        const shownKeys = JSON.parse(localStorage.getItem(jigsawGuide._localStorageItem) || '[]');
+        const shownKeys = JSON.parse(localStorage.getItem(this._localStorageItem) || '[]');
         shownKeys.push(guideKey);
-        localStorage.setItem(jigsawGuide._localStorageItem, JSON.stringify(shownKeys))
+        localStorage.setItem(this._localStorageItem, JSON.stringify(shownKeys))
     }
 
     private _debounce(fn: Function, delay: number): () => void {
@@ -644,18 +535,66 @@ class JigsawGuide {
         }
     }
 
+    private _clickDialogButton(type: 'pre' | 'next', guideKeys: string[], current: number, notices: NoviceGuideNotice[], cloneEle: HTMLDivElement) {
+        const fix = type === 'pre' ? -1 : 1;
+        const g = notices[current + fix];
+        const selector = this._getSelector(g);
+
+        const queryResult = document.body.querySelectorAll(selector);
+        if (queryResult.length > 0) {
+            const result = Array.from(queryResult).filter(node => {
+                const property1Checker = node[g.property1?.property] === g.property1?.value;
+                const property2Checker = node[g.property2?.property] === g.property2?.value;
+                return property1Checker && property2Checker;
+            })
+
+            if (result.length === 1) {
+                this._createMultiple(g, result[0] as HTMLElement, guideKeys, current + fix, notices);
+
+                const index = cloneEle.getAttribute('guideIndex');
+                this._showing.cloneEles[index] = undefined;
+                this._showing.guideKeys[index] = '';
+                cloneEle.remove();
+
+                const leftGuideCloneArr = this._showing.cloneEles.filter(clone => !!clone);
+                const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+                const mask = document.getElementById('novice-guide-mask');
+
+                if (dialogClone.length === 0 && mask) {
+                    mask.remove();
+                }
+
+                if (mask) {
+                    mask.innerHTML = '';
+                }
+
+                if (leftGuideCloneArr.length === 0) {
+                    this._removeGuideContainer();
+                    this._showing.guideEles = [];
+                    this._showing.cloneEles = [];
+                }
+
+                this.resize();
+                return;
+            }
+
+            console.warn('Find more than 1 target element.');
+            return;
+        }
+    }
+
     public resize(): void {
         const mask = document.getElementById('novice-guide-mask');
         if (mask) {
             mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
         }
 
-        jigsawGuide._showing.cloneEles.forEach((clone, i) => {
+        this._showing.cloneEles.forEach((clone, i) => {
             if (!clone) {
                 return;
             }
 
-            jigsawGuide._relocateClone(jigsawGuide._showing.guideEles[i], clone, mask)
+            this._relocateClone(this._showing.guideEles[i], clone, mask)
         });
     }
 
@@ -683,7 +622,6 @@ class JigsawGuide {
 
     public clear(): void {
         this._clearWithoutMutations();
-        console.log(this._showing.mutations)
         this._showing.mutations.filter(m => !!m).forEach(mutation => mutation.disconnect());
     }
 
@@ -701,12 +639,12 @@ class JigsawGuide {
 
     private _closeNoviceGuideNotice(cloneEle: HTMLDivElement, checkMask: boolean) {
         const index = cloneEle.getAttribute('guideIndex');
-        jigsawGuide._showing.cloneEles[index] = undefined;
-        jigsawGuide._showing.guideKeys[index] = '';
+        this._showing.cloneEles[index] = undefined;
+        this._showing.guideKeys[index] = '';
         cloneEle.remove();
 
         if (!this._showing.cloneEles.find(clone => !!clone)) {
-            jigsawGuide._clearWithoutMutations();
+            this._clearWithoutMutations();
             return;
         }
 
@@ -723,7 +661,7 @@ class JigsawGuide {
             }
         }
 
-        jigsawGuide.resize();
+        this.resize();
     }
 }
 export const jigsawGuide = new JigsawGuide();

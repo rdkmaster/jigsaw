@@ -271,10 +271,11 @@
 
 .novice-guide-clone .wizard .close {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
     color: #fff;
-    font-size: 24px;
+    font-size: 12px;
     cursor: pointer;
 }
 

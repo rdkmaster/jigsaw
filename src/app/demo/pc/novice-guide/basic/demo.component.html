@@ -4,9 +4,6 @@
 
 <div class="demo-cntr">
     <div id="setting">
-        <!-- <a (click)="getPos()">获取菜单节点位置</a>
-        <a (click)="changeSize()">改变菜单宽度</a>
-        <a (click)="deleteEle()">删除菜单节点</a> -->
         <a (click)="clear()">清理所有指引</a>
         <a (click)="bubbleGuide()">气泡指引</a>
         <a (click)="dialogGuide()">对话框指引</a>
@@ -33,7 +30,6 @@
     </div>
     <div class="main">
         <div class="content">
-            <!-- <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar> -->
             <jigsaw-header>单选框</jigsaw-header>
             <jigsaw-select [data]="cityList" placeholder="请选择城市">
             </jigsaw-select>
@@ -65,7 +61,7 @@
             <div jigsaw-button-bar>
                 <jigsaw-button colorType="primary" (click)="dialogInfo?.dispose()">OK</jigsaw-button>
                 <jigsaw-button (click)="dialogInfo?.dispose()">Cancel</jigsaw-button>
-                <a class="button-bar-link" (click)="showInfo()">需要帮助？</a>
+                <a class="button-bar-link">需要帮助？</a>
             </div>
         </jigsaw-dialog>
     </ng-template>

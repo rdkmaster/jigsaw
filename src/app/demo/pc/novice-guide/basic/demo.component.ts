@@ -1,5 +1,5 @@
-import {Component, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
-import {ArrayCollection, PopupInfo, PopupService, SimpleTreeData, TableData} from 'jigsaw/public_api';
+import { Component, OnInit, TemplateRef, ViewEncapsulation } from "@angular/core";
+import { ArrayCollection, PopupInfo, PopupService, SimpleTreeData, TableData } from 'jigsaw/public_api';
 import {
     jigsawGuide,
     MultipleNoviceGuide,
@@ -122,9 +122,6 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     popupDialog(ele: TemplateRef<any>) {
         this.dialogInfo = this.popupService.popup(ele);
-    }
-
-    showInfo() {
     }
 
     buttonbar = new ArrayCollection([
