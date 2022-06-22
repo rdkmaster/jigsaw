@@ -14,7 +14,6 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
     }
 
     &.#{$icon-prefix-cls}-disabled {
-        cursor: not-allowed;
         pointer-events: none;
         a:link,
         a:visited,

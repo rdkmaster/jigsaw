@@ -4,19 +4,19 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-header>可以通过设置disabled属性让按钮是否禁用</jigsaw-header>
-<span>是否禁用</span><jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+<jigsaw-header class="header">可以通过设置disabled属性让按钮是否禁用</jigsaw-header>
+<span>是否禁用</span><jigsaw-switch class="switch" [(checked)]="disabled"></jigsaw-switch>
 
-<jigsaw-header>设置disabled可以让图标变灰</jigsaw-header>
+<jigsaw-header class="header">设置disabled可以让图标变灰</jigsaw-header>
 <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="40" title="编辑" [disabled]='disabled'
     [href]="'https://rdk.zte.com.cn/home'" [target]="'_blank'">
 </jigsaw-icon>
 
-<jigsaw-header>设置disabled可以阻止绑定事件</jigsaw-header>
+<jigsaw-header class="header">设置disabled可以阻止绑定事件</jigsaw-header>
 <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'" [disabled]='disabled'
     title="编辑" (click)="onClick()">
 </jigsaw-icon>
 
-<jigsaw-header>设置disabled可以覆盖iconColor和textColor设置的颜色</jigsaw-header>
+<jigsaw-header class="header">设置disabled可以覆盖iconColor和textColor设置的颜色</jigsaw-header>
 <jigsaw-icon [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" [text]="'编辑'" title="编辑" [disabled]='disabled'
 iconColor='red' textColor='pink'>
