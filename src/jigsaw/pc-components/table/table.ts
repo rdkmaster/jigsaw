@@ -15,19 +15,16 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren,
-    ComponentFactoryResolver,
-    ApplicationRef,
-    ViewContainerRef
+    ViewChildren
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { Subscription } from "rxjs";
-import { TranslateModule, TranslateService } from "@ngx-translate/core";
-import { PerfectScrollbarDirective, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
-import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
-import { JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent } from "./table-inner.components";
-import { TableData, TableDataMatrix } from "../../common/core/data/table-data";
-import { AffixUtils, InternalUtils } from "../../common/core/utils/internal-utils";
+import {CommonModule} from "@angular/common";
+import {Subscription} from "rxjs";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
+import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
+import {TableData} from "../../common/core/data/table-data";
+import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -39,12 +36,12 @@ import {
     TableDataChangeEvent,
     TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
-import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
-import { IPageable, PagingInfo, SortOrder } from "../../common/core/data/component-data";
-import { JigsawTrustedHtmlModule, TrustedHtmlHelper } from "../../common/directive/trusted-html/trusted-html";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer, TableCellSwitchRenderer } from "./table-renderer";
-import { TableUtils } from "./table-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
+import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
+import {TableUtils} from "./table-utils";
 
 @WingsTheme('table.scss')
 @Component({
@@ -62,11 +59,9 @@ import { TableUtils } from "./table-utils";
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-        protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
-        // @RequireMarkForCheck 需要用到，勿删
-        private _injector: Injector,
-        private _componentFactoryResolver: ComponentFactoryResolver,
-        private _applicationRef: ApplicationRef) {
+                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -329,7 +324,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$blankRow: string[] = [];
+    public _$blankRow:string[] = [];
 
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
@@ -402,7 +397,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
                 cd.target = field;
             }
-            columnDefines.push(cd ? cd : { target: field });
+            columnDefines.push(cd ? cd : {target: field});
         });
 
         if (this._additionalColumnDefines) {
@@ -429,6 +424,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         const columnDefines = this._getMixedColumnDefines();
+        this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
@@ -569,7 +565,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.doubleClick.emit(rowIndex);
     }
 
-    @ViewChildren('tableRow', { read: ElementRef })
+    @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
     /**
@@ -714,10 +710,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
+    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
+    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -906,22 +902,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
     }
 
-    @ViewChildren('expandRowHost', { read: ViewContainerRef })
-    protected expandRowsHost: QueryList<ViewContainerRef>
     /**
      * 展开行
      */
-    public expand(rowIndex: number, rawHtml: string | TableDataMatrix, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
-        // const expandRowHost = this.expandRowsHost.toArray()[rowIndex];
-        // expandRowHost.clear();
-
-        // let rowComponentFactory: ComponentFactory<any>;
-        // rowComponentFactory = this.componentFactoryResolver.resolveComponentFactory(JigsawTableExpandRowComponent);
-        // const sourceComponentRef: ComponentRef<any> = expandRowHost.createComponent(rowComponentFactory);
-
-        // const sourceComponent = sourceComponentRef.instance;
-        // sourceComponent._$cellSettings = this._$cellSettings;
-
+    public expand(rowIndex: number, rawHtml: string, rawHtmlContext?: object, options?: TableRowExpandOptions): void {
         const rowElement = this._rowElementRefs.toArray()[rowIndex]?.nativeElement;
         if (!rowElement) {
             return;
@@ -942,10 +926,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 已经打开了，但此时人家要求再打开，需要更新一下内容
             const rowInfo = this._allExpandedRows.find(i => i?.element === rowElement.nextSibling);
             rowInfo.remainOpen = options?.remainOpenAfterDataChanges;
-            if (typeof rawHtml === 'string') {
-                rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
-                    CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
-            }
+            rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
+                CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
             return;
         }
         if (!expanded && action == 'show') {
@@ -966,30 +948,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _allExpandedRows: { element: HTMLTableRowElement, remainOpen: boolean, rowIndex: number, currentPage: number }[] = [];
 
-    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string | TableDataMatrix, context: object, remainOpen: boolean, rowIndex: number): void {
-        if (typeof rawHtml === 'string') {
-            const tr = document.createElement('tr');
-            tr.classList.add('jigsaw-table-row-expansion');
+    private _showExpansion(rowElement: HTMLTableRowElement, rawHtml: string, context: object, remainOpen: boolean, rowIndex: number): void {
+        const tr = document.createElement('tr');
+        const trustedEle = document.createElement('td');
+        const headerEle = this._headerComponents.toArray();
+        trustedEle.colSpan = headerEle.length;
+        tr.classList.add('jigsaw-table-row-expansion');
+        tr.insertBefore(trustedEle, tr.lastElementChild);
 
-            const headerEle = this._headerComponents.toArray();
-            const trustedEle = document.createElement('td');
-            trustedEle.colSpan = headerEle.length;
-            const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
-            trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
-            tr.insertBefore(trustedEle, tr.lastElementChild);
-            rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
-            const data: IPageable = <any>this.data;
-            const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
-            this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
-        }
-
-        if (rawHtml instanceof Array) {
-            console.log(111)
-            rawHtml.forEach(trItem => {
-                const tr = document.createElement('tr');
-                tr.classList.add('jigsaw-table-row-expansion');
-            })
-        }
+        const trustedHtml = CommonUtils.isUndefined(rawHtml) ? "" : rawHtml;
+        trustedEle.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+        rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
+        const data: IPageable = <any>this.data;
+        const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
+        this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
     }
 
     private _hideExpansion(rowElement: HTMLTableRowElement): void {
