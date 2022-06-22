@@ -44,7 +44,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background: cyan; */
 }
 
 .novice-guide-clone .bubble .line>div {
@@ -253,7 +252,6 @@
 .novice-guide-clone .wizard {
     position: absolute;
     width: 300px;
-    /* background: cyan; */
 }
 
 .novice-guide-clone .wizard .arrow-cntr {

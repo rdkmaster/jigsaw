@@ -12,7 +12,7 @@ import {
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css", "../../../../../novice-guide/src/novice-guide.css"],
+    styleUrls: ["./demo.component.css"],
     encapsulation: ViewEncapsulation.None
 })
 export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
