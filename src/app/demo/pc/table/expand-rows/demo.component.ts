@@ -19,9 +19,9 @@ export class TableExpandTableDemoComponent {
 
     rowClick(rowIndex: number) {
         const rowData = [["cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6"], ["cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6"]]
-        // this.tableCmp.expand(rowIndex, rowData, this, {
-        //     remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
-        // });
+        this.tableCmp.expand(rowIndex, rowData, this, {
+            remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
+        });
     };
 
     updateData() {
