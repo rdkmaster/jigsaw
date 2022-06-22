@@ -109,6 +109,8 @@ import {TableProgressDemoComponent} from "./progress/demo.component";
 import {TableProgressDemoModule} from "./progress/demo.module";
 import { TableExpandDemoComponent } from './expand/demo.component';
 import { TableExpandDemoModule } from './expand/demo.module';
+import { TableExpandTableDemoComponent } from './expand-table/demo.component';
+import { TableExpandTableDemoModule } from './expand-table/demo.module';
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 
@@ -276,6 +278,9 @@ export const routerConfig = [
         path: 'expand', component: TableExpandDemoComponent
     },
     {
+        path: 'expand-table', component: TableExpandTableDemoComponent
+    },
+    {
         path: 'expand-pageable', component: TableExpandPageableDemoComponent
     },
     {
@@ -298,7 +303,7 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableExpandPageableDemoModule
+        TableExpandPageableDemoModule, TableExpandTableDemoModule
     ]
 })
 export class TableDemoModule {

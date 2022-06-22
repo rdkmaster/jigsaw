@@ -5,7 +5,7 @@ import { TableData, ColumnDefine, JigsawTable, TableCellSwitchRenderer } from "j
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class TableExpandDemoComponent {
+export class TableExpandTableDemoComponent {
     action = ['toggle'];
     tableData: TableData;
     remainOpen: boolean = false;
