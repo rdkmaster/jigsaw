@@ -23,7 +23,7 @@ export class TableUpdateAdditionalColumnDefineDemoComponent {
         this.table.update();
     }
 
-    updateHeaderCheckboxValue(selectAll: boolean) {
+    updateHeaderCheckboxValue(selectAll: number) {
         this.table.additionalData.data.forEach((row, index) => {
             row[1] = selectAll;
             if (this.table.additionalData instanceof AdditionalTableData) {
