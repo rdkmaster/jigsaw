@@ -1,6 +1,6 @@
 import { Component, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable, TableHeadCheckboxRenderer } from "jigsaw/public_api";
+import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable, TableHeadCheckboxRenderer, AdditionalTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -24,10 +24,13 @@ export class TableUpdateAdditionalColumnDefineDemoComponent {
     }
 
     updateHeaderCheckboxValue(selectAll: boolean) {
-        this.additionalColumns[1].cell.data = (td, row, col) => {
-            return selectAll;
-        };
-        this.tableData.refresh();
+        this.table.additionalData.data.forEach((row, index) => {
+            row[1] = selectAll;
+            if (this.table.additionalData instanceof AdditionalTableData) {
+                this.table.additionalData.touchValueByRow("additional-field-1", index, selectAll);
+            }
+        });
+        this.table.additionalData.refresh();
     }
 
     additionalColumns: AdditionalColumnDefine[] = [

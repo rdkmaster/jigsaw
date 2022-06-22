@@ -13,8 +13,8 @@
     </div>
     <div>
         <span>第二列：</span>
-        <jigsaw-button (click)="updateHeaderCheckboxValue(true)">全选</jigsaw-button>
-        <jigsaw-button (click)="updateHeaderCheckboxValue(false)">取消全选</jigsaw-button>
+        <jigsaw-button (click)="updateHeaderCheckboxValue(1)">全选</jigsaw-button>
+        <jigsaw-button (click)="updateHeaderCheckboxValue(0)">取消全选</jigsaw-button>
     </div>
 </div>
 <jigsaw-table #table [data]="tableData" [additionalColumnDefines]="additionalColumns"></jigsaw-table>
