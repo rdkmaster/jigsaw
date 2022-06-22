@@ -1020,13 +1020,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
-<<<<<<< HEAD
-        this._allExpandedRows.push({ element: tr, rowIndex, remainOpen });
-=======
         const data: IPageable = <any>this.data;
         const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
         this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
->>>>>>> master
     }
 
     private _hideExpansion(rowElement: HTMLTableRowElement): void {
