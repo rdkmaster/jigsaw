@@ -62,13 +62,13 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
         }
     }
 
-    .#{$jigsaw-button}-icon-left {
+    &.#{$jigsaw-button}-icon-left {
         .#{$jigsaw-button}-content .iconfont {
             margin-right: 4px;
         }
     }
 
-    .#{$jigsaw-button}-icon-right {
+    &.#{$jigsaw-button}-icon-right {
         .#{$jigsaw-button}-content {
             flex-direction: row-reverse;
 
