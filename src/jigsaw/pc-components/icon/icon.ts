@@ -32,7 +32,8 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
-        '[class.jigsaw-icon-host]': 'true'
+        '[class.jigsaw-icon-host]': 'true',
+        '[class.jigsaw-icon-disabled]': 'disabled',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -65,6 +66,14 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
      */
     @Input()
     public isLinkButton: boolean = false;
+
+   /**
+     * 设置icon不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 图标类型 iconfont iconfont-xxx
