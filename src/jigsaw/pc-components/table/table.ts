@@ -930,9 +930,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 已经打开了，但此时人家要求再打开，需要更新一下内容
             const rowInfo = this._allExpandedRows.find(i => i?.element === rowElement.nextSibling);
             rowInfo.remainOpen = options?.remainOpenAfterDataChanges;
-            // rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
-            //     CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
-            return;
+            if (typeof rawHtml === 'string') {
+                rowInfo.element.children[0].innerHTML = TrustedHtmlHelper.updateHtml(
+                    CommonUtils.isUndefined(rawHtml) ? "" : rawHtml, rawHtmlContext, []);
+                    return;
+            }
         }
         if (!expanded && action == 'show') {
             // 该行还没打开，人家要求打开
