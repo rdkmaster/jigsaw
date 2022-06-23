@@ -278,7 +278,7 @@ export const routerConfig = [
         path: 'expand', component: TableExpandDemoComponent
     },
     {
-        path: 'expand-table', component: TableExpandTableDemoComponent
+        path: 'expand-rows', component: TableExpandTableDemoComponent
     },
     {
         path: 'expand-pageable', component: TableExpandPageableDemoComponent

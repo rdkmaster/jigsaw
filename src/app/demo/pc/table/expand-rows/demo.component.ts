@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { TableData, JigsawTable, TableCellSwitchRenderer } from "jigsaw/public_api";
+import { TableData, JigsawTable, TableCellSwitchRenderer, TableCellCheckboxRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -13,13 +13,37 @@ export class TableExpandTableDemoComponent {
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
 
+    row: number;
+
     constructor() {
         this.resetData();
     }
 
+    rowData = [
+        ["cell-1", { data: false, renderer: TableCellSwitchRenderer }, {
+            data: `<a onclick="onClick()">点击</a>`,
+            renderer: 'html'
+        }, "cell-4", "cell-5", "cell-6", { data: true, renderer: TableCellCheckboxRenderer }],
+        ["cell-1", { data: true, renderer: TableCellSwitchRenderer }, {
+            data: `<i class="iconfont iconfont-e8e3"></i>`,
+            renderer: 'html'
+        }, "cell-4", "cell-5", "cell-6", { data: false, renderer: TableCellCheckboxRenderer }],
+        ["cell-1", { data: false, renderer: TableCellSwitchRenderer, rendererInitData: { valid: false } }, {
+            data: `<i class="iconfont iconfont-ea50"></i> 图标`,
+            renderer: 'html'
+        }, "cell-4", "cell-5", "cell-6", { data: false, renderer: TableCellCheckboxRenderer, rendererInitData: { valid: false } }],
+        ["cell-1", { data: true, renderer: TableCellSwitchRenderer, rendererInitData: { disabled: true } }, , {
+            data: `<span>文本</span><i class="iconfont iconfont-e9b6"></i>`,
+            renderer: 'html'
+        }, "cell-4", "cell-5", "cell-6", { data: true, renderer: TableCellCheckboxRenderer, rendererInitData: { disabled: true } }]
+    ]
+
+    onClick() {
+        alert("按钮被点击了");
+    }
+
     rowClick(rowIndex: number) {
-        const rowData = [["cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6"], ["cell-1", "cell-2", "cell-3", "cell-4", "cell-5", "cell-6"]]
-        this.tableCmp.expand(rowIndex, rowData, this, {
+        this.tableCmp.expand(rowIndex, this.rowData, this, {
             remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
         });
     };
@@ -27,14 +51,14 @@ export class TableExpandTableDemoComponent {
     updateData() {
         this.tableData.fromObject({
             data: [
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "不可以", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "可以", "$17636", "2017/4/24", "Marketing I", 36],
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 65],
-                ["Shirley", "可以", "$11845", "2017/4/25", "R&D Dept II", 71],
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 23, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 42, ""],
+                ["Easton", "", "$17636", "2017/4/24", "Marketing I", 36, ""],
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 65, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 71, ""],
             ],
-            field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
-            header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
+            field: ["name", "switch", "salary", "enroll-date", "office", "progress", "checkbox"],
+            header: ["姓名", "开关组件", "薪资", "入职日期", "部门", "工作进度", "多选框"]
         })
     }
 
@@ -42,29 +66,36 @@ export class TableExpandTableDemoComponent {
         this.tableData = new TableData();
         this.tableData.fromObject({
             data: [
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 23],
-                ["Shirley", "不可以", "$11845", "2017/4/25", "R&D Dept II", 42],
-                ["Easton", "可以", "$17636", "2017/4/24", "Marketing I", 36],
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 65],
-                ["Shirley", "可以", "$11845", "2017/4/25", "R&D Dept II", 71],
-                ["Easton", "不可以", "$17636", "2017/4/24", "Marketing I", 56],
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 17],
-                ["Shirley", "不可以", "$11845", "2017/4/25", "R&D Dept II", 38],
-                ["Easton", "可以", "$17636", "2017/4/24", "Marketing I", 9],
-                ["Emily", "可以", "$15128", "2017/4/21", "HR II", 100],
-                ["Shirley", "不可以", "$11845", "2017/4/25", "R&D Dept II", 11],
-                ["Easton", "可以", "$17636", "2017/4/24", "Marketing I", 82]
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 23, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 42, ""],
+                ["Easton", "", "$17636", "2017/4/24", "Marketing I", 36, ""],
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 65, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 71, ""],
+                ["Easton", "", "$17636", "2017/4/24", "Marketing I", 56, ""],
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 17, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 38, ""],
+                ["Easton", "", "$17636", "2017/4/24", "Marketing I", 9, ""],
+                ["Emily", "", "$15128", "2017/4/21", "HR II", 100, ""],
+                ["Shirley", "", "$11845", "2017/4/25", "R&D Dept II", 11, ""],
+                ["Easton", "", "$17636", "2017/4/24", "Marketing I", 82, ""]
             ],
-            field: ["name", "expandable", "salary", "enroll-date", "office", "progress"],
-            header: ["姓名", "是否可以展开", "薪资", "入职日期", "部门", "工作进度"]
+            field: ["name", "switch", "salary", "enroll-date", "office", "progress", "checkbox"],
+            header: ["姓名", "开关组件", "薪资", "入职日期", "部门", "工作进度", "多选框"]
         })
     }
 
     expandRow(rowIndex: number) {
-        // this.tableCmp.expand(rowIndex, this.getExpansionHtml(2), this, {
-        //     remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
-        // });
+        this.tableCmp.expand(rowIndex, this.rowData, this, {
+            remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
+        });
     }
+
+    rowExpandDataChange($event) {
+        this.row = $event.row;
+    }
+
+
+
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

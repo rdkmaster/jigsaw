@@ -16,7 +16,8 @@
     QueryList,
     Renderer2,
     ViewChild,
-    ViewChildren
+    ViewChildren,
+    ApplicationRef
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
@@ -59,11 +60,10 @@ import {TableUtils} from "./table-utils";
 })
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
-                private _componentFactoryResolver:ComponentFactoryResolver,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+        private _componentFactoryResolver: ComponentFactoryResolver, private _applicationRef: ApplicationRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -153,6 +153,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public selectedRowChange: EventEmitter<number> = new EventEmitter<number>();
     @Output()
     public rowExpand: EventEmitter<number> = new EventEmitter<number>();
+    @Output()
+    public rowExpandDataChange = new EventEmitter<{ row: number, data: TableDataMatrix }>();
 
     private _getColumnIndex(field: string): [number, TableData] {
         return _getColumnIndex(this.data, this._additionalData, field);
@@ -968,79 +970,89 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
         }
 
-        if (rawHtml instanceof Array){
-            console.log(123123)
-            rawHtml.forEach(row=>{
-                const tr = document.createElement('tr');
+        if (rawHtml instanceof Array) {
+            const tableData = new TableData();
+            const data = [];
+            const field = [];
 
-                row.forEach(cell=>{
+            rawHtml.forEach(row => {
+                const rowData = [];
+                row.forEach((cell, colIndex) => {
+                    if (CommonUtils.isUndefined(cell.data)) {
+                        rowData.push(cell);
+                    } else {
+                        rowData.push(cell.data)
+                    }
+                    field.push('row-expand-field' + colIndex)
+                })
+                data.push(rowData);
+            })
+
+            tableData.fromObject({
+                data: data,
+                field: field,
+                header: field
+            })
+
+            tableData.onRefresh(() => {
+                this.rowExpandDataChange.emit({ row: rowIndex, data: tableData.data })
+            })
+
+            const trEleArr = [];
+            rawHtml.forEach((row, rowIndex) => {
+                const tr = document.createElement('tr');
+                tr.classList.add('jigsaw-table-row-expansion');
+
+                row.forEach((cell, colIndex) => {
                     const td = document.createElement('td');
+
+                    if (cell.renderer === 'html') {
+                        const trustedHtml = CommonUtils.isUndefined(cell.data) ? "" : cell.data;
+                        td.innerHTML = TrustedHtmlHelper.updateHtml(trustedHtml, context, []);
+                        tr.appendChild(td);
+                        return;
+                    }
+
                     let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
                     const componentRef = factory.create(this._injector, [], td);
-                    let cellData;
-                    if (typeof cell ==='string'){
-                        cellData = {
+                    let cellSettings = cell;
+                    if (typeof cell === 'string') {
+                        cellSettings = {
                             renderer: DefaultCellRenderer,
                             data: cell
                         }
                     }
-                    componentRef.instance.tableData = this.data;
-                    componentRef.instance.additionalData = this.additionalData;
-                    componentRef.instance.cellData = cellData.data;
-                componentRef.instance.row = -1;
-                componentRef.instance.field = cell.field;
-                componentRef.instance.renderer = cell.renderer;
-                componentRef.instance.editable = false
-                componentRef.instance.hostInstance = this;
-                tr.appendChild(td)
-                })
 
+                    componentRef.instance.field = 'row-expand-field' + colIndex;
+                    componentRef.instance.row = rowIndex;
+                    componentRef.instance.tableData = tableData;
+                    componentRef.instance.additionalData = new TableData();
+                    componentRef.instance.renderer = cellSettings.renderer;
+                    componentRef.instance.rendererInitData = cellSettings.rendererInitData;
+                    componentRef.instance.cellData = cellSettings.data;
+                    this._applicationRef.attachView(componentRef.hostView);
+                    tr.appendChild(td);
+                })
+                trEleArr.push(tr);
+            })
+
+            trEleArr.reverse().forEach(tr => {
                 rowElement.parentNode.insertBefore(tr, rowElement.nextSibling);
+                const data: IPageable = <any>this.data;
+                const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
+                this._allExpandedRows.push({ element: tr, rowIndex, remainOpen, currentPage });
             })
         }
-
-    
-        // if (rawHtml instanceof TableData) {
-
-        //     const cellSettings:TableCellSetting[][] = [];
-
-        //     for (let i = 0; i < headerEle.length; i++) {
-        //         const trustedEle = document.createElement('td');
-
-        //         let factory = this._componentFactoryResolver.resolveComponentFactory(JigsawTableCellInternalComponent);
-        //         const componentRef = factory.create(this._injector, [], trustedEle);
-
-        //         let cell = rawHtml[i];
-        //         if (typeof rawHtml[i] === 'string') {
-        //             cell = {
-        //                 renderer: DefaultCellRenderer,
-        //                 data: rawHtml[i]
-        //             }
-        //         }
-
-        //         console.log(componentRef.instance.column)
-        //         console.log(this.data)
-        //         componentRef.instance.tableData = this.data;
-        //         componentRef.instance.additionalData = this.additionalData;
-        //         componentRef.instance.cellData = cell.data;
-        //         componentRef.instance.row = -1;
-        //         componentRef.instance.field = cell.field;
-        //         componentRef.instance.renderer = cell.renderer;
-        //         componentRef.instance.editable = false
-        //         // componentRef.instance.hostInstance = this;
-
-        //         this._applicationRef.attachView(componentRef.hostView);
-
-        //         tr.appendChild(trustedEle)
-        //     }
-
-        // }
     }
 
     private _hideExpansion(rowElement: HTMLTableRowElement): void {
         const index = this._allExpandedRows.findIndex(i => i?.element === rowElement.nextSibling);
+        if (index == -1) {
+            return;
+        }
         this._allExpandedRows.splice(index, 1);
         rowElement.nextSibling.remove();
+        this._hideExpansion(rowElement);
     }
 
     private _clearExpansion() {
