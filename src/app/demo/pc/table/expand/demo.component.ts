@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
+import { TableData, ColumnDefine, JigsawTable, TableCellSwitchRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -20,6 +20,9 @@
     <jigsaw-button (click)="expandRow(2)">展开/关闭第三行</jigsaw-button>
 </div>
 
+<div>展开数据发生了变化的行数：{{row}}</div>
+
 <jigsaw-header [level]="2">信息展示</jigsaw-header>
-<jigsaw-table #tableCmp width="600px" [data]="tableData" (rowExpand)="rowClick($event)">
+<jigsaw-table #tableCmp width="600px" [data]="tableData" (rowExpand)="rowClick($event)"
+    (rowExpandDataChange)="rowExpandDataChange($event)">
 </jigsaw-table>
