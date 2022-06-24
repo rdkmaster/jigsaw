@@ -1,0 +1,41 @@
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['more']">
+    <div>
+        <p class="comment">用于页面中普通操作</p>
+    </div>
+    <div>
+        <p class="comment">正常(之后还要做下拉功能？？？) </p>
+        <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e24c" colorType="default"
+                       iconPosition="right" [(preSize)]="selectedLabel.size">
+            更多
+        </jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">禁用 </p>
+        <jigsaw-button [disabled]="true" icon="iconfont iconfont-e24c" colorType="default"
+                       iconPosition="right" [(preSize)]="selectedLabel.size">
+            更多
+        </jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">用于表格操作列：如果表格列为冻结列时，注意配置[isAppendBody]="true"和plx-dropdown-menu，具体参考表格demo【列冻结】。</p>
+    </div>
+
+    <div>
+        <p class="comment">正常 </p>
+        <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e24c" colorType="none"
+                       iconPosition="right" [(preSize)]="selectedLabel.size">
+            更多
+        </jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">禁用 </p>
+        <jigsaw-button [disabled]="true" (click)="onClick()" icon="iconfont iconfont-e24c" colorType="none"
+                       iconPosition="right" [(preSize)]="selectedLabel.size">
+            更多
+        </jigsaw-button>
+    </div>
+</demo-template>
+

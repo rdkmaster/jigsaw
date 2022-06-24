@@ -1,0 +1,12 @@
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['danger']">
+    <div>
+        <p class="comment">正常</p>
+        <jigsaw-button colorType="error" [(preSize)]="selectedLabel['size']">删除</jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">禁用</p>
+        <jigsaw-button colorType="error" [disabled]="true" [(preSize)]="selectedLabel['size']">删除</jigsaw-button>
+    </div>
+</demo-template>
+

@@ -17,8 +17,12 @@ import { ButtonIconDemoComponent } from './with-icon/demo.component';
 import { ButtonIconDemoModule } from './with-icon/demo.module';
 import { ButtonInstancesDemoComponent } from './instances/demo.component';
 import { ButtonInstancesDemoModule } from './instances/demo.module';
-
+import { ButtonAllModule } from './all/demo.module'
+import {ButtonAllComponent} from "./all/demo.component";
 export const routerConfig = [
+    {
+        path: 'all', component: ButtonAllComponent
+    },
     {
         path: 'full', component: ButtonFullComponent
     },
@@ -58,7 +62,8 @@ export const routerConfig = [
         ButtonWithLoadingModule,
         ButtonFullModule,
         ButtonIconDemoModule,
-        ButtonInstancesDemoModule
+        ButtonInstancesDemoModule,
+        ButtonAllModule
     ]
 })
 export class ButtonDemoModule {
