@@ -271,7 +271,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     public writeValue(date: WeekTime): void {
         this._date = date;
-        if (this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week) {
+        if (this._comboSelect && (this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             this._comboSelect.open = false;
         }
         this.dateChange.emit(date);
