@@ -206,7 +206,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 @Component({
     selector: 'jigsaw-table-header',
     template: `
-        <div class="jigsaw-table-header-cell" [ngClass]="{'header-sortable':sortable}">
+        <div class="jigsaw-table-header-cell">
             <ng-template jigsaw-renderer-host></ng-template>
             <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
                  [trustedHtmlContext]="headerTrustedHtmlContext"></div>
@@ -394,7 +394,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         for (let i = 0; i < this.rowSpan; i++) {
             rows.push(this.row + i);
             // update tableData directly, therefor table.ts need not to do this.
-            this.targetData.data[this.row + i][this.column] = cellData;
+            if (CommonUtils.isDefined(this.targetData.data[this.row + i][this.column])) {
+                this.targetData.data[this.row + i][this.column] = cellData;
+            }
         }
 
         const change: TableDataChangeEvent = {

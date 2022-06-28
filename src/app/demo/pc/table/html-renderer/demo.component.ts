@@ -67,7 +67,7 @@ export class TableHtmlRendererDemoComponent {
             },
             cell: {
                 renderer: 'html',
-                data: (data, row) => `<a onclick="onClick(${row}, 0)">修改</a> <a onclick="onClick(${row}, 1)">删除</a>`,
+                data: (data, row) => `<a style="margin-right:4px" onclick="onClick(${row}, 0)">修改</a><a onclick="onClick(${row}, 1)">删除</a>`,
                 innerHtmlContext: this
             }
         }
