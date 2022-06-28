@@ -358,7 +358,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const bodyScroll = bodyRangeEle.scrollTop;
         const validBottom = lastRowEle.getBoundingClientRect().bottom + bodyScroll;
         const height = bodyBottom - validBottom - 1;
-        const rowGap = Math.floor(height / 30);
+        const rowGap = Math.floor(height / 32);
         if (rowGap <= 0) {
             return;
         }
@@ -376,7 +376,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         const bodyHeight = tableEle.getBoundingClientRect().bottom - tableEle.getBoundingClientRect().top;
-        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 42;
+        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 34;
         if (!isNaN(data.pagingInfo.containerHeight) && data.pagingInfo.containerHeight === containerSize) {
             return
         }

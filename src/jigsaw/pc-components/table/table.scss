@@ -9,32 +9,100 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         text-align: center;
         table-layout: fixed;
         font-size: $font-size-text-base;
-        td {
-            color: $font-color-default;
-            border-width: 1px;
-            border-style: solid;
-            border-color: $border-color-default;
+
+        tr {
+            td {
+                height: 100%;
+                color: $font-color-default;
+                border-width: 1px;
+                border-style: solid;
+                border-color: $border-color-default;
+                line-height: $line-height-base;
+                vertical-align: middle;
+
+                .#{$jigsaw-table}-cell-content,
+                .#{$jigsaw-table}-header-cell {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0 8px;
+                    text-align: left;
+                    line-height: inherit;
+
+                    ng-component {
+                        display: inline-flex;
+                        justify-content: flex-start;
+                        align-items: center;
+                        width: 100%;
+                        height: 100%;
+                        line-height: 100%;
+                    }
+                }
+
+                .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
+                    display: block;
+                }
+
+                &.jigsaw-cell-align-left {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-start;
+                        text-align: left;
+
+                        ng-component {
+                            justify-content: flex-start;
+                        }
+                    }
+                }
+
+                &.jigsaw-cell-align-center {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: center;
+                        text-align: center;
+
+                        ng-component {
+                            justify-content: center;
+                        }
+                    }
+                }
+
+                &.jigsaw-cell-align-right {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-end;
+                        text-align: right;
+
+                        ng-component {
+                            justify-content: flex-end;
+                        }
+                    }
+                }
+
+                &.jigsaw-cell-no-padding {
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        padding: 0px;
+                    }
+                }
+            }
         }
+
         thead {
             color: $font-color-heading-bold;
             font-weight: bold;
             tr {
+                height: 32px;
+
                 td {
-                    height: 40px;
+                    height: 100%;
                     background: $bg-gray;
 
                     .#{$jigsaw-table}-header-cell {
-                        display: inline-flex;
-                        justify-content: center;
-                        align-items: center;
-                        width: 100%;
-
                         .iconfont {
                             margin-right: 2px;
-                        }
-
-                        ng-component {
-                            width: 100%;
                         }
                     }
                 }
@@ -43,13 +111,15 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         tbody {
             .#{$jigsaw-table}-line-ellipsis {
                 .#{$jigsaw-table}-cell-content {
-                    width: 100%;
-                    @include inline-block();
-                    @include line-ellipsis-style();
+                    min-width: 0;
+
+                    .#{$jigsaw-table}-cell-text {
+                        @include line-ellipsis-style();
+                    }
                 }
             }
             tr {
-                height: 30px;
+                height: 32px;
                 &:nth-child(2n) {
                     background: $bg-transparent;
                 }
@@ -97,7 +167,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
     .#{$jigsaw-table}-range {
         height: 100%;
-        padding-top: 40px;
+        padding-top: 32px;
         &.#{$jigsaw-table}-hide-head {
             padding-top: 0 !important;
         }

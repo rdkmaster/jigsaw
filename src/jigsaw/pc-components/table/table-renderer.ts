@@ -162,22 +162,26 @@ export class DefaultCellRenderer extends TableCellRendererBase {
         </jigsaw-input>
     `,
     styles: [`
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper {
+        .table-cell-password-renderer.jigsaw-input-host {
+            pointer-events: none;
+        }
+
+        .table-cell-password-renderer.jigsaw-input-host .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
             background: transparent;
         }
 
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper,
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input-host .jigsaw-input-container .jigsaw-input-wrapper,
+        .table-cell-password-renderer.jigsaw-input-host .jigsaw-input-container .jigsaw-input-wrapper input {
             cursor: inherit;
         }
 
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-disabled .jigsaw-input-container .jigsaw-input-wrapper input {
+        .table-cell-password-renderer.jigsaw-input-host.jigsaw-input-disabled .jigsaw-input-container .jigsaw-input-wrapper input {
             color: #666;
         }
 
-        .table-cell-password-renderer.jigsaw-input .jigsaw-input-container .jigsaw-input-wrapper:hover,
-        .table-cell-password-renderer.jigsaw-input.jigsaw-input-focused .jigsaw-input-container .jigsaw-input-wrapper {
+        .table-cell-password-renderer.jigsaw-input-host .jigsaw-input-container .jigsaw-input-wrapper:hover,
+        .table-cell-password-renderer.jigsaw-input-host.jigsaw-input-focused .jigsaw-input-container .jigsaw-input-wrapper {
             border: none;
         }
     `],

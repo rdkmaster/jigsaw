@@ -80,6 +80,8 @@ export class TableHeader {
     defaultSortOrder?: SortOrder;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
+    alignment?: 'left' | 'center' | 'right';
+    noPadding?: boolean;
 }
 
 export class TableCell {
@@ -92,6 +94,8 @@ export class TableCell {
     data?: any | TableCellDataGenerator;
     tooltip?: any;
     innerHtmlContext?: any;
+    alignment?: 'left' | 'center' | 'right';
+    noPadding?: boolean;
 }
 
 export class TableHeadSetting {
@@ -106,6 +110,8 @@ export class TableHeadSetting {
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;
+    alignment: 'left' | 'center' | 'right';
+    noPadding: boolean;
 }
 
 export class TableCellSetting {
@@ -123,6 +129,8 @@ export class TableCellSetting {
     rowSpan: number;
     tooltip: any;
     innerHtmlContext: any;
+    alignment: 'left' | 'center' | 'right';
+    noPadding: boolean;
 }
 
 export class SortChangeEvent {

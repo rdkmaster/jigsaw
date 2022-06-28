@@ -33,7 +33,6 @@ export class OfficeRendererBase extends TableCellRendererBase {
     styles: [
         `.renderer-demo-header-select .jigsaw-combo-select-selection {
             display: flex;
-            min-height: 38px;
             border-color: transparent;
         }
         `
@@ -144,7 +143,6 @@ export class OfficeCellRenderer extends TableCellRendererBase {
     styles: [
         `.renderer-demo-header-select .jigsaw-combo-select-selection {
             display: flex;
-            min-height: 38px;
             border-color: transparent;
         }
         `

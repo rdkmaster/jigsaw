@@ -39,7 +39,7 @@ export class TableAddCheckboxColumnPageableDemoComponent {
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
-        width: 20,
+        width: 30,
         header: {
             renderer: TableHeadCheckboxRenderer,
         },

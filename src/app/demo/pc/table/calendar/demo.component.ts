@@ -16,6 +16,7 @@ export class TableCalendarDemoComponent {
         {
             target: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
             cell: {
+                noPadding: true,
                 renderer: CalendarDateRenderer
             }
         }
@@ -54,6 +55,7 @@ export class TableCalendarDemoComponent {
     `,
     styles: [`
         .date-cell {
+            width:100%;
             height: 70px;
             color: #ababab;
         }
@@ -67,6 +69,7 @@ export class TableCalendarDemoComponent {
             padding-top: 22px;
             font-size: 20px;
             color: #c7220f;
+            text-align:center;
         }
 
         .status-good {
