@@ -376,7 +376,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         const bodyHeight = tableEle.getBoundingClientRect().bottom - tableEle.getBoundingClientRect().top;
-        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 42;
+        const containerSize = this.hideHeader ? bodyHeight - 1 : bodyHeight - 34;
         if (!isNaN(data.pagingInfo.containerHeight) && data.pagingInfo.containerHeight === containerSize) {
             return
         }
