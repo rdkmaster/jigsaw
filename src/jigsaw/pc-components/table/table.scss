@@ -41,6 +41,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
+                .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
+                    display: block;
+                }
+
                 &.jigsaw-cell-align-left {
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
@@ -108,7 +112,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             .#{$jigsaw-table}-line-ellipsis {
                 .#{$jigsaw-table}-cell-content {
                     min-width: 0;
-                    
+
                     .#{$jigsaw-table}-cell-text {
                         @include line-ellipsis-style();
                     }

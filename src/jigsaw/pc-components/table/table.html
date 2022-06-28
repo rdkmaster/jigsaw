@@ -67,7 +67,7 @@
                         <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
                             <span class="jigsaw-table-cell-text" title="{{cell.tooltip ? cell.tooltip : ''}}">{{cell.cellData}}</span>
                         </div>
-                        <div *ngSwitchCase="'html'" class="jigsaw-table-cell-content" title="{{cell.tooltip ? cell.tooltip : ''}}"
+                        <div *ngSwitchCase="'html'" class="jigsaw-table-cell-content jigsaw-table-cell-html-renderer" title="{{cell.tooltip ? cell.tooltip : ''}}"
                              [trustedHtml]="cell.cellData" [trustedHtmlContext]="cell.innerHtmlContext">
                         </div>
                         <jigsaw-table-cell *ngSwitchDefault class="jigsaw-table-cell-content"
