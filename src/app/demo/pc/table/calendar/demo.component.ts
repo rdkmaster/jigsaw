@@ -16,7 +16,7 @@ export class TableCalendarDemoComponent {
         {
             target: ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'],
             cell: {
-                clazz:'no-padding',
+                noPadding: true,
                 renderer: CalendarDateRenderer
             }
         }

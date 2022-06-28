@@ -41,7 +41,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
-                &.align-left {
+                &.jigsaw-cell-align-left {
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: flex-start;
@@ -53,7 +53,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
-                &.align-center {
+                &.jigsaw-cell-align-center {
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: center;
@@ -65,7 +65,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
-                &.align-right {
+                &.jigsaw-cell-align-right {
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: flex-end;
@@ -77,7 +77,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
-                &.no-padding {
+                &.jigsaw-cell-no-padding {
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         padding: 0px;
