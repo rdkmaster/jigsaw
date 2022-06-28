@@ -16,7 +16,6 @@ export class TableAutoPageableDemoComponent {
         this.pageable.http = http;
         this.pageable.fromAjax('mock-data/hr-list');
         this.pageable.pagingInfo.autoPageSizing = true;
-        this.pageable.pagingInfo.itemHeight = 32;
     }
 
     // ====================================================================

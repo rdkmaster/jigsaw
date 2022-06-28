@@ -741,7 +741,7 @@ export class PagingInfo implements IEmittable {
         this.emit();
     }
 
-    private _itemHeight: number;
+    private _itemHeight: number = 32;
 
     /**
      * 本属性用于实现动态分页记录数的功能，它指明了单条记录的高度，配合 `containerHeight` 属性可计算出当前最佳单页记录数
