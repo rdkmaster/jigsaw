@@ -393,8 +393,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         let rows = [];
         for (let i = 0; i < this.rowSpan; i++) {
             rows.push(this.row + i);
-            // update tableData directly, therefor table.ts need not to do this.
-            if (CommonUtils.isDefined(this.targetData.data[this.row + i][this.column])) {
+            // update tableData directly, therefore table.ts need not to do this.
+            if (CommonUtils.isDefined(this.targetData.data?.[this.row + i]?.[this.column])) {
                 this.targetData.data[this.row + i][this.column] = cellData;
             }
         }
