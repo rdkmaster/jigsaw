@@ -12,7 +12,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
         tr {
             td {
-                height: 100%;
                 color: $font-color-default;
                 border-width: 1px;
                 border-style: solid;
@@ -97,7 +96,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 height: 32px;
 
                 td {
-                    height: 100%;
                     background: $bg-gray;
 
                     .#{$jigsaw-table}-header-cell {
