@@ -4,11 +4,12 @@
 
 <div class="demo-cntr">
     <div id="setting">
-        <a (click)="clear()">清理所有指引</a>
-        <a (click)="bubbleGuide()">气泡指引</a>
-        <a (click)="dialogGuide()">对话框指引</a>
-        <a (click)="multipleGuide()">分步指引</a>
-        <a (click)="wizardGuide()">程序向导</a>
+        <a (click)="noviceGuide.resetStatus()">重置指引状态</a>
+        <a (click)="noviceGuide.clear()">清理所有指引</a>
+        <a (click)="noviceGuide.show(bubbleGuideData)">气泡指引</a>
+        <a (click)="noviceGuide.show(dialogGuideData)">对话框指引</a>
+        <a (click)="noviceGuide.show(multipleNoviceGuideData)">分步指引</a>
+        <a (click)="noviceGuide.show(wizardNoviceGuideData)">程序向导</a>
     </div>
 
     <header>

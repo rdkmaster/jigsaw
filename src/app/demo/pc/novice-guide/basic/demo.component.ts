@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewEncapsulation } from "@angular/core";
 import { ArrayCollection, PopupInfo, PopupService, SimpleTreeData, TableData } from 'jigsaw/public_api';
 import {
-    jigsawGuide,
+    JigsawNoviceGuide,
     MultipleNoviceGuide,
     NoviceGuideConfig,
     NoviceGuideNoticeType,
@@ -89,33 +89,10 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         version: 'v0.0.1'
     }
 
-    config: NoviceGuideConfig = {
-        localStorageItem: 'jigsaw.noviceGuide',
-        resetLocalStorage: true
-    }
+    noviceGuide = new JigsawNoviceGuide({localStorageItem: 'jigsaw.noviceGuide'});
 
     ngOnInit() {
-        this.bubbleGuide();
-    }
-
-    clear() {
-        jigsawGuide.clear();
-    }
-
-    bubbleGuide() {
-        jigsawGuide.show(this.bubbleGuideData, this.config);
-    }
-
-    dialogGuide() {
-        jigsawGuide.show(this.dialogGuideData, this.config);
-    }
-
-    multipleGuide() {
-        jigsawGuide.show(this.multipleNoviceGuideData, this.config);
-    }
-
-    wizardGuide() {
-        jigsawGuide.show(this.wizardNoviceGuideData, this.config);
+        this.noviceGuide.show(this.bubbleGuideData);
     }
 
     dialogInfo: PopupInfo;
