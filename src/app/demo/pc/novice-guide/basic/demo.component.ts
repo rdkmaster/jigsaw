@@ -47,8 +47,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     bubbleGuideData: SingularNoviceGuide = {
         type: NoviceGuideType.singular,
         data: [
-            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'li', property1: { property: 'innerText', value: '菜单6' }, position: 'bottom' },
-            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', property1: { property: 'innerText', value: '标准图标2' }, position: "right" },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', selector: '#header-menu>li:nth-child(6)', position: 'bottom' },
+            { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'jigsaw-nav-menu-item-top', selector: '.jigsaw-nav-menu-items>.jigsaw-nav-menu-item:nth-child(2)', position: "right" },
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', classes: 'footer copyright', position: "top" },
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条新手指引', tagName: 'div', id: "ad", position: 'left' },
             { type: NoviceGuideNoticeType.bubble, notice: '这是收起按钮，可以收起菜单。', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', position: "right" },
@@ -83,13 +83,13 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         type: NoviceGuideType.wizard,
         data: [
             { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'li', id: 'dialog-btn', position: 'bottom' },
-            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'j-tile-option', classes: 'jigsaw-tile-option', property1: { property: 'title', value: '错误' }, position: 'bottom' },
+            { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'j-tile-option', classes: 'jigsaw-tile-option', attribute1: { name: 'title', value: '错误' }, position: 'bottom' },
             { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button', classes: 'jigsaw-button-host jigsaw-button-color-primary jigsaw-button-icon-left', position: 'bottom' },
         ],
         version: 'v0.0.1'
     }
 
-    noviceGuide = new JigsawNoviceGuide({localStorageItem: 'jigsaw.noviceGuide'});
+    noviceGuide = new JigsawNoviceGuide({ localStorageItem: 'jigsaw.noviceGuide' });
 
     ngOnInit() {
         this.noviceGuide.show(this.bubbleGuideData);

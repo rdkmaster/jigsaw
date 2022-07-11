@@ -16,8 +16,9 @@ export interface NoviceGuidePicker {
     tagName?: string;
     id?: string;
     classes?: string;
-    property1?: { property: string, value: string | number };
-    property2?: { property: string, value: string | number };
+    attribute1?: { name: string, value: string | number };
+    attribute2?: { name: string, value: string | number };
+    selector?: string;
 }
 
 export interface NoviceGuideOptions {
@@ -82,7 +83,7 @@ type ShowingInfo = {
 };
 
 export class JigsawNoviceGuide {
-    private _config: NoviceGuideConfig = {localStorageItem: 'jigsaw.noviceGuide'};
+    private _config: NoviceGuideConfig = { localStorageItem: 'jigsaw.noviceGuide' };
 
     constructor(config?: NoviceGuideConfig) {
         this._config.localStorageItem = config?.localStorageItem;
@@ -164,7 +165,7 @@ export class JigsawNoviceGuide {
                 this._showing.mutations.splice(idx, 1);
             }
         });
-        mutationObserver.observe(document.body, {childList: true, subtree: true});
+        mutationObserver.observe(document.body, { childList: true, subtree: true });
         this._showing.mutations.push(mutationObserver);
     }
 
@@ -527,7 +528,7 @@ function getGuideContainer(hasMask: boolean): HTMLElement {
 }
 
 function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HTMLElement) {
-    const {left, top, width, height} = target.getBoundingClientRect();
+    const { left, top, width, height } = target.getBoundingClientRect();
     if (left + top + width + height === 0) {
         return;
     }
@@ -548,16 +549,16 @@ function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HTMLEleme
 function toKeyString(notice: BasicNoviceGuideNotice): string {
     const fields = [notice.version || 'v0'];
     fields.push(notice.type || '');
+    fields.push(notice.position || '');
+    fields.push(notice.selector || '');
     fields.push(notice.tagName || '');
     fields.push(notice.id || '');
     fields.push(notice.classes || '');
-    fields.push(notice.tagName || '');
-    fields.push(notice.position || '');
-    if (notice.property1 && notice.property1.hasOwnProperty('property') && notice.property1.hasOwnProperty('value')) {
-        fields.push(`${notice.property1.property}=${notice.property1.value}`);
+    if (notice.attribute1 && notice.attribute1.hasOwnProperty('name') && notice.attribute1.hasOwnProperty('value')) {
+        fields.push(`${notice.attribute1.name}=${notice.attribute1.value}`);
     }
-    if (notice.property2 && notice.property2.hasOwnProperty('property') && notice.property2.hasOwnProperty('value')) {
-        fields.push(`${notice.property2.property}=${notice.property2.value}`);
+    if (notice.attribute2 && notice.attribute2.hasOwnProperty('name') && notice.attribute2.hasOwnProperty('value')) {
+        fields.push(`${notice.attribute2.name}=${notice.attribute2.value}`);
     }
     return fields.join('$_$');
 }
@@ -587,15 +588,19 @@ function createMask(): Element {
 }
 
 function getSelector(notice: NoviceGuideNotice): string {
+    if (notice.selector) {
+        return notice.selector;
+    }
+
     const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
     const id = notice.id ? '#' + notice.id : '';
     const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
     let selector = `${tagName}${id}${classes}`;
-    if (notice.property1) {
-        selector += `[${notice.property1.property}=${fixPropValue(notice.property1.value)}]`;
+    if (notice.attribute1) {
+        selector += `[${notice.attribute1.name}=${fixPropValue(notice.attribute1.value)}]`;
     }
-    if (notice.property2) {
-        selector += `[${notice.property2.property}=${fixPropValue(notice.property2.value)}]`;
+    if (notice.attribute2) {
+        selector += `[${notice.attribute2.name}=${fixPropValue(notice.attribute2.value)}]`;
     }
     return selector;
 
