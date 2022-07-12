@@ -24,6 +24,8 @@ export interface NoviceGuidePicker {
 export interface NoviceGuideOptions {
     position: 'top' | 'left' | 'right' | 'bottom';
     timeout?: number;
+    // 若不设置disconnect，默认为60000ms
+    disconnect?: number;
 }
 
 export interface BasicNoviceGuideNotice extends NoviceGuideContent {
@@ -106,7 +108,7 @@ export class JigsawNoviceGuide {
         }
 
         if (this._showing.guideElements.length === 0) {
-            window.addEventListener('_resize', this._debounce(this._resize, 500));
+            window.addEventListener('resize', this._debounce(this._resize, 500));
         }
 
         const notices: NoviceGuideNotice[] = this._filterShownGuides(guide);
@@ -166,6 +168,9 @@ export class JigsawNoviceGuide {
             }
         });
         mutationObserver.observe(document.body, { childList: true, subtree: true });
+        setTimeout(() => {
+            mutationObserver.disconnect();
+        }, notice.disconnect ? notice.disconnect : 60000);
         this._showing.mutations.push(mutationObserver);
     }
 
@@ -226,12 +231,8 @@ export class JigsawNoviceGuide {
                 </div>`;
         }
 
-        const cloneEle = document.createElement('div');
-        cloneEle.classList.add('novice-guide-clone');
+        const cloneEle = this._createCloneElement(targetEle, guideKey);
         cloneEle.innerHTML = html;
-        this._showing.guideElements.push(targetEle);
-        this._showing.cloneElements.push(cloneEle);
-        this._showing.guideKeys.push(guideKey);
 
         cloneEle.onclick = (e) => {
             if (!(e.target as HTMLElement).classList.contains('close')) {
@@ -322,11 +323,6 @@ export class JigsawNoviceGuide {
         `;
 
         const current = notices.indexOf(notice);
-        if (current > 0) {
-            this._showing.cloneElements[current - 1].remove();
-            this._showing.cloneElements[current - 1] = undefined;
-        }
-
         const guideKeys = notices.map(n => toKeyString(n));
         cloneEle.onclick = (e) => {
             if (!(e.target as HTMLElement).classList.contains('close')) {
@@ -345,7 +341,8 @@ export class JigsawNoviceGuide {
                 this._saveShownKeys(guideKeys.join());
                 this._closeNoviceGuideNotice(cloneEle, false);
             } else {
-                this._createNoviceGuideNotice(NoviceGuideType.wizard, notices, notice);
+                this._createNoviceGuideNotice(NoviceGuideType.wizard, notices, notices[current + 1]);
+                this._closeNoviceGuideNotice(cloneEle, false);
             }
         }
         targetEle.addEventListener('click', handleClick);
@@ -438,6 +435,7 @@ export class JigsawNoviceGuide {
         const index = this._showing.cloneElements.indexOf(cloneEle);
         this._showing.cloneElements.splice(index, 1);
         this._showing.guideKeys.splice(index, 1);
+        this._showing.guideElements.splice(index, 1);
         cloneEle.remove();
 
         const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
@@ -456,7 +454,7 @@ export class JigsawNoviceGuide {
         this._resize();
     }
 
-    private _resize(): void {
+    private _resize = () => {
         const mask = document.getElementById('novice-guide-mask');
         if (mask) {
             mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
@@ -482,6 +480,7 @@ export class JigsawNoviceGuide {
         const index = this._showing.cloneElements.indexOf(cloneEle);
         this._showing.cloneElements.splice(index, 1);
         this._showing.guideKeys.splice(index, 1);
+        this._showing.guideElements.splice(index, 1);
         cloneEle.remove();
 
         if (this._showing.cloneElements.length == 0) {
