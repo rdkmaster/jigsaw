@@ -174,7 +174,7 @@ export class JigsawNoviceGuide {
         mutationObserver.observe(document.body, { childList: true, subtree: true });
         _clearTimer = setTimeout(() => {
             mutationObserver.disconnect();
-        }, notice.disconnect ? notice.disconnect : 20000);
+        }, notice.disconnect ? notice.disconnect : 60000);
         this._showing.mutations.push(mutationObserver);
     }
 
