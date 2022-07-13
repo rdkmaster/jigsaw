@@ -1,0 +1,18 @@
+.comment {
+    display: inline-block;
+    margin-right: 24px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+    width: 120px;
+}
+
+/*.demo-cell {*/
+/*    margin-bottom: 20px;*/
+/*    margin-top: 20px;*/
+/*}*/
+
+.notes {
+    display: inline-block;
+    margin-left: 29px;
+}

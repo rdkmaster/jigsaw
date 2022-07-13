@@ -1,0 +1,17 @@
+.section-container {
+    margin-bottom: 10px;
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+}
+.align-center jigsaw-tag {
+    margin-right: 15px;
+}
+
+.section-container jigsaw-header {
+    margin-bottom: 3px;
+}

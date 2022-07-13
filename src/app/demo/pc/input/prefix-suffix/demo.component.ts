@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
+import {InputTextService} from "../text.service";
 
 @Component({
+    selector: 'prefix-suffix-input',
     templateUrl: './demo.component.html',
     styles: [`
         .demo-container {
@@ -59,10 +61,6 @@ export class InputPrefixSuffixDemoComponent {
     public _$unitChange(event: any) {
         console.log('prefix-suffix selected: ', event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: InputTextService) {
+    }
 }

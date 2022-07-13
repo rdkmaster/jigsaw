@@ -1,15 +1,11 @@
 import {Component} from "@angular/core";
-import {JigsawInput} from "jigsaw/public_api";
+import {InputTextService} from "../text.service";
 
 @Component({
+    selector: "password-input",
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
 })
-export class InputPasswordComponent {
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+export class InputPasswordComponent {
+    constructor(public text: InputTextService) {}
 }

@@ -2,17 +2,18 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { JigsawProgressModule, JigsawHeaderModule } from "jigsaw/public_api";
-import { JigsawCircleProgressDemoComponent } from "./demo.component";
-
+import { CircleProgressDemoComponent } from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
         JigsawProgressModule,
         CommonModule,
         JigsawDemoDescriptionModule,
-        JigsawHeaderModule
+        JigsawHeaderModule,
+        DemoTemplateModule
     ],
-    declarations: [JigsawCircleProgressDemoComponent],
-    exports: [JigsawCircleProgressDemoComponent]
+    declarations: [CircleProgressDemoComponent],
+    exports: [CircleProgressDemoComponent]
 })
-export class JigsawCircleProgressDemoModule {}
+export class CircleProgressDemoModule {}

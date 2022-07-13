@@ -1,51 +1,40 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basicTab']">
+    <div>
+        <jigsaw-markdown [markdown]="'#### 独立的tab bar（简单数组）'"></jigsaw-markdown>
+        <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData"></jigsaw-tabs-bar>
+    </div>
+    <div>
+        <jigsaw-markdown [markdown]="'#### 独立的tab bar（对象数组）'"></jigsaw-markdown>
+        <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData2"></jigsaw-tabs-bar>
+    </div>
 
-<div class="container">
-    <div class="items">
-        <h4>独立的tab bar（简单数组）</h4>
-    </div>
-    <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData"></jigsaw-tabs-bar>
-</div>
-<div class="container">
-    <div class="items">
-        <h4>独立的tab bar（对象数组）</h4>
-    </div>
-    <jigsaw-tabs-bar [(selectedIndex)]="selectedIndex" [data]="tabBarData2"></jigsaw-tabs-bar>
-</div>
 
-<div class="container">
-    <div class="items">
-        <h4>一个完整的Tab容器</h4>
-        <span>
-            这里演示的是独立的 tab bar 与一个独立的tab容器配合使用的方法，tab bar与tab容器相互独立后，就可以做出更加复杂灵活的布局效果了，
-            甚至你可以把tab bar放在tab容器的下面，达成页签在下容器在上的效果
-        </span>
+    <div>
+        <jigsaw-markdown [markdown]="text['text']['textInBasic']"></jigsaw-markdown>
+        <div>
+            <span>隐藏tab头</span>
+            <jigsaw-switch [(checked)]="headless"></jigsaw-switch>
+        </div>
+        <div>
+            <jigsaw-tabs [headless]="headless" [(selectedIndex)]="selectedIndex">
+                <jigsaw-tab-pane title="Tab 1">
+                    <ng-template>
+                        <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+                    </ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane title="Tab 2">
+                    <ng-template>This is the body of the second tab</ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane title="Tab 3">
+                    <ng-template>This is the body of the third tab</ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane>
+                    <div jigsaw-title><span class="iconfont iconfont-e187"></span>Tab 3</div>
+                    <ng-template>
+                        <jigsaw-table [data]="fruitList"></jigsaw-table>
+                    </ng-template>
+                </jigsaw-tab-pane>
+            </jigsaw-tabs>
+        </div>
     </div>
-    <div class="items">
-        <span>隐藏tab头</span>
-        <jigsaw-switch [(checked)]="headless"></jigsaw-switch>
-    </div>
-    <div class="tabs-box">
-        <jigsaw-tabs [headless]="headless" [(selectedIndex)]="selectedIndex">
-            <jigsaw-tab-pane title="Tab 1">
-                <ng-template>
-                    <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
-                </ng-template>
-            </jigsaw-tab-pane>
-            <jigsaw-tab-pane title="Tab 2">
-                <ng-template>This is the body of the second tab</ng-template>
-            </jigsaw-tab-pane>
-            <jigsaw-tab-pane title="Tab 3">
-                <ng-template>This is the body of the third tab</ng-template>
-            </jigsaw-tab-pane>
-            <jigsaw-tab-pane>
-                <div jigsaw-title><span class="iconfont iconfont-e187"></span>Tab 3</div>
-                <ng-template>
-                    <jigsaw-table [data]="fruitList"></jigsaw-table>
-                </ng-template>
-            </jigsaw-tab-pane>
-        </jigsaw-tabs>
-    </div>
-</div>
+</demo-template>

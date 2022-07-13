@@ -1,14 +1,17 @@
 import {Component, OnInit} from "@angular/core";
+import {TabBarTextService} from "../text.service";
 import {JigsawMenu, SimpleTreeData, TabBarData} from "jigsaw/public_api";
 
 @Component({
+    selector: "Type-tabBar",
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["../public.css"]
 })
-export class TabBarTypeDemoComponent implements OnInit {
-    tabBarData: Array<string>;
-    tabBarData2: TabBarData[];
-    menuData: SimpleTreeData;
+
+export class TabBarTypeComponent implements OnInit{
+    public tabBarData: Array<string>;
+    public tabBarData2: TabBarData[];
+    public menuData: SimpleTreeData;
 
     public _$more() {
         const mouseEvent: MouseEvent = window.event || arguments[0];
@@ -20,7 +23,7 @@ export class TabBarTypeDemoComponent implements OnInit {
         alert(`${node.label} 被点击了!!!`);
     }
 
-    constructor() {
+    constructor(public text: TabBarTextService) {
         this.menuData = new SimpleTreeData();
         this.menuData.fromXML(`
             <node>
@@ -59,10 +62,4 @@ export class TabBarTypeDemoComponent implements OnInit {
             }
         ];
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "此demo主要展示可编辑的tab";
-    description: string = "";
 }

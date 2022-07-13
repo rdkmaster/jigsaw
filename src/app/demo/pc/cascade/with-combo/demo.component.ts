@@ -1,13 +1,19 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData, ArrayCollection} from "jigsaw/public_api";
+import {CascadeData} from "../../../../../jigsaw/pc-components/cascade/cascade";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "with-combo-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeWithComboDemoComponent {
-    constructor(public http: HttpClient) {
+
+export class CascadeWithComboComponent {
+    constructor(public http: HttpClient, public text: CascadeTextService) {
     }
 
     levelInfos = [
@@ -62,12 +68,6 @@ export class CascadeWithComboDemoComponent {
             closable: false
         }]
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了如何通过懒加载的方式加载每一级的数据，一般用于数据量很大的场景';
-    description: string = '';
 }
 
 
@@ -90,3 +90,4 @@ function dealAreaRequest(req: HttpRequest<any>): any {
 }
 
 /* 模拟请求代码 end */
+

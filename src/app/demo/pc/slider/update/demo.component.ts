@@ -1,11 +1,14 @@
-import {Component} from '@angular/core';
-import {ArrayCollection} from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {SliderTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "update-value-slider",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SliderUpdateDemoComponent {
+
+export class SliderUpdateValueComponent {
     rangeMax = 100;
     rangeValue = new ArrayCollection([30, 50, 60]);
     get sortedValue(): string {
@@ -20,10 +23,6 @@ export class SliderUpdateDemoComponent {
             this.rangeValue.refresh();
         })
     }
+    constructor(public text: SliderTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
+import {InputTextService} from "../text.service";
 
 @Component({
-  templateUrl: './demo.component.html'
+    selector: 'value-change-input',
+    templateUrl: './demo.component.html'
 })
 export class InputValueChangeDemoComponent {
     inputValue: any;
@@ -9,10 +11,6 @@ export class InputValueChangeDemoComponent {
     valueChanged(message: string) {
         console.log(`input value is: ${message}`);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: InputTextService) {
+    }
 }

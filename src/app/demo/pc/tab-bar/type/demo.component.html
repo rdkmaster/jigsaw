@@ -1,13 +1,9 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['type']">
+    <jigsaw-markdown [markdown]="'#### 标签式'"></jigsaw-markdown>
+    <jigsaw-tabs-bar [data]="tabBarData" style="margin-bottom: 20px"></jigsaw-tabs-bar>
+    <jigsaw-tabs-bar [data]="tabBarData2" style="margin-bottom: 20px"></jigsaw-tabs-bar>
 
-<!-- start to learn the demo from here -->
-<div class="demo-container">
-    <jigsaw-header>标签式</jigsaw-header>
-    <jigsaw-tabs-bar [data]="tabBarData"></jigsaw-tabs-bar>
-    <jigsaw-tabs-bar [data]="tabBarData2"></jigsaw-tabs-bar>
-
-    <jigsaw-header>页签式</jigsaw-header>
-    <jigsaw-tabs-bar [data]="tabBarData" [tabType]="'page'"></jigsaw-tabs-bar>
+    <jigsaw-markdown [markdown]="'#### 页签式'"></jigsaw-markdown>
+    <jigsaw-tabs-bar [data]="tabBarData" [tabType]="'page'" style="margin-bottom: 20px"></jigsaw-tabs-bar>
     <jigsaw-tabs-bar [data]="tabBarData2" [tabType]="'page'"></jigsaw-tabs-bar>
-</div>
+</demo-template>

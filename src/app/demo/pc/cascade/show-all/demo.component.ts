@@ -1,15 +1,19 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
-import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "show-all-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeShowAllDemoComponent {
+
+export class CascadeShowAllComponent {
     areas: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data')
             .pipe(map((data: SimpleTreeData) => {
@@ -29,10 +33,4 @@ export class CascadeShowAllDemoComponent {
             return result;
         }, []).join(' | ');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了如何在某一级上添加一个“全选”按钮';
-    description: string = '';
 }

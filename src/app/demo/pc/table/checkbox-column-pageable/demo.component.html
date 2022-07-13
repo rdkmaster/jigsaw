@@ -1,37 +1,31 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['renderer']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">分页数据缓存</jigsaw-header>
+    <j-button (click)="changeData()">click to change data</j-button>
 
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">分页数据缓存</jigsaw-header>
-        <j-button (click)="changeData()">click to change data</j-button>
+    <jigsaw-pagination
+        [data]="pageable"
+        [pageSizeOptions]="[5, 10, 20]"
+        [searchable]="true"
+        [showQuickJumper]="true"
+        (search)="onSearch($event)"
+    ></jigsaw-pagination>
+    <br><br>
 
-        <jigsaw-pagination
-            [data]="pageable"
-            [pageSizeOptions]="[5, 10, 20]"
-            [searchable]="true"
-            [showQuickJumper]="true"
-            (search)="onSearch($event)"
-        ></jigsaw-pagination><br><br>
+    <p>
+        当页前选中的行索引：{{selectedRows}}
+    </p>
 
-        <p>
-            当页前选中的行索引：{{selectedRows}}
-        </p>
+    <p>
+        所有选中的行信息：
+        <j-tag *ngFor="let row of allSelectedRows" [closable]="true" (close)="removeRow(row)">
+            {{row.name}}
+        </j-tag>
+    </p>
 
-        <p>
-            所有选中的行信息：
-            <j-tag *ngFor="let row of allSelectedRows" [closable]="true" (close)="removeRow(row)">
-                {{row.name}}
-            </j-tag>
-        </p>
-
-        <jigsaw-table #tableComponent [data]="pageable"
-                      [additionalColumnDefines]="additionalColumns"
-                      [(additionalData)]="additionalData"
-                      (additionalDataChange)="additionalDataChange($event)">
-        </jigsaw-table>
-    </div>
-</div>
-
+    <jigsaw-table #tableComponent [data]="pageable"
+                  [additionalColumnDefines]="additionalColumns"
+                  [(additionalData)]="additionalData"
+                  (additionalDataChange)="additionalDataChange($event)">
+    </jigsaw-table>
+</demo-template>

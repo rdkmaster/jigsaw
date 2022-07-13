@@ -3,12 +3,13 @@ import {CommonModule} from "@angular/common";
 import {JigsawBreadcrumbModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BreadcrumbBasicDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [BreadcrumbBasicDemoComponent],
     exports: [ BreadcrumbBasicDemoComponent ],
-    imports: [CommonModule, JigsawBreadcrumbModule, JigsawDemoDescriptionModule]
+    imports: [CommonModule, JigsawBreadcrumbModule, JigsawDemoDescriptionModule, DemoTemplateModule]
 })
-export class BreadcrumbBasicDemoModule{
+export class BreadcrumbBasicDemoModule {
 
 }

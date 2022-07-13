@@ -1,11 +1,20 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
+    selector: "multiple-select-select",
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["../public.css"]
 })
-export class MultipleSelectDemoComponent {
+
+export class SelectMultipleSelectComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
@@ -84,10 +93,6 @@ export class MultipleSelectDemoComponent {
     valueChange($event) {
         console.log($event);
     }
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

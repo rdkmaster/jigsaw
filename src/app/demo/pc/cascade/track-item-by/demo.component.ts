@@ -1,21 +1,18 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
-import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "Track-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeTrackItemByDemoComponent {
-    areas: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+export class CascadeTrackComponent {
+    areas: SimpleTreeData;
+    constructor(http: HttpClient, public text: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this.areas = data);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = 'trackItemBy用于告诉级联组件通过哪个或者哪些字段来区分所有条目';
-    description: string = '';
 }

@@ -1,7 +1,9 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {JigsawNavigationMenu, JigsawProgress, SimpleNode, SimpleTreeData} from "jigsaw/public_api";
+import {MenuTextService} from "../text.service";
 
 @Component({
+    selector: 'navigation-menu',
     templateUrl: './demo.component.html',
     styles: [`
         .block {
@@ -22,7 +24,7 @@ export class NavigationMenuNavDemo {
     public data4: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
 
-    constructor() {
+    constructor(public text: MenuTextService) {
         this.data1.fromXML(`
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
@@ -138,10 +140,4 @@ export class NavigationMenuNavDemo {
     onCollapsedChanged(event: boolean) {
         console.log(event, this.collapsed);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '制作一个可以折叠的导航菜单';
-    description: string = '';
 }

@@ -1,11 +1,20 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "valid-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectValidDemoComponent {
+
+export class SelectValidComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     cityList = new ArrayCollection([
         { label: "北京" },
         { label: "上海" },
@@ -20,9 +29,6 @@ export class SelectValidDemoComponent {
     public selectChange(selectedItem: any) {
         console.log("the select city is:", selectedItem.label);
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: SelectTextService) {}
+
 }

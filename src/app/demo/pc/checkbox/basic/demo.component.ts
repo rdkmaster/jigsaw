@@ -1,21 +1,16 @@
 import {Component} from "@angular/core";
+import {CheckboxTextService} from "../text.service";
 import {CheckBoxStatus} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "basic-checkbox",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CheckBoxBasicDemoComponent {
-    checked = CheckBoxStatus.unchecked;
-    enableIndeterminate: boolean = false;
 
-    // 第二个组件
-    status = CheckBoxStatus.indeterminate;
+export class CheckboxBasicComponent {
+    public status = CheckBoxStatus.unchecked;
+    public enableIndeterminate: boolean = false;
+    constructor(public text: CheckboxTextService) {}
 
-    mode = ['normal'];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了`JigsawCheckBox`的基本用法以及如何使用它的中间状态';
-    description: string = '';
 }

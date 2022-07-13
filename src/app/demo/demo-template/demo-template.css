@@ -1,0 +1,45 @@
+.demo-border {
+    position: relative;
+    border: 1px solid #D9D9D9;
+    border-radius: 4px;
+    margin-top:34px;
+}
+
+.noLabelBorder {
+    margin-top: 15px;
+}
+
+.label {
+    position: relative;
+    top: -17px;
+    left: 30px;
+    background-color: #FFF;
+}
+
+.content {
+    margin: 0 32px 55px 32px;
+}
+
+.noLabelContent {
+    margin: 20px 30px 55px 30px;
+}
+
+hr {
+    position: absolute;
+    bottom: 32px;
+    width: 100%;
+    height: 1px;
+    border-top: 1px dashed #D9D9D9;
+}
+
+a {
+    width: 100px;
+    position: absolute;
+    bottom:8px;
+    left: 50%;
+    margin-left: -50px;
+    text-align: center;
+}
+:host ::ng-deep .jigsaw-button-bar-host .jigsaw-tile-host .jigsaw-tile-option {
+    min-width: 39px;
+}

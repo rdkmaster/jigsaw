@@ -1,10 +1,6 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<jigsaw-input value="clearable" [clearable]="enabled"></jigsaw-input>
-<jigsaw-switch [(checked)]="enabled" onLabel="on" offLabel="off"></jigsaw-switch>
-
+<demo-template [data]="''" [text]="text['text']['clearable']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-input value="clearable" [clearable]="enabled"></jigsaw-input>
+    <jigsaw-switch [(checked)]="enabled" onLabel="on" offLabel="off"></jigsaw-switch>
+</demo-template>
 

@@ -1,8 +1,10 @@
 import {Component, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'set-cell-class-table',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     //TO NOTE
@@ -11,7 +13,7 @@ import {TableData, ColumnDefine} from "jigsaw/public_api";
 export class TableSetCellClassDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -25,10 +27,4 @@ export class TableSetCellClassDemoComponent {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

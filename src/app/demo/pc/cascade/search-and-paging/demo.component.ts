@@ -1,13 +1,19 @@
-import {Component, OnInit} from "@angular/core";
+import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData, ArrayCollection} from "jigsaw/public_api";
+import {CascadeData} from "../../../../../jigsaw/pc-components/cascade/cascade";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "search-and-paging-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeSearchAndPagingDemoComponent implements OnInit {
-    constructor(public http: HttpClient) {
+
+export class CascadeSearchAndPagingComponent {
+    constructor(public http: HttpClient, public text: CascadeTextService) {
     }
 
     lazyLoadSelectedItems: any[];
@@ -54,12 +60,6 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
             return result;
         }, []).join(' | ');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo说明如何使用selectedItems属性来预设一组默认选中的条目';
-    description: string = '';
 }
 
 

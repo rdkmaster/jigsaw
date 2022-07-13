@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
+import {BreadcrumbTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-breadcrumb',
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbBasicDemoComponent {
     breadcrumbItems: any[];
 
-    constructor() {
+    constructor(public text: BreadcrumbTextService) {
         this.resetBreadcrumbItems();
     }
 
@@ -25,10 +27,4 @@ export class BreadcrumbBasicDemoComponent {
             { id: 3, label: "Detail", icon: "iconfont iconfont-e385" }
         ];
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "高定制性的面包屑，理论上可以完成任何导航场景，代价是需要自行控制，" + '参考<a href="/breadcrumb/router">这个demo</a>使用自动控制的面包屑。';
-    description: string = "";
 }

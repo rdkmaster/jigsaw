@@ -1,5 +1,4 @@
 import { NgModule } from "@angular/core";
-import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { SearchInputDebounceDemoComponent } from "./demo.component";
 import {
     JigsawSearchInputModule,
@@ -7,16 +6,17 @@ import {
     JigsawNumericInputModule,
     JigsawButtonModule
 } from "jigsaw/public_api";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [SearchInputDebounceDemoComponent],
     exports: [SearchInputDebounceDemoComponent],
     imports: [
-        JigsawDemoDescriptionModule,
         JigsawSearchInputModule,
         JigsawHeaderModule,
         JigsawNumericInputModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        DemoTemplateModule
     ]
 })
 export class SearchInputDebounceDemoModule {}

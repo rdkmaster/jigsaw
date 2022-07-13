@@ -1,9 +1,14 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } from "jigsaw/public_api";
+import {UploadTextService} from "../text.service";
 
-@Component({ templateUrl: "./demo.component.html", styleUrls: ["./demo.component.css"] })
+@Component({
+    selector: 'change-target-url-upload',
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"]
+})
 export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
-    constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public text: UploadTextService) {}
     public uploadImmediately: boolean = false;
 
     @ViewChild("first", { read: JigsawUploadDirective })

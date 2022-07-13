@@ -1,11 +1,19 @@
-import { Component, QueryList, ViewChildren } from "@angular/core";
-import { JigsawTag } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {TagTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
+    selector: "selectable-tag",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
-export class TagSelectableDemoComponent {
+
+export class TagSelectableComponent {
+    public selectedLabel = {label: "大", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "medium"}
+    ]);
     tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Disabled1', 'Disabled2'];
     tags1 = [
         {label: 'Tag1', selected: true}, {label: 'Tag2'}, {label: 'Tag3'},
@@ -22,10 +30,6 @@ export class TagSelectableDemoComponent {
         this.tags1.forEach(tag => tag.selected = false);
         this.tags1[idx].selected = true;
     }
+    constructor(public text: TagTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '设置`selectedColor`属性可以让Tag在选中后，自动切换为此属性指定的颜色，从而形成一种被选中的效果';
-    description: string = "";
 }

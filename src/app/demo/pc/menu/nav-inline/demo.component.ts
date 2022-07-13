@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {SimpleTreeData} from "jigsaw/public_api";
+import {MenuTextService} from "../text.service";
 
 @Component({
+    selector: 'nav-inline-menu',
     templateUrl: './demo.component.html',
 })
 export class NavigationMenuInlineDemo {
@@ -11,7 +13,7 @@ export class NavigationMenuInlineDemo {
     public data3: SimpleTreeData = new SimpleTreeData();
     public data4: SimpleTreeData = new SimpleTreeData();
 
-    constructor() {
+    constructor(public text: MenuTextService) {
         const xmlData1 = `
             <node>
                 <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
@@ -48,10 +50,4 @@ export class NavigationMenuInlineDemo {
     menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '制作一个内嵌的导航菜单';
-    description: string = '';
 }

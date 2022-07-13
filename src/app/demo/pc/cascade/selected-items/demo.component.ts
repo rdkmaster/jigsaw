@@ -1,13 +1,18 @@
 import {Component, OnInit} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData, SimpleTreeData} from "jigsaw/public_api";
+import {CascadeData} from "../../../../../jigsaw/pc-components/cascade/cascade";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "selected-items-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeSelectedItemsDemoComponent implements OnInit {
-    constructor(public http: HttpClient) {
+
+export class CascadeSelectedItemsComponent implements OnInit {
+    constructor(public http: HttpClient, public text: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => {
             // 设置静态数据
@@ -57,12 +62,6 @@ export class CascadeSelectedItemsDemoComponent implements OnInit {
             list: this.http.get<any[]>('/mock-data/cascade/selected-items/area', {params: params}),
         }
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo说明如何使用selectedItems属性来预设一组默认选中的条目';
-    description: string = '';
 }
 
 

@@ -1,16 +1,14 @@
 import { Component } from "@angular/core";
+import {SearchInputTextService} from "../text.service";
 
 @Component({
+    selector: 'disabled-search-input',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class SearchInputDisabledDemoComponent {
     public disabled1 = false;
     public disabled2 = false;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
+    constructor(public text: SearchInputTextService) {
+    }
 }

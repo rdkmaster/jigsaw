@@ -1,15 +1,21 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "option-width-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectOptionWidthDemoComponent {
-    optionWidth = 400;
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个Demo演示了通过optionWidth属性来使得下拉列表的宽度变大的效果';
-    description: string = '';
+export class SelectOptionWidthComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
+    optionWidth = 400;
+    constructor(public text: SelectTextService) {}
+
 }

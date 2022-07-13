@@ -1,35 +1,31 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">普通数据</jigsaw-header>
+    <ul>
+        <li class="demo-item">
+            <div class="item-buttons">
+                <span>输入数据：</span>
+                <jigsaw-button (click)="addItem()">追加一个元素</jigsaw-button>
+                <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
+                <jigsaw-button (click)="changeInputData()">修改数据</jigsaw-button>
+            </div>
 
-<!-- start to learn the demo from here -->
-<jigsaw-header [level]="1">Transfer</jigsaw-header>
+            <div class="item-buttons">
+                <span>已穿梭数据：</span>
+                <jigsaw-button (click)="addSelectedItem()">追加一个元素</jigsaw-button>
+                <jigsaw-button (click)="removeSelectedItem()">删除最后一个元素</jigsaw-button>
+                <jigsaw-button (click)="changeSelectedData()">修改数据</jigsaw-button>
+            </div>
 
-<jigsaw-header [level]="2">普通数据</jigsaw-header>
-<ul>
-    <li class="demo-item">
-        <div class="item-buttons">
-            <span>输入数据：</span>
-            <jigsaw-button (click)="addItem()">追加一个元素</jigsaw-button>
-            <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
-            <jigsaw-button (click)="changeInputData()">修改数据</jigsaw-button>
-        </div>
-
-        <div class="item-buttons">
-            <span>已穿梭数据：</span>
-            <jigsaw-button (click)="addSelectedItem()">追加一个元素</jigsaw-button>
-            <jigsaw-button (click)="removeSelectedItem()">删除最后一个元素</jigsaw-button>
-            <jigsaw-button (click)="changeSelectedData()">修改数据</jigsaw-button>
-        </div>
-
-        <div class="item-buttons">
-            <span>数据重置：</span>
-            <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
-            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
-        </div>
-    </li>
-    <li class="demo-item">
-        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
-                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer"></j-transfer>
-    </li>
-</ul>
+            <div class="item-buttons">
+                <span>数据重置：</span>
+                <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+                <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+            </div>
+        </li>
+        <li class="demo-item">
+            <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
+                        [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer"></j-transfer>
+        </li>
+    </ul>
+</demo-template>

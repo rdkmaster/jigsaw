@@ -1,0 +1,9 @@
+p {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
+    line-height: 1.5;
+    padding: 3px 0 4px;
+}

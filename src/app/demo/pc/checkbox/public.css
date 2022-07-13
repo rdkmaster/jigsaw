@@ -1,0 +1,18 @@
+.comment {
+    display: inline-block;
+    margin-right: 24px;
+    margin-bottom: 20px;
+    color: #666;
+    font-size: 14px;
+    width: 100px;
+}
+
+.notes {
+    display: inline-block;
+    margin-left: 29px;
+}
+
+:host ::ng-deep demo-template .demo-border {
+    margin-top: 15px;
+}
+

@@ -10,6 +10,7 @@ import {
 } from "jigsaw/public_api";
 import { UploadResultDemoComponent } from "./demo.component";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [UploadResultDemoComponent],
@@ -22,7 +23,8 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
         JigsawRadioLiteModule,
         JigsawSwitchModule,
         JigsawNumericInputModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        DemoTemplateModule
     ]
 })
 export class UploadResultDemoModule {}

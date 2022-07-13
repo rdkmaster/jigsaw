@@ -1,72 +1,69 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['usage']">
+    <!-- start to learn the demo from here -->
+    <div class="block" style="height: 70vh">
+        <h4 style="margin-bottom: 8px">用法1：垂直导航菜单</h4>
+        <jigsaw-navigation-menu [data]="navData" (select)="menuSelect($event)" height="100%"
+                                style="border: 1px solid #dcdcdc;">
+        </jigsaw-navigation-menu>
+        <div class="vertical-rule" style="margin-top: -27px;"></div>
+    </div>
+    <div class="block" style="width: 380px">
+        <h4 style="margin-bottom: 8px">用法2：软件菜单</h4>
+        <p>一般用于屏幕或者对话框顶部，作为功能菜单使用</p>
+        <div class="content">
+            <label *ngFor="let menu of menuData" class="menu-item"
+                   jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
+                   jigsawCascadingMenuWidth="220" jigsawCascadingMenuTheme="light"
+                   (jigsawCascadingMenuSelect)="menuSelect($event)">
+                {{menu.label}}
+            </label>
+        </div>
 
+        <h4 style="margin-bottom: 8px">用法3：水平导航菜单</h4>
+        <p>一般用于屏幕顶部，作为一级水平导航栏使用</p>
+        <div class="content">
+            <label *ngFor="let menu of topBarData" class="nav-item"
+                   jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
+                   jigsawCascadingMenuWidth="250" jigsawCascadingMenuTheme="navigation"
+                   (jigsawCascadingMenuSelect)="menuSelect($event)">
+                {{menu.label}}
+            </label>
+        </div>
 
-<!-- start to learn the demo from here -->
-<div class="block" style="height: 70vh">
-    <h4 style="margin-bottom: 8px">用法1：垂直导航菜单</h4>
-    <jigsaw-navigation-menu [data]="navData" (select)="menuSelect($event)" height="100%"
-                            style="border: 1px solid #dcdcdc;">
-    </jigsaw-navigation-menu>
-    <div class="vertical-rule" style="margin-top: -27px;"></div>
-</div>
-<div class="block" style="width: 380px">
-    <h4 style="margin-bottom: 8px">用法2：软件菜单</h4>
-    <p>一般用于屏幕或者对话框顶部，作为功能菜单使用</p>
-    <div class="content">
-        <label *ngFor="let menu of menuData" class="menu-item"
-               jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
-               jigsawCascadingMenuWidth="220" jigsawCascadingMenuTheme="light"
+        <h4 style="margin-bottom: 8px">用法4：下拉菜单</h4>
+        <p>一般用于视图内部</p>
+        <div class="content">
+            <a jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
+               jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
                (jigsawCascadingMenuSelect)="menuSelect($event)">
-            {{menu.label}}
-        </label>
-    </div>
+                点击弹出菜单
+            </a>
+        </div>
 
-    <h4 style="margin-bottom: 8px">用法3：水平导航菜单</h4>
-    <p>一般用于屏幕顶部，作为一级水平导航栏使用</p>
-    <div class="content">
-        <label *ngFor="let menu of topBarData" class="nav-item"
-               jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
-               jigsawCascadingMenuWidth="250" jigsawCascadingMenuTheme="navigation"
-               (jigsawCascadingMenuSelect)="menuSelect($event)">
-            {{menu.label}}
-        </label>
-    </div>
+        <h4 style="margin-bottom: 8px">用法5：与按钮组合</h4>
+        <p style="margin-top: 8px">
+            <jigsaw-button jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
+                           jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
+                           (jigsawCascadingMenuSelect)="menuSelect($event)">
+                操作 <span class="iconfont iconfont-e24c"></span>
+            </jigsaw-button>
+            风格1：单击按钮直接弹出菜单
+        </p>
 
-    <h4 style="margin-bottom: 8px">用法4：下拉菜单</h4>
-    <p>一般用于视图内部</p>
-    <div class="content">
-        <a jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
-           jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
-           (jigsawCascadingMenuSelect)="menuSelect($event)">
-            点击弹出菜单
-        </a>
-    </div>
-
-    <h4 style="margin-bottom: 8px">用法5：与按钮组合</h4>
-    <p style="margin-top: 8px">
-        <jigsaw-button jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
-                       jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
-                       (jigsawCascadingMenuSelect)="menuSelect($event)">
-            操作 <span class="iconfont iconfont-e24c"></span>
-        </jigsaw-button>
-        风格1：单击按钮直接弹出菜单
-    </p>
-
-    <p style="margin-top: 8px">
-        <jigsaw-button>
-            <span>新建工程</span>
-            <span style="margin-left:8px" class="iconfont iconfont-e24c" jigsawCascadingMenu
-                  [jigsawCascadingMenuData]="dropdownData" jigsawCascadingMenuWidth="230"
-                  jigsawCascadingMenuTheme="dark" (jigsawCascadingMenuSelect)="menuSelect($event)">
+        <p style="margin-top: 8px">
+            <jigsaw-button>
+                <span>新建工程</span>
+                <span style="margin-left:8px" class="iconfont iconfont-e24c" jigsawCascadingMenu
+                      [jigsawCascadingMenuData]="dropdownData" jigsawCascadingMenuWidth="230"
+                      jigsawCascadingMenuTheme="dark" (jigsawCascadingMenuSelect)="menuSelect($event)">
         </span>
-        </jigsaw-button>
-        风格2：单击按钮直接执行操作，单击箭头出下拉菜单
-    </p>
-</div>
-<div class="vertical-rule"></div>
-<div class="block">
-    <h4 style="margin-bottom: 8px">用法6：鼠标右击</h4>
-    <p class="context-menu" (contextmenu)="showContext($event)"></p>
-</div>
+            </jigsaw-button>
+            风格2：单击按钮直接执行操作，单击箭头出下拉菜单
+        </p>
+    </div>
+    <div class="vertical-rule"></div>
+    <div class="block">
+        <h4 style="margin-bottom: 8px">用法6：鼠标右击</h4>
+        <p class="context-menu" (contextmenu)="showContext($event)"></p>
+    </div>
+</demo-template>

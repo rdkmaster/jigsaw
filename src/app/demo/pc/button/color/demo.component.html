@@ -1,0 +1,26 @@
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['color']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header>预设颜色</jigsaw-header>
+    <div style="margin-bottom: 20px">
+        <jigsaw-button [preSize]="selectedLabel.size">Default</jigsaw-button>
+
+        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size">Primary</jigsaw-button>
+
+        <jigsaw-button colorType="warning" [preSize]="selectedLabel.size">Warning</jigsaw-button>
+
+        <jigsaw-button colorType="error" [preSize]="selectedLabel.size">Error</jigsaw-button>
+
+        <jigsaw-button colorType="danger" [preSize]="selectedLabel.size">Danger</jigsaw-button>
+    </div>
+
+    <jigsaw-header>预设颜色,另一种写法（指令）</jigsaw-header>
+    <div>
+        <a jigsaw-button [preSize]="selectedLabel.size">Default</a>
+
+        <a jigsaw-button colorType="primary" [preSize]="selectedLabel.size">Primary</a>
+
+        <a jigsaw-button colorType="warning" [preSize]="selectedLabel.size">Warning</a>
+
+        <a jigsaw-button colorType="error" [preSize]="selectedLabel.size">Error</a>
+    </div>
+</demo-template>

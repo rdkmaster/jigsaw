@@ -4,14 +4,16 @@ import {
     PageableTableData, ColumnDefine, DataSortInfo, SortAs,
     SortOrder
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'pageable-table',
     templateUrl: './demo.component.html'
 })
 export class TablePageableDemoComponent {
     pageable: PageableTableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });
@@ -57,10 +59,4 @@ export class TablePageableDemoComponent {
     }
 
     searchDebounce = ['none'];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

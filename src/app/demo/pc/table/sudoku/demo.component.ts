@@ -3,15 +3,17 @@ import {HttpClient} from "@angular/common/http";
 import {TableData, JigsawInfoAlert} from "jigsaw/public_api";
 import {NumberRenderer} from "./number-renderer";
 import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'sudoku-table',
     templateUrl: './demo.component.html'
 })
 export class SudokuGameComponent {
     puzzles: string[][];
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
         this.tableData.subscribe((event) => this.checkBoardStatus(event));
         http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {
@@ -59,10 +61,4 @@ export class SudokuGameComponent {
             this.tableData.emit(PUZZLE_SOLVED);
         }
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '通过数独游戏的实现过程来学习如何在表格的渲染器之间进行复杂的交互逻辑';
-    description: string = '';
 }

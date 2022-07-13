@@ -1,0 +1,28 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+
+    <!-- start to learn the demo from here -->
+    <span>进度值</span>
+    <j-numeric-input min="0" max="110" [(value)]="progressValue">
+    </j-numeric-input>
+
+    <div style="margin-top:20px">
+        <jigsaw-header [level]="2">默认尺寸</jigsaw-header>
+        <j-progress [value]="progressValue" [preSize]="selectedLabel.size"></j-progress>
+    </div>
+
+    <div style="margin-top:20px">
+        <jigsaw-header [level]="2">文字在左边</jigsaw-header>
+        <j-progress [value]="progressValue" labelPosition="left" [preSize]="selectedLabel.size">
+        </j-progress>
+        <j-progress [value]="progressValue" labelPosition="left" status="block" [preSize]="selectedLabel.size">
+        </j-progress>
+    </div>
+
+    <div style="margin-top:20px">
+        <jigsaw-header [level]="2">文字在顶部</jigsaw-header>
+        <j-progress [value]="progressValue" width="400" labelPosition="top" [showMarker]="true"
+                    [preSize]="selectedLabel.size"></j-progress>
+        <j-progress [value]="progressValue" width="400" labelPosition="top" [showMarker]="true" status="block"
+                    [preSize]="selectedLabel.size"></j-progress>
+    </div>
+</demo-template>

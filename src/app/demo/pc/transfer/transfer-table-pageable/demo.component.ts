@@ -7,15 +7,17 @@ import {
     ListOption,
     PageableTableData
 } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'transfer-table-pageable-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 
 })
 export class TransferTablePageableDemoComponent {
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TransferTextService) {
         this.data = new PageableTableData(http, 'mock-data/hr-list-full');
         this.data.http = http;
         this.data.pagingInfo.pageSize = 10;
@@ -48,10 +50,4 @@ export class TransferTablePageableDemoComponent {
     resetSelectedData() {
         this.selectedData = new ArrayCollection([]);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

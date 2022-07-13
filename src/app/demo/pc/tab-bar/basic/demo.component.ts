@@ -1,16 +1,23 @@
-import { Component, OnInit } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { JigsawMenu, LineGraphData, SimpleTreeData, TabBarData, TableData } from "jigsaw/public_api";
+import {Component, OnInit} from "@angular/core";
+import {TabBarTextService} from "../text.service";
+import {TabBarData} from "../../../../../jigsaw/pc-components/tabs";
+import {TableData} from "../../../../../jigsaw/common/core/data/table-data";
+import {LineGraphData} from "../../../../../jigsaw/common/core/data/graph-data";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
+import {HttpClient} from "@angular/common/http";
+import {JigsawMenu} from "../../../../../jigsaw/pc-components/menu";
 
 @Component({
+    selector: "basic-tabBar",
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["../public.css"]
 })
-export class JigsawTabBarComponent implements OnInit {
-    tabBarData: Array<string>;
-    tabBarData2: TabBarData[];
-    headless: boolean = true;
-    selectedIndex = 0;
+
+export class TabBarBasicComponent implements OnInit{
+    public tabBarData: Array<string>;
+    public tabBarData2: TabBarData[];
+    public headless: boolean = true;
+    public selectedIndex = 0;
 
     fruitList: TableData = new TableData(
         [
@@ -58,7 +65,7 @@ export class JigsawTabBarComponent implements OnInit {
     lineBarGraphData: LineGraphData;
     menuData: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+    constructor(public http: HttpClient, public text: TabBarTextService) {
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax("mock-data/marketing");
@@ -110,10 +117,4 @@ export class JigsawTabBarComponent implements OnInit {
     menuSelect(node: SimpleTreeData) {
         alert(`${node.label} 被点击了!!!`);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "Jigsaw的Tab页签可以脱离tab容器，独立出来使用，这个demo演示了这个功能。";
-    description: string = "";
 }

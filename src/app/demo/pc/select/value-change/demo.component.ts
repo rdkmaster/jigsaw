@@ -1,15 +1,24 @@
-import { Component } from "@angular/core";
-import {ArrayCollection, InternalUtils} from "jigsaw/public_api";
-
+import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
+import {InternalUtils} from "../../../../../jigsaw/common/core/utils/internal-utils";
 class ForeverBusyArrayCollection extends ArrayCollection<any> {
     _busy = true;
 }
 
 @Component({
+    selector: "value-change-select",
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["../public.css"]
 })
-export class SelectValueChangeDemoComponent {
+
+export class SelectValueChangeComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     foreverBusyArray = new ForeverBusyArrayCollection();
 
     dataList = new ArrayCollection([
@@ -107,10 +116,6 @@ export class SelectValueChangeDemoComponent {
             { label: "文本选项4" }
         ]);
     }
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

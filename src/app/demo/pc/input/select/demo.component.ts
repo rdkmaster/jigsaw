@@ -1,16 +1,14 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/public_api";
+import {InputTextService} from "../text.service";
 
 @Component({
+    selector: 'select-input',
     templateUrl: './demo.component.html'
 })
 export class InputSelectDemoComponent {
 
     select: boolean;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: InputTextService) {
+    }
 }

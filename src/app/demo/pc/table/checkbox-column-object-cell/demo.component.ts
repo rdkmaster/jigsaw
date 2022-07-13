@@ -4,12 +4,14 @@ import {
     TableData, AdditionalColumnDefine, AdditionalTableData, ColumnDefine,
     TableCellCheckboxRenderer, TableCellRendererBase, TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'checkbox-column-object-cell-table',
     templateUrl: './demo.component.html'
 })
 export class TableCheckboxColumnObjectCellDemoComponent {
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         // 对ajax返回过来的数据进行预处理
@@ -73,12 +75,6 @@ export class TableCheckboxColumnObjectCellDemoComponent {
             return selectedRows;
         }, []).join(',');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这demo介绍table中使用内置checkbox渲染器';
-    description: string = require('!!raw-loader!../checkbox-column/readme.md').default;
 }
 
 @Component({

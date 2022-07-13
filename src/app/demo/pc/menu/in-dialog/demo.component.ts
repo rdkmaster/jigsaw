@@ -1,7 +1,9 @@
 import {Component, TemplateRef} from "@angular/core";
 import {SimpleTreeData, PopupService, PopupInfo, JigsawMenu} from "jigsaw/public_api";
+import {MenuTextService} from "../text.service";
 
 @Component({
+    selector: 'in-dialog-menu',
     templateUrl: './demo.component.html',
     styles: [`
         .content {
@@ -27,7 +29,7 @@ export class MenuInDialogDemo {
     public autoDispose: boolean = false;
     public timeout: number = 3000;
 
-    constructor(private ps: PopupService) {
+    constructor(private ps: PopupService, public text: MenuTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
@@ -79,10 +81,4 @@ export class MenuInDialogDemo {
     dispose() {
         this.popupInfo.dispose();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo主要用于测试上下文菜单在各种弹出场景下自动关闭的效果';
-    description: string = '';
 }

@@ -4,6 +4,7 @@ import {
     TableData, ColumnDefine, JigsawInput, TableCellRendererBase,
     TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 /*
  * 自定义单元格渲染组件
@@ -38,13 +39,14 @@ export class MyTableCellEditor extends TableCellRendererBase implements AfterVie
 }
 
 @Component({
+    selector: 'cell-editable-table',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
 export class TableSetCellEditableDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -130,10 +132,4 @@ export class TableSetCellEditableDemoComponent {
             console.log(this.tableData.data[row][value.column]);
         }
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

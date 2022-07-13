@@ -1,14 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['withCombo']">
 
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">cascade</jigsaw-header>
-
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">单选</jigsaw-header>
+    <div>
+        <jigsaw-markdown [markdown]="'#### 单选'"></jigsaw-markdown>
         <j-combo-select [value]="comboValue1">
             <ng-template>
                 <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems1" [dataGenerator]="generator"
@@ -19,8 +12,8 @@
         </j-combo-select>
     </div>
 
-    <div class="demo-2 live-demo">
-        <jigsaw-header [level]="2">多选</jigsaw-header>
+    <div>
+        <jigsaw-markdown [markdown]="'#### 多选'"></jigsaw-markdown>
         <j-combo-select [value]="comboValue2">
             <ng-template>
                 <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems2" [dataGenerator]="generator"
@@ -30,8 +23,4 @@
             </ng-template>
         </j-combo-select>
     </div>
-</div>
-
-
-
-
+</demo-template>

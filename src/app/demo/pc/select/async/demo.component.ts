@@ -1,13 +1,23 @@
 import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {ArrayCollection} from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "async-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
+
 export class SelectAsyncComponent {
-    constructor(public http: HttpClient) {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
+    constructor(public http: HttpClient, public text: SelectTextService) {
         this.cities = new ArrayCollection();
         this.cities.http = http;
         this.cities.fromAjax({url: '/mock-data/select/async/area', params: {provinceId: '10'}});
@@ -23,14 +33,7 @@ export class SelectAsyncComponent {
     selectChange(selectedItem: any) {
         this.selectedCityName = selectedItem.name;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }
-
 
 /* 模拟请求代码 start */
 
@@ -51,3 +54,4 @@ function dealAreaRequest(req: HttpRequest<any>): any {
 }
 
 /* 模拟请求代码 end */
+

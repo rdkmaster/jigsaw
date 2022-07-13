@@ -4,8 +4,10 @@ import {
     LocalPageableTableData, PageableTableData, AdditionalColumnDefine, AdditionalTableData,
     TableCellCheckboxRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'checkbox-column-pageable-table',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap j-tag {
@@ -16,7 +18,7 @@ import {
 export class TableAddCheckboxColumnPageableDemoComponent {
     pageable: LocalPageableTableData | PageableTableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });
@@ -105,9 +107,4 @@ export class TableAddCheckboxColumnPageableDemoComponent {
         const context = {reg};
         this.pageable.filter(filter, context);
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这demo介绍table中使用内置checkbox渲染器';
-    description: string = require('!!raw-loader!../checkbox-column/readme.md').default;
 }

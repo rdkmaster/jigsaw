@@ -8,8 +8,14 @@ import { SearchInputDebounceDemoComponent } from "./debounce/demo.component";
 import { SearchInputDebounceDemoModule } from "./debounce/demo.module";
 import {SearchInputHistoryStorageKeyDemoComponent} from "./history-storage-key/demo.component";
 import {SearchInputHistoryStorageKeyDemoModule} from "./history-storage-key/demo.module";
+import {SearchInputAllComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: "all", component: SearchInputAllComponent
+    },
     {
         path: "basic", component: SearchInputBasicDemoComponent
     },
@@ -30,7 +36,10 @@ export const routerConfig = [
         SearchInputBasicDemoModule,
         SearchInputDisabledDemoModule,
         SearchInputDebounceDemoModule,
-        SearchInputHistoryStorageKeyDemoModule
-    ]
+        SearchInputHistoryStorageKeyDemoModule,
+        DemoTemplateModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [SearchInputAllComponent]
 })
 export class SearchInputDemoModule {}

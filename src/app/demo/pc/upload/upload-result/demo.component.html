@@ -1,58 +1,56 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['uploadResult']">
+    <!-- start to learn the demo from here -->
+    <p style="margin-bottom: 12px">
+        提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。<br>
+        <a (click)="clear()">清空所有已上传的文件</a>
+    </p>
+    <jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
+    <div>
+        <a j-upload #first>上传</a>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
+                          (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
 
-<!-- start to learn the demo from here -->
-<jigsaw-header [level]="1">Upload指令面板</jigsaw-header>
-<p style="margin-bottom: 12px">
-    提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。<br>
-    <a (click)="clear()">清空所有已上传的文件</a>
-</p>
-<jigsaw-header>指令面板：有宽度高度限制</jigsaw-header>
-<div>
-    <a j-upload #first>上传</a>
-</div>
-<jigsaw-upload-result [uploader]="uploader1" width="200px" height="200px" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
+    <jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
+    <div>
+        <a j-upload #second>上传</a>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader2" (change)="onChange('change', $event)"
+                          (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
 
-<jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
-<div>
-    <a j-upload #second>上传</a>
-</div>
-<jigsaw-upload-result [uploader]="uploader2" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
+    <jigsaw-header>指令面板：上传按钮</jigsaw-header>
+    <div>
+        <jigsaw-button j-upload #third>上传</jigsaw-button>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
+                          (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
 
-<jigsaw-header>指令面板：上传按钮</jigsaw-header>
-<div>
-    <jigsaw-button j-upload #third>上传</jigsaw-button>
-</div>
-<jigsaw-upload-result [uploader]="uploader3" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
-
-<jigsaw-header>指令面板：配置选项</jigsaw-header>
-<div>
-    <p style="display: inline-block; margin: 12px 0">文件数目：</p>
-    <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
-    <br>
-    <p style="display: inline-block; margin-bottom: 12px">文件类型：</p>
-    <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg']">
-    </jigsaw-radios-lite>
-    <br>
-    <p style="display: inline-block; margin-bottom: 12px">文件大小：</p>
-    <span>最小限制</span>
-    <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input>
-    <span>MB</span>
-    <span>最大限制</span>
-    <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input>
-    <span>MB</span>
-</div>
-<div>
-    <jigsaw-button j-upload #forth [uploadMultiple]="multiple" [uploadFileType]="fileType"
-                   [uploadMinSize]="minSize" [uploadMaxSize]="maxSize">上传</jigsaw-button>
-</div>
-<jigsaw-upload-result [uploader]="uploader4" (change)="onChange('change', $event)"
-                      (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
-</jigsaw-upload-result>
+    <jigsaw-header>指令面板：配置选项</jigsaw-header>
+    <div>
+        <p style="display: inline-block; margin: 12px 0">文件数目：</p>
+        <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
+        <br>
+        <p style="display: inline-block; margin-bottom: 12px">文件类型：</p>
+        <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg']">
+        </jigsaw-radios-lite>
+        <br>
+        <p style="display: inline-block; margin-bottom: 12px">文件大小：</p>
+        <span>最小限制</span>
+        <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input>
+        <span>MB</span>
+        <span>最大限制</span>
+        <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input>
+        <span>MB</span>
+    </div>
+    <div>
+        <jigsaw-button j-upload #forth [uploadMultiple]="multiple" [uploadFileType]="fileType"
+                       [uploadMinSize]="minSize" [uploadMaxSize]="maxSize">上传
+        </jigsaw-button>
+    </div>
+    <jigsaw-upload-result [uploader]="uploader4" (change)="onChange('change', $event)"
+                          (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
+</demo-template>

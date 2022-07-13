@@ -1,35 +1,35 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+    <div>
+        <jigsaw-markdown [markdown]="'#### 基本用法'"></jigsaw-markdown>
 
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Select</jigsaw-header>
-    <div class="live-demo">
-        <jigsaw-header [level]="2">基本用法</jigsaw-header>
         <jigsaw-select id="test-select" [(value)]="selectedCityForSelect"
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
-                       [data]="cityList">
+                       [data]="cityList"
+                       [size]="selectedLabel.size">
         </jigsaw-select>
-        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+        <p>选择的城市是 <span>{{selectedCityName}}</span></p>
     </div>
-    <div class="live-demo">
-        <jigsaw-header [level]="2">字符串数组</jigsaw-header>
+
+    <div>
+        <jigsaw-markdown [markdown]="'#### 字符串数组'"></jigsaw-markdown>
+
         <jigsaw-select [(value)]="selectedCityForSelect2"
                        (valueChange)="selectChange2($event)"
                        placeholder="请选择城市"
-                       [data]="cityArrayList">
+                       [data]="cityArrayList"
+                       [size]="selectedLabel.size">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityForSelect2}}</span></p>
     </div>
-    <div class="live-demo">
-        <jigsaw-header [level]="2">动态labelField</jigsaw-header>
+
+    <div>
+        <jigsaw-markdown [markdown]="'#### 动态labelField'"></jigsaw-markdown>
         <p><a (click)="changeLabelField()">修改labelField</a></p>
+
         <jigsaw-select [data]="cityList3" [(value)]="selectedCityForSelect3" placeholder="请选择城市"
-                       [labelField]="labelField" (valueChange)="selectChange3($event)">
+                       [labelField]="labelField" (valueChange)="selectChange3($event)" [size]="selectedLabel.size">
         </jigsaw-select>
         <p class="message">选择的城市是 <span>{{selectedCityName3}}</span></p>
     </div>
-</div>
+</demo-template>

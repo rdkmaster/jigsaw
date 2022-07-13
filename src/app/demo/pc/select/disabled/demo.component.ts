@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "disabled-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectDisabledDemoComponent {
+
+export class SelectDisabledComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     disabled: boolean;
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
@@ -21,10 +31,6 @@ export class SelectDisabledDemoComponent {
     public selectChange(selectedItem: any) {
         this.selectedCityName = selectedItem.label;
     }
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

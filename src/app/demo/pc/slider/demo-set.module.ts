@@ -1,33 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {SliderVerticalDemoModule} from "./vertical/demo.module";
-import {SliderBasicDemoModule} from "./basic/demo.module";
-import {SliderBasicDemoComponent} from "./basic/demo.component";
-import {SliderVerticalDemoComponent} from "./vertical/demo.component";
-import {SliderUpdateDemoComponent} from "./update/demo.component";
-import {SliderUpdateDemoModule} from "./update/demo.module";
-import {SliderMultiValueComponent} from "./handling-multi-value/demo.component";
-import {SliderMultiValueDemoModule} from "./handling-multi-value/demo.module";
+import {SliderAllModule} from "./demo.module";
+import {SliderAllComponent} from "./demo.component";
 
 export const routerConfig = [
     {
-        path: 'basic', component: SliderBasicDemoComponent
-    },
-    {
-        path: 'vertical', component: SliderVerticalDemoComponent
-    },
-    {
-        path: 'update', component: SliderUpdateDemoComponent
-    },
-    {
-        path: 'handling-multi-value', component: SliderMultiValueComponent
+        path: 'all', component: SliderAllComponent
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig),
-        SliderBasicDemoModule, SliderVerticalDemoModule, SliderUpdateDemoModule, SliderMultiValueDemoModule
+        RouterModule.forChild(routerConfig), SliderAllModule
     ]
 })
 export class SliderDemoModule { }

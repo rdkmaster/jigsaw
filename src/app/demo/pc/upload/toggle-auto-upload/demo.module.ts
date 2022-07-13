@@ -11,6 +11,7 @@ import {
 } from "jigsaw/public_api";
 import { UploadAutoUploadDemoComponent } from "./demo.component";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [UploadAutoUploadDemoComponent],
@@ -24,7 +25,8 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
         JigsawSwitchModule,
         JigsawNumericInputModule,
         JigsawButtonModule,
-        JigsawButtonBarModule
+        JigsawButtonBarModule,
+        DemoTemplateModule
     ]
 })
 export class UploadAutoUploadDemoModule {}

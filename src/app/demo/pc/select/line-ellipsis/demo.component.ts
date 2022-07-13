@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "line-ellipsis-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectLineEllipsisDemoComponent {
+
+export class SelectLineEllipsisComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
@@ -20,10 +30,5 @@ export class SelectLineEllipsisDemoComponent {
     selectChange(selectedItem: any) {
         this.selectedCityName = selectedItem.label;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: SelectTextService) {}
 }

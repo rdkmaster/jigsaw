@@ -1,16 +1,14 @@
 import {Component} from "@angular/core";
+import {ButtonTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-button',
     templateUrl: './demo.component.html'
 })
 export class ButtonBasicDemoComponent {
+    public selectedLabel = {label: "中", size: "default"};
+    constructor(public text: ButtonTextService) {}
     onClick() {
         alert('hello jigsaw button');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '展示了按钮的3种使用场景。提示：使用button标签的方式可以与`form`结合使用，设置`type="submit"`。';
-    description: string = '';
 }

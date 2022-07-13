@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, AdditionalColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 /*
  * 操作列头
@@ -38,12 +39,13 @@ export class MyTableCellOption extends TableCellRendererBase {
 }
 
 @Component({
+    selector: 'add-column-table',
     templateUrl: './demo.component.html'
 })
 export class TableAddColumnDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -57,10 +59,4 @@ export class TableAddColumnDemoComponent {
             renderer: MyTableCellOption
         }
     }];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

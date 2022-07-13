@@ -2,8 +2,10 @@ import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {OfficeHeaderRenderer} from "./renderers";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'cell-render-table',
     templateUrl: './demo.component.html'
 })
 export class TableSetCellRenderDemoComponent {
@@ -12,7 +14,8 @@ export class TableSetCellRenderDemoComponent {
 
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService
+    ) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -44,10 +47,4 @@ export class TableSetCellRenderDemoComponent {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

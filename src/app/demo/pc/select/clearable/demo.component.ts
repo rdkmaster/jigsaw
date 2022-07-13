@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "clearable-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectClearableDemoComponent {
+
+export class SelectClearableComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     selectedCityForSelect: string;
     cityList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
@@ -12,9 +22,6 @@ export class SelectClearableDemoComponent {
         console.log("select city is: " + selectedItem);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: SelectTextService) {}
+
 }

@@ -1,11 +1,8 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<h3>面包屑折叠</h3>
-
-<j-breadcrumb [foldThreshold]="foldThreshold" [data]="data"></j-breadcrumb>
-<j-numeric-input [(value)]="foldThreshold" min="3" max="99" placeholder="请输入数字"></j-numeric-input>
-<p class="message">
-    输入值是：<span>{{ foldThreshold }}</span>
-</p>
+<demo-template [data]="''" [text]="text['text']['fold']">
+    <!-- start to learn the demo from here -->
+    <j-breadcrumb [foldThreshold]="foldThreshold" [data]="data"></j-breadcrumb>
+    <j-numeric-input [(value)]="foldThreshold" min="3" max="99" placeholder="请输入数字"></j-numeric-input>
+    <p class="message">
+        输入值是：<span>{{ foldThreshold }}</span>
+    </p>
+</demo-template>

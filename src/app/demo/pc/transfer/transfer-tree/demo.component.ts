@@ -1,8 +1,10 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData, TransferListDestRenderer, TransferTreeSourceRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'transfer-tree-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -11,7 +13,7 @@ export class TransferTreeDemoComponent {
     public sourceRenderer = TransferTreeSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: TransferTextService) {
         this.data = new SimpleTreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");
@@ -113,9 +115,4 @@ export class TransferTreeDemoComponent {
             { label: "叶子节点114", id: 4 }
         ]);
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

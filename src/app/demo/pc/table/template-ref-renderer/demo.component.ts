@@ -1,8 +1,10 @@
 import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, AdditionalColumnDefine, ColumnDefine} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'template-ref-renderer-table',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
@@ -48,7 +50,7 @@ export class TableRendererOfTemplateRefDemoComponent {
         }
     ];
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -64,10 +66,4 @@ export class TableRendererOfTemplateRefDemoComponent {
     handleClick(context) {
         alert(`row: ${context.row}, column: ${context.column}, cellData: ${context.cellData}`)
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

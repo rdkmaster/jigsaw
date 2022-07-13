@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {UploadFileInfo} from "jigsaw/public_api";
+import {UploadTextService} from "../text.service";
 
 @Component({
+    selector: 'directive-upload',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -34,9 +36,6 @@ export class UploadDirectiveDemoComponent {
         this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo展示了`jigsaw-upload`指令的基本用法';
-    description: string = '';
+    constructor(public text: UploadTextService) {
+    }
 }

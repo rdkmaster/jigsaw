@@ -1,14 +1,24 @@
 import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../../../../jigsaw/common/core/data/array-collection";
+import {GroupOptionValue} from "../../../../../jigsaw/pc-components/list-and-tile/group-common";
+import {TableData} from "../../../../../jigsaw/common/core/data/table-data";
+import {CommonUtils} from "../../../../../jigsaw/common/core/utils/common-utils";
 import {HttpClient} from "@angular/common/http";
-import {
-    ArrayCollection, LocalPageableArray, PageableArray, GroupOptionValue,
-    TableData, CommonUtils
-} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "searchable-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectSearchableDemoComponent {
+
+export class SelectSearchableComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
@@ -74,7 +84,7 @@ export class SelectSearchableDemoComponent {
         }
     }
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: SelectTextService) {
         this.lpaCountries = new LocalPageableArray<GroupOptionValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.fromAjax('mock-data/countries');
@@ -99,10 +109,4 @@ export class SelectSearchableDemoComponent {
         this.spaCountries.pagingInfo.pageSize = Infinity;
         this.spaCountries.fromAjax();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

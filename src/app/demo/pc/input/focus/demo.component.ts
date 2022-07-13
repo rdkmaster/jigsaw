@@ -1,7 +1,9 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/public_api";
+import {InputTextService} from "../text.service";
 
 @Component({
+    selector: 'focus-input',
     templateUrl: './demo.component.html'
 })
 export class InputFocusDemoComponent {
@@ -17,10 +19,6 @@ export class InputFocusDemoComponent {
         console.log(event);
         this.focusMessage = 'input component focused'
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: InputTextService) {
+    }
 }

@@ -1,12 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<jigsaw-slider style="margin-left: 50px;"
-               min="10" max="100"
-               [value]="value"
-               vertical="true"
-               height="360">
-</jigsaw-slider>
+<demo-template [data]="''" [text]="text['text']['vertical']">
+    <div class="inline mgr50">
+        <jigsaw-slider [(value)]="value" vertical="true"></jigsaw-slider>
+        <jigsaw-slider class="mgr50" [(value)]="rangeValue" vertical="true"></jigsaw-slider>
+        <jigsaw-slider value="80" [marks]="marks" min="20" vertical="true" height="400"></jigsaw-slider>
+    </div>
+</demo-template>

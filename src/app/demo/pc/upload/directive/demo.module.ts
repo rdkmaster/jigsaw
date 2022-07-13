@@ -6,13 +6,14 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {UploadDirectiveDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [UploadDirectiveDemoComponent],
     exports: [UploadDirectiveDemoComponent],
     imports: [JigsawUploadModule, JigsawDemoDescriptionModule, JigsawSwitchModule,
         JigsawRadioLiteModule, JigsawButtonModule, JigsawLoadingModule, CommonModule,
-        JigsawNumericInputModule, JigsawHeaderModule]
+        JigsawNumericInputModule, JigsawHeaderModule, DemoTemplateModule]
 })
 export class UploadDirectiveDemoModule {
 

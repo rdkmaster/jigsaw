@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -12,7 +14,7 @@ export class TransferArrayDemoComponent {
     data: ArrayCollection<any>;
     selectedItems: ArrayCollection<any>;
 
-    constructor() {
+    constructor(public text: TransferTextService) {
         this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
         this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
@@ -59,10 +61,4 @@ export class TransferArrayDemoComponent {
     resetSelectedData() {
         this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

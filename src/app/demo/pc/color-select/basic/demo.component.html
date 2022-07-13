@@ -1,22 +1,20 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <div class="live-demo-wrap">
+        <p>是否支持透明度</p>
+        <jigsaw-color-select [enableOpacity]="true" color="#e43232" width="40" [preSize]="selectedLabel.size"></jigsaw-color-select>
+        <jigsaw-color-select [enableOpacity]="false" width="40" [preSize]="selectedLabel.size"></jigsaw-color-select>
 
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <p>是否支持透明度</p>
-    <jigsaw-color-select [enableOpacity]="true" color="#e43232" width="40"></jigsaw-color-select>
-    <jigsaw-color-select [enableOpacity]="false" width="40"></jigsaw-color-select>
+        <p>是否需要确认</p>
+        <jigsaw-color-select [enableConfirm]="true" color="#e43232" width="40" [preSize]="selectedLabel.size"></jigsaw-color-select>
+        <jigsaw-color-select [enableConfirm]="false" width="40" [preSize]="selectedLabel.size"></jigsaw-color-select>
 
-    <p>是否需要确认</p>
-    <jigsaw-color-select [enableConfirm]="true" color="#e43232" width="40"></jigsaw-color-select>
-    <jigsaw-color-select [enableConfirm]="false" width="40"></jigsaw-color-select>
-
-    <p>限定颜色</p>
-    <jigsaw-color-select mode="limited" color="#06478c" width="92" optionCount="6"
-                         [limitedColors]="[
+        <p>限定颜色</p>
+        <jigsaw-color-select mode="limited" color="#06478c" width="92" optionCount="6"
+                             [limitedColors]="[
                             '#e6f5ff', '#bde4ff', '#94d2ff', '#6bbfff', '#42aaff',
                             '#1993ff', '#1178d9', '#0b5fb3', '#06478c', '#023166'
-                         ]">
-    </jigsaw-color-select>
-</div>
+                         ]" [preSize]="selectedLabel.size">
+        </jigsaw-color-select>
+    </div>
+</demo-template>

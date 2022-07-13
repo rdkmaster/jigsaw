@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {JigsawTableModule} from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CalendarDateRenderer, TableCalendarDemoComponent} from './demo.component';
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
-    imports: [CommonModule, JigsawTableModule, JigsawDemoDescriptionModule],
+    imports: [CommonModule, JigsawTableModule, DemoTemplateModule],
     declarations: [TableCalendarDemoComponent, CalendarDateRenderer],
     exports: [TableCalendarDemoComponent]
 })

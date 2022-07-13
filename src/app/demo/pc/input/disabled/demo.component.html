@@ -1,13 +1,9 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['disabled']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-input [disabled]="!enabled"></jigsaw-input>
 
-
-<!-- start to learn the demo from here -->
-<jigsaw-input [disabled]="!enabled"></jigsaw-input>
-
-<jigsaw-switch [(checked)]="enabled" onLabel="enabled" offLabel="disabled">
-</jigsaw-switch>
-
+    <jigsaw-switch [(checked)]="enabled" onLabel="enabled" offLabel="disabled">
+    </jigsaw-switch>
+</demo-template>
 
 

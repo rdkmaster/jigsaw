@@ -1,12 +1,16 @@
 import {Component} from "@angular/core";
+import {RadioTextService} from "../text.service";
 import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "basic-radio",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class RadioBasicDemoComponent {
-    public selectedCity;
-    cities = new ArrayCollection([
+
+export class RadioBasicComponent {
+    public selectedCity = {label: "北京", id: 0};
+    public cities = new ArrayCollection([
         {label: "北京", id: 0},
         {label: "上海", id: 2},
         {label: "南京", id: 3},
@@ -15,21 +19,12 @@ export class RadioBasicDemoComponent {
         {label: "西安", id: 6}
     ]);
 
-    constructor() {
-        this.selectedCity = {id: 6, label: "西安"};
-    }
+    constructor(public text: RadioTextService) {}
 
     public radioChange(message: any) {
         console.log(`switch message is: ${message.label}`);
     }
-
-    clearSelectedCity(){
+    clearSelectedCity() {
         this.selectedCity = null;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

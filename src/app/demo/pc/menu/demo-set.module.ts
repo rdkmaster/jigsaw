@@ -10,8 +10,13 @@ import {NavigationMenuNavDemo} from "./navigation/demo.component";
 import {NavigationMenuInlineDemo} from "./nav-inline/demo.component";
 import {NavigationMenuInlineDemoModule} from "./nav-inline/demo.module";
 import {NavigationMenuNavDemoModule} from "./navigation/demo.module";
+import {MenuAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: MenuAllComponent
+    },
     {
         path: 'in-dialog', component: MenuInDialogDemo
     },
@@ -32,8 +37,9 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), MenuOptionsModule, MenuInDialogDemoModule,
-        MenuUsageDemoModule, NavigationMenuInlineDemoModule, NavigationMenuNavDemoModule
-    ]
+        MenuUsageDemoModule, NavigationMenuInlineDemoModule, NavigationMenuNavDemoModule, JigsawMarkdownModule
+    ],
+    declarations: [MenuAllComponent]
 })
 export class MenuDemoModule {
 }

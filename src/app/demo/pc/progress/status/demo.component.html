@@ -1,0 +1,14 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['status']">
+
+    <!-- start to learn the demo from here -->
+    <span>进度值</span>
+    <j-numeric-input min="0" max="110" [(value)]="progressValue">
+    </j-numeric-input>
+
+    <div style="margin-top: 20px">
+        <j-progress [value]="progressValue" status="processing" [preSize]="selectedLabel.size"></j-progress>
+        <j-progress [value]="progressValue" status="block" [preSize]="selectedLabel.size"></j-progress>
+        <j-progress [value]="progressValue" status="error" [preSize]="selectedLabel.size"></j-progress>
+        <j-progress [value]="progressValue" status="success" [preSize]="selectedLabel.size"></j-progress>
+    </div>
+</demo-template>

@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'transfer-list-local-pageable-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -77,7 +79,7 @@ export class TransferListLocalPageableDemoComponent {
         }
     ];
 
-    constructor(public _http: HttpClient) {
+    constructor(public _http: HttpClient, public text: TransferTextService) {
         this.data = new LocalPageableArray();
         this.data.http = _http;
         this.data.pagingInfo.pageSize = 15;
@@ -139,10 +141,4 @@ export class TransferListLocalPageableDemoComponent {
 
     data: LocalPageableArray<any>;
     selectedData: ArrayCollection<any>;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个Demo模拟的是采用浏览器内部分页的情形';
-    description: string = '';
 }

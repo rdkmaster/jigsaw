@@ -1,14 +1,16 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
+import {BreadcrumbTextService} from "../text.service";
 
 @Component({
+    selector: 'theme-breadCrumb',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class BreadcrumbModeDemoComponent {
     public data: (string | BreadcrumbNode)[];
 
-    constructor() {
+    constructor(public text: BreadcrumbTextService) {
         this.resetBreadcrumbItems();
     }
 
@@ -30,11 +32,4 @@ export class BreadcrumbModeDemoComponent {
             { label: "业务样本" }
         ];
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "面包屑的标签数超过指定数目时进行折叠";
-    description: string =
-        "在组件标签内设置foldThreshold的值，控制面包屑的折叠。一旦面包屑的标签数超过设定的值，会进行折叠。";
 }

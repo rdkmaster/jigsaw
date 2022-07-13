@@ -1,8 +1,10 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'header-render-table',
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderRenderDemoComponent {
@@ -11,7 +13,7 @@ export class TableSetHeaderRenderDemoComponent {
 
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -26,10 +28,4 @@ export class TableSetHeaderRenderDemoComponent {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }
