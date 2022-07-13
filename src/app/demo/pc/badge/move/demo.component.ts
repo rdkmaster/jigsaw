@@ -1,6 +1,10 @@
 import {Component, ViewChild, Renderer2, ElementRef} from "@angular/core";
+import {BadgeTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
+    selector: 'move-badge',
     templateUrl: 'demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -8,10 +12,17 @@ export class BadgeMoveDemoComponent {
     @ViewChild('target', {read: ElementRef})
     target: ElementRef;
 
-    public offsetLeft: number = 30;
-    public offsetTop: number = 100;
+    public selectedLabel = {label: "中", size: "normal"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
 
-    constructor(public _renderer: Renderer2) {
+    public offsetLeft: number = 40;
+    public offsetTop: number = 381;
+
+    constructor(public _renderer: Renderer2, public text: BadgeTextService, private router: Router) {
     }
 
     updateStyle(style: string, value: string) {
@@ -21,14 +32,12 @@ export class BadgeMoveDemoComponent {
         this._renderer.setStyle(this.target.nativeElement, style, value);
     }
 
-    updateHandler(){
+    updateHandler() {
         this.offsetLeft = this.target.nativeElement.offsetLeft;
         this.offsetTop = this.target.nativeElement.offsetTop;
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '当一个对象既可以拖动又可以单击时，需要一些技巧来这两个操作带来的避免冲突';
-    description: string = '';
+    nav() {
+        this.router.navigate(['/pc/badge/move'])
+    }
 }

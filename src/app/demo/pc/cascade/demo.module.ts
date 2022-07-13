@@ -1,0 +1,38 @@
+import { NgModule } from "@angular/core";
+import {CascadeAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
+import {CommonModule} from "@angular/common";
+import {CascadeBasicComponent} from "./basic/demo.component";
+import {JigsawCascadeModule} from "../../../../jigsaw/pc-components/cascade/cascade";
+import {CascadeLazyLoadComponent} from "./lazy-load/demo.component";
+import {CascadeSelectedItemsComponent} from "./selected-items/demo.component";
+import {CascadeMultipleComponent} from "./multiple-select/demo.component";
+import {CascadeTrackComponent} from "./track-item-by/demo.component";
+import {CascadeShowAllComponent} from "./show-all/demo.component";
+import {CascadeWithComboComponent} from "./with-combo/demo.component";
+import {JigsawComboSelectModule} from "../../../../jigsaw/pc-components/combo-select";
+import {CascadeSearchAndPagingComponent} from "./search-and-paging/demo.component";
+
+@NgModule({
+    imports: [
+        JigsawMarkdownModule,
+        DemoTemplateModule,
+        CommonModule,
+        JigsawCascadeModule,
+        JigsawComboSelectModule
+    ],
+    declarations: [
+        CascadeAllComponent,
+        CascadeBasicComponent,
+        CascadeLazyLoadComponent,
+        CascadeSelectedItemsComponent,
+        CascadeMultipleComponent,
+        CascadeTrackComponent,
+        CascadeShowAllComponent,
+        CascadeWithComboComponent,
+        CascadeSearchAndPagingComponent
+    ],
+    exports: [CascadeAllComponent]
+})
+export class CascadeAllModule {}

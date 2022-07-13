@@ -1,9 +1,6 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<p><a (click)="editNode()">编辑选中的节点</a></p>
-<jigsaw-tree-ext [setting]="setting" [(data)]="data">
-</jigsaw-tree-ext>
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['editable']">
+    <!-- start to learn the demo from here -->
+    <p><a (click)="editNode()">编辑选中的节点</a></p>
+    <jigsaw-tree-ext [setting]="setting" [(data)]="data" [size]="selectedLabel.size">
+    </jigsaw-tree-ext>
+</demo-template>

@@ -1,24 +1,26 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['move']">
+    <!-- start to learn the demo from here -->
+    <div style="height: 100px">
+        Left:
+        <jigsaw-slider (valueChange)="updateStyle('left', $event + 'px')"
+                       width="250px" [value]="offsetLeft" max="800" min="10">
+        </jigsaw-slider>
+        Top:
+        <jigsaw-slider (valueChange)="updateStyle('top', $event + 'px')"
+                       width="250px" [value]="offsetTop" max="550" min="80">
+        </jigsaw-slider>
+        Opacity:
+        <jigsaw-slider (valueChange)="updateStyle('opacity', $event)"
+                       width="250px" value="1" max="1" min="0" step="0.1">
+        </jigsaw-slider>
 
+        <a (click)="nav()">查看demo</a>
+        <j-button #target j-movable class="movable" (mousemove)="updateHandler()">
+            <p class="label" jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
+               [jigsawBadgeSize]="selectedLabel.size">
+                a movable button
+            </p>
+        </j-button>
 
-<!-- start to learn the demo from here -->
-Left:
-<jigsaw-slider (valueChange)="updateStyle('left', $event + 'px')"
-               width="250px" [value]="offsetLeft" max="800" min="10">
-</jigsaw-slider>
-Top:
-<jigsaw-slider (valueChange)="updateStyle('top', $event + 'px')"
-               width="250px" [value]="offsetTop" max="550" min="80">
-</jigsaw-slider>
-Opacity:
-<jigsaw-slider (valueChange)="updateStyle('opacity', $event)"
-               width="250px" value="1" max="1" min="0" step="0.1">
-</jigsaw-slider>
-
-<j-button #target j-movable class="movable" (mousemove)="updateHandler()">
-    <p class="label" jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop">
-        a movable button
-    </p>
-</j-button>
+    </div>
+</demo-template>

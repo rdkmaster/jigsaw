@@ -15,8 +15,6 @@ import {TableAddIDColumnDemoComponent} from "./index-column/demo.component";
 import {TableAddIDColumnDemoModule} from "./index-column/demo.module";
 import {TableAddIDWithPagingComponent} from "./index-column-with-paging/demo.component";
 import {TableAddIDWithPagingModule} from "./index-column-with-paging/demo.module";
-import {TableBasicDemoComponent} from "./basic/demo.component";
-import {TableBasicDemoModule} from "./basic/demo.module";
 import {TableCheckboxColumnObjectCellDemoComponent} from "./checkbox-column-object-cell/demo.component";
 import {TableCheckboxColumnObjectCellDemoModule} from "./checkbox-column-object-cell/demo.module";
 import {TableColumnGroupDemoComponent} from "./column-group/demo.component";
@@ -45,8 +43,6 @@ import {TablePageableDemoComponent} from "./pageable/demo.component";
 import {TablePageableDemoModule} from "./pageable/demo.module";
 import {TablePageableReadyDemoComponent} from "./pageable-ready/demo.component";
 import {TablePageableReadyDemoModule} from "./pageable-ready/demo.module";
-import {TableRendererDemoComponent} from "./renderer/demo.component";
-import {TableRendererDemoModule} from "./renderer/demo.module";
 import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/demo.component";
 import {TableRendererOfTemplateRefDemoModule} from "./template-ref-renderer/demo.module";
 import {TableSelectRowDemoComponent} from "./select-row/demo.component";
@@ -115,10 +111,14 @@ import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additio
 import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-defines/demo.module";
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
+import {TableAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {TableBasicDemoModule} from "./basic/demo.module";
+import {TableRendererDemoModule} from "./renderer/demo.module";
 
 export const routerConfig = [
     {
-        path: 'renderer', component: TableRendererDemoComponent
+        path: 'all', component: TableAllComponent
     },
     {
         path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent
@@ -134,9 +134,6 @@ export const routerConfig = [
     },
     {
         path: 'sudoku', component: SudokuGameComponent
-    },
-    {
-        path: 'basic', component: TableBasicDemoComponent
     },
     {
         path: 'data-from-ajax', component: TableDataFromAjaxDemoComponent
@@ -297,9 +294,9 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
-        TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
+        TableAddIDWithPagingModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule, TablePageableReadyDemoModule,
-        TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
+        TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
@@ -308,7 +305,10 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule
+        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, JigsawMarkdownModule, TableBasicDemoModule, TableRendererDemoModule
+    ],
+    declarations: [
+        TableAllComponent,
     ]
 })
 export class TableDemoModule {

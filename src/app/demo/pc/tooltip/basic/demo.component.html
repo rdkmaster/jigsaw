@@ -1,66 +1,61 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    编辑tooltip
+    <jigsaw-input width="370" [(value)]="tooltipMessage">
+    </jigsaw-input>
+    <div style="position: relative; margin-top: 20px; height: 200px;">
+        <jigsaw-button style="position:absolute; left:190px; top:10px;" width="105px"
+                       jigsawTooltipPosition="topLeft" [jigsawTooltip]="tooltipMessage">
+            topLeft
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:300px; top:10px;" width="105px"
+                       jigsawTooltipPosition="top" [jigsawTooltip]="tooltipMessage">
+            top
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:410px; top:10px;" width="105px"
+                       jigsawTooltipPosition="topRight" [jigsawTooltip]="tooltipMessage">
+            topRight
+        </jigsaw-button>
 
+        <jigsaw-button style="position:absolute; left:80px; top:50px" width="105px"
+                       jigsawTooltipPosition="leftTop" [jigsawTooltip]="tooltipMessage">
+            leftTop
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:520px; top:50px" width="105px"
+                       jigsawTooltipPosition="rightTop" [jigsawTooltip]="tooltipMessage">
+            rightTop
+        </jigsaw-button>
 
-<!-- start to learn the demo from here -->
-编辑tooltip
-<jigsaw-input width="370" [(value)]="tooltipMessage">
-</jigsaw-input>
+        <jigsaw-button style="position:absolute; left:80px; top:90px" width="105px"
+                       jigsawTooltipPosition="left" [jigsawTooltip]="tooltipMessage">
+            left
+        </jigsaw-button>
+        <p style="position:absolute; left:230px; top:96px">注意观察tooltip内容长短时位置自动调整效果</p>
+        <jigsaw-button style="position:absolute; left:520px; top:90px" width="105px"
+                       jigsawTooltipPosition="right" [jigsawTooltip]="tooltipMessage">
+            right
+        </jigsaw-button>
 
-<br>
-<br>
+        <jigsaw-button style="position:absolute; left:80px; top:130px" width="105px"
+                       jigsawTooltipPosition="leftBottom" [jigsawTooltip]="tooltipMessage">
+            leftBottom
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:520px; top:130px" width="105px"
+                       jigsawTooltipPosition="rightBottom" [jigsawTooltip]="tooltipMessage">
+            rightBottom
+        </jigsaw-button>
 
-<jigsaw-button style="position:absolute; left:190px; top:100px;" width="105px"
-               jigsawTooltipPosition="topLeft" [jigsawTooltip]="tooltipMessage">
-    topLeft
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:300px; top:100px;" width="105px"
-               jigsawTooltipPosition="top" [jigsawTooltip]="tooltipMessage">
-    top
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:410px; top:100px;" width="105px"
-               jigsawTooltipPosition="topRight" [jigsawTooltip]="tooltipMessage">
-    topRight
-</jigsaw-button>
-
-<jigsaw-button style="position:absolute; left:80px; top:140px" width="105px"
-               jigsawTooltipPosition="leftTop" [jigsawTooltip]="tooltipMessage">
-    leftTop
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:520px; top:140px" width="105px"
-               jigsawTooltipPosition="rightTop" [jigsawTooltip]="tooltipMessage">
-    rightTop
-</jigsaw-button>
-
-<jigsaw-button style="position:absolute; left:80px; top:180px" width="105px"
-               jigsawTooltipPosition="left" [jigsawTooltip]="tooltipMessage">
-    left
-</jigsaw-button>
-<p style="position:absolute; left:230px; top:186px">注意观察tooltip内容长短时位置自动调整效果</p>
-<jigsaw-button style="position:absolute; left:520px; top:180px" width="105px"
-               jigsawTooltipPosition="right" [jigsawTooltip]="tooltipMessage">
-    right
-</jigsaw-button>
-
-<jigsaw-button style="position:absolute; left:80px; top:220px" width="105px"
-               jigsawTooltipPosition="leftBottom" [jigsawTooltip]="tooltipMessage">
-    leftBottom
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:520px; top:220px" width="105px"
-               jigsawTooltipPosition="rightBottom" [jigsawTooltip]="tooltipMessage">
-    rightBottom
-</jigsaw-button>
-
-<jigsaw-button style="position:absolute; left:190px; top:260px;" width="105px"
-               jigsawTooltipPosition="bottomLeft" [jigsawTooltip]="tooltipMessage">
-    bottomLeft
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:300px; top:260px;" width="105px"
-               jigsawTooltipPosition="bottom" [jigsawTooltip]="tooltipMessage">
-    bottom
-</jigsaw-button>
-<jigsaw-button style="position:absolute; left:410px; top:260px;" width="105px"
-               jigsawTooltipPosition="bottomRight" [jigsawTooltip]="tooltipMessage">
-    bottomRight
-</jigsaw-button>
+        <jigsaw-button style="position:absolute; left:190px; top:170px;" width="105px"
+                       jigsawTooltipPosition="bottomLeft" [jigsawTooltip]="tooltipMessage">
+            bottomLeft
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:300px; top:170px;" width="105px"
+                       jigsawTooltipPosition="bottom" [jigsawTooltip]="tooltipMessage">
+            bottom
+        </jigsaw-button>
+        <jigsaw-button style="position:absolute; left:410px; top:170px;" width="105px"
+                       jigsawTooltipPosition="bottomRight" [jigsawTooltip]="tooltipMessage">
+            bottomRight
+        </jigsaw-button>
+    </div>
+</demo-template>

@@ -6,7 +6,8 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         align-items: center;
         width: 100%;
         min-width: 256px;
-        height: $height-huge;
+        min-height: $height-base;
+        padding: 4px 0;
         background: $bg-popup;
         border-radius: $border-radius-base;
 
@@ -14,20 +15,23 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 32px;
+            width: 48px;
             height: 100%;
             font-size: $icon-size-status-sm;
         }
 
         .#{$jigsaw-toast}-message {
-            width: calc(100% - 64px);
-            white-space: nowrap;
+            display: -webkit-box;
+            // 文本最大支持行数
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            width: calc(100% - 80px);
             text-overflow: ellipsis;
             overflow: hidden;
+            white-space: normal;
         }
 
         .#{$jigsaw-toast}-close {
-            align-self: flex-end;
             display: flex;
             justify-content: center;
             align-items: center;

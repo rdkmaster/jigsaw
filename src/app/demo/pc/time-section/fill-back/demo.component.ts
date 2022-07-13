@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {ArrayCollection, TimeSectionValue} from "jigsaw/public_api";
+import {TimeSectionTextService} from "../text.service";
 
 @Component({
+    selector: 'fill-bace-time-section',
     templateUrl: './demo.component.html'
 })
 export class TimeSectionFillBackDemoComponent {
@@ -31,9 +33,6 @@ export class TimeSectionFillBackDemoComponent {
         this.value = JSON.stringify(v, null, '  ');
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TimeSectionTextService) {
+    }
 }

@@ -4,13 +4,14 @@ import {
     JigsawTableModule, JigsawComboSelectModule, JigsawButtonModule, JigsawCheckBoxModule,
     JigsawListModule
 } from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 import {TableSetCellRenderDemoComponent} from './demo.component';
 import {OfficeHeaderRenderer} from "./renderers";
 
 @NgModule({
     imports: [
-        JigsawTableModule, CommonModule, JigsawDemoDescriptionModule, JigsawComboSelectModule, JigsawListModule,
+        JigsawTableModule, CommonModule, DemoTemplateModule
+        , JigsawComboSelectModule, JigsawListModule,
         JigsawButtonModule, JigsawCheckBoxModule
     ],
     declarations: [TableSetCellRenderDemoComponent, OfficeHeaderRenderer],

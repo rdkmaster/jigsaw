@@ -1,14 +1,17 @@
 import {Component, Renderer2, ViewContainerRef} from "@angular/core";
-import {TableData, ColumnDefine} from "jigsaw/public_api";
+import {TableData, ColumnDefine} from "jigsaw/public_api"
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'content-width-table',
     templateUrl: './demo.component.html'
 })
 export class TableContentWidthDemoComponent {
     tableData: TableData;
 
     constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2) {
+                public renderer: Renderer2,
+                public text: TableTextService) {
         this.tableData = new TableData(
             [
                 ["2017-05-05 16:59:40", "S1-U", "4G", "152551111", "unknown", "CMNET.MNC000.MCC460.GPRS", 180698],
@@ -82,10 +85,4 @@ export class TableContentWidthDemoComponent {
             width: 230
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用contentWidth控制表格的列宽。';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

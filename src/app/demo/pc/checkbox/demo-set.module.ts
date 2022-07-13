@@ -1,32 +1,34 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CheckBoxBasicDemoModule} from "./basic/demo.module";
-import {CheckBoxDisableDemoModule} from "./disabled/demo.module";
 import {CheckBoxFullModule} from "./full/demo.module";
-
 import {CheckBoxFullComponent} from "./full/demo.component";
-import {CheckBoxBasicDemoComponent} from "./basic/demo.component";
-import {CheckBoxDisableDemoComponent} from "./disabled/demo.component";
+import {CheckboxAllComponent} from "./demo.component";
+import {CheckBoxBasicDemoModule} from "./basic/demo.module";
+import {CheckboxIndeterminateDemoModule} from "./indeterminate/demo.module";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {CheckboxMinimalistDemoModule} from "./minimalist/demo.module";
+import {CheckboxDisabledDemoModule} from "./disabled/demo.module";
 
 export const routerConfig = [
     {
+        path: 'all', component: CheckboxAllComponent
+    },
+    {
         path: 'full', component: CheckBoxFullComponent
-    },
-    {
-        path: 'basic', component: CheckBoxBasicDemoComponent
-    },
-    {
-        path: 'disabled', component: CheckBoxDisableDemoComponent
-    },
+    }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
+        JigsawMarkdownModule,
+        CheckBoxFullModule,
         CheckBoxBasicDemoModule,
-        CheckBoxDisableDemoModule,
-        CheckBoxFullModule
-    ]
+        CheckboxIndeterminateDemoModule,
+        CheckboxMinimalistDemoModule,
+        CheckboxDisabledDemoModule
+    ],
+    declarations: [CheckboxAllComponent]
 })
 export class CheckBoxDemoModule {
 }

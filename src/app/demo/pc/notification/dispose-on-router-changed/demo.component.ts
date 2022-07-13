@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {JigsawNotification} from "jigsaw/public_api";
+import {NotificationTextService} from "../text.service";
 
 @Component({
+    selector: 'dispose-on-router-changed-notification',
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
@@ -19,7 +21,7 @@ import {JigsawNotification} from "jigsaw/public_api";
     `]
 })
 export class NotificationDisposeOnRouterDemoComponent {
-    constructor(private router:Router){
+    constructor(private router:Router, public text: NotificationTextService){
     }
 
     showNotification() {
@@ -36,9 +38,4 @@ export class NotificationDisposeOnRouterDemoComponent {
     changeRoute() {
         this.router.navigate([`pc/notification/basic`]);
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo介绍了控制是否在路由变化时自动关掉弹出的提示框';
-    description: string = '';
 }

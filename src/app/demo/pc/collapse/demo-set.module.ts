@@ -7,11 +7,17 @@ import {CollapseFullModule} from "./full/demo.module";
 import {CollapseBasicDemoComponent} from "./basic/demo.component";
 import {CollapseWithNGForDemoComponent} from "./with-ngfor/demo.component";
 import {CollapseFullComponent} from "./full/demo.component";
+import {CollapseAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
     {
+        path: 'all', component: CollapseAllComponent
+    },
+    {
         path: 'basic', component: CollapseBasicDemoComponent
-    }, {
+    },
+    {
         path: 'with-ngfor', component: CollapseWithNGForDemoComponent
     },
     {
@@ -24,7 +30,9 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         CollapseBasicDemoModule,
         ngForDemoModule,
-        CollapseFullModule
-    ]
+        CollapseFullModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [CollapseAllComponent]
 })
 export class CollapseDemoModule { }

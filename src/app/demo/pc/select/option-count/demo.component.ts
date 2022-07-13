@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-  templateUrl: './demo.component.html',
+    selector: "option-count-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectOptionCountDemoComponent {
+
+export class SelectOptionCountComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
@@ -20,10 +30,6 @@ export class SelectOptionCountDemoComponent {
     public selectChange(selectedItem:any){
         this.selectedCityName = selectedItem.label;
     }
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

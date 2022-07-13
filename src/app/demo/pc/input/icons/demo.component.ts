@@ -1,7 +1,9 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/public_api";
+import {InputTextService} from "../text.service";
 
 @Component({
+    selector: 'icons-input',
     templateUrl: './demo.component.html'
 })
 export class InputPrefixIconDemoComponent {
@@ -23,9 +25,6 @@ export class InputPrefixIconDemoComponent {
         this.message = `${position} icon "${event}" is clicked.`;
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '左右侧可以有多个图标，并且有交互';
-    description: string = '';
+    constructor(public text: InputTextService) {
+    }
 }

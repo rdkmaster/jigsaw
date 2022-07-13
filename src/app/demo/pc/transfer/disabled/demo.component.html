@@ -1,21 +1,18 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['disabled']">
+    <!-- start to learn the demo from here -->
 
-
-<!-- start to learn the demo from here -->
-
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">点击按钮，切换Disabled属性</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">普通数据</jigsaw-header>
-        <j-transfer width="100%" height="500" [data]="data" [searchable]="true"
-                    (selectedItemsChange)="handleSelectChange($event)" [selectedItems]="selectedCountries" [disabled]="!enabled"
-                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
-                    [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
-        <p class="message">选择的地区：{{selectedCountriesStr}}</p>
+    <div class="live-demo-wrap">
+        <div class="demo-1 live-demo">
+            <jigsaw-header [level]="2">普通数据</jigsaw-header>
+            <j-transfer width="100%" height="500" [data]="data" [searchable]="true"
+                        (selectedItemsChange)="handleSelectChange($event)" [selectedItems]="selectedCountries"
+                        [disabled]="!enabled"
+                        [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
+                        [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"></j-transfer>
+            <p class="message">选择的地区：{{selectedCountriesStr}}</p>
+        </div>
     </div>
-</div>
 
-<jigsaw-switch [(checked)]="enabled" onLabel="enabled" offLabel="disabled">
-</jigsaw-switch>
+    <jigsaw-switch [(checked)]="enabled" onLabel="enabled" offLabel="disabled">
+    </jigsaw-switch>
+</demo-template>

@@ -1,10 +1,8 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <j-breadcrumb [data]="breadcrumbItems" (select)="itemSelect($event)">
+    </j-breadcrumb>
 
-<!-- start to learn the demo from here -->
-<j-breadcrumb [data]="breadcrumbItems" (select)="itemSelect($event)">
-</j-breadcrumb>
-
-<br>
-<a (click)="resetBreadcrumbItems()">reset</a>
+    <br>
+    <a (click)="resetBreadcrumbItems()">reset</a>
+</demo-template>

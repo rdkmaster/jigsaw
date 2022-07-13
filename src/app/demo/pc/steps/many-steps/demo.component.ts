@@ -1,8 +1,10 @@
 import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {InternalUtils} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: "many-steps",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -17,7 +19,7 @@ export class JigsawStepManyStepsDemoComponent {
     @ViewChild('vScrollbar', {read: PerfectScrollbarDirective})
     private _vScrollbar: PerfectScrollbarDirective;
 
-    constructor(private _cdr: ChangeDetectorRef) {
+    constructor(private _cdr: ChangeDetectorRef, public text: StepsTextService) {
         for (let i = 0; i < this.count; i++) {
             this.data.push(this._createStepData());
         }
@@ -46,10 +48,4 @@ export class JigsawStepManyStepsDemoComponent {
             subTitle: '描述信息'
         };
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "演示当步骤数较多和较少等极端情况下展示效果";
-    description: string = "";
 }

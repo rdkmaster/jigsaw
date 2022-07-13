@@ -9,10 +9,11 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {MovingTooltipDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
-        JigsawMovableModule, JigsawTooltipModule, JigsawDemoDescriptionModule, JigsawButtonModule
+        JigsawMovableModule, JigsawTooltipModule, JigsawDemoDescriptionModule, JigsawButtonModule, DemoTemplateModule
     ],
     declarations: [MovingTooltipDemoComponent],
     exports: [MovingTooltipDemoComponent]

@@ -1,0 +1,11 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<j-cascade [data]="areas" (selectedItemsChange)="parseMessage($event)" width="400">
+</j-cascade>
+
+<p>注：北京市、江苏省-南京市 支持选择全部，请点击进去查看效果。其他的地区不支持选择全部</p>
+<p>选择的区域是：{{message}}</p>

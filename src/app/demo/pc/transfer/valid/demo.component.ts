@@ -1,8 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'valid-transfer',
     templateUrl: './demo.component.html'
 })
 export class TransferArrayValidDemoComponent {
@@ -13,7 +15,7 @@ export class TransferArrayValidDemoComponent {
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
 
-    constructor(_http: HttpClient) {
+    constructor(_http: HttpClient, public text: TransferTextService) {
         this.data = new LocalPageableArray();
         this.data.http = _http;
         this.data.pagingInfo.pageSize = 15;
@@ -25,10 +27,4 @@ export class TransferArrayValidDemoComponent {
 
     data: LocalPageableArray<any>;
     selectedData: ArrayCollection<any>;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

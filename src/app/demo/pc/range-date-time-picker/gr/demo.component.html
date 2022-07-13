@@ -1,18 +1,15 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['gr']">
+    <!-- start to learn the demo from here -->
+    <p style="font-size: 14px; margin: 10px 0 20px 0">如下粒度（Gr）值支持日期和时间同时选择：</p>
+    <jigsaw-button-bar [data]="['second','minute','hour','date','week','month']" [(selectedItems)]="gr">
+    </jigsaw-button-bar>
 
+    <br><br>
 
-<!-- start to learn the demo from here -->
-<h4 style="font-size: 20px; margin-bottom: 20px;">粒度 Gr</h4>
+    <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [gr]="gr[0]"
+                                   [(endDate)]="endDate"></jigsaw-range-date-time-picker>
+    <br>
 
-<p style="font-size: 14px; margin: 10px 0 20px 0">如下粒度（Gr）值支持日期和时间同时选择：</p>
-<jigsaw-button-bar [data]="['second','minute','hour','date','week','month']" [(selectedItems)]="gr">
-</jigsaw-button-bar>
-
-<br><br>
-
-<jigsaw-range-date-time-picker [(beginDate)]="beginDate" [gr]="gr[0]" [(endDate)]="endDate" ></jigsaw-range-date-time-picker><br>
-
-<div *ngIf="gr[0] !='week'">beginDate ： {{beginDate}}   endDate：{{endDate}}</div>
-<div *ngIf="gr[0] =='week'">beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>
+    <div *ngIf="gr[0] !='week'">beginDate ： {{beginDate}}   endDate：{{endDate}}</div>
+    <div *ngIf="gr[0] =='week'">beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>
+</demo-template>

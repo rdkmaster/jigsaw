@@ -1,12 +1,10 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="count" [jigsawBadgeMaxValue]="99"
-                 [icon]="'iconfont iconfont-e8fa'" [iconSize]="100">
-    </jigsaw-icon>
-    <br>
-    <jigsaw-numeric-input [(value)]="count"></jigsaw-numeric-input>
-</div>
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['maxValue']">
+    <!-- start to learn the demo from here -->
+    <div class="live-demo-wrap">
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="count" [jigsawBadgeMaxValue]="99"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedLabel.size">
+        </jigsaw-icon>
+        <br>
+        <jigsaw-numeric-input [(value)]="count"></jigsaw-numeric-input>
+    </div>
+</demo-template>

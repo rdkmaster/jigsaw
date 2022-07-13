@@ -17,8 +17,13 @@ import {DialogHeightDemo} from "./height/demo.component";
 import {DialogHeightDemoModule} from "./height/demo.module";
 import {DialogAbsolutePositionDemoComponent} from "./absolute-position/demo.component";
 import {DialogAbsolutePositionDemoModule} from "./absolute-position/demo.module";
+import {DialogAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig:any = [
+    {
+        path: 'all', component: DialogAllComponent
+    },
     {
         path: 'misc', component: DialogMiscDemoComponent
     },
@@ -55,8 +60,10 @@ export const routerConfig:any = [
         DialogTitleDemoModule,
         DialogTopDemoModule,
         DialogHeightDemoModule,
-        DialogAbsolutePositionDemoModule
-    ]
+        DialogAbsolutePositionDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [DialogAllComponent]
 })
 export class DialogDemoModule {
 }

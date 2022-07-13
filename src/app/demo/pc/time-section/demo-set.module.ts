@@ -6,8 +6,13 @@ import {TimeSectionOptionsDemoComponent} from "./time-section-options/demo.compo
 import {TimeSectionOptionsDemoModule} from "./time-section-options/demo.module";
 import {TimeSectionFillBackDemoComponent} from "./fill-back/demo.component";
 import {TimeSectionFillBackDemoModule} from "./fill-back/demo.module";
+import {TimeSectionAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: TimeSectionAllComponent
+    },
     {
         path: 'basic', component: TimeSectionBasicDemoComponent
     },
@@ -24,8 +29,10 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TimeSectionBasicDemoModule,
         TimeSectionOptionsDemoModule,
-        TimeSectionFillBackDemoModule
-    ]
+        TimeSectionFillBackDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [TimeSectionAllComponent]
 })
 export class TimeSectionDemoModule {
 }

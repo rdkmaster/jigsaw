@@ -1,14 +1,18 @@
 import {Component} from "@angular/core";
+import {TagTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "preset-color-tag",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"]
 })
-export class TagPresetColorDemoComponent {
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '提供了内置颜色和大小';
-    description: string = '';
+export class TagPresetColorComponent {
+    public selectedLabel = {label: "大", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "medium"}
+    ]);
+    constructor(public text: TagTextService) {}
 }

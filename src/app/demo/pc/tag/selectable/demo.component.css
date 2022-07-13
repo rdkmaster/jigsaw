@@ -1,17 +1,11 @@
-.section-container {
-    margin-bottom: 10px;
+div {
+    margin-bottom: 20px;
 }
 
-.align-center {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-
-}
-.align-center jigsaw-tag {
-    margin-right: 15px;
+span {
+    display: inline-block;
 }
 
-.section-container jigsaw-header {
-    margin-bottom: 3px;
+jigsaw-tag {
+    margin-right: 5px;
 }

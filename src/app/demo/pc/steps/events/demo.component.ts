@@ -1,7 +1,9 @@
 import {Component, ViewChild} from "@angular/core";
 import {InternalUtils, JigsawSteps, StepItem} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: "events-steps",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -13,7 +15,7 @@ export class JigsawStepEventsDemoComponent {
     @ViewChild('jigsawSteps')
     private _jigsawSteps: JigsawSteps;
 
-    constructor() {
+    constructor(public text: StepsTextService) {
         for (let i = 0; i < 6; i++) {
             this.data.push(this._createStepData());
         }
@@ -52,10 +54,4 @@ export class JigsawStepEventsDemoComponent {
     titleChangeHandler(step: StepItem) {
         console.log(`节点被修改为：`, step);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

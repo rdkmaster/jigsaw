@@ -1,7 +1,9 @@
 import { Component, ViewChild } from "@angular/core";
 import { JigsawUpload } from 'jigsaw/public_api';
+import {UploadTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-upload',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -38,9 +40,6 @@ export class UploadBasicDemoComponent {
     @ViewChild("demo7", { read: JigsawUpload })
     public uploader7: JigsawUpload;
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo展示了`jigsaw-upload`组件的基本用法';
-    description: string = '';
+    constructor(public text: UploadTextService) {
+    }
 }

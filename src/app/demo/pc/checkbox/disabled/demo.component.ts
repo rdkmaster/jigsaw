@@ -1,16 +1,15 @@
 import {Component} from "@angular/core";
+import {CheckboxTextService} from "../text.service";
 import {CheckBoxStatus} from "jigsaw/public_api";
 
 @Component({
-  templateUrl: './demo.component.html'
+    selector: "disabled-checkbox",
+    templateUrl: "./demo.component.html",
 })
-export class CheckBoxDisableDemoComponent {
-    checked = CheckBoxStatus.unchecked;
-    enabled: boolean;
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何使用`JigsawCheckBox`的disabled属性';
-    description: string = '';
+export class CheckboxDisabledComponent {
+    status = CheckBoxStatus.checked;
+    enabled: boolean;
+    constructor(public text: CheckboxTextService) {}
+
 }

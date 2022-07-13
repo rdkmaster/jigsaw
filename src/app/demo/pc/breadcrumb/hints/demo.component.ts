@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
+import {BreadcrumbTextService} from "../text.service";
 
 @Component({
+    selector: 'hints-breadcrumb',
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbHintDemoComponent {
@@ -30,9 +32,6 @@ export class BreadcrumbHintDemoComponent {
             hint: "业务样本就是除了业务管理和业务清单以外的内容。"
         }
     ];
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "面包屑的标签可以配置一些提示信息，带有提示信息的标签右侧会出现一个问号图标";
-    description: string = "";
+    constructor(public text: BreadcrumbTextService) {
+    }
 }

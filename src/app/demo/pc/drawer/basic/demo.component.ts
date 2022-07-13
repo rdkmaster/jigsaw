@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DrawerTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-drawer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -8,7 +10,7 @@ export class DrawerBasicDemoComponent {
     isOpen: boolean = false;
     selectedPosition = 'left';
     touched = false;
-    width: string = '30%';
+    width: string = '20%';
     height: string = '100%';
     emphasisHandler:boolean = false;
 
@@ -27,9 +29,6 @@ export class DrawerBasicDemoComponent {
         }
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DrawerTextService) {
+    }
 }

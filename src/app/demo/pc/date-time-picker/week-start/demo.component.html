@@ -1,20 +1,17 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['weekStart']">
+    <!-- start to learn the demo from here -->
+    <p class="message">First Day of Week: </p>
+    <jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart">
+    </jigsaw-button-bar>
+    <br><br>
+    <p class="message">First Week of Year: </p>
+    <jigsaw-button-bar [data]="[1, 2, 3, 4, 5, 6]" [(selectedItems)]="janX">
+    </jigsaw-button-bar>
+    <br><br>
 
+    <jigsaw-date-time-picker [(date)]="date" [weekStart]="weekStart[0]" [firstWeekMustContains]="janX[0]" gr="week"
+                             (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
+    <br>
 
-<!-- start to learn the demo from here -->
-<h4 class="header">First Day of Week and First Week of Year</h4>
-
-<p class="message">First Day of Week: </p>
-<jigsaw-button-bar [data]="['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat']" [(selectedItems)]="weekStart">
-</jigsaw-button-bar>
-<br><br>
-<p class="message">First Week of Year: </p>
-<jigsaw-button-bar [data]="[1, 2, 3, 4, 5, 6]" [(selectedItems)]="janX">
-</jigsaw-button-bar>
-<br><br>
-
-<jigsaw-date-time-picker [(date)]="date" [weekStart]="weekStart[0]" [firstWeekMustContains]="janX[0]" gr="week" (dateChange)="dateChange($event)"></jigsaw-date-time-picker><br>
-
-<p class="message">{{date | json}}</p>
+    <p class="message">{{date | json}}</p>
+</demo-template>

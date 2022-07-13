@@ -1,93 +1,98 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''">
+    <!-- start to learn the demo from here -->
+    <p style="padding-bottom: 12px">
+        <span>{{'desc' | translate}}</span>
+        <span [innerHtml]="'lang' | translate:  { lang: this.translateService.currentLang }"></span>
+    </p>
+    <jigsaw-button (click)="changeLang('en')">
+        change language to English
+    </jigsaw-button>
+    <jigsaw-button (click)="changeLang('zh')">
+        change language to Chinese
+    </jigsaw-button>
+    <br>
 
-
-<!-- start to learn the demo from here -->
-<p style="padding-bottom: 12px">
-    <span>{{'desc' | translate}}</span>
-    <span [innerHtml]="'lang' | translate:  { lang: this.translateService.currentLang }"></span>
-</p>
-<jigsaw-button (click)="changeLang('en')">
-    change language to English
-</jigsaw-button>
-<jigsaw-button (click)="changeLang('zh')">
-    change language to Chinese
-</jigsaw-button><br>
-
-<h4 class="header">alert</h4><jigsaw-info-alert [initData]="infoInitData"></jigsaw-info-alert><br>
-<h4 class="header">dialog</h4>
-<jigsaw-dialog class="dialog-container" width="400" [buttons]="buttons">
-    <div jigsaw-title>
-        <span class="iconfont iconfont-e3f0"></span>{{'dialogTitle' | translate}}
-    </div>
-    <div jigsaw-body>
-        <div class="dialog-content">
-            <span class="iconfont iconfont-e23f"></span> <span>{{'dialogContent' | translate}}</span>
+    <h4 class="header">alert</h4>
+    <jigsaw-info-alert [initData]="infoInitData"></jigsaw-info-alert>
+    <br>
+    <h4 class="header">dialog</h4>
+    <jigsaw-dialog class="dialog-container" width="400" [buttons]="buttons">
+        <div jigsaw-title>
+            <span class="iconfont iconfont-e3f0"></span>{{'dialogTitle' | translate}}
         </div>
+        <div jigsaw-body>
+            <div class="dialog-content">
+                <span class="iconfont iconfont-e23f"></span> <span>{{'dialogContent' | translate}}</span>
+            </div>
+        </div>
+    </jigsaw-dialog>
+    <h4 class="header">range-time</h4>
+    <jigsaw-range-time gr="second"></jigsaw-range-time>
+    <br>
+    <h4 class="header">time</h4>
+    <jigsaw-time gr="second"></jigsaw-time>
+    <br>
+    <h4 class="header">combo-time</h4>
+    <jigsaw-combo-select [(value)]="rangeTimeComboValue">
+        <ng-template>
+            <jigsaw-range-time [(beginDate)]="beginDate"
+                               [(endDate)]="endDate"
+                               (change)="handleRangeDateChange()">
+            </jigsaw-range-time>
+        </ng-template>
+    </jigsaw-combo-select>
+    <br>
+    <h4 class="header">pagination</h4>
+    <jigsaw-pagination [data]="pageable"
+                       [pageSizeOptions]="[5,10,20]"
+                       [searchable]="true"
+                       [showQuickJumper]="true"
+                       width="800px">
+    </jigsaw-pagination>
+
+    <br>
+    <h4 class="header">navigation menu</h4>
+    <jigsaw-navigation-menu [data]="navigationMenuData" height="320px" style="border: 1px solid #dcdcdc">
+    </jigsaw-navigation-menu>
+
+    <br>
+    <h4 class="header">select</h4>
+    <div>
+        <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}"
+                             width="160px"
+                             [useStatistics]="true">
+        </jigsaw-group-select>
     </div>
-</jigsaw-dialog>
-<h4 class="header">range-time</h4><jigsaw-range-time gr="second"></jigsaw-range-time><br>
-<h4 class="header">time</h4><jigsaw-time gr="second"></jigsaw-time>
-<br>
-<h4 class="header">combo-time</h4>
-<jigsaw-combo-select [(value)]="rangeTimeComboValue">
-    <ng-template>
-        <jigsaw-range-time [(beginDate)]="beginDate"
-                           [(endDate)]="endDate"
-                           (change)="handleRangeDateChange()">
-        </jigsaw-range-time>
-    </ng-template>
-</jigsaw-combo-select>
-<br>
-<h4 class="header">pagination</h4>
-<jigsaw-pagination [data]="pageable"
-                   [pageSizeOptions]="[5,10,20]"
-                   [searchable]="true"
-                   [showQuickJumper]="true"
-                   width="800px">
-</jigsaw-pagination>
-
-<br>
-<h4 class="header">navigation menu</h4>
-<jigsaw-navigation-menu [data]="navigationMenuData" height="320px" style="border: 1px solid #dcdcdc">
-</jigsaw-navigation-menu>
-
-<br>
-<h4 class="header">select</h4>
-<div>
-    <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}" width="160px"
-        [useStatistics]="true">
-    </jigsaw-group-select>
-</div>
-<br>
-<div>
-    <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}" width="160px"
-        [useStatistics]="false">
-    </jigsaw-group-select>
-</div>
-<br>
-<div>
-    <jigsaw-tabs [editable]="true" [width]="300"  (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
-        <jigsaw-tab-pane title="tab1">
-            <ng-template>tab content 1</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab2">
-            <ng-template>tab content 2</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab3">
-            <ng-template>tab content 3</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab4">
-            <ng-template>tab content 4</ng-template>
-        </jigsaw-tab-pane>
-    </jigsaw-tabs>
-    <ng-template #newTab>
-        new tab content
-    </ng-template>
-</div>
-<br>
-<div>
-    <jigsaw-table [data]="tableData" ></jigsaw-table>   
-</div>
-
+    <br>
+    <div>
+        <jigsaw-group-select [data]="dataList" [multipleSelect]="true" placeholder="{{'selectPlaceholder' | translate}}"
+                             width="160px"
+                             [useStatistics]="false">
+        </jigsaw-group-select>
+    </div>
+    <br>
+    <div>
+        <jigsaw-tabs [editable]="true" [width]="300" (remove)="show('about to remove tab ' + $event)"
+                     (add)="add($event, newTab)">
+            <jigsaw-tab-pane title="tab1">
+                <ng-template>tab content 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2">
+                <ng-template>tab content 2</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template>tab content 3</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template>tab content 4</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+        <ng-template #newTab>
+            new tab content
+        </ng-template>
+    </div>
+    <br>
+    <div>
+        <jigsaw-table [data]="tableData"></jigsaw-table>
+    </div>
+</demo-template>

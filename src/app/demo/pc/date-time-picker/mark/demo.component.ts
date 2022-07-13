@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {MarkDate} from "jigsaw/public_api";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'mark-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerMarkDemoComponent {
@@ -15,9 +17,6 @@ export class DateTimePickerMarkDemoComponent {
         {date: {from: 'now-32d', to: 'now-30d'}, mark: 'warn', label: '提醒日期'},
     ];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

@@ -1,10 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedLabel.size">
+    </jigsaw-tree-ext>
 
-
-<!-- start to learn the demo from here -->
-<jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)">
-</jigsaw-tree-ext>
-
-<p>建议使用xml作为数据源，<a href="#/pc/tree/xml-data">详见这里</a>。</p>
+    <p>建议使用xml作为数据源，<a href="#/pc/tree/xml-data">详见这里</a>。</p>
+</demo-template>

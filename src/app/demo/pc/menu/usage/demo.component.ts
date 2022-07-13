@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
-import {SimpleTreeData, JigsawMenu} from "jigsaw/public_api";
+import {SimpleTreeData, JigsawMenu, PopupService} from "jigsaw/public_api";
+import {MenuTextService} from "../text.service";
 
 @Component({
+    selector: 'usage-menu',
     templateUrl: './demo.component.html',
     styleUrls: [`./demo.component.css`]
 })
@@ -231,9 +233,5 @@ export class MenuUsageDemo {
         JigsawMenu.show(event, {data: this.dropdownData, width: 250}, this.menuSelect.bind(this));
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo主要用于展示菜单的各种典型用法，起到抛砖引玉的目的';
-    description: string = '';
+    constructor(public text: MenuTextService) {}
 }

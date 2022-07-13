@@ -8,6 +8,7 @@ import {BreadcrumbRouterList} from "./list/list";
 import {BreadcrumbRouterDetail} from "./detail/detail";
 import {BreadcrumbRouterBuy} from "./buy/buy";
 import {ProductService} from "./product.service";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 /* #for-live-demo-only#
 const routes = [
@@ -30,7 +31,7 @@ const routes = [
     ],
     exports: [BreadcrumbRouterDemoComponent],
     imports: [
-        JigsawBreadcrumbModule, JigsawDemoDescriptionModule, CommonModule,
+        JigsawBreadcrumbModule, JigsawDemoDescriptionModule, CommonModule, DemoTemplateModule,
         RouterModule/* #for-live-demo-only# .forRoot(routes) */
     ],
     providers: [ProductService]

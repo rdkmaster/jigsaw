@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {TooltipTextService} from "../text.service";
 
 @Component({
+    selector: 'html-render-tooltip',
     templateUrl: './demo.component.html'
 })
 export class TooltipHtmlDemoComponent {
@@ -10,10 +12,6 @@ export class TooltipHtmlDemoComponent {
     onclick() {
         alert('你点击了tooltip里的超链了！')
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo演示了Tooltip将内容渲染为html的效果，以及如何在html里添加简单的交互动作';
-    description: string = '';
+    constructor(public text: TooltipTextService) {
+    }
 }

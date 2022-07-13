@@ -10,8 +10,14 @@ import {PaginationBigDataDemoComponent} from "./big-data/demo.component";
 import {PaginationBigDataDemoModule} from "./big-data/demo.module";
 import { PaginationNoDataDemoComponent } from './no-data/demo.component';
 import { PaginationNoDataDemoModule } from './no-data/demo.module';
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {PaginationAllComponent} from "./demo.component";
 
 export const routerConfig = [
+    {
+        path: "all",
+        component: PaginationAllComponent
+    },
     {
         path: "basic",
         component: PaginationBasicDemoComponent
@@ -25,11 +31,11 @@ export const routerConfig = [
         component: PaginationSizeDemoComponent
     },
     {
-        path: 'big-data', 
+        path: 'big-data',
         component: PaginationBigDataDemoComponent
     },
     {
-        path: 'no-data', 
+        path: 'no-data',
         component: PaginationNoDataDemoComponent
     }
 ];
@@ -41,7 +47,9 @@ export const routerConfig = [
         WithPagingInfoDemoModule,
         PaginationSizeDemoModule,
         PaginationBigDataDemoModule,
-        PaginationNoDataDemoModule
-    ]
+        PaginationNoDataDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [PaginationAllComponent]
 })
 export class PaginationDemoModule {}

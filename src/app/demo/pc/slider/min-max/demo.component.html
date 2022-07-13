@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['setMinMax']">
+    <div class="demo-2 live-demo">
+        <jigsaw-slider [value]="value" [min]="min" [max]="max" width="600"
+                       (change)="sliderChange($event)"></jigsaw-slider>
+        <p>取值: {{value}}</p>
+    </div>
+</demo-template>

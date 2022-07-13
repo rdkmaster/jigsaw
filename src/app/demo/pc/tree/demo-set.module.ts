@@ -18,8 +18,13 @@ import { ZtreeFuzzySearchComponent } from './fuzzy-search/demo.component';
 import { TreeFuzzySearchDemoModule } from './fuzzy-search/demo.module';
 import { ZtreeSizeComponent } from './size/demo.component';
 import { TreeSizeDemoModule } from './size/demo.module';
+import {TreeAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: TreeAllComponent
+    },
     {
         path: 'basic', component: ZtreeDemoComponent
     },
@@ -52,9 +57,10 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
-        ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
+        ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule, JigsawMarkdownModule,
         TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeFuzzySearchDemoModule, TreeSizeDemoModule
     ],
+    declarations: [TreeAllComponent],
     exports: [
     ],
     providers: []

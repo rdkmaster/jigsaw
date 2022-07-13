@@ -31,10 +31,10 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `
         <j-input [theme]="theme" *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
-                 (valueChange)="_$handleSearching($event)">
+                 (valueChange)="_$handleSearching($event)" [placeholder]="placeholder">
             <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </j-input>
-        <div class="jigsaw-list-lite-wrapper"
+        <div [class]="showBorder ? 'jigsaw-list-lite-wrapper' : 'jigsaw-list-lite-wrapper jigsaw-list-lite-wrapper-no-border'"
              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
             <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
@@ -143,6 +143,16 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     public searchable: boolean;
 
     /**
+     * 搜索框的提示语
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = list-lite/searchable
+     */
+    @Input()
+    public placeholder: string = '';
+
+    /**
      * 显示的option个数，超出的会显示滚动条；
      * 不设置optionCount，则显示全部
      *
@@ -158,6 +168,16 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     @ViewChildren(JigsawListOption)
     private _listOptions: QueryList<JigsawListOption>;
+
+    /**
+     * true显示边框
+     * false不显示边框
+     *
+     * @NoMarkForCheckRequired
+     *
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
@@ -208,7 +228,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     private _setListWrapperHeight() {
         if (!this.optionCount || !this._listOptions.length) return;
-        this.height = this._listOptions.first.elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
+        this.height = this._listOptions.first.elementRef.nativeElement.offsetHeight * this.optionCount + 2 + 'px';
         this._changeDetectorRef.detectChanges();
     }
 

@@ -1,10 +1,20 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
+import {SelectTextService} from "../text.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: "./demo.component.html"
+    selector: "trigger-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectTriggerDemoComponent {
+
+export class SelectTriggerComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         { label: "北京" },
@@ -24,9 +34,6 @@ export class SelectTriggerDemoComponent {
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
+    constructor(public text: SelectTextService) {}
+
 }

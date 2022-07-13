@@ -1,10 +1,12 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
+import {RangeDataTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'step-range-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeStepDemoComponent implements AfterViewInit {
-    constructor(public changeDetectorRef: ChangeDetectorRef) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
     }
 
     beginDate = "now-1d";
@@ -13,10 +15,4 @@ export class RangeDateTimeStepDemoComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.changeDetectorRef.detectChanges();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

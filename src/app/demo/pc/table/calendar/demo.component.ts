@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {TableData, TableCellRendererBase, CommonUtils} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 export class CalendarTableData extends TableData {
     year: number = new Date().getFullYear();
@@ -7,6 +8,7 @@ export class CalendarTableData extends TableData {
 }
 
 @Component({
+    selector: 'calendar-table',
     templateUrl: './demo.component.html'
 })
 export class TableCalendarDemoComponent {
@@ -22,7 +24,7 @@ export class TableCalendarDemoComponent {
         }
     ];
 
-    constructor() {
+    constructor(public text: TableTextService) {
         this.tableData = new CalendarTableData(
             [
                 [69, 16, 4, 47, 27, 54, 100],
@@ -35,12 +37,6 @@ export class TableCalendarDemoComponent {
             ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六',]
         );
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '基于Table实现的日历功能';
-    description: string = '';
 }
 
 @Component({

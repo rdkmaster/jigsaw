@@ -1,10 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
+    selector: "Preset-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectPresetDemoComponent {
+
+export class SelectPresetComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     cities = new ArrayCollection([
         {label: "北京"},
         {label: "上海"},
@@ -26,10 +36,6 @@ export class SelectPresetDemoComponent {
     public selectNone() {
         this.selectedCity = undefined;
     }
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

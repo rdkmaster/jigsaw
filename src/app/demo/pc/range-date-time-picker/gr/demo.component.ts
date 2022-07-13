@@ -1,6 +1,8 @@
 import {AfterContentInit, ChangeDetectorRef, Component} from "@angular/core";
+import {RangeDataTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'gr-range-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeGrComponent implements AfterContentInit {
@@ -10,17 +12,11 @@ export class RangeDateTimeGrComponent implements AfterContentInit {
 
     gr:any;
 
-    constructor(public changeDetectorRef: ChangeDetectorRef) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
     }
 
     ngAfterContentInit() {
         this.gr = [`date`];
         this.changeDetectorRef.detectChanges();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

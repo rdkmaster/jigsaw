@@ -1,12 +1,21 @@
-import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/public_api";
+import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {TagTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
+import {JigsawInput} from "../../../../../jigsaw/pc-components/input/input";
+import {JigsawTag} from "../../../../../jigsaw/pc-components/tag/tag";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "with-icon-tag",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"]
 })
-export class TagWithIconDemoComponent {
 
+export class TagWithIconComponent {
+    public selectedLabel = {label: "大", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "medium"}
+    ]);
     @ViewChildren(JigsawTag)
     tags: QueryList<JigsawTag>;
 
@@ -14,9 +23,7 @@ export class TagWithIconDemoComponent {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = 'Tag与图标混用';
-    description: string = '';
+
+    constructor(public text: TagTextService) {}
+
 }

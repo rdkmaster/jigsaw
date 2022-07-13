@@ -1,8 +1,10 @@
 import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 import {TableSwimLaneCell} from "./table-renderer";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'swim-lane-diagram-table',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
@@ -21,7 +23,7 @@ export class SwimLaneDiagramDemoComponent {
         {name: 'PCRF', desc: 'XNSAEGW02', ip: '221.177.187.112'},
     ];
 
-    constructor(public elementRef: ElementRef) {
+    constructor(public elementRef: ElementRef, public text: TableTextService) {
         this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
         for (let i = 0; i < this.neList.length; i++) {
             this.tableData.field.push('swimLang' + i);
@@ -191,10 +193,4 @@ export class SwimLaneDiagramDemoComponent {
     handleDbRowSelect(rowIndex: number) {
         console.log(rowIndex);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了表格应对事先未知多少列，并且需要动态调整这些列定义的方法。';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

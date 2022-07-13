@@ -1,11 +1,20 @@
 import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {SelectTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ["./demo.component.css"]
+    selector: "size-select",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SelectSizeDemoComponent {
+
+export class SelectSizeComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     cityListForSelect = new ArrayCollection([
         {label: "北京"},
         {label: "这是一个上海的标题，非常长，非常长，非常长，非常长，非常长。。。。"},
@@ -14,10 +23,6 @@ export class SelectSizeDemoComponent {
         {label: "长沙"},
         {label: "西安"}
     ]);
+    constructor(public text: SelectTextService) {}
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

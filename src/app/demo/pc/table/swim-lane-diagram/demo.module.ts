@@ -5,11 +5,12 @@ import {TranslateHelper, JigsawTableModule, JigsawSliderModule} from "jigsaw/pub
 import {JigsawDemoDescriptionModule} from "../../../../demo-description/demo-description";
 import {SwimLaneDiagramDemoComponent} from './demo.component';
 import {TableSwimLaneCell} from "./table-renderer";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
         JigsawTableModule, CommonModule, TranslateModule.forChild(),
-        JigsawDemoDescriptionModule, JigsawSliderModule
+        JigsawDemoDescriptionModule, JigsawSliderModule, DemoTemplateModule
     ],
     declarations: [SwimLaneDiagramDemoComponent, TableSwimLaneCell],
     exports: [SwimLaneDiagramDemoComponent]

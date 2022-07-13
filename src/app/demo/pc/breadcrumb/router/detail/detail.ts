@@ -7,7 +7,7 @@ import {ProductService} from "../product.service";
     template: `
         name: {{product?.name}}<br>
         price: {{product?.price}}<br>
-        <a routerLink="/pc/breadcrumb/router/buy/{{product?.id}}">buy now</a>
+        <a routerLink="/pc/breadcrumb/all/buy/{{product?.id}}">buy now</a>
     `
 })
 export class BreadcrumbRouterDetail implements OnInit {

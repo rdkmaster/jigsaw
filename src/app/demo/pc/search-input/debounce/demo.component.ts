@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
+import {SearchInputTextService} from "../text.service";
 
 @Component({
+    selector: 'debounce-search-input',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -12,11 +14,6 @@ export class SearchInputDebounceDemoComponent {
         console.log("demo search event:", $event);
         this.searchKey = $event;
     }
-
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
+    constructor(public text: SearchInputTextService) {
+    }
 }

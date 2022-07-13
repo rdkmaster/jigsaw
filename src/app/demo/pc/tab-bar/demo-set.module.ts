@@ -1,33 +1,28 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {JigsawTabBarComponent} from "./basic/demo.component";
-import {JigsawTabBarDemoModule} from "./basic/demo.module";
-import { TabBarTypeDemoComponent } from './type/demo.component';
-import { TabBarTypeDemoModule } from './type/demo.module';
-import { TabBarBackgroundDemoComponent } from './background/demo.component';
-import { TabBarBackgroundDemoModule } from './background/demo.module';
-import { TabBarEditableDemoComponent } from './editable/demo.component';
-import { TabBarEditableDemoModule } from './editable/demo.module';
+import {TabBarAllComponent} from "./demo.component";
+import {TabBarBasicDemoModule} from "./basic/demo.module";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {TabBarTypeDemoModule} from "./type/demo.module";
+import {TabBarEditableDemoModule} from "./editable/demo.module";
+import {TabBarBackgroundDemoModule} from "./background/demo.module";
 
 export const routerConfig = [
     {
-        path: 'basic', component: JigsawTabBarComponent
+        path: 'all', component: TabBarAllComponent
     },
-    {
-        path: 'type', component: TabBarTypeDemoComponent
-    },
-    {
-        path: 'background', component: TabBarBackgroundDemoComponent
-    },
-    {
-        path: 'editable', component: TabBarEditableDemoComponent
-    }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), JigsawTabBarDemoModule, TabBarTypeDemoModule, TabBarBackgroundDemoModule, TabBarEditableDemoModule
+        RouterModule.forChild(routerConfig),
+        JigsawMarkdownModule,
+        TabBarBasicDemoModule,
+        TabBarTypeDemoModule,
+        TabBarEditableDemoModule,
+        TabBarBackgroundDemoModule
     ],
+    declarations: [TabBarAllComponent],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class TabBarDemoModule {

@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, LineGraphData, PieGraphData} from "jigsaw/public_api";
+import {CollapseTextService} from "../text.service";
 
 @Component({
+    selector: 'full-collapse',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -11,7 +13,7 @@ export class CollapseFullComponent {
     public pieGraphDataByCol: PieGraphData;
     public lineGraphData: LineGraphData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: CollapseTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -52,10 +54,4 @@ export class CollapseFullComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了`JigsawCollapse`的效果';
-    description: string = '';
 }

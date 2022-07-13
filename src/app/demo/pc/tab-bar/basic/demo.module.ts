@@ -3,21 +3,23 @@ import {CommonModule} from "@angular/common";
 import {
     JigsawButtonModule,
     JigsawGraphModule,
+    JigsawHeaderModule,
     JigsawMenuModule,
     JigsawSwitchModule,
     JigsawTableModule,
     JigsawTabsModule
 } from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {JigsawTabBarComponent} from "./demo.component";
+import {TabBarBasicComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {JigsawMarkdownModule} from "../../../../markdown/markdown";
 
 @NgModule({
     imports: [
-        CommonModule, JigsawTabsModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawTableModule, JigsawGraphModule,
-        JigsawButtonModule, JigsawMenuModule
+        CommonModule, JigsawTabsModule, JigsawSwitchModule, JigsawTableModule, JigsawGraphModule,
+        JigsawButtonModule, JigsawMenuModule, DemoTemplateModule, JigsawHeaderModule, JigsawMarkdownModule
     ],
-    declarations: [JigsawTabBarComponent],
-    exports: [JigsawTabBarComponent]
+    declarations: [TabBarBasicComponent],
+    exports: [TabBarBasicComponent]
 })
-export class JigsawTabBarDemoModule {
+export class TabBarBasicDemoModule {
 }

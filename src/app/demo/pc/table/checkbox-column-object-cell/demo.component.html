@@ -1,21 +1,14 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">单元格数据类型是JSON对象</jigsaw-header>
-        <!--trackRowBy相关说明请参考本demo的展开详情 -->
-        <jigsaw-table height="400"
-                      [data]="tableData"
-                      [columnDefines]="columnDefineGenerator"
-                      [additionalColumnDefines]="additionalColumns"
-                      [(additionalData)]="additionalData"
-                      (additionalDataChange)="additionalDataChange($event)"
-                      trackRowBy="name">
-        </jigsaw-table>
-        <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
-    </div>
-</div>
-
+<demo-template [data]="''" [text]="text['text']['checkboxColumnObjectCell']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">单元格数据类型是JSON对象</jigsaw-header>
+    <!--trackRowBy相关说明请参考本demo的展开详情 -->
+    <jigsaw-table height="400"
+                  [data]="tableData"
+                  [columnDefines]="columnDefineGenerator"
+                  [additionalColumnDefines]="additionalColumns"
+                  [(additionalData)]="additionalData"
+                  (additionalDataChange)="additionalDataChange($event)"
+                  trackRowBy="name">
+    </jigsaw-table>
+    <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+</demo-template>

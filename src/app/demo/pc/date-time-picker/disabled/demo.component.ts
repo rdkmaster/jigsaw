@@ -1,14 +1,13 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'disabled-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerDisabledDemoComponent {
     disabled = true;
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

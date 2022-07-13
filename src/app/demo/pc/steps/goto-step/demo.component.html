@@ -1,20 +1,18 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['gotoStep']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-container">
+        <jigsaw-header [level]="2">通过点击步骤节点进行跳转</jigsaw-header>
+        <jigsaw-steps [data]="steps1" [(current)]="step1" (currentChange)="currentChange1($event)"></jigsaw-steps>
+        <br>当前选择节点: {{step1}}
 
-<!-- start to learn the demo from here -->
-<div class="demo-container">
-    <jigsaw-header [level]="2">通过点击步骤节点进行跳转</jigsaw-header>
-    <jigsaw-steps [data]="steps1" [(current)]="step1" (currentChange)="currentChange1($event)"></jigsaw-steps>
-    <br>当前选择节点: {{step1}}
-
-    <br><br><br><br>
-    <jigsaw-header [level]="2">通过点击按钮进行跳转，节点禁用</jigsaw-header>
-    <div style="margin-top: 30px;">
-        <jigsaw-button (click)="pre()" [disabled]="step2 < 0 || step2 == 0">上一步</jigsaw-button>
-        <jigsaw-button (click)="next()" [disabled]="step2 < 0 || step2 >= steps2.length - 1">下一步</jigsaw-button>
-        <jigsaw-button (click)="step2 = -1">测试无效值</jigsaw-button>
+        <br><br><br><br>
+        <jigsaw-header [level]="2">通过点击按钮进行跳转，节点禁用</jigsaw-header>
+        <div style="margin-top: 30px;">
+            <jigsaw-button (click)="pre()" [disabled]="step2 < 0 || step2 == 0">上一步</jigsaw-button>
+            <jigsaw-button (click)="next()" [disabled]="step2 < 0 || step2 >= steps2.length - 1">下一步</jigsaw-button>
+            <jigsaw-button (click)="step2 = -1">测试无效值</jigsaw-button>
+        </div>
+        <jigsaw-steps [data]="steps2" [(current)]="step2" (currentChange)="currentChange2($event)"></jigsaw-steps>
+        <br>当前选择节点: {{step2}}
     </div>
-    <jigsaw-steps [data]="steps2" [(current)]="step2" (currentChange)="currentChange2($event)"></jigsaw-steps>
-    <br>当前选择节点: {{step2}}
-</div>
+</demo-template>

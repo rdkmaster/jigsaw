@@ -1,12 +1,21 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit } from "jigsaw/public_api";
+import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit, ArrayCollection } from "jigsaw/public_api";
+import {TreeTextService} from "../text.service";
 
 @Component({
+    selector: 'icon-tree',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
+
+    public selectedLabel = {label: "中", size: "medium"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
 
     public data: SimpleTreeData = new SimpleTreeData();
     public xml: SimpleTreeData = new SimpleTreeData();
@@ -46,7 +55,7 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
         nodeClose: "ea57"
     };
 
-    constructor() {
+    constructor(public text: TreeTextService) {
         this.xml.fromXML(`
             <node>
                 <node label="Web代码" open="true" iconUnicode="e25c">

@@ -7,8 +7,13 @@ import {NotificationBasicDemoComponent} from "./basic/demo.component";
 import {NotificationBasicDemoModule} from "./basic/demo.module";
 import {NotificationDisposeOnRouterDemoComponent} from "./dispose-on-router-changed/demo.component";
 import {NotificationDisposeOnRouterDemoModule} from "./dispose-on-router-changed/demo.module";
+import {NotificationAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: NotificationAllComponent
+    },
     {
         path: 'full', component: NotificationFullDemoComponent
     },
@@ -22,9 +27,10 @@ export const routerConfig = [
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), NotificationFullDemoModule, 
-        NotificationBasicDemoModule, NotificationDisposeOnRouterDemoModule,
+        RouterModule.forChild(routerConfig), NotificationFullDemoModule,
+        NotificationBasicDemoModule, NotificationDisposeOnRouterDemoModule, JigsawMarkdownModule
     ],
+    declarations: [NotificationAllComponent]
 })
 export class NotificationDemoModule {
 }

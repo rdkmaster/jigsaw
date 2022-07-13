@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'week-start-date-time-picker',
     templateUrl: './demo.component.html',
     styles: [`
         .header {
@@ -24,9 +26,7 @@ export class DateTimePickerWeekStartComponent {
         console.log($event);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
+
 }

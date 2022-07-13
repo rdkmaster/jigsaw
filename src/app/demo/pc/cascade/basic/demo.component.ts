@@ -1,14 +1,18 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
-import {SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "basic-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeBasicDemoComponent {
+
+export class CascadeBasicComponent {
     areas: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+    constructor(public http: HttpClient, public text: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this.areas = data);
     }
@@ -21,10 +25,4 @@ export class CascadeBasicDemoComponent {
             return result;
         }, []).join(' | ');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '以行政区选择作为场景，说明如何使用静态数据来实现级联数据的选择';
-    description: string = '';
 }

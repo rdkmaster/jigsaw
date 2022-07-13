@@ -1,21 +1,20 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['withPageInfo']">
 
+    <!-- start to learn the demo from here -->
+    <jigsaw-pagination [data]="pageable"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       [searchable]="false"
+                       [showQuickJumper]="true"
+                       [size]="selectedLabel.size">
+    </jigsaw-pagination>
 
-<!-- start to learn the demo from here -->
-<jigsaw-pagination [data]="pageable"
-                   [pageSizeOptions]="[5, 10, 20]"
-                   [searchable]="false"
-                   [showQuickJumper]="true">
-</jigsaw-pagination>
-
-<br><br>
-<h5>分页数据信息：</h5>
-<ul style="list-style: disc">
-    <li>pagingInfo.totalPage: {{pageable.pagingInfo.totalPage}}</li>
-    <li>pageInfo.pageSize: {{pageable.pagingInfo.pageSize}}</li>
-    <li>pageInfo.currentPage: {{pageable.pagingInfo.currentPage}}</li>
-    <li>pageInfo.totalRecord: {{pageable.pagingInfo.totalRecord}}</li>
-    <li>actions: {{actions}} <span>注意快速切换页时的debounce的效果</span></li>
-</ul>
+    <br><br>
+    <h5>分页数据信息：</h5>
+    <ul style="list-style: disc">
+        <li>pagingInfo.totalPage: {{pageable.pagingInfo.totalPage}}</li>
+        <li>pageInfo.pageSize: {{pageable.pagingInfo.pageSize}}</li>
+        <li>pageInfo.currentPage: {{pageable.pagingInfo.currentPage}}</li>
+        <li>pageInfo.totalRecord: {{pageable.pagingInfo.totalRecord}}</li>
+        <li>actions: {{actions}} <span>注意快速切换页时的debounce的效果</span></li>
+    </ul>
+</demo-template>

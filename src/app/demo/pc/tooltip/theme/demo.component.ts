@@ -1,13 +1,11 @@
 import { Component } from "@angular/core";
+import {TooltipTextService} from "../text.service";
 
 @Component({
+    selector: 'theme-tooltip',
     templateUrl: './demo.component.html'
 })
 export class TooltipThemeDemoComponent {
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '此demo展示了tooltip内置的明、暗样式';
-    description: string = '';
+    constructor(public text: TooltipTextService) {
+    }
 }

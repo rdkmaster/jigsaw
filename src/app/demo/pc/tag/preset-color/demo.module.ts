@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {JigsawTagModule, JigsawButtonModule, JigsawHeaderModule} from "jigsaw/public_api";
-import {TagPresetColorDemoComponent} from './demo.component';
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {JigsawTagModule} from "jigsaw/public_api";
+import {TagPresetColorComponent} from './demo.component';
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
-    imports: [JigsawTagModule, JigsawDemoDescriptionModule, JigsawButtonModule, JigsawHeaderModule],
-    declarations: [TagPresetColorDemoComponent],
-    exports: [TagPresetColorDemoComponent]
+    imports: [JigsawTagModule, DemoTemplateModule],
+    declarations: [TagPresetColorComponent],
+    exports: [TagPresetColorComponent]
 })
 export class TagPresetColorDemoModule {
 }

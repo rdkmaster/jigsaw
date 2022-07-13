@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {PageableTableData, ColumnDefine} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'pageable-ready-table',
     templateUrl: './demo.component.html'
 })
 export class TablePageableReadyDemoComponent {
@@ -10,7 +12,7 @@ export class TablePageableReadyDemoComponent {
     pageableReady: PageableTableData;
 
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries', method: 'post'
         });
@@ -38,10 +40,4 @@ export class TablePageableReadyDemoComponent {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = 'ready为true时，在设置pagingInfo的pageSize，或者currentPage属性，会触发查询；ready为false时，pagingInfo的pageSize，或者currentPage属性则不会触发查询';
-    description: string = '';
 }

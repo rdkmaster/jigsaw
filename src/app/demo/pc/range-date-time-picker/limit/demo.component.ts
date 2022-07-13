@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {RangeDataTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'limit-range-data-time-picker',
     templateUrl: './demo.component.html',
     styles: [`
         .message {
@@ -17,9 +19,6 @@ export class RangeDateTimeLimitComponent {
     limitStart = 'now-5d';
     limitEnd = 'now+5d';
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: RangeDataTimePickerTextService) {
+    }
 }

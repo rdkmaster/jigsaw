@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {TimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'pop-up-down-time-picker',
     templateUrl: './demo.component.html'
 })
 export class TimePickerFloatPositionDemoComponent {
@@ -10,9 +12,6 @@ export class TimePickerFloatPositionDemoComponent {
         console.log('time change to ', $event);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TimePickerTextService) {
+    }
 }

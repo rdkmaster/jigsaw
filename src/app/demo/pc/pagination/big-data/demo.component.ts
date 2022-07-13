@@ -1,18 +1,26 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {LocalPageableTableData} from "jigsaw/public_api";
+import {LocalPageableTableData, ArrayCollection} from "jigsaw/public_api";
+import {PaginationTextService} from "../text.service";
 
 @Component({
+    selector: 'big-data-pagination',
     templateUrl: './demo.component.html'
 })
 export class PaginationBigDataDemoComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     searchable: boolean = false;
     pageable: LocalPageableTableData;
     pageableForSimple: LocalPageableTableData;
     pageSizeOptions = null;
     showQuickJumper = true;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: PaginationTextService) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 2;
@@ -37,10 +45,4 @@ export class PaginationBigDataDemoComponent {
         this.pageable.pagingInfo.currentPage = number;
         this.pageableForSimple.pagingInfo.currentPage = number;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

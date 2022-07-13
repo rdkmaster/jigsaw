@@ -1,14 +1,13 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'step-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerStepDemoComponent {
     date='now';
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

@@ -1,20 +1,22 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
-import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "multiple-select-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeMultipleDemoComponent {
-    areas: SimpleTreeData;
 
-    constructor(http: HttpClient) {
+export class CascadeMultipleComponent {
+    areas: SimpleTreeData;
+    message: string = '';
+    constructor(http: HttpClient, public text: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this.areas = data);
     }
-
-    message: string = '';
-
     parseMessage(selectedItems) {
         this.message = selectedItems.reduce((result, item) => {
             const districts = [];
@@ -27,10 +29,4 @@ export class CascadeMultipleDemoComponent {
             return result;
         }, []).join(' | ');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了如何通过multipleSelect属性设置级联组件最后一级支持多选的方法';
-    description: string = '';
 }

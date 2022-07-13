@@ -1,7 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 import {TimeGr, GrItem, Shortcut, RangeTimeDataRanges} from "jigsaw/public_api";
+import {RangeDataTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'gr-items-range-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeGrItemsComponent implements AfterViewInit {
@@ -20,7 +22,7 @@ export class RangeDateTimeGrItemsComponent implements AfterViewInit {
             {label: "Month", value: TimeGr.month}
         ];
 
-    constructor(public changeDetectorRef: ChangeDetectorRef) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
     }
 
     ngAfterViewInit() {
@@ -30,10 +32,4 @@ export class RangeDateTimeGrItemsComponent implements AfterViewInit {
     onChange($event) {
         console.log($event)
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

@@ -7,6 +7,7 @@ import {
     JigsawHeaderModule,
     JigsawButtonModule
 } from "jigsaw/public_api";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
@@ -14,7 +15,8 @@ import {
         CommonModule,
         JigsawDemoDescriptionModule,
         JigsawHeaderModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        DemoTemplateModule
     ],
     declarations: [JigsawStepBasicDemoComponent],
     exports: [JigsawStepBasicDemoComponent]

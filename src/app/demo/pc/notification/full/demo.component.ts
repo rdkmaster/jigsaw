@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {JigsawNotification} from "jigsaw/public_api";
+import {NotificationTextService} from "../text.service";
 
 @Component({
+    selector: 'full-notification',
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
@@ -123,9 +125,6 @@ export class NotificationFullDemoComponent {
         JigsawNotification.showInfo('这是一条消息的提示消息', {timeout: 8000});
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`j-notification`组件的各个参数的效果以及推荐的用法';
-    description: string = '';
+    constructor(public text: NotificationTextService) {
+    }
 }

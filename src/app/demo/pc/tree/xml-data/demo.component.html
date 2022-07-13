@@ -1,8 +1,5 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)">
-</jigsaw-tree-ext>
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['xmlData']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedLabel.size">
+    </jigsaw-tree-ext>
+</demo-template>

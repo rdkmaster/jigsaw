@@ -1,13 +1,22 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {SimpleTreeData, JigsawTreeExt, ZTreeSettings} from "jigsaw/public_api";
+import {SimpleTreeData, JigsawTreeExt, ZTreeSettings, ArrayCollection} from "jigsaw/public_api";
+import {TreeTextService} from "../text.service";
 
 @Component({
+    selector: 'custom-settings-callback-tree',
     templateUrl: './demo.component.html'
 })
 export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;
+
+    public selectedLabel = {label: "中", size: "medium"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
     setting: ZTreeSettings = {
         data: {
             key: {
@@ -39,7 +48,7 @@ export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
         }
     }
 
-    constructor() {
+    constructor(public text: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.fromObject([
             {
@@ -115,9 +124,4 @@ export class ZtreeCustomSettingCallbackDemoComponent implements AfterViewInit {
         }
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

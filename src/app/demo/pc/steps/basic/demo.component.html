@@ -1,14 +1,15 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">横向步骤条</jigsaw-header>
+    <jigsaw-steps class="steps-horizontal" [data]="data" [(current)]="current"
+                  (currentChange)="currentChange($event)"></jigsaw-steps>
+    <br>
+    <jigsaw-header [level]="2">纵向步骤条</jigsaw-header>
+    <jigsaw-steps class="steps-vertical" [data]="data" [(current)]="current" (currentChange)="currentChange($event)"
+                  direction="vertical"></jigsaw-steps>
 
-<!-- start to learn the demo from here -->
-<jigsaw-header [level]="2">这是step的最基础用法</jigsaw-header>
-<jigsaw-steps class="steps-horizontal" [data]="data" [(current)]="current" (currentChange)="currentChange($event)"></jigsaw-steps>
-<br>
-<jigsaw-steps class="steps-vertical" [data]="data" [(current)]="current" (currentChange)="currentChange($event)" direction="vertical"></jigsaw-steps>
-
-<div>
-    <span style="margin-right: 20px;">当前步骤：{{current}}</span>
-    <jigsaw-button (click)="changeData()">换一批数据瞅瞅</jigsaw-button>
-</div>
+    <div>
+        <span style="margin-right: 20px;">当前步骤：{{current}}</span>
+        <jigsaw-button (click)="changeData()">换一批数据瞅瞅</jigsaw-button>
+    </div>
+</demo-template>

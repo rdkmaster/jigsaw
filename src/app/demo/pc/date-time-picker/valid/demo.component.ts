@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'valid-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerValidDemoComponent {
@@ -10,9 +12,6 @@ export class DateTimePickerValidDemoComponent {
         return this.selected[0] == 'valid';
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

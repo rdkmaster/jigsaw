@@ -2,8 +2,10 @@ import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'cell-select-renderer-table',
     templateUrl: './demo.component.html'
 })
 export class TableCellSelectRenderDemoComponent {
@@ -12,7 +14,7 @@ export class TableCellSelectRenderDemoComponent {
 
     tableData: TableData;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-short');
@@ -60,12 +62,6 @@ export class TableCellSelectRenderDemoComponent {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了表格内置select渲染器的各种用法';
-    description: string = '';
 }
 
 /* 模拟请求代码 start */

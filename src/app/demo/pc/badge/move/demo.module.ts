@@ -6,13 +6,13 @@ import {
     JigsawSliderModule,
     JigsawButtonModule
 } from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BadgeMoveDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
         JigsawMovableModule, JigsawAlertModule, JigsawBadgeModule, JigsawSliderModule,
-        JigsawDemoDescriptionModule, JigsawButtonModule
+        JigsawButtonModule, DemoTemplateModule
     ],
     declarations: [BadgeMoveDemoComponent],
     exports: [BadgeMoveDemoComponent]

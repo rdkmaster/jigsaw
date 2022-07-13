@@ -1,18 +1,14 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['withPopup']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button width="150" (click)="popupTemplate(tp)">
+        popup
+    </jigsaw-button>
 
-
-<!-- start to learn the demo from here -->
-<jigsaw-button width="150" (click)="popupTemplate(tp)">
-popup
-</jigsaw-button>
-
-<ng-template #tp>
-<jigsaw-dialog top="20%" width="70%" caption="table of dialog" (answer)="disposer()">
-    <jigsaw-table [data]="tableData" height="400px"></jigsaw-table>
-</jigsaw-dialog>
-</ng-template>
-
+    <ng-template #tp>
+        <jigsaw-dialog top="20%" width="70%" caption="table of dialog" (answer)="disposer()">
+            <jigsaw-table [data]="tableData" height="400px"></jigsaw-table>
+        </jigsaw-dialog>
+    </ng-template>
+</demo-template>
 
 

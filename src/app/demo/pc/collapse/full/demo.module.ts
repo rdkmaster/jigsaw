@@ -6,7 +6,7 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {CollapseFullComponent} from "./demo.component";
-
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
@@ -14,7 +14,7 @@ import {JigsawHeaderModule} from "jigsaw/public_api";
     exports: [CollapseFullComponent],
     imports: [
         CommonModule, JigsawCollapseModule, JigsawButtonModule, JigsawInputModule,
-        JigsawTableModule, JigsawGraphModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
+        JigsawTableModule, JigsawGraphModule, JigsawDemoDescriptionModule, JigsawHeaderModule, DemoTemplateModule]
 })
 export class CollapseFullModule {
 

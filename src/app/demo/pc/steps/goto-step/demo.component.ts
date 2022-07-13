@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {StepItem} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: "goto-steps",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -42,7 +44,7 @@ export class JigsawStepGotoDemoComponent {
     step1 = 2;
     step2 = 0;
 
-    constructor() {
+    constructor(public text: StepsTextService) {
         this.steps1 = JSON.parse(JSON.stringify(this.data));
         this.steps2 = JSON.parse(JSON.stringify(this.data)).map((item, index) => {
             if (index == 0) {
@@ -72,10 +74,4 @@ export class JigsawStepGotoDemoComponent {
         // 访问过的节点，去除disabled
         delete stepObject.disabled;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

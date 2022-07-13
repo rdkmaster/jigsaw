@@ -1,8 +1,12 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <div style="margin-bottom: 20px">
+        <jigsaw-input [(value)]="inputValue" placeholder="请输入文本" width="50%">
+        </jigsaw-input>
+        <p class="notes">输入值是：<span>{{inputValue}}</span></p>
+    </div>
 
-<!-- start to learn the demo from here -->
-<jigsaw-input id="test-input" [(value)]="inputValue" placeholder="basic demo">
-</jigsaw-input>
-<p class="notes">输入值是：<span id="bind-property">{{inputValue}}</span></p>
+    <div>
+        <jigsaw-input placeholder="禁用文本框" width="50%" [disabled]="true">
+        </jigsaw-input>
+    </div>
+</demo-template>

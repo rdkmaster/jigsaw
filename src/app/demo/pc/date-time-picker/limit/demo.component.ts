@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'limit-date-time-picker',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap p {
@@ -17,9 +19,6 @@ export class DateTimePickerLimitComponent {
     limitStart = 'now-10d';
     limitEnd = 'now+5d';
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

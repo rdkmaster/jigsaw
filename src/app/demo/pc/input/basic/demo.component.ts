@@ -1,24 +1,21 @@
-import {Component, ViewChild} from "@angular/core";
-import {JigsawInput} from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {InputTextService} from "../text.service";
 
 @Component({
-  templateUrl: './demo.component.html'
+    selector: "basic-input",
+    templateUrl: './demo.component.html',
 })
-export class InputBasicDemoComponent {
-    inputValue: any;
 
-    valueChanged(message: string) {
-        console.log(`input value is: ${message}`);
+export class InputBasicComponent {
+    public units = ['单位（GB）', '单位（MB）', '单位（KB）'];
+    public inputValue: any;
+    public inputValue2: any;
+    public inputValue3: any;
+    public unit: string;
+    constructor(public text: InputTextService) {}
+
+    public unitChange(event: any) {
+        console.log('prefix-suffix selected: ', event);
+        this.unit = event;
     }
-
-    @ViewChild('myInput') myInput:JigsawInput;
-    click() {
-        alert('你输入的值是 ' + this.myInput.value)
-    }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

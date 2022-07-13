@@ -1,0 +1,29 @@
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['table']">
+    <div>
+        <p class="comment">正常 </p>
+        <jigsaw-button [preSize]="selectedLabel.size" colorType="none">
+            表格中的按钮
+        </jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">选中 </p>
+        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size" colorType="none">
+            修改
+        </jigsaw-button>
+        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size" colorType="none">
+            删除
+        </jigsaw-button>
+        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size" colorType="primary">
+            表格里操作
+        </jigsaw-button>
+    </div>
+
+    <div>
+        <p class="comment">禁用 </p>
+        <jigsaw-button colorType="none" [disabled]="true" [preSize]="selectedLabel.size">
+            表格里操作
+        </jigsaw-button>
+    </div>
+</demo-template>
+

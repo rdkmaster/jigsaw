@@ -13,8 +13,24 @@ import { BreadcrumbFoldDemoComponent } from "./fold/demo.component";
 import { BreadcrumbFoldDemoModule } from "./fold/demo.module"
 import { BreadcrumbModeDemoComponent } from './theme/demo.component';
 import { BreadcrumbModeDemoModule } from './theme/demo.module';
+import {BreadcrumbAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: BreadcrumbAllComponent,
+        children: [
+            {
+                path: 'list/:typeId', component: BreadcrumbRouterList
+            },
+            {
+                path: 'detail/:id', component: BreadcrumbRouterDetail
+            },
+            {
+                path: 'buy/:id', component: BreadcrumbRouterBuy
+            }
+        ]
+    },
     {
         path: 'basic', component: BreadcrumbBasicDemoComponent
     },
@@ -50,8 +66,10 @@ export const routerConfig = [
         BreadcrumbHintDemoModule,
         BreadcrumbFoldDemoModule,
         BreadcrumbRouterDemoModule,
-        BreadcrumbModeDemoModule
-    ]
+        BreadcrumbModeDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [BreadcrumbAllComponent]
 })
 export class BreadcrumbDemoModule {
 }

@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {GrItem, MarkDate, TimeGr} from "jigsaw/public_api";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'date-time-select-date-time-picker',
     templateUrl: './demo.component.html'
 })
 export class DateTimeSelectDemoComponent {
@@ -78,9 +80,7 @@ export class DateTimeSelectDemoComponent {
             this.date10 = '2020-03-24'
         })
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

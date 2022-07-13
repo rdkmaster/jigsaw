@@ -1,11 +1,20 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawInput} from "jigsaw/public_api";
+import {TagTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
+import {JigsawInput} from "../../../../../jigsaw/pc-components/input/input";
 
 @Component({
+    selector: "add-remove-tag",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
-export class TagAddRemoveDemoComponent {
+
+export class TagAddRemoveComponent {
+    public selectedLabel = {label: "大", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "medium"}
+    ]);
     @ViewChild('input')
     input: JigsawInput;
 
@@ -42,9 +51,6 @@ export class TagAddRemoveDemoComponent {
         this.tags.splice(idx, 1);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '添加`[isAdd]="true"`来设置Tag为Add状态，本demo最多可添加5个Tag，注意观察`disabled`效果';
-    description: string = "";
+    constructor(public text: TagTextService) {}
+
 }

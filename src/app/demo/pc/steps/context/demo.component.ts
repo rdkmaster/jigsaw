@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: "context-steps",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -10,7 +12,7 @@ export class JigsawStepContextDemoComponent {
 
     current = 0;
 
-    constructor() {
+    constructor(public text: StepsTextService) {
         for (let i = 0; i < 6; i++) {
             this.data.push(this._createStepData(i));
         }
@@ -40,10 +42,4 @@ export class JigsawStepContextDemoComponent {
         }
         this.data = tempData;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "这个demo演示steps的数据中，context属性的用法";
-    description: string = "";
 }

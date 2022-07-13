@@ -11,8 +11,10 @@ import {
     OfficeHeaderRenderer,
     PositionHeaderRenderer,
 } from "./renderers";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'renderer-table',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
@@ -24,7 +26,7 @@ export class TableRendererDemoComponent {
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: TableTextService) {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 50;
         this.tableData.http = http;
@@ -173,10 +175,4 @@ export class TableRendererDemoComponent {
         // 注意对于LocalPageableTableData，Jigsaw没有做debounce
         filterData(this.tableData, {allFields: key});
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了表格的列定义模式的多个用法，包括列渲染器、列宽调整、列的宽文本控制，列tooltip等。';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

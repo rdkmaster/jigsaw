@@ -136,16 +136,19 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
     }
 
     private _resetMenuSelected(): void {
-        this.data.nodes.forEach(node => {
+        this.data?.nodes?.forEach(node => {
             if (!node.nodes?.length) {
                 node.selected = false;
             }
-            node.nodes.forEach(n => n.selected = false);
+            node.nodes?.forEach(n => n.selected = false);
         });
     }
 
     private _findNode(target: {[property: string]: string}, trackItemBy?: string[], parent?: SimpleNode): [SimpleNode, SimpleNode] {
         parent = parent || this.data;
+        if (!parent.nodes) {
+            return [null, null];
+        }
         const node = parent.nodes.find(n => CommonUtils.compareWithKeyProperty(n, target, trackItemBy));
         if (node) {
             return parent == this.data ? [node, null] : [null, node];

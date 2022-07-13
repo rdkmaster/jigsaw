@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {TimeSectionTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-time-section',
     templateUrl: './demo.component.html'
 })
 export class TimeSectionBasicDemoComponent {
@@ -43,10 +45,6 @@ export class TimeSectionBasicDemoComponent {
         console.log('time section change to ', $event);
     }
 
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TimeSectionTextService) {
+    }
 }

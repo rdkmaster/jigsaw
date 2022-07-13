@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer, PageableArray, CommonUtils } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,7 +15,7 @@ export class TransferListPageableDemoComponent {
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: TransferTextService) {
         this.data = new PageableArray(http, {
             url: 'mock-data/countries',
             // 在这个例子中不需要带参数，但是为了演示如何带参数给服务端，

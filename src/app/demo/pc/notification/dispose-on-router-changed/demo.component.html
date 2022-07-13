@@ -1,22 +1,15 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="wrapper">
-    <p class="action">
-        点击这里
-        <a (click)="showNotification()">弹出</a>
-        对路由改变事件应对方式不同的多个消息框。
-    </p>
-    <p class="action">
-        点击这里
-        <a (click)="changeRoute()">改变路由</a>
-        来对比一下效果。
-    </p>
-    <p>
-        提示：有的消息框上可能会带有交互逻辑，而这些交互逻辑往往只在某个路由下才有效，当用户离开此路由后，再触发这些交互逻辑则会出现BUG，
-        现在只要打开<code>disposeOnRouterChanged</code>属性，消息框内部会在路由发生变化时自动关闭自身，而无需应用自行实现；
-    </p>
-</div>
+<demo-template [data]="''" [text]="text['text']['diposeOnRouterChanged']">
+    <!-- start to learn the demo from here -->
+    <div class="wrapper">
+        <p class="action">
+            点击这里
+            <a (click)="showNotification()">弹出</a>
+            对路由改变事件应对方式不同的多个消息框。
+        </p>
+        <p class="action">
+            点击这里
+            <a (click)="changeRoute()">改变路由</a>
+            来对比一下效果。
+        </p>
+    </div>
+</demo-template>

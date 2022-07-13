@@ -12,8 +12,11 @@ import {JigsawStepEventsDemoModule} from "./events/demo.module";
 import {JigsawStepEventsDemoComponent} from "./events/demo.component";
 import {JigsawStepManyStepsDemoComponent} from "./many-steps/demo.component";
 import {JigsawStepManyStepsDemoModule} from "./many-steps/demo.module";
+import {StepsAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {path: "all", component: StepsAllComponent},
     {path: "basic", component: JigsawStepBasicDemoComponent},
     {path: "over-length", component: JigsawStepOverLengthDemoComponent},
     {path: "context", component: JigsawStepContextDemoComponent},
@@ -31,7 +34,9 @@ export const routerConfig = [
         JigsawStepGotoDemoModule,
         JigsawStepEventsDemoModule,
         JigsawStepManyStepsDemoModule,
-    ]
+        JigsawMarkdownModule
+    ],
+    declarations: [StepsAllComponent]
 })
 export class StepsDemoModule {
 }

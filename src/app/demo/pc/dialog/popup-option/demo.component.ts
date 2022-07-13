@@ -3,8 +3,10 @@ import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
+import {DialogTextService} from "../text.service";
 
 @Component({
+    selector: 'popup-option-dialog',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -30,7 +32,7 @@ export class DialogPopOptionDemo implements OnInit, AfterViewInit {
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef) {
+    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public text: DialogTextService) {
     }
 
     ngOnInit() {
@@ -96,10 +98,4 @@ export class DialogPopOptionDemo implements OnInit, AfterViewInit {
         console.log(this.option);
         this.dialogInfo = this.popupService.popup(ele, this.option);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

@@ -18,8 +18,11 @@ import {BadgeStyleDemoComponent} from "./style/demo.component";
 import {BadgeStyleDemoModule} from "./style/demo.module";
 import { BadgeOffsetDemoComponent } from './offset/demo.component';
 import { BadgeOffsetDemoModule } from './offset/demo.module';
+import {BadgeAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {path: 'all', component: BadgeAllComponent},
     {path: 'basic', component: BadgeBasicDemoComponent},
     {path: 'mask', component: BadgeMaskDemoComponent},
     {path: 'max-value', component: BadgeMaxValueDemoComponent},
@@ -35,8 +38,9 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig), BadgeBasicDemoModule, BadgeSizeDemoModule, BadgeMaskDemoModule,
         BadgeMaxValueDemoModule, BadgePositionDemoModule, BadgeStatusDemoModule, BadgeMoveDemoModule,
-        BadgeStyleDemoModule, BadgeOffsetDemoModule
-    ]
+        BadgeStyleDemoModule, BadgeOffsetDemoModule, JigsawMarkdownModule
+    ],
+    declarations: [BadgeAllComponent]
 })
 export class BadgeDemoModule {
 }

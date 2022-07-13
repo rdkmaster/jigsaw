@@ -1,12 +1,14 @@
-import {NgModule} from "@angular/core";
-import {JigsawInputModule} from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import { NgModule } from "@angular/core";
+import {JigsawMarkdownModule} from "../../../../markdown/markdown";
 import {InputPasswordComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {JigsawInputModule} from "../../../../../jigsaw/pc-components/input/input";
 
 @NgModule({
-    declarations: [InputPasswordComponent],
-    exports: [InputPasswordComponent],
-    imports: [JigsawInputModule, JigsawDemoDescriptionModule]
+    imports: [JigsawMarkdownModule, DemoTemplateModule, JigsawInputModule],
+    declarations: [
+        InputPasswordComponent
+    ],
+    exports: [InputPasswordComponent]
 })
-export class InputPasswordModule {
-}
+export class InputPasswordModule {}

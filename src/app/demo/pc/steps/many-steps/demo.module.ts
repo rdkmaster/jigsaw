@@ -4,6 +4,7 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawButtonBarModule, JigsawHeaderModule, JigsawStepsModule} from "jigsaw/public_api";
 import {JigsawStepManyStepsDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
@@ -12,7 +13,8 @@ import {JigsawStepManyStepsDemoComponent} from "./demo.component";
         JigsawDemoDescriptionModule,
         JigsawHeaderModule,
         JigsawStepsModule,
-        JigsawButtonBarModule
+        JigsawButtonBarModule,
+        DemoTemplateModule
     ],
     declarations: [JigsawStepManyStepsDemoComponent],
     exports: [JigsawStepManyStepsDemoComponent]

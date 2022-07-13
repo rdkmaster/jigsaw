@@ -1,0 +1,6 @@
+<demo-template [data]="''" [text]="text['text']['changeStep']">
+    <div>
+        <jigsaw-slider [value]="valueStep" min="0" max="2" step="0.01" (change)="sliderChange3($event)"></jigsaw-slider>
+        <p>取值: {{value}}</p>
+    </div>
+</demo-template>

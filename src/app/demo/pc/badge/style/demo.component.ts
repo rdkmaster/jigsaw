@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
+import {BadgeTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
+    selector: 'style-badge',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap jigsaw-icon {
@@ -11,9 +14,14 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeStyleDemoComponent {
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO演示了`jigsaw-badge`指令的三种样式的使用方法。';
-    description: string = '';
+    public selectedLabel = {label: "中", size: "normal"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+
+    constructor(public text: BadgeTextService) {
+    }
+
 }

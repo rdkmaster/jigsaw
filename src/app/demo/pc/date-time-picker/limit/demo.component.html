@@ -1,35 +1,23 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Date Time Picker</jigsaw-header>
-    <div class="clearfix">
-        <div class="demo-1 live-demo">
-            <jigsaw-header [level]="2">Limit</jigsaw-header>
-            <p class="comment">limit采用宏的时候，会实时根据宏计算limit时间，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd</p>
-
-            <div class="toggle up">
-                <label>limitStart: </label>
-                <j-radios [(value)]="limitStart">
-                    <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
-                </j-radios>
-                <br>
-                <label>limitEnd: </label>
-                <j-radios [(value)]="limitEnd">
-                    <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
-                </j-radios>
-            </div>
-
-            <div style="margin-bottom: 20px;">
-                <span>是否显示确认按钮 showConfirmButton: </span>
-                <jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
-            </div>
-
-            <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"
-                                [showConfirmButton]="showConfirmButton"></j-date-time-picker>
-            <p class="message">Selected Time: <span>{{date1}}</span></p>
-        </div>
+<demo-template [data]="''" [text]="text['text']['limit']">
+    <!-- start to learn the demo from here -->
+    <div class="toggle up">
+        <label>limitStart: </label>
+        <j-radios [(value)]="limitStart">
+            <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
+        </j-radios>
+        <br>
+        <label>limitEnd: </label>
+        <j-radios [(value)]="limitEnd">
+            <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
+        </j-radios>
     </div>
-</div>
+
+    <div style="margin-bottom: 20px;">
+        <span>是否显示确认按钮 showConfirmButton: </span>
+        <jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
+    </div>
+
+    <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"
+                        [showConfirmButton]="showConfirmButton"></j-date-time-picker>
+    <p class="message">Selected Time: <span>{{date1}}</span></p>
+</demo-template>

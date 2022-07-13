@@ -1,21 +1,22 @@
 import {Component} from "@angular/core";
+import {CascadeTextService} from "../text.service";
+import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData} from "jigsaw/public_api";
+import {CascadeData} from "../../../../../jigsaw/pc-components/cascade/cascade";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "lazyLoad-cascade",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class CascadeLazyLoadDemoComponent {
-    constructor(public http: HttpClient) {
-    }
 
+export class CascadeLazyLoadComponent {
     levelInfos = [
         {title: '省/直辖市', field: 'provinceId'},
         {title: '市', field: 'cityId'},
         {title: '区', field: 'districtId'},
     ];
-
     generator(selectedItem: any, selectedItems: any[], data: any[], level: number): CascadeData {
         const params = {};
         for (let i = 0; i < level; i++) {
@@ -31,21 +32,16 @@ export class CascadeLazyLoadDemoComponent {
     }
 
     message: string = '--';
-
     parseMessage(selectedItems) {
         this.message = selectedItems.reduce((result, item) => {
             result.push(item.name);
             return result;
         }, []).join(' | ');
     }
+    constructor(public http: HttpClient, public text: CascadeTextService) {
+    }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了如何通过懒加载的方式加载每一级的数据，一般用于数据量很大的场景';
-    description: string = '';
 }
-
 
 /* 模拟请求代码 start */
 

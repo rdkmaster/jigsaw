@@ -1,13 +1,14 @@
-import {NgModule} from "@angular/core";
-import {JigsawInputModule} from "jigsaw/public_api";
-import {InputBasicDemoComponent} from "./demo.component";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import { NgModule } from "@angular/core";
+import {JigsawMarkdownModule} from "../../../../markdown/markdown";
+import {InputBasicComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {JigsawInputModule} from "../../../../../jigsaw/pc-components/input/input";
 
 @NgModule({
-    declarations: [InputBasicDemoComponent],
-    exports: [InputBasicDemoComponent],
-    imports: [JigsawInputModule, JigsawDemoDescriptionModule]
+    imports: [JigsawMarkdownModule, DemoTemplateModule, JigsawInputModule],
+    declarations: [
+        InputBasicComponent
+    ],
+    exports: [InputBasicComponent]
 })
-export class InputBasicDemoModule {
-
-}
+export class InputBasicModule {}

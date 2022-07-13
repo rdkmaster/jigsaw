@@ -9,11 +9,12 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DateTimePickerDisabledDemoComponent} from './demo.component';
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
         CommonModule, JigsawDateTimePickerModule, JigsawDemoDescriptionModule, JigsawButtonBarModule, JigsawDatePickerModule,
-        JigsawTimePickerModule, JigsawRangeDateTimePickerModule, JigsawSwitchModule
+        JigsawTimePickerModule, JigsawRangeDateTimePickerModule, JigsawSwitchModule, DemoTemplateModule
     ],
     declarations: [DateTimePickerDisabledDemoComponent],
     exports: [DateTimePickerDisabledDemoComponent]

@@ -1,12 +1,12 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonBarModule, JigsawCheckBoxModule, JigsawSwitchModule} from "jigsaw/public_api";
-import {CheckBoxBasicDemoComponent} from "./demo.component";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
+import {JigsawCheckBoxModule, JigsawSwitchModule} from "jigsaw/public_api";
+import {CheckboxBasicComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
-    declarations: [CheckBoxBasicDemoComponent],
-    exports: [CheckBoxBasicDemoComponent],
-    imports: [JigsawCheckBoxModule, JigsawSwitchModule, JigsawDemoDescriptionModule, JigsawButtonBarModule]
+    declarations: [CheckboxBasicComponent],
+    exports: [CheckboxBasicComponent],
+    imports: [JigsawCheckBoxModule, JigsawSwitchModule, DemoTemplateModule]
 })
 export class CheckBoxBasicDemoModule {
 }

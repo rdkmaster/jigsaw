@@ -1,11 +1,19 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
-import {JigsawTag} from "jigsaw/public_api";
+import {TagTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
+import {JigsawTag} from "../../../../../jigsaw/pc-components/tag/tag";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "basic-tag",
+    templateUrl: "./demo.component.html",
 })
-export class TagBasicDemoComponent {
+
+export class TagBasicComponent {
+    public selectedLabel = {label: "大", size: "medium"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "medium"}
+    ]);
     handleClose(tag) {
         console.log(tag)
     }
@@ -17,9 +25,6 @@ export class TagBasicDemoComponent {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TagTextService) {}
+
 }

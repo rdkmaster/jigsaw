@@ -1,15 +1,11 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="mark">
-    <p><strong>日期标记图例</strong></p>
-    <div class="label"> 推荐日期 </div>
-    <div class="label"> 危险日期 </div>
-    <div class="label"> 警告日期 </div>
-</div>
-<jigsaw-date-picker [(date)]="date" [markDates]="markDates"></jigsaw-date-picker>
-<br>
-选择的时间是：{{date}}
+<demo-template [data]="''" [text]="text['text']['mark']">
+    <!-- start to learn the demo from here -->
+    <div class="mark">
+        <div class="label"> 推荐日期</div>
+        <div class="label"> 危险日期</div>
+        <div class="label"> 警告日期</div>
+    </div>
+    <jigsaw-date-picker [(date)]="date" [markDates]="markDates"></jigsaw-date-picker>
+    <br>
+    选择的时间是：{{date}}
+</demo-template>

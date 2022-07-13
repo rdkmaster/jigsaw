@@ -1,12 +1,21 @@
 import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/public_api";
+import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
+import {TreeTextService} from "../text.service";
 
 @Component({
+    selector: 'xml-data-tree',
     templateUrl: './demo.component.html'
 })
 export class ZtreeXMLDataDemoComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
+
     public data: SimpleTreeData;
-    constructor() {
+    constructor(public text: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
@@ -47,10 +56,4 @@ export class ZtreeXMLDataDemoComponent {
         console.log("click");
         console.log(msg);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '使用xml作为树的数据源格式是一个非常好的选择，相比json对象，xml更加简洁和清晰';
-    description: string = '';
 }

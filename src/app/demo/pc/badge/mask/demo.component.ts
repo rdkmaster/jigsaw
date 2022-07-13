@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
+import {BadgeTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
+    selector: 'mask-badge',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap jigsaw-icon {
@@ -10,6 +13,14 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeMaskDemoComponent {
+    public selectedLabel = {label: "中", size: "normal"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+
+
     public select($event) {
         console.log('badge click: ', $event);
     }
@@ -18,10 +29,6 @@ export class BadgeMaskDemoComponent {
         console.log('host click');
     }
 
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`jigsaw-badge`指令角标加背景色的用法和效果，注意区分深浅色';
-    description: string = '';
+    constructor(public text: BadgeTextService) {
+    }
 }

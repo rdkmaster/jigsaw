@@ -1,0 +1,8 @@
+<demo-template [data]="''" [text]="text['text']['auto']">
+    <div>
+        <p class="comment">文本框 </p>
+        <jigsaw-search-input width="50%" (search)="value = $event" [searchDebounce]="1000">
+        </jigsaw-search-input>
+        <p class="notes"><span>{{ " 搜索值为：" + value }}</span></p>
+    </div>
+</demo-template>

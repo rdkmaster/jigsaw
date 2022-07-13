@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {TimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-time-picker',
     templateUrl: './demo.component.html'
 })
 export class TimePickerBasicDemoComponent {
@@ -9,10 +11,6 @@ export class TimePickerBasicDemoComponent {
     valueChange($event) {
         console.log('time change to ', $event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TimePickerTextService) {
+    }
 }

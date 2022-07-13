@@ -9,12 +9,13 @@ import {TableRendererDemoComponent} from './demo.component';
 import {
     OfficeCellEditorRenderer, OfficeHeaderRenderer, OfficeCellRenderer, PositionHeaderRenderer
 } from "./renderers";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
         JigsawTableModule, JigsawSelectModule, JigsawTableRendererModule, JigsawPaginationModule,
         JigsawComboSelectModule, JigsawListModule, JigsawCheckBoxModule, JigsawButtonModule,
-        JigsawDemoDescriptionModule
+        JigsawDemoDescriptionModule, DemoTemplateModule
     ],
     declarations: [
         TableRendererDemoComponent, PositionHeaderRenderer, OfficeCellRenderer,

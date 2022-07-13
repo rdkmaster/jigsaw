@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {JigsawButtonModule, JigsawHeaderModule, JigsawStepsModule} from "jigsaw/public_api";
 import {JigsawStepGotoDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     imports: [
@@ -10,7 +11,8 @@ import {JigsawStepGotoDemoComponent} from "./demo.component";
         CommonModule,
         JigsawDemoDescriptionModule,
         JigsawHeaderModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        DemoTemplateModule
     ],
     declarations: [JigsawStepGotoDemoComponent],
     exports: [JigsawStepGotoDemoComponent]

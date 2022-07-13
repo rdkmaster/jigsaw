@@ -13,12 +13,25 @@ import {ButtonDisableDemoComponent} from "./disabled/demo.component";
 import {ButtonWidthHeightDemoComponent} from "./width-height/demo.component";
 import {ButtonPresetDemoComponent} from "./preset/demo.component";
 import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
-import { ButtonIconDemoComponent } from './with-icon/demo.component';
-import { ButtonIconDemoModule } from './with-icon/demo.module';
-import { ButtonInstancesDemoComponent } from './instances/demo.component';
-import { ButtonInstancesDemoModule } from './instances/demo.module';
-
+import {ButtonIconDemoModule} from './icon/demo.module';
+import {ButtonInstancesDemoComponent} from './instances/demo.component';
+import {ButtonInstancesDemoModule} from './instances/demo.module';
+import {ButtonAllComponent} from "./demo.component";
+import {ButtonKeyDemoModule} from "./key/demo.module";
+import {ButtonImportantDemoModule} from "./important/demo.module";
+import {ButtonCommonDemoModule} from "./common/demo.module";
+import {ButtonMoreDemoModule} from "./more/demo.module";
+import {ButtonInTableDemoModule} from "./table/demo.module";
+import {ButtonDangerDemoModule} from "./danger/demo.module";
+import {ButtonIconWordDemoModule} from "./icon-word/demo.module";
+import {ButtonLoadingDemoModule} from "./loading/demo.module";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {ButtonColorDemoModule} from "./color/demo.module";
+import {ButtonWithChartIconDemoModule} from "./with-chart-icon/demo.module";
 export const routerConfig = [
+    {
+        path: 'all', component: ButtonAllComponent
+    },
     {
         path: 'full', component: ButtonFullComponent
     },
@@ -38,9 +51,6 @@ export const routerConfig = [
         path: 'with-loading', component: ButtonWithLoadingComponent
     },
     {
-        path: 'with-icon', component: ButtonIconDemoComponent
-    },
-    {
         path: 'instances', component: ButtonInstancesDemoComponent
     },
     {
@@ -58,7 +68,21 @@ export const routerConfig = [
         ButtonWithLoadingModule,
         ButtonFullModule,
         ButtonIconDemoModule,
-        ButtonInstancesDemoModule
+        ButtonInstancesDemoModule,
+        ButtonKeyDemoModule,
+        ButtonImportantDemoModule,
+        ButtonCommonDemoModule,
+        ButtonMoreDemoModule,
+        ButtonInTableDemoModule,
+        ButtonDangerDemoModule,
+        ButtonIconWordDemoModule,
+        ButtonLoadingDemoModule,
+        JigsawMarkdownModule,
+        ButtonColorDemoModule,
+        ButtonWithChartIconDemoModule
+    ],
+    declarations: [
+        ButtonAllComponent
     ]
 })
 export class ButtonDemoModule {

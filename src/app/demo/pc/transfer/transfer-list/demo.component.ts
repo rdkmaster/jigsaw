@@ -1,8 +1,10 @@
 import {Component} from "@angular/core";
 import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
 import {HttpClient} from '@angular/common/http';
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'transfer-list-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -118,7 +120,7 @@ export class TransferListDemoComponent {
         }
     ]
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: TransferTextService) {
         this.data = new ArrayCollection(this.allData);
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }
@@ -162,10 +164,4 @@ export class TransferListDemoComponent {
             return i < 3
         }));
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个Demo模拟的是采用服务端分页的情形';
-    description: string = '';
 }

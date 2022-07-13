@@ -8,6 +8,6 @@ import {ButtonIconDemoComponent} from "./demo.component";
     exports: [ButtonIconDemoComponent],
     imports: [JigsawButtonModule, JigsawDemoDescriptionModule, JigsawHeaderModule]
 })
-export class ButtonIconDemoModule {
+export class ButtonWithIconDemoModule {
 
 }

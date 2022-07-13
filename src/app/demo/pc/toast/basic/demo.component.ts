@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { JigsawToast } from 'jigsaw/public_api';
+import {ToastTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-toast',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -26,9 +28,6 @@ export class ToastBasicDemoComponent {
         JigsawToast.showInfo('这是Toast信息提示框')
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo介绍了Toast组件的基本用法';
-    description: string = '';
+    constructor(public text: ToastTextService) {
+    }
 }

@@ -8,8 +8,13 @@ import {ColorSelectModeDemoComponent} from "./mode/demo.component";
 import {ColorSelectModeDemoModule} from "./mode/demo.module";
 import {ColorSelectConfirmDemoComponent} from "./confirm/demo.component";
 import {ColorSelectConfirmDemoModule} from "./confirm/demo.module";
+import {ColorSelectAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: ColorSelectAllComponent
+    },
     {
         path: 'basic', component: ColorSelectBasicDemoComponent
     }, {
@@ -25,8 +30,9 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), ColorSelectBasicDemoModule, ColorSelectPreSizeDemoModule,
-        ColorSelectModeDemoModule, ColorSelectConfirmDemoModule
-    ]
+        ColorSelectModeDemoModule, ColorSelectConfirmDemoModule, JigsawMarkdownModule
+    ],
+    declarations: [ColorSelectAllComponent]
 })
 export class ColorSelectDemoModule {
 }

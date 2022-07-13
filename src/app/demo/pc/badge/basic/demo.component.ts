@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
+import {BadgeTextService} from "../text.service";
+import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
+    selector: 'basic-badge',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap jigsaw-icon {
@@ -18,6 +21,13 @@ import {Component} from '@angular/core';
     `]
 })
 export class BadgeBasicDemoComponent {
+    public selectedLabel = {label: "中", size: "normal"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+
     public nice = "Nice";
     public dot = "dot";
 
@@ -29,9 +39,7 @@ export class BadgeBasicDemoComponent {
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
     ]
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO演示了`jigsaw-badge`指令的简单用法，支持将文本、数字、图标等内容作为徽标的内容，也支持边框和背景，还支持偏移微调徽标的位置。';
-    description: string = '';
+
+    constructor(public text: BadgeTextService) {
+    }
 }

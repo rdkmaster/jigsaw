@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-steps',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -10,7 +12,7 @@ export class JigsawStepBasicDemoComponent {
 
     current = 0;
 
-    constructor() {
+    constructor(public text: StepsTextService) {
         for (let i = 0; i < 6; i++) {
             this.data.push(this._createStepData());
         }
@@ -38,10 +40,4 @@ export class JigsawStepBasicDemoComponent {
     public currentChange(event: number) {
         console.log(`${event} is selected: `, this.data[event]);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

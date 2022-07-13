@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DatePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'gr-date-picker',
     templateUrl: './demo.component.html',
     styles: [`
         .demo-container h4 {
@@ -23,9 +25,6 @@ export class DatePickerGrComponent {
         console.log($event);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DatePickerTextService) {
+    }
 }

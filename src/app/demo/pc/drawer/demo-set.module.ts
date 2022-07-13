@@ -12,8 +12,13 @@ import {DrawerWithTabDemoComponent} from "./with-tab/demo.component";
 import {DrawerWithTabDemoModule} from "./with-tab/demo.module";
 import {DrawerInDrawerDemoComponent} from "./drawer-in-drawer/demo.component";
 import {DrawerInDrawerDemoModule} from "./drawer-in-drawer/demo.module";
+import {DrawerAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: DrawerAllComponent
+    },
     {
         path: 'basic', component: DrawerBasicDemoComponent
     },
@@ -42,8 +47,10 @@ export const routerConfig = [
         DrawerWithScrollbarDemoModule,
         DrawerWithTabDemoModule,
         DrawerInDomDemoModule,
-        DrawerInDrawerDemoModule
-    ]
+        DrawerInDrawerDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [DrawerAllComponent]
 })
 export class DrawerDemoModule {
 }

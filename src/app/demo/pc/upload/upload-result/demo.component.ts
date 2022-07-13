@@ -1,10 +1,15 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
+import {UploadTextService} from "../text.service";
 
-@Component({ templateUrl: "./demo.component.html" })
+@Component({
+    selector: 'upload-result-upload',
+    templateUrl: "./demo.component.html"
+})
 export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
+        public text: UploadTextService
     ) {}
 
     @ViewChild("first", { read: JigsawUploadDirective })

@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {JigsawNotification} from "jigsaw/public_api";
+import {NotificationTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-notification',
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
@@ -44,9 +46,6 @@ export class NotificationBasicDemoComponent {
         JigsawNotification.showInfo('这是一条消息的提示消息', '带有标题的提示消息');
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo介绍了通知提醒框的4种基础类型：';
-    description: string = '';
+    constructor(public text: NotificationTextService) {
+    }
 }

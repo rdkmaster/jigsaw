@@ -1,6 +1,9 @@
 import {Component} from '@angular/core';
+import {BadgeTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
+    selector: 'max-value-abdge',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap jigsaw-icon {
@@ -11,10 +14,15 @@ import {Component} from '@angular/core';
 })
 
 export class BadgeMaxValueDemoComponent {
+    public selectedLabel = {label: "中", size: "normal"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+
     public count: number = 99;
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`jigsaw-badge`指令在输入大于的最大数字限制时如何显示';
-    description: string = '';
+
+    constructor(public text: BadgeTextService) {
+    }
 }

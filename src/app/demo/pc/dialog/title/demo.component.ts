@@ -1,7 +1,9 @@
 import {Component, TemplateRef} from '@angular/core';
 import {PopupInfo, PopupService} from "jigsaw/public_api";
+import {DialogTextService} from "../text.service";
 
 @Component({
+    selector: 'title-dialog',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -10,7 +12,7 @@ export class DialogTitleDemo {
     dialogInfo1: PopupInfo;
     dialogInfo2: PopupInfo;
 
-    constructor(private popupService: PopupService) {
+    constructor(private popupService: PopupService, public text: DialogTextService) {
     }
 
     close(info: PopupInfo) {
@@ -24,10 +26,4 @@ export class DialogTitleDemo {
     popupDialog2(ele: TemplateRef<any>) {
         this.dialogInfo2 = this.popupService.popup(ele);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

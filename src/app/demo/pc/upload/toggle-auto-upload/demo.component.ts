@@ -1,11 +1,16 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
+import {UploadTextService} from "../text.service";
 
-@Component({ templateUrl: "./demo.component.html",
-             styleUrls:["./demo.component.css"] })
+@Component({
+    selector: 'toggle-auto-upload-upload',
+    templateUrl: "./demo.component.html",
+    styleUrls:["./demo.component.css"]
+})
 export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
+        public text: UploadTextService
     ) {}
     public uploadImmediately: boolean = false;
 
@@ -42,11 +47,4 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
         console.log(`AfterViewInit, uploader:`, this.uploader1);
         this._changeDetectorRef.detectChanges();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "这个demo展示了如何通过控制上传指令的`uploadImmediately`属性来控制不同的文件上传方式";
-    description: string = "`jigsaw-upload-result`组件是`IUploader`上传结果的可视化显示器，" +
-        "它无法独立使用，必须配合实现了IUploader的类来使用";
 }

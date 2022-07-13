@@ -6,12 +6,13 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DialogAbsolutePositionDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [DialogAbsolutePositionDemoComponent],
     exports: [DialogAbsolutePositionDemoComponent],
     imports: [JigsawDialogModule, JigsawButtonModule, JigsawDemoDescriptionModule, JigsawNumericInputModule, JigsawSwitchModule,
-        JigsawRadioModule, CommonModule],
+        JigsawRadioModule, CommonModule, DemoTemplateModule],
     providers: [PopupService]
 })
 export class DialogAbsolutePositionDemoModule {

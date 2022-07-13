@@ -1,12 +1,14 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'item-disabled-transfer',
     templateUrl: './demo.component.html'
 })
 export class TransferItemDisabledDemoComponent {
-    constructor(private _http: HttpClient) {
+    constructor(private _http: HttpClient, public text: TransferTextService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
         this.data.fromAjax('mock-data/countries');
@@ -26,10 +28,4 @@ export class TransferItemDisabledDemoComponent {
     public labelField = 'zhName';
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

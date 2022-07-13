@@ -24,8 +24,13 @@ import { TransferListPageableDemoComponent } from './transfer-list-pageable/demo
 import { TransferListPageableDemoModule } from './transfer-list-pageable/demo.module';
 import { TransferTablePageableDemoComponent } from './transfer-table-pageable/demo.component';
 import { TransferTablePageableDemoModule } from './transfer-table-pageable/demo.module';
+import {TransferAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: TransferAllComponent
+    },
     {
         path: 'basic', component: TransferArrayDemoComponent
     },
@@ -78,8 +83,10 @@ export const routerConfig = [
         TransferListLocalPageableDemoModule,
         TransferTableLocalPageableDemoModule,
         TransferListPageableDemoModule,
-        TransferTablePageableDemoModule
-    ]
+        TransferTablePageableDemoModule,
+        JigsawMarkdownModule
+    ],
+    declarations: [TransferAllComponent]
 })
 export class TransferDemoModule {
 }

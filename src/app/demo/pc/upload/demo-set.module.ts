@@ -12,9 +12,14 @@ import { ChangeTargetUrlDemoComponent } from './change-target-url/demo.component
 import { UploadChangeTargetUrlDemoModule } from './change-target-url/demo.module';
 import { UploadDirectiveDemoComponent } from './directive/demo.component';
 import { UploadDirectiveDemoModule } from './directive/demo.module';
+import {UploadAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 
 export const routerConfig = [
+    {
+        path: 'all', component: UploadAllComponent
+    },
     {
         path: 'basic', component: UploadBasicDemoComponent
     },
@@ -39,8 +44,9 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         UploadBasicDemoModule, UploadResultDemoModule, UploadContentFieldDemoModule, UploadAutoUploadDemoModule,
-        UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule
-    ]
+        UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule, JigsawMarkdownModule
+    ],
+    declarations: [UploadAllComponent]
 })
 export class UploadDemoModule {
 }

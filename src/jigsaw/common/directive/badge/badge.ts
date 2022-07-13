@@ -39,8 +39,19 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
     /**
      * @NoMarkForCheckRequired
      */
+    private size: 'large' | 'normal' | 'small' = 'normal';
     @Input()
-    public jigsawBadgeSize: 'large' | 'normal' | 'small' = 'normal';
+    public get jigsawBadgeSize(): 'large' | 'normal' | 'small' {
+        return this.size;
+    }
+
+    public set jigsawBadgeSize(value: 'large' | 'normal' | 'small') {
+        if (this.size === value) {
+            return;
+        }
+        this.size = value;
+        this._addBadge();
+    }
 
     /**
      * @NoMarkForCheckRequired
@@ -151,7 +162,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             `<div style="${positionStr}" title="${title}"></div>` :
             `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
         this._badge.children[0].classList.add(classPre);
-        this._badge.children[0].classList.add(`${classPre}-size-${this.jigsawBadgeSize}`);
+        this._badge.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
         if (this.jigsawBadgeValue != 'dot') {
             badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
@@ -167,7 +178,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
                 maskPos = this.jigsawBadgePosition.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
             }
             const positionClass = `${classMaskPre}-${maskPos}`;
-            const maskSizeClass = `${classMaskPre}-${this.jigsawBadgeSize}`;
+            const maskSizeClass = `${classMaskPre}-${this.size}`;
             this._badge.children[1].classList.add(classMaskPre);
             this._badge.children[1].classList.add(backgroundClass);
             this._badge.children[1].classList.add(positionClass);
@@ -216,7 +227,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         const width = parseInt(hostStyle.width);
         const height = parseInt(hostStyle.height);
         const compareSize = Math.floor(Math.min(width, height) / 2);
-        const maskSize = this.jigsawBadgeSize == 'small' ? 20 : (this.jigsawBadgeSize == 'large' ? 28 : 24);
+        const maskSize = this.size == 'small' ? 20 : (this.size == 'large' ? 28 : 24);
         return compareSize != 0 && maskSize > compareSize ? compareSize : 0;
     }
 
@@ -322,17 +333,17 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
     private _getDiffer(): number {
         let differ = 0;
         if (this.jigsawBadgeValue == 'dot') {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 differ = 8;
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 differ = 6;
             } else {
                 differ = 4;
             }
         } else {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 differ = 12;
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 differ = 10;
             } else {
                 differ = 8;
@@ -347,7 +358,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             host: {top: 0}
         };
         position.host[pos] = 0;
-        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.jigsawBadgeSize == "large" ? 6 : 4);
+        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.size == "large" ? 6 : 4);
         differ = calibrateSize == 0 ? offset : calibrateSize - (differ - 1);
         position.badge = {top: `${differ}px`};
         position.badge[pos] = `${differ}px`;
@@ -363,9 +374,9 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
 
         let left = 0, right = 0;
         if (this.jigsawBadgeValue == 'dot') {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 left = calibrateSize == 0 ? 24 : calibrateSize + (differ + 2);
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 left = calibrateSize == 0 ? 20 : calibrateSize + (differ + 2);
             } else {
                 left = calibrateSize == 0 ? 18 : calibrateSize + (differ + 2);

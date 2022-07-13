@@ -3,8 +3,10 @@ import {
     JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
     PopupService
 } from "jigsaw/public_api";
+import {MenuTextService} from "../text.service";
 
 @Component({
+    selector: 'options-menu',
     templateUrl: './demo.component.html',
     styles: [`
         .menu {
@@ -39,7 +41,7 @@ export class MenuOptionsDemo {
     public width: number = 150;
     public height: number = 0;
 
-    constructor( private ps: PopupService) {
+    constructor( private ps: PopupService, public text: MenuTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
@@ -88,10 +90,4 @@ export class MenuOptionsDemo {
             console.log("Context menu selected, node =", node);
         });
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了jigsaw-cascading-menu指令实现多级菜单，展示了各个可用配置项及其效果，事件回调效果请查看控制台';
-    description: string = '';
 }

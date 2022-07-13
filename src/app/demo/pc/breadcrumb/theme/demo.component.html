@@ -1,15 +1,13 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['theme']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header>明亮主题</jigsaw-header>
+    <j-breadcrumb [data]="data" theme="light" (select)="itemSelect($event)"></j-breadcrumb>
 
-<!-- start to learn the demo from here -->
-<jigsaw-header>明亮主题</jigsaw-header>
-<j-breadcrumb [data]="data" theme="light" (select)="itemSelect($event)"></j-breadcrumb>
+    <jigsaw-header>深色主题</jigsaw-header>
+    <j-breadcrumb [data]="data" theme="dark" (select)="itemSelect($event)"></j-breadcrumb>
 
-<jigsaw-header>深色主题</jigsaw-header>
-<j-breadcrumb [data]="data" theme="dark" (select)="itemSelect($event)"></j-breadcrumb>
+    <jigsaw-header>内嵌主题</jigsaw-header>
+    <j-breadcrumb [data]="data" theme="inner" (select)="itemSelect($event)"></j-breadcrumb>
 
-<jigsaw-header>内嵌主题</jigsaw-header>
-<j-breadcrumb [data]="data" theme="inner" (select)="itemSelect($event)"></j-breadcrumb>
-
-<a (click)="resetBreadcrumbItems()">数据重置</a>
+    <a (click)="resetBreadcrumbItems()">数据重置</a>
+</demo-template>

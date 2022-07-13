@@ -1,14 +1,19 @@
 import {Component} from '@angular/core';
+import {ColorSelectTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
+    selector: 'basic-color-select',
     templateUrl: './demo.component.html'
 })
 
 export class ColorSelectBasicDemoComponent {
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`jigsaw-color-select`组件的各个参数的效果以及推荐的用法';
-    description: string = '';
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+    public selectedLabel = {label: "中", size: "normal"};
+    constructor(public text: ColorSelectTextService) {
+    }
 }

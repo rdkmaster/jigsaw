@@ -1,14 +1,16 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, DefaultCellRenderer} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'data-change-table',
     templateUrl: './demo.component.html'
 })
 export class TableDataChangeDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -33,10 +35,4 @@ export class TableDataChangeDemoComponent {
         this.columns[0].width = '30%';
         this.tableData.refresh();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

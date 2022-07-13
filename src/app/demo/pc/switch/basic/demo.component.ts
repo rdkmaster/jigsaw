@@ -1,14 +1,20 @@
 import {Component} from "@angular/core";
+import {SwitchTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls:['./demo.component.css']
+    selector: "basic-switch",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class SwitchBasicDemoComponent {
-    checked: boolean;
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+
+export class SwitchBasicComponent {
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "default"}
+    ]);
+    public checked: boolean;
+    public selectedLabel = {label: "中", size: "medium"};
+    constructor(public text: SwitchTextService) {}
 }

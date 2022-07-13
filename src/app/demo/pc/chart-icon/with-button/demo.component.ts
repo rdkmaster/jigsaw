@@ -2,6 +2,7 @@ import {Component} from "@angular/core";
 import {InternalUtils, JigsawTheme} from "jigsaw/public_api";
 
 @Component({
+    selector: 'chart-icon-with-button',
     templateUrl: './demo.component.html',
     styles:[`
         .jigsaw-header-host:not(:first-of-type) {

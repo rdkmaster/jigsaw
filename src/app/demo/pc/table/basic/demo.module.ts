@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {JigsawTableModule} from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
-import {TableBasicDemoComponent} from './demo.component';
+import {TableBasicComponent} from './demo.component';
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawDemoDescriptionModule],
-    declarations: [TableBasicDemoComponent],
-    exports: [TableBasicDemoComponent]
+    imports: [JigsawTableModule, DemoTemplateModule],
+    declarations: [TableBasicComponent],
+    exports: [TableBasicComponent]
 })
 export class TableBasicDemoModule {
 }

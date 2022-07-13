@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {TimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'gr-time-picker',
     templateUrl: './demo.component.html'
 })
 export class TimePickerGrDemoComponent {
@@ -12,9 +14,6 @@ export class TimePickerGrDemoComponent {
         console.log('time change to ', $event);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TimePickerTextService) {
+    }
 }

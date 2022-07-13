@@ -5,12 +5,13 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {NotificationFullDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [NotificationFullDemoComponent],
     imports: [
         JigsawButtonModule, JigsawNotificationModule, JigsawInputModule,
-        JigsawRadioModule, JigsawSliderModule, JigsawDemoDescriptionModule
+        JigsawRadioModule, JigsawSliderModule, JigsawDemoDescriptionModule, DemoTemplateModule
     ],
     providers: [PopupService],
     exports: [NotificationFullDemoComponent]

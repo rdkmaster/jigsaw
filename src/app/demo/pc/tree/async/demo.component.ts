@@ -1,14 +1,23 @@
 import {Component} from "@angular/core";
-import {ZTreeSettings, SimpleTreeData} from "jigsaw/public_api";
+import {ZTreeSettings, SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
+import {TreeTextService} from "../text.service";
 
 declare const $:any;
 
 const lazyLoadUrl = '/rdk/service/app/ztree-async/server/lazy';
 
 @Component({
+    selector: 'async-tree',
     templateUrl: 'demo.component.html'
 })
 export class ZTreeAsyncDemoComponent {
+    public selectedLabel = {label: "中", size: "medium"};
+    public labelData: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"}
+    ]);
+
     public setting: ZTreeSettings = {
         async: {
             enable: true,
@@ -28,19 +37,13 @@ export class ZTreeAsyncDemoComponent {
 
     public data = new SimpleTreeData();
 
-    constructor() {
+    constructor(public text: TreeTextService) {
         this.data.fromObject([
             {key: '1', name: 'n1', label: "n1", isParent: true},
             {key: '2', name: 'n2', label: "n2", isParent: true},
             {key: '3', name: 'n3', label: "n3", isParent: true}
         ]);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '通过模拟的方式演示了树的懒加载能力，提供了树子节点数据量很大时的一个解决方案';
-    description: string = '';
 }
 
 // monkey patch jquery ajax to simulate a ajax lazy load response.

@@ -5,8 +5,10 @@ import {
 } from "jigsaw/public_api";
 import {UserDialogComponent} from "./user-dialog/user-dialog";
 import {UserDialog2Component} from "./user-dialog2/user-dialog";
+import {DialogTextService} from "../text.service";
 
 @Component({
+    selector: 'misc-dialog',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
@@ -18,7 +20,7 @@ export class DialogMiscDemoComponent {
 
     public title: string = 'Title of the dialog';
 
-    constructor(private _popupService: PopupService) {
+    constructor(private _popupService: PopupService, public text: DialogTextService) {
     }
 
     /*
@@ -103,10 +105,4 @@ export class DialogMiscDemoComponent {
             posType: PopupPositionType.absolute, //定位类型
         };
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义';
-    description: string = '[这里详细介绍了`PopupService`，请仔细阅读](#/pc/popup/introduce)。';
 }

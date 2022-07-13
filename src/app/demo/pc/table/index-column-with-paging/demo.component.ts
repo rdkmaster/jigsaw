@@ -4,8 +4,10 @@ import {
     PageableTableData, AdditionalColumnDefine, ColumnDefine, TableValueGenerators,
     SortAs, SortOrder
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'index-column-with-paging-table',
     templateUrl: './demo.component.html'
 })
 export class TableAddIDWithPagingComponent {
@@ -30,7 +32,7 @@ export class TableAddIDWithPagingComponent {
         }
     }];
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries',
         });
@@ -39,10 +41,4 @@ export class TableAddIDWithPagingComponent {
         });
         this.pageable.fromAjax();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

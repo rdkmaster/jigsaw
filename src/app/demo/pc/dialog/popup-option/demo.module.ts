@@ -6,6 +6,7 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {DialogPopOptionDemo} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [DialogPopOptionDemo],
@@ -18,6 +19,7 @@ import {DialogPopOptionDemo} from "./demo.component";
         JigsawInputModule,
         JigsawDemoDescriptionModule,
         CommonModule,
+        DemoTemplateModule
     ],
     providers: [PopupService]
 })

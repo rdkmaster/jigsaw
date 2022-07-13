@@ -2,11 +2,13 @@ import { NgModule } from "@angular/core";
 import {
     JigsawTabsModule,
     JigsawButtonModule,
-    JigsawHeaderModule
+    JigsawHeaderModule,
 } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
-import { TabBarEditableDemoComponent } from "./demo.component";
+import {TabBarEditableComponent} from "./demo.component";
 import { CommonModule } from "@angular/common";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {JigsawMarkdownModule} from "../../../../markdown/markdown";
 
 @NgModule({
     imports: [
@@ -14,9 +16,11 @@ import { CommonModule } from "@angular/common";
         JigsawTabsModule,
         JigsawDemoDescriptionModule,
         JigsawButtonModule,
+        DemoTemplateModule,
+        JigsawMarkdownModule,
         JigsawHeaderModule
     ],
-    declarations: [TabBarEditableDemoComponent],
-    exports: [TabBarEditableDemoComponent]
+    declarations: [TabBarEditableComponent],
+    exports: [TabBarEditableComponent]
 })
 export class TabBarEditableDemoModule { }

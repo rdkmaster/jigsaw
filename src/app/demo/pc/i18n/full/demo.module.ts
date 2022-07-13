@@ -8,6 +8,7 @@ import {
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {I18nFullDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [I18nFullDemoComponent],
@@ -15,7 +16,8 @@ import {I18nFullDemoComponent} from "./demo.component";
     imports: [
         JigsawAlertModule, JigsawButtonModule, JigsawDateTimePickerModule, JigsawRangeDateTimePickerModule,
         JigsawDialogModule, JigsawDemoDescriptionModule, JigsawPaginationModule, JigsawComboSelectModule,
-        JigsawMenuModule, JigsawSelectModule, TranslateModule, JigsawTabsModule, JigsawTableModule/* #for-live-demo-only# .forRoot() */
+        JigsawMenuModule, JigsawSelectModule, TranslateModule, JigsawTabsModule, JigsawTableModule, /* #for-live-demo-only# .forRoot() */
+        DemoTemplateModule
     ],
     providers: [PopupService, TranslateService]
 })

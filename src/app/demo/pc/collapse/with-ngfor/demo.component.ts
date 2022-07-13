@@ -1,7 +1,9 @@
 import {Component, ViewChild} from '@angular/core';
 import {JigsawCollapse, JigsawCollapsePane} from "jigsaw/public_api";
+import {CollapseTextService} from "../text.service";
 
 @Component({
+    selector: 'with-ngfor-collapse',
     templateUrl: './demo.component.html',
     styles: [`
         .collapse-content {
@@ -32,9 +34,6 @@ export class CollapseWithNGForDemoComponent {
         alert(found + ' is activated!');
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何通过`ngFor`指令动态创建多个折叠子页';
-    description: string = '';
+    constructor(public text: CollapseTextService) {
+    }
 }

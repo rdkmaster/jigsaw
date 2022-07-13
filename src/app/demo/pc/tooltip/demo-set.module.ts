@@ -14,8 +14,13 @@ import { TooltipThemeDemoComponent } from './theme/demo.component';
 import { TooltipThemeDemoModule } from './theme/demo.module';
 import { TooltipScenesDemoComponent } from './scenes/demo.component';
 import { TooltipScenesDemoModule } from './scenes/demo.module';
+import {TooltipAllComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [
+    {
+        path: 'all', component: TooltipAllComponent
+    },
     {
         path: 'basic', component: TooltipBasicDemoComponent
     },
@@ -39,8 +44,9 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), TooltipBasicDemoModule, TooltipHtmlDemoModule, MovingTooltipDemoModule,
-        TooltipTriggerDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule
+        TooltipTriggerDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule, JigsawMarkdownModule
     ],
+    declarations: [TooltipAllComponent],
     providers: [PopupService]
 })
 export class TooltipDemoModule {

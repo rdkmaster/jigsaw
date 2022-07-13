@@ -1,14 +1,12 @@
 import {Component} from "@angular/core";
+import {DatePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'basic-date-picker',
     templateUrl: './demo.component.html'
 })
 export class DatePickerBasicDemoComponent {
     date;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DatePickerTextService) {
+    }
 }

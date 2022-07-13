@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<section class="section-container">
+    <jigsaw-header>选中色配置</jigsaw-header>
+    <section class="align-center">
+        <jigsaw-button-bar [data]="['preset-magenta', 'preset-cyan', 'preset-green', 'blue', 'orange', 'green']"
+                           [(selectedItems)]="selectedColor" style="margin-bottom: 8px">
+        </jigsaw-button-bar>
+    </section>
+
+    <jigsaw-header>多选效果</jigsaw-header>
+    <section class="align-center">
+        <jigsaw-tag *ngFor="let item of tags; let idx = index;" color="preset-blue"
+                    [selectedColor]="selectedColor[0]" disabledColor="preset-gray"
+                    [disabled]="idx > 4" (selectChange)="onSelect(item, $event)">
+            {{item}}
+        </jigsaw-tag>
+    </section>
+
+    <jigsaw-header>单选效果</jigsaw-header>
+    <section class="align-center">
+        <jigsaw-tag *ngFor="let item of tags1; let idx = index;" color="preset-blue"
+                    [selectedColor]="selectedColor[0]" disabledColor="preset-gray" toggleSelect='true'
+                    [select]="item.selected" [disabled]="idx > 4" (selectChange)="onSelect1(item)">
+            {{item.label}}
+        </jigsaw-tag>
+    </section>
+</section>

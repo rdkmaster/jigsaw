@@ -2,15 +2,17 @@ import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core
 import {HttpClient} from "@angular/common/http";
 import {take} from 'rxjs/operators';
 import {ChartIconFactory, ChartType, JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
+import {FishBoneTextService} from "../text.service";
 
 @Component({
+    selector: 'full-fish-bone',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient, public _zone: NgZone) {
+    constructor(public http: HttpClient, public _zone: NgZone, public text: FishBoneTextService) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
@@ -429,9 +431,4 @@ export class FishBoneFullComponent implements AfterViewInit {
         console.log(index, data);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = 'FishBone的使用说明';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

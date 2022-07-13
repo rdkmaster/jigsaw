@@ -1,10 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['focus']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button id="call-function" (click)="click()">获取Input焦点</jigsaw-button>
+    <jigsaw-input [(value)]="inputValue" (focus)="focusHandler($event)" #myInput></jigsaw-input>
 
-
-<!-- start to learn the demo from here -->
-<jigsaw-button id="call-function" (click)="click()">获取Input焦点</jigsaw-button>
-<jigsaw-input [(value)]="inputValue" (focus)="focusHandler($event)" #myInput></jigsaw-input>
-
-<p id="focus-message">{{focusMessage}}</p>
+    <p id="focus-message">{{focusMessage}}</p>
+</demo-template>

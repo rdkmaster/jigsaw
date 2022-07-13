@@ -7,6 +7,7 @@ import {
 } from "jigsaw/public_api";
 
 @Component({
+    selector: 'full-I18n',
     templateUrl: './demo.component.html',
     styles: [`
         .dialog-content {

@@ -1,10 +1,18 @@
-import {AfterContentInit, Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ButtonBarTextService} from "../text.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "basic-button-bar",
+    templateUrl: "./demo.component.html",
 })
-export class ButtonBarBasicDemoComponent implements AfterContentInit {
+
+export class ButtonBarBasicComponent {
+    public selectedLabel = {label: "大", size: "default"};
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "大", size: "default"}
+    ]);
     multiple: boolean = false;
 
     selectedCityStr: string;
@@ -76,9 +84,6 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
         this.index = this.index >= 3 ? 0 : (this.index + 1);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: ButtonBarTextService) {}
+
 }

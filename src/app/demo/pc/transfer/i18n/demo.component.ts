@@ -2,8 +2,10 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TranslateService} from "@ngx-translate/core";
 import {ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer, TranslateHelper} from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'i18n-transfer',
     templateUrl: './demo.component.html'
 })
 export class TransferArrayI18nDemoComponent {
@@ -14,7 +16,7 @@ export class TransferArrayI18nDemoComponent {
     public trackItemBy = 'zhName';
 
 
-    constructor(private _http: HttpClient,private _translateService:TranslateService) {
+    constructor(private _http: HttpClient,private _translateService:TranslateService, public text: TransferTextService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
         this.data.fromAjax('mock-data/countries');
@@ -50,10 +52,4 @@ export class TransferArrayI18nDemoComponent {
     changeLang(lang: string) {
         TranslateHelper.changeLanguage(this._translateService, lang);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

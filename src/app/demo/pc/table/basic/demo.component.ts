@@ -1,13 +1,17 @@
 import {Component} from "@angular/core";
-import {TableData} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
+import {TableData} from "../../../../../jigsaw/common/core/data/table-data";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: "basic-table",
+    templateUrl: "./demo.component.html",
+    styleUrls: ["../public.css"]
 })
-export class TableBasicDemoComponent {
+
+export class TableBasicComponent {
     tableData: TableData;
 
-    constructor() {
+    constructor(public text: TableTextService) {
         this.tableData = new TableData(
             [
                 [
@@ -167,9 +171,4 @@ export class TableBasicDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

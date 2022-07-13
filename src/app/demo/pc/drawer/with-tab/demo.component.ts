@@ -1,14 +1,12 @@
 import {Component} from "@angular/core";
+import {DrawerTextService} from "../text.service";
 
 @Component({
+    selector: 'with-tab-drawer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class DrawerWithTabDemoComponent {
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DrawerTextService) {
+    }
 }

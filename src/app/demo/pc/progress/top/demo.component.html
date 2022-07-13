@@ -1,0 +1,8 @@
+<demo-template [data]="''" [text]="text['text']['top']">
+    <a style="font-size: 14px" (click)="showTopBar()">弹出顶部进度条</a>
+    <a *ngIf="dockingBar" style="margin-right: 8px" (click)="dockingBar?.dispose();dockingBar=null;">关闭</a>
+    <a *ngIf="dockingBar" style="margin-right: 8px" (click)="updateTopBarValue(10)">↑↑</a>
+    <a *ngIf="dockingBar" style="margin-right: 8px" (click)="updateTopBarValue(-10)">↓↓</a>
+    <a *ngIf="dockingBar" style="margin-right: 8px" (click)="dockingBar?.instance.status = 'block'">阻塞</a>
+    <a *ngIf="dockingBar" style="margin-right: 8px" (click)="dockingBar?.instance.startEstimating(duration, maxProgress)">估计进度</a>
+</demo-template>

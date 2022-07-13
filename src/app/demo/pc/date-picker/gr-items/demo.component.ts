@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {TimeGr, GrItem} from "jigsaw/public_api";
+import {DatePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'gr-items-date-picker',
     templateUrl: './demo.component.html'
 })
 export class DatePickerGrItemDemoComponent {
@@ -13,9 +15,6 @@ export class DatePickerGrItemDemoComponent {
         {label: "Month", value: TimeGr.month}
     ];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DatePickerTextService) {
+    }
 }

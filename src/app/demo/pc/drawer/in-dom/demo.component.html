@@ -1,33 +1,33 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['inDom']">
+    <!-- start to learn the demo from here -->
+    <div style="margin-bottom: 20px">
+        <div>
+            <label>抽屉位置：</label>
+            <jigsaw-radios [(value)]="selectedPosition">
+                <jigsaw-radio-option value="left">left</jigsaw-radio-option>
+                <jigsaw-radio-option value="right">right</jigsaw-radio-option>
+                <jigsaw-radio-option value="top">top</jigsaw-radio-option>
+                <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
+            </jigsaw-radios>
+        </div>
+        <div>
+            <label>内容是否自适应尺寸：</label>
+            <jigsaw-switch [(checked)]="autoSize">Auto Size</jigsaw-switch>
+        </div>
+        <div>
+            宽度：
+            <j-input [(value)]="width"></j-input>
+            高度：
+            <j-input [(value)]="height"></j-input>
+        </div>
+    </div>
 
-
-<!-- start to learn the demo from here -->
-<div class="option-box">
-    <div class="position-box">
-        <label>抽屉位置：</label>
-        <jigsaw-radios [(value)]="selectedPosition">
-            <jigsaw-radio-option value="left">left</jigsaw-radio-option>
-            <jigsaw-radio-option value="right">right</jigsaw-radio-option>
-            <jigsaw-radio-option value="top">top</jigsaw-radio-option>
-            <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
-        </jigsaw-radios>
-    </div>
-    <div class="position-box">
-        <label>内容是否自适应尺寸：</label>
-        <jigsaw-switch [(checked)]="autoSize">Auto Size</jigsaw-switch>
-    </div>
-    <div class="size-box">
-        宽度：<j-input [(value)]="width"></j-input>
-        高度：<j-input [(value)]="height"></j-input>
-    </div>
-</div>
-<section class="content-section">Page Content</section>
-<j-drawer [floating]="false" [position]="selectedPosition" [width]="width" [height]="height" [autoSize]="autoSize">
-    <div class="drawer-content">
-        这是一个展示内容的box
-    </div>
-</j-drawer>
-<span>This is an inline content</span>
-<section class="content-section">Page Content</section>
+    <section class="content-section">Page Content</section>
+    <j-drawer [floating]="false" [position]="selectedPosition" [width]="width" [height]="height" [autoSize]="autoSize">
+        <div class="drawer-content">
+            这是一个展示内容的box
+        </div>
+    </j-drawer>
+    <span>This is an inline content</span>
+    <section class="content-section">Page Content</section>
+</demo-template>

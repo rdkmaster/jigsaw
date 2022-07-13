@@ -1,8 +1,10 @@
 import {Component, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'updata-column-define-table',
     templateUrl: './demo.component.html'
 })
 export class TableColumnSetWidthDemoComponent {
@@ -19,7 +21,7 @@ export class TableColumnSetWidthDemoComponent {
         this.table.update();
     }
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -43,10 +45,4 @@ export class TableColumnSetWidthDemoComponent {
             width: '50px',
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

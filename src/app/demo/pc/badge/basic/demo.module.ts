@@ -10,14 +10,14 @@ import {
     JigsawSwitchModule,
     JigsawTileLiteModule,
 } from "jigsaw/public_api";
-import {JigsawDemoDescriptionModule} from "app/demo-description/demo-description";
 import {BadgeBasicDemoComponent} from "./demo.component";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [BadgeBasicDemoComponent],
     imports: [
-        JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule, JigsawButtonModule, JigsawSwitchModule, JigsawCheckBoxModule,
-        JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule, JigsawTileLiteModule,
+        JigsawIconModule, JigsawBadgeModule, JigsawButtonModule, JigsawSwitchModule, JigsawCheckBoxModule,
+        JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule, JigsawTileLiteModule, DemoTemplateModule
     ],
     exports: [BadgeBasicDemoComponent]
 })

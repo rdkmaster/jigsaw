@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
-import { JigsawDemoDescriptionModule } from "app/demo-description/demo-description";
 import { SearchInputBasicDemoComponent } from "./demo.component";
 import { JigsawSearchInputModule, JigsawHeaderModule } from "jigsaw/public_api";
+import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
 @NgModule({
     declarations: [SearchInputBasicDemoComponent],
     exports: [SearchInputBasicDemoComponent],
-    imports: [JigsawDemoDescriptionModule, JigsawSearchInputModule, JigsawHeaderModule]
+    imports: [JigsawSearchInputModule, JigsawHeaderModule, DemoTemplateModule]
 })
 export class SearchInputBasicDemoModule {}

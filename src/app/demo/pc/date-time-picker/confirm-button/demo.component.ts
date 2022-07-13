@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {DateTimePickerTextService} from "../text.service";
 
 @Component({
+    selector: 'confirm-button-date-time-picker',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap p {
@@ -34,9 +36,6 @@ export class DateTimePickerConfirmButtonDemoComponent {
     beginDate = "now-1d";
     endDate = "now";
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: DateTimePickerTextService) {
+    }
 }

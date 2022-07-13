@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
+import {TransferTextService} from "../text.service";
 
 @Component({
+    selector: 'transfer-table-transfer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class TransferTableDemoComponent {
-    constructor() {
+    constructor(public text: TransferTextService) {
         this.data = new TableData(
             [
                 [
@@ -296,9 +298,4 @@ export class TransferTableDemoComponent {
     resetSelectedData() {
         this.selectedItems = new ArrayCollection([{ name: 'Tiger Nixon2', id: 3 }, { name: "Garrett Winters2", id: 4 }]);
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

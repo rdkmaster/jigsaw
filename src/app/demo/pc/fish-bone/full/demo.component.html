@@ -1,26 +1,22 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Fish Bone</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">左边 白色</jigsaw-header>
-        <j-fish-bone [data]="data"></j-fish-bone>
+<demo-template [data]="''" [text]="text['text']['full']">
+    <!-- start to learn the demo from here -->
+    <div class="live-demo-wrap">
+        <div class="demo-1 live-demo">
+            <jigsaw-header [level]="2">左边 白色</jigsaw-header>
+            <j-fish-bone [data]="data"></j-fish-bone>
+        </div>
+        <div class="demo-2 live-demo">
+            <jigsaw-header [level]="2">右边 黑色</jigsaw-header>
+            <j-fish-bone [data]="data2" direction="right" [theme]="'dark'"></j-fish-bone>
+        </div>
+        <div class="demo-3 live-demo">
+            <jigsaw-header [level]="2">实用场景</jigsaw-header>
+            <jigsaw-select labelField="label"
+                           [(value)]="selectedScene"
+                           [data]="sceneData"
+                           (valueChange)="changeData($event)">
+            </jigsaw-select>
+            <j-fish-bone class="custom-pie-bone" [data]="data3"></j-fish-bone>
+        </div>
     </div>
-    <div class="demo-2 live-demo">
-        <jigsaw-header [level]="2">右边 黑色</jigsaw-header>
-        <j-fish-bone [data]="data2" direction="right" [theme]="'dark'" ></j-fish-bone>
-    </div>
-    <div class="demo-3 live-demo">
-        <jigsaw-header [level]="2">实用场景</jigsaw-header>
-        <jigsaw-select labelField="label"
-                       [(value)]="selectedScene"
-                       [data]="sceneData"
-                       (valueChange)="changeData($event)">
-        </jigsaw-select>
-        <j-fish-bone class="custom-pie-bone" [data]="data3"></j-fish-bone>
-    </div>
-</div>
+</demo-template>

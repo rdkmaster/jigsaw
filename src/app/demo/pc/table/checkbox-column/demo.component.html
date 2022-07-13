@@ -1,16 +1,12 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-
-<jigsaw-header [level]="1">Table</jigsaw-header>
-<jigsaw-header [level]="2">checkbox-column</jigsaw-header>
-<div class="demo-buttons">
-    <j-button (click)="changeData()">click to change data</j-button>
-    <j-button (click)="toggleHeaderDisabled()">click to toggle header disabled</j-button>
-</div>
-<jigsaw-table #tableComponent maxHeight="400" [data]="tableData" [additionalColumnDefines]="additionalColumns"
-    [(additionalData)]="additionalData" (additionalDataChange)="additionalDataChange()">
-</jigsaw-table>
-<p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+<demo-template [data]="''" [text]="text['text']['checkboxColumn']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">checkbox-column</jigsaw-header>
+    <div class="demo-buttons">
+        <j-button (click)="changeData()">click to change data</j-button>
+        <j-button (click)="toggleHeaderDisabled()">click to toggle header disabled</j-button>
+    </div>
+    <jigsaw-table #tableComponent maxHeight="400" [data]="tableData" [additionalColumnDefines]="additionalColumns"
+                  [(additionalData)]="additionalData" (additionalDataChange)="additionalDataChange()">
+    </jigsaw-table>
+    <p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
+</demo-template>

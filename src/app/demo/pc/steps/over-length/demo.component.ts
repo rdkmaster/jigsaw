@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
+import {StepsTextService} from "../text.service";
 
 @Component({
+    selector: 'over-length-steps',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -29,7 +31,7 @@ export class JigsawStepOverLengthDemoComponent {
 
     current = 0;
 
-    constructor() {
+    constructor(public text: StepsTextService) {
         for (let i = 2; i < 5; i++) {
             this.data.push(this._createStepData());
         }
@@ -45,10 +47,4 @@ export class JigsawStepOverLengthDemoComponent {
             subTitle: '描述信息'
         };
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

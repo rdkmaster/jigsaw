@@ -1,8 +1,8 @@
 .movable {
     position: fixed;
     cursor: move;
-    left: 20px;
-    top: 100px;
+    left: 1000px;
+    top: 317px;
 }
 
 .label {

@@ -1,9 +1,6 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<jigsaw-date-picker [(date)]="date" [grItems]="grItems"></jigsaw-date-picker>
-<br>
-选择的时间是：{{date | json}}
+<demo-template [data]="''" [text]="text['text']['grItems']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-date-picker [(date)]="date" [grItems]="grItems"></jigsaw-date-picker>
+    <br>
+    选择的时间是：{{date | json}}
+</demo-template>

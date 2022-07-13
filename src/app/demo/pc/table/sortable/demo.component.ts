@@ -5,8 +5,10 @@ import {
     DataSortInfo, SortAs, SortOrder,
     JigsawTable
 } from "jigsaw/public_api";
+import {TableTextService} from "../text.service";
 
 @Component({
+    selector: 'sortable-table',
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderSortDemoComponent {
@@ -153,7 +155,7 @@ export class TableSetHeaderSortDemoComponent {
         ]
     };
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TableTextService) {
         this.tableDataFromAjax = new TableData();
         this.tableDataFromAjax.http = http;
         this.tableDataFromAjax.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');
@@ -246,10 +248,4 @@ export class TableSetHeaderSortDemoComponent {
         // 直接过滤列
         //this.pageable.filter(reg, [0]);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }
