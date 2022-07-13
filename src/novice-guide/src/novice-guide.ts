@@ -153,6 +153,7 @@ export class JigsawNoviceGuide {
         }
 
         // 当前还找不到，那就要等着了
+        let _clearTimer;
         const mutationObserver = new MutationObserver(() => {
             // 实测querySelector的性能可以接受（万次耗时500~700ms）
             const found = document.querySelector(selector);
@@ -161,6 +162,9 @@ export class JigsawNoviceGuide {
             }
             this._createNoviceGuide(guideType, notices, notice, found as HTMLElement);
             this._resize();
+            if (_clearTimer) {
+                clearTimeout(_clearTimer);
+            }
             mutationObserver.disconnect();
             const idx = this._showing.mutations.indexOf(mutationObserver);
             if (idx != -1) {
@@ -168,9 +172,10 @@ export class JigsawNoviceGuide {
             }
         });
         mutationObserver.observe(document.body, { childList: true, subtree: true });
-        setTimeout(() => {
+        _clearTimer = setTimeout(() => {
+            console.log(mutationObserver)
             mutationObserver.disconnect();
-        }, notice.disconnect ? notice.disconnect : 60000);
+        }, notice.disconnect ? notice.disconnect : 20000);
         this._showing.mutations.push(mutationObserver);
     }
 
