@@ -31,7 +31,7 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
     selector: 'jigsaw-list-lite, j-list-lite',
     template: `
         <j-input [theme]="theme" *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
-                 (valueChange)="_$handleSearching($event)">
+                 (valueChange)="_$handleSearching($event)" [placeholder]="placeholder">
             <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </j-input>
         <div class="jigsaw-list-lite-wrapper"
@@ -152,6 +152,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input()
     public optionCount: number;
+
+    /**
+     * 搜索框的提示语
+     */
+    @Input()
+    public placeholder: string = '';
 
     @ViewChild(JigsawList)
     private _listInst: JigsawList;
