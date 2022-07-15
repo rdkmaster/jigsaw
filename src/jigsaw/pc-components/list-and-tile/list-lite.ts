@@ -143,6 +143,16 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     public searchable: boolean;
 
     /**
+     * 搜索框的提示语
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = list-lite/searchable
+     */
+    @Input()
+    public placeholder: string = '';
+
+    /**
      * 显示的option个数，超出的会显示滚动条；
      * 不设置optionCount，则显示全部
      *
@@ -152,12 +162,6 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     @Input()
     public optionCount: number;
-
-    /**
-     * 搜索框的提示语
-     */
-    @Input()
-    public placeholder: string = '';
 
     @ViewChild(JigsawList)
     private _listInst: JigsawList;
