@@ -1,3 +1,6 @@
+import {readdirSync} from "fs"
+
+
 export enum NoviceGuideNoticeType {
     bubble = 'bubble', dialog = 'dialog', wizard = 'wizard'
 }
