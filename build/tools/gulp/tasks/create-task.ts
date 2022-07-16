@@ -113,8 +113,8 @@ export function createTask(packageName: string) {
                 `--outDir ${dist} ${home}/src/jigsaw/common/novice-guide/novice-guide.ts`);
         } catch(e) {
             console.error(e.message);
-            console.error(e.stderr);
-            console.error(e.stdout);
+            console.error(e.stderr.toString());
+            console.error(e.stdout.toString());
             throw 'Error: failed to build novice guide';
         }
         let output = readFileSync(`${dist}/novice-guide.js`).toString()
