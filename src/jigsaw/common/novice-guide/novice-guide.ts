@@ -1,3 +1,6 @@
+import {JigsawBadgeDirective} from "../directive/badge/badge"
+
+
 export enum NoviceGuideNoticeType {
     bubble = 'bubble', dialog = 'dialog', wizard = 'wizard'
 }
