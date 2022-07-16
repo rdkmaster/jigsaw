@@ -1,12 +1,13 @@
 import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
-import {writeFileSync} from 'fs-extra';
+import {writeFileSync, readFileSync, existsSync} from 'fs';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
+import {execSync} from "child_process";
 
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
@@ -94,12 +95,43 @@ export function createTask(packageName: string) {
         }
     });
 
+    task('build:novice-guide', function buildNoviceGuide() {
+        console.log('building novice guide...');
+        const home = `${__dirname}/../../../..`;
+        const src = readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString();
+        if (/import\s*[{*]/.test(src)) {
+            throw 'Error: it is NOT allowed to import anything inside of novice-guide.ts!!';
+        }
+        const dist = `${home}/dist/@rdkmaster/jigsaw`;
+        if (!existsSync(dist)) {
+            execSync(`mkdir -p ${dist}`);
+        }
+
+        console.log('compiling novice guide with tsc...');
+        try {
+            execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 ` +
+                `--outDir ${dist} ${home}/src/jigsaw/common/novice-guide/novice-guide.ts`);
+        } catch(e) {
+            console.error(e.message);
+            console.error(e.stderr.toString());
+            console.error(e.stdout.toString());
+            throw 'Error: failed to build novice guide';
+        }
+        let output = readFileSync(`${dist}/novice-guide.js`).toString()
+            .replace(/("use strict";\n)/, '$1window.jigsaw = window.jigsaw || {};(exports => {');
+        output += "})(window.jigsaw);";
+        writeFileSync(`${dist}/novice-guide.js`, output);
+
+        execSync(`${home}/node_modules/.bin/terser ${dist}/novice-guide.js -c -m -o ${dist}/novice-guide.min.js`);
+    });
+
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
         ':create-component-wings-theme',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
+        'build:novice-guide',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
