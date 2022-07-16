@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 scriptDir=$(cd `dirname $0`; pwd)
 cd $scriptDir/../..
@@ -14,7 +14,7 @@ if [ ! -e "dist/@rdkmaster/jigsaw" ]; then
     mkdir -p dist/@rdkmaster/jigsaw
 fi
 
-echo "building novice guide with tsc..."
+echo "compiling novice guide with tsc..."
 ./node_modules/.bin/tsc --module commonjs --target es6 --outDir dist/@rdkmaster/jigsaw \
     src/jigsaw/common/novice-guide/novice-guide.ts
 if [ "$?" != "0" ]; then
@@ -25,4 +25,5 @@ fi
 sed -i "2 i window.jigsaw = window.jigsaw || {};(exports => {" dist/@rdkmaster/jigsaw/novice-guide.js
 echo "})(window.jigsaw);" >> dist/@rdkmaster/jigsaw/novice-guide.js
 
+echo "minifying novice guide with terser..."
 ./node_modules/.bin/terser dist/@rdkmaster/jigsaw/novice-guide.js -c -m -o dist/@rdkmaster/jigsaw/novice-guide.min.js
