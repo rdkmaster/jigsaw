@@ -5,7 +5,7 @@ cd $scriptDir/../..
 
 # 必须保持novice-guide.ts的独立性，不允许它依赖其他内容
 cat src/jigsaw/common/novice-guide/novice-guide.ts | grep "import\s*{" > /dev/null
-if [ $? == 0 ]; then
+if test $? == 0; then
     echo "Error: it is NOT allowed to import anything inside of novice-guide.ts!!"
     exit 1
 fi
@@ -17,7 +17,7 @@ fi
 echo "compiling novice guide with tsc..."
 ./node_modules/.bin/tsc --module commonjs --target es6 --outDir dist/@rdkmaster/jigsaw \
     src/jigsaw/common/novice-guide/novice-guide.ts
-if [ "$?" != "0" ]; then
+if test $? != 0; then
     echo "Error: failed to build novice guide"
     exit 1
 fi
