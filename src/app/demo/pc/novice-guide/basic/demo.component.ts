@@ -1,14 +1,20 @@
-import { Component, OnInit, TemplateRef, ViewEncapsulation } from "@angular/core";
-import { ArrayCollection, PopupInfo, PopupService, SimpleTreeData, TableData } from 'jigsaw/public_api';
+import {Component, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
 import {
-    JigsawNoviceGuide,
+    ArrayCollection,
+    clearNoviceGuide,
+    JigsawToast,
     MultipleNoviceGuide,
-    NoviceGuideConfig,
     NoviceGuideNoticeType,
     NoviceGuideType,
+    PopupInfo,
+    PopupService,
+    resetNoviceGuideStatus,
+    showNoviceGuide,
+    SimpleTreeData,
     SingularNoviceGuide,
+    TableData,
     WizardNoviceGuide
-} from 'novice-guide/src/novice-guide';
+} from 'jigsaw/public_api';
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -42,6 +48,26 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     deleteEle() {
         const ele = document.querySelector("li#guide1");
         ele.remove();
+    }
+
+    show(data) {
+        const r = showNoviceGuide(data);
+        console.log(r);
+        if (r == 'all-shown') {
+            JigsawToast.showInfo('该新手指引帮助内容已经显示过了，请重置状态后再试。');
+        } else if (r == 'conflict') {
+            JigsawToast.showError('已经有一个指引在显示了，无法同时显示多个指引。');
+        } else if (r == 'showing') {
+            JigsawToast.showInfo('新手指正常显示中。。。');
+        }
+    }
+
+    reset() {
+        resetNoviceGuideStatus();
+    }
+
+    clear() {
+        clearNoviceGuide();
     }
 
     bubbleGuideData: SingularNoviceGuide = {
@@ -89,10 +115,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         version: 'v0.0.1'
     }
 
-    noviceGuide = new JigsawNoviceGuide({ localStorageItem: 'jigsaw.noviceGuide' });
-
     ngOnInit() {
-        this.noviceGuide.show(this.bubbleGuideData);
+        showNoviceGuide(this.bubbleGuideData);
     }
 
     dialogInfo: PopupInfo;

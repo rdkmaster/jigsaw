@@ -7,6 +7,7 @@ import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
+import {execSync} from "child_process";
 
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
@@ -94,12 +95,19 @@ export function createTask(packageName: string) {
         }
     });
 
+
+    task(':build:novice-guide', function buildNoviceGuide() {
+        console.log('building novice guide...');
+        execSync(`sh ${__dirname}/../../../scripts/build-novice-guide.sh`);
+    });
+
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
         ':create-component-wings-theme',
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
+        ':build:novice-guide',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(

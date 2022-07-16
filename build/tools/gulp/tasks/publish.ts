@@ -1,8 +1,8 @@
-import {spawn} from 'child_process';
+import {spawn, execSync} from 'child_process';
 import {existsSync, statSync} from 'fs-extra';
 import {join} from 'path';
 import {task} from 'gulp';
-import {execTask, sequenceTask} from '../util/task_helpers';
+import {execTask} from '../util/task_helpers';
 import {buildConfig} from './build-config';
 import {yellow, green, red, grey} from 'chalk';
 import * as minimist from 'minimist';

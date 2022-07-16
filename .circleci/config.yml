@@ -38,6 +38,7 @@ jobs:
                     node build/scripts/extract-theme-variables.js
                     node build/scripts/check-extraction.js
                     node build/scripts/create-component-wings-theme.js
+                    sh build/scripts/build-novice-guide.sh
             - run:
                 name: Generate demo info
                 command: ./node_modules/.bin/gulp generate-demo-info

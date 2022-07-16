@@ -32,6 +32,7 @@ export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
 export * from "./common/service/time.types";
+export * from "./common/novice-guide/novice-guide";
 export * from "./pc-components/alert/alert";
 export * from "./pc-components/box/index";
 export * from "./pc-components/breadcrumb/breadcrumb";
