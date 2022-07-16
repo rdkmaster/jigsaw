@@ -1,7 +1,7 @@
 import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
-import {writeFileSync} from 'fs-extra';
+import {writeFileSync, readFileSync, existsSync} from 'fs';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {green, red} from 'chalk';
@@ -97,7 +97,32 @@ export function createTask(packageName: string) {
 
     task('build:novice-guide', function buildNoviceGuide() {
         console.log('building novice guide...');
-        execSync(`sh ${__dirname}/../../../scripts/build-novice-guide.sh`);
+        const home = `${__dirname}/../../../..`;
+        const src = readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString();
+        if (/import\s*{/.test(src)) {
+            throw 'Error: it is NOT allowed to import anything inside of novice-guide.ts!!';
+        }
+        const dist = `${home}/dist/@rdkmaster/jigsaw`;
+        if (!existsSync(dist)) {
+            execSync(`mkdir -p ${dist}`);
+        }
+
+        console.log('compiling novice guide with tsc...');
+        try {
+            execSync(`sh ${home}/node_modules/.bin/tsc --module commonjs --target es6 ` +
+                `--outDir ${dist} ${home}/src/jigsaw/common/novice-guide/novice-guide.ts`);
+        } catch(e) {
+            console.error(e.message);
+            console.error(e.stderr);
+            console.error(e.stdout);
+            throw 'Error: failed to build novice guide';
+        }
+        let output = readFileSync(`${dist}/novice-guide.js`).toString()
+            .replace(/("use strict";\n)/, '$1window.jigsaw = window.jigsaw || {};(exports => {');
+        output += "})(window.jigsaw);";
+        writeFileSync(`${dist}/novice-guide.js`, output);
+
+        execSync(`sh ${home}/node_modules/.bin/terser ${dist}/novice-guide.js -c -m -o ${dist}/novice-guide.min.js`);
     });
 
     task(`build:${packageName}`, sequenceTask(
