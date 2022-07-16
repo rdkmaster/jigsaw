@@ -99,7 +99,7 @@ export function createTask(packageName: string) {
         console.log('building novice guide...');
         const home = `${__dirname}/../../../..`;
         const src = readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString();
-        if (/import\s*{/.test(src)) {
+        if (/import\s*[{*]/.test(src)) {
             throw 'Error: it is NOT allowed to import anything inside of novice-guide.ts!!';
         }
         const dist = `${home}/dist/@rdkmaster/jigsaw`;
@@ -109,7 +109,7 @@ export function createTask(packageName: string) {
 
         console.log('compiling novice guide with tsc...');
         try {
-            execSync(`sh ${home}/node_modules/.bin/tsc --module commonjs --target es6 ` +
+            execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 ` +
                 `--outDir ${dist} ${home}/src/jigsaw/common/novice-guide/novice-guide.ts`);
         } catch(e) {
             console.error(e.message);
@@ -122,7 +122,7 @@ export function createTask(packageName: string) {
         output += "})(window.jigsaw);";
         writeFileSync(`${dist}/novice-guide.js`, output);
 
-        execSync(`sh ${home}/node_modules/.bin/terser ${dist}/novice-guide.js -c -m -o ${dist}/novice-guide.min.js`);
+        execSync(`${home}/node_modules/.bin/terser ${dist}/novice-guide.js -c -m -o ${dist}/novice-guide.min.js`);
     });
 
     task(`build:${packageName}`, sequenceTask(
