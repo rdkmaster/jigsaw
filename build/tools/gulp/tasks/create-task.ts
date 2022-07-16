@@ -95,8 +95,7 @@ export function createTask(packageName: string) {
         }
     });
 
-
-    task(':build:novice-guide', function buildNoviceGuide() {
+    task('build:novice-guide', function buildNoviceGuide() {
         console.log('building novice guide...');
         execSync(`sh ${__dirname}/../../../scripts/build-novice-guide.sh`);
     });
@@ -107,7 +106,7 @@ export function createTask(packageName: string) {
         `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
-        ':build:novice-guide',
+        'build:novice-guide',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
