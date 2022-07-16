@@ -1,4 +1,4 @@
-import {readdirSync} from "fs"
+import {JigsawBadgeDirective} from "../directive/badge/badge"
 
 
 export enum NoviceGuideNoticeType {
