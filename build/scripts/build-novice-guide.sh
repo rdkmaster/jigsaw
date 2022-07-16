@@ -5,7 +5,8 @@ cd $scriptDir/../..
 
 # 必须保持novice-guide.ts的独立性，不允许它依赖其他内容
 cat src/jigsaw/common/novice-guide/novice-guide.ts | grep "import\s*{" > /dev/null
-if [ "x$?" == "x0" ]; then
+exitCode=$?
+if [ "$exitCode" == "0" ]; then
     echo "Error: it is NOT allowed to import anything inside of novice-guide.ts!!"
     exit 1
 fi
