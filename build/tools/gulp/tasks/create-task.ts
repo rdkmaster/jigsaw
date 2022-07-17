@@ -1,13 +1,13 @@
 import {dest, src, task} from 'gulp';
+import {execSync} from "child_process";
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
-import {writeFileSync, readFileSync, existsSync} from 'fs';
+import {green, red} from 'chalk';
+import {existsSync, readFileSync, writeFileSync, mkdirpSync} from 'fs-extra';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
-import {green, red} from 'chalk';
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
-import {execSync} from "child_process";
 
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
@@ -18,7 +18,7 @@ export function createTask(packageName: string) {
     const distDir = './dist';
     const releasePath = join(distDir, `@rdkmaster/${packageName}`);
 
-    const jigsawPath = `./src/jigsaw/${packageName== 'jigsaw' ? 'pc-components' : 'mobile-components'}`;
+    const jigsawPath = `./src/jigsaw/${packageName == 'jigsaw' ? 'pc-components' : 'mobile-components'}`;
     const jigsawCommonPath = './src/jigsaw/common';
     const themingEntryPointPath = join(jigsawPath, 'theming/all-theme.scss');
     const themingBundlePath = join(releasePath, 'theming.scss');
@@ -98,13 +98,16 @@ export function createTask(packageName: string) {
     task('build:novice-guide', function buildNoviceGuide() {
         console.log('building novice guide...');
         const home = `${__dirname}/../../../..`;
-        const src = readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString();
-        if (/import\s*[{*]/.test(src)) {
-            throw 'Error: it is NOT allowed to import anything inside of novice-guide.ts!!';
-        }
+        readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString()
+            .replace(/import\s*(\*|[\s\S]*?)\s*from\s*['"](.*?)['"]/g, (_1, _2, path) => {
+                console.log('checking import from path:', path);
+                if (!path.startsWith('./')) {
+                    throw 'Error: it is NOT allowed to import anything outside of novice-guide!!';
+                }
+            });
         const dist = `${home}/dist/@rdkmaster/jigsaw`;
         if (!existsSync(dist)) {
-            execSync(`mkdir -p ${dist}`);
+            mkdirpSync(dist);
         }
 
         console.log('compiling novice guide with tsc...');

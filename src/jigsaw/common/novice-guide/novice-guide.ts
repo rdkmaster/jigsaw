@@ -1,95 +1,30 @@
-export enum NoviceGuideNoticeType {
-    bubble = 'bubble', dialog = 'dialog', wizard = 'wizard'
-}
-
-export interface NoviceGuideContent {
-    type: NoviceGuideNoticeType;
-    title?: string;
-    notice: string;
-    useHtml?: boolean;
-    button?: string;
-    trigger?: 'click' | 'mouseover';
-}
-
-export interface NoviceGuidePicker {
-    version?: string;
-    tagName?: string;
-    id?: string;
-    classes?: string;
-    attribute1?: { name: string, value: string | number };
-    attribute2?: { name: string, value: string | number };
-    selector?: string;
-}
-
-export interface NoviceGuideOptions {
-    position: 'top' | 'left' | 'right' | 'bottom';
-    timeout?: number;
-}
-
-export interface BasicNoviceGuideNotice extends NoviceGuideContent {
-}
-
-export interface BasicNoviceGuideNotice extends NoviceGuidePicker {
-}
-
-export interface BasicNoviceGuideNotice extends NoviceGuideOptions {
-}
-
-export interface BubbleNoviceGuide extends BasicNoviceGuideNotice {
-    type: NoviceGuideNoticeType.bubble;
-}
-
-export interface DialogNoviceGuide extends BasicNoviceGuideNotice {
-    type: NoviceGuideNoticeType.dialog;
-}
-
-export interface WizardStepNoviceGuide extends BasicNoviceGuideNotice {
-    type: NoviceGuideNoticeType.wizard;
-}
-
-export enum NoviceGuideType {
-    singular = 'singular', multiple = 'multiple', wizard = 'wizard'
-}
-
-export type NoviceGuideNotice = BubbleNoviceGuide | DialogNoviceGuide | WizardStepNoviceGuide;
+import {NoviceGuide, NoviceGuideNotice, NoviceGuideNoticeType, NoviceGuideType, ShowResult, StoragedNotice} from "./types";
+import {
+    clearExceptMutations,
+    closeNoviceGuideNotice,
+    debouncedResize,
+    getGuideContainer,
+    getSelector,
+    localStorageItem,
+    onGoing,
+    removeGuideContainer,
+    removeStyle,
+    resize,
+    showing,
+    toKeyString
+} from "./utils";
 
 /**
- * version属性，再加上父类里的tagName等属性一起，共同组成了一个帮助内容的标识
+ * 由于 novice guide 需要在js上下文中直接使用，因此这里通过noviceGuide这个变量来起到命名空间的作用
+ * 从而统一ts和js两种上下文的引入用法一致。
  */
-export interface BasicNoviceGuide {
-    type: NoviceGuideType;
-    data: NoviceGuideNotice[];
-    version: string;
-}
+export const noviceGuide = {show, reset, clear};
 
-export interface SingularNoviceGuide extends BasicNoviceGuide {
-    type: NoviceGuideType.singular;
-}
-
-export interface MultipleNoviceGuide extends BasicNoviceGuide {
-    type: NoviceGuideType.multiple;
-}
-
-export interface WizardNoviceGuide extends BasicNoviceGuide {
-    type: NoviceGuideType.wizard;
-}
-
-export type NoviceGuide = SingularNoviceGuide | MultipleNoviceGuide | WizardNoviceGuide;
-
-type ShowingInfo = {
-    guideElements: HTMLElement[], cloneElements: HTMLElement[], guideKeys: string[],
-    mutations: MutationObserver[], maxWaitMs: number
-};
-export type ShowResult = 'invalid-data' | 'conflict' | 'all-shown' | 'showing';
-
-const localStorageItem = 'jigsaw.noviceGuide';
-const showing: ShowingInfo = { guideElements: [], cloneElements: [], guideKeys: [], mutations: [], maxWaitMs: 0 };
-
-export function resetNoviceGuideStatus() {
+function reset() {
     localStorage.setItem(localStorageItem, '[]');
 }
 
-export function clearNoviceGuide() {
+function clear() {
     clearExceptMutations();
     showing.mutations.forEach(mutation => mutation.disconnect());
     showing.mutations = [];
@@ -97,7 +32,7 @@ export function clearNoviceGuide() {
     window.removeEventListener('resize', debouncedResize);
 }
 
-export function showNoviceGuide(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult  {
+function show(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult {
     if (!guide || !guide.data?.length) {
         console.error('There is no available guide data.');
         return 'invalid-data';
@@ -106,7 +41,7 @@ export function showNoviceGuide(guide: NoviceGuide, maxWaitMs: number = 10000): 
         console.error('Conflict, there is a novice guide showing...');
         return 'conflict';
     }
-    const notices: NoviceGuideNotice[] = filterShownGuides(guide);
+    const notices: NoviceGuideNotice[] = filterGuide(guide);
     if (notices.length == 0) {
         console.warn('All guides were shown.');
         return 'all-shown';
@@ -127,14 +62,10 @@ export function showNoviceGuide(guide: NoviceGuide, maxWaitMs: number = 10000): 
     }
     if (guide.type === 'wizard') {
         const container = getGuideContainer(false);
-        container.classList.add('wizard')
+        container.classList.add('wizard');
         createNoviceGuideNotice(guide.type, notices, notices[0]);
     }
     return 'showing';
-}
-
-function onGoing(): boolean {
-    return showing.guideElements.length > 0 || showing.mutations.length > 0;
 }
 
 function createNoviceGuideNotice(guideType: NoviceGuideType, notices: NoviceGuideNotice[], notice: NoviceGuideNotice) {
@@ -175,19 +106,19 @@ function createNoviceGuideNotice(guideType: NoviceGuideType, notices: NoviceGuid
 function createNoviceGuide(type: NoviceGuideType, notices: NoviceGuideNotice[], notice: NoviceGuideNotice, targetEle: HTMLElement) {
     if (type === NoviceGuideType.singular) {
         if (notice.type !== NoviceGuideNoticeType.bubble && notice.type !== NoviceGuideNoticeType.dialog) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.singular} novice guide`)
+            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.singular} novice guide`);
             return;
         }
         createSingular(notice, targetEle);
     } else if (type === NoviceGuideType.multiple) {
         if (notice.type !== NoviceGuideNoticeType.dialog) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.multiple} novice guide`)
+            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.multiple} novice guide`);
             return;
         }
         createMultiple(notices, notice, targetEle);
     } else if (type === NoviceGuideType.wizard) {
         if (notice.type !== NoviceGuideNoticeType.wizard) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.wizard} novice guide`)
+            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.wizard} novice guide`);
             return;
         }
         createWizardStep(notices, notice, targetEle)
@@ -239,7 +170,7 @@ function createSingular(notice: NoviceGuideNotice, targetEle: HTMLElement) {
         cloneEle.onclick = null;
         saveShownKeys(guideKey);
         closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
-    }
+    };
 
     getGuideContainer(hasMask).appendChild(cloneEle);
     resize();
@@ -295,7 +226,7 @@ function createMultiple(notices: NoviceGuideNotice[], notice: NoviceGuideNotice,
         if ((e.target as HTMLElement).classList.contains('pre')) {
             onButtonClicked('pre', notices, current, cloneEle);
         }
-    }
+    };
 
     getGuideContainer(true).appendChild(cloneEle);
     resize();
@@ -331,7 +262,7 @@ function createWizardStep(notices: NoviceGuideNotice[], notice: NoviceGuideNotic
             saveShownKeys(guideKeys.join());
         }
         closeNoviceGuideNotice(cloneEle, false);
-    }
+    };
 
     const handleClick = () => {
         targetEle.removeEventListener('click', handleClick);
@@ -342,58 +273,66 @@ function createWizardStep(notices: NoviceGuideNotice[], notice: NoviceGuideNotic
             createNoviceGuideNotice(NoviceGuideType.wizard, notices, notices[current + 1]);
             closeNoviceGuideNotice(cloneEle, false);
         }
-    }
+    };
     targetEle.addEventListener('click', handleClick);
 
     getGuideContainer(false).appendChild(cloneEle);
     resize();
 }
 
-function filterShownGuides(guide: NoviceGuide): NoviceGuideNotice[] {
-    const keys = guide.data.map(notice => toKeyString(notice));
-    const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
+    let keys = guide.data.map(notice => toKeyString(notice));
+    const shownItems: StoragedNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
     if (guide.type === 'multiple' || guide.type === 'wizard') {
         const joinKey = keys.join();
-        if (shownKeys.indexOf(joinKey) !== -1) {
+        if (shownItems.find(item => item.key == joinKey)) {
             return [];
         }
     }
 
-    const guidesCopy = [...guide.data];
+    let filtered = keys.filter((key, idx, arr) => idx == arr.indexOf(key));
     if (guide.type === 'singular') {
-        keys.forEach((key, idx) => {
-            if (shownKeys.indexOf(key) == -1) {
-                return;
-            }
-            guidesCopy[idx] = null;
-        });
+        filtered = filtered.filter(key => !shownItems.find(i => i.key == key));
     }
-    return deduplicate(guidesCopy.filter(g => !!g), keys.filter(k => !!k));
+    return filtered.map(key => keys.indexOf(key)).map(idx => guide.data[idx]);
+
+    // notices.filter((notice, idx) => idx == notices.findIndex(n => toKeyString(n)))
+
+    // const guidesCopy = [...guide.data];
+    // if (guide.type === 'singular') {
+    //     keys.forEach((key, idx) => {
+    //         if (!shownItems.find(item => item.key == key)) {
+    //             return;
+    //         }
+    //         guidesCopy[idx] = null;
+    //     });
+    // }
+    // return deduplicate(notices, keys);
 }
 
-function deduplicate(notices: NoviceGuideNotice[], keys: string[]): NoviceGuideNotice[] {
-    const len = notices.length;
-    const duplicates: number[][] = keys.map((key, idx) => {
-        const arr = [idx];
-        for (let i = idx + 1; i < len; i++) {
-            if (keys[i] == key) {
-                arr.push(i);
-            }
-        }
-        return arr;
-    }).filter(i => i.length > 1);
-    if (duplicates.length > 0) {
-        console.warn('The following guides are duplicated:\n', duplicates);
-        duplicates.forEach(row => row.forEach((pos, idx) => {
-            if (idx == row.length - 1) {
-                return;
-            }
-            notices[pos] = null;
-        }));
-        notices = notices.filter(g => !!g);
-    }
-    return notices;
-}
+// function deduplicate(notices: NoviceGuideNotice[], keys: string[]): NoviceGuideNotice[] {
+//     const len = notices.length;
+//     const duplicates: number[][] = keys.map((key, idx) => {
+//         const arr = [idx];
+//         for (let i = idx + 1; i < len; i++) {
+//             if (keys[i] == key) {
+//                 arr.push(i);
+//             }
+//         }
+//         return arr;
+//     }).filter(i => i.length > 1);
+//     if (duplicates.length > 0) {
+//         console.warn('The following guides are duplicated:\n', duplicates);
+//         duplicates.forEach(row => row.forEach((pos, idx) => {
+//             if (idx == row.length - 1) {
+//                 return;
+//             }
+//             notices[pos] = null;
+//         }));
+//         notices = notices.filter(g => !!g);
+//     }
+//     return notices;
+// }
 
 function createCloneElement(targetEle: HTMLElement, guideKey: string): HTMLDivElement {
     const cloneEle = document.createElement('div');
@@ -405,8 +344,8 @@ function createCloneElement(targetEle: HTMLElement, guideKey: string): HTMLDivEl
 }
 
 function saveShownKeys(guideKey: string) {
-    const shownKeys = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-    shownKeys.push(guideKey);
+    const shownKeys: StoragedNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+    shownKeys.push({key: guideKey, timestamp: Date.now()});
     localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
 }
 
@@ -440,493 +379,4 @@ function onButtonClicked(type: 'pre' | 'next', notices: NoviceGuideNotice[], cur
         showing.cloneElements = [];
     }
     resize();
-}
-
-function debounce(fn: Function, delay: number): () => void {
-    let timer;
-    return function () {
-        if (timer) {
-            clearTimeout(timer)
-        }
-        timer = setTimeout(fn, delay)
-    }
-}
-
-function resize() {
-    const mask = document.getElementById('novice-guide-mask');
-    if (mask) {
-        mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
-    }
-
-    showing.cloneElements.forEach((clone, i) => {
-        if (!clone) {
-            return;
-        }
-        relocateClone(showing.guideElements[i], clone, mask);
-    });
-}
-
-const debouncedResize = debounce(resize, 500);
-
-function clearExceptMutations(): void {
-    removeGuideContainer();
-    showing.cloneElements.filter(e => !!e).forEach(clone => clone.remove());
-    showing.cloneElements = [];
-    showing.guideKeys = [];
-    showing.guideElements = [];
-}
-
-function closeNoviceGuideNotice(cloneEle: HTMLDivElement, checkMask: boolean) {
-    const index = showing.cloneElements.indexOf(cloneEle);
-    showing.cloneElements.splice(index, 1);
-    showing.guideKeys.splice(index, 1);
-    showing.guideElements.splice(index, 1);
-    cloneEle.remove();
-
-    if (showing.cloneElements.length == 0) {
-        clearExceptMutations();
-        return;
-    }
-
-    if (checkMask) {
-        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
-        const mask = document.getElementById('novice-guide-mask');
-        if (mask) {
-            mask.innerHTML = '';
-        }
-        if (dialogClone.length === 0 && mask) {
-            mask.remove();
-        }
-    }
-    resize();
-}
-
-function getGuideContainer(hasMask: boolean): HTMLElement {
-    const container = document.getElementById('novice-guide-container');
-    if (container === null) {
-        const guideContainer = document.createElement('div');
-        guideContainer.id = 'novice-guide-container';
-        document.body.appendChild(guideContainer);
-
-        if (hasMask) {
-            guideContainer.appendChild(createMask())
-        }
-
-        checkStyle();
-        return guideContainer;
-    }
-
-    const mask = document.getElementById('novice-guide-mask');
-    if (hasMask && mask === null) {
-        container.appendChild(createMask());
-    }
-
-    checkStyle();
-    return container;
-}
-
-function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HTMLElement) {
-    const {left, top, width, height} = target.getBoundingClientRect();
-    if (left + top + width + height === 0) {
-        return;
-    }
-
-    clone.style.top = top + 'px';
-    clone.style.left = left + 'px';
-    clone.style.width = width + 'px';
-    clone.style.height = height + 'px';
-    if (mask) {
-        mask.innerHTML += `<rect x="${left}" y="${top}" width="${width}" height="${height}"/>`
-    }
-    const container = getGuideContainer(false);
-    if (container.classList.contains('wizard')) {
-        container.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${left}px ${top + height}px, ${left + width}px ${top + height}px, ${left + width}px ${top}px, ${left}px ${top}px, ${left}px ${top + height}px`
-    }
-}
-
-function toKeyString(notice: BasicNoviceGuideNotice): string {
-    const fields = [notice.version || 'v0'];
-    fields.push(notice.type || '');
-    fields.push(notice.position || '');
-    fields.push(notice.selector || '');
-    fields.push(notice.tagName || '');
-    fields.push(notice.id || '');
-    fields.push(notice.classes || '');
-    if (notice.attribute1 && notice.attribute1.hasOwnProperty('name') && notice.attribute1.hasOwnProperty('value')) {
-        fields.push(`${notice.attribute1.name}=${notice.attribute1.value}`);
-    }
-    if (notice.attribute2 && notice.attribute2.hasOwnProperty('name') && notice.attribute2.hasOwnProperty('value')) {
-        fields.push(`${notice.attribute2.name}=${notice.attribute2.value}`);
-    }
-    return fields.join('$_$');
-}
-
-function removeGuideContainer(): void {
-    const container = document.getElementById('novice-guide-container');
-    if (container === null) {
-        return;
-    }
-    container.remove();
-}
-
-function createMask(): Element {
-    const svgNS = "http://www.w3.org/2000/svg";
-    const xlink = "http://www.w3.org/1999/xlink";
-    const svg = document.createElementNS(svgNS, 'svg');
-
-    svg.setAttributeNS(xlink, 'width', '100%');
-    svg.setAttributeNS(xlink, 'height', '100%');
-    svg.setAttribute('id', 'novice-guide-svg');
-
-    svg.innerHTML = `
-            <mask id="novice-guide-mask"></mask>
-            <rect mask="url(#novice-guide-mask)" fill="#00000099" width="100%" height="100%"/>
-        `;
-    return svg;
-}
-
-function getSelector(notice: NoviceGuideNotice): string {
-    if (notice.selector) {
-        return notice.selector;
-    }
-
-    const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
-    const id = notice.id ? '#' + notice.id : '';
-    const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
-    let selector = `${tagName}${id}${classes}`;
-    if (notice.attribute1) {
-        selector += `[${notice.attribute1.name}=${fixPropValue(notice.attribute1.value)}]`;
-    }
-    if (notice.attribute2) {
-        selector += `[${notice.attribute2.name}=${fixPropValue(notice.attribute2.value)}]`;
-    }
-    return selector;
-
-    // 替换掉属性值里的部分已知敏感字符
-    function fixPropValue(propValue: string | number): string {
-        return String(propValue).replace(/([<>[\]'"=])/g, '\\$1')
-    }
-}
-
-function removeStyle(): void {
-    const noviceGuideStyle = document.getElementById("jigsaw-novice-guide-style-sheet") as HTMLLinkElement;
-    if (noviceGuideStyle) {
-        document.head.removeChild(noviceGuideStyle);
-    }
-}
-
-function checkStyle(): void {
-    const id = 'jigsaw-novice-guide-style-sheet';
-    const noviceGuideStyle = document.getElementById(id) as HTMLLinkElement;
-    if (noviceGuideStyle) {
-        return;
-    }
-    const style = document.createElement('style');
-    style.id = id;
-    document.getElementsByTagName('head')[0].appendChild(style);
-    style.type = 'text/css';
-    style.innerHTML = `
-        #novice-guide-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: var(--zindex-novice-guide);
-        }
-
-        #novice-guide-container.wizard {
-            background: #00000099;
-        }
-
-        #novice-guide-svg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%
-        }
-
-        .novice-guide-clone {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .novice-guide-clone:hover {
-            z-index: 1;
-        }
-
-        .novice-guide-clone .bubble {
-            position: relative;
-            width: 8px;
-            height: 8px;
-            border-radius: 8px;
-            outline: 2px solid var(--brand-default);
-        }
-
-        .novice-guide-clone .bubble .line {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .novice-guide-clone .bubble .line>div {
-            background: var(--brand-default);
-        }
-
-        .novice-guide-clone .bubble.bubble-bottom .line {
-            top: 8px;
-            left: 0;
-            width: 100%;
-            height: 80px;
-        }
-
-        .novice-guide-clone .bubble.bubble-top .line {
-            left: 0;
-            bottom: 8px;
-            width: 100%;
-            height: 80px;
-        }
-
-        .novice-guide-clone .bubble.bubble-bottom .line>div,
-        .novice-guide-clone .bubble.bubble-top .line>div {
-            width: 1px;
-            height: 100%;
-        }
-
-        .novice-guide-clone .bubble.bubble-right .line {
-            top: 0;
-            left: 8px;
-            width: 80px;
-            height: 100%;
-        }
-
-        .novice-guide-clone .bubble.bubble-left .line {
-            top: 0;
-            right: 8px;
-            width: 80px;
-            height: 100%;
-        }
-
-        .novice-guide-clone .bubble.bubble-right .line>div,
-        .novice-guide-clone .bubble.bubble-left .line>div {
-            width: 100%;
-            height: 1px;
-        }
-
-        .novice-guide-clone .bubble .notice-cntr {
-            position: absolute;
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            width: 400px;
-            padding: 16px;
-            border-radius: 3px;
-            background: var(--brand-default);
-            box-shadow: var(--box-shadow-lv3);
-        }
-
-        .novice-guide-clone .bubble .notice-cntr .text {
-            width: 95%;
-            color: #fff;
-            font-size: var(--font-size-text-base);
-        }
-
-        .novice-guide-clone .bubble .notice-cntr .close {
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .novice-guide-clone .bubble.bubble-bottom .notice-cntr {
-            top: 88px;
-            left: -192px;
-        }
-
-        .novice-guide-clone .bubble.bubble-top .notice-cntr {
-            bottom: 88px;
-            left: -192px;
-        }
-
-        .novice-guide-clone .bubble.bubble-right .notice-cntr {
-            top: 50%;
-            left: 88px;
-            transform: translateY(-50%);
-        }
-
-        .novice-guide-clone .bubble.bubble-left .notice-cntr {
-            top: 50%;
-            right: 88px;
-            transform: translateY(-50%);
-        }
-
-        .novice-guide-clone .dialog .notice-cntr {
-            position: absolute;
-            width: 400px;
-            padding: 16px;
-            border-radius: 3px;
-            background: var(--bg-component);
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .title {
-            position: relative;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .text {
-            min-height: 64px;
-            font-size: var(--font-size-text-base);
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .button-cntr {
-            position: relative;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .button-cntr .progress {
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            height: 32px;
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .title .close-arrow {
-            position: absolute;
-            top: 0;
-            right: 0;
-            cursor: pointer;
-        }
-
-        .novice-guide-clone .dialog .notice-cntr .button {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 4px;
-            padding: 0 16px;
-            min-width: 80px;
-            height: 32px;
-            border-radius: 3px;
-            background: var(--brand-default);
-            color: white;
-            cursor: pointer;
-        }
-
-        .novice-guide-clone .dialog .notice-cntr::after {
-            content: '';
-            position: absolute;
-            background: var(--bg-component);
-            height: 20px;
-            width: 20px;
-            transform: rotate(45deg);
-            z-index: -1;
-        }
-
-        .novice-guide-clone .dialog.dialog-right .notice-cntr {
-            top: 50%;
-            left: calc(100% + 20px);
-            transform: translateY(-50%);
-        }
-
-        .novice-guide-clone .dialog.dialog-right .notice-cntr::after {
-            top: 50%;
-            left: -10px;
-            margin-top: -10px;
-        }
-
-        .novice-guide-clone .dialog.dialog-left .notice-cntr {
-            top: 50%;
-            right: calc(100% + 20px);
-            transform: translateY(-50%);
-        }
-
-        .novice-guide-clone .dialog.dialog-left .notice-cntr::after {
-            top: 50%;
-            right: -10px;
-            margin-top: -10px;
-        }
-
-        .novice-guide-clone .dialog.dialog-bottom .notice-cntr {
-            top: calc(100% + 20px);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .novice-guide-clone .dialog.dialog-bottom .notice-cntr::after {
-            top: -10px;
-            left: 50%;
-            margin-left: -5px;
-        }
-
-        .novice-guide-clone .dialog.dialog-top .notice-cntr {
-            bottom: calc(100% + 20px);
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .novice-guide-clone .dialog.dialog-top .notice-cntr::after {
-            bottom: -10px;
-            left: 50%;
-            margin-left: -5px;
-        }
-
-        .novice-guide-clone .wizard {
-            position: absolute;
-            width: 300px;
-        }
-
-        .novice-guide-clone .wizard .arrow-cntr {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 50px;
-        }
-
-        .novice-guide-clone .wizard .arrow-cntr .arrow {
-            color: #fff;
-            font-size: 24px;
-            animation: 0.3s ease-out infinite alternate bounce_arrow;
-        }
-
-        .novice-guide-clone .wizard .close {
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -6px;
-            color: #fff;
-            font-size: 12px;
-            cursor: pointer;
-        }
-
-        .novice-guide-clone .wizard .notice-cntr {
-            position: relative;
-            padding: 0 16px;
-            color: #fff;
-            font-size: 24px;
-        }
-
-        .novice-guide-clone .wizard.wizard-bottom {
-            top: 100%;
-        }
-
-        .novice-guide-clone .wizard.wizard-bottom .arrow-cntr {
-            transform: rotate(90deg);
-        }
-
-        @keyframes bounce_arrow {
-            0% {
-                transform: translateX(-10px);
-            }
-
-            100% {
-                transform: translateX(10px);
-            }
-        }`;
 }

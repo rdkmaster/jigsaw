@@ -1,19 +1,17 @@
 import {Component, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
 import {
     ArrayCollection,
-    clearNoviceGuide,
     JigsawToast,
     MultipleNoviceGuide,
     NoviceGuideNoticeType,
     NoviceGuideType,
     PopupInfo,
     PopupService,
-    resetNoviceGuideStatus,
-    showNoviceGuide,
     SimpleTreeData,
     SingularNoviceGuide,
     TableData,
-    WizardNoviceGuide
+    WizardNoviceGuide,
+    noviceGuide
 } from 'jigsaw/public_api';
 
 @Component({
@@ -51,7 +49,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     show(data) {
-        const r = showNoviceGuide(data);
+        const r = noviceGuide.show(data);
         console.log(r);
         if (r == 'all-shown') {
             JigsawToast.showInfo('该新手指引帮助内容已经显示过了，请重置状态后再试。');
@@ -63,11 +61,11 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     reset() {
-        resetNoviceGuideStatus();
+        noviceGuide.reset();
     }
 
     clear() {
-        clearNoviceGuide();
+        noviceGuide.clear();
     }
 
     bubbleGuideData: SingularNoviceGuide = {
@@ -81,7 +79,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             { type: NoviceGuideNoticeType.bubble, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button-bar', classes: 'jigsaw-button-bar-host', position: 'bottom' },
         ],
         version: 'v0.0.1'
-    }
+    };
 
     dialogGuideData: SingularNoviceGuide = {
         type: NoviceGuideType.singular,
@@ -92,7 +90,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top' }
         ],
         version: 'v0.0.1'
-    }
+    };
 
     multipleNoviceGuideData: MultipleNoviceGuide = {
         type: NoviceGuideType.multiple,
@@ -103,7 +101,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             { type: NoviceGuideNoticeType.dialog, notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top' }
         ],
         version: 'v0.0.1'
-    }
+    };
 
     wizardNoviceGuideData: WizardNoviceGuide = {
         type: NoviceGuideType.wizard,
@@ -113,10 +111,10 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             { type: NoviceGuideNoticeType.wizard, notice: '这是一条对话框新手指引', title: '自定义标题', tagName: 'jigsaw-button', classes: 'jigsaw-button-host jigsaw-button-color-primary jigsaw-button-icon-left', position: 'bottom' },
         ],
         version: 'v0.0.1'
-    }
+    };
 
     ngOnInit() {
-        showNoviceGuide(this.bubbleGuideData);
+        noviceGuide.show(this.bubbleGuideData);
     }
 
     dialogInfo: PopupInfo;
