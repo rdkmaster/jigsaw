@@ -1,4 +1,4 @@
-import {NoviceGuide, NoviceGuideNotice, NoviceGuideNoticeType, NoviceGuideType, ShowResult, StoragedNotice} from "./types";
+import {NoviceGuide, NoviceGuideNotice, NoviceGuideType, ShowResult, ShownNotice} from "./types";
 import {
     clearExceptMutations,
     closeNoviceGuideNotice,
@@ -19,6 +19,11 @@ import {
  * 从而统一ts和js两种上下文的引入用法一致。
  */
 export const noviceGuide = {show, reset, clear};
+declare const window: any;
+if (window) {
+    window.jigsaw = window.jigsaw || {};
+    window.jigsaw.noviceGuide = noviceGuide;
+}
 
 function reset() {
     localStorage.setItem(localStorageItem, '[]');
@@ -33,7 +38,7 @@ function clear() {
 }
 
 function show(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult {
-    if (!guide || !guide.data?.length) {
+    if (!guide || !guide.notices?.length) {
         console.error('There is no available guide data.');
         return 'invalid-data';
     }
@@ -41,6 +46,8 @@ function show(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult {
         console.error('Conflict, there is a novice guide showing...');
         return 'conflict';
     }
+    // 把version复制到notice里，方便后续使用
+    guide.notices.forEach(n => n.version = n.version || guide.version);
     const notices: NoviceGuideNotice[] = filterGuide(guide);
     if (notices.length == 0) {
         console.warn('All guides were shown.');
@@ -50,17 +57,15 @@ function show(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult {
     showing.maxWaitMs = maxWaitMs;
     window.addEventListener('resize', debouncedResize);
 
-    // 把version复制到notice里，方便后续使用
-    notices.forEach(n => n.version = guide.version);
-    if (guide.type === 'singular') {
+    if (guide.type === NoviceGuideType.bubble || guide.type === NoviceGuideType.dialog) {
         notices.forEach((notice) => {
             createNoviceGuideNotice(guide.type, notices, notice);
         });
     }
-    if (guide.type === 'multiple') {
+    if (guide.type === NoviceGuideType.stepped) {
         createNoviceGuideNotice(guide.type, notices, notices[0]);
     }
-    if (guide.type === 'wizard') {
+    if (guide.type === NoviceGuideType.wizard) {
         const container = getGuideContainer(false);
         container.classList.add('wizard');
         createNoviceGuideNotice(guide.type, notices, notices[0]);
@@ -73,7 +78,7 @@ function createNoviceGuideNotice(guideType: NoviceGuideType, notices: NoviceGuid
     // 如果有多个，就用浏览器找到的第一个，不管其他的了
     const found = document.querySelector(selector);
     if (found) {
-        createNoviceGuide(guideType, notices, notice, found as HTMLElement);
+        createNotice(found as HTMLElement);
         return;
     }
 
@@ -85,13 +90,25 @@ function createNoviceGuideNotice(guideType: NoviceGuideType, notices: NoviceGuid
         if (!found) {
             return;
         }
-        createNoviceGuide(guideType, notices, notice, found as HTMLElement);
+        createNotice(found as HTMLElement);
         resize();
         clearObserver();
     });
     mutationObserver.observe(document.body, {childList: true, subtree: true});
     clearTimer = setTimeout(() => clearObserver(), showing.maxWaitMs);
     showing.mutations.push(mutationObserver);
+
+    function createNotice(targetEle: HTMLElement) {
+        if (guideType === NoviceGuideType.bubble || guideType === NoviceGuideType.dialog) {
+            createBubbleOrDialogNotice(guideType, notice, targetEle);
+        } else if (guideType === NoviceGuideType.stepped) {
+            createSteppedNotice(notices, notice, targetEle);
+        } else if (guideType === NoviceGuideType.wizard) {
+            createWizardStep(notices, notice, targetEle)
+        } else {
+            console.error("Error: unsupported novice notice type:", guideType);
+        }
+    }
 
     function clearObserver() {
         clearTimeout(clearTimer);
@@ -103,39 +120,17 @@ function createNoviceGuideNotice(guideType: NoviceGuideType, notices: NoviceGuid
     }
 }
 
-function createNoviceGuide(type: NoviceGuideType, notices: NoviceGuideNotice[], notice: NoviceGuideNotice, targetEle: HTMLElement) {
-    if (type === NoviceGuideType.singular) {
-        if (notice.type !== NoviceGuideNoticeType.bubble && notice.type !== NoviceGuideNoticeType.dialog) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.singular} novice guide`);
-            return;
-        }
-        createSingular(notice, targetEle);
-    } else if (type === NoviceGuideType.multiple) {
-        if (notice.type !== NoviceGuideNoticeType.dialog) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.multiple} novice guide`);
-            return;
-        }
-        createMultiple(notices, notice, targetEle);
-    } else if (type === NoviceGuideType.wizard) {
-        if (notice.type !== NoviceGuideNoticeType.wizard) {
-            console.warn(`Notice type ${notice.type} is not allowed in ${NoviceGuideType.wizard} novice guide`);
-            return;
-        }
-        createWizardStep(notices, notice, targetEle)
-    }
-}
-
-function createSingular(notice: NoviceGuideNotice, targetEle: HTMLElement) {
+function createBubbleOrDialogNotice(type: NoviceGuideType, notice: NoviceGuideNotice, targetEle: HTMLElement) {
     const guideKey: string = toKeyString(notice);
     if (showing.guideKeys.indexOf(guideKey) !== -1) {
         return;
     }
 
+    const hasMask = type === NoviceGuideType.dialog;
     let html = '';
-    let hasMask = false;
-    if (notice.type === NoviceGuideNoticeType.bubble) {
+    if (type === NoviceGuideType.bubble) {
         html = `
-            <div class="${notice.type} ${notice.type}-${notice.position}">
+            <div class="${type} ${type}-${notice.position}">
                 <div class="line">
                     <div></div>
                 </div>
@@ -145,11 +140,9 @@ function createSingular(notice: NoviceGuideNotice, targetEle: HTMLElement) {
                 </div>
             </div>`;
     }
-
-    if (notice.type === NoviceGuideNoticeType.dialog) {
-        hasMask = true;
+    if (type === NoviceGuideType.dialog) {
         html = `
-            <div class="${notice.type} ${notice.type}-${notice.position}">
+            <div class="${type} ${type}-${notice.position}">
                 <div class="notice-cntr">
                     <div class="title">${notice.title}</div>
                     <div class="text">${notice.notice}</div>
@@ -162,21 +155,20 @@ function createSingular(notice: NoviceGuideNotice, targetEle: HTMLElement) {
 
     const cloneEle = createCloneElement(targetEle, guideKey);
     cloneEle.innerHTML = html;
-
     cloneEle.onclick = (e) => {
         if (!(e.target as HTMLElement).classList.contains('close')) {
             return;
         }
         cloneEle.onclick = null;
         saveShownKeys(guideKey);
-        closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
+        closeNoviceGuideNotice(cloneEle, hasMask);
     };
 
     getGuideContainer(hasMask).appendChild(cloneEle);
     resize();
 }
 
-function createMultiple(notices: NoviceGuideNotice[], notice: NoviceGuideNotice, targetEle: HTMLElement) {
+function createSteppedNotice(notices: NoviceGuideNotice[], notice: NoviceGuideNotice, targetEle: HTMLElement) {
     const key = toKeyString(notice);
     if (showing.guideKeys.indexOf(key) !== -1) {
         return;
@@ -195,7 +187,7 @@ function createMultiple(notices: NoviceGuideNotice[], notice: NoviceGuideNotice,
 
     const cloneEle = createCloneElement(targetEle, key);
     cloneEle.innerHTML = `
-        <div class="${notice.type} ${notice.type}-${notice.position}">
+        <div class="${NoviceGuideType.dialog} ${NoviceGuideType.dialog}-${notice.position}">
             <div class="notice-cntr">
                 <div class="title">${notice.title}
                     <div class="close iconfont iconfont-e14b close-arrow"></div>
@@ -217,7 +209,7 @@ function createMultiple(notices: NoviceGuideNotice[], notice: NoviceGuideNotice,
                 const guideKeys = notices.map(notice => toKeyString(notice));
                 saveShownKeys(guideKeys.join());
             }
-            closeNoviceGuideNotice(cloneEle, notice.type === NoviceGuideNoticeType.dialog);
+            closeNoviceGuideNotice(cloneEle, true);
         }
 
         if ((e.target as HTMLElement).classList.contains('next')) {
@@ -240,7 +232,7 @@ function createWizardStep(notices: NoviceGuideNotice[], notice: NoviceGuideNotic
 
     const cloneEle = createCloneElement(targetEle, key);
     cloneEle.innerHTML = `
-        <div class="${notice.type} ${notice.type}-${notice.position}">
+        <div class="${NoviceGuideType.wizard} ${NoviceGuideType.wizard}-${notice.position}">
             <div class="arrow-cntr">
                 <i class="arrow iconfont iconfont-e250"></i>
             </div>
@@ -281,9 +273,9 @@ function createWizardStep(notices: NoviceGuideNotice[], notice: NoviceGuideNotic
 }
 
 function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
-    let keys = guide.data.map(notice => toKeyString(notice));
-    const shownItems: StoragedNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-    if (guide.type === 'multiple' || guide.type === 'wizard') {
+    let keys = guide.notices.map(notice => toKeyString(notice));
+    const shownItems: ShownNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+    if (guide.type === NoviceGuideType.stepped || guide.type === NoviceGuideType.wizard) {
         const joinKey = keys.join();
         if (shownItems.find(item => item.key == joinKey)) {
             return [];
@@ -291,48 +283,11 @@ function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
     }
 
     let filtered = keys.filter((key, idx, arr) => idx == arr.indexOf(key));
-    if (guide.type === 'singular') {
+    if (guide.type === NoviceGuideType.bubble) {
         filtered = filtered.filter(key => !shownItems.find(i => i.key == key));
     }
-    return filtered.map(key => keys.indexOf(key)).map(idx => guide.data[idx]);
-
-    // notices.filter((notice, idx) => idx == notices.findIndex(n => toKeyString(n)))
-
-    // const guidesCopy = [...guide.data];
-    // if (guide.type === 'singular') {
-    //     keys.forEach((key, idx) => {
-    //         if (!shownItems.find(item => item.key == key)) {
-    //             return;
-    //         }
-    //         guidesCopy[idx] = null;
-    //     });
-    // }
-    // return deduplicate(notices, keys);
+    return filtered.map(key => keys.indexOf(key)).map(idx => guide.notices[idx]);
 }
-
-// function deduplicate(notices: NoviceGuideNotice[], keys: string[]): NoviceGuideNotice[] {
-//     const len = notices.length;
-//     const duplicates: number[][] = keys.map((key, idx) => {
-//         const arr = [idx];
-//         for (let i = idx + 1; i < len; i++) {
-//             if (keys[i] == key) {
-//                 arr.push(i);
-//             }
-//         }
-//         return arr;
-//     }).filter(i => i.length > 1);
-//     if (duplicates.length > 0) {
-//         console.warn('The following guides are duplicated:\n', duplicates);
-//         duplicates.forEach(row => row.forEach((pos, idx) => {
-//             if (idx == row.length - 1) {
-//                 return;
-//             }
-//             notices[pos] = null;
-//         }));
-//         notices = notices.filter(g => !!g);
-//     }
-//     return notices;
-// }
 
 function createCloneElement(targetEle: HTMLElement, guideKey: string): HTMLDivElement {
     const cloneEle = document.createElement('div');
@@ -344,8 +299,13 @@ function createCloneElement(targetEle: HTMLElement, guideKey: string): HTMLDivEl
 }
 
 function saveShownKeys(guideKey: string) {
-    const shownKeys: StoragedNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-    shownKeys.push({key: guideKey, timestamp: Date.now()});
+    const shownKeys: ShownNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
+    const item = shownKeys.find(i => i.key == guideKey);
+    if (item) {
+        item.timestamp = Date.now();
+    } else {
+        shownKeys.push({key: guideKey, timestamp: Date.now()});
+    }
     localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
 }
 
@@ -358,7 +318,7 @@ function onButtonClicked(type: 'pre' | 'next', notices: NoviceGuideNotice[], cur
         return;
     }
 
-    createMultiple(notices, notice, target as HTMLElement);
+    createSteppedNotice(notices, notice, target as HTMLElement);
     const index = showing.cloneElements.indexOf(cloneEle);
     showing.cloneElements.splice(index, 1);
     showing.guideKeys.splice(index, 1);

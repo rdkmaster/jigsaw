@@ -1,4 +1,4 @@
-import {BasicNoviceGuideNotice, NoviceGuideNotice, ShowingInfo} from "./types";
+import {NoviceGuideNotice, ShowingInfo} from "./types";
 
 export const localStorageItem = 'jigsaw.noviceGuide';
 export const showing: ShowingInfo = { guideElements: [], cloneElements: [], guideKeys: [], mutations: [], maxWaitMs: 0 };
@@ -109,9 +109,8 @@ export function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HT
     }
 }
 
-export function toKeyString(notice: BasicNoviceGuideNotice): string {
+export function toKeyString(notice: NoviceGuideNotice): string {
     const fields = [notice.version || 'v0'];
-    fields.push(notice.type || '');
     fields.push(notice.position || '');
     fields.push(notice.selector || '');
     fields.push(notice.tagName || '');
