@@ -69,6 +69,10 @@
     z-index: 99999;
 }
 
+#setting a {
+    margin-right: 8px;
+}
+
 #setting a:hover {
     text-decoration: underline;
 }

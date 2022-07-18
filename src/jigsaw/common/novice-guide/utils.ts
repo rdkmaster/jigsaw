@@ -1,10 +1,42 @@
-import {NoviceGuideNotice, ShowingInfo} from "./types";
+import {NoviceGuide, NoviceGuideNotice, NoviceGuideOptions, ShowingNotice, ShownGuideInfo} from "./types";
 
-export const localStorageItem = 'jigsaw.noviceGuide';
-export const showing: ShowingInfo = { guideElements: [], cloneElements: [], guideKeys: [], mutations: [], maxWaitMs: 0 };
+export const options: NoviceGuideOptions = {
+    // 7 days
+    expire: 7 * 24 * 3600 * 1000,
+    // 2 hours
+    duration: 2 * 3600 * 1000,
+    maxShowTimes: 3,
+    storageKey: 'jigsaw.noviceGuide',
+    maxWaitTargetTimeout: 5000
+}
+export let shownGuides: ShownGuideInfo[] = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
+export const showingNotices: ShowingNotice[] = [];
 
 export function onGoing(): boolean {
-    return showing.guideElements.length > 0 || showing.mutations.length > 0;
+    return showingNotices.length > 0 ? !!showingNotices.find(sn => !!sn.mutation) : false;
+}
+
+export function clearExpiredGuides() {
+    const now = Date.now();
+    shownGuides = shownGuides.filter(item => now - item.timestamp < options.expire);
+    localStorage.setItem(options.storageKey, JSON.stringify(shownGuides));
+}
+
+export function tooManyInterruptions(): boolean {
+    const now = Date.now();
+    const shown = shownGuides.filter(item => now - item.timestamp < options.duration);
+    return shown.length >= options.maxShowTimes;
+}
+
+export function copyAndNormalize(guide: NoviceGuide): NoviceGuide {
+    const copy = JSON.parse(JSON.stringify(guide));
+    copy.notices.forEach(notice => {
+        notice.key = toKeyString(notice);
+        // 把version复制到notice里，方便后续使用
+        notice.version = notice.version || guide.version;
+    });
+    copy.key = [...copy.notices].sort((n1, n2) => n1.key.localeCompare(n2.key)).map(n => n.key).join();
+    return copy;
 }
 
 export function debounce(fn: Function, delay: number): () => void {
@@ -22,35 +54,23 @@ export function resize() {
     if (mask) {
         mask.innerHTML = `<rect fill="white" width="100%" height="100%"/>`
     }
-
-    showing.cloneElements.forEach((clone, i) => {
-        if (!clone) {
-            return;
-        }
-        relocateClone(showing.guideElements[i], clone, mask);
-    });
+    showingNotices.filter(sn => sn.cloneElement).forEach(sn => relocateClone(sn.guideElement, sn.cloneElement, mask));
 }
 
-export const debouncedResize = debounce(resize, 500);
+export const debouncedResize = debounce(resize, 300);
 
-export function clearExceptMutations(): void {
-    removeGuideContainer();
-    showing.cloneElements.filter(e => !!e).forEach(clone => clone.remove());
-    showing.cloneElements = [];
-    showing.guideKeys = [];
-    showing.guideElements = [];
-}
-
-export function closeNoviceGuideNotice(cloneEle: HTMLDivElement, checkMask: boolean) {
-    const index = showing.cloneElements.indexOf(cloneEle);
-    showing.cloneElements.splice(index, 1);
-    showing.guideKeys.splice(index, 1);
-    showing.guideElements.splice(index, 1);
-    cloneEle.remove();
-
-    if (showing.cloneElements.length == 0) {
-        clearExceptMutations();
+export function closeNoviceGuideNotice(noticeKey: string, checkMask: boolean) {
+    const idx = showingNotices.findIndex(sn => sn.noticeKey == noticeKey);
+    if (idx == -1) {
         return;
+    }
+    const showing = showingNotices[idx];
+    showing.cloneElement.remove();
+    showing.mutation?.disconnect();
+    showing.mutation = null;
+    showingNotices.splice(idx, 1);
+    if (!showingNotices.find(sn => sn.cloneElement)) {
+        removeGuideContainer();
     }
 
     if (checkMask) {
@@ -111,7 +131,6 @@ export function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HT
 
 export function toKeyString(notice: NoviceGuideNotice): string {
     const fields = [notice.version || 'v0'];
-    fields.push(notice.position || '');
     fields.push(notice.selector || '');
     fields.push(notice.tagName || '');
     fields.push(notice.id || '');

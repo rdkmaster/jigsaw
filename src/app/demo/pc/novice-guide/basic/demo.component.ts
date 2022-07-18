@@ -56,6 +56,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             JigsawToast.showError('已经有一个指引在显示了，无法同时显示多个指引。');
         } else if (r == 'showing') {
             JigsawToast.showInfo('新手指正常显示中。。。');
+        } else if (r == 'too-many-interruptions') {
+            JigsawToast.showInfo('短时间内已经打扰过多次啦，稍等再来。');
         }
     }
 
@@ -65,6 +67,12 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     clear() {
         noviceGuide.clear();
+    }
+
+    options() {
+        noviceGuide.updateOptions({
+            expire: 120 * 1000, duration: 60 * 1000, maxShowTimes: 2, storageKey: 'jigsaw.noviceGuide', maxWaitTargetTimeout: 5000
+        });
     }
 
     bubbleGuideData: BubbleNoviceGuide = {

@@ -3,11 +3,13 @@ export enum NoviceGuideType {
 }
 
 export interface NoviceGuideContent {
-    title?: string;
     notice: string;
+    position: 'top' | 'left' | 'right' | 'bottom';
+    title?: string;
     useHtml?: boolean;
     button?: string;
     trigger?: 'click' | 'mouseover';
+    key?: string;
 }
 
 export interface NoviceGuidePicker {
@@ -20,18 +22,33 @@ export interface NoviceGuidePicker {
     selector?: string;
 }
 
-export interface NoviceGuideOptions {
-    position: 'top' | 'left' | 'right' | 'bottom';
-    timeout?: number;
-}
-
 export interface NoviceGuideNotice extends NoviceGuideContent {
 }
 
 export interface NoviceGuideNotice extends NoviceGuidePicker {
 }
 
-export interface NoviceGuideNotice extends NoviceGuideOptions {
+export interface NoviceGuideOptions {
+    /**
+     * 一个指引显示出来之后，最大的过期时间；比如这个值设置了7天，那么7天之后，一个指引将会再被显示。
+     */
+    expire: number;
+    /**
+     * 从当前时刻往前回溯这个时长，计算在这个时长内显示了几次指引，主要目的是为了控制打扰次数。
+     */
+    duration: number;
+    /**
+     * 在 `duration` 时长内最大允许显示指引的次数，主要目的是为了控制打扰次数。
+     */
+    maxShowTimes: number;
+    /**
+     * 缓存的数据放在localeStorage里的主键名。
+     */
+    storageKey: string;
+    /**
+     * 如果show一个指引时，目标dom节点尚未存在，则会自动等待一段时间，一般这个情况都是时间差导致的，因此等待的时间不需要太长
+     */
+    maxWaitTargetTimeout: number;
 }
 
 /**
@@ -41,6 +58,7 @@ export interface BasicNoviceGuide {
     type: NoviceGuideType;
     notices: NoviceGuideNotice[];
     version: string;
+    key?: string;
 }
 
 export interface BubbleNoviceGuide extends BasicNoviceGuide {
@@ -61,10 +79,10 @@ export interface WizardNoviceGuide extends BasicNoviceGuide {
 
 export type NoviceGuide = BubbleNoviceGuide | DialogNoviceGuide | SteppedNoviceGuide | WizardNoviceGuide;
 
-export type ShowingInfo = {
-    guideElements: HTMLElement[], cloneElements: HTMLElement[], guideKeys: string[],
-    mutations: MutationObserver[], maxWaitMs: number
-};
-export type ShowResult = 'invalid-data' | 'conflict' | 'all-shown' | 'showing';
+export type ShowingNotice = {
+    noticeKey: string, guideElement?: HTMLElement, cloneElement?: HTMLElement, mutation?: MutationObserver
+}
 
-export type ShownNotice = {key: string, timestamp: number};
+export type ShowResult = 'invalid-data' | 'conflict' | 'all-shown' | 'showing' | 'too-many-interruptions';
+
+export type ShownGuideInfo = { guideKey: string, timestamp: number, notices: string[] };
