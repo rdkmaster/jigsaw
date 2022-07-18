@@ -43,7 +43,7 @@ function show(guide: NoviceGuide, maxWaitMs: number = 10000): ShowResult {
         return 'invalid-data';
     }
     if (onGoing()) {
-        console.error('Conflict, there is a novice guide showing...');
+        console.log('Conflict, there is a novice guide showing...');
         return 'conflict';
     }
     // 把version复制到notice里，方便后续使用
@@ -300,12 +300,17 @@ function createCloneElement(targetEle: HTMLElement, guideKey: string): HTMLDivEl
 
 function saveShownKeys(guideKey: string) {
     const shownKeys: ShownNotice[] = JSON.parse(localStorage.getItem(localStorageItem) || '[]');
-    const item = shownKeys.find(i => i.key == guideKey);
-    if (item) {
+    const idx = shownKeys.findIndex(i => i.key == guideKey);
+    let item;
+    if (idx != -1) {
+        item = shownKeys[idx];
         item.timestamp = Date.now();
+        // 挪到最前面去，这样后面就可以直接从第一个读取到最近一次显示指引的时间戳了。
+        shownKeys.splice(idx, 1);
     } else {
-        shownKeys.push({key: guideKey, timestamp: Date.now()});
+        item = {key: guideKey, timestamp: Date.now()}
     }
+    shownKeys.unshift(item);
     localStorage.setItem(localStorageItem, JSON.stringify(shownKeys))
 }
 
