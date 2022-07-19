@@ -62,6 +62,14 @@
             <j-list-lite width="200" [data]="goodsStrList" [(selectedItems)]="selectedItems7" [multipleSelect]="true" [searchable]="true"></j-list-lite>
             <p class="message">选中的条目是: <span>{{selectedItems7?.join(',')}}</span></p>
         </div>
+        <div class="demo-8 live-demo live-demo-block">
+            <jigsaw-header [level]="2">隐藏列表边框
+                <a (click)="noListBorder = !noListBorder" style="margin-left: 8px; font-size: 12px; font-weight: 100;">切换是否显示边框</a>
+            </jigsaw-header>
+            <j-list-lite width="200" [data]="goodsList" labelField="name" [(selectedItems)]="selectedItems8" [noListBorder]="noListBorder"
+                         (selectedItemsChange)="handleSelect8($event)"></j-list-lite>
+            <p class="message">选中的条目是: <span>{{selectedItems8}}</span></p>
+        </div>
     </div>
 </div>
 

@@ -21,6 +21,18 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
+    .#{$jigsaw-list-lite}-wrapper-no-border {
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+        border-radius: $border-radius-base;
+        background: $bg-transparent;
+        
+        .#{$jigsaw-list}-host {
+            border: none;
+        }
+    }
+
     .#{$jigsaw-list-option}-wrapper {
         font-size: 0;
     }

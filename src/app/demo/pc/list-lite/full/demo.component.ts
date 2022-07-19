@@ -81,6 +81,10 @@ export class ListLiteFullDemoComponent {
         this.selectedItems4 = selectedItems.map(item => item.name).toString()
     }
 
+    handleSelect8(selectedItems) {
+        this.selectedItems8 = selectedItems.map(item => item.name).toString()
+    }
+
     constructor() {
         this.goodsList5 = [...this.goodsList];
         [1, 2, 3, 4, 5, 6].forEach((item, index) => {
@@ -108,6 +112,9 @@ export class ListLiteFullDemoComponent {
     ]);
 
     selectedItems7;
+    selectedItems8;
+
+    public noListBorder:boolean = true;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
