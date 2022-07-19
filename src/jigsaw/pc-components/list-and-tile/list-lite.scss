@@ -21,6 +21,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
+    .#{$jigsaw-list-lite}-wrapper-no-border {
+        border-color: transparent;
+    }
+
     .#{$jigsaw-list-option}-wrapper {
         font-size: 0;
     }

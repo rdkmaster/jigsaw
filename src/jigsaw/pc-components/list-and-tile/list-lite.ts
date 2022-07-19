@@ -34,7 +34,7 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
                  (valueChange)="_$handleSearching($event)" [placeholder]="placeholder">
             <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
         </j-input>
-        <div class="jigsaw-list-lite-wrapper"
+        <div [class]="showBorder ? 'jigsaw-list-lite-wrapper' : 'jigsaw-list-lite-wrapper jigsaw-list-lite-wrapper-no-border'"
              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
              [style.max-height]="height">
             <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
@@ -168,6 +168,16 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     @ViewChildren(JigsawListOption)
     private _listOptions: QueryList<JigsawListOption>;
+
+    /**
+     * true显示边框
+     * false不显示边框
+     *
+     * @NoMarkForCheckRequired
+     *
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
