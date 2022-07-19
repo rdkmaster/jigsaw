@@ -114,7 +114,7 @@ export class ListLiteFullDemoComponent {
     selectedItems7;
     selectedItems8;
 
-    public noListBorder:boolean = true;
+    public showBorder:boolean = false;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
