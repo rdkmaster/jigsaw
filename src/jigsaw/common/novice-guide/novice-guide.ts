@@ -4,9 +4,8 @@ import {
     closeNoviceGuideNotice, copyAndNormalize,
     debouncedResize,
     getGuideContainer,
-    getSelector,
     onGoing,
-    options,
+    options, queryNode,
     removeStyle,
     resize,
     showingNotices,
@@ -39,6 +38,10 @@ function updateOptions(opt: NoviceGuideOptions) {
 }
 
 function show(guide: NoviceGuide): ShowResult {
+    if (!document.body) {
+        console.error('document.body is not ready right now, try invoke this function later...');
+        return;
+    }
     if (!guide || !guide.notices?.length) {
         console.error('There is no available guide data.');
         return 'invalid-data';
@@ -69,8 +72,8 @@ function show(guide: NoviceGuide): ShowResult {
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     if (guide.type === NoviceGuideType.wizard) {
-        const container = getGuideContainer(false);
-        container.classList.add('wizard');
+        // const container = getGuideContainer(false);
+        // container.classList.add('wizard');
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     return 'showing';
@@ -80,9 +83,7 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
     const showingNotice: ShowingNotice = {noticeKey: notice.key};
     showingNotices.push(showingNotice);
 
-    const selector = getSelector(notice);
-    // 如果有多个，就用浏览器找到的第一个，不管其他的了
-    const found = document.querySelector(selector);
+    const found = queryNode(notice);
     if (found) {
         createNotice(found as HTMLElement);
         return;
@@ -92,7 +93,7 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
     let clearTimer;
     showingNotice.mutation = new MutationObserver(() => {
         // 实测querySelector的性能可以接受（万次耗时500~700ms）
-        const found = document.querySelector(selector);
+        const found = queryNode(notice);
         if (!found) {
             return;
         }
@@ -229,8 +230,7 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
     function onClicked(type: 'pre' | 'next') {
         const offset = type === 'pre' ? -1 : 1;
         const nextNotice = guide.notices[current + offset];
-        const selector = getSelector(nextNotice);
-        const target = document.querySelector(selector);
+        const target = queryNode(nextNotice);
         if (!target) {
             return;
         }
@@ -238,7 +238,6 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
         showingNotices.push({noticeKey: nextNotice.key});
         createSteppedNotice(guide, nextNotice, target as HTMLElement);
         closeNoviceGuideNotice(notice.key, true);
-        // removeGuideContainer();
     }
 }
 
@@ -284,7 +283,9 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
     };
     targetEle.addEventListener('click', handleClick);
 
-    getGuideContainer(false).appendChild(cloneEle);
+    const container = getGuideContainer(false);
+    container.appendChild(cloneEle);
+    container.classList.add('wizard');
     resize();
 }
 

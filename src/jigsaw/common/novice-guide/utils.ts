@@ -1,4 +1,13 @@
-import {NoviceGuide, NoviceGuideNotice, NoviceGuideOptions, ShowingNotice, ShownGuideInfo} from "./types";
+import {
+    NoviceGuide,
+    NoviceGuideNotice,
+    NoviceGuideNoticeWithAttributes,
+    NoviceGuideNoticeWithInnerText,
+    NoviceGuideNoticeWithSelector,
+    NoviceGuideOptions,
+    ShowingNotice,
+    ShownGuideInfo
+} from "./types";
 
 export const options: NoviceGuideOptions = {
     // 7 days
@@ -29,13 +38,14 @@ export function tooManyInterruptions(): boolean {
 }
 
 export function copyAndNormalize(guide: NoviceGuide): NoviceGuide {
-    const copy = JSON.parse(JSON.stringify(guide));
+    const copy = {...guide};
+    copy.notices = [...guide.notices];
     copy.notices.forEach(notice => {
         notice.key = toKeyString(notice);
         // 把version复制到notice里，方便后续使用
         notice.version = notice.version || guide.version;
     });
-    copy.key = [...copy.notices].sort((n1, n2) => n1.key.localeCompare(n2.key)).map(n => n.key).join();
+    copy.key = [...copy.notices].sort((n1, n2) => n1.key.localeCompare(n2.key)).map(n => n.key).join(';');
     return copy;
 }
 
@@ -131,17 +141,24 @@ export function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HT
 
 export function toKeyString(notice: NoviceGuideNotice): string {
     const fields = [notice.version || 'v0'];
-    fields.push(notice.selector || '');
-    fields.push(notice.tagName || '');
-    fields.push(notice.id || '');
-    fields.push(notice.classes || '');
-    if (notice.attribute1 && notice.attribute1.hasOwnProperty('name') && notice.attribute1.hasOwnProperty('value')) {
-        fields.push(`${notice.attribute1.name}=${notice.attribute1.value}`);
+    const selectorNotice = <NoviceGuideNoticeWithSelector>notice;
+    fields.push(selectorNotice.selector || null);
+
+    const attributesNotice = <NoviceGuideNoticeWithAttributes>notice;
+    fields.push(attributesNotice.tagName || null);
+    fields.push(attributesNotice.id || null);
+    fields.push(attributesNotice.classes || null);
+    if (attributesNotice.attribute1?.hasOwnProperty('name') && attributesNotice.attribute1?.hasOwnProperty('value')) {
+        fields.push(`${attributesNotice.attribute1.name}=${attributesNotice.attribute1.value}`);
     }
-    if (notice.attribute2 && notice.attribute2.hasOwnProperty('name') && notice.attribute2.hasOwnProperty('value')) {
-        fields.push(`${notice.attribute2.name}=${notice.attribute2.value}`);
+    if (attributesNotice.attribute2?.hasOwnProperty('name') && attributesNotice.attribute2?.hasOwnProperty('value')) {
+        fields.push(`${attributesNotice.attribute2.name}=${attributesNotice.attribute2.value}`);
     }
-    return fields.filter(f => !!f).join('$_$');
+
+    const innerTextNotice = <NoviceGuideNoticeWithInnerText>notice;
+    fields.push(innerTextNotice.innerText?.toString() || null);
+
+    return fields.filter(f => f != null).join(',');
 }
 
 export function removeGuideContainer(): void {
@@ -168,11 +185,35 @@ export function createMask(): Element {
     return svg;
 }
 
-export function getSelector(notice: NoviceGuideNotice): string {
-    if (notice.selector) {
-        return notice.selector;
+export function queryNode(notice: NoviceGuideNotice): HTMLElement {
+    const innerTextNotice = <NoviceGuideNoticeWithInnerText>notice;
+    if (innerTextNotice.innerText != null) {
+        let selector = (<any>innerTextNotice).selector;
+        if (typeof selector != 'string') {
+            selector = getSelector(innerTextNotice)
+        }
+        const nodes = document.querySelectorAll(selector);
+        return <HTMLElement>Array.from(nodes).find((node: HTMLElement) => {
+            if (typeof innerTextNotice.innerText == 'string') {
+                return node.innerText?.trim() == innerTextNotice.innerText;
+            } else {
+                return innerTextNotice.innerText.test(node.innerText);
+            }
+        });
     }
 
+    const selectorNotice = <NoviceGuideNoticeWithSelector>notice;
+    if (selectorNotice.selector) {
+        // 如果有多个，就用浏览器找到的第一个，不管其他的了
+        return document.querySelector(selectorNotice.selector);
+    }
+
+    const attributesNotice = <NoviceGuideNoticeWithAttributes>notice;
+    // 如果有多个，就用浏览器找到的第一个，不管其他的了
+    return document.querySelector(getSelector(attributesNotice));
+}
+
+function getSelector(notice: NoviceGuideNoticeWithAttributes): string {
     const tagName = notice.tagName ? notice.tagName.toUpperCase() : '';
     const id = notice.id ? '#' + notice.id : '';
     const classes = notice.classes?.replace(/^\s*/, '.').split(/\s+/).join(".") || '';
@@ -216,7 +257,7 @@ export function checkStyle(): void {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            z-index: var(--zindex-novice-guide);
+            z-index: var(--novice-guide-z-index, ${Number.MAX_SAFE_INTEGER});
         }
 
         #novice-guide-container.wizard {
@@ -247,7 +288,7 @@ export function checkStyle(): void {
             width: 8px;
             height: 8px;
             border-radius: 8px;
-            outline: 2px solid var(--brand-default);
+            outline: 2px solid var(--brand-default, #1a93ff);
         }
 
         .novice-guide-clone .bubble .line {
@@ -258,7 +299,7 @@ export function checkStyle(): void {
         }
 
         .novice-guide-clone .bubble .line>div {
-            background: var(--brand-default);
+            background: var(--brand-default, #1a93ff);
         }
 
         .novice-guide-clone .bubble.bubble-bottom .line {
@@ -309,14 +350,14 @@ export function checkStyle(): void {
             width: 400px;
             padding: 16px;
             border-radius: 3px;
-            background: var(--brand-default);
-            box-shadow: var(--box-shadow-lv3);
+            background: var(--brand-default, #1a93ff);
+            box-shadow: var(--box-shadow-lv3, 0px 5px 12px rgba(0, 0, 0, 0.12));
         }
 
         .novice-guide-clone .bubble .notice-cntr .text {
             width: 95%;
             color: #fff;
-            font-size: var(--font-size-text-base);
+            font-size: var(--font-size-text-base, 12px);
         }
 
         .novice-guide-clone .bubble .notice-cntr .close {
@@ -351,7 +392,7 @@ export function checkStyle(): void {
             width: 400px;
             padding: 16px;
             border-radius: 3px;
-            background: var(--bg-component);
+            background: var(--bg-component, #f5f5f5);
         }
 
         .novice-guide-clone .dialog .notice-cntr .title {
@@ -362,7 +403,7 @@ export function checkStyle(): void {
 
         .novice-guide-clone .dialog .notice-cntr .text {
             min-height: 64px;
-            font-size: var(--font-size-text-base);
+            font-size: var(--font-size-text-base, 12px);
         }
 
         .novice-guide-clone .dialog .notice-cntr .button-cntr {
@@ -397,7 +438,7 @@ export function checkStyle(): void {
             min-width: 80px;
             height: 32px;
             border-radius: 3px;
-            background: var(--brand-default);
+            background: var(--brand-default, #1a93ff);
             color: white;
             cursor: pointer;
         }
@@ -405,7 +446,7 @@ export function checkStyle(): void {
         .novice-guide-clone .dialog .notice-cntr::after {
             content: '';
             position: absolute;
-            background: var(--bg-component);
+            background: var(--bg-component, #f5f5f5);
             height: 20px;
             width: 20px;
             transform: rotate(45deg);
@@ -484,7 +525,7 @@ export function checkStyle(): void {
             left: 50%;
             margin-left: -6px;
             color: #fff;
-            font-size: 12px;
+            font-size: (var --icon-size-status-sm, 24px);
             cursor: pointer;
         }
 
@@ -492,7 +533,8 @@ export function checkStyle(): void {
             position: relative;
             padding: 0 16px;
             color: #fff;
-            font-size: 24px;
+            font-size: var(--font-title-lg, 16px);
+            text-align: center;
         }
 
         .novice-guide-clone .wizard.wizard-bottom {

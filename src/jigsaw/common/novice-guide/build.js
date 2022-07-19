@@ -3,10 +3,11 @@ const {execSync} = require("child_process");
 const {readdirSync, unlinkSync, rmdirSync} = require("fs");
 const glob = require('glob').sync;
 
+const minimize = process.argv[require.main === module ? 2 : 3] !== 'debug';
 module.exports = {build};
 
 function build() {
-    console.log('building novice guide...');
+    console.log(`building novice guide ..., minimize=${minimize}`);
 
     const home = `${__dirname}/../../../..`;
     glob(`${home}/src/jigsaw/common/novice-guide/**/*.ts`)
@@ -39,7 +40,7 @@ function build() {
     const webpack = require('webpack');
     webpack({
         entry: { 'novice-guide': `${dist}/tmp/novice-guide.js` },
-        optimization: { minimize: true },
+        optimization: { minimize },
         resolve: { extensions: ['.js'] },
         output: { path: `${dist}`, filename: '[name].js' },
     }, (err, stats) => {

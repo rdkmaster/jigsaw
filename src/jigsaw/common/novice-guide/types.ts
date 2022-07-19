@@ -2,7 +2,7 @@ export enum NoviceGuideType {
     bubble = 'bubble', dialog = 'dialog', stepped = 'stepped', wizard = 'wizard'
 }
 
-export interface NoviceGuideContent {
+export interface NoviceGuideBasicNotice {
     notice: string;
     position: 'top' | 'left' | 'right' | 'bottom';
     title?: string;
@@ -10,23 +10,38 @@ export interface NoviceGuideContent {
     button?: string;
     trigger?: 'click' | 'mouseover';
     key?: string;
+    version?: string;
 }
 
-export interface NoviceGuidePicker {
-    version?: string;
+export interface NoviceGuideNoticeWithAttributes extends NoviceGuideBasicNotice {
     tagName?: string;
     id?: string;
     classes?: string;
     attribute1?: { name: string, value: string | number };
     attribute2?: { name: string, value: string | number };
-    selector?: string;
 }
 
-export interface NoviceGuideNotice extends NoviceGuideContent {
+export interface NoviceGuideNoticeWithSelector extends NoviceGuideBasicNotice {
+    selector: string;
 }
 
-export interface NoviceGuideNotice extends NoviceGuidePicker {
+interface NoviceGuideNoticeWithInnerText1 extends NoviceGuideNoticeWithSelector {
 }
+
+interface NoviceGuideNoticeWithInnerText1 extends NoviceGuideBasicNotice {
+    innerText: string | RegExp
+}
+
+interface NoviceGuideNoticeWithInnerText2 extends NoviceGuideNoticeWithAttributes {
+}
+
+interface NoviceGuideNoticeWithInnerText2 extends NoviceGuideBasicNotice {
+    innerText: string | RegExp
+}
+
+export type NoviceGuideNoticeWithInnerText = NoviceGuideNoticeWithInnerText1 | NoviceGuideNoticeWithInnerText2;
+
+export type NoviceGuideNotice = NoviceGuideNoticeWithAttributes | NoviceGuideNoticeWithSelector | NoviceGuideNoticeWithInnerText;
 
 export interface NoviceGuideOptions {
     /**

@@ -34,6 +34,7 @@
 
 .demo-cntr header>ul li {
     margin-right: 16px;
+    cursor: pointer;
 }
 
 .demo-cntr footer {
@@ -61,6 +62,10 @@
     display: flex;
     flex-direction: column;
     height: 100%;
+}
+
+.content-hidden-notice {
+    font-size: 16px;
 }
 
 #setting {
