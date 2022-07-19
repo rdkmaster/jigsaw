@@ -32,23 +32,27 @@ export interface NoviceGuideOptions {
     /**
      * 一个指引显示出来之后，最大的过期时间；比如这个值设置了7天，那么7天之后，一个指引将会再被显示。
      */
-    expire: number;
+    expire?: number;
     /**
      * 从当前时刻往前回溯这个时长，计算在这个时长内显示了几次指引，主要目的是为了控制打扰次数。
      */
-    duration: number;
+    duration?: number;
     /**
      * 在 `duration` 时长内最大允许显示指引的次数，主要目的是为了控制打扰次数。
      */
-    maxShowTimes: number;
+    maxShowTimes?: number;
     /**
      * 缓存的数据放在localeStorage里的主键名。
      */
-    storageKey: string;
+    storageKey?: string;
     /**
      * 如果show一个指引时，目标dom节点尚未存在，则会自动等待一段时间，一般这个情况都是时间差导致的，因此等待的时间不需要太长
      */
-    maxWaitTargetTimeout: number;
+    maxWaitTargetTimeout?: number;
+    /**
+     * 用于在angular zone外面执行函数，避免不必要的脏检查，提升性能
+     */
+    ngZone?: { runOutsideAngular: Function }
 }
 
 /**

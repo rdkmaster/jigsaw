@@ -7,7 +7,7 @@ export const options: NoviceGuideOptions = {
     duration: 2 * 3600 * 1000,
     maxShowTimes: 3,
     storageKey: 'jigsaw.noviceGuide',
-    maxWaitTargetTimeout: 5000
+    maxWaitTargetTimeout: 25000
 }
 export let shownGuides: ShownGuideInfo[] = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
 export const showingNotices: ShowingNotice[] = [];

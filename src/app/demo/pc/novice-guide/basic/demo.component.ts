@@ -1,4 +1,4 @@
-import {Component, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
+import {Component, NgZone, OnInit, TemplateRef, ViewEncapsulation} from "@angular/core";
 import {
     ArrayCollection,
     JigsawToast,
@@ -70,9 +70,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
     }
 
     options() {
-        noviceGuide.updateOptions({
-            expire: 120 * 1000, duration: 60 * 1000, maxShowTimes: 2, storageKey: 'jigsaw.noviceGuide', maxWaitTargetTimeout: 5000
-        });
+        noviceGuide.updateOptions({expire: 120 * 1000, duration: 60 * 1000, maxShowTimes: 2});
     }
 
     bubbleGuideData: BubbleNoviceGuide = {
@@ -137,7 +135,8 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
         { label: "信息", id: 4, icon: 'iconfont iconfont-e22c' }
     ]);
 
-    constructor(private popupService: PopupService) {
+    constructor(private popupService: PopupService, ngZone: NgZone) {
+        noviceGuide.updateOptions({ngZone});
         const xmlData = `
             <node>
                 <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

@@ -14,17 +14,6 @@ import {
     tooManyInterruptions
 } from "./utils";
 
-/**
- * 由于 novice guide 需要在js上下文中直接使用，因此这里通过noviceGuide这个变量来起到命名空间的作用
- * 从而统一ts和js两种上下文的引入用法一致。
- */
-export const noviceGuide = {show, reset, clear, updateOptions};
-declare const window: any;
-if (window) {
-    window.jigsaw = window.jigsaw || {};
-    window.jigsaw.noviceGuide = noviceGuide;
-}
-
 function reset() {
     shownGuides.splice(0, shownGuides.length);
     localStorage.setItem(options.storageKey, '[]');
@@ -41,11 +30,12 @@ function clear() {
 }
 
 function updateOptions(opt: NoviceGuideOptions) {
-    options.expire = opt.expire;
-    options.duration = opt.duration;
-    options.maxShowTimes = opt.maxShowTimes;
-    options.storageKey = opt.storageKey;
-    options.maxWaitTargetTimeout = opt.maxWaitTargetTimeout;
+    options.expire = opt?.expire || options.expire;
+    options.duration = opt?.duration || options.duration;
+    options.maxShowTimes = opt?.maxShowTimes || options.maxShowTimes;
+    options.storageKey = opt?.storageKey || options.storageKey;
+    options.maxWaitTargetTimeout = opt?.maxWaitTargetTimeout || options.maxWaitTargetTimeout;
+    options.ngZone = opt?.ngZone || options.ngZone;
 }
 
 function show(guide: NoviceGuide): ShowResult {
@@ -339,4 +329,44 @@ function saveShownGuide(guide: NoviceGuide, notice: NoviceGuideNotice) {
         shownGuides.push({guideKey: guide.key, timestamp: Date.now(), notices: [notice.key]});
     }
     localStorage.setItem(options.storageKey, JSON.stringify(shownGuides));
+}
+
+/**
+ * 由于 novice guide 需要在js上下文中直接使用，因此这里通过noviceGuide这个变量来起到命名空间的作用
+ * 从而统一ts和js两种上下文的引入用法一致。
+ */
+export const noviceGuide = {
+    show: (guide: NoviceGuide) => {
+        if (options.ngZone) {
+            return options.ngZone.runOutsideAngular(() => show(guide));
+        } else {
+            return show(guide);
+        }
+    },
+    reset: () => {
+        if (options.ngZone) {
+            options.ngZone.runOutsideAngular(reset);
+        } else {
+            reset();
+        }
+    },
+    clear: () => {
+        if (options.ngZone) {
+            options.ngZone.runOutsideAngular(clear);
+        } else {
+            clear();
+        }
+    },
+    updateOptions: (opt: NoviceGuideOptions) => {
+        if (options.ngZone) {
+            options.ngZone.runOutsideAngular(() => updateOptions(opt));
+        } else {
+            updateOptions(opt);
+        }
+    }
+};
+declare const window: any;
+if (window) {
+    window.jigsaw = window.jigsaw || {};
+    window.jigsaw.noviceGuide = noviceGuide;
 }
