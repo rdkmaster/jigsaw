@@ -1,21 +1,24 @@
 const {readFileSync, existsSync, mkdirpSync, writeFileSync, moveSync, statSync} = require("fs-extra");
 const {execSync} = require("child_process");
 const {readdirSync, unlinkSync, rmdirSync} = require("fs");
+const glob = require('glob').sync;
 
+const minimize = process.argv[require.main === module ? 2 : 3] !== 'debug';
 module.exports = {build};
 
 function build() {
-    console.log('building novice guide...');
+    console.log(`building novice guide ..., minimize=${minimize}`);
 
     const home = `${__dirname}/../../../..`;
-    readFileSync(`${home}/src/jigsaw/common/novice-guide/novice-guide.ts`).toString()
-        .replace(/import\s*(\*|[\s\S]*?)\s*from\s*['"](.*?)['"]/g, (_1, _2, path) => {
+    glob(`${home}/src/jigsaw/common/novice-guide/**/*.ts`)
+        .map(file => readFileSync(file).toString())
+        .forEach(src => src.replace(/import\s*(\*.+?|[\s\S]*?)\s*from\s*['"](.*?)['"]/g, (_1, _2, path) => {
             console.log('checking import from path:', path);
             if (!path.startsWith('./')) {
-                throw 'Error: it is NOT allowed to import anything outside of novice-guide!!';
+                throw `Error: it is NOT allowed to import from path "${path}"!!`;
             }
             return '';
-        });
+        }));
     const dist = `${home}/dist/@rdkmaster/novice-guide`;
     if (existsSync(dist)) {
         removeDir(dist);
@@ -37,7 +40,7 @@ function build() {
     const webpack = require('webpack');
     webpack({
         entry: { 'novice-guide': `${dist}/tmp/novice-guide.js` },
-        optimization: { minimize: true },
+        optimization: { minimize },
         resolve: { extensions: ['.js'] },
         output: { path: `${dist}`, filename: '[name].js' },
     }, (err, stats) => {

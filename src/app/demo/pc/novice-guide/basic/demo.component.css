@@ -34,6 +34,7 @@
 
 .demo-cntr header>ul li {
     margin-right: 16px;
+    cursor: pointer;
 }
 
 .demo-cntr footer {
@@ -63,10 +64,18 @@
     height: 100%;
 }
 
+.content-hidden-notice {
+    font-size: 16px;
+}
+
 #setting {
     position: absolute;
     bottom: 0;
     z-index: 99999;
+}
+
+#setting a {
+    margin-right: 8px;
 }
 
 #setting a:hover {
