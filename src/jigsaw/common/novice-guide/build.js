@@ -65,8 +65,7 @@ function build() {
             src = src.replace(/^!/, '(')
                 .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
         }
-        src = 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + src;
-            writeFileSync(`${dist}/novice-guide.js`, src);
+        writeFileSync(`${dist}/novice-guide.js`, 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + src);
         moveSync(dist, `${home}/dist/@rdkmaster/jigsaw/novice-guide`);
     });
 }
