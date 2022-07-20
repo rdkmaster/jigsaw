@@ -39,19 +39,17 @@ function build() {
 
     const webpack = require('webpack');
     webpack({
-        entry: { 'novice-guide': `${dist}/tmp/novice-guide.js` },
-        optimization: { minimize },
-        resolve: { extensions: ['.js'] },
-        output: { path: `${dist}`, filename: '[name].js' },
+        entry: {'novice-guide': `${dist}/tmp/novice-guide.js`},
+        optimization: {minimize},
+        resolve: {extensions: ['.js']},
+        output: {path: dist, filename: '[name].js'},
     }, (err, stats) => {
         if (err || stats.hasErrors()) {
             throw 'failed to rollup with webpack' + err.toString();
         }
-        readdirSync(`${dist}/tmp`).forEach(file => {
-            if (/.+\.d\.ts$/.test(file)) {
-                console.log('copying declaration:', file);
-                writeFileSync(`${dist}/${file}`, readFileSync(`${dist}/tmp/${file}`));
-            }
+        readdirSync(`${dist}/tmp`).filter(f => /.+\.d\.ts$/.test(f)).forEach(file => {
+            console.log('copying declaration:', file);
+            writeFileSync(`${dist}/${file}`, readFileSync(`${dist}/tmp/${file}`));
         });
         removeDir(`${dist}/tmp`);
 
@@ -61,6 +59,14 @@ function build() {
         if (existsSync(`${home}/dist/@rdkmaster/jigsaw/novice-guide`)) {
             removeDir(`${home}/dist/@rdkmaster/jigsaw/novice-guide`);
         }
+        // 把noviceGuide对象暴露到window.jigsaw上
+        let src = readFileSync(`${dist}/novice-guide.js`).toString();
+        if (/^!/.test(src)) {
+            src = src.replace(/^!/, '(')
+                .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
+        }
+        src = 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + src;
+            writeFileSync(`${dist}/novice-guide.js`, src);
         moveSync(dist, `${home}/dist/@rdkmaster/jigsaw/novice-guide`);
     });
 }
