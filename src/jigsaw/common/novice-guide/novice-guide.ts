@@ -248,7 +248,7 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
 
     const cloneEle = createCloneElement(targetEle, notice.key);
     cloneEle.innerHTML = `
-        <div class="${NoviceGuideType.wizard} ${NoviceGuideType.wizard}-${notice.position}">
+        <div class="${NoviceGuideType.wizard} ${NoviceGuideType.wizard}-${notice.position || 'bottom'}">
             <div class="arrow-cntr">
                 <i class="arrow iconfont iconfont-e250"></i>
             </div>
@@ -366,8 +366,3 @@ export const noviceGuide = {
         }
     }
 };
-declare const window: any;
-if (window) {
-    window.jigsaw = window.jigsaw || {};
-    window.jigsaw.noviceGuide = noviceGuide;
-}
