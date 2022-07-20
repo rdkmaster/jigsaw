@@ -97,13 +97,6 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             },
             {notice: '这是一个使用attribute的示例', tagName: 'div', id: "ad", position: 'left'},
             {notice: '这是一个使用attribute的示例', tagName: 'i', classes: 'jigsaw-nav-menu-toggle-button-arrow', position: "right"},
-            {
-                notice: '这是一个使用attribute的示例',
-                title: '自定义标题',
-                tagName: 'jigsaw-button-bar',
-                classes: 'jigsaw-button-bar-host',
-                position: 'bottom'
-            },
         ],
         version: 'v0.0.1'
     };
