@@ -228,7 +228,7 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
 
     private _setListWrapperHeight() {
         if (!this.optionCount || !this._listOptions.length) return;
-        this.height = this._listOptions.first.elementRef.nativeElement.offsetHeight * this.optionCount + 'px';
+        this.height = this._listOptions.first.elementRef.nativeElement.offsetHeight * this.optionCount + 2 + 'px';
         this._changeDetectorRef.detectChanges();
     }
 
