@@ -21,7 +21,7 @@ export class TableUtils {
             settings.renderer = TableUtils.getRenderer(headerDef.renderer);
             settings.rendererInitData = headerDef.rendererInitData;
             settings.clazz = headerDef.clazz;
-            settings.alignment = headerDef.alignment ? headerDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableHeadCheckboxRenderer" ? "center" : "left");
+            settings.alignment = headerDef.alignment ? headerDef.alignment : "left";
             settings.noPadding = !!headerDef.noPadding;
             settings.sortable = headerDef.sortable;
             settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
@@ -47,7 +47,7 @@ export class TableUtils {
             settings.renderer = TableUtils.getRenderer(cellDef.renderer);
             settings.rendererInitData = cellDef.rendererInitData;
             settings.clazz = cellDef.clazz;
-            settings.alignment = cellDef.alignment ? cellDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableCellCheckboxRenderer" ? "center" : "left");
+            settings.alignment = cellDef.alignment ? cellDef.alignment : "left";
             settings.noPadding = !!cellDef.noPadding;
             settings.editable = cellDef.editable;
             settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);
