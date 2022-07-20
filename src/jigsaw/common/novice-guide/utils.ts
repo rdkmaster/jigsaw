@@ -18,7 +18,14 @@ export const options: NoviceGuideOptions = {
     storageKey: 'jigsaw.noviceGuide',
     maxWaitTargetTimeout: 25000
 }
-export let shownGuides: ShownGuideInfo[] = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
+export const shownGuides: ShownGuideInfo[] = [];
+try {
+    shownGuides.push(...JSON.parse(localStorage.getItem(options.storageKey) || '[]'));
+} catch (e) {
+    // 避免单测等非浏览器场景下报错
+    console.warn('Warn: do not run jigsaw in none browser environment!');
+}
+
 export const showingNotices: ShowingNotice[] = [];
 
 export function onGoing(): boolean {
@@ -27,7 +34,9 @@ export function onGoing(): boolean {
 
 export function clearExpiredGuides() {
     const now = Date.now();
-    shownGuides = shownGuides.filter(item => now - item.timestamp < options.expire);
+    const filtered = shownGuides.filter(item => now - item.timestamp < options.expire);
+    shownGuides.splice(0, shownGuides.length);
+    shownGuides.push(...filtered);
     localStorage.setItem(options.storageKey, JSON.stringify(shownGuides));
 }
 
