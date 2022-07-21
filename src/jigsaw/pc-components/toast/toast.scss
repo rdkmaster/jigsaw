@@ -6,7 +6,8 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
         align-items: center;
         width: 100%;
         min-width: 256px;
-        min-height: $height-huge;
+        min-height: $height-base;
+        padding: 4px 0;
         background: $bg-popup;
         border-radius: $border-radius-base;
 
@@ -25,7 +26,6 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             width: calc(100% - 80px);
-            padding: 8px 0;
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: normal;
