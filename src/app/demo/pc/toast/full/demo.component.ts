@@ -11,7 +11,6 @@ export class ToastFullDemoComponent {
     icon = undefined;
     timeout = 80;
     width = 256;
-    multiline = 1;
 
     show() {
         JigsawToast.show(this.message, { icon: this.icon, timeout: this.timeout * 1000, width: this.width })
