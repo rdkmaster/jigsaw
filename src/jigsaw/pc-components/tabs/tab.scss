@@ -89,11 +89,13 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                     margin-left: -4px;
                     width: 0;
                     height: 0;
+
                     border: {
                         width: 4px 4px;
                         style: solid;
                         color: $brand-default transparent transparent transparent;
                     }
+
                     content: "";
                     display: none;
                 }
@@ -106,7 +108,8 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
                 .#{$jigsaw-tabs}-nav {
                     position: relative;
-                    float: left; /*用于width为auto，并能撑开tab nav*/
+                    float: left;
+                    /*用于width为auto，并能撑开tab nav*/
                     background-color: var(--jigsaw-nav-background, transparent);
                     transition: transform 0.5s $ease-in-out, left 0.5s $ease-in-out;
 
@@ -348,7 +351,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
         .#{$jigsaw-tabs}-bar-add-option {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
 
             span {
                 margin-right: 6px;
@@ -356,19 +359,11 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
         }
 
         .#{$jigsaw-list}-option-host {
-            .span-margin {
-                margin: 0 4px;
-                width: 10px;
-                height: 9px;
-            }
+            &.#{$jigsaw-list}-option-selected {
+                background: $bg-active;
 
-            .#{$jigsaw-list}-option-selected {
-                display: flex;
-                align-items: center;
-                color: $brand-default;
-
-                .check-icon {
-                    margin-right: 5px;
+                .jigsaw-tabs-bar-list-option {
+                    color: $brand-default;
                 }
             }
 

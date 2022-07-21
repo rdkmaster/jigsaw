@@ -33,9 +33,8 @@
 <ng-template #tabsList>
     <j-list class="jigsaw-tabs-list" [theme]="theme" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <jigsaw-list-option *ngFor="let tab of _$tabPanes; let i = index;" [value]="tab" (click)="_$listOptionClick(i)"
-                            [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden">
-            <div class="jigsaw-tabs-bar-list-option" [class.jigsaw-list-option-selected]="_$selectedIndex === i">
-                <span class="iconfont iconfont-e13f check-icon" *ngIf="_$selectedIndex === i"></span>
+                            [disabled]="tab.disabled" [class.jigsaw-list-option-hidden]="tab.hidden" [class.jigsaw-list-option-selected]="_$selectedIndex === i">
+            <div class="jigsaw-tabs-bar-list-option">
                 <span *ngIf="tab.icon" [ngClass]="tab.icon"></span>
                 <span class="jigsaw-tabs-bar-list-content" [trustedHtml]="_$tabList[i]"></span>
             </div>
