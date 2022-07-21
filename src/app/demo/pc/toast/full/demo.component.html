@@ -32,5 +32,13 @@
         <span>{{width}} px</span>
     </div>
 
+    <div class="row">
+        <label>多行</label>
+        <div></div>
+        <j-numeric-input [(value)]="multiline" min="1" max="4" placeholder="请输入行数">
+        </j-numeric-input>
+        <span>行</span>
+    </div>
+
     <jigsaw-button width="200" (click)="show()">弹出消息框</jigsaw-button>
 </div>
