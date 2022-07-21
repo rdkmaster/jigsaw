@@ -14,7 +14,7 @@ export class ToastFullDemoComponent {
     multiline = 1;
 
     show() {
-        JigsawToast.show(this.message, { icon: this.icon, timeout: this.timeout * 1000, width: this.width, multiline: this.multiline })
+        JigsawToast.show(this.message, { icon: this.icon, timeout: this.timeout * 1000, width: this.width })
     }
 
     makeLongMessage() {

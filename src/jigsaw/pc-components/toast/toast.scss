@@ -1,31 +1,6 @@
 $jigsaw-toast: #{$jigsaw-prefix}-toast;
 
 .#{$jigsaw-toast}-host {
-
-    &[data-multiline="1"] {
-        .#{$jigsaw-toast} .#{$jigsaw-toast}-message {
-            -webkit-line-clamp: 1;
-        }
-    }
-
-    &[data-multiline="2"] {
-        .#{$jigsaw-toast} .#{$jigsaw-toast}-message {
-            -webkit-line-clamp: 2;
-        }
-    }
-
-    &[data-multiline="3"] {
-        .#{$jigsaw-toast} .#{$jigsaw-toast}-message {
-            -webkit-line-clamp: 3;
-        }
-    }
-
-    &[data-multiline="4"] {
-        .#{$jigsaw-toast} .#{$jigsaw-toast}-message {
-            -webkit-line-clamp: 4;
-        }
-    }
-
     .#{$jigsaw-toast} {
         display: flex;
         align-items: center;
@@ -46,7 +21,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
 
         .#{$jigsaw-toast}-message {
             display: -webkit-box;
-            -webkit-line-clamp: 1;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             width: calc(100% - 80px);
             text-overflow: ellipsis;

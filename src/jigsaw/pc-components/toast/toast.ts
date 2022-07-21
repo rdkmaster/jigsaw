@@ -28,10 +28,6 @@ export class ToastMessage {
      * 提示框支持的默认类型
      */
     iconType?: NoticeLevel;
-    /**
-     * 提示框支持的文本行数（1-4）
-     */
-    multiline?: number;
 }
 
 
@@ -47,7 +43,6 @@ const toastInstances = [];
     selector: 'jigsaw-toast, j-toast',
     templateUrl: 'toast.html',
     host: {
-        '[attr.data-multiline]': 'multiline',
         '[class.jigsaw-toast-host]': 'true'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -71,7 +66,6 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
         this.message = value.message || 'the "message" property in the initData goes here.';
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this._timeout = value.timeout;
-        this.multiline = Number.isInteger(value.multiline) ? value.multiline : 1;
 
         this._$iconType = value.iconType;
     }
@@ -111,14 +105,6 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
      */
     @Input()
     public icon: string;
-
-    /**
-     * 提示框的图标，目前支持Jigsaw自研的@rdkmaster/icon-font符号图标。默认无图标。
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public multiline: number = 1;
 
     private _popupInfoValue: PopupInfo;
 
@@ -163,8 +149,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             message: message,
             icon: opt.icon,
             timeout: opt.timeout,
-            iconType: opt.iconType,
-            multiline: opt.multiline
+            iconType: opt.iconType
         }
 
         const popupInfo = PopupService.instance.popup(JigsawToast, popupOptions, initData);
