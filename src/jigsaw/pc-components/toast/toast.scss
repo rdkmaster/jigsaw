@@ -21,6 +21,7 @@ $jigsaw-toast: #{$jigsaw-prefix}-toast;
 
         .#{$jigsaw-toast}-message {
             display: -webkit-box;
+            // 文本最大支持行数
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             width: calc(100% - 80px);
