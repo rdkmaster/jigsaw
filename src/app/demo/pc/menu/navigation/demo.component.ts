@@ -9,6 +9,7 @@ import {JigsawNavigationMenu, JigsawProgress, SimpleNode, SimpleTreeData} from "
             width: 200px;
             vertical-align: top;
         }
+
         .block a {
             margin: 4px 0;
             display: block;
@@ -58,24 +59,32 @@ export class NavigationMenuNavDemo {
         this.data2.fromXML(xmlData);
         this.data3.fromXML(xmlData);
 
-        this.data4.fromXML(`
-            <node>
-                <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" badgeValue="12">
-                    <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" badgeValue="3"></node>
-                    <node label="告警统计"></node>
-                    <node label="定时导出" icon="iconfont iconfont-e601"></node>
-                    <node label="告警同步"></node>
-                    <node label="告警提示" icon="iconfont iconfont-e52a" badgeValue="9"></node>
-                </node>
-                <node label="历史告警" icon="iconfont iconfont-e5f7" badgeValue="dot">
-                    <node label="告警查询"></node>
-                </node>
-                <node label="通知" icon="iconfont iconfont-e605">
-                    <node label="通知监控"></node>
-                </node>
-                <node label="告警设置" icon="iconfont iconfont-e36f"></node>
-            </node>
-        `)
+        this.data4.fromObject([
+            {
+                label: '当前告警',
+                icon: 'iconfont iconfont-e9ad',
+                selected: true,
+                isActive: true,
+                nodes: [
+                    {label: '告警监控', selected: true},
+                    {label: '告警统计'},
+                    {label: '定时导出'},
+                    {label: '告警同步'},
+                    {label: '告警提示'}
+                ]
+            },
+            {
+                label: '历史告警',
+                icon: 'iconfont iconfont-e2d4',
+                nodes: [{label: '告警查询'}]
+            },
+            {
+                label: '通知',
+                icon: 'iconfont iconfont-e605',
+                nodes: [{label: '通知监控'}]
+            },
+            {label: '告警设置', icon: 'iconfont iconfont-e36f'}
+        ])
     }
 
     updateMenu() {
