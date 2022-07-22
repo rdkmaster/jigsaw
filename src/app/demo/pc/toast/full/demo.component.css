@@ -1,6 +1,7 @@
 .toast-basic-demo-cntr {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
+    width: 500px;
 }
 
 .toast-basic-demo-cntr .jigsaw-button {
