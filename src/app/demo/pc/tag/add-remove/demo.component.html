@@ -1,9 +1,11 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['addRemove']">
-    <jigsaw-tag *ngFor="let item of tags" [closable]="true" color="preset-blue" [size]="selectedLabel.size"
-                (close)="removeTag(item)">{{item}}</jigsaw-tag>
-    <jigsaw-tag *ngIf="!adding" isAdd="true" [disabled]="tags.length >= 5" [size]="selectedLabel.size"
-                (add)="showInput()"></jigsaw-tag>
-    <jigsaw-input *ngIf="adding" #input width="120" icon="iconfont iconfont-e142" value="New Tag"
-                  (iconSelect)="addTag(input.value)" (blur)="addTag(input.value)">
-    </jigsaw-input>
+    <div class="container">
+        <jigsaw-tag *ngFor="let item of tags" [closable]="true" color="preset-blue" [size]="selectedLabel.size"
+                    (close)="removeTag(item)">{{item}}</jigsaw-tag>
+        <jigsaw-tag *ngIf="!adding" isAdd="true" [disabled]="tags.length >= 5" [size]="selectedLabel.size"
+                    (add)="showInput()"></jigsaw-tag>
+        <jigsaw-input *ngIf="adding" #input width="120" icon="iconfont iconfont-e142" value="New Tag"
+                      (iconSelect)="addTag(input.value)" (blur)="addTag(input.value)">
+        </jigsaw-input>
+    </div>
 </demo-template>
