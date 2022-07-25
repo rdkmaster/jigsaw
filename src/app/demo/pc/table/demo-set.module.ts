@@ -111,7 +111,7 @@ import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additio
 import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-defines/demo.module";
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
-import {TableAllComponent} from "./demo.component";
+import {TableAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {TableBasicDemoModule} from "./basic/demo.module";
 import {TableRendererDemoModule} from "./renderer/demo.module";

@@ -10,7 +10,7 @@ import {NavigationMenuNavDemo} from "./navigation/demo.component";
 import {NavigationMenuInlineDemo} from "./nav-inline/demo.component";
 import {NavigationMenuInlineDemoModule} from "./nav-inline/demo.module";
 import {NavigationMenuNavDemoModule} from "./navigation/demo.module";
-import {MenuAllComponent} from "./demo.component";
+import {MenuAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

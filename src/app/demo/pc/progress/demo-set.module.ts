@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {ProgressFullModule} from "./full/demo.module";
 import {ProgressFullComponent} from "./full/demo.component";
-import {ProgressAllComponent} from "./demo.component";
+import {ProgressAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {ProgressBasicModule} from "./basic/demo.module";
 import {ProgressStatusModule} from "./status/demo.module";

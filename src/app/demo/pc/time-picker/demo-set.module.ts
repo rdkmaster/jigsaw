@@ -12,7 +12,7 @@ import {TimePickerFloatPositionDemoComponent} from "./pop-up-down/demo.component
 import {TimePickerFloatPositionDemoModule} from "./pop-up-down/demo.module";
 import {TimePickerLimitDemoComponent} from "./limit/demo.component";
 import {TimePickerLimitDemoModule} from "./limit/demo.module";
-import {TimePickerAllComponent} from "./demo.component";
+import {TimePickerAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

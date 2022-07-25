@@ -12,7 +12,7 @@ import {DatePickerMarkDemoComponent} from "./mark/demo.component";
 import {DatePickerMarkDemoModule} from "./mark/demo.module";
 import {DatePickerWeekStartComponent} from "./week-start/demo.component";
 import {DatePickerWeekStartDemoModule} from "./week-start/demo.module";
-import {DatePickerAllComponent} from "./demo.component";
+import {DatePickerAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

@@ -24,7 +24,7 @@ import {DateTimePickerWeekStartComponent} from "./week-start/demo.component";
 import {DateTimePickerWeekStartDemoModule} from "./week-start/demo.module";
 import {DateTimePickerConfirmButtonDemoComponent} from "./confirm-button/demo.component";
 import {DateTimePickerConfirmButtonDemoModule} from "./confirm-button/demo.module";
-import {DateTimePickerAllComponent} from "./demo.component";
+import {DateTimePickerAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

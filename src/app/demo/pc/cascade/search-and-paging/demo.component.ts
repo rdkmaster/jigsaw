@@ -6,8 +6,7 @@ import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
     selector: "search-and-paging-cascade",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class CascadeSearchAndPagingComponent {

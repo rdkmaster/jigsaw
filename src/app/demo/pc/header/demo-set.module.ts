@@ -2,7 +2,7 @@ import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { JigsawHeaderBasicDemoModule } from "./basic/demo.module";
 import { JigsawHeaderBasicDemoComponent } from "./basic/demo.component";
-import {HeaderAllComponent} from "./demo.component";
+import {HeaderAllComponent} from "./all/demo.component";
 import {HeaderFirstLevelDemoModule} from "./first-level/demo.module";
 import {HeaderSecondLevelDemoModule} from "./second-level/demo.module";
 import {HeaderThirdLevelDemoModule} from "./third-level/demo.module";

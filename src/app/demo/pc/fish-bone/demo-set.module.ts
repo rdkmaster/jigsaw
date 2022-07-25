@@ -3,7 +3,7 @@ import {RouterModule} from "@angular/router";
 import {FishBoneFullModule} from "./full/demo.module";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {FishBoneFullComponent} from "./full/demo.component";
-import {FishBoneAllComponent} from "./demo.component";
+import {FishBoneAllComponent} from "./all/demo.component";
 
 export const routerConfig =  [
     {

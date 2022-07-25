@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {CascadeAllModule} from "./demo.module";
-import {CascadeAllComponent} from "./demo.component";
+import {CascadeAllModule} from "./all/demo.module";
+import {CascadeAllComponent} from "./all/demo.component";
 
 export const routerConfig = [
     {

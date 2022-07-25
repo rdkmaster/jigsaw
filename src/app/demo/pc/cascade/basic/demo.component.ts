@@ -6,7 +6,6 @@ import {HttpClient} from "@angular/common/http";
 @Component({
     selector: "basic-cascade",
     templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
 })
 
 export class CascadeBasicComponent {

@@ -1,7 +1,7 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {SelectAllComponent} from "./demo.component";
-import {SelectAllModule} from "./demo.module";
+import {SelectAllComponent} from "./all/demo.component";
+import {SelectAllModule} from "./all/demo.module";
 
 export const routerConfig = [
     {

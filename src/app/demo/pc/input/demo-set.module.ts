@@ -19,7 +19,7 @@ import {InputValidComponent} from "./valid/demo.component";
 import {InputSelectDemoComponent} from "./select/demo.component";
 import {InputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
 import {InputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
-import {InputAllComponent} from "./demo.component";
+import {InputAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {InputBasicModule} from "./basic/demo.module";
 import {InputPasswordModule} from "./password/demo.module";

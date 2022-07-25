@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import {CheckBoxFullModule} from "./full/demo.module";
 import {CheckBoxFullComponent} from "./full/demo.component";
-import {CheckboxAllComponent} from "./demo.component";
+import {CheckboxAllComponent} from "./all/demo.component";
 import {CheckBoxBasicDemoModule} from "./basic/demo.module";
 import {CheckboxIndeterminateDemoModule} from "./indeterminate/demo.module";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";

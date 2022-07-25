@@ -7,7 +7,7 @@ import {NotificationBasicDemoComponent} from "./basic/demo.component";
 import {NotificationBasicDemoModule} from "./basic/demo.module";
 import {NotificationDisposeOnRouterDemoComponent} from "./dispose-on-router-changed/demo.component";
 import {NotificationDisposeOnRouterDemoModule} from "./dispose-on-router-changed/demo.module";
-import {NotificationAllComponent} from "./demo.component";
+import {NotificationAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

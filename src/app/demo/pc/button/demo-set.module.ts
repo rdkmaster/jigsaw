@@ -16,7 +16,7 @@ import {ButtonWithLoadingComponent} from "./with-loading/demo.component";
 import {ButtonIconDemoModule} from './icon/demo.module';
 import {ButtonInstancesDemoComponent} from './instances/demo.component';
 import {ButtonInstancesDemoModule} from './instances/demo.module';
-import {ButtonAllComponent} from "./demo.component";
+import {ButtonAllComponent} from "./all/demo.component";
 import {ButtonKeyDemoModule} from "./key/demo.module";
 import {ButtonImportantDemoModule} from "./important/demo.module";
 import {ButtonCommonDemoModule} from "./common/demo.module";

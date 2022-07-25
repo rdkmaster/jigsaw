@@ -12,7 +12,7 @@ import {JigsawStepEventsDemoModule} from "./events/demo.module";
 import {JigsawStepEventsDemoComponent} from "./events/demo.component";
 import {JigsawStepManyStepsDemoComponent} from "./many-steps/demo.component";
 import {JigsawStepManyStepsDemoModule} from "./many-steps/demo.module";
-import {StepsAllComponent} from "./demo.component";
+import {StepsAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

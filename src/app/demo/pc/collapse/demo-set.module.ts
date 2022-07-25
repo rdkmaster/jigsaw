@@ -7,7 +7,7 @@ import {CollapseFullModule} from "./full/demo.module";
 import {CollapseBasicDemoComponent} from "./basic/demo.component";
 import {CollapseWithNGForDemoComponent} from "./with-ngfor/demo.component";
 import {CollapseFullComponent} from "./full/demo.component";
-import {CollapseAllComponent} from "./demo.component";
+import {CollapseAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

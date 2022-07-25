@@ -12,7 +12,7 @@ import { ChangeTargetUrlDemoComponent } from './change-target-url/demo.component
 import { UploadChangeTargetUrlDemoModule } from './change-target-url/demo.module';
 import { UploadDirectiveDemoComponent } from './directive/demo.component';
 import { UploadDirectiveDemoModule } from './directive/demo.module';
-import {UploadAllComponent} from "./demo.component";
+import {UploadAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 

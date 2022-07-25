@@ -6,8 +6,7 @@ import {CascadeData, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     selector: "with-combo-cascade",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class CascadeWithComboComponent {

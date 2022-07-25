@@ -6,8 +6,7 @@ import {map} from "rxjs/operators";
 
 @Component({
     selector: "show-all-cascade",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class CascadeShowAllComponent {

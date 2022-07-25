@@ -1,6 +1,6 @@
 import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {RouterModule} from "@angular/router";
-import {TabBarAllComponent} from "./demo.component";
+import {TabBarAllComponent} from "./all/demo.component";
 import {TabBarBasicDemoModule} from "./basic/demo.module";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {TabBarTypeDemoModule} from "./type/demo.module";

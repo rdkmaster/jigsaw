@@ -14,7 +14,7 @@ import {RangeDateTimeSelectComponent} from "./range-date-time-select/demo.compon
 import {RangeDateTimeSelectModule} from "./range-date-time-select/demo.module";
 import {RangeDateTimeWeekStartComponent} from "./week-start/demo.component";
 import {RangeDateTimeWeekStartModule} from "./week-start/demo.module";
-import {RangeDataTimePickerAllComponent} from "./demo.component";
+import {RangeDataTimePickerAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig: any = [

@@ -8,7 +8,7 @@ import {ColorSelectModeDemoComponent} from "./mode/demo.component";
 import {ColorSelectModeDemoModule} from "./mode/demo.module";
 import {ColorSelectConfirmDemoComponent} from "./confirm/demo.component";
 import {ColorSelectConfirmDemoModule} from "./confirm/demo.module";
-import {ColorSelectAllComponent} from "./demo.component";
+import {ColorSelectAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

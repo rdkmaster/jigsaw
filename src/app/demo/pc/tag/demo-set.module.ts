@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
-import {TagAllComponent} from "./demo.component";
+import {TagAllComponent} from "./all/demo.component";
 import {TagBasicDemoModule} from "./basic/demo.module";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {TagPresetColorDemoModule} from "./preset-color/demo.module";

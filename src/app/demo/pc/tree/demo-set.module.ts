@@ -18,7 +18,7 @@ import { ZtreeFuzzySearchComponent } from './fuzzy-search/demo.component';
 import { TreeFuzzySearchDemoModule } from './fuzzy-search/demo.module';
 import { ZtreeSizeComponent } from './size/demo.component';
 import { TreeSizeDemoModule } from './size/demo.module';
-import {TreeAllComponent} from "./demo.component";
+import {TreeAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

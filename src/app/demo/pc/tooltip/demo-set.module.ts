@@ -14,7 +14,7 @@ import { TooltipThemeDemoComponent } from './theme/demo.component';
 import { TooltipThemeDemoModule } from './theme/demo.module';
 import { TooltipScenesDemoComponent } from './scenes/demo.component';
 import { TooltipScenesDemoModule } from './scenes/demo.module';
-import {TooltipAllComponent} from "./demo.component";
+import {TooltipAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

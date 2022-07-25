@@ -24,7 +24,7 @@ import { TransferListPageableDemoComponent } from './transfer-list-pageable/demo
 import { TransferListPageableDemoModule } from './transfer-list-pageable/demo.module';
 import { TransferTablePageableDemoComponent } from './transfer-table-pageable/demo.component';
 import { TransferTablePageableDemoModule } from './transfer-table-pageable/demo.module';
-import {TransferAllComponent} from "./demo.component";
+import {TransferAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

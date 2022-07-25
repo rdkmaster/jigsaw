@@ -11,7 +11,7 @@ import {PaginationBigDataDemoModule} from "./big-data/demo.module";
 import { PaginationNoDataDemoComponent } from './no-data/demo.component';
 import { PaginationNoDataDemoModule } from './no-data/demo.module';
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
-import {PaginationAllComponent} from "./demo.component";
+import {PaginationAllComponent} from "./all/demo.component";
 
 export const routerConfig = [
     {

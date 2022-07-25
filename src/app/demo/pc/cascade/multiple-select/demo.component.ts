@@ -5,8 +5,7 @@ import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: "multiple-select-cascade",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class CascadeMultipleComponent {

@@ -12,7 +12,7 @@ import {DrawerWithTabDemoComponent} from "./with-tab/demo.component";
 import {DrawerWithTabDemoModule} from "./with-tab/demo.module";
 import {DrawerInDrawerDemoComponent} from "./drawer-in-drawer/demo.component";
 import {DrawerInDrawerDemoModule} from "./drawer-in-drawer/demo.module";
-import {DrawerAllComponent} from "./demo.component";
+import {DrawerAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

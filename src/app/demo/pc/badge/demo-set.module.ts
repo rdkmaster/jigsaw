@@ -18,7 +18,7 @@ import {BadgeStyleDemoComponent} from "./style/demo.component";
 import {BadgeStyleDemoModule} from "./style/demo.module";
 import { BadgeOffsetDemoComponent } from './offset/demo.component';
 import { BadgeOffsetDemoModule } from './offset/demo.module';
-import {BadgeAllComponent} from "./demo.component";
+import {BadgeAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

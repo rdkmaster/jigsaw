@@ -5,7 +5,7 @@ import {RadioTrackItemByDemoModule} from "./track-item-by/demo.module";
 
 import {RadioFullComponent} from "./full/demo.component";
 import {RadioTrackItemByDemoComponent} from "./track-item-by/demo.component";
-import {RadioAllComponent} from "./demo.component";
+import {RadioAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {CommonModule} from "@angular/common";
 import {RadioBasicDemoModule} from "./basic/demo.module";

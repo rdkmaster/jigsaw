@@ -8,7 +8,7 @@ import { SearchInputDebounceDemoComponent } from "./debounce/demo.component";
 import { SearchInputDebounceDemoModule } from "./debounce/demo.module";
 import {SearchInputHistoryStorageKeyDemoComponent} from "./history-storage-key/demo.component";
 import {SearchInputHistoryStorageKeyDemoModule} from "./history-storage-key/demo.module";
-import {SearchInputAllComponent} from "./demo.component";
+import {SearchInputAllComponent} from "./all/demo.component";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 

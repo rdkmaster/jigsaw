@@ -6,7 +6,7 @@ import {TimeSectionOptionsDemoComponent} from "./time-section-options/demo.compo
 import {TimeSectionOptionsDemoModule} from "./time-section-options/demo.module";
 import {TimeSectionFillBackDemoComponent} from "./fill-back/demo.component";
 import {TimeSectionFillBackDemoModule} from "./fill-back/demo.module";
-import {TimeSectionAllComponent} from "./demo.component";
+import {TimeSectionAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 export const routerConfig = [

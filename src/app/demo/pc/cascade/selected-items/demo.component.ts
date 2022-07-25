@@ -6,8 +6,7 @@ import {CascadeData, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     selector: "selected-items-cascade",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class CascadeSelectedItemsComponent implements OnInit {

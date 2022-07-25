@@ -4,7 +4,7 @@ import { ToastBasicDemoComponent } from './basic/demo.component';
 import { ToastBasicDemoModule } from './basic/demo.module';
 import { ToastFullDemoComponent } from "./full/demo.component";
 import { ToastFullDemoModule } from "./full/demo.module";
-import {ToastDemoAllComponent} from "./demo.component";
+import {ToastDemoAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
 

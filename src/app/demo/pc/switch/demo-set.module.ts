@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {RouterModule} from "@angular/router";
 import { SwitchSizeDemoComponent } from './size/demo.component';
 import { SwitchSizeDemoModule } from './size/demo.module';
-import {SwitchAllComponent} from "./demo.component";
+import {SwitchAllComponent} from "./all/demo.component";
 import {SwitchBasicDemoModule} from "./basic/demo.module";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
