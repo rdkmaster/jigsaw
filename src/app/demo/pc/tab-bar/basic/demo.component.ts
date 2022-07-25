@@ -1,11 +1,7 @@
 import {Component, OnInit} from "@angular/core";
 import {TabBarTextService} from "../text.service";
-import {TabBarData} from "../../../../../jigsaw/pc-components/tabs";
-import {TableData} from "../../../../../jigsaw/common/core/data/table-data";
-import {LineGraphData} from "../../../../../jigsaw/common/core/data/graph-data";
-import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient} from "@angular/common/http";
-import {JigsawMenu} from "../../../../../jigsaw/pc-components/menu";
+import { JigsawMenu, LineGraphData, SimpleTreeData, TabBarData, TableData } from "jigsaw/public_api";
 
 @Component({
     selector: "basic-tabBar",

@@ -1,8 +1,6 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {TagTextService} from "../text.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import {JigsawInput} from "../../../../../jigsaw/pc-components/input/input";
-import {JigsawTag} from "../../../../../jigsaw/pc-components/tag/tag";
+import {JigsawTag, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     selector: "with-icon-tag",

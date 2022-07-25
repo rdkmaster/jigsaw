@@ -1,8 +1,6 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
 import {ProgressTextService} from "../text.service";
-import {JigsawProgress} from "../../../../../jigsaw/pc-components/progress/progress";
-import {JigsawCircleProgress} from "../../../../../jigsaw/pc-components/progress/circle-progress";
-import { ArrayCollection } from "jigsaw/public_api";
+import {JigsawProgress, ArrayCollection, JigsawCircleProgress } from "jigsaw/public_api";
 
 @Component({
     selector: 'estimation-progress',

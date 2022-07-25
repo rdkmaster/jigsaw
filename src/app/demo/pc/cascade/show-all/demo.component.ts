@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {CascadeTextService} from "../text.service";
-import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
+import {SimpleTreeData} from "jigsaw/public_api";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 

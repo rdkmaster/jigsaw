@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
 import {CascadeTextService} from "../text.service";
-import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
+import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
 import {HttpClient} from "@angular/common/http";
-import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
     selector: "multiple-select-cascade",

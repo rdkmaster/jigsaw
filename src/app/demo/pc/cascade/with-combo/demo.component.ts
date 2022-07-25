@@ -1,10 +1,8 @@
 import {Component} from "@angular/core";
 import {CascadeTextService} from "../text.service";
-import {SimpleTreeData} from "../../../../../jigsaw/common/core/data/tree-data";
 import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData} from "../../../../../jigsaw/pc-components/cascade/cascade";
-import { ArrayCollection } from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
+import {CascadeData, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     selector: "with-combo-cascade",

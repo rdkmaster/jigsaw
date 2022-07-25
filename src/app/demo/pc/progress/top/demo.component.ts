@@ -1,9 +1,6 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
 import {ProgressTextService} from "../text.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import {PopupInfo} from "../../../../../jigsaw/common/service/popup.service";
-import {JigsawProgress} from "../../../../../jigsaw/pc-components/progress/progress";
-import {JigsawCircleProgress} from "../../../../../jigsaw/pc-components/progress/circle-progress";
+import {JigsawCircleProgress, JigsawProgress, PopupInfo} from "jigsaw/public_api";
 
 @Component({
     selector: 'top-progress',

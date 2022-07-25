@@ -1,7 +1,7 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
 import {TagTextService} from "../text.service";
 import { ArrayCollection } from "jigsaw/public_api";
-import {JigsawTag} from "../../../../../jigsaw/pc-components/tag/tag";
+import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
     selector: "basic-tag",

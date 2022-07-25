@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {SliderTextService} from "../text.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import {SliderMark} from "../../../../../jigsaw/pc-components/slider";
+import {SliderMark, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     selector: "vertical-slider",
