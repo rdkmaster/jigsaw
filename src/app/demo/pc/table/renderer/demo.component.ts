@@ -101,7 +101,8 @@ export class TableRendererDemoComponent {
             target: 'desc',
             cell: {
                 tooltip: TableValueGenerators.originCellDataGenerator,
-                clazz: 'green-text'
+                clazz: 'green-text',
+                editable: true
             },
             width: '100'
         },
