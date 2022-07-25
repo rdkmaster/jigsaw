@@ -4,6 +4,7 @@ import { JigsawDemoDescriptionModule } from "app/demo-description/demo-descripti
 import { ToastFullDemoComponent } from "./demo.component";
 import {DemoTemplateModule} from "../../../demo-template/demo-template";
 
+
 @NgModule({
     declarations: [ToastFullDemoComponent],
     imports: [
