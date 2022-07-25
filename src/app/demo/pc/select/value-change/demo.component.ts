@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {SelectTextService} from "../text.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import {InternalUtils} from "../../../../../jigsaw/common/core/utils/internal-utils";
+import {ArrayCollection, InternalUtils} from "jigsaw/public_api";
+
 class ForeverBusyArrayCollection extends ArrayCollection<any> {
     _busy = true;
 }
