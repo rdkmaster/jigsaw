@@ -26,6 +26,7 @@ import { SwitchDemoComponent } from "./switch-demo.component";
 import { DemoCodeComponent } from "./demo-code.component";
 import { ExampleDemoModule } from './demo/pc/example/demo.module';
 import {AlertDemoModule} from "./demo/pc/alert/demo.module";
+import {HeaderDemoModule} from "./demo/pc/header/demo.module";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,7 @@ import {AlertDemoModule} from "./demo/pc/alert/demo.module";
             { path: '**', redirectTo: '/' }
         ], { useHash: true }),
         JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
-        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule,
+        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule, HeaderDemoModule,
         TranslateModule.forRoot()
     ],
     providers: [

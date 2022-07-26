@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {HeaderTextService} from "../text.service";
+import {HeaderTextService} from "../doc.service";
 
 @Component({
-    selector: "first-level-header",
+    selector: "header-level1",
     templateUrl: './demo.component.html'
 })
 export class HeaderFirstLevelComponent {
