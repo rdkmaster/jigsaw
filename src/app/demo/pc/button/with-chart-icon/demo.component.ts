@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {ButtonTextService} from "../text.service";
+import {ButtonTextService} from "../doc.service";
 
 @Component({
-    selector: 'with-chart-icon-button',
+    selector: 'button-with-chart-icon',
     templateUrl: './demo.component.html'
 })
 export class ButtonWithChartIconDemoComponent {

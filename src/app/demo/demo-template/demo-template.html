@@ -2,7 +2,7 @@
 <div class="demo-border" [ngClass]="{'noLabelBorder': !data}">
 
     <jigsaw-button-bar *ngIf="!!data" class="label" [(selectedItems)]="selectedLabel" [data]="data" [multipleSelect]="false"
-                       (selectedItemsChange)="onClick($event[0])" optionWidth=39>
+                       (selectedItemsChange)="onClick($event[0])">
     </jigsaw-button-bar>
 
     <div class="content" [ngClass]="{'noLabelContent': !data}">

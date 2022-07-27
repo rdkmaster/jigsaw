@@ -1,15 +1,15 @@
-<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['icon']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['icon']">
     <div>
         <p class="comment">正常</p>
         <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e35b" colorType="default"
-                       [(preSize)]="selectedLabel.size">
+                       [preSize]="selectedLabel.size">
         </jigsaw-button>
     </div>
 
     <div>
         <p class="comment">禁用</p>
         <jigsaw-button icon="iconfont iconfont-e35b" colorType="default"
-                       [disabled]="true" [(preSize)]="selectedLabel.size">
+                       [disabled]="true" [preSize]="selectedLabel.size">
         </jigsaw-button>
     </div>
 </demo-template>

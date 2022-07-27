@@ -27,6 +27,8 @@ import {DemoCodeComponent} from "./demo-code.component";
 import {ExampleDemoModule} from './demo/pc/example/demo.module';
 import {AlertDemoModule} from "./demo/pc/alert/demo.module";
 import {HeaderDemoModule} from "./demo/pc/header/demo.module";
+import {BreadcrumbDemoModule} from "./demo/pc/breadcrumb/demo.module";
+import {ButtonDemoModule} from "./demo/pc/button/demo.module";
 import {CheckBoxDemoModule} from "./demo/pc/checkbox/demo.module";
 import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
 
@@ -47,12 +49,11 @@ import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
                     {path: '**', component: DemoCodeComponent}
                 ]
             },
-            {path: '**', redirectTo: '/'}
-        ], {useHash: true}),
-        JigsawRootModule, CheckBoxDemoModule, RadioGroupDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule,
-        JigsawButtonBarModule, JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule,
-        HeaderDemoModule,
-        TranslateModule.forRoot()
+            { path: '**', redirectTo: '/' }
+        ], { useHash: true }),
+        JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
+        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule, HeaderDemoModule,
+        TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, RadioGroupDemoModule
     ],
     providers: [
         {

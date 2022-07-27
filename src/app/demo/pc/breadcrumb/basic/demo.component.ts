@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import {BreadcrumbTextService} from "../text.service";
+import {BreadcrumbTextService} from "../doc.service";
 
 @Component({
-    selector: 'basic-breadcrumb',
+    selector: 'breadcrumb-basic',
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbBasicDemoComponent {
