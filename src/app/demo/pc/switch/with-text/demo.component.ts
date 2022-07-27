@@ -1,14 +1,12 @@
 import {Component} from "@angular/core";
+import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-collection";
 import {SwitchTextService} from "../doc.service";
-import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "switch-basic",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    selector: 'switch-with-text',
+    templateUrl: './demo.component.html',
 })
-
-export class SwitchBasicComponent {
+export class SwitchWithTextDemoComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},

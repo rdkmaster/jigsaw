@@ -18,9 +18,10 @@ export class SwitchTextService {
             ## 示例
         `,
         basic: `
-            ### 基础复选框
-
-            点击方框，实施对方框相应标签项的选择，可多选。
+            ### 基础开关
+        `,
+        withText: `
+            ### 带文字开关
         `
     }
 }
