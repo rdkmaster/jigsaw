@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {ArrayCollection, CascadeData} from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 
 @Component({
-    selector: "search-and-paging-cascade",
+    selector: "cascade-search-and-paging",
     templateUrl: "./demo.component.html"
 })
 

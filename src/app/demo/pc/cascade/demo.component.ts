@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

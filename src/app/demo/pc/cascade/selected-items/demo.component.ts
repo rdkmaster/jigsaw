@@ -1,11 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
 import {CascadeData, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
-    selector: "selected-items-cascade",
+    selector: "cascade-selected-items",
     templateUrl: "./demo.component.html"
 })
 

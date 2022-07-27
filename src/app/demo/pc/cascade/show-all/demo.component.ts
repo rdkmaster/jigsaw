@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {SimpleTreeData} from "jigsaw/public_api";
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
 
 @Component({
-    selector: "show-all-cascade",
+    selector: "cascade-show-all",
     templateUrl: "./demo.component.html"
 })
 

@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {SimpleTreeData} from "jigsaw/public_api";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
-    selector: "basic-cascade",
+    selector: "cascade-basic",
     templateUrl: "./demo.component.html",
 })
 

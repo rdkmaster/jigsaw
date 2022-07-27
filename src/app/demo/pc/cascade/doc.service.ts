@@ -25,7 +25,7 @@ export class CascadeTextService {
             本demo演示了如何通过懒加载的方式加载每一级的数据，一般用于数据量很大的场景。
         `,
         selectedItems: `
-            ### 默认选中
+            ### 添加默认值
 
             本demo说明如何使用selectedItems属性来预设一组默认选中的条目。
         `,
@@ -35,17 +35,17 @@ export class CascadeTextService {
             本demo演示了如何通过multipleSelect属性设置级联组件最后一级支持多选的方法
         `,
         trackItemBy: `
-            ### 区分条目
+            ### 区分字段
 
             trackItemBy用于告诉级联组件通过哪个或者哪些字段来区分所有条目
         `,
         showAll: `
-            ### 全选
+            ### 添加全选
 
             本demo演示了如何在某一级上添加一个“全选”按钮。
         `,
         withCombo: `
-            ### 下拉框方式
+            ### 自带下拉框
 
             本demo演示了如何通过懒加载的方式加载每一级的数据，一般用于数据量很大的场景。
         `,

@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
 import {HttpClient} from "@angular/common/http";
 
 @Component({
-    selector: "multiple-select-cascade",
+    selector: "cascade-multiple-select",
     templateUrl: "./demo.component.html"
 })
 

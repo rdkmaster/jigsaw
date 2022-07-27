@@ -1,7 +1,6 @@
 <demo-template [data]="''" [text]="text['text']['withCombo']">
-
-    <div>
-        <jigsaw-markdown [markdown]="'#### 单选'"></jigsaw-markdown>
+    <div class="demo-showcase">
+        <span>单选</span>
         <j-combo-select [value]="comboValue1">
             <ng-template>
                 <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems1" [dataGenerator]="generator"
@@ -12,8 +11,8 @@
         </j-combo-select>
     </div>
 
-    <div>
-        <jigsaw-markdown [markdown]="'#### 多选'"></jigsaw-markdown>
+    <div class="demo-showcase">
+        <span>多选</span>
         <j-combo-select [value]="comboValue2">
             <ng-template>
                 <j-cascade style="min-height: 335px" [(selectedItems)]="selectedItems2" [dataGenerator]="generator"

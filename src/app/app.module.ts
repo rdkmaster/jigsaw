@@ -32,6 +32,7 @@ import {ButtonDemoModule} from "./demo/pc/button/demo.module";
 import {CheckBoxDemoModule} from "./demo/pc/checkbox/demo.module";
 import {ButtonBarDemoModule} from "./demo/pc/button-bar/demo.module";
 import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
+import {CascadeAllModule} from "./demo/pc/cascade/demo.module";
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
             { path: '**', redirectTo: '/' }
         ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
-        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule, HeaderDemoModule,
+        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
+        HeaderDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule
     ],
     providers: [
