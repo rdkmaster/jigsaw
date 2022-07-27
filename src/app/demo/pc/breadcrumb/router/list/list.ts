@@ -7,7 +7,7 @@ import {ProductService} from "../product.service";
     template: `
         <ul class="demo-container">
             <li *ngFor="let product of productList">
-                <a routerLink="/pc/breadcrumb/all/detail/{{product.id}}">{{product.name}}
+                <a routerLink="/pc/breadcrumb/detail/{{product.id}}">{{product.name}}
                 </a>
             </li>
         </ul>

@@ -1,15 +1,8 @@
-<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['common']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['common']">
     <div>
         <p class="comment">正常 </p>
         <jigsaw-button [preSize]="selectedLabel.size">
             确定
-        </jigsaw-button>
-    </div>
-
-    <div>
-        <p class="comment">选中（有疑问？？？） </p>
-        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size">
-            普通操作
         </jigsaw-button>
     </div>
 

@@ -4,11 +4,11 @@ import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-coll
 
 
 @Component({
-    selector: 'button-icon',
+    selector: 'button-functional',
     templateUrl: './demo.component.html',
     styleUrls: ['../public.css']
 })
-export class ButtonIconComponent {
+export class ButtonFunctionalComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},
@@ -16,9 +16,9 @@ export class ButtonIconComponent {
         {label: "默认", size: "default"}
     ]);
     public selectedLabel = {label: "默认", size: "default"};
-    constructor(public text: ButtonTextService) {}
     onClick() {
         alert('Hello Jigsaw Button ^_^');
     }
 
+    constructor(public text: ButtonTextService) {}
 }

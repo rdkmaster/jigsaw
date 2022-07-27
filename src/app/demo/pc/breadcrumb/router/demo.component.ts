@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/public_api";
 import {ProductService} from "./product.service";
-import {BreadcrumbTextService} from "../text.service";
+import {BreadcrumbTextService} from "../doc.service";
 
 @Component({
-    selector: 'router-breadcrumb',
+    selector: 'breadcrumb-router',
     templateUrl: './demo.component.html',
     styles: [`
         .demo-container h3 {
@@ -27,10 +27,10 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     routes: BreadcrumbRouteConfig[] = [
-        {'/pc/breadcrumb/all': {label: 'Product List', icon: 'iconfont iconfont-e12e'}},
-        {'/pc/breadcrumb/all/list/*': this.listBreadcrumbGenerator},
-        {'/pc/breadcrumb/all/detail/*': this.detailBreadcrumbGenerator},
-        {'/pc/breadcrumb/all/buy/*': this.buyBreadcrumbGenerator},
+        {'/pc/breadcrumb': {label: 'Product List', icon: 'iconfont iconfont-e12e'}},
+        {'/pc/breadcrumb/list/*': this.listBreadcrumbGenerator},
+        {'/pc/breadcrumb/detail/*': this.detailBreadcrumbGenerator},
+        {'/pc/breadcrumb/buy/*': this.buyBreadcrumbGenerator},
     ];
 
     listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
@@ -61,7 +61,7 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     getDetailNode(detail) {
-        return {label: detail.name, routeLink: '/pc/breadcrumb/all/detail/' + detail.id} // 请尽量使用绝对路径
+        return {label: detail.name, routeLink: '/pc/breadcrumb/detail/' + detail.id} // 请尽量使用绝对路径
     }
 
     getListNode(typeId) {
@@ -76,7 +76,7 @@ export class BreadcrumbRouterDemoComponent {
             default:
                 listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
         }
-        listNode.routeLink = '/pc/breadcrumb/all/list/' + typeId; // 请尽量使用绝对路径
+        listNode.routeLink = '/pc/breadcrumb/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
     }
 

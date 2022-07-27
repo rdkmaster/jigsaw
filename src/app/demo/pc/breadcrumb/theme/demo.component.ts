@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import {BreadcrumbTextService} from "../text.service";
+import {BreadcrumbTextService} from "../doc.service";
 
 @Component({
     selector: 'theme-breadCrumb',
