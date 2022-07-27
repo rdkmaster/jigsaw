@@ -10,11 +10,15 @@ import {RadioDataIsObjectComponent} from "./object/demo.component";
 import {RadioComplexSceneComponent} from "./complex-scene/demo.component";
 import {RadioTrackItemByDemoComponent} from "./track-item-by/demo.component";
 import {JigsawDemoDescriptionModule} from "../../../demo-description/demo-description";
+import {RadioLiteComponent} from "./radio-lite/demo.component";
+import {JigsawHeaderModule} from "../../../../jigsaw/pc-components/header/header";
+import {JigsawRadioLiteModule} from "../../../../jigsaw/pc-components/radio/radio-lite";
 @NgModule({
     declarations: [ RadioGroupDemoComponent , RadioDataIsStringArrayComponent, RadioDataIsObjectComponent, RadioComplexSceneComponent,
-        RadioTrackItemByDemoComponent],
+        RadioTrackItemByDemoComponent, RadioLiteComponent],
     imports: [
-        DemoTemplateModule, JigsawMarkdownModule, JigsawRadioModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule
+        DemoTemplateModule, JigsawMarkdownModule, JigsawRadioModule, JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule,
+        JigsawHeaderModule, JigsawRadioLiteModule
     ]
 })
 export  class RadioGroupDemoModule {

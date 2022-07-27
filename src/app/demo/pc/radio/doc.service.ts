@@ -35,6 +35,14 @@ export class RadioTextService {
         `,
         complexScene: `
             ### 复杂的场景
+        `,
+        trackItemBy: `
+            ### 单选按钮-TrackItemBy
+        `,
+        radioLite: `
+           ### 极简单选框
+
+           基础单选框的极简状态
         `
     }
 }

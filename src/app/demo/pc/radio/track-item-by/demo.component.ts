@@ -1,5 +1,6 @@
 import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
+import {RadioTextService} from "../doc.service";
 
 @Component({
     selector: 'radio-TrackItemBy',
@@ -21,5 +22,7 @@ export class RadioTrackItemByDemoComponent {
 
     public radioChange(message: any) {
         console.log(`switch message is: ${message.pro_name}`);
+    }
+    constructor(public text: RadioTextService) {
     }
 }
