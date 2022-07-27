@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {RadioTextService} from "../text.service";
+import {RadioTextService} from "../doc.service";
 import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: "basic-radio",
+    selector: "radio-group-basic",
     templateUrl: "./demo.component.html",
 })
 

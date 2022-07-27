@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {RadioTextService} from "../text.service";
+import {RadioTextService} from "../doc.service";
 import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: "complex-secne-radio",
+    selector: "radio-group-complex-scene",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
