@@ -10,6 +10,7 @@ import {CheckBoxDemoComponent} from "./demo/pc/checkbox/demo.componet";
 import {ButtonBarAllComponent} from "./demo/pc/button-bar/demo.component";
 import {RadioGroupDemoComponent} from "./demo/pc/radio/demo.component";
 import {CascadeAllComponent} from "./demo/pc/cascade/demo.component";
+import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -33,7 +34,8 @@ export const routerConfigPC = [
     { path: "pc/cascade", component: CascadeAllComponent},
     { path: "pc/header", component: HeaderDemoComponent },
     { path: "pc/checkbox", component: CheckBoxDemoComponent },
-    {path: "pc/radio-group", component: RadioGroupDemoComponent}
+    {path: "pc/radio-group", component: RadioGroupDemoComponent},
+    {path: "pc/switch", component: SwitchDemoComponent}
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];
