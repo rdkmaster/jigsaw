@@ -1,4 +1,3 @@
-
 .app-wrap {
     padding: 6px;
 }
@@ -92,10 +91,22 @@
 }
 
 /* clearfix */
-.live-demo-wrap .clearfix:before, .live-demo-wrap .clearfix:after {
+.live-demo-wrap .clearfix:before,
+.live-demo-wrap .clearfix:after {
     display: table;
     content: ' ';
 }
+
 .live-demo-wrap .clearfix:after {
     clear: both;
+}
+
+.app-wrap .demo-showcase {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.app-wrap .demo-showcase>span {
+    margin-right: 24px;
 }
