@@ -1,6 +1,6 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['primary']">
-    <div>
-        <p class="comment">正常 </p>
+    <div class="demo-showcase">
+        <span>正常 </span>
         <jigsaw-button (click)="onClick()" colorType="primary"
                        [disabled]="false" [preSize]="selectedLabel.size">
             主导按钮
@@ -15,8 +15,8 @@
         </jigsaw-button>
     </div>
 
-    <div>
-        <p class="comment">禁用 </p>
+    <div class="demo-showcase">
+        <span>禁用 </span>
         <jigsaw-button (click)="onClick()" colorType="primary"
                        [disabled]="true" [preSize]="selectedLabel.size">
             主导按钮

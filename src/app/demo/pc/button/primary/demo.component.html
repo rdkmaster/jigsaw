@@ -1,20 +1,20 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['primary']">
-    <div>
-        <p class="comment">正常 </p>
+    <div class="demo-showcase">
+        <span>正常 </span>
         <jigsaw-button colorType="primary" [preSize]="selectedLabel.size">
             确定
         </jigsaw-button>
     </div>
 
-    <div>
-        <p class="comment">禁用 </p>
+    <div class="demo-showcase">
+        <span>禁用 </span>
         <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedLabel.size">
             重点操作
         </jigsaw-button>
     </div>
 
-    <div>
-        <p class="comment">表单、模态框中 </p>
+    <div class="demo-showcase">
+        <span>表单、模态框中 </span>
         <jigsaw-button colorType="primary" [preSize]="selectedLabel.size">
             确定
         </jigsaw-button>
@@ -23,8 +23,8 @@
         </jigsaw-button>
     </div>
 
-    <div>
-        <p class="comment">步骤条 </p>
+    <div class="demo-showcase">
+        <span>步骤条 </span>
         <jigsaw-button [preSize]="selectedLabel.size">
             上一步
         </jigsaw-button>

@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ButtonBarTextService} from "../text.service";
+import {ButtonBarTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

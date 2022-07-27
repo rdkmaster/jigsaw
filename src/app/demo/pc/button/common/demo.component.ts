@@ -5,8 +5,7 @@ import {ArrayCollection} from "../../../../../jigsaw/common/core/data/array-coll
 
 @Component({
     selector: 'button-common',
-    templateUrl: './demo.component.html',
-    styleUrls: ['../public.css']
+    templateUrl: './demo.component.html'
 })
 export class ButtonCommonComponent {
     public data: object[] = new ArrayCollection([

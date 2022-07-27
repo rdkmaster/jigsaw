@@ -3,11 +3,11 @@ import {ButtonBarTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "button-bar-set-height",
+    selector: "button-bar-string-array",
     templateUrl: "./demo.component.html",
 })
 
-export class ButtonBarSetHeightComponent {
+export class ButtonBarStringArrayComponent {
     public selectedLabel = {label: "大", size: "default"};
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},

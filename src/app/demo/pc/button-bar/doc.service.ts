@@ -16,17 +16,22 @@ export class ButtonBarTextService {
 
             ## 示例
         `,
-        basic: `
-            #### 基础分段选择器
-
-            分段选择器作为二级选项卡使用，也用于单选场景。
+        objectsArray: `
+            ###  对象数组
         `,
-        blue: `
-            #### 蓝底分段选择器
-
-            适用于类似gis场景，背景影响分段选择器选中状态的可识别性的时候，可使用蓝底分段选择器。
+        stringArray: `
+            ### 字符串数组
         `,
-        height: `
+        colorType: `
+            ### color-type
+        `,
+        icons: `
+            ### 带图标分段选择器
+        `,
+        multipleChoice: `
+            ### 多选
+        `,
+        setHeight: `
             #### 直接设置height
         `
     }

@@ -1,6 +1,6 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['loading']" [data]="data">
-    <div>
-        <p class="comment">正常</p>
+    <div class="demo-showcase">
+        <span>正常</span>
         <jigsaw-button
             (click)="onLoading()"
             colorType="primary"
@@ -18,8 +18,8 @@
         </jigsaw-button>
     </div>
 
-    <div>
-        <p class="comment">禁用</p>
+    <div class="demo-showcase">
+        <span>禁用</span>
         <jigsaw-button
             colorType="primary"
             height="32px"
