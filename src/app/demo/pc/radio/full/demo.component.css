@@ -1,0 +1,26 @@
+
+.goods-box {
+       height: 40px;
+       cursor: pointer;
+   }
+
+.goods-box .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin: 0 4px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 26px;
+}
+
+.goods-box p {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
+    line-height: 1.5;
+    padding: 3px 0 4px;
+}

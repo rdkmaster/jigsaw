@@ -1,14 +1,30 @@
 import {Component} from "@angular/core";
-import {RadioTextService} from "../text.service";
-import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: "complex-secne-radio",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
+export class RadioFullComponent {
+    // demo1
+    selectedCity = {name: "北京"};
+    cities = [
+        {name: "北京", id: "1"},
+        {name: "上海", id: "2"},
+        {name: "南京", id: "3"},
+        {name: "深圳", id: "4"},
+        {name: "长沙", id: "5"},
+        {name: "西安", id: "6"}
+    ];
 
-export class RadioComplexSceneComponent {
+    public radioChange(message: any) {
+        console.log(`switch message is: ${message.name}`);
+    }
+
+    // demo2
+    citys2 = ["北京", "上海", "南京", "深圳", "长沙", "西安"];
+    selectedCity2 = "西安";
+
+    // demo3
     selectedGoods = {name: 'car'};
     goodsList = [
         {
@@ -44,10 +60,9 @@ export class RadioComplexSceneComponent {
         },
     ];
 
-    public radioChange(message: any) {
-        console.log(`switch message is: ${message.name}`);
-    }
-
-    constructor(public text: RadioTextService) {}
-
+    // ====================================================================
+    // ignore the following lines, they are not important to this demo
+    // ====================================================================
+    summary: string = '';
+    description: string = '';
 }
