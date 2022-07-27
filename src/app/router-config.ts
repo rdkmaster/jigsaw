@@ -6,11 +6,11 @@ import {BreadcrumbRouterList} from "./demo/pc/breadcrumb/router/list/list";
 import {BreadcrumbRouterDetail} from "./demo/pc/breadcrumb/router/detail/detail";
 import {BreadcrumbRouterBuy} from "./demo/pc/breadcrumb/router/buy/buy";
 import {ButtonAllComponent} from "./demo/pc/button/demo.component";
+import {CheckBoxDemoComponent} from "./demo/pc/checkbox/demo.componet";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
     { path: "pc/alert", component: AlertDemoComponent},
-    { path: "pc/header", component: HeaderDemoComponent},
     {
         path: "pc/breadcrumb", component: BreadcrumbAllComponent,
         children: [
@@ -25,7 +25,9 @@ export const routerConfigPC = [
             }
         ]
     },
-    {path: "pc/button", component: ButtonAllComponent}
+    {path: "pc/button", component: ButtonAllComponent},
+    {path: "pc/header", component: HeaderDemoComponent},
+    {path: "pc/checkbox", component: CheckBoxDemoComponent}
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

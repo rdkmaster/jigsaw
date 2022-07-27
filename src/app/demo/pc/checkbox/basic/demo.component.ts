@@ -1,15 +1,20 @@
 import {Component} from "@angular/core";
-import {CheckboxTextService} from "../text.service";
+import {CheckboxTextService} from "../doc.service";
 import {CheckBoxStatus} from "jigsaw/public_api";
 
 @Component({
-    selector: "basic-checkbox",
+    selector: "checkbox-basic",
     templateUrl: "./demo.component.html",
 })
 
 export class CheckboxBasicComponent {
-    public status = CheckBoxStatus.unchecked;
-    public enableIndeterminate: boolean = false;
-    constructor(public text: CheckboxTextService) {}
+    public demo1checked = CheckBoxStatus.checked;
+    public demo1indeterminate = CheckBoxStatus.indeterminate;
+    public demo1unchecked = CheckBoxStatus.unchecked;
+    public demo2checked = CheckBoxStatus.checked;
+    public demo2indeterminate = CheckBoxStatus.indeterminate;
+    public demo2unchecked = CheckBoxStatus.unchecked;
+    constructor(public text: CheckboxTextService) {
+    }
 
 }
