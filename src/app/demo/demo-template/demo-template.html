@@ -1,18 +1,12 @@
 <jigsaw-markdown [markdown]="text"></jigsaw-markdown>
-<div class="demo-border" [ngClass]="{'noLabelBorder': !data}">
-
-    <jigsaw-button-bar *ngIf="!!data" class="label" [(selectedItems)]="selectedLabel" [data]="data" [multipleSelect]="false"
-                       (selectedItemsChange)="onClick($event[0])">
+<div class="demo-cntr" [ngClass]="{'no-handler': !data}">
+    <jigsaw-button-bar *ngIf="!!data" class="demo-handler" [(selectedItems)]="selectedLabel" [data]="data"
+        [multipleSelect]="false" (selectedItemsChange)="onClick($event[0])" colorType="default" height="28">
     </jigsaw-button-bar>
 
-    <div class="content" [ngClass]="{'noLabelContent': !data}">
+    <div class="demo-content" [ngClass]="{'no-content': !data}">
         <ng-content></ng-content>
     </div>
 
-    <hr>
-
     <a>查看本DEMO源码</a>
 </div>
-
-
-
