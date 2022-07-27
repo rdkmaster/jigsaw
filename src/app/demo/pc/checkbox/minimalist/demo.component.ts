@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {CheckboxTextService} from "../text.service";
+import {CheckboxTextService} from "../doc.service";
 import {CheckBoxStatus} from "jigsaw/public_api";
 
 @Component({
-    selector: "minimalist-checkbox",
+    selector: "checkbox-minimalist",
     templateUrl: "./demo.component.html",
 })
 

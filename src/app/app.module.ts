@@ -27,6 +27,7 @@ import { DemoCodeComponent } from "./demo-code.component";
 import { ExampleDemoModule } from './demo/pc/example/demo.module';
 import {AlertDemoModule} from "./demo/pc/alert/demo.module";
 import {HeaderDemoModule} from "./demo/pc/header/demo.module";
+import {CheckBoxDemoModule} from "./demo/pc/checkbox/demo.module";
 
 @NgModule({
     declarations: [
@@ -46,7 +47,7 @@ import {HeaderDemoModule} from "./demo/pc/header/demo.module";
             },
             { path: '**', redirectTo: '/' }
         ], { useHash: true }),
-        JigsawRootModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
+        JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, AlertDemoModule, HeaderDemoModule,
         TranslateModule.forRoot()
     ],

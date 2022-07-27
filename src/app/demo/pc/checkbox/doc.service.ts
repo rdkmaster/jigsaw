@@ -24,14 +24,13 @@ export class CheckboxTextService {
             点击方框，实施对方框相应标签项的选择。
             有三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code>
         `,
-        indeterminate: `
-            ### 初始值设置为中间状态
-        `,
         minimalist: `
             ### 极简和普通模式
         `,
-        disabled: `
-            ### 不可点击状态
+        checkall: `
+           ### 基础复选框全选
+
+           勾选所有复选框，可实现全选效果。
         `
     }
 }
