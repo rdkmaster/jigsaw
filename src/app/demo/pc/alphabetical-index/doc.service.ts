@@ -16,5 +16,13 @@ export class AlphabeticalTextService {
         dictionary: `
             ### 配置了拼音字典的基础文字索引
         `,
+        multiTone: `
+            ### 多音字的内容索引
+        `,
+        inDom: `
+            ### 嵌入
+
+            常驻状态
+        `,
     }
 }
