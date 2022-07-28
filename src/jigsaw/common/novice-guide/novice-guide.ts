@@ -85,33 +85,37 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
 
     const found = queryNode(notice);
     if (found) {
-        handleCreateNotice(guide, notice, found as HTMLElement, showingNotice);
+        createNoticeWithDelay(guide, notice, found as HTMLElement, showingNotice);
         return;
     }
 
     // 当前还找不到，那就要等着了
-    let clearTimer;
+    let observerTimer;
     showingNotice.mutation = new MutationObserver(() => {
         // 实测querySelector的性能可以接受（万次耗时500~700ms）
         const found = queryNode(notice);
         if (!found) {
             return;
         }
-        handleCreateNotice(guide, notice, found as HTMLElement, showingNotice, clearTimer);
+        createNoticeWithDelay(guide, notice, found as HTMLElement, showingNotice, observerTimer);
     });
     showingNotice.mutation.observe(document.body, {childList: true, subtree: true});
-    clearTimer = setTimeout(() => clearObserver(showingNotice, clearTimer), options.maxWaitTargetTimeout);
+    observerTimer = setTimeout(() => disconnectMutationObserver(showingNotice, observerTimer), options.maxWaitTargetTimeout);
 }
 
-function handleCreateNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targetEle: HTMLElement, showingNotice: ShowingNotice, clearTimer?: number) {
-    if (notice.hasOwnProperty('delay')) {
-        setTimeout(() => {
-            createNotice(guide, notice, targetEle);
-            clearTimer && clearObserver(showingNotice, clearTimer);
-        }, notice.delay)
+function createNoticeWithDelay(guide: NoviceGuide, notice: NoviceGuideNotice, targetEle: HTMLElement,
+                               showingNotice: ShowingNotice, observerTimer?: number) {
+    if (isNaN(notice.delay)) {
+        func();
     } else {
+        setTimeout(func, notice.delay);
+    }
+
+    function func() {
         createNotice(guide, notice, targetEle);
-        clearTimer && clearObserver(showingNotice, clearTimer);
+        if (!isNaN(observerTimer)) {
+            disconnectMutationObserver(showingNotice, observerTimer);
+        }
     }
 }
 
@@ -130,7 +134,7 @@ function createNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targetEle: 
     }
 }
 
-function clearObserver(showingNotice: ShowingNotice, timer: number) {
+function disconnectMutationObserver(showingNotice: ShowingNotice, timer: number) {
     clearTimeout(timer);
     showingNotice.mutation?.disconnect();
     showingNotice.mutation = null;
