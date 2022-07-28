@@ -72,8 +72,6 @@ function show(guide: NoviceGuide): ShowResult {
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     if (guide.type === NoviceGuideType.wizard) {
-        // const container = getGuideContainer(false);
-        // container.classList.add('wizard');
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     return 'showing';
