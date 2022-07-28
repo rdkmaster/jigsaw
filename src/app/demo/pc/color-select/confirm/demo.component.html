@@ -1,12 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-switch [(checked)]="_$showConfirm"></jigsaw-switch> <span>show confirm buttons</span>
-    <br>
-    <br>
-    <jigsaw-color-select color="#e57409" [enableConfirm]="_$showConfirm" (colorChange)="_$colorChange($event)">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['confirm']">
+<div class="demo-showcase">
+    <span>手动提交色值</span>
+    <jigsaw-color-select color="#e57409" [enableConfirm]="true" (colorChange)="_$colorChange($event)" [preSize]="selectedLabel.size">
     </jigsaw-color-select>
 </div>
+</demo-template>
