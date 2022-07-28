@@ -1,6 +1,6 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
     <!-- start to learn the demo from here -->
-    <div>
+    <div class="demo-showcase">
         <span>正常</span>
         <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="280"
                                     (valueChange)="valueChanged($event)" [data]="_$dropdownData"
@@ -8,10 +8,10 @@
                                     [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
                                     (iconSelect)="iconClick($event, 'back')">
         </jigsaw-auto-complete-input>
-        <p style="margin-left: 20px;">Click info: {{message}}</p>
+        <p>Click info: {{message}}</p>
     </div>
 
-    <div>
+    <div class="demo-showcase">
         <span>禁用</span>
         <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="280"
                                     (valueChange)="valueChanged($event)" [data]="_$dropdownData"

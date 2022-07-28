@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {FishBoneTextService} from "../text.service";
+import {FishBoneTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',
