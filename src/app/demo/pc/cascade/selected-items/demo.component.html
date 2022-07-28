@@ -7,16 +7,15 @@
 
     <div class="demo-showcase-v">
         <span>设置多个默认选中条目</span>
-        <j-cascade [data]="areas" [selectedItems]="multiSelectedItems"
-                   [multipleSelect]="true" width="400">
+        <j-cascade [data]="areas" [selectedItems]="multiSelectedItems" [multipleSelect]="true" width="400">
         </j-cascade>
     </div>
 
 
     <div class="demo-showcase-v">
         <span>设置懒加载数据默认选中条目</span>
-        <j-cascade [data]="generator" [selectedItems]="lazyLoadSelectedItems"
-                   labelField="name" [generatorContext]="this" width="400">
+        <j-cascade [data]="generator" [selectedItems]="lazyLoadSelectedItems" labelField="name"
+            [generatorContext]="this" width="400">
         </j-cascade>
     </div>
 </demo-template>
