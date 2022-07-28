@@ -1,21 +1,21 @@
 import {Component} from '@angular/core';
-import {BadgeTextService} from "../text.service";
+import {BadgeTextService} from "../doc.service";
 import {ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: 'basic-badge',
+    selector: 'badge-basic',
     templateUrl: './demo.component.html',
     styles: [`
-        .live-demo-wrap jigsaw-icon {
+        .demo-showcase jigsaw-icon {
             margin-right: 50px;
             line-height: 1;
         }
-        .live-demo-wrap jigsaw-switch,
-        .live-demo-wrap jigsaw-input,
-        .live-demo-wrap jigsaw-checkbox,
-        .live-demo-wrap jigsaw-button-bar,
-        .live-demo-wrap jigsaw-radios-lite,
-        .live-demo-wrap jigsaw-tile-lite {
+        .demo-showcase jigsaw-switch,
+        .demo-showcase jigsaw-input,
+        .demo-showcase jigsaw-checkbox,
+        .demo-showcase jigsaw-button-bar,
+        .demo-showcase jigsaw-radios-lite,
+        .demo-showcase jigsaw-tile-lite {
             margin-right: 20px;
         }
     `]

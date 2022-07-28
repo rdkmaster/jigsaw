@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class ButtonBarTextService {
     public text: object = {
         introduction: `
-            # Button-bar 分段选择器
+            # Button-bar 按钮栏
 
             为页面和功能提供导航的列表。
 
@@ -26,7 +26,7 @@ export class ButtonBarTextService {
             ### color-type
         `,
         icons: `
-            ### 带图标分段选择器
+            ### 带图标按钮栏
         `,
         multipleChoice: `
             ### 多选

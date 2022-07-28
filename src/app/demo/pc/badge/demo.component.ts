@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {BadgeTextService} from "../text.service";
+import {BadgeTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

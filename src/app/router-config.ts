@@ -6,6 +6,7 @@ import {BreadcrumbAllComponent} from "./demo/pc/breadcrumb/demo.component";
 import {BreadcrumbRouterList} from "./demo/pc/breadcrumb/router/list/list";
 import {BreadcrumbRouterDetail} from "./demo/pc/breadcrumb/router/detail/detail";
 import {BreadcrumbRouterBuy} from "./demo/pc/breadcrumb/router/buy/buy";
+import {BadgeAllComponent} from "./demo/pc/badge/demo.component";
 import {ButtonAllComponent} from "./demo/pc/button/demo.component";
 import {CheckBoxDemoComponent} from "./demo/pc/checkbox/demo.componet";
 import {ButtonBarAllComponent} from "./demo/pc/button-bar/demo.component";
@@ -36,6 +37,7 @@ export const routerConfigPC = [
         ]
     },
     { path: "pc/auto-complete-input", component: AutoCompleteInputDemoComponent},
+    { path: "pc/badge", component: BadgeAllComponent},
     { path: "pc/button-bar", component: ButtonBarAllComponent },
     { path: "pc/button", component: ButtonAllComponent },
     { path: "pc/cascade", component: CascadeAllComponent},
