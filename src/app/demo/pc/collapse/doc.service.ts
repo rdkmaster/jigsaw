@@ -23,15 +23,14 @@ export class CollapseTextService {
 
             演示了\`JigsawCollapse\`多个属性的基本用法
         `,
-        withNgfor: `
-            ### 创建多个折叠子页
-
-            演示了如何通过ngFor指令动态创建多个折叠子页
+        rightArrow: `
+            ### 折叠项在右侧
         `,
-        full: `
-            ### JigsawCollapse的效果
-
-            演示了JigsawCollapse的效果
-        `
+        accordion: `
+            ### 手风琴样式
+        `,
+        advanced: `
+            ### 高级用法
+        `,
     }
 }

@@ -16,6 +16,7 @@ import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
 import {AlphabeticalIndexDemoComponent} from "./demo/pc/alphabetical-index/demo.component";
 import {RateDemoComponent} from "./demo/pc/rate/demo.component";
 import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
+import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -46,6 +47,7 @@ export const routerConfigPC = [
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
     {path: "pc/rate", component: RateDemoComponent},
     {path: "pc/color-select", component: ColorSelectDemoComponent},
+    {path: "pc/collapse", component: CollapseDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

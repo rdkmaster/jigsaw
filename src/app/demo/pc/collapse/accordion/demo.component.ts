@@ -1,40 +1,23 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, LineGraphData, PieGraphData} from "jigsaw/public_api";
-import {CollapseTextService} from "../text.service";
+import { Component } from "@angular/core";
+import {CollapseTextService} from "../doc.service";
 
 @Component({
-    selector: 'full-collapse',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: "collapse-accordion",
+    templateUrl: "./demo.component.html",
 })
-export class CollapseFullComponent {
-    tableData: TableData;
-    public pieGraphDataByCol: PieGraphData;
-    public lineGraphData: LineGraphData;
+export class CollapseAccordionDemoComponent {
 
-    constructor(http: HttpClient, public text: CollapseTextService) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-
-        this.pieGraphDataByCol = new PieGraphData();
-        this.pieGraphDataByCol.http = http;
-        this.pieGraphDataByCol.fromAjax('mock-data/marketing');
-
-        this.lineGraphData = new LineGraphData();
-        this.lineGraphData.http = http;
-        this.lineGraphData.fromAjax('mock-data/marketing');
-    }
 
     goodsList = [
         {
             name: 'bicycle',
+            // tslint:disable-next-line:max-line-length
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.',
             active: true
         },
         {
             name: 'camera',
+            // tslint:disable-next-line:max-line-length
             desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
         },
         {
@@ -54,4 +37,8 @@ export class CollapseFullComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
+
+    constructor(public text: CollapseTextService) {
+    }
+
 }
