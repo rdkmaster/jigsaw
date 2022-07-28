@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_api';
 
 @Component({
+    selector: "alphabetical-index-basic",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -239,10 +240,4 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         娜朦羔酌圃黍蟆呕巍畸擅柑钮畴彬缕屉砚楔腻
     `.replace(/\s/g, '').split('');
     private _visibleAscChars = [];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }

@@ -34,6 +34,7 @@ import {ButtonBarDemoModule} from "./demo/pc/button-bar/demo.module";
 import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
 import {CascadeAllModule} from "./demo/pc/cascade/demo.module";
 import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
+import {AlphabeticalIndexModule} from "./demo/pc/alphabetical-index/demo.module";
 
 
 @NgModule({
@@ -56,7 +57,7 @@ import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
         ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
-        HeaderDemoModule,
+        HeaderDemoModule, AlphabeticalIndexModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

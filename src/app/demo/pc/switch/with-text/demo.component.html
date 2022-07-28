@@ -1,11 +1,11 @@
 
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['withText']">
     <div class="demo-showcase">
-        <span>正常状态带文字：</span>
+        <span>正常状态带文字</span>
         <jigsaw-switch onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!" [size]="selectedLabel.size"></jigsaw-switch>
     </div>
     <div class="demo-showcase">
-        <span>禁用状态带文字：</span>
+        <span>禁用状态带文字</span>
         <jigsaw-switch [checked]="true" [disabled]="true" [size]="selectedLabel.size" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
         <jigsaw-switch [checked]="false" [disabled]="true" [size]="selectedLabel.size" onLabel="Jigsaw is great!" offLabel="Jigsaw is perfect!"></jigsaw-switch>
     </div>
