@@ -3,10 +3,10 @@ import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_ap
 import {AlphabeticalTextService} from "../doc.service";
 
 @Component({
-    selector: "alphabetical-index-basic",
+    selector: "alphabetical-index-dictionary",
     templateUrl: "./demo.component.html",
 })
-export class AlphabeticalIndexBasicDemoComponent implements OnInit {
+export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
     constructor(public text: AlphabeticalTextService) {
     }
     public mixCountries = [];
@@ -90,12 +90,6 @@ export class AlphabeticalIndexBasicDemoComponent implements OnInit {
         ["niue", "纽埃", "niu"],
         ["pakistan", "巴基斯坦", "pak"],
     ]
-
-    valueChange($event) {
-        console.log($event);
-        this.selected = $event;
-    }
-
     ngOnInit() {
         const mixCountries = [];
         this.countries.forEach(item => {

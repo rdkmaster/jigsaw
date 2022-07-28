@@ -1,0 +1,10 @@
+<demo-template [data]="''" [text]="text['text']['half']">
+   <div class="demo-showcase">
+       <span style="font-size: 18px">正常</span>
+       <jigsaw-rate class="rate-font-size" max="5" [allowHalf]="true" [(value)]="selectedHalfValue" (valueChange)="selectChange($event)"></jigsaw-rate>
+   </div>
+    <div class="demo-showcase">
+        <span style="font-size: 18px">禁用</span>
+        <jigsaw-rate class="rate-font-size" max="5" [allowHalf]="true" [(value)]="selectedHalfValue1" [disabled]="true"></jigsaw-rate>
+    </div>
+</demo-template>

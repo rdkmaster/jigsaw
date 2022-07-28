@@ -1,11 +1,11 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
-<div>
+<div class="demo-showcase">
     <span>正常</span>
     <j-checkbox [(checked)]="demo1checked">选项1</j-checkbox>
     <j-checkbox [(checked)]="demo1indeterminate" [enableIndeterminate]="true">选项2</j-checkbox>
     <j-checkbox [(checked)]="demo1unchecked">选项3</j-checkbox>
 </div>
-<div>
+<div class="demo-showcase">
     <span>禁用</span>
     <j-checkbox [checked]="demo2checked" [disabled]="true">选项4</j-checkbox>
     <j-checkbox [checked]="demo2indeterminate" [disabled]="true" [enableIndeterminate]="true">选项5</j-checkbox>
