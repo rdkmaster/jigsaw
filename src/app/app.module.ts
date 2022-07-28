@@ -34,10 +34,11 @@ import {ButtonBarDemoModule} from "./demo/pc/button-bar/demo.module";
 import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
 import {CascadeAllModule} from "./demo/pc/cascade/demo.module";
 import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
+import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.module";
+import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
 import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.module";
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
 import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
-
 
 @NgModule({
     declarations: [
@@ -59,7 +60,8 @@ import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
         ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
-        HeaderDemoModule, AlphabeticalIndexDemoModule, RateDemoModule, ColorSelectDemoModule,
+        HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
+        ColorSelectDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

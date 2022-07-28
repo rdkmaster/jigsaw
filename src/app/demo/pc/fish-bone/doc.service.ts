@@ -30,11 +30,13 @@ export class FishBoneTextService {
             在使用ChartIcon时，因为图形的渲染与FishBone无关，所以如果只是图形的数据改变了，可以不用刷新FishBone，只要遵照ChartIcon的方法刷新图形
             就可以了。
 
-
             ## 示例
         `,
-        full: `
-            ### FishBone的使用说明
+        basic: `
+            ### 基础鱼骨图
+        `,
+        scene: `
+            ### 实用场景
         `
     }
 }
