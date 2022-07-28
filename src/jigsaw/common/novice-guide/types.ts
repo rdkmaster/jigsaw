@@ -11,6 +11,7 @@ export interface NoviceGuideBasicNotice {
     trigger?: 'click' | 'mouseover';
     key?: string;
     version?: string;
+    delay?: number
 }
 
 export interface NoviceGuideNoticeWithAttributes extends NoviceGuideBasicNotice {

@@ -85,7 +85,13 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
 
     const found = queryNode(notice);
     if (found) {
-        createNotice(found as HTMLElement);
+        if (notice.hasOwnProperty('delay')) {
+            setTimeout(() => {
+                createNotice(found as HTMLElement);
+            }, notice.delay)
+        } else {
+            createNotice(found as HTMLElement);
+        }
         return;
     }
 
@@ -97,8 +103,15 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
         if (!found) {
             return;
         }
-        createNotice(found as HTMLElement);
-        clearObserver(showingNotice, clearTimer);
+        if (notice.hasOwnProperty('delay')) {
+            setTimeout(() => {
+                createNotice(found as HTMLElement);
+                clearObserver(showingNotice, clearTimer);
+            }, notice.delay)
+        } else {
+            createNotice(found as HTMLElement);
+            clearObserver(showingNotice, clearTimer);
+        }
     });
     showingNotice.mutation.observe(document.body, {childList: true, subtree: true});
     clearTimer = setTimeout(() => clearObserver(showingNotice, clearTimer), options.maxWaitTargetTimeout);
