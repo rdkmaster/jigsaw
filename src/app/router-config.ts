@@ -16,6 +16,7 @@ import {CascadeAllComponent} from "./demo/pc/cascade/demo.component";
 import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
 import {AlphabeticalIndexDemoComponent} from "./demo/pc/alphabetical-index/demo.component";
 import {RateDemoComponent} from "./demo/pc/rate/demo.component";
+import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -45,7 +46,8 @@ export const routerConfigPC = [
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
-    {path: "pc/rate", component: RateDemoComponent}
+    {path: "pc/rate", component: RateDemoComponent},
+    {path: "pc/color-select", component: ColorSelectDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

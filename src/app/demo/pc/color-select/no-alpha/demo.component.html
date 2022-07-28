@@ -1,0 +1,7 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['noAlpha']">
+<div class="demo-showcase">
+    <span>取消透明度</span>
+    <jigsaw-color-select color="#e57409" [enableConfirm]="true" [enableOpacity]="false" (colorChange)="_$colorChange($event)" [preSize]="selectedLabel.size">
+    </jigsaw-color-select>
+</div>
+</demo-template>

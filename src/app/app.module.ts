@@ -39,6 +39,7 @@ import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.mo
 import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
 import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.module";
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
+import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 
 @NgModule({
     declarations: [
@@ -61,6 +62,7 @@ import {RateDemoModule} from "./demo/pc/rate/demo.module";
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule, BadgeDemoModule,
+        ColorSelectDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

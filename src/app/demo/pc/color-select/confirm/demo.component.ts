@@ -1,20 +1,22 @@
 import {Component} from '@angular/core';
+import {ColorSelectTextService} from "../doc.service";
+import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    selector: 'color-select-comfirm',
+    templateUrl: 'demo.component.html'
 })
 
 export class ColorSelectConfirmDemoComponent {
-
-    public _$showConfirm: boolean;
-
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "normal"},
+        {label: "大", size: "large"}
+    ]);
+    public selectedLabel = {label: "中", size: "normal"};
     public _$colorChange(color: string) {
         console.log(color);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`jigsaw-color-select`组件的在颜色选中时，是否需要确认的效果';
-    description: string = '';
+    constructor(public text: ColorSelectTextService) {
+    }
 }

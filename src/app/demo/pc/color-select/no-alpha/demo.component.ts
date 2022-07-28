@@ -1,13 +1,13 @@
 import {Component} from '@angular/core';
-import {ColorSelectTextService} from "../text.service";
+import {ColorSelectTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'mode-color-select',
-    templateUrl: './demo.component.html'
+    selector: 'color-select-no-alpha',
+    templateUrl: 'demo.component.html'
 })
 
-export class ColorSelectModeDemoComponent {
+export class ColorSelectNoAlphaDemoComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},
