@@ -110,3 +110,21 @@
 .app-wrap .demo-showcase>span {
     margin-right: 24px;
 }
+
+.app-wrap .demo-showcase>*:not(:first-child) {
+    margin-right: 8px;
+}
+
+.app-wrap .demo-showcase-v {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+}
+
+.app-wrap .demo-showcase-v>span {
+    margin-bottom: 8px;
+}
+
+.app-wrap .demo-showcase-v>*:not(:first-child) {
+    margin-bottom: 8px;
+}
