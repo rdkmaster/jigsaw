@@ -17,5 +17,5 @@ import {AlphabeticalIndexInDomDemoComponent} from "./in-dom/demo.component";
     imports: [DemoTemplateModule, JigsawMarkdownModule, JigsawButtonModule, JigsawInputModule, JigsawHeaderModule,
         JigsawAlphabeticalIndexModule, JigsawAlphabeticalIndexSelectModule]
 })
-export class AlphabeticalIndexModule {
+export class AlphabeticalIndexDemoModule {
 }
