@@ -1,5 +1,6 @@
 import { ExampleDemoComponent } from './demo/pc/example/demo.component';
 import {AlertDemoComponent} from "./demo/pc/alert/demo.component";
+import {AutoCompleteInputDemoComponent} from "./demo/pc/auto-complete-input/demo.component";
 import {HeaderDemoComponent} from "./demo/pc/header/demo.component";
 import {BreadcrumbAllComponent} from "./demo/pc/breadcrumb/demo.component";
 import {BreadcrumbRouterList} from "./demo/pc/breadcrumb/router/list/list";
@@ -29,6 +30,7 @@ export const routerConfigPC = [
             }
         ]
     },
+    { path: "pc/auto-complete-input", component: AutoCompleteInputDemoComponent},
     { path: "pc/button-bar", component: ButtonBarAllComponent },
     { path: "pc/button", component: ButtonAllComponent },
     { path: "pc/cascade", component: CascadeAllComponent},

@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {DropDownValue} from "jigsaw/public_api";
+import {AutoCompleteInputTextService} from "../doc.service";
 
 @Component({
+    selector: 'auto-complete-input-with-group',
     templateUrl: './demo.component.html'
 })
 
@@ -23,9 +25,6 @@ export class AutoCompleteInputGroupDemoComponent {
         items: ['自定义代码块']
     }];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个DEMO详细演示了`j-auto-complete-input`组件的各个参数的效果以及推荐的用法';
-    description: string = '';
+    constructor(public text: AutoCompleteInputTextService) {
+    }
 }

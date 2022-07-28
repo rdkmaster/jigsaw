@@ -1,71 +1,24 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Auto-Complete-Input</jigsaw-header>
-
-    <div class="demo-1">
-        获得焦点后自动执行过滤
-        <jigsaw-switch [(checked)]="filterOnFocus"></jigsaw-switch>
-        <br><br>
-        选中推荐条目后关闭下拉
-        <jigsaw-switch [(checked)]="closeDropDownOnSelect"></jigsaw-switch>
-    </div>
-    <br><br><br>
-
-    <div class="clearfix">
-        <div class="demo-1 live-demo live-demo-block">
-            <jigsaw-header [level]="2">属性设置图标</jigsaw-header>
-            <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="280"
-                                        (valueChange)="valueChanged($event)" [data]="_$dropdownData"
-                                        [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
-                                        [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
-                                        (iconSelect)="iconClick($event, 'back')">
-            </jigsaw-auto-complete-input>
-            <span style="margin-left: 20px;">Click info: {{message}}</span>
-            <p style="color:#999">提示：这种方法设置图标简单便捷，推荐优先使用</p>
-        </div>
-
-        <div class="demo-2 live-demo live-demo-block">
-            <jigsaw-header [level]="2">模板设置图标</jigsaw-header>
-            <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="250"
-                                        (valueChange)="valueChanged($event)" [data]="_$dropdownData"
-                                        [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect">
-                <a jigsaw-prefix-icon (click)="click()"><span class="iconfont iconfont-ea03" style="font-size: 14px;"></span></a>
-                <a jigsaw-icon (click)="click()"><span class="iconfont iconfont-e9ee" style="font-size: 14px;"></span></a>
-            </jigsaw-auto-complete-input>
-            <p style="color:#999">提示：这种方法可以完全对图标实现自定义，但是较为繁琐，不推荐使用</p>
-        </div>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <div>
+        <span>正常</span>
+        <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="280"
+                                    (valueChange)="valueChanged($event)" [data]="_$dropdownData"
+                                    [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
+                                    [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
+                                    (iconSelect)="iconClick($event, 'back')">
+        </jigsaw-auto-complete-input>
+        <p style="margin-left: 20px;">Click info: {{message}}</p>
     </div>
 
-    <div class="clearfix">
-        <div class="demo-3 live-demo live-demo-block">
-            <jigsaw-header [level]="2">下拉列表最大高度</jigsaw-header>
-            <p class="notes">最大高度：
-                <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
-            </p>
-            <p class="notes">最大宽度：
-                <jigsaw-input [(value)]="maxDropDownWidth"></jigsaw-input>
-            </p>
-
-            <br><br>
-
-            <jigsaw-auto-complete-input placeholder="auto complete input demo" [data]="_$dropdownData" [width]="width"
-                                        height="32" [maxDropDownHeight]="maxDropDownHeight" [filterOnFocus]="filterOnFocus"
-                                        [closeDropDownOnSelect]="closeDropDownOnSelect" [maxDropDownWidth]="maxDropDownWidth" >
-            </jigsaw-auto-complete-input>
-        </div>
-
-        <div class="demo-4 live-demo live-demo-block">
-            <jigsaw-header [level]="2">带默认值</jigsaw-header>
-            <p class="notes">输入值是：<span>{{inputValue2}}</span></p>
-            <jigsaw-auto-complete-input [(value)]="inputValue2" placeholder="auto complete input demo" width="20%"
-                                        [data]="_$dropdownData" [filterOnFocus]="filterOnFocus"
-                                        [closeDropDownOnSelect]="closeDropDownOnSelect">
-            </jigsaw-auto-complete-input>
-        </div>
+    <div>
+        <span>禁用</span>
+        <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="auto complete input demo" width="280"
+                                    (valueChange)="valueChanged($event)" [data]="_$dropdownData"
+                                    [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
+                                    [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
+                                    (iconSelect)="iconClick($event, 'back')"
+                                    [disabled]="true">
+        </jigsaw-auto-complete-input>
     </div>
-
-</div>
+</demo-template>
