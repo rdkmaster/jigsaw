@@ -54,7 +54,7 @@ export class CascadeTextService {
 
             本demo说明如何使用selectedItems属性来预设一组默认选中的条目fff。
 
-            <code>searchable</code>为<code>true</code>时可以搜索；<code>pageSize</code>默认是<code>Infinity</code>，即不分页，设置了<code>pageSize</code>数值即可实现分页。
+            \`searchable\`为\`true\`时可以搜索；\`pageSize\`默认是\`Infinity\`，即不分页，设置了\`pageSize\`数值即可实现分页。
         `
     }
 }

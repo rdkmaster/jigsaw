@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {CascadeTextService} from "../text.service";
+import {CascadeTextService} from "../doc.service";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {CascadeData} from "jigsaw/public_api";
 import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
