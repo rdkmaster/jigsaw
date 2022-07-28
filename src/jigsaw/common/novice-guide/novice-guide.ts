@@ -72,8 +72,6 @@ function show(guide: NoviceGuide): ShowResult {
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     if (guide.type === NoviceGuideType.wizard) {
-        // const container = getGuideContainer(false);
-        // container.classList.add('wizard');
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
     return 'showing';
@@ -85,41 +83,56 @@ function createNoviceGuideNotice(guide: NoviceGuide, notices: NoviceGuideNotice[
 
     const found = queryNode(notice);
     if (found) {
-        createNotice(found as HTMLElement);
+        createNoticeWithDelay(guide, notice, found as HTMLElement, showingNotice);
         return;
     }
 
     // 当前还找不到，那就要等着了
-    let clearTimer;
+    let observerTimer;
     showingNotice.mutation = new MutationObserver(() => {
         // 实测querySelector的性能可以接受（万次耗时500~700ms）
         const found = queryNode(notice);
         if (!found) {
             return;
         }
-        createNotice(found as HTMLElement);
-        clearObserver(showingNotice, clearTimer);
+        createNoticeWithDelay(guide, notice, found as HTMLElement, showingNotice, observerTimer);
     });
     showingNotice.mutation.observe(document.body, {childList: true, subtree: true});
-    clearTimer = setTimeout(() => clearObserver(showingNotice, clearTimer), options.maxWaitTargetTimeout);
+    observerTimer = setTimeout(() => disconnectMutationObserver(showingNotice, observerTimer), options.maxWaitTargetTimeout);
+}
 
-    function createNotice(targetEle: HTMLElement) {
-        // 用微任务触发resize，避免setTimeout引起Angular的变更检测
-        Promise.resolve().then(resize);
+function createNoticeWithDelay(guide: NoviceGuide, notice: NoviceGuideNotice, targetEle: HTMLElement,
+                               showingNotice: ShowingNotice, observerTimer?: number) {
+    if (isNaN(notice.delay)) {
+        func();
+    } else {
+        setTimeout(func, notice.delay);
+    }
 
-        if (guide.type === NoviceGuideType.bubble || guide.type === NoviceGuideType.dialog) {
-            createBubbleOrDialogNotice(guide, notice, targetEle);
-        } else if (guide.type === NoviceGuideType.stepped) {
-            createSteppedNotice(guide, notice, targetEle);
-        } else if (guide.type === NoviceGuideType.wizard) {
-            createWizardStep(guide, notice, targetEle);
-        } else {
-            console.error("Error: unsupported novice notice type:", (<any>guide).type);
+    function func() {
+        createNotice(guide, notice, targetEle);
+        if (!isNaN(observerTimer)) {
+            disconnectMutationObserver(showingNotice, observerTimer);
         }
     }
 }
 
-function clearObserver(showingNotice: ShowingNotice, timer: number) {
+function createNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targetEle: HTMLElement) {
+    // 用微任务触发resize，避免setTimeout引起Angular的变更检测
+    Promise.resolve().then(resize);
+
+    if (guide.type === NoviceGuideType.bubble || guide.type === NoviceGuideType.dialog) {
+        createBubbleOrDialogNotice(guide, notice, targetEle);
+    } else if (guide.type === NoviceGuideType.stepped) {
+        createSteppedNotice(guide, notice, targetEle);
+    } else if (guide.type === NoviceGuideType.wizard) {
+        createWizardStep(guide, notice, targetEle);
+    } else {
+        console.error("Error: unsupported novice notice type:", (<any>guide).type);
+    }
+}
+
+function disconnectMutationObserver(showingNotice: ShowingNotice, timer: number) {
     clearTimeout(timer);
     showingNotice.mutation?.disconnect();
     showingNotice.mutation = null;
