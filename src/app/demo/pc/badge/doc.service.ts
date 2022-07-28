@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class BadgeTextService {
     public text: object = {
         introduction: `
-            # Badge 徽标
+            # Badge 多功能徽标
 
             图标右上角的图形徽标数字。
 
@@ -27,9 +27,9 @@ export class BadgeTextService {
             这个DEMO详细演示了\`jigsaw-badge\`指令角标加背景色的用法和效果，注意区分深浅色。
         `,
         maxValue: `
-            ### 输入大于最大数字限制的情况
+            ### 封顶数字
 
-            这个DEMO详细演示了jigsaw-badge指令在输入大于的最大数字限制时如何显示。
+            超过数字限制会显示"+"，数字限制可配置。
         `,
         position: `
             ### 位置
@@ -39,7 +39,7 @@ export class BadgeTextService {
         status: `
             ### 状态
 
-            这个DEMO详细演示了jigsaw-badge指令的各种状态
+            表示状态有变化，没有具体的数字。
         `,
         move: `
             ### move
@@ -52,7 +52,7 @@ export class BadgeTextService {
             这个DEMO演示了\`jigsaw-badge\`指令的三种样式的使用方法。
         `,
         offset: `
-            ### offset
+            ### 位置偏移
 
             这个DEMO详细演示了\`jigsaw-badge\`指令的各个位置的用法。
         `

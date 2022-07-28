@@ -1,8 +1,6 @@
 <demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['offset']">
     <!-- start to learn the demo from here -->
-    <div class="live-demo-wrap">
-        <jigsaw-slider min="-30" max="30" [(value)]="hOffset1" width="300px"></jigsaw-slider>
-        <br><br>
+    <div>
         <div style="display: inline-block;margin-right: 30px">
             <jigsaw-icon width="100" height="100" icon="iconfont iconfont-e8fb" iconSize="100"
                          style="color: #ffffff; background-color:#695f5f;align-items: center; justify-content: center;display: flex;"
@@ -45,18 +43,15 @@
                          [jigsawBadgeHorizontalOffset]="hOffset1" [jigsawBadgeSize]="selectedLabel.size">
             </jigsaw-icon>
         </div>
+    </div>
 
-        <br>
-        <br>
-        <br>
-        <br>
-
-        <jigsaw-slider min="-30" max="30" [(value)]="hOffset2" width="300px"></jigsaw-slider>
+    <div>
         <br><br>
         <jigsaw-list width="250">
             <j-list-option *ngFor="let item of list" [value]="item">
                 <div style="width: 140px" jigsawBadge [jigsawBadgeValue]="item" jigsawBadgePosition="right"
-                     [jigsawBadgeHorizontalOffset]="-hOffset2" [jigsawBadgeStyle]="'border'" [jigsawBadgeSize]="selectedLabel.size">{{item}}</div>
+                     [jigsawBadgeHorizontalOffset]="-hOffset2" [jigsawBadgeStyle]="'border'"
+                     [jigsawBadgeSize]="selectedLabel.size">{{item}}</div>
             </j-list-option>
         </jigsaw-list>
     </div>

@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {BadgeTextService} from "../text.service";
+import {BadgeTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'status-badge',
+    selector: 'badge-status',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap jigsaw-icon {

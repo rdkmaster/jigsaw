@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
-import {BadgeTextService} from "../text.service";
+import {BadgeTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'offset-badge',
+    selector: 'badge-offset',
     templateUrl: './demo.component.html'
 })
 
 export class BadgeOffsetDemoComponent {
-    hOffset1 = 0;
+    hOffset1 = 20;
     hOffset2 = -10;
     list = [
         'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',

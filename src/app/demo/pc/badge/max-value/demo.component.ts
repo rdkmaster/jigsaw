@@ -1,12 +1,12 @@
 import {Component} from '@angular/core';
-import {BadgeTextService} from "../text.service";
+import {BadgeTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'max-value-abdge',
+    selector: 'badge-max-value',
     templateUrl: './demo.component.html',
     styles: [`
-        .live-demo-wrap jigsaw-icon {
+        .demo-showcase jigsaw-icon {
             margin-bottom: 10px;
             line-height: 1;
         }
@@ -21,7 +21,7 @@ export class BadgeMaxValueDemoComponent {
         {label: "大", size: "large"}
     ]);
 
-    public count: number = 99;
+    public count: number = 100;
 
     constructor(public text: BadgeTextService) {
     }
