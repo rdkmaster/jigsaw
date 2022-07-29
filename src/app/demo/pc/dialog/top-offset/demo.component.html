@@ -1,0 +1,19 @@
+
+<demo-template [data]="[]" [text]="text['text']['top']">
+    <jigsaw-button (click)="popupDialog1(dialog1)">弹出模态框</jigsaw-button>
+    {{message}}
+    <ng-template #dialog1>
+        <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="对话框标题" [top]="top" (close)="close()">
+            <ul class="dialog-content">
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+            </ul>
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="danger" (click)="close()">确定</jigsaw-button>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+
+</demo-template>

@@ -26,7 +26,7 @@ export class ColorSelectTextService {
         confirm: `
             ### 手动模式
 
-            这个DEMO详细演示了\`jigsaw-color-select\`组件中自动提交色值的用法。
+            这个DEMO详细演示了\`jigsaw-color-select\`组件中手动提交色值的用法。
         `,
         limited: `
             ### limited 模式
