@@ -1,37 +1,30 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['trigger']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>鼠标单击触发打开/关闭</span>
+        <jigsaw-combo-select openTrigger="click"
+                             closeTrigger="click"
+                             [open]="false"
+                             placeholder="根据选择的触发器测试效果">
+            <ng-template>
+                <div class="drop-down">
+                    这里是下拉视图的内容
+                </div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
 
-
-<!-- start to learn the demo from here -->
-触发打开：
-<jigsaw-radios [(value)]="openTrigger">
-    <jigsaw-radio-option id="openByClick" value="click">鼠标单击</jigsaw-radio-option>
-    <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
-    <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
-</jigsaw-radios>
-<jigsaw-button *ngIf="openTrigger=='none'" (click)="openCombo($event)">open</jigsaw-button>
-
-<br><br>
-触发关闭：
-<jigsaw-radios [(value)]="closeTrigger">
-    <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
-    <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
-    <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
-</jigsaw-radios>
-<jigsaw-button *ngIf="closeTrigger=='none'" (click)="closeCombo($event)">close</jigsaw-button>
-
-<br><br>
-由于 <code>open</code> 属性默认值为true，因此combo的下拉视图默认会直接打开
-<br><br>
-<jigsaw-combo-select [openTrigger]="openTrigger"
-                     [closeTrigger]="closeTrigger"
-                     [(open)]="open"
-                     placeholder="根据选择的触发器测试效果">
-    <ng-template>
-        <div class="drop-down">
-            这里是下拉视图的内容
-        </div>
-    </ng-template>
-</jigsaw-combo-select>
-
+    <div class="demo-showcase-v">
+        <span>鼠标滑入触发打开，鼠标滑出触发关闭</span>
+        <jigsaw-combo-select openTrigger="mouseenter"
+                             closeTrigger="mouseleave"
+                             [open]="false"
+                             placeholder="根据选择的触发器测试效果">
+            <ng-template>
+                <div class="drop-down">
+                    这里是下拉视图的内容
+                </div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</demo-template>

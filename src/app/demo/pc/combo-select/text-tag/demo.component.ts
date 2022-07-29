@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
+    selector: 'combo-select-text-tag',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
 })
@@ -28,9 +30,7 @@ export class ComboSelectTextTagDemoComponent {
 
     selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '利用textTag属性来控制文本的表现形式';
-    description: string = '';
+    constructor(public text: ComboSelectTextService) {
+    }
+
 }

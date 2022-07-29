@@ -1,13 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="combo-select-demo cmn-box">
-    <h3>open drop down</h3>
-    <div class="test-btn">
-        <jigsaw-button (click)="toggleOpen()">toggle open drop down</jigsaw-button>
+<demo-template [data]="''" [text]="text['text']['open']">
+    <!-- start to learn the demo from here -->
+    <div style="margin-bottom: 20px">
+        <jigsaw-button (click)="toggleOpen()">打开/关闭下拉框</jigsaw-button>
     </div>
     <jigsaw-combo-select [(value)]="selectedCity"
                          [(open)]="open"
@@ -23,5 +17,4 @@
             </jigsaw-tile>
         </ng-template>
     </jigsaw-combo-select>
-</div>
-
+</demo-template>

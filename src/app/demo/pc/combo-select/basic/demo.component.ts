@@ -1,16 +1,13 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    selector: 'combo-select-basic',
+    templateUrl: './demo.component.html'
 })
-export class DisabledComboSelectDemo {
+export class ComboSelectBasicDemo {
     disabled = false;
-
-    changeDisabled() {
-        this.disabled = !this.disabled;
-    }
 
     selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
     cities = [
@@ -29,10 +26,6 @@ export class DisabledComboSelectDemo {
         {label: "哈尔滨"}
     ];
 
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: ComboSelectTextService) {
+    }
 }

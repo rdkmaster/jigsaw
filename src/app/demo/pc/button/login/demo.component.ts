@@ -4,8 +4,7 @@ import {ButtonTextService} from "../doc.service";
 
 @Component({
     selector: 'button-login',
-    templateUrl: './demo.component.html',
-    styleUrls: ['../public.css']
+    templateUrl: './demo.component.html'
 })
 export class ButtonLoginComponent {
     onClick() {

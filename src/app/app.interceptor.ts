@@ -379,7 +379,6 @@ export class MockData {
         this.dataSet['hr-list-short'] = require('../mock-data/hr-list-short.json');
         this.dataSet['hr-list-complex'] = require('../mock-data/hr-list-complex.json');
         this.dataSet['fish-bone-1'] = require('../mock-data/fish-bone-1.json');
-        this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
         this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
         this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');

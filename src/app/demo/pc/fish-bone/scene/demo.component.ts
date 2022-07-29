@@ -43,22 +43,8 @@ export class FishBoneSceneComponent implements AfterViewInit {
     }
     data3: SimpleTreeData;
 
-    sceneData = [
-        {id: 1, label: "场景一",},
-        {id: 2, label: "场景二",}
-    ];
-    selectedScene = this.sceneData[0];
-
     hello(toWhom) {
         alert('hello ' + toWhom);
-    }
-
-    changeData(scene) {
-        if (scene.id == 1) {
-            this.data3.fromAjax('mock-data/fish-bone-1');
-        } else if (scene.id = 2) {
-            this.data3.fromAjax('mock-data/fish-bone-2');
-        }
     }
 
     getPieData(node) {

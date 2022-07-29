@@ -1,10 +1,12 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
+    selector: 'combo-select-max-height',
     templateUrl: './demo.component.html',
 })
-export class ComboSelectMaxHeightDemo {
+export class ComboSelectMaxHeightDemoComponent {
 
     selectedCity = new ArrayCollection([{label: "北京"}]);
     selectedCity2 = new ArrayCollection([{label: "北京"}]);
@@ -31,9 +33,7 @@ export class ComboSelectMaxHeightDemo {
         {label: "乌鲁木齐"}
     ];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了combo-select如何设置高度和实现多行滚动显示';
-    description: string = require('!!raw-loader!../events/readme.md').default;
+    constructor(public text: ComboSelectTextService) {
+    }
+
 }

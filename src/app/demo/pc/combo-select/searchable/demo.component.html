@@ -1,12 +1,7 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">本地数据过滤</jigsaw-header>
+<demo-template [data]="''" [text]="text['text']['searchable']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>本地数据过滤</span>
         <j-combo-select maxWidth="500"
                         [(value)]="selectedCountries"
                         [clearable]="true"
@@ -17,7 +12,8 @@
                         (searchKeywordChange)="handleSearching($event, lpaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <j-tile [(selectedItems)]="selectedCountries" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
+                    <j-tile [(selectedItems)]="selectedCountries" [autoRemoveInvalidValue]="false"
+                            trackItemBy="enName" width="550px">
                         <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
                             {{country.enName}}
                         </j-tile-option>
@@ -25,11 +21,11 @@
                 </div>
             </ng-template>
         </j-combo-select>
-        <p>selected countries: {{toCountriesString(selectedCountries)}}</p>
+        <p>选择的国家: {{toCountriesString(selectedCountries)}}</p>
     </div>
 
-    <div class="demo-2 live-demo">
-        <jigsaw-header [level]="2">服务端数据过滤</jigsaw-header>
+    <div class="demo-showcase">
+        <span>服务端数据过滤</span>
         <j-combo-select maxWidth="500"
                         [(value)]="selectedCountries2"
                         [clearable]="true"
@@ -41,7 +37,8 @@
                         (searchKeywordChange)="handleSearching($event, spaCountries)">
             <ng-template>
                 <div class="dropdown">
-                    <j-tile [(selectedItems)]="selectedCountries2" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
+                    <j-tile [(selectedItems)]="selectedCountries2" [autoRemoveInvalidValue]="false"
+                            trackItemBy="enName" width="550px">
                         <j-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
                             {{country.enName}}
                         </j-tile-option>
@@ -49,11 +46,11 @@
                 </div>
             </ng-template>
         </j-combo-select>
-        <p>selected countries: {{toCountriesString(selectedCountries2)}}</p>
+        <p>选择的国家: {{toCountriesString(selectedCountries2)}}</p>
     </div>
 
-    <div class="demo-3 live-demo">
-        <jigsaw-header [level]="2">自定义过滤器</jigsaw-header>
+    <div class="demo-showcase">
+        <span>自定义过滤器</span>
         <j-combo-select maxWidth="500"
                         [(value)]="selectedCountries3"
                         [clearable]="true"
@@ -66,7 +63,8 @@
                         <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
                     </j-input>
                     <div class="dropdown">
-                        <j-tile [(selectedItems)]="selectedCountries3" [autoRemoveInvalidValue]="false" trackItemBy="enName" width="550px">
+                        <j-tile [(selectedItems)]="selectedCountries3" [autoRemoveInvalidValue]="false"
+                                trackItemBy="enName" width="550px">
                             <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
                                 {{country.enName}}
                             </j-tile-option>
@@ -75,7 +73,6 @@
                 </div>
             </ng-template>
         </j-combo-select>
-        <p>selected countries: {{toCountriesString(selectedCountries3)}}</p>
+        <p>选择的国家: {{toCountriesString(selectedCountries3)}}</p>
     </div>
-</div>
-
+</demo-template>

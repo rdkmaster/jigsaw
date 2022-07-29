@@ -15,7 +15,7 @@ export class DemoTemplate {
     @Input()
     public text: string = '';
     @Input()
-    public data: object[] = new ArrayCollection([
+    public data: object[] | '' = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "default"},
         {label: "大", size: "large"}
