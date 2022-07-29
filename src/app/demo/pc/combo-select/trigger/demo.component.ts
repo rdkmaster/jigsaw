@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
+    selector: 'combo-select-trigger',
     templateUrl: './demo.component.html',
     styles: [`
         .drop-down {
@@ -12,24 +14,9 @@ import {Component} from '@angular/core';
         }
     `]
 })
-export class ComboSelectTriggerDemo {
-    openTrigger = "mouseenter";
-    closeTrigger = "mouseleave";
+export class ComboSelectTriggerDemoComponent {
     public open: boolean = true;
 
-    public openCombo(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.open = true;
+    constructor(public text: ComboSelectTextService) {
     }
-    public closeCombo(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.open = false;
-    }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何改变下拉视图的触发器';
-    description: string = '';
 }

@@ -1,22 +1,10 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
     <!-- start to learn the demo from here -->
-    <label>抽屉位置：</label>
-    <jigsaw-radios [(value)]="selectedPosition" (valueChange)="onPosChange($event)">
-        <jigsaw-radio-option value="left">left</jigsaw-radio-option>
-        <jigsaw-radio-option value="right">right</jigsaw-radio-option>
-        <jigsaw-radio-option value="top">top</jigsaw-radio-option>
-        <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
-    </jigsaw-radios>
-    <div>
-        <label>突出抽屉把手：</label>
-        <jigsaw-switch [(checked)]="emphasisHandler"></jigsaw-switch>
-    </div>
-    <br>
     <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
     <span *ngIf="touched" style="margin:auto;">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>
 
-    <j-drawer [(open)]="isOpen" (openChange)="touched = true" [position]="selectedPosition"
-              [width]="width" [height]="height" [emphasisHandler]="emphasisHandler">
+    <j-drawer [(open)]="isOpen" (openChange)="touched = true" position="right"
+              [width]="width" [height]="height">
         <div class="drawer-content">
             这是一个展示内容的box
         </div>

@@ -17,8 +17,7 @@ import {FishBoneSceneComponent} from "./scene/demo.component";
         JigsawMarkdownModule,
         JigsawFishBoneModule,
         JigsawSelectModule
-    ],
-    exports: [FishBoneAllComponent]
+    ]
 })
 export class FishBoneDemoModule {
 }

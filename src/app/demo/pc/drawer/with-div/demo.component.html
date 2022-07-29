@@ -1,34 +1,8 @@
 <demo-template [data]="''" [text]="text['text']['withDiv']">
     <!-- start to learn the demo from here -->
-    <div>
-        宽度：
-        <j-input width="200" [(value)]="width"></j-input>
-        高度：
-        <j-input width="200" [(value)]="height"></j-input>
-    </div>
-    <div>
-        <label>抽屉位置：</label>
-        <jigsaw-radios [(value)]="selectedPosition">
-            <jigsaw-radio-option value="left">left</jigsaw-radio-option>
-            <jigsaw-radio-option value="right">right</jigsaw-radio-option>
-            <jigsaw-radio-option value="top">top</jigsaw-radio-option>
-            <jigsaw-radio-option value="bottom">bottom</jigsaw-radio-option>
-        </jigsaw-radios>
-    </div>
-    <div style="margin-bottom: 20px">
-        offsetLeft：
-        <j-input [(value)]="offsetLeft"></j-input>
-        offsetTop：
-        <j-input [(value)]="offsetTop"></j-input>
-        offsetRight：
-        <j-input [(value)]="offsetRight"></j-input>
-        offsetBottom：
-        <j-input [(value)]="offsetBottom"></j-input>
-    </div>
     <div class="custom-container">
-        <j-drawer container=".custom-container" [position]="selectedPosition" [width]="width" [height]="height"
-                  [offsetLeft]="offsetLeft" [offsetTop]="offsetTop" [offsetRight]="offsetRight"
-                  [offsetBottom]="offsetBottom">
+        <j-drawer container=".custom-container" position="left" width="auto" [height]="height"
+                  offsetLeft="0" offsetTop="28" offsetRight="0" offsetBottom="0">
             <div class="drawer-content">
                 这是一个展示内容的box
             </div>

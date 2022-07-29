@@ -1,14 +1,13 @@
 import {Component} from '@angular/core';
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
+    selector: 'combo-select-drop-down-status',
     templateUrl: './demo.component.html'
 })
 export class ComboDropDownStatusDemoComponent {
     name: string = 'Jigsaw';
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '下拉视图的状态 - 请关注这个demo的下拉视图的各个组件的值的变化';
-    description: string = require('!!raw-loader!./readme.md').default;
+    constructor(public text: ComboSelectTextService) {
+    }
 }

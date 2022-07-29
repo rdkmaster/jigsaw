@@ -1,11 +1,12 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    selector: 'combo-select-events',
+    templateUrl: './demo.component.html'
 })
-export class ComboSelectChangeTriggerDemo {
+export class ComboSelectChangeEventsDemoComponent {
     selectedCity = new ArrayCollection();
     cities = [
         {label: '北京', type: '', closable: false},
@@ -40,9 +41,6 @@ export class ComboSelectChangeTriggerDemo {
         btn.type = '';
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何利用事件将下拉视图与`JigsawComboSelect`组件实现无缝融合';
-    description: string = require('!!raw-loader!./readme.md').default;
+    constructor(public text: ComboSelectTextService) {
+    }
 }

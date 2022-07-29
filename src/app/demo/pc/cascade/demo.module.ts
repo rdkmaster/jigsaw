@@ -31,7 +31,6 @@ import {JigsawCascadeModule, JigsawComboSelectModule} from "jigsaw/public_api";
         CascadeShowAllComponent,
         CascadeWithComboComponent,
         CascadeSearchAndPagingComponent
-    ],
-    exports: [CascadeAllComponent]
+    ]
 })
 export class CascadeAllModule {}

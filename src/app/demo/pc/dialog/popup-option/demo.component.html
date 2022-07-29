@@ -5,9 +5,11 @@
             <div #middle class="middle box"></div>
             <div #right class="right box"></div>
         </div>
-        <jigsaw-button colorType="primary" width="200px" (click)="popupDialog1(dialog1)">红色弹出对话框</jigsaw-button>
-        <jigsaw-button colorType="primary" width="200px" (click)="popupDialog2(dialog1)">蓝色弹出对话框</jigsaw-button>
-        <jigsaw-button colorType="primary" width="200px" (click)="popupDialog3(dialog1)">绿色弹出对话框</jigsaw-button>
+  <div class="demo-showcase">
+      <div><jigsaw-button colorType="primary" width="200px" (click)="popupDialog1(dialog1)">红色弹出对话框</jigsaw-button></div>
+      <div><jigsaw-button colorType="primary" width="200px" (click)="popupDialog2(dialog1)">蓝色弹出对话框</jigsaw-button></div>
+      <div> <jigsaw-button colorType="primary" width="200px" (click)="popupDialog3(dialog1)">绿色弹出对话框</jigsaw-button></div>
+  </div>
         <ng-template #dialog1>
             <jigsaw-dialog width="400px" icon="iconfont iconfont-e3f0" caption="对话框标题" (close)="close()">
                 <ul class="dialog-content">

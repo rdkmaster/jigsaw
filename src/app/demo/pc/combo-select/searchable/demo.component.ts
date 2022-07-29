@@ -4,19 +4,20 @@ import {
     ArrayCollection, LocalPageableArray, PageableArray, ComboSelectValue,
     TableData
 } from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    selector: 'combo-select-searchable',
+    templateUrl: './demo.component.html'
 })
-export class ComboSelectAutoCompleteDemo {
+export class ComboSelectSearchableDemoComponent {
     lpaCountries: LocalPageableArray<ComboSelectValue>;
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
     selectedCountries3: any;
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: ComboSelectTextService) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.pagingInfo.pageSize=1000;
@@ -79,10 +80,4 @@ export class ComboSelectAutoCompleteDemo {
         filterKey = filterKey ? filterKey.trim() : '';
         data.filter(filterKey, ['enName', 'zhName']);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何使用关键字过滤的功能，包括浏览器内部数据过滤，和服务端数据过滤';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

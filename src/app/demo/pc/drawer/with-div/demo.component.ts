@@ -1,16 +1,13 @@
 import {Component} from "@angular/core";
-import {DrawerTextService} from "../text.service";
+import {DrawerTextService} from "../doc.service";
 
 @Component({
-    selector: 'with-div-drawer',
+    selector: 'drawer-with-div',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class DrawerWithDivDemoComponent {
-    width: string = 'auto';
     height: string = 'calc(100% - 30px)';
-
-    selectedPosition = 'left';
 
     offsetLeft: string;
     offsetTop: string = '28';

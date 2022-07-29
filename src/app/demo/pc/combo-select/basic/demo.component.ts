@@ -3,18 +3,14 @@ import {ArrayCollection} from "jigsaw/public_api";
 import {ComboSelectTextService} from "../doc.service";
 
 @Component({
-    selector: 'combo-select-open',
+    selector: 'combo-select-basic',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectOpenDemoComponent {
-    public open: boolean = false;
+export class ComboSelectBasicDemo {
+    disabled = false;
 
-    public toggleOpen() {
-        this.open = !this.open
-    }
-
-    public selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
-    public cities = [
+    selectedCity = new ArrayCollection([{label: "北京", closable: false}]);
+    cities = [
         {label: "北京", closable: false},
         {label: "上海", closable: false},
         {label: "南京"},
@@ -32,5 +28,4 @@ export class ComboSelectOpenDemoComponent {
 
     constructor(public text: ComboSelectTextService) {
     }
-
 }

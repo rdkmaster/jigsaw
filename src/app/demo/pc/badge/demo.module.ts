@@ -47,8 +47,7 @@ import {BadgeStyleDemoComponent} from "./style/demo.component";
         JigsawTileLiteModule,
         JigsawNumericInputModule,
         JigsawListModule
-    ],
-    exports: [BadgeAllComponent]
+    ]
 })
 export class BadgeDemoModule {
 }

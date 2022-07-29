@@ -38,8 +38,7 @@ import {ButtonWithChartIconDemoComponent} from "./with-chart-icon/demo.component
         JigsawLoadingModule,
         ChartIconButtonDemoModule
 
-    ],
-    exports: [ButtonAllComponent]
+    ]
 })
 export class ButtonDemoModule {
 }

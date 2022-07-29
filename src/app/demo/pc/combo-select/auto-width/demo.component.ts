@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
+    selector: 'combo-select-auto-width',
     templateUrl: './demo.component.html'
 })
 export class ComboSelectAutoWidthDemo {
@@ -22,9 +24,6 @@ export class ComboSelectAutoWidthDemo {
         {label: "哈尔滨"}
     ];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何实现下拉视图的宽度自动与组件对齐';
-    description: string = '';
+    constructor(public text: ComboSelectTextService) {
+    }
 }

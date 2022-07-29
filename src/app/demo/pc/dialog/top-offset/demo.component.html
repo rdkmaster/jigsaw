@@ -1,6 +1,6 @@
 
 <demo-template [data]="[]" [text]="text['text']['top']">
-    <jigsaw-button (click)="popupDialog1(dialog1)">popup</jigsaw-button>
+    <jigsaw-button (click)="popupDialog1(dialog1)">弹出模态框</jigsaw-button>
     {{message}}
     <ng-template #dialog1>
         <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="对话框标题" [top]="top" (close)="close()">

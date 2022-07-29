@@ -1,16 +1,15 @@
 import {Component} from '@angular/core';
+import {ComboSelectTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    selector: 'combo-select-set-width',
+    templateUrl: './demo.component.html'
 })
-export class ComboSelectSetWidthDemo {
+export class ComboSelectSetWidthDemoComponent {
     width: string = '200';
     width2: string = '400';
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: ComboSelectTextService) {
+    }
+
 }

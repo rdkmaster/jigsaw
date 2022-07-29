@@ -34,7 +34,6 @@ import {ProductService} from "./router/product.service";
         RouterModule,
         CommonModule
     ],
-    exports: [BreadcrumbAllComponent],
     providers: [ProductService]
 })
 export class BreadcrumbDemoModule {
