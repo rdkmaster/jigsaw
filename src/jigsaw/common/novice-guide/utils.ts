@@ -20,7 +20,11 @@ export const options: NoviceGuideOptions = {
 }
 export const shownGuides: ShownGuideInfo[] = [];
 try {
-    shownGuides.push(...JSON.parse(localStorage.getItem(options.storageKey) || '[]'));
+    const storage = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
+    (<any>shownGuides).disabled = storage.disabled;
+    if (storage instanceof Array) {
+        shownGuides.push(...storage);
+    }
 } catch (e) {
     // 避免单测等非浏览器场景下报错
     console.warn('Warn: do not run jigsaw in none browser environment!');

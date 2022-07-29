@@ -351,8 +351,7 @@ function saveShownGuide(guide: NoviceGuide, notice: NoviceGuideNotice) {
  */
 export const noviceGuide = {
     show: (guide: NoviceGuide) => {
-        const storage = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
-        if (storage?.disabled) {
+        if ((<any>shownGuides).disabled) {
             return;
         }
         if (options.ngZone) {
