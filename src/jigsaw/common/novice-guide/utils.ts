@@ -21,9 +21,10 @@ export const options: NoviceGuideOptions = {
 export const shownGuides: ShownGuideInfo[] = [];
 try {
     const storage = JSON.parse(localStorage.getItem(options.storageKey) || '[]');
-    (<any>shownGuides).disabled = storage.disabled;
     if (storage instanceof Array) {
         shownGuides.push(...storage);
+    } else {
+        (<any>shownGuides).disabled = true;
     }
 } catch (e) {
     // 避免单测等非浏览器场景下报错

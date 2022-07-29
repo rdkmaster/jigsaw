@@ -345,17 +345,23 @@ function saveShownGuide(guide: NoviceGuide, notice: NoviceGuideNotice) {
     localStorage.setItem(options.storageKey, JSON.stringify(shownGuides));
 }
 
+type NoviceGuideWrapper = {
+    show: (guide: NoviceGuide) => ShowResult;
+    reset: () => void;
+    clear: () => void;
+    updateOptions: (opt: NoviceGuideOptions) => void;
+};
 /**
  * 由于 novice guide 需要在js上下文中直接使用，因此这里通过noviceGuide这个变量来起到命名空间的作用
  * 从而统一ts和js两种上下文的引入用法一致。
  */
-export const noviceGuide = {
+export const noviceGuide: NoviceGuideWrapper = {
     show: (guide: NoviceGuide) => {
         if ((<any>shownGuides).disabled) {
-            return;
+            return 'disabled';
         }
         if (options.ngZone) {
-            return options.ngZone.runOutsideAngular(() => show(guide));
+            return <ShowResult>options.ngZone.runOutsideAngular(() => show(guide));
         } else {
             return show(guide);
         }
