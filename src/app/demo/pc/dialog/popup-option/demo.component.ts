@@ -3,14 +3,14 @@ import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
-import {DialogTextService} from "../text.service";
+import {DialogTextService} from "../doc.service";
 
 @Component({
-    selector: 'popup-option-dialog',
+    selector: 'dialog-popup-option',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DialogPopOptionDemo implements OnInit, AfterViewInit {
+export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
 
     dialogInfo: PopupInfo;
 
@@ -36,7 +36,7 @@ export class DialogPopOptionDemo implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.generatePopPosition();
+        // this.generatePopPosition();
         this.detailPos = {x: null, y: null};
         this.offset = {top: 10, left: 10, right: null, bottom: null};
         this.option = {
@@ -63,34 +63,53 @@ export class DialogPopOptionDemo implements OnInit, AfterViewInit {
         this.selectedPos = this.poses[0];
         this._cdr.detectChanges();
     }
-
-    generatePopPosition() {
-        this.popPositionTypes = [];
-        for (let prop in PopupPositionType) {
-            if (typeof PopupPositionType[prop] === 'number')
-                this.popPositionTypes.push({label: prop, id: PopupPositionType[prop]});
-        }
-        this.selectedPositionType = this.popPositionTypes[1];
-    }
-
     popupDialog1(ele: TemplateRef<any>) {
         this.option.posOffset = {
-            top: this.offset.top === null ? this.offset.top : Number(this.offset.top),
-            left: this.offset.left === null ? this.offset.left : Number(this.offset.left),
-            right: this.offset.right === null ? this.offset.right : Number(this.offset.right),
-            bottom: this.offset.bottom === null ? this.offset.bottom : Number(this.offset.bottom)
+            top: 10,
+            left: 10,
+            right: 0,
+            bottom: 0,
         };
 
-        if (this.selectedPos.label != "point") {
-            this.option.pos = this.selectedPos.ele;
-        } else {
-            this.option.pos = {
-                x: this.detailPos.x === null ? this.detailPos.x : Number(this.detailPos.x),
-                y: this.detailPos.y === null ? this.detailPos.y : Number(this.detailPos.y),
-            };
-        }
+        this.option.pos = this.left
 
-        this.option.posType = this.selectedPositionType.id;
+        this.option.posType = 0
+
+        if (this.dialogInfo) {
+            this.dialogInfo.dispose();
+        }
+        console.log(this.option);
+        this.dialogInfo = this.popupService.popup(ele, this.option);
+    }
+    popupDialog2(ele: TemplateRef<any>) {
+        this.option.posOffset = {
+            top: 20,
+            left: 0,
+            right: 10,
+            bottom: 0,
+        };
+
+        this.option.pos = this.middle
+
+        this.option.posType = 0
+
+        if (this.dialogInfo) {
+            this.dialogInfo.dispose();
+        }
+        console.log(this.option);
+        this.dialogInfo = this.popupService.popup(ele, this.option);
+    }
+    popupDialog3(ele: TemplateRef<any>) {
+        this.option.posOffset = {
+            top: 30,
+            left: 0,
+            right: 0,
+            bottom: 0,
+        };
+
+        this.option.pos = this.right
+
+        this.option.posType = 0
 
         if (this.dialogInfo) {
             this.dialogInfo.dispose();

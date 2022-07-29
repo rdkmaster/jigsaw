@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {DialogTextService} from "../text.service";
+import {DialogTextService} from "../doc.service";
 
 @Component({
-    selector: 'in-dom-dialog',
+    selector: 'dialog-in-dom',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont {

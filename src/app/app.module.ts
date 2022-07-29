@@ -41,6 +41,7 @@ import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.mod
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
 import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
+import {DialogDemoModule} from "./demo/pc/dialog/demo.module";
 
 @NgModule({
     declarations: [
@@ -63,7 +64,7 @@ import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
-        ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule,
+        ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

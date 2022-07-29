@@ -1,0 +1,34 @@
+<demo-template [data]="[]" [text]="text['text']['basic']">
+    <div class="line-box">
+        <label>位置：</label>
+        <jigsaw-radios [(value)]="selectedPositionType" trackItemBy="label">
+            <jigsaw-radio-option *ngFor="let popPositionType of popPositionTypes"
+                                 [value]="popPositionType">{{popPositionType.label}}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+    <div class="line-box" *ngIf="selectedPositionType?.label != '居中'">
+        <div *ngFor="let property of objectKeys(selectedPositionType?.offset)" class="offset-box">
+            <label>{{property}}: </label>
+            <jigsaw-numeric-input [(value)]="selectedPositionType.offset[property]"></jigsaw-numeric-input>
+            <span style="margin-left: 5px;">px</span>
+        </div>
+    </div>
+    <jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog()">
+        弹出 / 复位
+    </jigsaw-button>
+
+    <ng-template #tpDialog>
+        <jigsaw-dialog width="400px" (close)="closeDialog()" icon="iconfont iconfont-e3f0" caption="一个对话框">
+            <div jigsaw-body>
+                <p class="dialog-content">
+                    这是一个普通的对话框，请关注它的弹出位置
+                </p>
+            </div>
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="closeDialog()">确定</jigsaw-button>
+                <jigsaw-button (click)="closeDialog()">取消</jigsaw-button>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+</demo-template>
