@@ -34,6 +34,7 @@ import {ButtonBarDemoModule} from "./demo/pc/button-bar/demo.module";
 import {BadgeDemoModule} from "./demo/pc/badge/demo.module";
 import {RadioGroupDemoModule} from "./demo/pc/radio/demo.module";
 import {CascadeAllModule} from "./demo/pc/cascade/demo.module";
+import {DrawerDemoModule} from "./demo/pc/drawer/demo.module";
 import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
 import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.module";
 import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
@@ -48,7 +49,7 @@ import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
         AppComponent, PCDemoListComponent, MobileDemoListComponent, SwitchDemoComponent, DemoCodeComponent
     ],
     imports: [
-        BrowserModule, BrowserAnimationsModule, HttpClientModule,
+        BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

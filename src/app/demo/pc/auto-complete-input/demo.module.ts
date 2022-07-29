@@ -22,8 +22,7 @@ import {AutoCompleteInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.c
         JigsawAutoCompleteInputModule,
         JigsawSwitchModule,
         JigsawInputModule
-    ],
-    exports: [AutoCompleteInputDemoComponent]
+    ]
 })
 export class AutoCompleteInputDemoModule {
 }

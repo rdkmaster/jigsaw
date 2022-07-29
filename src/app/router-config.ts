@@ -10,6 +10,7 @@ import {BadgeAllComponent} from "./demo/pc/badge/demo.component";
 import {ButtonAllComponent} from "./demo/pc/button/demo.component";
 import {CheckBoxDemoComponent} from "./demo/pc/checkbox/demo.componet";
 import {ButtonBarAllComponent} from "./demo/pc/button-bar/demo.component";
+import {DrawerAllComponent} from "./demo/pc/drawer/demo.component";
 import {RadioGroupDemoComponent} from "./demo/pc/radio/demo.component";
 import {FishBoneAllComponent} from "./demo/pc/fish-bone/demo.component";
 import {CascadeAllComponent} from "./demo/pc/cascade/demo.component";
@@ -46,6 +47,7 @@ export const routerConfigPC = [
     { path: "pc/fish-bone", component: FishBoneAllComponent},
     { path: "pc/header", component: HeaderDemoComponent },
     { path: "pc/checkbox", component: CheckBoxDemoComponent },
+    { path: "pc/drawer", component: DrawerAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

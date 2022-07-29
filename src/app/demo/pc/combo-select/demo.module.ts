@@ -50,8 +50,7 @@ import {ComboSelectTriggerDemoComponent} from "./trigger/demo.component";
         JigsawSwitchModule,
         JigsawInputModule
 
-    ],
-    exports: [ComboSelectComponent]
+    ]
 })
 export class ComboSelectDemoModule {
 }

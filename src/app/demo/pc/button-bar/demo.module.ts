@@ -29,8 +29,7 @@ import {ButtonBarSetHeightComponent} from "./set-height/demo.component";
         JigsawSwitchModule,
         JigsawRadioLiteModule
 
-    ],
-    exports: [ButtonBarAllComponent]
+    ]
 })
 export class ButtonBarDemoModule {
 }

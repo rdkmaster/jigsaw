@@ -23,8 +23,7 @@ import {CustomizedAlert} from "./customized/customized-alert";
         JigsawButtonModule,
         JigsawHeaderModule,
         JigsawCheckBoxModule
-    ],
-    exports: [AlertDemoComponent]
+    ]
 })
 export class AlertDemoModule {
 }

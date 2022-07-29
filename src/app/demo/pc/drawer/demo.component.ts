@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {DrawerTextService} from "../text.service";
+import {DrawerTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',
