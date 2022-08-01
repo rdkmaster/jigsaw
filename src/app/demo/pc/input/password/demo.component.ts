@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {InputTextService} from "../text.service";
+import {InputTextService} from "../doc.service";
 
 @Component({
-    selector: "password-input",
+    selector: "input-password",
     templateUrl: './demo.component.html',
 })
 

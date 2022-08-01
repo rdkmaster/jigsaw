@@ -1,12 +1,14 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
-    <div style="margin-bottom: 20px">
-        <jigsaw-input [(value)]="inputValue" placeholder="请输入文本" width="50%">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <jigsaw-input [(value)]="inputValue" placeholder="请输入文本" width="300px">
         </jigsaw-input>
-        <p class="notes">输入值是：<span>{{inputValue}}</span></p>
+        <p>输入值是：<span>{{inputValue}}</span></p>
     </div>
 
-    <div>
-        <jigsaw-input placeholder="禁用文本框" width="50%" [disabled]="true">
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-input placeholder="请输入文本" width="300px" [disabled]="true">
         </jigsaw-input>
     </div>
 </demo-template>

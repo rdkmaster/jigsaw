@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
-import {InputTextService} from "../text.service";
+import {InputTextService} from "../doc.service";
 
 @Component({
-    selector: 'prefix-suffix-input',
+    selector: 'input-prefix-suffix',
     templateUrl: './demo.component.html',
     styles: [`
         .demo-container {

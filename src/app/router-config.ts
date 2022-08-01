@@ -14,6 +14,7 @@ import {DrawerAllComponent} from "./demo/pc/drawer/demo.component";
 import {RadioGroupDemoComponent} from "./demo/pc/radio/demo.component";
 import {IconAllComponent} from "./demo/pc/icon/demo.component";
 import {FishBoneAllComponent} from "./demo/pc/fish-bone/demo.component";
+import {InputAllComponent} from "./demo/pc/input/demo.component";
 import {CascadeAllComponent} from "./demo/pc/cascade/demo.component";
 import {ComboSelectComponent} from "./demo/pc/combo-select/demo.component";
 import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
@@ -51,6 +52,7 @@ export const routerConfigPC = [
     { path: "pc/checkbox", component: CheckBoxDemoComponent },
     { path: "pc/drawer", component: DrawerAllComponent},
     { path: "pc/icon", component: IconAllComponent},
+    { path: "pc/input", component: InputAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
