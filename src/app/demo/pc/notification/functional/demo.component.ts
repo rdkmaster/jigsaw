@@ -7,7 +7,7 @@ import {NotificationTextService} from "../doc.service";
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
-            width: 380px;
+            width: 250px;
         }
     `]
 })

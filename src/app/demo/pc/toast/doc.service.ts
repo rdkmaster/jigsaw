@@ -17,10 +17,13 @@ export class ToastTextService {
             ## 示例
         `,
         basic: `
-            ### 基本用法
+            ### 基础吐司
         `,
-        toastSet: `
-            ### Toast配置
-        `
+        functional: `
+            ### 基础吐司
+        `,
+        longText: `
+            ### 长文本提示框
+        `,
     }
 }
