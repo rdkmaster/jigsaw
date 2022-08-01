@@ -1,4 +1,4 @@
-import { ExampleDemoComponent } from './demo/pc/example/demo.component';
+import {ExampleDemoComponent} from './demo/pc/example/demo.component';
 import {AlertDemoComponent} from "./demo/pc/alert/demo.component";
 import {AutoCompleteInputDemoComponent} from "./demo/pc/auto-complete-input/demo.component";
 import {HeaderDemoComponent} from "./demo/pc/header/demo.component";
@@ -28,10 +28,11 @@ import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
 import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.component";
 import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
 import {ToastDemoComponent} from "./demo/pc/toast/demo.component";
+import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
 
 export const routerConfigPC = [
-    { path: "pc/example", component: ExampleDemoComponent },
-    { path: "pc/alert", component: AlertDemoComponent },
+    {path: "pc/example", component: ExampleDemoComponent},
+    {path: "pc/alert", component: AlertDemoComponent},
     {
         path: "pc/breadcrumb", component: BreadcrumbAllComponent,
         children: [
@@ -46,18 +47,18 @@ export const routerConfigPC = [
             }
         ]
     },
-    { path: "pc/combo-select", component: ComboSelectComponent},
-    { path: "pc/auto-complete-input", component: AutoCompleteInputDemoComponent},
-    { path: "pc/badge", component: BadgeAllComponent},
-    { path: "pc/button-bar", component: ButtonBarAllComponent },
-    { path: "pc/button", component: ButtonAllComponent },
-    { path: "pc/cascade", component: CascadeAllComponent},
-    { path: "pc/fish-bone", component: FishBoneAllComponent},
-    { path: "pc/header", component: HeaderDemoComponent },
-    { path: "pc/checkbox", component: CheckBoxDemoComponent },
-    { path: "pc/drawer", component: DrawerAllComponent},
-    { path: "pc/icon", component: IconAllComponent},
-    { path: "pc/input", component: InputAllComponent},
+    {path: "pc/combo-select", component: ComboSelectComponent},
+    {path: "pc/auto-complete-input", component: AutoCompleteInputDemoComponent},
+    {path: "pc/badge", component: BadgeAllComponent},
+    {path: "pc/button-bar", component: ButtonBarAllComponent},
+    {path: "pc/button", component: ButtonAllComponent},
+    {path: "pc/cascade", component: CascadeAllComponent},
+    {path: "pc/fish-bone", component: FishBoneAllComponent},
+    {path: "pc/header", component: HeaderDemoComponent},
+    {path: "pc/checkbox", component: CheckBoxDemoComponent},
+    {path: "pc/drawer", component: DrawerAllComponent},
+    {path: "pc/icon", component: IconAllComponent},
+    {path: "pc/input", component: InputAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
@@ -69,7 +70,8 @@ export const routerConfigPC = [
     {path: "pc/loading", component: LoadingDemoComponent},
     {path: "pc/navigation-menu", component: NavigationMenuAllDemoComponent},
     {path: "pc/notification", component: NotificationDemoComponent},
-    {path: "pc/toast", component: ToastDemoComponent}
+    {path: "pc/toast", component: ToastDemoComponent},
+    {path: "pc/tooltip", component: TooltipDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

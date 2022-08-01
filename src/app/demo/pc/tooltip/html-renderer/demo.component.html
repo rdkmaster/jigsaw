@@ -1,20 +1,12 @@
-<demo-template [data]="''" [text]="text['text']['html']">
+<demo-template [data]="[]" [text]="text['text']['html']">
     <!-- start to learn the demo from here -->
     <div>
-        编辑tooltip
-        <jigsaw-input width="600" [(value)]="simpleHtml">
-        </jigsaw-input>
-        <br>
         <jigsaw-button style="margin-top: 6px" width="105px" jigsawTooltipRenderAs="html" [jigsawTooltip]="simpleHtml">
             显示Tooltip
         </jigsaw-button>
     </div>
 
     <div style="margin-top: 12px">
-        编辑tooltip
-        <jigsaw-input width="600" [(value)]="actionHtml">
-        </jigsaw-input>
-        <br>
         <jigsaw-button jigsawTooltipRenderAs="html" [jigsawTooltipContext]="this" [jigsawTooltip]="actionHtml"
                        jigsawTooltipCloseDelay="200" style="margin-top: 6px" width="105px">
             显示Tooltip
