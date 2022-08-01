@@ -6,10 +6,10 @@ import {MenuInDialogDemo} from './in-dialog/demo.component';
 import {MenuInDialogDemoModule} from './in-dialog/demo.module';
 import {MenuUsageDemo} from "./usage/demo.component";
 import {MenuUsageDemoModule} from "./usage/demo.module";
-import {NavigationMenuNavDemo} from "./navigation/demo.component";
+import {NavigationMenuNavDemo} from "../navigation/demo.component";
 import {NavigationMenuInlineDemo} from "./nav-inline/demo.component";
 import {NavigationMenuInlineDemoModule} from "./nav-inline/demo.module";
-import {NavigationMenuNavDemoModule} from "./navigation/demo.module";
+import {NavigationMenuNavDemoModule} from "../navigation/demo.module";
 import {MenuAllComponent} from "./all/demo.component";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 
