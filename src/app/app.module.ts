@@ -46,6 +46,7 @@ import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
 import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
 import {DialogDemoModule} from "./demo/pc/dialog/demo.module";
 import {IconsDemoModule} from "./demo/pc/icons/demo.module";
+import {LoadingDemoModule} from "./demo/pc/loading/demo.module";
 
 @NgModule({
     declarations: [
@@ -69,6 +70,7 @@ import {IconsDemoModule} from "./demo/pc/icons/demo.module";
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
+        LoadingDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

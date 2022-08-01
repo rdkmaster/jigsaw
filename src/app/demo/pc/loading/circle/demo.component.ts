@@ -1,23 +1,30 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService, PopupInfo, JigsawCircleLoading } from "jigsaw/public_api";
+import {LoadingService, PopupInfo, JigsawCircleLoading, ArrayCollection} from "jigsaw/public_api";
+import {LoadingTextService} from "../doc.service";
 
 @Component({
+    selector: 'loading-circle',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class CircleLoadingDemoComponent {
+export class LoadingCircleDemoComponent {
     @ViewChild('block') block: ElementRef;
 
     percent: number = 0;
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
-    constructor(public loadingService: LoadingService) {
+    constructor(public loadingService: LoadingService, public text: LoadingTextService) {
         setInterval(() => {
             this.percent = (this.percent + Math.random() * 10) % 100;
         }, 500);
     }
-
+    public data: object[] = new ArrayCollection([
+        {label: "小", size: "small"},
+        {label: "中", size: "medium"},
+        {label: "大", size: "large"},
+    ]);
+    public selectedLabel = {label: "中", size: "medium"};
     popupBlockLoading() {
         if (!this.blockLoading) {
             this.blockLoading = this.loadingService.show(this.block);

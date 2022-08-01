@@ -1,93 +1,27 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['circle']">
+    <div class="wrap">
+        <jigsaw-header>圆形Loading 各种size</jigsaw-header>
 
-<!-- start to learn the demo from here -->
-<div class="wrap">
-    <jigsaw-header>这是一个在容器内的loading</jigsaw-header>
-    <j-button (click)="popupBlockLoading()">popupBlockLoading</j-button>
-    <j-button (click)="closeBlockLoading()">closeBlockLoading</j-button>
-    <div #block class="block">
-        <div>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
-            <p>这里需要一段文字，虽然我认真写了，但是估计没多少人会仔细看。</p>
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading
+                [size]="selectedLabel.size"
+                [label]="'这是'+selectedLabel.label"
+                [percent]="percent"
+            ></jigsaw-circle-loading>
+        </div>
+        <jigsaw-header>圆形Loading 不显示标签</jigsaw-header>
+
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading
+                [size]="selectedLabel.size"
+                [percent]="percent"
+            ></jigsaw-circle-loading>
+        </div>
+
+        <jigsaw-header>圆形Loading 不显示百分比</jigsaw-header>
+
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading [size]="selectedLabel.size"></jigsaw-circle-loading>
         </div>
     </div>
-
-    <jigsaw-header>这是一个全屏带遮罩的loading</jigsaw-header>
-    <j-button (click)="popupGlobalLoading()">弹出全屏Loading</j-button>
-
-    <jigsaw-header>圆形Loading 各种size</jigsaw-header>
-
-    <div class="large-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'large'"
-            [label]="'这是large'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'medium'"
-            [label]="'这是medium'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'small'"
-            [label]="'这是small'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <jigsaw-header>圆形Loading 不显示标签</jigsaw-header>
-
-    <div class="large-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'large'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'medium'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
-        <jigsaw-circle-loading
-            [size]="'small'"
-            [percent]="percent"
-        ></jigsaw-circle-loading>
-    </div>
-
-    <jigsaw-header>圆形Loading 不显示百分比</jigsaw-header>
-
-    <div class="large-loading-cntr">
-        <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>
-    </div>
-
-    <div class="medium-loading-cntr">
-        <jigsaw-circle-loading [size]="'medium'"></jigsaw-circle-loading>
-    </div>
-
-    <div class="small-loading-cntr">
-        <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
-    </div>
-</div>
+</demo-template>

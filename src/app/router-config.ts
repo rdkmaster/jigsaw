@@ -23,6 +23,7 @@ import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
 import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
+import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -59,7 +60,8 @@ export const routerConfigPC = [
     {path: "pc/color-select", component: ColorSelectDemoComponent},
     {path: "pc/collapse", component: CollapseDemoComponent},
     {path: "pc/dialog", component: DialogDemoComponent},
-    {path: "pc/icons", component: IconsDemoComponent}
+    {path: "pc/icons", component: IconsDemoComponent},
+    {path: "pc/loading", component: LoadingDemoComponent}
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];
