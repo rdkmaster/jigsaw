@@ -3,10 +3,10 @@ import {SimpleTreeData} from "jigsaw/public_api";
 import {MenuTextService} from "../doc.service";
 
 @Component({
-    selector: 'menu-nav-inline',
+    selector: 'menu-in-drawer',
     templateUrl: './demo.component.html',
 })
-export class NavigationMenuInlineDemoComponent {
+export class NavigationInDrawerDemoComponent {
     public data: SimpleTreeData = new SimpleTreeData();
 
     constructor(public text: MenuTextService) {

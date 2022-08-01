@@ -6,6 +6,7 @@ import {BreadcrumbAllComponent} from "./demo/pc/breadcrumb/demo.component";
 import {BreadcrumbRouterList} from "./demo/pc/breadcrumb/router/list/list";
 import {BreadcrumbRouterDetail} from "./demo/pc/breadcrumb/router/detail/detail";
 import {BreadcrumbRouterBuy} from "./demo/pc/breadcrumb/router/buy/buy";
+import {MenuAllComponent} from "./demo/pc/menu/demo.component";
 import {BadgeAllComponent} from "./demo/pc/badge/demo.component";
 import {ButtonAllComponent} from "./demo/pc/button/demo.component";
 import {CheckBoxDemoComponent} from "./demo/pc/checkbox/demo.componet";
@@ -54,6 +55,7 @@ export const routerConfigPC = [
     { path: "pc/drawer", component: DrawerAllComponent},
     { path: "pc/icon", component: IconAllComponent},
     { path: "pc/input", component: InputAllComponent},
+    { path: "pc/menu", component: MenuAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

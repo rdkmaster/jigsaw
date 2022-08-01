@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {MenuTextService} from "../text.service";
+import {MenuTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

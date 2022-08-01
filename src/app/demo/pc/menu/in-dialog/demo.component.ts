@@ -1,9 +1,9 @@
 import {Component, TemplateRef} from "@angular/core";
 import {SimpleTreeData, PopupService, PopupInfo, JigsawMenu} from "jigsaw/public_api";
-import {MenuTextService} from "../text.service";
+import {MenuTextService} from "../doc.service";
 
 @Component({
-    selector: 'in-dialog-menu',
+    selector: 'menu-in-dialog',
     templateUrl: './demo.component.html',
     styles: [`
         .content {
