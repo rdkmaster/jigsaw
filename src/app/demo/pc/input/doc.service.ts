@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class InputTextService {
     public text: object = {
         introduction: `
-            # Input文本框
+            # Input 输入框
 
             用于显示、输入、编辑文本或数值。
 
@@ -43,6 +43,8 @@ export class InputTextService {
         `,
         icons: `
             ### 加入图标，并有交互
+
+            使用控件的输入输出属性，设定图标并监听点击事件。
         `,
         disabled: `
             ### 禁用

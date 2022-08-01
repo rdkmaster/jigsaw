@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {InputTextService} from "../text.service";
+import {InputTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

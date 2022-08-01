@@ -1,12 +1,12 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/public_api";
-import {InputTextService} from "../text.service";
+import {InputTextService} from "../doc.service";
 
 @Component({
-    selector: 'icons-input',
+    selector: 'input-icons',
     templateUrl: './demo.component.html'
 })
-export class InputPrefixIconDemoComponent {
+export class InputIconDemoComponent {
 
     @ViewChild('myInput1') myInput: JigsawInput;
 

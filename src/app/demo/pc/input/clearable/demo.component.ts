@@ -1,12 +1,11 @@
 import {Component} from "@angular/core";
-import {InputTextService} from "../text.service";
+import {InputTextService} from "../doc.service";
 
 @Component({
-    selector: 'clearable-input',
+    selector: 'input-clearable',
     templateUrl: './demo.component.html'
 })
 export class InputClearableDemoComponent {
-    enabled: boolean;
     constructor(public text: InputTextService) {
     }
 }
