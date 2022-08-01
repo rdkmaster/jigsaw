@@ -1,27 +1,18 @@
 import {Component} from '@angular/core';
 import {JigsawNotification} from "jigsaw/public_api";
-import {NotificationTextService} from "../text.service";
+import {NotificationTextService} from "../doc.service";
 
 @Component({
-    selector: 'basic-notification',
+    selector: 'notification-basic',
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
             width: 380px;
-            margin: auto;
-            overflow: hidden;
-        }
-
-        .wrapper h4 {
-            margin: 6px 0 18px 6px;
-        }
-
-        .wrapper jigsaw-button {
-            margin: 0 6px 6px 6px;
         }
     `]
 })
 export class NotificationBasicDemoComponent {
+    public ButtonSize: string = 'medium';
     showWithOptions() {
         JigsawNotification.show('这是消息框的默认样子！', {icon: undefined});
     }

@@ -48,6 +48,11 @@ import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
 import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
 import {DialogDemoModule} from "./demo/pc/dialog/demo.module";
 import {IconsDemoModule} from "./demo/pc/icons/demo.module";
+import {LoadingDemoModule} from "./demo/pc/loading/demo.module";
+import {NavigationMenuDemoModule} from "./demo/pc/navigation-menu/demo.module";
+import {NotificationDemoModule} from "./demo/pc/notification/demo.module";
+import {ToastDemoModule} from "./demo/pc/toast/demo.module";
+import {TooltipDemoModule} from "./demo/pc/tooltip/demo.module";
 
 @NgModule({
     declarations: [
@@ -72,6 +77,7 @@ import {IconsDemoModule} from "./demo/pc/icons/demo.module";
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
+        LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

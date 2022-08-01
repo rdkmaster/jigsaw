@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import {TooltipTextService} from "../text.service";
+import {TooltipTextService} from "../doc.service";
 
 @Component({
-    selector: 'scenes-tooltip',
+    selector: 'tooltip-scenes',
     templateUrl: './demo.component.html'
 })
 export class TooltipScenesDemoComponent {

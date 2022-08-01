@@ -1,12 +1,7 @@
-<demo-template [data]="''" [text]="text['text']['basic']">
+<demo-template [data]="[]" [text]="text['text']['basic']">
     <!-- start to learn the demo from here -->
-    <div class="toast-basic-demo-cntr">
-        <jigsaw-header>默认用法</jigsaw-header>
+    <div class="toast-basic-demo-cntr demo-showcase-v">
+        <span>默认用法：</span>
         <jigsaw-button width="200" (click)="show()">弹出默认消息框</jigsaw-button>
-        <jigsaw-header>快捷用法</jigsaw-header>
-        <jigsaw-button width="200" (click)="showSuccess()">弹出成功消息框</jigsaw-button>
-        <jigsaw-button width="200" (click)="showError()">弹出错误消息框</jigsaw-button>
-        <jigsaw-button width="200" (click)="showWarn()">弹出警告消息框</jigsaw-button>
-        <jigsaw-button width="200" (click)="showInfo()">弹出提示消息框</jigsaw-button>
     </div>
 </demo-template>

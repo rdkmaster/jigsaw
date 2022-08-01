@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {TooltipTextService} from "../text.service";
+import {TooltipTextService} from "../doc.service";
 
 @Component({
-    selector: 'trigger-tooltip',
+    selector: 'tooltip-trigger',
     templateUrl: './demo.component.html'
 })
 export class TooltipTriggerDemoComponent {
@@ -10,11 +10,15 @@ export class TooltipTriggerDemoComponent {
     public closeTrigger = "mouseleave";
     public open = false;
 
-    public openFloat() {
+    public openFloat(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.open = true;
     }
 
-    public closeFloat() {
+    public closeFloat(e) {
+        e.preventDefault();
+        e.stopPropagation();
         this.open = false;
     }
 

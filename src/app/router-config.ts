@@ -1,4 +1,4 @@
-import { ExampleDemoComponent } from './demo/pc/example/demo.component';
+import {ExampleDemoComponent} from './demo/pc/example/demo.component';
 import {AlertDemoComponent} from "./demo/pc/alert/demo.component";
 import {AutoCompleteInputDemoComponent} from "./demo/pc/auto-complete-input/demo.component";
 import {HeaderDemoComponent} from "./demo/pc/header/demo.component";
@@ -25,10 +25,15 @@ import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
 import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
+import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
+import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.component";
+import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
+import {ToastDemoComponent} from "./demo/pc/toast/demo.component";
+import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
 
 export const routerConfigPC = [
-    { path: "pc/example", component: ExampleDemoComponent },
-    { path: "pc/alert", component: AlertDemoComponent },
+    {path: "pc/example", component: ExampleDemoComponent},
+    {path: "pc/alert", component: AlertDemoComponent},
     {
         path: "pc/breadcrumb", component: BreadcrumbAllComponent,
         children: [
@@ -63,7 +68,12 @@ export const routerConfigPC = [
     {path: "pc/color-select", component: ColorSelectDemoComponent},
     {path: "pc/collapse", component: CollapseDemoComponent},
     {path: "pc/dialog", component: DialogDemoComponent},
-    {path: "pc/icons", component: IconsDemoComponent}
+    {path: "pc/icons", component: IconsDemoComponent},
+    {path: "pc/loading", component: LoadingDemoComponent},
+    {path: "pc/navigation-menu", component: NavigationMenuAllDemoComponent},
+    {path: "pc/notification", component: NotificationDemoComponent},
+    {path: "pc/toast", component: ToastDemoComponent},
+    {path: "pc/tooltip", component: TooltipDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];
