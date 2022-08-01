@@ -1,19 +1,18 @@
 import { Component } from "@angular/core";
+import {NumericInputTextService} from "../doc.service";
 
 @Component({
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'numeric-input-show-option',
+    templateUrl: "./demo.component.html"
 })
 export class NumericInputShowOptionDemoComponent {
+    public selectedLabel = {label: "中", size: "default"};
     showOption: boolean = true;
     value: number;
     value2: number;
     value3: number;
-    value4: number;
     public _$units = ["单位（GB）", "单位（MB）", "单位（KB）"];
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
+
+    constructor(public text: NumericInputTextService) {
+    }
 }

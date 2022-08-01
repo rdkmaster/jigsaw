@@ -19,6 +19,7 @@ import {InputAllComponent} from "./demo/pc/input/demo.component";
 import {CascadeAllComponent} from "./demo/pc/cascade/demo.component";
 import {ComboSelectComponent} from "./demo/pc/combo-select/demo.component";
 import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
+import {NumericInputAllComponent} from "./demo/pc/numeric-input/demo.component";
 import {AlphabeticalIndexDemoComponent} from "./demo/pc/alphabetical-index/demo.component";
 import {RateDemoComponent} from "./demo/pc/rate/demo.component";
 import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
@@ -61,6 +62,7 @@ export const routerConfigPC = [
     { path: "pc/icon", component: IconAllComponent},
     { path: "pc/input", component: InputAllComponent},
     { path: "pc/menu", component: MenuAllComponent},
+    { path: "pc/numeric-input", component: NumericInputAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

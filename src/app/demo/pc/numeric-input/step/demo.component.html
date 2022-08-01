@@ -1,23 +1,13 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Numeric Input</jigsaw-header>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">step</jigsaw-header>
-
-        <div class="one-line mgb">
-            <label>step为0.1：</label>
-            <j-numeric-input value="1" min="-10" max="10" step="0.1"></j-numeric-input>
-        </div>
-        <div class="one-line mgb">
-            <label>step为3.2：</label>
-            <j-numeric-input value="2" min="-100" max="100" step="3.2"></j-numeric-input>
-        </div>
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['step']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>step为0.1：</span>
+        <j-numeric-input value="1" min="-10" max="10" step="0.1" [size]="selectedLabel.size"></j-numeric-input>
     </div>
-</div>
+
+    <div class="demo-showcase">
+        <span>step为3.2：</span>
+        <j-numeric-input value="2" min="-100" max="100" step="3.2" [size]="selectedLabel.size"></j-numeric-input>
+    </div>
+</demo-template>
 
