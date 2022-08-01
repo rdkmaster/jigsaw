@@ -1,59 +1,17 @@
 import {Component} from '@angular/core';
 import {JigsawNotification} from "jigsaw/public_api";
-import {NotificationTextService} from "../text.service";
+import {NotificationTextService} from "../doc.service";
 
 @Component({
-    selector: 'full-notification',
-    templateUrl: './demo.component.html',
+    selector: 'notification-advanced',
+    templateUrl: 'demo.component.html',
     styles: [`
         .wrapper {
             width: 380px;
-            margin: auto;
-            overflow: hidden;
-        }
-
-        .row {
-            margin: 6px;
-        }
-
-        .wrapper h4 {
-            margin: 6px 0 18px 6px;
-        }
-
-        .wrapper jigsaw-button {
-            margin: 0 6px 6px 6px;
-        }
-
-        .wrapper label {
-            width: 30px;
-        }
-
-        .wrapper jigsaw-input {
-            width: 290px;
-        }
-
-        .wrapper jigsaw-slider {
-            width: 270px;
         }
     `]
 })
-export class NotificationFullDemoComponent {
-    message = '这是一个 <b>很棒的</b> 消息提示框！';
-    caption = undefined;   // this is the default value
-    position = 'rightTop'; // this is the default value
-    icon = undefined;      // this is the default value
-    timeout = 8;           // this is the default value
-    width = 350;           // this is the default value
-    height = 0;            // this is the default value
-
-    showWithOptions() {
-        JigsawNotification.show(this.message, {
-            caption: this.caption, position: this.position, icon: this.icon,
-            timeout: this.timeout * 1000, width: this.width, height: this.height,
-            innerHtmlContext: this
-        });
-    }
-
+export class NotificationAdvancedDemoComponent {
     showNormal() {
         JigsawNotification.show('最简洁方便的使用方式：<code>JigsawNotification.show("message")</code>');
     }
@@ -75,16 +33,6 @@ export class NotificationFullDemoComponent {
                 buttons: [{label: '同意！'}, {label: '不好说'}], icon: 'iconfont iconfont-e9ee'
             });
     }
-
-    makeLongContent(prop) {
-        let value = '';
-        for (let i = 0; i < 40; i++) {
-            value += `当 ${prop} 的内容很多时的效果。`;
-        }
-        this[prop] = value;
-        this.showWithOptions();
-    }
-
     investigate(result) {
         alert('你的答案是：' + result);
     }
@@ -108,23 +56,6 @@ export class NotificationFullDemoComponent {
                 innerHtmlContext: this
             });
     }
-
-    showSuccess() {
-        JigsawNotification.showSuccess('这是一条成功的提示消息', {timeout: 8000});
-    }
-
-    showError() {
-        JigsawNotification.showError('这是一条错误的提示消息', {timeout: 8000});
-    }
-
-    showWarn() {
-        JigsawNotification.showWarn('这是一条警告的提示消息', {timeout: 8000});
-    }
-
-    showInfo() {
-        JigsawNotification.showInfo('这是一条消息的提示消息', {timeout: 8000});
-    }
-
     constructor(public text: NotificationTextService) {
     }
 }

@@ -26,6 +26,7 @@ import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
 import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
 import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.component";
+import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -66,6 +67,7 @@ export const routerConfigPC = [
     {path: "pc/icons", component: IconsDemoComponent},
     {path: "pc/loading", component: LoadingDemoComponent},
     {path: "pc/navigation-menu", component: NavigationMenuAllDemoComponent},
+    {path: "pc/notification", component: NotificationDemoComponent}
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

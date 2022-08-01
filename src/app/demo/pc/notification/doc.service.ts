@@ -24,21 +24,14 @@ export class NotificationTextService {
         `,
         basic: `
             ### 基础用法
-
-            这个demo介绍了通知提醒框的4种基础类型。
         `,
-        diposeOnRouterChanged: `
-            ### 路由变化的情况
+        functional: `
+            ### 基础全局提示
 
-            这个demo介绍了控制是否在路由变化时自动关掉弹出的提示框。
-
-            提示：有的消息框上可能会带有交互逻辑，而这些交互逻辑往往只在某个路由下才有效，当用户离开此路由后，再触发这些交互逻辑则会出现BUG，
-            现在只要打开\`disposeOnRouterChanged\`属性，消息框内部会在路由发生变化时自动关闭自身，而无需应用自行实现；
+            这个demo介绍了通知提醒框的5种基础类型。
         `,
-        full: `
-            ### 例子
-
-            这个DEMO详细演示了\`j-notification\`组件的各个参数的效果以及推荐的用法。
+        advanced: `
+            ### 带操作的全局提示
         `
     }
 }

@@ -3,7 +3,7 @@ import {JigsawNotification} from "jigsaw/public_api";
 import {NotificationTextService} from "../doc.service";
 
 @Component({
-    selector: 'notification-basic',
+    selector: 'notification-functional',
     templateUrl: './demo.component.html',
     styles: [`
         .wrapper {
@@ -11,11 +11,7 @@ import {NotificationTextService} from "../doc.service";
         }
     `]
 })
-export class NotificationBasicDemoComponent {
-    public ButtonSize: string = 'medium';
-    showWithOptions() {
-        JigsawNotification.show('这是消息框的默认样子！', {icon: undefined});
-    }
+export class NotificationFunctionalDemoComponent {
 
     showSuccess() {
         JigsawNotification.showSuccess('这是一条成功的提示消息', {timeout: 8000});
