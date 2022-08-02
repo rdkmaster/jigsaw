@@ -1,10 +1,10 @@
 import {Component, ViewChild} from "@angular/core";
-import {TagTextService} from "../text.service";
+import {TagTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 import {JigsawInput} from "jigsaw/public_api";
 
 @Component({
-    selector: "add-remove-tag",
+    selector: "tag-add-remove",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })

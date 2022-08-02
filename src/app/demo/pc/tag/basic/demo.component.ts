@@ -1,10 +1,10 @@
 import {Component, QueryList, ViewChildren} from "@angular/core";
-import {TagTextService} from "../text.service";
+import {TagTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 import {JigsawTag} from "jigsaw/public_api";
 
 @Component({
-    selector: "basic-tag",
+    selector: "tag-basic",
     templateUrl: "./demo.component.html",
 })
 
@@ -17,7 +17,7 @@ export class TagBasicComponent {
     handleClose(tag) {
         console.log(tag)
     }
-
+    constructor(public text: TagTextService) {}
     @ViewChildren(JigsawTag)
     tags: QueryList<JigsawTag>;
 
@@ -25,6 +25,4 @@ export class TagBasicComponent {
         console.log(this.tags);
         this.tags.forEach(tag => tag.show());
     }
-    constructor(public text: TagTextService) {}
-
 }

@@ -29,6 +29,7 @@ import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.com
 import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
 import {ToastDemoComponent} from "./demo/pc/toast/demo.component";
 import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
+import {TagDemoComponent} from "./demo/pc/tag/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -72,6 +73,7 @@ export const routerConfigPC = [
     {path: "pc/notification", component: NotificationDemoComponent},
     {path: "pc/toast", component: ToastDemoComponent},
     {path: "pc/tooltip", component: TooltipDemoComponent},
+    {path: "pc/tag", component: TagDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

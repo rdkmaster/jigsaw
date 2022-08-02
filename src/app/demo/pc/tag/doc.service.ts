@@ -22,6 +22,9 @@ export class TagTextService {
         presetColor: `
             ### 内置颜色
         `,
+        customColor: `
+            ### 定制颜色
+        `,
         selectable: `
             ### 选中效果
 
