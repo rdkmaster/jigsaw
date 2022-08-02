@@ -1,0 +1,21 @@
+.host {
+    border: solid 1px #cdcdcd;
+    border-radius: 2px;
+    padding: 12px;
+    margin: 12px 0 12px 0;
+}
+
+.demo-container {
+    width: 450px;
+}
+
+.demo-container p {
+    margin-top: 6px;
+}
+
+.demo-container jigsaw-textarea {
+    width: 450px;
+    height: 160px;
+    font-family: monospace;
+}
+
