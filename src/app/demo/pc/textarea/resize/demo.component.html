@@ -1,55 +1,53 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['resize']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>双向可伸缩</span>
+        <jigsaw-textarea [resize]="'both'" width="200px" height="80px" [placeholder]="'width=200px\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'both'" width="200px" height="10vh" [placeholder]="'width=200px\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'both'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'both'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'both'" [placeholder]="'width: 未设置;\nheight: 未设置'">
+        </jigsaw-textarea>
+    </div>
+    <div class="demo-showcase-v">
+        <span>纵向可伸缩</span>
+        <jigsaw-textarea [resize]="'vertical'" width="200px" height="80px" [placeholder]="'width=200px\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'vertical'" width="200px" height="10vh" [placeholder]="'width=200px\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'vertical'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'vertical'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'vertical'" [placeholder]="'width: 未设置;\nheight: 未设置'">
+        </jigsaw-textarea>
+    </div>
 
-<!-- start to learn the demo from here -->
-<jigsaw-header>双向可伸缩</jigsaw-header>
-<div class="container">
-    <jigsaw-textarea [resize]="'both'" width="200px" height="80px" [placeholder]="'width=200px\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'both'" width="200px" height="10vh" [placeholder]="'width=200px\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'both'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'both'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'both'" [placeholder]="'width: 未设置;\nheight: 未设置'">
-    </jigsaw-textarea>
-</div>
+    <div class="demo-showcase-v">
+        <span>横向可伸缩</span>
+        <jigsaw-textarea [resize]="'horizontal'" width="200px" height="80px"
+                         [placeholder]="'width=200px\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'horizontal'" width="200px" height="10vh"
+                         [placeholder]="'width=200px\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'horizontal'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'horizontal'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'horizontal'" [placeholder]="'width: 未设置;\nheight: 未设置'">
+        </jigsaw-textarea>
+    </div>
 
-<jigsaw-header>纵向可伸缩</jigsaw-header>
-<div class="container">
-    <jigsaw-textarea [resize]="'vertical'" width="200px" height="80px" [placeholder]="'width=200px\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'vertical'" width="200px" height="10vh" [placeholder]="'width=200px\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'vertical'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'vertical'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'vertical'" [placeholder]="'width: 未设置;\nheight: 未设置'">
-    </jigsaw-textarea>
-</div>
-
-<jigsaw-header>横向可伸缩</jigsaw-header>
-<div class="container-v">
-    <jigsaw-textarea [resize]="'horizontal'" width="200px" height="80px" [placeholder]="'width=200px\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'horizontal'" width="200px" height="10vh" [placeholder]="'width=200px\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'horizontal'" width="15vw" height="80px" [placeholder]="'width=15vw\nheight: 80px'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'horizontal'" width="15vw" height="10vh" [placeholder]="'width=15vw\nheight: 10vh'">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'horizontal'" [placeholder]="'width: 未设置;\nheight: 未设置'">
-    </jigsaw-textarea>
-</div>
-
-<jigsaw-header>不可伸缩（默认）</jigsaw-header>
-<div class="container">
-    <jigsaw-textarea [resize]="'none'" width="200px" height="80px" placeholder="这是不可伸缩的文本输入框">
-    </jigsaw-textarea>
-    <jigsaw-textarea [resize]="'none'" width="30%" height="80px" placeholder="这是不可伸缩的文本输入框">
-    </jigsaw-textarea>
-</div>
-
+    <div class="demo-showcase-v">
+        <span>不可伸缩（默认）</span>
+        <jigsaw-textarea [resize]="'none'" width="200px" height="80px" placeholder="这是不可伸缩的文本输入框">
+        </jigsaw-textarea>
+        <jigsaw-textarea [resize]="'none'" width="30%" height="80px" placeholder="这是不可伸缩的文本输入框">
+        </jigsaw-textarea>
+    </div>
+</demo-template>
