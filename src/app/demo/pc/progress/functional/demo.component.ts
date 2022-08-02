@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
-import {ProgressTextService} from "../text.service";
+import {ProgressTextService} from "../doc.service";
 
 @Component({
-    selector: 'status-progress',
+    selector: 'progress-functional',
     templateUrl: './demo.component.html',
 })
-export class ProgressStatusComponent {
+export class ProgressFunctionalComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "大", size: "default"},

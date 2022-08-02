@@ -23,11 +23,17 @@ export class ProgressTextService {
         basic: `
             ### 进度条
         `,
+        functional: `
+            ### 图标形进度条，表格中的进度条
+         `,
+        textTop: `
+            ### 文字在顶部
+        `,
         status: `
             ## 四种状态
         `,
-        largeSize: `
-            ## 用于卡片的巨型进度条
+        textFollow: `
+            ### 用于卡片的巨型进度条
         `,
         circle: `
             ## 圆形进度条

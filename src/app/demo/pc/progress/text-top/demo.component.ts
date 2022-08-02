@@ -3,10 +3,10 @@ import {ArrayCollection} from "jigsaw/public_api";
 import {ProgressTextService} from "../doc.service";
 
 @Component({
-    selector: 'progress-basic',
+    selector: 'progress-text-top',
     templateUrl: './demo.component.html',
 })
-export class ProgressBasicComponent {
+export class ProgressTextTopComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "大", size: "default"},

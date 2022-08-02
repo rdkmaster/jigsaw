@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import {ProgressTextService} from "../text.service";
+import {ProgressTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
