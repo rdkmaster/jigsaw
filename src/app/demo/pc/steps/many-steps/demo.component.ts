@@ -1,6 +1,7 @@
-import {ChangeDetectorRef, Component} from "@angular/core";
+import {ChangeDetectorRef, Component, ViewChild} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
 import {StepsTextService} from "../doc.service";
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 
 @Component({
     selector: "many-steps",
@@ -10,6 +11,9 @@ export class JigsawStepManyStepsDemoComponent {
     data = [];
     current = 0;
     count = 30;
+
+    @ViewChild('hScrollbar', {read: PerfectScrollbarDirective})
+    private _hScrollbar: PerfectScrollbarDirective;
 
     constructor(private _cdr: ChangeDetectorRef, public text: StepsTextService) {
         for (let i = 0; i < this.count; i++) {

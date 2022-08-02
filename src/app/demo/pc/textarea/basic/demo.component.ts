@@ -1,7 +1,9 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawTextarea} from "jigsaw/public_api";
+import {TextareaTextService} from "../doc.service";
 
 @Component({
+    selector: 'textarea-basic',
     templateUrl: './demo.component.html'
 })
 export class TextareaBasicDemoComponent {
@@ -9,9 +11,6 @@ export class TextareaBasicDemoComponent {
 
     @ViewChild('myTextarea') myTextarea: JigsawTextarea;
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TextareaTextService) {
+    }
 }
