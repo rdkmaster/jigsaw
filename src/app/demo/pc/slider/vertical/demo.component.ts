@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {SliderTextService} from "../text.service";
+import {SliderTextService} from "../doc.service";
 import {SliderMark, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: "vertical-slider",
+    selector: "slider-vertical",
     templateUrl: "./demo.component.html",
     styleUrls: ["../public.css", "./demo.component.css"]
 })
 
-export class SliderVerticalComponent {
+export class SliderVerticalDemoComponent {
     value = 10;
     vertical = true;
     rangeValue = new ArrayCollection([10, 80]);

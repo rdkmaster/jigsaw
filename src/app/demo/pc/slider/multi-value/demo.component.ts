@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {SliderTextService} from "../text.service";
+import {SliderTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "double-contact-slider",
+    selector: "slider-multi-value",
     templateUrl: "./demo.component.html",
     styleUrls: ["../public.css"]
 })
 
-export class SliderDoubleContactComponent {
+export class SliderMultiValueDemoComponent {
     rangeValue = new ArrayCollection([30, 50, 60]);
 
     handleValueChange(value) {

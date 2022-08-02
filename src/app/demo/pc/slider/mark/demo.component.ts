@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {SliderTextService} from "../text.service";
+import {SliderTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "with-mark-slider",
-    templateUrl: "./demo.component.html",
+    selector: "slider-mark",
+    templateUrl: "demo.component.html",
     styleUrls: ["../public.css"]
 })
 
-export class SliderWithMarkComponent {
+export class SliderMarkDemoComponent {
     marks = [
         {value: 20, label: '20 ℃'},
         {value: 40, label: '40 ℃'},
