@@ -39,6 +39,7 @@ import {DrawerDemoModule} from "./demo/pc/drawer/demo.module";
 import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
 import {InputDemoModule} from "./demo/pc/input/demo.module";
 import {MenuDemoModule} from "./demo/pc/menu/demo.module";
+import {SearchInputDemoModule} from "./demo/pc/search-input/demo.module";
 import {NumericInputDemoModule} from "./demo/pc/numeric-input/demo.module";
 import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.module";
 import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
@@ -63,7 +64,7 @@ import {TagDemoModule} from "./demo/pc/tag/demo.module";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
-        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule,
+        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

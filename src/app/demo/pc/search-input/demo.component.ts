@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {SearchInputTextService} from "../text.service";
+import {SearchInputTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

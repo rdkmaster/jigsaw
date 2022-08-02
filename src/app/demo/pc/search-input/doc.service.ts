@@ -16,11 +16,11 @@ export class SearchInputTextService {
 
             ## 示例
         `,
-        basic: `
-            ### 基础搜索框
+        autoSearch: `
+            ### 自动搜索
         `,
-        disabled: `
-            ### 禁用
+        manualSearch: `
+            ### 手动搜索
         `,
         debounce: `
             ### 自动搜索防抖

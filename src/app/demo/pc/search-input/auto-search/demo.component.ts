@@ -1,11 +1,12 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
 import {SearchInputTextService} from "../doc.service";
 
 @Component({
-    selector: 'search-input-history-storage-key',
+    selector: 'search-input-auto-search',
     templateUrl: "./demo.component.html"
 })
-export class SearchInputHistoryStorageKeyDemoComponent {
+export class SearchInputAutoSearchDemoComponent {
+    value: string = '';
     constructor(public text: SearchInputTextService) {
     }
 }

@@ -1,7 +1,6 @@
 <demo-template [data]="''" [text]="text['text']['debounce']">
     <!-- start to learn the demo from here -->
-
-    <div class="setting-cntr">
+    <div class="demo-showcase">
         <span>设置防抖:</span>
         <jigsaw-numeric-input
             width="120px"
@@ -14,7 +13,5 @@
     <jigsaw-search-input #first width="200px" (search)="searchTrigger($event)" [searchDebounce]="debounceTime">
     </jigsaw-search-input>
 
-    <div>
-        {{ " 搜索值为：" + searchKey }}
-    </div>
+    <p>{{ " 搜索值为：" + searchKey }}</p>
 </demo-template>
