@@ -38,6 +38,8 @@ import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
 import {TagDemoComponent} from "./demo/pc/tag/demo.component";
 import {ProgressDemoComponent} from "./demo/pc/progress/demo.component";
 import {ProcessStatusDemoComponent} from "./demo/pc/process-status/demo.component";
+import {SliderDemoComponent} from "./demo/pc/slider/demo.component";
+import {TrustedHtmlDemoComponent} from "./demo/pc/trusted-html/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -90,6 +92,8 @@ export const routerConfigPC = [
     {path: "pc/tag", component: TagDemoComponent},
     {path: "pc/progress", component: ProgressDemoComponent},
     {path: "pc/process-status" , component: ProcessStatusDemoComponent },
+    {path: "pc/slider", component: SliderDemoComponent},
+    {path: "pc/trusted-html", component: TrustedHtmlDemoComponent},
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

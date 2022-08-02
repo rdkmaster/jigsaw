@@ -61,6 +61,8 @@ import {TooltipDemoModule} from "./demo/pc/tooltip/demo.module";
 import {TagDemoModule} from "./demo/pc/tag/demo.module";
 import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
 import {ProcessStatusDemoModule} from "./demo/pc/process-status/demo.module";
+import {SliderAllDemoModule} from "./demo/pc/slider/demo.module";
+import {TrustedHtmlDemoModule} from "./demo/pc/trusted-html/demo.module";
 
 @NgModule({
     declarations: [
@@ -86,7 +88,7 @@ import {ProcessStatusDemoModule} from "./demo/pc/process-status/demo.module";
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
-        ProgressDemoModule, ProcessStatusDemoModule,
+        ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

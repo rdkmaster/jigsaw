@@ -2,7 +2,10 @@ import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../../demo/demo-template/demo-template';
 import { JigsawMarkdownModule } from '../../../markdown/markdown';
 import {StepsAllComponent} from "./demo.component";
-import {JigsawStepsModule} from "jigsaw/public_api";
+import {
+    JigsawStepsModule,
+    JigsawButtonModule,
+} from "jigsaw/public_api";
 import {JigsawStepHorizontalDemoComponent} from "./horizontal/demo.component";
 import {JigsawStepVerticalDemoComponent} from "./vertical/demo.component";
 import {JigsawStepstatusDemoComponent} from "./status/demo.component";
@@ -24,6 +27,7 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
         DemoTemplateModule,
         JigsawMarkdownModule,
         JigsawStepsModule,
+        JigsawButtonModule,
         PerfectScrollbarModule
     ]
 })

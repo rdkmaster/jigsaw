@@ -1,19 +1,19 @@
-import { NgModule } from "@angular/core";
-import {SliderAllComponent} from "./demo.component";
+import {NgModule} from "@angular/core";
 import {JigsawMarkdownModule} from "../../../markdown/markdown";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {CommonModule} from "@angular/common";
-import {SliderBasicComponent} from "./basic/demo.component";
 import {JigsawSwitchModule} from "../../../../jigsaw/pc-components/switch/switch";
 import {JigsawSliderModule} from "../../../../jigsaw/pc-components/slider";
-import {SliderSetMinMaxComponent} from "./min-max/demo.component";
-import {SliderChangeStepComponent} from "./change-step/demo.component"
-import {SliderDoubleContactComponent} from "./double-contact/demo.component";
-import {SliderWithMarkComponent} from "./with-mark/demo.component";
-import {SliderVerticalComponent} from "./vertical/demo.component";
-import {SliderUpdateValueComponent} from "./update/demo.component";
 import {JigsawButtonModule} from "../../../../jigsaw/pc-components/button/button";
-import {SliderMultiValueComponent} from "./handing-multi-value/demo.component";
+import {SliderStepDemoComponent} from "./step/demo.component";
+import {SliderChangeStepDemoComponent} from "./change-step/demo.component";
+import {SliderBasicDemoComponent} from "./basic/demo.component";
+import {SliderSetMinMaxDemoComponent} from "./min-max/demo.component";
+import {SliderMultiValueDemoComponent} from "./multi-value/demo.component";
+import {SliderMarkDemoComponent} from "./mark/demo.component";
+import {SliderDemoComponent} from "./demo.component";
+import {SliderVerticalDemoComponent} from "./vertical/demo.component";
+
 
 @NgModule({
     imports: [
@@ -25,16 +25,16 @@ import {SliderMultiValueComponent} from "./handing-multi-value/demo.component";
         JigsawButtonModule
     ],
     declarations: [
-        SliderAllComponent,
-        SliderBasicComponent,
-        SliderSetMinMaxComponent,
-        SliderChangeStepComponent,
-        SliderDoubleContactComponent,
-        SliderWithMarkComponent,
-        SliderVerticalComponent,
-        SliderUpdateValueComponent,
-        SliderMultiValueComponent
+        SliderDemoComponent,
+        SliderStepDemoComponent,
+        SliderChangeStepDemoComponent,
+        SliderBasicDemoComponent,
+        SliderSetMinMaxDemoComponent,
+        SliderMultiValueDemoComponent,
+        SliderMarkDemoComponent,
+        SliderVerticalDemoComponent
+
     ],
-    exports: [SliderAllComponent]
 })
-export class SliderAllModule {}
+export class SliderAllDemoModule {
+}

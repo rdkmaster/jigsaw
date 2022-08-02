@@ -1,9 +1,0 @@
-<demo-template [data]="''" [text]="text['text']['multiValue']">
-    <jigsaw-markdown [markdown]="'#### 对值排序'"></jigsaw-markdown>
-    <jigsaw-slider width="500px" [(value)]="rangeValue1" [max]="100"></jigsaw-slider>
-    <p>原始值是：{{rangeValue1.join('-')}}，排序后的值是{{sortedValue}}</p>
-
-    <jigsaw-markdown [markdown]="'#### 自动调整'"></jigsaw-markdown>
-    <jigsaw-slider width="500px" [(value)]="rangeValue2" [max]="100" (change)="handleChange()"></jigsaw-slider>
-    <p>原始值是：{{rangeValue2.join('-')}}，自动调整相邻的值，让他们保持顺序</p>
-</demo-template>

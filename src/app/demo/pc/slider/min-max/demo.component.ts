@@ -1,15 +1,15 @@
 import {Component} from "@angular/core";
-import {SliderTextService} from "../text.service";
+import {SliderTextService} from "../doc.service";
 
 @Component({
-    selector: "set-min-max-slider",
+    selector: "slider-set-min-max",
     templateUrl: "./demo.component.html",
     styleUrls: ["../public.css"]
 })
 
-export class SliderSetMinMaxComponent {
+export class SliderSetMinMaxDemoComponent {
     value: number = 10;
-    min = 1;
+    min = 4;
     max = 20;
 
     sliderChange(value) {
