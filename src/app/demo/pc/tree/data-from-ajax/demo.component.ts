@@ -1,7 +1,7 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ZTreeSettings, SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../text.service";
+import {TreeTextService} from "../doc.service";
 
 @Component({
     selector: 'data-from-ajax-tree',

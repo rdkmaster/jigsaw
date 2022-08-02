@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../text.service";
+import {TreeTextService} from "../doc.service";
 
 @Component({
-    selector: 'xml-data-tree',
+    selector: 'tree-xml-data',
     templateUrl: './demo.component.html'
 })
 export class ZtreeXMLDataDemoComponent {

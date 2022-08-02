@@ -1,11 +1,10 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit, ArrayCollection } from "jigsaw/public_api";
-import {TreeTextService} from "../text.service";
+import {TreeTextService} from "../doc.service";
 
 @Component({
-    selector: 'icon-tree',
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'tree-icon',
+    templateUrl: "./demo.component.html"
 })
 export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
