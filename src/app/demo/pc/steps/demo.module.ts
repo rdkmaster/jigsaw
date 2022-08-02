@@ -4,8 +4,7 @@ import { JigsawMarkdownModule } from '../../../markdown/markdown';
 import {StepsAllComponent} from "./demo.component";
 import {
     JigsawStepsModule,
-    JigsawButtonModule
-
+    JigsawButtonModule,
 } from "jigsaw/public_api";
 import {JigsawStepHorizontalDemoComponent} from "./horizontal/demo.component";
 import {JigsawStepVerticalDemoComponent} from "./vertical/demo.component";
@@ -27,8 +26,7 @@ import {JigsawStepOverLengthDemoComponent} from "./over-length/demo.component";
         DemoTemplateModule,
         JigsawMarkdownModule,
         JigsawStepsModule,
-        JigsawButtonModule
-
+        JigsawButtonModule,
     ]
 })
 export class StepsDemoModule {
