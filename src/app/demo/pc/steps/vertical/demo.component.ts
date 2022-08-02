@@ -1,13 +1,12 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
-import {StepsTextService} from "../text.service";
+import {StepsTextService} from "../doc.service";
 
 @Component({
-    selector: 'basic-steps',
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'steps-vertical',
+    templateUrl: "./demo.component.html"
 })
-export class JigsawStepBasicDemoComponent {
+export class JigsawStepVerticalDemoComponent {
     data = [];
 
     current = 0;
@@ -27,14 +26,6 @@ export class JigsawStepBasicDemoComponent {
             status: status,
             subTitle: '描述信息'
         };
-    }
-
-    public changeData() {
-        let tempData = [];
-        for (let i = 0; i < 6; i++) {
-            tempData.push(this._createStepData());
-        }
-        this.data = tempData;
     }
 
     public currentChange(event: number) {

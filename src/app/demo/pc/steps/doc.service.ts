@@ -18,8 +18,14 @@ export class StepsTextService {
 
             ## 示例
         `,
-        basic: `
-            ### Steps基础用法
+        horizontal: `
+            ### 横向步骤条
+        `,
+        vertical: `
+            ### 纵向步骤条
+        `,
+        status: `
+            ### 状态
         `,
         overLength: `
             ### 标题和描述过长时的表现

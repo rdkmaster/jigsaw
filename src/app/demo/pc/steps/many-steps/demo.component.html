@@ -1,14 +1,7 @@
 <demo-template [data]="''" [text]="text['text']['manySteps']">
     <!-- start to learn the demo from here -->
-    <jigsaw-header [level]="2">步骤数量</jigsaw-header>
-    <jigsaw-button-bar [data]="[5, 10, 30, 50]" [(selectedItems)]="count" (selectedItemsChange)="changeData()"
-                       style="margin-bottom: 16px">
-    </jigsaw-button-bar>
-
-    <jigsaw-header [level]="2">观察不同步骤数量下步骤条的展示效果</jigsaw-header>
-    <jigsaw-steps #hScrollbar class="steps-horizontal" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
+    <div style="overflow: auto">
+    <jigsaw-steps [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
                   [data]="data" [(current)]="current"></jigsaw-steps>
-    <br>
-    <jigsaw-steps #vScrollbar class="steps-vertical" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
-                  [data]="data" [(current)]="current" direction="vertical"></jigsaw-steps>
+    </div>
 </demo-template>

@@ -45,6 +45,7 @@ import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.mo
 import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
 import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.module";
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
+import {StepsDemoModule} from "./demo/pc/steps/demo.module";
 import {PaginationDemoModule} from "./demo/pc/pagination/demo.module";
 import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
@@ -66,7 +67,7 @@ import {ProcessStatusDemoModule} from "./demo/pc/process-status/demo.module";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
-        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule,
+        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
