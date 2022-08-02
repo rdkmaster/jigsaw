@@ -1,11 +1,10 @@
 import { Component } from "@angular/core";
 import { LocalPageableTableData, ArrayCollection } from "jigsaw/public_api";
-import {PaginationTextService} from "../text.service";
+import {PaginationTextService} from "../doc.service";
 
 @Component({
-    selector: 'no-data-pagination',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: 'pagination-no-data',
+    templateUrl: './demo.component.html'
 })
 export class PaginationNoDataDemoComponent {
     public selectedLabel = {label: "中", size: "medium"};
@@ -15,20 +14,10 @@ export class PaginationNoDataDemoComponent {
         {label: "大", size: "large"}
     ]);
     paginationData: LocalPageableTableData;
-    delayData: LocalPageableTableData;
 
     constructor(public text: PaginationTextService) {
         this.paginationData = new LocalPageableTableData();
         this.paginationData.fromObject({
-            header: ['header0', 'header1', 'header2', 'header3'],
-            field: ['field0', 'field1', 'field2', 'field3'],
-            data: []
-        });
-    }
-
-    updateDelayData() {
-        this.delayData = new LocalPageableTableData();
-        this.delayData.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],
             field: ['field0', 'field1', 'field2', 'field3'],
             data: []
