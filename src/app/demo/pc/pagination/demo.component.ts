@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {PaginationTextService} from "../text.service";
+import {PaginationTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

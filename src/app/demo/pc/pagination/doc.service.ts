@@ -15,10 +15,19 @@ export class PaginationTextService {
             ## 示例
         `,
         basic: `
-            ### 基础分页器
+            ### 默认模式
         `,
-        withPageInfo: `
-            ### 分页数据信息
+        fold: `
+            ### 折叠模式
+        `,
+        simple: `
+            ### 简约模式
+        `,
+        withSearchBox: `
+            ### 带搜索框
+        `,
+        hidden: `
+            ### 隐藏元素
         `,
         bigData: `
             ### 巨大分页数量的情况

@@ -1,10 +1,10 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['withSearchBox']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="pageSizeOptions"
-                           [searchable]="false"
-                           [showQuickJumper]="true"
+                           [searchable]="true"
+                           [showQuickJumper]="showQuickJumper"
                            mode="complex"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"

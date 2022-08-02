@@ -1,11 +1,11 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['fold']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-pagination [data]="pageable"
                            [pageSizeOptions]="pageSizeOptions"
                            [searchable]="false"
                            [showQuickJumper]="true"
-                           mode="complex"
+                           mode="folding"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"
                            widh="710px"
