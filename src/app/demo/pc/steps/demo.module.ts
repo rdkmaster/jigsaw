@@ -11,6 +11,7 @@ import {JigsawStepVerticalDemoComponent} from "./vertical/demo.component";
 import {JigsawStepstatusDemoComponent} from "./status/demo.component";
 import {JigsawStepManyStepsDemoComponent} from "./many-steps/demo.component";
 import {JigsawStepOverLengthDemoComponent} from "./over-length/demo.component";
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import {JigsawStepOverLengthDemoComponent} from "./over-length/demo.component";
         JigsawMarkdownModule,
         JigsawStepsModule,
         JigsawButtonModule,
+        PerfectScrollbarModule
     ]
 })
 export class StepsDemoModule {
