@@ -1,17 +1,23 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
 <!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Numeric Input</jigsaw-header>
 
-    <div class="live-demo">
-        <jigsaw-header [level]="2">基本用法</jigsaw-header>
-        <p class="comment">试试获取input焦点后，敲击键盘的上下键</p>
-        <j-numeric-input [(value)]="value" min="10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)"></j-numeric-input>
+    <div class="demo-showcase">
+        <span>正常</span>
+        <j-numeric-input [(value)]="value" min="10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)"
+        [size]="selectedLabel.size"></j-numeric-input>
         <p class="message">输入值是：<span>{{value}}</span></p>
     </div>
-</div>
 
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <j-numeric-input [(value)]="value"  [disabled]="true" min="10" max="110" placeholder="请输入数字"
+                         [size]="selectedLabel.size" (valueChange)="valueChange($event)"></j-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>是否合法</span>
+        <j-numeric-input [(value)]="value" [valid]="false" [disabled]="true" min="10" max="110" placeholder="请输入数字"
+                         [size]="selectedLabel.size" (valueChange)="valueChange($event)"></j-numeric-input>
+    </div>
+
+</demo-template>
