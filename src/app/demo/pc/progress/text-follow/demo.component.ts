@@ -1,11 +1,11 @@
 import {Component} from "@angular/core";
-import {ProgressTextService} from "../text.service";
+import {ProgressTextService} from "../doc.service";
 
 @Component({
-    selector: 'large-size-progress',
+    selector: 'progress-text-follow',
     templateUrl: './demo.component.html',
 })
-export class ProgressLargeSizeComponent {
+export class ProgressTextFollowComponent {
     progressValue: number = 32;
     constructor(public text: ProgressTextService) {
     }

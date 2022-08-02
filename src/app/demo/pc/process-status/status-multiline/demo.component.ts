@@ -1,13 +1,15 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
+import {ProcessStatusTextService} from "../doc.service";
 
 @Component({
+    selector: 'process-status-multiline',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusMultilineComponent {
     steps = [];
 
-    constructor() {
+    constructor( public text: ProcessStatusTextService) {
         for (let i = 0; i < 50; i++) {
             this.steps.push(this._createStepData(i));
         }
@@ -60,10 +62,4 @@ export class ProcessStatusMultilineComponent {
     public _$selectChange($event) {
         console.log($event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了 jigsaw-process-status-multiline 组件最简单的用法';
-    description: string = '';
 }

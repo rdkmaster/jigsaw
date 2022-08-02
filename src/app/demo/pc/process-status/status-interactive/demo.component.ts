@@ -1,10 +1,12 @@
 import {ChangeDetectorRef, Component} from "@angular/core";
+import {ProcessStatusTextService} from "../doc.service";
 
 @Component({
+    selector: 'process-status-interactive',
     templateUrl: './demo.component.html',
 })
-export class ProcessStatusClickChangeStatusComponent {
-    constructor(private _changeDetector: ChangeDetectorRef) {
+export class ProcessStatusInteractiveComponent {
+    constructor(private _changeDetector: ChangeDetectorRef, public text: ProcessStatusTextService) {
     }
     steps = [
         {
@@ -50,10 +52,4 @@ export class ProcessStatusClickChangeStatusComponent {
         this.steps[index].status = "skipped";
         this._changeDetector.detectChanges();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了如何配合trustedHtml对用户提供交互的例子';
-    description: string = '';
 }
