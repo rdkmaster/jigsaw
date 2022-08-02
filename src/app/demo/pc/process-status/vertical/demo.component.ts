@@ -1,10 +1,13 @@
 import {Component} from "@angular/core";
+import {ProcessStatusTextService} from "../doc.service";
 
 @Component({
+    selector: 'process-status-vertical',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusVerticalFullComponent {
-
+    constructor(public text: ProcessStatusTextService) {
+    }
     steps = [
         {
             title: 'done',
@@ -38,9 +41,4 @@ export class ProcessStatusVerticalFullComponent {
         },
     ];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了 jigsaw-process-status 垂直排列的效果';
-    description: string = '';
 }

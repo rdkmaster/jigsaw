@@ -1,9 +1,11 @@
 import {Component} from "@angular/core";
+import {ProcessStatusTextService} from "../doc.service";
 
 @Component({
+    selector: 'process-status-basic',
     templateUrl: './demo.component.html',
 })
-export class ProcessStatusHorizontalBasicComponent {
+export class ProcessStatusBasicComponent {
     steps = [
         {
             title: 'done',
@@ -30,10 +32,6 @@ export class ProcessStatusHorizontalBasicComponent {
             status: "waiting"
         },
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了jigsaw-process-status组件最简单的用法，所有配置项都用默认';
-    description: string = '';
+    constructor( public text: ProcessStatusTextService) {
+    }
 }

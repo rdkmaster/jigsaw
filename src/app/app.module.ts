@@ -57,6 +57,7 @@ import {ToastDemoModule} from "./demo/pc/toast/demo.module";
 import {TooltipDemoModule} from "./demo/pc/tooltip/demo.module";
 import {TagDemoModule} from "./demo/pc/tag/demo.module";
 import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
+import {ProcessStatusDemoModule} from "./demo/pc/process-status/demo.module";
 
 @NgModule({
     declarations: [
@@ -82,7 +83,7 @@ import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
-        ProgressDemoModule,
+        ProgressDemoModule, ProcessStatusDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [
@@ -110,3 +111,4 @@ export class AppModule {
         JigsawTheme.changeTheme(themeName, majorStyle);
     }
 }
+

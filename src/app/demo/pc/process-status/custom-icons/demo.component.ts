@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {ProcessStatusTextService} from "../doc.service";
 
 @Component({
+    selector: "process-status-custom-icons",
     templateUrl: './demo.component.html'
 })
 export class ProcessStatusCustomIconsComponent {
@@ -66,10 +68,6 @@ export class ProcessStatusCustomIconsComponent {
             skippedIcon: 'iconfont iconfont-e339'
         },
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了jigsaw-steps组件自定义状态ICON图的方法';
-    description: string = '';
+constructor( public text: ProcessStatusTextService) {
+}
 }
