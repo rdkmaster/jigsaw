@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
-import {TagTextService} from "../text.service";
+import {TagTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "selectable-tag",
+    selector: "tag-selectable",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -27,7 +27,7 @@ export class TagSelectableComponent {
 
     onSelect1(tag: { label: string, selected: boolean }) {
         const idx = this.tags1.indexOf(tag);
-        this.tags1.forEach(tag => tag.selected = false);
+        this.tags1.forEach ( tag => tag.selected = false);
         this.tags1[idx].selected = true;
     }
     constructor(public text: TagTextService) {}

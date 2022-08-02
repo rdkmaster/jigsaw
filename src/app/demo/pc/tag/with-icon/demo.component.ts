@@ -1,9 +1,9 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {TagTextService} from "../text.service";
+import {TagTextService} from "../doc.service";
 import {JigsawTag, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
-    selector: "with-icon-tag",
+    selector: "tag-with-icon",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
