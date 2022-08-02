@@ -39,11 +39,13 @@ import {DrawerDemoModule} from "./demo/pc/drawer/demo.module";
 import {SwitchDemoModule} from "./demo/pc/switch/demo.module";
 import {InputDemoModule} from "./demo/pc/input/demo.module";
 import {MenuDemoModule} from "./demo/pc/menu/demo.module";
+import {SearchInputDemoModule} from "./demo/pc/search-input/demo.module";
 import {NumericInputDemoModule} from "./demo/pc/numeric-input/demo.module";
 import {AutoCompleteInputDemoModule} from "./demo/pc/auto-complete-input/demo.module";
 import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
 import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.module";
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
+import {StepsDemoModule} from "./demo/pc/steps/demo.module";
 import {PaginationDemoModule} from "./demo/pc/pagination/demo.module";
 import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
@@ -66,7 +68,7 @@ import {SliderAllDemoModule} from "./demo/pc/slider/demo.module";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
-        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule,
+        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

@@ -1,11 +1,10 @@
 import {Component} from "@angular/core";
 import {InternalUtils} from "jigsaw/public_api";
-import {StepsTextService} from "../text.service";
+import {StepsTextService} from "../doc.service";
 
 @Component({
-    selector: 'over-length-steps',
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'steps-over-length',
+    templateUrl: "./demo.component.html"
 })
 export class JigsawStepOverLengthDemoComponent {
     data = [

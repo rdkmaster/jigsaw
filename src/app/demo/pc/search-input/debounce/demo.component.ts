@@ -1,14 +1,13 @@
 import { Component } from "@angular/core";
-import {SearchInputTextService} from "../text.service";
+import {SearchInputTextService} from "../doc.service";
 
 @Component({
-    selector: 'debounce-search-input',
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'search-input-debounce',
+    templateUrl: "./demo.component.html"
 })
 export class SearchInputDebounceDemoComponent {
     public debounceTime: number = 0;
-    public searchKey: string = "暂无";
+    public searchKey: string = "";
 
     public searchTrigger($event) {
         console.log("demo search event:", $event);

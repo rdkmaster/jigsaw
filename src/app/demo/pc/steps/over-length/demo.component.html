@@ -1,9 +1,4 @@
 <demo-template [data]="''" [text]="text['text']['overLength']">
     <!-- start to learn the demo from here -->
-    <div class="demo-container">
-        <jigsaw-header [level]="2">当横向步骤的标题和描述过长时的表现</jigsaw-header>
-        <jigsaw-steps width="80%" [data]="data" [current]="current"></jigsaw-steps>
-        <jigsaw-header [level]="2">当纵向步骤的标题和描述过长时的表现</jigsaw-header>
-        <jigsaw-steps width="200" height="350" [data]="data" [current]="current" direction="vertical"></jigsaw-steps>
-    </div>
+    <jigsaw-steps width="80%" [data]="data" [current]="current"></jigsaw-steps>
 </demo-template>
