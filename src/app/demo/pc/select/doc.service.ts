@@ -26,17 +26,11 @@ export class SelectTextService {
 
             已选项用蓝色背景标识，中尺寸单选下拉框适用于紧凑型表单，小尺寸单选下拉框适用于表单。
         `,
-        async: `
-            ## 服务端取数据
-        `,
-        preset: `
-            ## 预设数值
+        string: `
+            ## 数据来自字符串数组
         `,
         optionCount: `
             ## option-count
-        `,
-        disabled: `
-            ## 禁用
         `,
         lineEllipsis: `
             ## 文本溢出
@@ -46,22 +40,8 @@ export class SelectTextService {
         trigger: `
             ## 下拉打开方式
         `,
-        multiple: `
-            ## 多选
-
-            可试试 maxWidth / maxHeight 对组件尺寸的影响
-        `,
         searchable: `
-            ## 不知道怎么起名
-        `,
-        size: `
-            ## 尺寸设置
-
-            单选设置尺寸用width;
-
-            多选设置尺寸用minWidth和maxWidth;
-
-            多选设置width，则minWidth和maxWidth都为width值。
+            ## Searchable
         `,
         clearable: `
             ## 清除功能
@@ -74,11 +54,8 @@ export class SelectTextService {
 
             这个Demo演示了通过optionWidth属性来使得下拉列表的宽度变大的效果
         `,
-        valueChange: `
-            ## 不知道名字
-        `,
-        valid: `
-            ## 不知道名字
-        `
+       interaction: `
+            ## 联动
+       `,
     }
 }

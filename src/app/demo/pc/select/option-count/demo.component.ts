@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {SelectTextService} from "../text.service";
+import {SelectTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "option-count-select",
+    selector: "select-option-count",
     templateUrl: "./demo.component.html",
     styleUrls: ["../public.css"]
 })
 
-export class SelectOptionCountComponent {
+export class SelectOptionCountDemoComponent {
     public selectedLabel = {label: "中", size: "medium"};
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},

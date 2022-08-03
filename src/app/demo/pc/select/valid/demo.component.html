@@ -1,8 +1,0 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['valid']">
-    <jigsaw-select (valueChange)="selectChange($event)" placeholder="请选择城市" [data]="cityList" [valid]="valid" [size]="selectedLabel.size">
-    </jigsaw-select>
-    <div class="demo-setting-wrap">
-        <span class="text">valid:</span>
-        <jigsaw-switch [(checked)]="valid"></jigsaw-switch>
-    </div>
-</demo-template>
