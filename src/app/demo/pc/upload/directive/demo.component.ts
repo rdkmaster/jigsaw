@@ -1,11 +1,10 @@
 import {Component} from "@angular/core";
 import {UploadFileInfo} from "jigsaw/public_api";
-import {UploadTextService} from "../text.service";
+import {UploadTextService} from "../doc.service";
 
 @Component({
-    selector: 'directive-upload',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: 'upload-directive',
+    templateUrl: './demo.component.html'
 })
 export class UploadDirectiveDemoComponent {
     fileType = '.png';

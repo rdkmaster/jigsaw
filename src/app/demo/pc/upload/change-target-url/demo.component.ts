@@ -1,11 +1,10 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } from "jigsaw/public_api";
-import {UploadTextService} from "../text.service";
+import {UploadTextService} from "../doc.service";
 
 @Component({
-    selector: 'change-target-url-upload',
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'upload-change-target-url',
+    templateUrl: "./demo.component.html"
 })
 export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
     constructor(private _changeDetectorRef: ChangeDetectorRef, public text: UploadTextService) {}

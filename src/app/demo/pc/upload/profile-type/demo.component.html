@@ -1,0 +1,6 @@
+<demo-template [data]="''" [text]="text['text']['profileType']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg', '.txt']">
+    </jigsaw-radios-lite>
+    <jigsaw-upload width="300px" [uploadFileType]="fileType"></jigsaw-upload>
+</demo-template>

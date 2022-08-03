@@ -28,6 +28,7 @@ import {AlphabeticalIndexDemoComponent} from "./demo/pc/alphabetical-index/demo.
 import {RateDemoComponent} from "./demo/pc/rate/demo.component";
 import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
 import {ZtreeAllComponent} from "./demo/pc/tree/demo.component";
+import {UploadAllComponent} from "./demo/pc/upload/demo.component";
 import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
@@ -78,6 +79,7 @@ export const routerConfigPC = [
     { path: "pc/steps", component: StepsAllComponent},
     { path: "pc/textarea", component: TextareaAllComponent},
     { path: "pc/tree", component: ZtreeAllComponent},
+    { path: "pc/upload", component: UploadAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

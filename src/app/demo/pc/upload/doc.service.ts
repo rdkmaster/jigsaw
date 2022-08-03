@@ -33,9 +33,28 @@ export class UploadTextService {
 
             #### 注意
 
-            为了便于便于应用在更多的场合实现文件上传功能，文件上传功能与文件上传结果显示功能两部分可以单独使用， 其中执行上传功能的部分以\`j-upload / jigsaw-upload\`指令的形式存在,详情请[参考这个demo](/#/components/upload/demo/directive)。
+            为了便于应用在更多的场合实现文件上传功能，文件上传功能与文件上传结果显示功能两部分可以单独使用， 其中执行上传功能的部分以\`j-upload / jigsaw-upload\`
+            指令的形式存在,详情请[参考这个demo](/#/components/upload/demo/directive)。
 
             结果展示的功能，则以\`j-upload-result / jigsaw-upload-result\`组件的形式存在， 详情请[参考这个demo](/#/components/upload/demo/upload-result)。
+        `,
+        single: `
+            ### 仅支持单个文件
+        `,
+        hideResults: `
+            ### 不显示结果
+        `,
+        profileType: `
+            ### 配置文件类型
+        `,
+        manualUpload: `
+            ### 手动上传
+        `,
+        manualClear: `
+            ### 手动清空
+        `,
+        setSize: `
+            ### 自定义宽高
         `,
         contentField: `
             ## 设置字段名

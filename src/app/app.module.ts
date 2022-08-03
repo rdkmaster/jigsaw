@@ -53,6 +53,7 @@ import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
 import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
 import {DialogDemoModule} from "./demo/pc/dialog/demo.module";
+import {UploadDemoModule} from "./demo/pc/upload/demo.module";
 import {IconsDemoModule} from "./demo/pc/icons/demo.module";
 import {LoadingDemoModule} from "./demo/pc/loading/demo.module";
 import {NavigationMenuDemoModule} from "./demo/pc/navigation-menu/demo.module";
@@ -72,7 +73,7 @@ import {TrustedHtmlDemoModule} from "./demo/pc/trusted-html/demo.module";
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
-        ZtreeDemoModule,
+        ZtreeDemoModule, UploadDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
