@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {TimePickerTextService} from "../text.service";
+import {TimePickerTextService} from "../doc.service";
 
 @Component({
-    selector: 'limit-time-picker',
+    selector: 'time-picker-limit',
     templateUrl: './demo.component.html'
 })
 export class TimePickerLimitDemoComponent {
@@ -13,7 +13,6 @@ export class TimePickerLimitDemoComponent {
     limitEnd = '17:40:00';
 
     valueChange($event) {
-        console.log('time change to ', $event);
     }
 
     constructor(public text: TimePickerTextService) {
