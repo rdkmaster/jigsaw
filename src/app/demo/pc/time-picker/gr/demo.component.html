@@ -1,9 +1,20 @@
 <demo-template [data]="''" [text]="text['text']['gr']">
-    <!-- start to learn the demo from here -->
-
-    <jigsaw-button-bar [data]="['time','time_hour_minute','time_minute_second','time_hour']" [(selectedItems)]="gr">
-    </jigsaw-button-bar>
-    <br><br>
-    <j-time-picker [(value)]="time" [gr]="gr[0]" (valueChange)="valueChange($event)"></j-time-picker>
-    {{time}}
+<!--    <jigsaw-button-bar [data]="['time','time_hour_minute','time_minute_second','time_hour']" [(selectedItems)]="gr">-->
+<!--    </jigsaw-button-bar>-->
+    <div class="demo-showcase">
+        <span>正常时分秒：</span>
+        <j-time-picker [(value)]="time" [gr]="gr[0]" (valueChange)="valueChange($event)"></j-time-picker>
+    </div>
+    <div class="demo-showcase">
+        <span>只含时分：</span>
+        <j-time-picker [(value)]="time" [gr]="gr[1]" (valueChange)="valueChange($event)"></j-time-picker>
+    </div>
+    <div class="demo-showcase">
+        <span>只含分秒：</span>
+        <j-time-picker [(value)]="time" [gr]="gr[2]" (valueChange)="valueChange($event)"></j-time-picker>
+    </div>
+    <div class="demo-showcase">
+        <span>只含时：</span>
+        <j-time-picker [(value)]="time" [gr]="gr[3]" (valueChange)="valueChange($event)"></j-time-picker>
+    </div>
 </demo-template>

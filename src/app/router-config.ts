@@ -45,6 +45,7 @@ import {TrustedHtmlDemoComponent} from "./demo/pc/trusted-html/demo.component";
 import {TransferDemoComponent} from "./demo/pc/transfer/demo.component";
 import {TimeSectionDemoComponent} from "./demo/pc/time-section/demo.component";
 import {ChartIconDemoComponent} from "./demo/pc/chart-icon/demo.component";
+import {TimePickerDemoComponent} from "./demo/pc/time-picker/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -104,6 +105,7 @@ export const routerConfigPC = [
     {path: "pc/transfer", component: TransferDemoComponent},
     {path: "pc/time-section", component: TimeSectionDemoComponent},
     {path: "pc/chart-icon", component: ChartIconDemoComponent},
+    {path: "pc/time-picker", component: TimePickerDemoComponent},
 
 ];
 export const routerConfigMobile = [];
