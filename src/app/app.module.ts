@@ -56,6 +56,7 @@ import {DialogDemoModule} from "./demo/pc/dialog/demo.module";
 import {UploadDemoModule} from "./demo/pc/upload/demo.module";
 import {IconsDemoModule} from "./demo/pc/icons/demo.module";
 import {LoadingDemoModule} from "./demo/pc/loading/demo.module";
+import {AdjustFontColorDemoModule} from "./demo/pc/adjust-font-color/demo.module";
 import {NavigationMenuDemoModule} from "./demo/pc/navigation-menu/demo.module";
 import {NotificationDemoModule} from "./demo/pc/notification/demo.module";
 import {ToastDemoModule} from "./demo/pc/toast/demo.module";
@@ -77,7 +78,7 @@ import {TimePickerDemoModule} from "./demo/pc/time-picker/demo.module";
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
-        ZtreeDemoModule, UploadDemoModule,
+        ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

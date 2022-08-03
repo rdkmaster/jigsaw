@@ -33,6 +33,7 @@ import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
 import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
+import {AdjustFontColorAllDemoComponent} from "./demo/pc/adjust-font-color/demo.component";
 import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.component";
 import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
 import {ToastDemoComponent} from "./demo/pc/toast/demo.component";
@@ -84,6 +85,7 @@ export const routerConfigPC = [
     { path: "pc/textarea", component: TextareaAllComponent},
     { path: "pc/tree", component: ZtreeAllComponent},
     { path: "pc/upload", component: UploadAllComponent},
+    { path: "pc/adjust-font-color", component: AdjustFontColorAllDemoComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
