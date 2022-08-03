@@ -1,13 +1,13 @@
 import {Component} from "@angular/core";
 import {ZTreeSettings, SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../text.service";
+import {TreeTextService} from "../doc.service";
 
 declare const $:any;
 
 const lazyLoadUrl = '/rdk/service/app/ztree-async/server/lazy';
 
 @Component({
-    selector: 'async-tree',
+    selector: 'tree-async',
     templateUrl: 'demo.component.html'
 })
 export class ZTreeAsyncDemoComponent {

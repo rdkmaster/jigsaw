@@ -1,21 +1,22 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawTreeExt, SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
 import {HttpClient} from '@angular/common/http';
-import {TreeTextService} from "../text.service";
+import {TreeTextService} from "../doc.service";
 
 @Component({
     selector: 'fuzzy-search-tree',
     templateUrl: './demo.component.html'
 })
 export class ZtreeFuzzySearchComponent {
-    @ViewChild(JigsawTreeExt)
-
     public selectedLabel = {label: "中", size: "medium"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},
         {label: "大", size: "large"}
     ]);
+
+    @ViewChild(JigsawTreeExt)
+
     public treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData;

@@ -1,15 +1,12 @@
 import {Component} from "@angular/core";
+import {TextareaTextService} from "../doc.service";
 
 @Component({
+    selector: 'textarea-clearable',
     templateUrl: './demo.component.html'
 })
 export class TextareaClearableDemoComponent {
     textareaValue: any;
-    clearable = true;
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TextareaTextService) {
+    }
 }

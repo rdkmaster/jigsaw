@@ -21,11 +21,13 @@ import {ComboSelectComponent} from "./demo/pc/combo-select/demo.component";
 import {SwitchDemoComponent} from "./demo/pc/switch/demo.component";
 import {SearchInputAllComponent} from "./demo/pc/search-input/demo.component";
 import {NumericInputAllComponent} from "./demo/pc/numeric-input/demo.component";
+import {TextareaAllComponent} from "./demo/pc/textarea/demo.component";
 import {PaginationAllComponent} from "./demo/pc/pagination/demo.component";
 import {StepsAllComponent} from "./demo/pc/steps/demo.component";
 import {AlphabeticalIndexDemoComponent} from "./demo/pc/alphabetical-index/demo.component";
 import {RateDemoComponent} from "./demo/pc/rate/demo.component";
 import {ColorSelectDemoComponent} from "./demo/pc/color-select/demo.component";
+import {ZtreeAllComponent} from "./demo/pc/tree/demo.component";
 import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
@@ -75,6 +77,8 @@ export const routerConfigPC = [
     { path: "pc/numeric-input", component: NumericInputAllComponent},
     { path: "pc/search-input", component: SearchInputAllComponent},
     { path: "pc/steps", component: StepsAllComponent},
+    { path: "pc/textarea", component: TextareaAllComponent},
+    { path: "pc/tree", component: ZtreeAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

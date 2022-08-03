@@ -8,48 +8,24 @@ export class TextareaTextService {
         introduction: `
             # Textarea 多行文本框
 
-            引导用户按照流程完成任务的导航条。
-
-            ## 使用场景
-
-            当任务复杂或者存在先后关系时，将其分解成一系列步骤，从而简化任务。
-
-            一般在3个步骤（含3个）以上使用。
-
             ## 示例
         `,
-        horizontal: `
-            ### 横向步骤条
+        basic: `
+            ### 基本用法
         `,
-        vertical: `
-            ### 纵向步骤条
+        clearable: `
+            ### 关闭清除功能
         `,
-        status: `
-            ### 状态
+        maxLength: `
+            ### 限制30个字符（默认不包含回车换行符）
         `,
-        overLength: `
-            ### 标题和描述过长时的表现
-        `,
-        context: `
-            ### context属性
+        resize: `
+            ### 可伸缩
 
-            这个demo演示steps的数据中，context属性的用法。
+            此Demo演示了textarea组件的可动态调整尺寸的效果，在启用动态调整尺寸时，组件的尺寸单位只能支持px和vw/vh，不支持%。
         `,
-        noData: `
-            ### Pagination空数据
-
-            此Demo展示了Pagination组件在空数据/数据延迟设置时的表现。
-        `,
-        gotoStep: `
-            ### 跳转方式
-        `,
-        events: `
-            ### 事件
-        `,
-        manySteps: `
-            ### 步骤数量极端的情况
-
-            演示当步骤数较多和较少等极端情况下展示效果
+        select: `
+            ### 自动选中文本
         `
     }
 }

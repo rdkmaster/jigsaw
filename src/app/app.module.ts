@@ -46,7 +46,9 @@ import {FishBoneDemoModule} from "./demo/pc/fish-bone/demo.module";
 import {AlphabeticalIndexDemoModule} from "./demo/pc/alphabetical-index/demo.module";
 import {RateDemoModule} from "./demo/pc/rate/demo.module";
 import {StepsDemoModule} from "./demo/pc/steps/demo.module";
+import {TextareaDemoModule} from "./demo/pc/textarea/demo.module";
 import {PaginationDemoModule} from "./demo/pc/pagination/demo.module";
+import {ZtreeDemoModule} from "./demo/pc/tree/demo.module";
 import {ColorSelectDemoModule} from "./demo/pc/color-select/demo.module";
 import {ComboSelectDemoModule} from "./demo/pc/combo-select/demo.module";
 import {CollapseDemoModule} from "./demo/pc/collapse/demo.module";
@@ -70,7 +72,8 @@ import {TransferDemoModule} from "./demo/pc/transfer/demo.module";
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
-        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule,
+        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
+        ZtreeDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

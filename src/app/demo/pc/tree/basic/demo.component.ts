@@ -1,9 +1,9 @@
 import {AfterViewInit, Component, ViewChild} from "@angular/core";
-import {SimpleTreeData, JigsawTreeExt, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../text.service";
+import {SimpleTreeData, JigsawTreeExt, ArrayCollection, ZTreeSettings} from "jigsaw/public_api";
+import {TreeTextService} from "../doc.service";
 
 @Component({
-    selector: 'basic-tree',
+    selector: 'tree-basic',
     templateUrl: './demo.component.html'
 })
 export class ZtreeDemoComponent implements AfterViewInit {
@@ -17,6 +17,12 @@ export class ZtreeDemoComponent implements AfterViewInit {
         {label: "中", size: "medium"},
         {label: "大", size: "large"}
     ]);
+
+    // public setting: ZTreeSettings = {
+    //     edit: {
+    //         enable: false
+    //     }
+    // }
 
     constructor(public text: TreeTextService) {
         this.data = new SimpleTreeData();

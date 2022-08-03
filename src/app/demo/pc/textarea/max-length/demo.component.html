@@ -1,29 +1,5 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <div class="clearfix">
-        <div class="demo-1 live-demo live-demo-block">
-            <jigsaw-header [level]="2">不配置字符数限制</jigsaw-header>
-            <jigsaw-textarea (valueChange)="_$valueChange($event)"></jigsaw-textarea>
-        </div>
-
-        <div class="demo-2 live-demo live-demo-block">
-            <jigsaw-header [level]="2">限制30个字符（默认不包含回车换行符）</jigsaw-header>
-            <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
-        </div>
-    </div>
-
-    <div class="clearfix">
-        <div class="demo-3 live-demo live-demo-block">
-            字符数是否包含回车换行符：
-            <jigsaw-switch [(checked)]="_$includesCRLF" offLabel="不包含" onLabel="包含"></jigsaw-switch>
-            <br><br>
-            <jigsaw-textarea [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
-        </div>
-    </div>
-</div>
-
+<demo-template [data]="''" [text]="text['text']['maxLength']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-textarea maxLength="30" (valueChange)="_$valueChange($event)" [(value)]="_$value"></jigsaw-textarea>
+</demo-template>
 
