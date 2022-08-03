@@ -66,6 +66,7 @@ import {SliderAllDemoModule} from "./demo/pc/slider/demo.module";
 import {TrustedHtmlDemoModule} from "./demo/pc/trusted-html/demo.module";
 import {TransferDemoModule} from "./demo/pc/transfer/demo.module";
 import {TimeSectionDemoModule} from "./demo/pc/time-section/demo.module";
+import {ChartIconDemoModule} from "./demo/pc/chart-icon/demo.module";
 
 @NgModule({
     declarations: [
@@ -93,6 +94,7 @@ import {TimeSectionDemoModule} from "./demo/pc/time-section/demo.module";
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
+        ChartIconDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

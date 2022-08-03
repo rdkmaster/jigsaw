@@ -1,7 +1,9 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
-import {ChartIconLine, ChartIconPie, ColumnDefine, InternalUtils, TableData,} from "jigsaw/public_api";
+import { ColumnDefine, InternalUtils, TableData,} from "jigsaw/public_api";
+import {ChartIconTextService} from "../doc.service";
 
 @Component({
+    selector: 'chart-icon-with-table',
     templateUrl: './demo.component.html'
 })
 export class ChartIconTableDemoComponent implements AfterViewInit {
@@ -16,7 +18,7 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
         this.tableData.refresh();
     }
 
-    constructor() {
+    constructor( public text: ChartIconTextService) {
         setInterval(() => {
             this.randomData();
             this.tableData.refresh();
@@ -62,10 +64,4 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
             }
         }
     ];
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本Demo演示了chart-icon组件与表格配合使用的方法';
-    description: string = '';
 }

@@ -1,14 +1,10 @@
 import {Component} from "@angular/core";
 import {InternalUtils, JigsawTheme} from "jigsaw/public_api";
+import {ChartIconTextService} from "../doc.service";
 
 @Component({
     selector: 'chart-icon-with-button',
     templateUrl: './demo.component.html',
-    styles:[`
-        .jigsaw-header-host:not(:first-of-type) {
-            margin-top: 20px;
-        }
-    `]
 })
 export class ChartIconButtonDemoComponent {
     public disabled: boolean = false;
@@ -41,15 +37,7 @@ export class ChartIconButtonDemoComponent {
         }, 1000);
     }
 
-    constructor() {
+    constructor( public text: ChartIconTextService) {
         this._startUpdating();
     }
-
-
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '展示了按钮与chart-icon组合使用的各种使用场景。';
-    description: string = '';
 }

@@ -13,8 +13,8 @@ import {ButtonLoadingComponent} from "./loading/demo.component";
 import {ButtonDirectiveDemoComponent} from "./directive/demo.component";
 import {ButtonTextDemoComponent} from "./text/demo.component";
 import {ButtonLoginComponent} from "./login/demo.component";
-import {ChartIconButtonDemoModule} from "../chart-icon/with-button/demo.module";
 import {ButtonWithChartIconDemoComponent} from "./with-chart-icon/demo.component";
+import {ChartIconDemoModule} from "../chart-icon/demo.module";
 
 @NgModule({
     declarations: [
@@ -29,14 +29,14 @@ import {ButtonWithChartIconDemoComponent} from "./with-chart-icon/demo.component
         ButtonDirectiveDemoComponent,
         ButtonTextDemoComponent,
         ButtonLoginComponent,
-        ButtonWithChartIconDemoComponent
+        ButtonWithChartIconDemoComponent,
     ],
     imports: [
         DemoTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawLoadingModule,
-        ChartIconButtonDemoModule
+        ChartIconDemoModule,
 
     ]
 })
