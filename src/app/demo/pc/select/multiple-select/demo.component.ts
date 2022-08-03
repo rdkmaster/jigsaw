@@ -1,14 +1,14 @@
 import {Component} from "@angular/core";
-import {SelectTextService} from "../text.service";
+import {SelectTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: "multiple-select-select",
+    selector: "select-multiple-select",
     templateUrl: "./demo.component.html",
     styleUrls: ["../public.css"]
 })
 
-export class SelectMultipleSelectComponent {
+export class SelectMultipleSelectDemoComponent {
     public selectedLabel = {label: "中", size: "medium"};
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},

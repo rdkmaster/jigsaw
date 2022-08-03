@@ -1,4 +1,6 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['optionCount']">
+<div class="demo-showcase">
+    <span>设置选项数量：</span>
     <jigsaw-select [(value)]="selectedCityForSelect"
                    (valueChange)="selectChange($event)"
                    placeholder="请选择城市"
@@ -6,5 +8,5 @@
                    [data]="cityListForSelect"
                    [size]="selectedLabel.size">
     </jigsaw-select>
-    <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+</div>
 </demo-template>
