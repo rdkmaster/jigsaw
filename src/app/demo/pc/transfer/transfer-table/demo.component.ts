@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
-import {TransferTextService} from "../text.service";
+import {TransferTextService} from "../doc.service";
 
 @Component({
     selector: 'transfer-table-transfer',

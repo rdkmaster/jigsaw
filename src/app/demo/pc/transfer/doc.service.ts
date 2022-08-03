@@ -52,7 +52,7 @@ export class TransferTextService {
 
             这个Demo模拟的是采用服务端分页的情形
         `,
-        transferListLoaclPageable: `
+        transferListLocalPageable: `
             ## 本地分页数据？？？
 
             这个Demo模拟的是采用浏览器内部分页的情形

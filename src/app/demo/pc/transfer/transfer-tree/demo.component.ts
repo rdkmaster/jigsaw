@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData, TransferListDestRenderer, TransferTreeSourceRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
-import {TransferTextService} from "../text.service";
+import {TransferTextService} from "../doc.service";
 
 @Component({
     selector: 'transfer-tree-transfer',
