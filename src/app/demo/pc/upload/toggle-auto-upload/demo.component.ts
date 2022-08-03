@@ -1,11 +1,10 @@
 import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
 import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
-import {UploadTextService} from "../text.service";
+import {UploadTextService} from "../doc.service";
 
 @Component({
-    selector: 'toggle-auto-upload-upload',
-    templateUrl: "./demo.component.html",
-    styleUrls:["./demo.component.css"]
+    selector: 'upload-toggle-auto-upload',
+    templateUrl: "./demo.component.html"
 })
 export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     constructor(

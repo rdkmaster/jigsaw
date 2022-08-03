@@ -1,15 +1,15 @@
 import {Component} from "@angular/core";
 import { UploadFileInfo } from 'jigsaw/public_api';
-import {UploadTextService} from "../text.service";
+import {UploadTextService} from "../doc.service";
 
 @Component({
-    selector: 'content-field-upload',
+    selector: 'upload-content-field',
     templateUrl: './demo.component.html',
     styles: [`
         .field-label {
             width: 137px;
             margin-bottom: 16px;
-            text-align: right;
+            /*text-align: right;*/
         }
     `]
 })

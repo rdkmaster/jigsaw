@@ -1,19 +1,16 @@
-import { Component } from "@angular/core";
+import { Component, ViewChild } from "@angular/core";
+import { JigsawUpload } from 'jigsaw/public_api';
 import {UploadTextService} from "../doc.service";
 
 @Component({
-    selector: 'upload-basic',
+    selector: 'upload-manual-upload',
     templateUrl: './demo.component.html'
 })
-export class UploadBasicDemoComponent {
+export class UploadManualUploadDemoComponent {
     fileType = '.txt';
 
     uploadStart($event) {
         console.log("uploadStart触发了", $event)
-    }
-
-    uploadDataSendProgress($event) {
-        console.log("uploadDataSendProgress触发了", $event)
     }
 
     uploadProgress($event) {
@@ -24,13 +21,8 @@ export class UploadBasicDemoComponent {
         console.log("uploadComplete触发了", $event)
     }
 
-    uploadChange($event) {
-        console.log("uploadChange触发了", $event)
-    }
-
-    uploadRemove($event) {
-        console.log("uploadRemove触发了", $event)
-    }
+    @ViewChild("demo6", { read: JigsawUpload })
+    public uploader6: JigsawUpload;
 
     constructor(public text: UploadTextService) {
     }
