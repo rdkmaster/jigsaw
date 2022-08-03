@@ -1,0 +1,14 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+<!-- start to learn the demo from here -->
+
+<ul class="public-variables-demo-ul">
+    <div *ngFor="let propList of properties">
+        <li *ngFor="let prop of propList" [ngStyle]="{background: prop.bg, color: getFontColor(prop.bg)}">
+            <label>属性名</label>
+            <span (click)="copyToClipboard(prop.name)" title="单击复制">{{prop.name}}</span>
+            <label>属性值</label>
+            <span (click)="copyToClipboard(prop.value)" title="单击复制">{{prop.value}}</span>
+        </li>
+    </div>
+</ul>
+</demo-template>

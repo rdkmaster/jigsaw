@@ -60,6 +60,7 @@ import {AdjustFontColorDemoModule} from "./demo/pc/adjust-font-color/demo.module
 import {NavigationMenuDemoModule} from "./demo/pc/navigation-menu/demo.module";
 import {NotificationDemoModule} from "./demo/pc/notification/demo.module";
 import {ToastDemoModule} from "./demo/pc/toast/demo.module";
+import {ThemePropertiesDemoModule} from "./demo/pc/theme-properties/demo.module";
 import {TooltipDemoModule} from "./demo/pc/tooltip/demo.module";
 import {TagDemoModule} from "./demo/pc/tag/demo.module";
 import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
@@ -80,7 +81,7 @@ import {DragDropDemoModule} from "./demo/pc/drag-drop/demo.module";
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
-        ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule,
+        ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
