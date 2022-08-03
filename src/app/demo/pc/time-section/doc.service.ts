@@ -19,11 +19,17 @@ export class TimeSectionTextService {
         basic: `
             ### 基础用法
         `,
-        timeSectionOptions: `
-            ### 时段选项
+        timeSectionPicker: `
+            ### 小时选择器
         `,
-        fillBack: `
-            ### Fill Back
-        `
+        weekSectionPicker: `
+            ### 周选择器
+        `,
+        daySectionPicker: `
+            ### 天选择器
+        `,
+        horizontal: `
+            ### 多选
+        `,
     }
 }

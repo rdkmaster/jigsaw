@@ -1,0 +1,11 @@
+<demo-template [data]="[]" [text]="text['text']['daySectionPicker']">
+        <div class="demo-3 live-demo">
+            <jigsaw-header [level]="2">day-section-picker</jigsaw-header>
+            <br><br>
+            <j-checkbox style="margin-left: 16px" [(checked)]="showLastDay">显示最后一天</j-checkbox>
+            <br><br>
+            <j-day-section-picker [value]="daySection" [showLastDay]="showLastDay" [currentTime]="curTime"
+                                  [multipleSelect]="multipleSelect3" (valueChange)="dayValueChange($event)"
+                                  width="50%"></j-day-section-picker>
+        </div>
+</demo-template>
