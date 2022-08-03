@@ -1,0 +1,9 @@
+<demo-template [data]="[]" [text]="text['text']['timeSectionPicker']">
+        <div class="demo-1 live-demo">
+            <jigsaw-header [level]="2">time-section-picker： 按小时选择</jigsaw-header>
+            <br><br>
+            <j-time-section-picker [(value)]="timeSection" [multipleSelect]="multipleSelect1"
+                                   (valueChange)="timeValueChange($event)"></j-time-section-picker>
+            <br>
+        </div>
+</demo-template>

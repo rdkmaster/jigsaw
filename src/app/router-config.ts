@@ -42,6 +42,9 @@ import {ProgressDemoComponent} from "./demo/pc/progress/demo.component";
 import {ProcessStatusDemoComponent} from "./demo/pc/process-status/demo.component";
 import {SliderDemoComponent} from "./demo/pc/slider/demo.component";
 import {TrustedHtmlDemoComponent} from "./demo/pc/trusted-html/demo.component";
+import {TransferDemoComponent} from "./demo/pc/transfer/demo.component";
+import {TimeSectionDemoComponent} from "./demo/pc/time-section/demo.component";
+import {ChartIconDemoComponent} from "./demo/pc/chart-icon/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -98,6 +101,10 @@ export const routerConfigPC = [
     {path: "pc/process-status" , component: ProcessStatusDemoComponent },
     {path: "pc/slider", component: SliderDemoComponent},
     {path: "pc/trusted-html", component: TrustedHtmlDemoComponent},
+    {path: "pc/transfer", component: TransferDemoComponent},
+    {path: "pc/time-section", component: TimeSectionDemoComponent},
+    {path: "pc/chart-icon", component: ChartIconDemoComponent},
+
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];

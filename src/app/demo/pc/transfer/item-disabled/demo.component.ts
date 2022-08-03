@@ -1,10 +1,10 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
-import {TransferTextService} from "../text.service";
+import {TransferTextService} from "../doc.service";
 
 @Component({
-    selector: 'item-disabled-transfer',
+    selector: 'transfer-item-disabled',
     templateUrl: './demo.component.html'
 })
 export class TransferItemDisabledDemoComponent {
