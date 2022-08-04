@@ -303,6 +303,9 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
 }
 
 function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
+    if (guide.alwaysPopup) {
+        return guide.notices;
+    }
     const guideInfo = shownGuides.find(g => g.guideKey == guide.key);
     if (!guideInfo) {
         return guide.notices;
@@ -317,7 +320,7 @@ function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
         // 去重
         .filter((key, idx, arr) => idx == arr.indexOf(key))
         // 去掉已经显示过的
-        .filter(key => guideInfo.notices.indexOf(key) == -1);
+        .filter(key => guideInfo.notices.indexOf(key) == -1 || guide.notices.find(notice => notice.key == key)?.alwaysPopup);
     return filtered.map(key => keys.indexOf(key)).map(idx => guide.notices[idx]);
 }
 
