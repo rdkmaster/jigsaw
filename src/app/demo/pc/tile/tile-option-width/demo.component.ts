@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
+import {TileTextService} from "../doc.service";
 
 @Component({
+    selector: 'tile-option-width',
     templateUrl: './demo.component.html'
 })
 export class TileSelectOptionWidthComponent {
@@ -14,9 +16,6 @@ export class TileSelectOptionWidthComponent {
         {label: "西安"}
     ]);
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TileTextService) {
+    }
 }

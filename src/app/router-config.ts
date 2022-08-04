@@ -43,6 +43,7 @@ import {TabAllComponent} from "./demo/pc/tab/demo.component";
 import {BoxAllComponent} from "./demo/pc/box/demo.component";
 import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
 import {TagDemoComponent} from "./demo/pc/tag/demo.component";
+import {TileAllComponent} from "./demo/pc/tile/demo.component";
 import {ProgressDemoComponent} from "./demo/pc/progress/demo.component";
 import {ProcessStatusDemoComponent} from "./demo/pc/process-status/demo.component";
 import {SliderDemoComponent} from "./demo/pc/slider/demo.component";
@@ -99,6 +100,7 @@ export const routerConfigPC = [
     { path: "pc/movable", component: MovableAllComponent},
     { path: "pc/tab", component: TabAllComponent},
     { path: "pc/box", component: BoxAllComponent},
+    { path: "pc/tile", component: TileAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

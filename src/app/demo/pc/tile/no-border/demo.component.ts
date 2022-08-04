@@ -1,12 +1,12 @@
 import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
+import {TileTextService} from "../doc.service";
 
 @Component({
+    selector: 'tile-no-border',
     templateUrl: './demo.component.html'
 })
-export class TileSelectFullDemoComponent {
-    showBorder = true;
-
+export class TileSelectNoBorderDemoComponent {
     citys = new ArrayCollection([
         {label: "北京"},
         {label: "上海", disabled: true},
@@ -49,9 +49,6 @@ export class TileSelectFullDemoComponent {
         this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TileTextService) {
+    }
 }
