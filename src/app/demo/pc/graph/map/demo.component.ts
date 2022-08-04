@@ -1,14 +1,16 @@
 import {AfterViewInit, Component, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
+import {GraphTextService} from "../demo.service";
 
 @Component({
+    selector: 'graph-map',
     templateUrl: './demo.component.html'
 })
-export class MapGraphComponent implements AfterViewInit {
+export class GraphMapDemoComponent implements AfterViewInit {
     data: AbstractGraphData;
 
-    constructor(public http: HttpClient) {
+    constructor(public http: HttpClient, public text: GraphTextService) {
 
     }
 
@@ -22,11 +24,6 @@ export class MapGraphComponent implements AfterViewInit {
         })
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }
 
 export class GraphDataDemo extends AbstractGraphData {

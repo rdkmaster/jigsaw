@@ -2,12 +2,14 @@ import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {FunnelPlotGraphData} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
+import {GraphTextService} from "../demo.service";
 
 @Component({
+    selector: 'graph-funnel-plot',
     templateUrl: './demo.component.html'
 })
-export class FunnelPlotGraphComponent {
-    constructor(public http: HttpClient) {
+export class GraphFunnelPlotDemoComponent {
+    constructor(public http: HttpClient, public text: GraphTextService) {
         this.funnelPlotData = new FunnelPlotGraphData();
         this.funnelPlotData.title = '漏斗图';
         this.funnelPlotData.rowDescriptor = ['访问', '咨询', '订单', '点击', '展现'];
@@ -18,15 +20,9 @@ export class FunnelPlotGraphComponent {
             [80],
             [100]
         ];
-
-        this.funnelPlotFromAjax = new FunnelPlotGraphData();
-        this.funnelPlotFromAjax.http = http;
-        this.funnelPlotFromAjax.title = '漏斗图';
-        this.funnelPlotFromAjax.fromAjax('/graph-data/funnel-plot-data');
     }
 
     funnelPlotData: FunnelPlotGraphData;
-    funnelPlotFromAjax: FunnelPlotGraphData;
 
     handleClick($event) {
         console.log($event);
@@ -38,22 +34,3 @@ export class FunnelPlotGraphComponent {
     summary: string = '这个demo展示了如何使用漏斗图';
     description: string = require('!!raw-loader!./readme.md').default;
 }
-
-
-/* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/graph-data/funnel-plot-data', dealAreaRequest);
-
-function dealAreaRequest(req: HttpRequest<any>) {
-    return {
-        "rowDescriptor": ['访问', '咨询', '订单', '点击', '展现'],
-        "data": [
-            [60],
-            [40],
-            [20],
-            [80],
-            [100]
-        ]
-    }
-}
-
-/* 模拟请求代码 end */

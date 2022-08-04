@@ -3,21 +3,15 @@
 </jigsaw-demo-description>
 
 
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">热力图</jigsaw-header>
+<demo-template [data]="[]" [text]="text['text']['heat']">
 
-    <div class="live-demo">
-        <jigsaw-header [level]="2">HeatGraphData静态数据</jigsaw-header>
-        <jigsaw-graph [data]="heatData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+    <div class="live-demo-wrap">
+        <div class="live-demo">
+            <jigsaw-header [level]="2">HeatGraphData静态数据</jigsaw-header>
+            <jigsaw-graph [data]="heatData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
     </div>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">HeatGraphData异步数据</jigsaw-header>
-        <jigsaw-graph [data]="heatFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
-    </div>
-</div>
-
+</demo-template>
 
 
 
