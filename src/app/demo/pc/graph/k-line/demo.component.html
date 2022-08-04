@@ -3,20 +3,12 @@
 </jigsaw-demo-description>
 
 
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">K线图</jigsaw-header>
-
+<demo-template [data]="[]" [text]="text['text']['kLine']">
     <div class="live-demo">
         <jigsaw-header [level]="2">KLineGraphData静态数据</jigsaw-header>
         <jigsaw-graph [data]="kLineData" height="400" (click)="handleClick($event)"></jigsaw-graph>
     </div>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">KLineGraphData异步数据</jigsaw-header>
-        <jigsaw-graph [data]="kLineFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
-    </div>
-</div>
+</demo-template>
 
 
 

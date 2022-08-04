@@ -2,26 +2,23 @@ import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {ScatterGraphData} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
+import {GraphTextService} from "../demo.service";
 
 @Component({
+    selector: 'graph-scatter',
     templateUrl: './demo.component.html'
 })
-export class ScatterGraphComponent {
-    constructor(public http: HttpClient) {
+export class GraphScatterDemoComponent {
+    constructor(public http: HttpClient, public text: GraphTextService) {
         this.scatterData = new ScatterGraphData();
         this.scatterData.title = '散点图';
         this.scatterData.data = [
             [10.0, 8.04], [8.0, 6.95], [13.0, 7.58], [9.0, 8.81], [11.0, 8.33], [14.0, 9.96], [6.0, 7.24], [4.0, 4.26], [12.0, 10.84], [7.0, 4.82], [5.0, 5.68]
         ];
 
-        this.scatterFromAjax = new ScatterGraphData();
-        this.scatterFromAjax.http = http;
-        this.scatterFromAjax.title = '散点图';
-        this.scatterFromAjax.fromAjax('/graph-data/scatter-data');
     }
 
     scatterData: ScatterGraphData;
-    scatterFromAjax: ScatterGraphData;
 
     handleClick($event) {
         console.log($event);
@@ -33,17 +30,3 @@ export class ScatterGraphComponent {
     summary: string = '';
     description: string = '';
 }
-
-
-/* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/graph-data/scatter-data', dealAreaRequest);
-
-function dealAreaRequest(req: HttpRequest<any>) {
-    return {
-        "data": [
-            [10.0, 8.04], [8.0, 6.95], [13.0, 7.58], [9.0, 8.81], [11.0, 8.33], [14.0, 9.96], [6.0, 7.24], [4.0, 4.26], [12.0, 10.84], [7.0, 4.82], [5.0, 5.68]
-        ]
-    }
-}
-
-/* 模拟请求代码 end */

@@ -1,10 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
+import {GraphTextService} from "../demo.service";
 
 @Component({
+    selector: 'graph-basic',
     templateUrl: './demo.component.html'
 })
-export class BasicGraphComponent implements OnInit {
+export class GraphBasicDemoComponent implements OnInit {
     data: AbstractGraphData;
 
     @ViewChild("graph") graph: JigsawGraph;
@@ -14,7 +16,8 @@ export class BasicGraphComponent implements OnInit {
             text: '补丁 - 堆叠区域图'
         }
     };
-
+    constructor( public text: GraphTextService) {
+    }
     handleClick(info){
         console.log(info);
     }
@@ -24,12 +27,6 @@ export class BasicGraphComponent implements OnInit {
         this.data = graphData;
         graphData.optionsPatch = this.patchOption;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }
 
 export class GraphDataDemo extends AbstractGraphData {

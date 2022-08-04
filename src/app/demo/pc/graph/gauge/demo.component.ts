@@ -2,23 +2,20 @@ import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {GaugeGraphData} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../app.interceptor";
+import {GraphTextService} from "../demo.service";
 
 @Component({
+    selector: 'graph-gauge',
     templateUrl: './demo.component.html'
 })
-export class GaugeGraphComponent {
-    constructor(public http: HttpClient) {
+export class GraphGaugeDemoComponent {
+    constructor(public http: HttpClient, public text: GraphTextService) {
         this.gaugeData = new GaugeGraphData();
         this.gaugeData.rowDescriptor = ['完成率'];
         this.gaugeData.data = 35;
-
-        this.gaugeFromAjax = new GaugeGraphData();
-        this.gaugeFromAjax.http = http;
-        this.gaugeFromAjax.fromAjax('/graph-data/gauge-data');
     }
 
     gaugeData: GaugeGraphData;
-    gaugeFromAjax: GaugeGraphData;
 
     handleClick($event) {
         console.log($event);
@@ -31,17 +28,3 @@ export class GaugeGraphComponent {
     description: string = require('!!raw-loader!./readme.md').default;
 }
 
-
-/* 模拟请求代码 start */
-AjaxInterceptor.registerProcessor('/graph-data/gauge-data', dealAreaRequest);
-
-function dealAreaRequest(req: HttpRequest<any>) {
-    return  {
-        "rowDescriptor": ['完成率'],
-        "data": [
-            [35]
-        ]
-    }
-}
-
-/* 模拟请求代码 end */

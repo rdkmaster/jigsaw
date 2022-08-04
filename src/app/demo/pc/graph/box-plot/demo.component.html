@@ -1,22 +1,11 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">箱线图</jigsaw-header>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">BoxPlotGraphData静态数据</jigsaw-header>
-        <jigsaw-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+<demo-template [data]="[]" [text]="text['text']['boxPlot']">
+    <div class="live-demo-wrap">
+        <div class="live-demo">
+            <jigsaw-header [level]="2">BoxPlotGraphData静态数据</jigsaw-header>
+            <jigsaw-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
     </div>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">BoxPlotGraphData异步数据</jigsaw-header>
-        <jigsaw-graph [data]="boxPlotFromAjax" height="400" (click)="handleClick($event)"></jigsaw-graph>
-    </div>
-</div>
+</demo-template>
 
 
 
