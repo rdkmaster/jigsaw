@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
+import {TabTextService} from "../doc.service";
 
 @Component({
+    selector: 'tab-background',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
@@ -15,9 +17,7 @@ export class TabsBackgroundDemoComponent {
         tab.addTab("new tab", content);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "此demo展示通过设置backgroundColor属性，达到页签与背景色完美融合在一起的效果。";
-    description: string = "";
+    constructor(public text: TabTextService) {
+    }
+
 }

@@ -1,8 +1,9 @@
 import { Component } from "@angular/core";
+import {TabTextService} from "../doc.service";
 
 @Component({
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    selector: 'tab-type',
+    templateUrl: "./demo.component.html"
 })
 export class TabsTypeDemoComponent {
     editable: boolean = true;
@@ -14,10 +15,6 @@ export class TabsTypeDemoComponent {
     add(tab, content) {
         tab.addTab("new tab", content);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "此demo主要展示可编辑的tab";
-    description: string = "";
+    constructor(public text: TabTextService) {
+    }
 }
