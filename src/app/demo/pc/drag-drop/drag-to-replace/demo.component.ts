@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {DragDropInfo} from "jigsaw/public_api";
+import {DragDropTextService} from "../doc.service";
 
 @Component({
+    selector: 'drag-to-replace',
     templateUrl: 'demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -43,10 +45,6 @@ export class DragToReplaceDemoComponent {
         this._replacedEl = dragInfo.element.innerHTML;
         dragInfo.element.innerHTML = dragInfo.dragDropData;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor( public text: DragDropTextService) {
+    }
 }
