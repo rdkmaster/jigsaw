@@ -65,6 +65,7 @@ import {TabsDemoModule} from "./demo/pc/tab/demo.module";
 import {ThemePropertiesDemoModule} from "./demo/pc/theme-properties/demo.module";
 import {TooltipDemoModule} from "./demo/pc/tooltip/demo.module";
 import {TagDemoModule} from "./demo/pc/tag/demo.module";
+import {ListDemoModule} from "./demo/pc/list/demo.module";
 import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
 import {BoxDemoModule} from "./demo/pc/box/demo.module";
 import {TileSelectDemoModule} from "./demo/pc/tile/demo.module";
@@ -89,7 +90,7 @@ import {GraphDemoModule} from "./demo/pc/graph/demo.module";
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
         ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
-        BoxDemoModule, TileSelectDemoModule,
+        BoxDemoModule, TileSelectDemoModule, ListDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
