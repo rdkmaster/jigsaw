@@ -52,6 +52,8 @@ import {ChartIconDemoComponent} from "./demo/pc/chart-icon/demo.component";
 import {TimePickerDemoComponent} from "./demo/pc/time-picker/demo.component";
 import {SelectDemoComponent} from "./demo/pc/select/demo.component";
 import {DragDropDemoComponent} from "./demo/pc/drag-drop/demo.component";
+import {PopupDemoComponent} from "./demo/pc/popup/demo.component";
+import {DataEncapsulationDemoComponent} from "./demo/pc/data-encapsulation/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -118,6 +120,8 @@ export const routerConfigPC = [
     {path: "pc/time-picker", component: TimePickerDemoComponent},
     {path: "pc/select", component: SelectDemoComponent},
     {path: "pc/drag-drop", component: DragDropDemoComponent},
+    {path: "pc/popup", component: PopupDemoComponent},
+    {path: "pc/data-encapsulation", component: DataEncapsulationDemoComponent},
 
 ];
 export const routerConfigMobile = [];
