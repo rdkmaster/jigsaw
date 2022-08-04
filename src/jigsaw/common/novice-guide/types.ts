@@ -11,8 +11,7 @@ export interface NoviceGuideBasicNotice {
     trigger?: 'click' | 'mouseover';
     key?: string;
     version?: string;
-    delay?: number;
-    alwaysPopup?: boolean;
+    delay?: number
 }
 
 export interface NoviceGuideNoticeWithAttributes extends NoviceGuideBasicNotice {
@@ -80,7 +79,6 @@ export interface BasicNoviceGuide {
     notices: NoviceGuideNotice[];
     version: string;
     key?: string;
-    alwaysPopup?: boolean;
 }
 
 export interface BubbleNoviceGuide extends BasicNoviceGuide {
