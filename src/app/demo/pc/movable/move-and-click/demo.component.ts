@@ -1,10 +1,12 @@
 import {Component} from "@angular/core";
 import {JigsawInfoAlert} from "jigsaw/public_api";
+import {MovableTextService} from "../doc.service";
 
 @Component({
+    selector: 'move-and-click-basic',
     templateUrl: 'demo.component.html'
 })
-export class MoveAndClickDemoComponent {
+export class MoveAndClickBasicDemoComponent {
     mouseStartPosition = {x: null, y: null};
 
     handleButtonClick() {
@@ -31,9 +33,7 @@ export class MoveAndClickDemoComponent {
         return e.clientX == this.mouseStartPosition.x && e.clientY == this.mouseStartPosition.y
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '当一个对象既可以拖动又可以单击时，需要一些技巧来这两个操作带来的避免冲突';
-    description: string = '';
+    constructor(public text: MovableTextService) {
+    }
+
 }

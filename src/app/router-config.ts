@@ -31,6 +31,7 @@ import {ZtreeAllComponent} from "./demo/pc/tree/demo.component";
 import {UploadAllComponent} from "./demo/pc/upload/demo.component";
 import {CollapseDemoComponent} from "./demo/pc/collapse/demo.component";
 import {DialogDemoComponent} from "./demo/pc/dialog/demo.component";
+import {MovableAllComponent} from "./demo/pc/movable/demo.component";
 import {IconsDemoComponent} from "./demo/pc/icons/demo.component";
 import {LoadingDemoComponent} from "./demo/pc/loading/demo.component";
 import {ThemePropertiesAllComponent} from "./demo/pc/theme-properties/demo.component";
@@ -91,6 +92,7 @@ export const routerConfigPC = [
     { path: "pc/upload", component: UploadAllComponent},
     { path: "pc/adjust-font-color", component: AdjustFontColorAllDemoComponent},
     { path: "pc/theme-properties", component: ThemePropertiesAllComponent},
+    { path: "pc/movable", component: MovableAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
