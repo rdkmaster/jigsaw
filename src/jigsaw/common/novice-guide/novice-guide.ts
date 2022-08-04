@@ -37,7 +37,7 @@ function updateOptions(opt: NoviceGuideOptions) {
     options.ngZone = opt?.ngZone || options.ngZone;
 }
 
-function show(guide: NoviceGuide): ShowResult {
+function show(guide: NoviceGuide, force: boolean = false): ShowResult {
     if (!document.body) {
         console.error('document.body is not ready right now, try invoke this function later...');
         return;
@@ -55,7 +55,7 @@ function show(guide: NoviceGuide): ShowResult {
 
     clearExpiredGuides();
     guide = copyAndNormalize(guide);
-    const notices: NoviceGuideNotice[] = filterGuide(guide);
+    const notices: NoviceGuideNotice[] = filterGuide(guide, force);
     if (notices.length == 0) {
         console.warn('All notices of this guide were shown.');
         return 'all-shown';
@@ -302,7 +302,10 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
     resize();
 }
 
-function filterGuide(guide: NoviceGuide): NoviceGuideNotice[] {
+function filterGuide(guide: NoviceGuide, force: boolean = false): NoviceGuideNotice[] {
+    if (force) {
+        return guide.notices;
+    }
     const guideInfo = shownGuides.find(g => g.guideKey == guide.key);
     if (!guideInfo) {
         return guide.notices;
@@ -346,7 +349,7 @@ function saveShownGuide(guide: NoviceGuide, notice: NoviceGuideNotice) {
 }
 
 type NoviceGuideWrapper = {
-    show: (guide: NoviceGuide) => ShowResult;
+    show: (guide: NoviceGuide, force?: boolean) => ShowResult;
     reset: () => void;
     clear: () => void;
     updateOptions: (opt: NoviceGuideOptions) => void;
@@ -356,14 +359,14 @@ type NoviceGuideWrapper = {
  * 从而统一ts和js两种上下文的引入用法一致。
  */
 export const noviceGuide: NoviceGuideWrapper = {
-    show: (guide: NoviceGuide) => {
+    show: (guide: NoviceGuide, force: boolean = false) => {
         if ((<any>shownGuides).disabled) {
             return 'disabled';
         }
         if (options.ngZone) {
-            return <ShowResult>options.ngZone.runOutsideAngular(() => show(guide));
+            return <ShowResult>options.ngZone.runOutsideAngular(() => show(guide, force));
         } else {
-            return show(guide);
+            return show(guide, force);
         }
     },
     reset: () => {
