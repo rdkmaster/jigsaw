@@ -1,11 +1,11 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <div style="height:500px">
+        <j-button j-movable jigsawMovableAffixType="fixed"
+                  (mousedown)="recordMouseStartPosition($event)"
+                  (mouseup)="handleMouseUp($event)">
+            a movable button
+        </j-button>
+    </div>
+</demo-template>
 
-
-<!-- start to learn the demo from here -->
-<j-button j-movable jigsawMovableAffixType="fixed"
-        (mousedown)="recordMouseStartPosition($event)"
-        (mouseup)="handleMouseUp($event)">
-    a movable button
-</j-button>
