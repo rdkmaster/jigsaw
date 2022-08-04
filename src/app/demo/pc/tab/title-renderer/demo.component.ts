@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {JigsawEditableTabTitleRenderer, TabTitleInfo} from "jigsaw/public_api";
+import {TabTextService} from "../doc.service";
 
 @Component({
+    selector: 'tab-title-renderer',
     templateUrl: "./demo.component.html"
 })
 export class TabsTitleRendererComponent {
@@ -16,10 +18,6 @@ export class TabsTitleRendererComponent {
     titleChanged(titleInfo: TabTitleInfo) {
         console.log("New title info: ", titleInfo);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TabTextService) {
+    }
 }

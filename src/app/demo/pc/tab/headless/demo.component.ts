@@ -1,8 +1,10 @@
 import {Component} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, TableData, LineGraphData} from "jigsaw/public_api";
+import {TabTextService} from "../doc.service";
 
 @Component({
+    selector: 'tab-headless',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -33,16 +35,9 @@ export class TabHeadlessDemoComponent {
 
     lineBarGraphData: LineGraphData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TabTextService) {
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-
-    summary: string = '将tab的页签部分隐藏起来，在某些场景下，可以实现定制性更高的视图，或者将tab作为一个视图叠加容器来使用';
-    description: string = '';
 }

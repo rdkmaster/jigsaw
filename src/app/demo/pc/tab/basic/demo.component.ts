@@ -1,8 +1,10 @@
 import {AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {TableData, LineGraphData, JigsawProgress} from "jigsaw/public_api";
+import {TabTextService} from "../doc.service";
 
 @Component({
+    selector: 'tab-basic',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -45,15 +47,9 @@ export class JigsawTabsDemoComponent implements AfterViewInit {
 
     public lineBarGraphData: LineGraphData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, public text: TabTextService) {
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '此demo主要描述tab的基本用法，包括如何使用渲染器来丰富tab头';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

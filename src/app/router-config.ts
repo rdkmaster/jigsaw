@@ -39,6 +39,7 @@ import {AdjustFontColorAllDemoComponent} from "./demo/pc/adjust-font-color/demo.
 import {NavigationMenuAllDemoComponent} from "./demo/pc/navigation-menu/demo.component";
 import {NotificationDemoComponent} from "./demo/pc/notification/demo.component";
 import {ToastDemoComponent} from "./demo/pc/toast/demo.component";
+import {TabAllComponent} from "./demo/pc/tab/demo.component";
 import {TooltipDemoComponent} from "./demo/pc/tooltip/demo.component";
 import {TagDemoComponent} from "./demo/pc/tag/demo.component";
 import {ProgressDemoComponent} from "./demo/pc/progress/demo.component";
@@ -92,6 +93,7 @@ export const routerConfigPC = [
     { path: "pc/adjust-font-color", component: AdjustFontColorAllDemoComponent},
     { path: "pc/theme-properties", component: ThemePropertiesAllComponent},
     { path: "pc/movable", component: MovableAllComponent},
+    { path: "pc/tab", component: TabAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},
