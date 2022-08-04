@@ -73,6 +73,7 @@ import {ChartIconDemoModule} from "./demo/pc/chart-icon/demo.module";
 import {TimePickerDemoModule} from "./demo/pc/time-picker/demo.module";
 import {SelectDemoModule} from "./demo/pc/select/demo.module";
 import {DragDropDemoModule} from "./demo/pc/drag-drop/demo.module";
+import {PopupDemoModule} from "./demo/pc/popup/demo.module";
 
 @NgModule({
     declarations: [
@@ -100,7 +101,7 @@ import {DragDropDemoModule} from "./demo/pc/drag-drop/demo.module";
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
-        ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule,
+        ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [
