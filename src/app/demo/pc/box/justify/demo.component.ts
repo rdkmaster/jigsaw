@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {BoxTextService} from "../doc.service";
 
 @Component({
+    selector: 'box-justify',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -14,9 +16,6 @@ export class BoxJustifyDemoComponent {
     align = 'center';
     alignArr = ['start', 'end', 'center', 'baseline', 'stretch'];
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了box的对齐方式';
-    description: string = require('!!raw-loader!./readme.md').default;
+    constructor(public text: BoxTextService) {
+    }
 }

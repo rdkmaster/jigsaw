@@ -1,41 +1,33 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Box</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">布局</jigsaw-header>
-        <j-box height="400" width="800">
-            <j-box width="50px" class="border-box">
-                <div class="nav" *ngFor="let i of [1,2,3,4]"><p class="iconfont iconfont-e243"></p><br>导航{{i}}</div>
+<demo-template [data]="''" [text]="text['text']['layout']">
+    <!-- start to learn the demo from here -->
+    <j-box height="400" width="800">
+        <j-box width="50px" class="border-box">
+            <div class="nav" *ngFor="let i of [1,2,3,4]"><p class="iconfont iconfont-e243"></p><br>导航{{i}}</div>
+        </j-box>
+        <j-box direction="v">
+            <j-box height="50px" class="border-box">
+                <h4>这里是header</h4>
             </j-box>
-            <j-box direction="v">
-                <j-box height="50px" class="border-box">
-                    <h4>这里是header</h4>
+            <j-box [resizable]="true">
+                <j-box class="border-box"
+                       (resizeStart)="handleResizeStart($event)"
+                       (resize)="handleResize($event)">
+                    <div class="nav-2" *ngFor="let i of [1,2,3,4]">
+                        <p>二级导航条目{{i}} 标题部分</p><span>二级导航条目{{i}}  详情部分....</span>
+                    </div>
                 </j-box>
-                <j-box [resizable]="true">
-                    <j-box class="border-box"
-                           (resizeStart)="handleResizeStart($event)"
-                           (resize)="handleResize($event)">
-                        <div class="nav-2" *ngFor="let i of [1,2,3,4]">
-                            <p>二级导航条目{{i}} 标题部分</p><span>二级导航条目{{i}}  详情部分....</span>
-                        </div>
-                    </j-box>
-                    <j-box class="border-box" grow="2"></j-box>
-                </j-box>
-                <j-box height="30px" class="border-box">
-                    <h5>这里是footer</h5>
-                </j-box>
+                <j-box class="border-box" grow="2"></j-box>
+            </j-box>
+            <j-box height="30px" class="border-box">
+                <h5>这里是footer</h5>
             </j-box>
         </j-box>
-        <p class="message">{{resizeInfo}}</p>
-    </div>
+    </j-box>
+    <p class="message">{{resizeInfo}}</p>
+
 
     <div class="demo-2 live-demo">
-        <jigsaw-header [level]="2">resize</jigsaw-header>
+        <span>resize</span>>
         <p class="comment">设置尺寸的box不能resize</p>
         <j-box [resizable]="true" height="400" class="border-box">
             <j-box width="50" class="border-box">fixed size</j-box>
@@ -46,7 +38,6 @@
             <j-box class="border-box" grow="2"></j-box>
         </j-box>
     </div>
-</div>
-
+</demo-template>
 
 

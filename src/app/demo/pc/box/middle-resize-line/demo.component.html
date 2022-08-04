@@ -1,39 +1,29 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Box</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">布局</jigsaw-header>
-        <j-box direction="v" [resizable]="true" height="400" width="800">
+<demo-template [data]="''" [text]="text['text']['middleResizeLine']">
+    <!-- start to learn the demo from here -->
+    <j-box direction="v" [resizable]="true" height="400" width="800">
+        <j-box>
+            <div class="box-content">
+                <div class="border-content"></div>
+            </div>
+        </j-box>
+        <j-box [resizable]="true" grow="4">
             <j-box>
                 <div class="box-content">
                     <div class="border-content"></div>
                 </div>
             </j-box>
-            <j-box [resizable]="true" grow="4">
-                <j-box>
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
-                </j-box>
-                <j-box grow="4">
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
-                </j-box>
-            </j-box>
-            <j-box>
+            <j-box grow="4">
                 <div class="box-content">
                     <div class="border-content"></div>
                 </div>
             </j-box>
         </j-box>
-    </div>
-</div>
-
+        <j-box>
+            <div class="box-content">
+                <div class="border-content"></div>
+            </div>
+        </j-box>
+    </j-box>
+</demo-template>
 
 
