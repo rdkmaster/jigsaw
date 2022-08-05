@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
+import {ListLiteTextService} from "../doc.service";
 
 @Component({
+    selector: 'list-lite-with-icon',
     templateUrl: './demo.component.html'
 })
 export class ListLiteWithIconDemoComponent {
@@ -38,17 +40,6 @@ export class ListLiteWithIconDemoComponent {
         },
     ];
 
-    public fixData(useIcon: boolean, useSuffixIcon: boolean): GroupOptionValue[] {
-        return this.withIcon.map(item => ({
-                name: item.name, icon: useIcon ? item.icon : null,
-                suffixIcon: useSuffixIcon ? item.suffixIcon : null
-            }
-        ));
+    constructor(public text: ListLiteTextService) {
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '使用`icon`属性来指定一个图标，使用`suffixIcon`属性来指定一个副图标';
-    description: string = '';
 }

@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
+import {ListLiteTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: 'list-lite-line-ellipsis',
+    templateUrl: './demo.component.html'
 })
 export class ListLiteLineEllipsisDemoComponent {
     goodsList: GroupOptionValue[] = [
@@ -47,9 +48,6 @@ export class ListLiteLineEllipsisDemoComponent {
         this.selectedItemsStr = selectedItems.map(item => item.name).toString()
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: ListLiteTextService) {
+    }
 }

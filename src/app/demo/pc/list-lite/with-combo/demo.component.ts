@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
 import {ArrayCollection, GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
+import {ListLiteTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: 'list-lite-with-combo',
+    templateUrl: './demo.component.html'
 })
 export class ListLiteWithComboDemoComponent {
     goodsList: GroupOptionValue[] = [
@@ -50,9 +51,6 @@ export class ListLiteWithComboDemoComponent {
         },
     ]);
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: ListLiteTextService) {
+    }
 }

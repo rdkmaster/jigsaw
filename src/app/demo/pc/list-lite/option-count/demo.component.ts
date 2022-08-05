@@ -1,9 +1,10 @@
 import {Component} from "@angular/core";
 import {GroupOptionValue} from "jigsaw/public_api";
+import {ListLiteTextService} from "../doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    selector: 'list-lite-option-count',
+    templateUrl: './demo.component.html'
 })
 export class ListLiteOptionCountDemoComponent {
     goodsList: GroupOptionValue[] = [
@@ -39,7 +40,7 @@ export class ListLiteOptionCountDemoComponent {
         },
     ];
 
-    constructor() {
+    constructor(public text: ListLiteTextService) {
         [1, 2, 3, 4, 5, 6].forEach((item, index) => {
             this.goodsList.push({
                 icon: 'iconfont iconfont-bicycle',

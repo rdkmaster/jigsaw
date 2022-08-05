@@ -1,20 +1,9 @@
-<!-- ignore the following lines, they are not important to this demo -->
-<jigsaw-demo-description [summary]="summary" [content]="description">
-</jigsaw-demo-description>
-
-
-<!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">List lite</jigsaw-header>
-
-    <div class="live-demo">
-        <jigsaw-header [level]="2">与combo-select组合使用</jigsaw-header>
-        <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name" [autoWidth]="true">
-            <ng-template>
-                <j-list-lite [data]="goodsList" labelField="name" [(selectedItems)]="selectedItems6"
-                             [multipleSelect]="true" [searchable]="true"></j-list-lite>
-            </ng-template>
-        </j-combo-select>
-    </div>
-</div>
-
+<demo-template [data]="''" [text]="text['text']['withCombo']">
+    <!-- start to learn the demo from here -->
+    <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name" [autoWidth]="true">
+        <ng-template>
+            <j-list-lite [data]="goodsList" labelField="name" [(selectedItems)]="selectedItems6"
+                         [multipleSelect]="true" [searchable]="true"></j-list-lite>
+        </ng-template>
+    </j-combo-select>
+</demo-template>

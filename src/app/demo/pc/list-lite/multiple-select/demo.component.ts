@@ -1,18 +1,19 @@
 import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
+import {GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
 import {ListLiteTextService} from "../doc.service";
 
 @Component({
-    selector: 'list-lite-preset-value',
+    selector: 'list-lite-multiple-select',
     templateUrl: './demo.component.html'
 })
-export class ListLitePresetValueDemoComponent {
+export class ListLiteMultipleSelectDemoComponent {
     goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.'
         },
+        JigsawListLite.SEPARATOR, // 配置分隔线
         {
             icon: 'iconfont iconfont-e2e7',
             name: 'camera',
@@ -22,12 +23,14 @@ export class ListLitePresetValueDemoComponent {
             icon: 'iconfont iconfont-e18a',
             name: 'car',
             desc: 'A car (or automobile) is a wheeled motor vehicle used for transportation.',
+            disabled: true // 配置不可点击
         },
         {
             icon: 'iconfont iconfont-e534',
             name: 'football',
             desc: 'Football is a family of team sports that involve, to varying degrees, kicking a ball with the foot to score a goal. '
         },
+        JigsawListLite.SEPARATOR,
         {
             icon: 'iconfont iconfont-e565',
             name: 'book',
@@ -40,15 +43,15 @@ export class ListLitePresetValueDemoComponent {
         },
     ];
 
-    // selectedItems只要包含trackItemBy的name字段就能在组件中显示出来
-    selectedItems = [{name: 'bicycle',}, {name: 'book',}];
 
-    selectedItemsStr: string = this.selectedItems.map(item => item.name).toString();
+    selectedItems: string;
 
-    handleSelect(selectedItems) {
-        this.selectedItemsStr = selectedItems.map(item => item.name).toString()
+    handleSelect(selectedItems: any[], property: string, labelField?: string) {
+        this[property] = selectedItems.map(item => labelField ? item[labelField] : item).toString()
     }
 
+
     constructor(public text: ListLiteTextService) {
+
     }
 }

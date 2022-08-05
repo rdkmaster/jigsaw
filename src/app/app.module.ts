@@ -68,6 +68,7 @@ import {TagDemoModule} from "./demo/pc/tag/demo.module";
 import {ListDemoModule} from "./demo/pc/list/demo.module";
 import {ProgressDemoModule} from "./demo/pc/progress/demo.module";
 import {BoxDemoModule} from "./demo/pc/box/demo.module";
+import {ListLiteDemoModule} from "./demo/pc/list-lite/demo.module";
 import {TileSelectDemoModule} from "./demo/pc/tile/demo.module";
 import {ProcessStatusDemoModule} from "./demo/pc/process-status/demo.module";
 import {SliderAllDemoModule} from "./demo/pc/slider/demo.module";
@@ -82,6 +83,7 @@ import {PopupDemoModule} from "./demo/pc/popup/demo.module";
 import {DataEncapsulationDemoModule} from "./demo/pc/data-encapsulation/demo.module";
 import {GraphDemoModule} from "./demo/pc/graph/demo.module";
 
+
 @NgModule({
     declarations: [
         AppComponent, PCDemoListComponent, MobileDemoListComponent, SwitchDemoComponent, DemoCodeComponent
@@ -90,7 +92,7 @@ import {GraphDemoModule} from "./demo/pc/graph/demo.module";
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
         ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
-        BoxDemoModule, TileSelectDemoModule, ListDemoModule,
+        BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
