@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-trigger',
     templateUrl: './demo.component.html',
     styles: [`
                .iconfont-e9d8{
@@ -16,22 +18,24 @@ import {Component} from '@angular/core';
                }
     `]
 })
-export class FloatTriggerDemo {
+export class FloatTriggerDemoComponent {
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
+    openTrigger1 = "click";
+    closeTrigger1 = "click";
+    openTrigger2 = "none";
+    closeTrigger2 = "none";
     public open: boolean = false;
-
+    public open1: boolean = false;
+    public open2: boolean = false;
     public openFloat() {
-        this.open = true;
+        this.open2 = true;
     }
-
     public closeFloat() {
-        this.open = false;
+        this.open2 = false;
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何改变jigsawFloat指令的触发器';
-    description: string = '';
+    constructor( public text: FloatTextService) {
+    }
+
 }

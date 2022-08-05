@@ -1,6 +1,8 @@
 import {Component} from "@angular/core";
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-basic',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
@@ -17,10 +19,7 @@ import {Component} from "@angular/core";
         }
     `]
 })
-export class FloatBasicDemo {
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了jigsaw-float指令最简单的用法，所有配置项都用默认';
-    description: string = '';
+export class FloatBasicDemoComponent {
+constructor( public text: FloatTextService) {
+}
 }

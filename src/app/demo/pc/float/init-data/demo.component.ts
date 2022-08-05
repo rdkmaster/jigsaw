@@ -1,7 +1,9 @@
 import {Component} from '@angular/core';
 import {UserComponent} from "./user-component/user-component";
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-init-data',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
@@ -9,15 +11,11 @@ import {UserComponent} from "./user-component/user-component";
         }
     `]
 })
-export class FloatInitDataDemo {
+export class FloatInitDataDemoComponent {
     public target: any = UserComponent;
     public initData: any = {
         inputData: 'some data...'
     };
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何使用jigsawFloatInitData来属性初始化jigsawFloat指令的弹出目标';
-    description: string = '';
+constructor( public text: FloatTextService) {
+}
 }

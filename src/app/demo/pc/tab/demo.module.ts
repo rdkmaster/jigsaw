@@ -3,7 +3,7 @@ import { DemoTemplateModule } from '../../../demo/demo-template/demo-template';
 import { JigsawMarkdownModule } from '../../../markdown/markdown';
 import {
     JigsawTabsModule, JigsawProgressModule, JigsawInputModule, JigsawTableModule,
-    JigsawGraphModule, JigsawButtonModule, JigsawSwitchModule, JigsawButtonBarModule
+    JigsawGraphModule, JigsawButtonModule, JigsawSwitchModule, JigsawButtonBarModule, JigsawHeaderModule
 } from "jigsaw/public_api";
 import {TabAllComponent} from "./demo.component";
 import {JigsawTabsDemoComponent} from "./basic/demo.component";
@@ -40,7 +40,8 @@ import {TabTabBarComponent} from "./tab-bar/demo.component";
         JigsawButtonModule,
         JigsawSwitchModule,
         JigsawButtonBarModule,
-        CommonModule
+        CommonModule,
+        JigsawHeaderModule,
     ]
 })
 export class TabsDemoModule {
