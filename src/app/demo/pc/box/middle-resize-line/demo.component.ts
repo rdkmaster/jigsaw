@@ -1,14 +1,12 @@
 import {Component} from "@angular/core";
+import {BoxTextService} from "../doc.service";
 
 @Component({
+    selector: 'box-middle-resize-line',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class BoxMiddleResizeLineDemoComponent {
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何让resize line看起来在两个box中间';
-    description: string = "";
+    constructor(public text: BoxTextService) {
+    }
 }

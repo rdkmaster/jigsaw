@@ -1,7 +1,9 @@
 import {AfterContentInit, Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
+import {TileTextService} from "../doc.service";
 
 @Component({
+    selector: 'tile-multiple-select',
     templateUrl: './demo.component.html'
 })
 export class TileSelectMultipleSelectDemoComponent implements AfterContentInit {
@@ -19,9 +21,6 @@ export class TileSelectMultipleSelectDemoComponent implements AfterContentInit {
         this.selectedCity = new ArrayCollection([{label: "深圳"}]);
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: TileTextService) {
+    }
 }

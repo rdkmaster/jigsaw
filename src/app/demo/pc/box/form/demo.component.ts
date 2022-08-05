@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {ArrayCollection, TimeGr, TimeService} from "jigsaw/public_api";
+import {BoxTextService} from "../doc.service";
 
 @Component({
+    selector: 'box-form',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
@@ -35,10 +37,6 @@ export class FormDemoComponent {
         this.rangeTimeComboValue[1].label = this.rangeTime.endDate;
         this.rangeTimeComboValue.refresh();
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    constructor(public text: BoxTextService) {
+    }
 }
