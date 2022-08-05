@@ -60,6 +60,7 @@ import {PopupDemoComponent} from "./demo/pc/popup/demo.component";
 import {DataEncapsulationDemoComponent} from "./demo/pc/data-encapsulation/demo.component";
 import {GraphDemoComponent} from "./demo/pc/graph/demo.component";
 import {FloatDemoComponent} from "./demo/pc/float/demo.component";
+import {RangeDataTimePickerAllComponent} from "./demo/pc/range-date-time-picker/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -106,6 +107,7 @@ export const routerConfigPC = [
     { path: "pc/tile", component: TileAllComponent},
     { path: "pc/list", component: ListAllComponent},
     { path: "pc/list-lite", component: ListLiteAllComponent},
+    { path: "pc/range-date-time-picker", component: RangeDataTimePickerAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

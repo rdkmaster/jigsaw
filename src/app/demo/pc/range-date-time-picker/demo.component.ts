@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {RangeDataTimePickerTextService} from "../text.service";
+import {RangeDataTimePickerTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

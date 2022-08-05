@@ -17,19 +17,24 @@ export class RangeDataTimePickerTextService {
             ## 示例
         `,
         basic: `
-            ### 基础用法
+            ### 基本用法
         `,
-        gr: `
-            ### 粒度 Gr
+        grWeek: `
+            ### 粒度为周
+        `,
+        grMonth: `
+            ### 粒度为月
         `,
         grItems: `
             ### 粒度选项
         `,
         limit: `
             ### 限制可选日期
+
+            limit采用宏的时候，会实时根据宏计算limit时间，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd。
         `,
-        step: `
-            ### step
+        rangeDateTimeSelect: `
+            ### Range Date Time Select
         `,
         weekStart: `
             ### 自定义起始周期

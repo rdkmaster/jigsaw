@@ -1,9 +1,9 @@
 import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
 import {TimeGr, GrItem, Shortcut, RangeTimeDataRanges} from "jigsaw/public_api";
-import {RangeDataTimePickerTextService} from "../text.service";
+import {RangeDataTimePickerTextService} from "../doc.service";
 
 @Component({
-    selector: 'gr-items-range-date-time-picker',
+    selector: 'range-date-time-picker-gr-items',
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeGrItemsComponent implements AfterViewInit {

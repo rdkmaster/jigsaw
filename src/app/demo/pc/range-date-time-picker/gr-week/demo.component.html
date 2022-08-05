@@ -1,0 +1,6 @@
+<demo-template [data]="''" [text]="text['text']['grWeek']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [gr]="'week'"
+                                   [(endDate)]="endDate"></jigsaw-range-date-time-picker>
+    <div>beginDate ： {{beginDate | json}}   endDate：{{endDate | json}}</div>
+</demo-template>
