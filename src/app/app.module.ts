@@ -84,6 +84,7 @@ import {DataEncapsulationDemoModule} from "./demo/pc/data-encapsulation/demo.mod
 import {GraphDemoModule} from "./demo/pc/graph/demo.module";
 import {FloatDemoModule} from "./demo/pc/float/demo.module";
 import {RangeDateTimeDemoModule} from "./demo/pc/range-date-time-picker/demo.module";
+import {DatePickerDemoModule} from "./demo/pc/date-picker/demo.module";
 
 
 @NgModule({
@@ -94,7 +95,7 @@ import {RangeDateTimeDemoModule} from "./demo/pc/range-date-time-picker/demo.mod
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
         ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
-        BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule, RangeDateTimeDemoModule,
+        BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule, RangeDateTimeDemoModule, DatePickerDemoModule,
         RouterModule.forRoot([
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},

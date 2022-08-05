@@ -19,8 +19,11 @@ export class DatePickerTextService {
         basic: `
             ### 基础用法
         `,
-        gr: `
-            ### 粒度 Gr
+        grWeek: `
+            ### 粒度为周
+        `,
+        grMonth: `
+            ### 粒度为月
         `,
         grItems: `
             ### 粒度选项

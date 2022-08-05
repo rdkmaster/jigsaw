@@ -1,8 +1,8 @@
 import {Component} from "@angular/core";
-import {DatePickerTextService} from "../text.service";
+import {DatePickerTextService} from "../doc.service";
 
 @Component({
-    selector: 'week-start-date-picker',
+    selector: 'date-picker-week-start',
     templateUrl: './demo.component.html',
     styles: [`
         .demo-container h4 {
@@ -18,9 +18,6 @@ import {DatePickerTextService} from "../text.service";
 })
 export class DatePickerWeekStartComponent {
     date = "now";
-
-    weekStart = ['mon'];
-    janX = [4];
 
     dateChange($event) {
         console.log($event);

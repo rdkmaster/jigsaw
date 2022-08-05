@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {MarkDate} from "jigsaw/public_api";
-import {DatePickerTextService} from "../text.service";
+import {DatePickerTextService} from "../doc.service";
 
 @Component({
-    selector: 'mark-date-picker',
+    selector: 'date-picker-mark',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
