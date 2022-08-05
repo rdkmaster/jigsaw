@@ -1,6 +1,8 @@
 import {Component} from '@angular/core';
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-position',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
@@ -17,16 +19,15 @@ import {Component} from '@angular/core';
         }
     `]
 })
-export class FloatPositionDemo {
-    floatPosition = "bottomLeft";
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了弹出位置的效果，一共8个位置';
-    description: string = `
-        其中第一个单词表示弹出视图在触发点的哪个位置，第二个单词控制弹出视图的哪个边缘与触发点对齐，
-        比如\`'bottomLeft'\`表示在下面弹出来，并且视图左侧与触发点左侧对齐。
-        
-        注意，这个位置是应用给的理想位置，在弹出的时候会自动对理想位置坐修正，避免视图超时浏览器边界的情况
-    `;
+export class FloatPositionDemoComponent {
+    floatPosition1 = "bottomLeft";
+    floatPosition2 = "bottomRight";
+    floatPosition3 = "topLeft";
+    floatPosition4 = "topRight";
+    floatPosition5 = "leftTop";
+    floatPosition6 = "leftBottom";
+    floatPosition7 = "rightTop";
+    floatPosition8 = "rightBottom";
+    constructor( public text: FloatTextService) {
+    }
 }

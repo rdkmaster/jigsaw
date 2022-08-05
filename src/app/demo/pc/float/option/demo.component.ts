@@ -3,12 +3,13 @@ import {
     PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
     PopupSize, CommonUtils, FloatPosition
 } from "jigsaw/public_api";
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-option',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
-            margin: 0 200px;
             color: blue;
         }
 
@@ -20,40 +21,20 @@ import {
             text-align: center;
             line-height: 60px;
         }
-
-        .row {
-            margin: 6px;
-        }
-
-        .group {
-            width: 420px;
-            overflow: hidden;
-            display: inline-block;
-        }
-
-        .wrapper {
-            display: flex;
-            height: 400px;
-        }
-
-        .wrapper label {
-            min-width: 50px
-        }
     `]
 })
-export class FloatOptionDemo implements OnInit {
+export class FloatOptionDemoComponent implements OnInit {
     showHideEffect = "";
     selectedPositionType = "";
     offset: PopupPositionOffset = {};
-    arrowPosition: PopupPositionOffset = {};
     showBorder = true;
     showShadow = true;
     showArrow = true;
     position: FloatPosition = 'bottomLeft';
     size: PopupSize = {};
     options: PopupOptions = {useCustomizedBackground: true};
-    _$height = 'auto';
-
+    constructor( public text: FloatTextService) {
+    }
     valueChange() {
         this.options = {useCustomizedBackground: true};
         this.options.showEffect = PopupEffect[<string>this.showHideEffect + 'In'];
@@ -65,29 +46,8 @@ export class FloatOptionDemo implements OnInit {
         this.options.size = this.size;
         this.options.borderType = this.showArrow ? 'pointer' : 'default';
     }
-
-    get optionsString(): string {
-        const options: any = CommonUtils.deepCopy(this.options);
-        options.showEffect = PopupEffect[this.options.showEffect];
-        options.hideEffect = PopupEffect[this.options.hideEffect];
-        options.posType = PopupPositionType[this.options.posType];
-
-        return JSON.stringify(options, null, '    ')
-            .replace(/\n/g, '<br>')
-            .replace(/\s/g, '&nbsp;');
-    }
-
-    expandHeight() {
-        this._$height = '3000px';
-    }
-
     ngOnInit() {
         this.valueChange();
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何改变float option参数';
-    description: string = '';
 }

@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {SimpleTreeData} from "jigsaw/public_api";
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-multi-level',
     templateUrl: './demo.component.html',
     styles: [`
                .menu{
@@ -12,9 +14,9 @@ import {SimpleTreeData} from "jigsaw/public_api";
                }
     `]
 })
-export class FloatMultiLevelDemo {
+export class FloatMultiLevelDemoComponent {
     public data: SimpleTreeData;
-    constructor() {
+    constructor( public text: FloatTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>
@@ -48,10 +50,4 @@ export class FloatMultiLevelDemo {
             </node>
         `);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '本demo演示了jigsaw-float指令实现多级弹出，当弹出一个区域后，弹出区域再次弹出新的区域';
-    description: string = '';
 }

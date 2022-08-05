@@ -1,7 +1,9 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from '@angular/core';
-import {UserComponent} from "./user-component/user-component";
+import {User1Component} from "./user-component/user-component";
+import {FloatTextService} from "../doc.service";
 
 @Component({
+    selector: 'float-target',
     templateUrl: './demo.component.html',
     styles: [`
         .iconfont-e9d8 {
@@ -27,13 +29,13 @@ import {UserComponent} from "./user-component/user-component";
         }
     `]
 })
-export class FloatTargetDemo implements AfterViewInit {
+export class FloatTargetDemoComponent implements AfterViewInit {
     @ViewChild('jigsawFloatArea1')
     jigsawFloatArea1: TemplateRef<any>;
     @ViewChild('jigsawFloatArea2')
     jigsawFloatArea2: TemplateRef<any>;
 
-    public target: any = UserComponent;
+    public target: any = User1Component;
     public targets: any[] = [
         {label: "template1"}, {label: "template2"},
         {label: "component", target: this.target}
@@ -43,10 +45,6 @@ export class FloatTargetDemo implements AfterViewInit {
         this.targets[0].target = this.jigsawFloatArea1;
         this.targets[1].target = this.jigsawFloatArea2;
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '演示了如何改变jigsawFloat指令的弹出目标';
-    description: string = '';
+constructor( public text: FloatTextService) {
+}
 }

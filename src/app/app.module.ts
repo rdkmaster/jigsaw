@@ -82,6 +82,7 @@ import {DragDropDemoModule} from "./demo/pc/drag-drop/demo.module";
 import {PopupDemoModule} from "./demo/pc/popup/demo.module";
 import {DataEncapsulationDemoModule} from "./demo/pc/data-encapsulation/demo.module";
 import {GraphDemoModule} from "./demo/pc/graph/demo.module";
+import {FloatDemoModule} from "./demo/pc/float/demo.module";
 
 
 @NgModule({
@@ -112,7 +113,7 @@ import {GraphDemoModule} from "./demo/pc/graph/demo.module";
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
-        GraphDemoModule,
+        GraphDemoModule, FloatDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

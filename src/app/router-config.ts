@@ -59,6 +59,7 @@ import {DragDropDemoComponent} from "./demo/pc/drag-drop/demo.component";
 import {PopupDemoComponent} from "./demo/pc/popup/demo.component";
 import {DataEncapsulationDemoComponent} from "./demo/pc/data-encapsulation/demo.component";
 import {GraphDemoComponent} from "./demo/pc/graph/demo.component";
+import {FloatDemoComponent} from "./demo/pc/float/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -132,6 +133,7 @@ export const routerConfigPC = [
     {path: "pc/popup", component: PopupDemoComponent},
     {path: "pc/data-encapsulation", component: DataEncapsulationDemoComponent},
     {path: "pc/graph", component: GraphDemoComponent},
+    {path: "pc/float", component: FloatDemoComponent},
 
 ];
 export const routerConfigMobile = [];

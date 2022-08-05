@@ -1,7 +1,8 @@
+
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: 'user-component.html',
+    templateUrl: "./user-component.html",
     styles: [`
             .componentArea{
                 line-height:40px;
@@ -12,5 +13,5 @@ import {Component} from "@angular/core";
             }
     `]
 })
-export class UserComponent {
+export class User1Component {
 }
