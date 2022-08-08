@@ -6,7 +6,7 @@
         "types": ["node"]
     },
     "files": [
-        "main.ts",
+        "app/app-demo/main.ts",
         "polyfills.ts"
     ],
     "angularCompilerOptions": {
