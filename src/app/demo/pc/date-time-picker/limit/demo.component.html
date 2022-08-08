@@ -1,23 +1,8 @@
 <demo-template [data]="''" [text]="text['text']['limit']">
     <!-- start to learn the demo from here -->
-    <div class="toggle up">
-        <label>limitStart: </label>
-        <j-radios [(value)]="limitStart">
-            <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
-        </j-radios>
-        <br>
-        <label>limitEnd: </label>
-        <j-radios [(value)]="limitEnd">
-            <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
-        </j-radios>
+    <div class="demo-showcase-v">
+        <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"
+                            [showConfirmButton]="showConfirmButton"></j-date-time-picker>
+        <p>选择的时间是: <span>{{date1}}</span></p>
     </div>
-
-    <div style="margin-bottom: 20px;">
-        <span>是否显示确认按钮 showConfirmButton: </span>
-        <jigsaw-switch [(checked)]="showConfirmButton"></jigsaw-switch>
-    </div>
-
-    <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"
-                        [showConfirmButton]="showConfirmButton"></j-date-time-picker>
-    <p class="message">Selected Time: <span>{{date1}}</span></p>
 </demo-template>

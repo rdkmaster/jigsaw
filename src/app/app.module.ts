@@ -85,6 +85,7 @@ import {GraphDemoModule} from "./demo/pc/graph/demo.module";
 import {FloatDemoModule} from "./demo/pc/float/demo.module";
 import {RangeDateTimeDemoModule} from "./demo/pc/range-date-time-picker/demo.module";
 import {DatePickerDemoModule} from "./demo/pc/date-picker/demo.module";
+import {DateTimePickerDemoModule} from "./demo/pc/date-time-picker/demo.module";
 
 
 @NgModule({
@@ -115,7 +116,7 @@ import {DatePickerDemoModule} from "./demo/pc/date-picker/demo.module";
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
-        GraphDemoModule, FloatDemoModule,
+        GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
     ],
     providers: [

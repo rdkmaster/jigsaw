@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {DateTimePickerTextService} from "../text.service";
+import {DateTimePickerTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

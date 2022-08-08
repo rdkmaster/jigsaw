@@ -19,8 +19,11 @@ export class DateTimePickerTextService {
         basic: `
             ### 基础用法
         `,
-        gr: `
-            ### 粒度 Gr
+        grSecond: `
+            ### 粒度为秒
+        `,
+        grMinute: `
+            ### 粒度为分
         `,
         grItems: `
             ### 粒度选项
@@ -55,6 +58,8 @@ export class DateTimePickerTextService {
         `,
         confirmButton: `
             ### 带有确认按钮
+
+            仅在粒度为 'hour', 'minute', 'second' 时才有效。
         `
     }
 }

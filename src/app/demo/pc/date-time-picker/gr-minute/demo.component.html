@@ -1,8 +1,8 @@
-<demo-template [data]="''" [text]="text['text']['grItems']">
+<demo-template [data]="''" [text]="text['text']['grMinute']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-date-time-picker [(date)]="date" [grItems]="grItems"
+        <jigsaw-date-time-picker [(date)]="date" [gr]="'minute'"
                                  (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
-        选择的时间是：{{date | json}}
+        <p>{{date | json}}</p>
     </div>
 </demo-template>

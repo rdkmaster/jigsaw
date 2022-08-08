@@ -62,6 +62,7 @@ import {GraphDemoComponent} from "./demo/pc/graph/demo.component";
 import {FloatDemoComponent} from "./demo/pc/float/demo.component";
 import {RangeDataTimePickerAllComponent} from "./demo/pc/range-date-time-picker/demo.component";
 import {DatePickerAllComponent} from "./demo/pc/date-picker/demo.component";
+import {DateTimePickerAllComponent} from "./demo/pc/date-time-picker/demo.component";
 
 export const routerConfigPC = [
     {path: "pc/example", component: ExampleDemoComponent},
@@ -110,6 +111,7 @@ export const routerConfigPC = [
     { path: "pc/list-lite", component: ListLiteAllComponent},
     { path: "pc/range-date-time-picker", component: RangeDataTimePickerAllComponent},
     { path: "pc/date-picker", component: DatePickerAllComponent},
+    { path: "pc/data-time-picker", component: DateTimePickerAllComponent},
     {path: "pc/radio-group", component: RadioGroupDemoComponent},
     {path: "pc/switch", component: SwitchDemoComponent},
     {path: "pc/alphabetical-index", component: AlphabeticalIndexDemoComponent},

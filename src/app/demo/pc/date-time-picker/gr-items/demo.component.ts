@@ -1,9 +1,9 @@
 import {Component} from "@angular/core";
 import {TimeGr, GrItem} from "jigsaw/public_api";
-import {DateTimePickerTextService} from "../text.service";
+import {DateTimePickerTextService} from "../doc.service";
 
 @Component({
-    selector: 'gr-items-date-time-picker',
+    selector: 'date-time-picker-gr-items',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerGrItemDemoComponent {
