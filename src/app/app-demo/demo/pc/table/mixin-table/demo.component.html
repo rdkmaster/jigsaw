@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+
+<ng-template #jobCellRender let-context="context">
+    <div [ngSwitch]="context.cellData" style="font-size: 16px;">
+        <span *ngSwitchCase="'Test Engineer'" class="iconfont iconfont-e567"></span>
+        <span *ngSwitchCase="'System Architect'" class="iconfont iconfont-e451"></span>
+        <span *ngSwitchCase="'Developer'" class="iconfont iconfont-e4f0"></span>
+    </div>
+</ng-template>

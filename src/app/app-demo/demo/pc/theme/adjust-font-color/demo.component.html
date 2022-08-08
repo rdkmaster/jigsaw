@@ -1,0 +1,61 @@
+<!-- ignore the following lines, they are not important to this demo -->
+
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>文本颜色自动调整</jigsaw-header>
+<div class="adjust-color-demo-cntr">
+    <jigsaw-button [ngStyle]="{'color': _$fontColor, 'background': _$background}">文本信息
+    </jigsaw-button>
+    <jigsaw-color-select color="#e57409" [enableConfirm]="false" (colorChange)="_$colorChange($event)">
+    </jigsaw-color-select>
+</div>
+
+<jigsaw-header>颜色转换</jigsaw-header>
+<div class="color-options">
+    <jigsaw-input [(value)]="hexToRGBValue" placeholder="输入hex值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hexToRGB(hexToRGBValue)" colorType="primary" width=120>hexToRGB</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + hexToRGBResult}}</jigsaw-tag>
+</div>
+
+<div class="color-options">
+    <jigsaw-input [(value)]="hexAToRGBAValue" placeholder="输入hexA值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hexAToRGBA(hexAToRGBAValue)" colorType="primary" width=120>hexAToRGBA</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + hexAToRGBAResult}}</jigsaw-tag>
+</div>
+
+<div class="color-options">
+    <jigsaw-input [(value)]="hslToRGBValue" placeholder="输入HSL值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hslToRGB(hslToRGBValue)" colorType="primary" width=120>hslToRGB</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + hslToRGBResult}}</jigsaw-tag>
+</div>
+
+<div class="color-options">
+    <jigsaw-input [(value)]="hslAToRGBAValue" placeholder="输入HSLA值" width=180></jigsaw-input>
+    <jigsaw-button (click)="hslAToRGBA(hslAToRGBAValue)" colorType="primary" width=120>hslAToRGBA</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + hslAToRGBAResult}}</jigsaw-tag>
+</div>
+
+<div class="color-options">
+    <jigsaw-input [(value)]="nameToRGBValue" placeholder="输入颜色名" width=180></jigsaw-input>
+    <jigsaw-button (click)="nameToRGB(nameToRGBValue)" colorType="primary" width=120>nameToRGB</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + nameToRGBResult}}</jigsaw-tag>
+</div>
+
+<div class="color-options">
+    <jigsaw-input [(value)]="anyToRGBValue" placeholder="输入颜色值" width=180></jigsaw-input>
+    <jigsaw-button (click)="anyToRGB(anyToRGBValue)" colorType="primary" width=120>anyToRGB</jigsaw-button>
+</div>
+<div class="color-result">
+    <jigsaw-tag color="preset-blue">{{"结果：" + anyToRGBResult}}</jigsaw-tag>
+</div>

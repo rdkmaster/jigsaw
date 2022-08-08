@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+
+
+
+<!-- start to learn the demo from here -->
+<p style="margin-bottom: 12px">
+	“婚否”列是否可编辑
+	<jigsaw-switch [(checked)]='editable' (checkedChange)="createColumnDefines(!$event);">
+	</jigsaw-switch>
+    <span style="margin-left: 16px;">更改数据的信息： {{changeMsg}}</span>
+</p>
+<jigsaw-table width="400px" height="420" [data]="tableData1" [columnDefines]="columns1"
+              (edit)="onCellChange($event)">
+</jigsaw-table>
+<jigsaw-table style="margin-left: 24px;" width="400px" height="420" [data]="tableData2" trackRowBy="name"
+              [columnDefines]="columns2" [additionalColumnDefines]="additional" (edit)="onCellChange($event)">
+</jigsaw-table>
+
