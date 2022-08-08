@@ -21,7 +21,6 @@ import {AppComponent} from './app.component';
 import {AjaxInterceptor} from './app.interceptor';
 import {routerConfig} from "./router-config";
 import {PCDemoListComponent} from "./pc-demo-list.component";
-import {MobileDemoListComponent} from "./mobile-demo-list.component";
 import {SwitchDemoComponent} from "./switch-demo.component";
 import {DemoCodeComponent} from "./demo-code.component";
 import {ExampleDemoModule} from './demo/pc/example/demo.module';
@@ -90,7 +89,7 @@ import {DateTimePickerDemoModule} from "./demo/pc/date-time-picker/demo.module";
 
 @NgModule({
     declarations: [
-        AppComponent, PCDemoListComponent, MobileDemoListComponent, SwitchDemoComponent, DemoCodeComponent
+        AppComponent, PCDemoListComponent, SwitchDemoComponent, DemoCodeComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
@@ -101,7 +100,6 @@ import {DateTimePickerDemoModule} from "./demo/pc/date-time-picker/demo.module";
             ...routerConfig,
             {path: '', component: SwitchDemoComponent},
             {path: 'pc', component: PCDemoListComponent},
-            {path: 'mobile', component: MobileDemoListComponent},
             {
                 path: 'demo-code', component: DemoCodeComponent, children: [
                     {path: '**', component: DemoCodeComponent}

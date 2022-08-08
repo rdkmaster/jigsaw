@@ -1,11 +1,10 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 
 @Component({
     template: `
         <div>
             <p>Jigsaw组件演示，请选择对应的终端</p>
             <a [routerLink]="['/pc']" title="桌面版"><span class="iconfont iconfont-e17d"></span></a>
-            <a [routerLink]="['/mobile']" title="移动版（Beta）"><span class="iconfont iconfont-e2fe"></span></a>
         </div>
     `,
     styles: [`
