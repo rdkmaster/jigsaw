@@ -14,7 +14,8 @@ import {JigsawTableModule} from "../../../../jigsaw/pc-components/table/table";
 @NgModule({
     declarations: [ChartIconDemoComponent, ChartIconBasicDemoComponent, ChartIconButtonDemoComponent, ChartIconTableDemoComponent],
     exports: [
-        ChartIconButtonDemoComponent
+        ChartIconButtonDemoComponent,
+        ChartIconTableDemoComponent
     ],
     imports: [DemoTemplateModule, JigsawMarkdownModule, JigsawChartIconModule, JigsawButtonModule, JigsawCheckBoxModule, JigsawHeaderModule,
         JigsawTableModule]

@@ -33,28 +33,8 @@ export class DateTimePickerTextService {
 
             limit采用宏的时候，会实时根据宏计算limit时间，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd
         `,
-        mark: `
-            ### 日期标记图例
-        `,
-        setp: `
-            ### step
-        `,
-        valid: `
-            ### 是否有效 Valid
-        `,
-        withFloat: `
-            ### float
-
-            这个demo主要是为了验证在float下拉场景中，时间选择面板可以正常工作
-        `,
-        disabled: `
-            ###  是否可用 Disabled
-        `,
         dateTimeSelect: `
             ### Date Time Select
-        `,
-        weekStart: `
-            ### 自定义起始周期
         `,
         confirmButton: `
             ### 带有确认按钮

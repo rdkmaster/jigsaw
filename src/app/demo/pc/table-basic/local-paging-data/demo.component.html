@@ -1,0 +1,15 @@
+<demo-template [data]="''" [text]="text['text']['localPagingData']">
+    <!-- start to learn the demo from here -->
+
+    <jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+    <jigsaw-pagination style="margin-top: 8px"
+                       [data]="pageable"
+                       [pageSizeOptions]="[5, 10, 20]"
+                       [searchable]="true"
+                       [showQuickJumper]="true"
+                       (search)="_$search($event)"
+    ></jigsaw-pagination>
+    <p style="margin-top:8px; display:inline-block; vertical-align:middle;">
+        共{{pageable.pagingInfo.totalRecord}}条记录
+    </p>
+</demo-template>

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
-import { ColumnDefine, InternalUtils, TableData,} from "jigsaw/public_api";
+import { ColumnDefine, InternalUtils, TableData} from "jigsaw/public_api";
 import {ChartIconTextService} from "../doc.service";
 
 @Component({
