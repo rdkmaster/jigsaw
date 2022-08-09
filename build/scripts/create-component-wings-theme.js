@@ -2,7 +2,6 @@ const fs = require("fs");
 const glob = require('glob').sync;
 
 const projectName = process.argv[2] ? process.argv[2] : "jigsaw-demo";
-console.log('xxxxxxxxxxx',x)
 console.log('开始创建 wings theme ...');
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
