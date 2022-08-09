@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import {CascadeAllComponent} from "./demo.component";
-import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {CommonModule} from "@angular/common";
 import {CascadeBasicComponent} from "./basic/demo.component";

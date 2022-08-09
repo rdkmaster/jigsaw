@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FloatDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { CommonModule } from "@angular/common";
 import { FloatBasicDemoComponent } from "./basic/demo.component";
 import { FloatInitDataDemoComponent } from "./init-data/demo.component";

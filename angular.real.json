@@ -26,7 +26,7 @@
             "extractCss": true,
             "assets": [
               "src/app/libs/favicon.ico",
-              "src/app/app-demo/demo/pc/tree/icon/assets"
+              "src/app/app-demo/demo/tree/icon/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",

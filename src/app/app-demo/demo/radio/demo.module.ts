@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RadioGroupDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonModule, JigsawRadioModule, JigsawHeaderModule, JigsawRadioLiteModule } from "jigsaw/public_api";
 import { CommonModule } from "@angular/common";
 import { RadioDataIsStringArrayComponent } from "./string-array/demo.component";

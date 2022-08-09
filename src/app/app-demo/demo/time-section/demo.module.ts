@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TimeSectionDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonBarModule, JigsawTimeSectionModule, JigsawCheckBoxModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { TimeSectionBasicDemoComponent } from "./basic/demo.component";

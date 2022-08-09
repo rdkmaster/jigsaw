@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {
     JigsawTabsModule, JigsawProgressModule, JigsawInputModule, JigsawTableModule,
     JigsawGraphModule, JigsawButtonModule, JigsawSwitchModule, JigsawButtonBarModule, JigsawHeaderModule

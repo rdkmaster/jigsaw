@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TagDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonModule, JigsawTagModule, JigsawHeaderModule, JigsawInputModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { TagBasicComponent } from "./basic/demo.component";

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {JigsawTableModule, JigsawPaginationModule, JigsawButtonBarModule} from "jigsaw/public_api";
 import {TablePageableDemoComponent} from './demo.component';
-import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
 
 @NgModule({
     imports: [JigsawTableModule, JigsawPaginationModule, DemoTemplateModule, JigsawButtonBarModule,],

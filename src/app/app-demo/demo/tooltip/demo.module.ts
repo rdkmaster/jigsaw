@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TooltipDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonModule, JigsawTooltipModule, JigsawInputModule, JigsawRadioModule } from "jigsaw/public_api";
 import { TooltipBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";

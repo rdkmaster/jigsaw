@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {AdjustFontColorAllDemoComponent} from "./demo.component";
 import {JigsawButtonModule, JigsawHeaderModule, JigsawInputModule, JigsawTagModule, JigsawColorSelectModule} from "jigsaw/public_api";
 import { CommonModule } from '@angular/common';

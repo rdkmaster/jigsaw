@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {DateTimePickerAllComponent} from "./demo.component";
 import {DateTimePickerBasicDemoComponent} from "./basic/demo.component";
 import {CommonModule} from "@angular/common";

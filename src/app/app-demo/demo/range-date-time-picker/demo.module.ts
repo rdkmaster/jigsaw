@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {JigsawButtonBarModule, JigsawRangeDateTimePickerModule, JigsawRadioModule, JigsawRangeDateTimeSelectModule} from "jigsaw/public_api";
 import {CommonModule} from "@angular/common";
 import {RangeDateTimeGrWeekComponent} from "./gr-week/demo.component";

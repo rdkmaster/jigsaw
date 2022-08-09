@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
 import {AlertDemoComponent} from './demo.component';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {JigsawAlertModule, JigsawButtonModule, JigsawHeaderModule, JigsawCheckBoxModule} from "jigsaw/public_api";
 import {AlertPopupDemoComponent} from "./popup/demo.component";
 import {AlertInDomDemoComponent} from "./in-dom/demo.component";

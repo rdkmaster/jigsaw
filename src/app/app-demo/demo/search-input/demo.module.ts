@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../markdown/markdown';
+import {DemoTemplateModule} from '../../demo-template/demo-template';
+import {JigsawMarkdownModule} from '../../markdown/markdown';
 import {SearchInputAllComponent} from "./demo.component";
 import {SearchInputAutoSearchDemoComponent} from "./auto-search/demo.component";
 import {JigsawSearchInputModule, JigsawNumericInputModule} from "jigsaw/public_api";

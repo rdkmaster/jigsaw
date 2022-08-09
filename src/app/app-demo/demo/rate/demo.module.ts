@@ -3,7 +3,7 @@ import { RateDemoComponent } from "./demo.component";
 import { RateBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { JigsawRateModule, JigsawHeaderModule } from "jigsaw/public_api";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { RateHalfDemoComponent } from "./half/demo.component";
 
 @NgModule({

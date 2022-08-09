@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TransferDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonModule, JigsawHeaderModule, JigsawTransferModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { TransferBasicDemoComponent } from "./basic/demo.component";

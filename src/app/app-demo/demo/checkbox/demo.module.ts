@@ -3,7 +3,7 @@ import {CheckboxBasicComponent} from "./basic/demo.component";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {JigsawCheckBoxModule} from "jigsaw/public_api";
 import {CheckBoxDemoComponent} from "./demo.componet";
-import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 import {CheckboxMinimalistComponent} from "./minimalist/demo.component";
 import {JigsawButtonBarModule} from "jigsaw/public_api";
 import {CheckboxCheckAllComponent} from "./checkall/demo.component";

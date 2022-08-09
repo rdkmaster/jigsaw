@@ -18,7 +18,7 @@ import {
     MajorStyle
 } from "jigsaw/public_api";
 import { AppComponent } from './app.component';
-import { AjaxInterceptor } from './app.interceptor';
+import { AjaxInterceptor } from '../libs/app.interceptor';
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./pc-demo-list.component";
 import { SwitchDemoComponent } from "./switch-demo.component";

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {JigsawTreeExtModule, JigsawInputModule} from "jigsaw/public_api";
 import {ZtreeDemoComponent} from "./basic/demo.component";
 import {ZtreeAllComponent} from "./demo.component";

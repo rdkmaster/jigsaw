@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import { JigsawButtonModule, JigsawHeaderModule, JigsawBreadcrumbModule} from "jigsaw/public_api";
 import {BreadcrumbBasicDemoComponent} from "./basic/demo.component";
 import {BreadcrumbAllComponent} from "./demo.component";

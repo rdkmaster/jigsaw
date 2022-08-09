@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
-import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 import {JigsawDrawerModule, JigsawRadioModule, JigsawButtonModule, JigsawSwitchModule, JigsawTabsModule} from "jigsaw/public_api";
 import {DrawerAllComponent} from "./demo.component";
 import {DrawerBasicDemoComponent} from "./basic/demo.component";

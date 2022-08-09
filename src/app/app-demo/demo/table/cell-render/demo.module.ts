@@ -4,7 +4,7 @@ import {
     JigsawTableModule, JigsawComboSelectModule, JigsawButtonModule, JigsawCheckBoxModule,
     JigsawListModule
 } from "jigsaw/public_api";
-import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {TableSetCellRenderDemoComponent} from './demo.component';
 import {OfficeHeaderRenderer} from "./renderers";
 

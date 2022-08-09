@@ -4,7 +4,7 @@ import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { TranslateHelper, JigsawTableModule, JigsawSliderModule } from "jigsaw/public_api";
 import { SwimLaneDiagramDemoComponent } from './demo.component';
 import { TableSwimLaneCell } from "./table-renderer";
-import { DemoTemplateModule } from "../../../demo-template/demo-template";
+import { DemoTemplateModule } from "../../demo-template/demo-template";
 
 @NgModule({
     imports: [

@@ -4,7 +4,7 @@ import {
     JigsawTableModule, TableCellCheckboxRenderer, TableHeadCheckboxRenderer, JigsawPaginationModule,
     JigsawTagModule, JigsawButtonModule
 } from "jigsaw/public_api";
-import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {TableAddCheckboxColumnPageableDemoComponent} from './demo.component';
 
 import {JigsawHeaderModule} from "jigsaw/public_api";

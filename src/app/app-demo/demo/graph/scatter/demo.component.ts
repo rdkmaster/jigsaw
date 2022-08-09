@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {ScatterGraphData} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../app.interceptor";
+import {AjaxInterceptor} from "../../../../libs/app.interceptor";
 import {GraphTextService} from "../demo.service";
 
 @Component({

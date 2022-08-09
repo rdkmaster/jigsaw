@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { ChartIconDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawChartIconModule, JigsawButtonModule, JigsawCheckBoxModule, JigsawHeaderModule, JigsawTableModule } from "jigsaw/public_api";
 import { ChartIconBasicDemoComponent } from "./basic/demo.component";
 import { ChartIconButtonDemoComponent } from "./with-button/demo.component";

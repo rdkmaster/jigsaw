@@ -6,7 +6,7 @@ import {
 } from "jigsaw/public_api";
 import {BigTableDataDemoComponent} from './demo.component';
 import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
-import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
 
 @NgModule({
     imports: [

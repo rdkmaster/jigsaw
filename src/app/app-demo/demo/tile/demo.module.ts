@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../markdown/markdown';
+import {DemoTemplateModule} from '../../demo-template/demo-template';
+import {JigsawMarkdownModule} from '../../markdown/markdown';
 import {TileAllComponent} from "./demo.component";
 import {JigsawSwitchModule, JigsawTileSelectModule, JigsawTileLiteModule} from "jigsaw/public_api";
 import {CommonModule} from "@angular/common";

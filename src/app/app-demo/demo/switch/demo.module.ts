@@ -3,7 +3,7 @@ import { SwitchDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { SwitchBasicComponent } from "./basic/demo.component";
 import { JigsawSwitchModule, JigsawHeaderModule } from "jigsaw/public_api";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { SwitchWithTextDemoComponent } from "./with-text/demo.component";
 
 @NgModule({

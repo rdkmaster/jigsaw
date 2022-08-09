@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../markdown/markdown';
+import {DemoTemplateModule} from '../../demo-template/demo-template';
+import {JigsawMarkdownModule} from '../../markdown/markdown';
 import {JigsawInputModule, JigsawNumericInputModule} from "jigsaw/public_api";
 import {NumericInputBasicDemoComponent} from "./basic/demo.component";
 import {NumericInputAllComponent} from "./demo.component";

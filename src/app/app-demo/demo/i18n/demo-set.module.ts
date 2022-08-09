@@ -4,7 +4,7 @@ import {I18nFullDemoModule} from "./full/demo.module";
 
 import {I18nFullDemoComponent} from "./full/demo.component";
 import {I18nDemoAllComponent} from "./all/demo.component";
-import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 
 export const routerConfig = [
     {

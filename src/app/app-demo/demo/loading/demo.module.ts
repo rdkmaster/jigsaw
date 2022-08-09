@@ -4,7 +4,7 @@ import { JigsawButtonModule, JigsawLoadingModule, JigsawInputModule, LoadingServ
 import { CommonModule } from "@angular/common";
 import { LoadingBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { LoadingBallDemoComponent } from "./ball/demo.component";
 import { LoadingBubbleDemoComponent } from "./bubble/demo.component";
 import { LoadingFontIconDemoComponent } from "./font-icon/demo.component";

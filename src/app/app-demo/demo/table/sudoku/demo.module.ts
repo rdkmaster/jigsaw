@@ -4,7 +4,7 @@ import {JigsawTableModule, JigsawTileSelectModule, JigsawAlertModule, JigsawButt
 import {SudokuGameComponent} from './demo.component';
 import {NumberRenderer} from "./number-renderer";
 import {NumberSelectPad} from "./number-select-pad";
-import {DemoTemplateModule} from "../../../demo-template/demo-template";
+import {DemoTemplateModule} from "../../demo-template/demo-template";
 
 @NgModule({
     imports: [

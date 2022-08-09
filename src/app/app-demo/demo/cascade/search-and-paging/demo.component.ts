@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {CascadeTextService} from "../doc.service";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {ArrayCollection, CascadeData} from "jigsaw/public_api";
-import {AjaxInterceptor, MockData} from "../../../../app.interceptor";
+import {AjaxInterceptor, MockData} from "../../../../libs/app.interceptor";
 
 @Component({
     selector: "cascade-search-and-paging",

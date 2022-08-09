@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TrustedHtmlDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { JigsawTrustedHtmlModule, JigsawHeaderModule, JigsawTextareaModule } from "jigsaw/public_api";

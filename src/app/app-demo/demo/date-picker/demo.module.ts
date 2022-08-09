@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../markdown/markdown';
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { JigsawMarkdownModule } from '../../markdown/markdown';
 import {JigsawDatePickerModule} from "jigsaw/public_api";
 import {DatePickerAllComponent} from "./demo.component";
 import {DatePickerBasicDemoComponent} from "./basic/demo.component";

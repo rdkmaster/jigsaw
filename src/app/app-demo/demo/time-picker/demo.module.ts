@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { TimePickerDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { TimePickerBasicDemoComponent } from "./basic/demo.component";
 import { JigsawButtonModule, JigsawTimePickerModule } from "jigsaw/public_api";

@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { ToastDemoComponent } from "./demo.component";
-import { JigsawMarkdownModule } from "../../../markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonModule, JigsawToastModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { ToastBasicDemoComponent } from "./basic/demo.component";

@@ -112,7 +112,7 @@ import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 import {TableAllComponent} from "./all/demo.component";
-import {JigsawMarkdownModule} from "../../../markdown/markdown";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 import {TableBasicDemoModule} from "./basic/demo.module";
 import {TableRendererDemoModule} from "./renderer/demo.module";
 

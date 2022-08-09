@@ -7,7 +7,7 @@ import {
     JigsawTableModule
 } from "jigsaw/public_api";
 import { I18nFullDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from "../../../demo-template/demo-template";
+import { DemoTemplateModule } from "../../demo-template/demo-template";
 
 @NgModule({
     declarations: [I18nFullDemoComponent],
