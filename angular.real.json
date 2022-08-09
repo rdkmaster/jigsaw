@@ -19,14 +19,14 @@
           "options": {
             "aot": true,
             "outputPath": "dist/jigsaw-app",
-            "index": "src/index.html",
+            "index": "src/app/app-demo/index.html",
             "main": "src/app/app-demo/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "polyfills": "src/app/libs/polyfills.ts",
+            "tsConfig": "src/app/app-demo/tsconfig.app.json",
             "extractCss": true,
             "assets": [
-              "src/favicon.ico",
-              "src/app/demo/pc/tree/icon/assets"
+              "src/app/libs/favicon.ico",
+              "src/app/app-demo/demo/pc/tree/icon/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
@@ -34,7 +34,7 @@
               "node_modules/@rdkmaster/icon-font/iconfont.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/mbo.css",
-              "src/styles.scss",
+              "src/app/app-demo/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
                 "bundleName": "themes/paletx-pro-light",

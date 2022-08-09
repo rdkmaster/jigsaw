@@ -1,6 +1,6 @@
-import { Component, NgModule, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, NgModule, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JigsawMarkdownModule } from "app/app-demo/markdown/markdown";
+import { JigsawMarkdownModule } from "../../markdown/markdown";
 import { JigsawButtonBarModule, ArrayCollection } from "jigsaw/public_api";
 
 
