@@ -1,6 +1,8 @@
 const fs = require("fs");
 const glob = require('glob').sync;
 
+const projectName = process.argv[2] ? process.argv[2] : "jigsaw-demo";
+console.log('xxxxxxxxxxx',x)
 console.log('开始创建 wings theme ...');
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
@@ -109,7 +111,7 @@ if (fs.existsSync(wingsThemeOutput)) {
 
 const styleFiles = styleFilesParser();
 const angularJson = require(`../../angular.real.json`);
-const options = angularJson.projects["jigsaw-demo"].architect.build.options;
+const options = angularJson.projects[projectName].architect.build.options;
 options.styles = options.styles.filter(style => typeof style === 'string' ||
     (style.input && style.input.indexOf('/wings-theme/')) === -1);
 
