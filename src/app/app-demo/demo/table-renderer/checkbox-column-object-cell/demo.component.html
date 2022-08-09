@@ -1,0 +1,12 @@
+<demo-template [data]="''" [text]="text['text']['checkboxColumnObjectCell']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-table height="400"
+                  [data]="tableData"
+                  [columnDefines]="columnDefineGenerator"
+                  [additionalColumnDefines]="additionalColumns"
+                  [(additionalData)]="additionalData"
+                  (additionalDataChange)="additionalDataChange($event)"
+                  trackRowBy="name">
+    </jigsaw-table>
+    <p>选中的序号是: <span>{{selectedRows}}</span></p>
+</demo-template>
