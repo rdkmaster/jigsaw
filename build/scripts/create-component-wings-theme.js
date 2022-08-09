@@ -109,7 +109,7 @@ if (fs.existsSync(wingsThemeOutput)) {
 
 const styleFiles = styleFilesParser();
 const angularJson = require(`../../angular.real.json`);
-const options = angularJson.projects["jigsaw-app"].architect.build.options;
+const options = angularJson.projects["jigsaw-demo"].architect.build.options;
 options.styles = options.styles.filter(style => typeof style === 'string' ||
     (style.input && style.input.indexOf('/wings-theme/')) === -1);
 

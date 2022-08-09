@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "jigsaw-app": {
+    "jigsaw-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "aot": true,
-            "outputPath": "dist/jigsaw-app",
+            "outputPath": "dist/jigsaw-demo",
             "index": "src/app/app-demo/index.html",
             "main": "src/app/app-demo/main.ts",
             "polyfills": "src/app/libs/polyfills.ts",
@@ -114,18 +114,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "jigsaw-app:build"
+            "browserTarget": "jigsaw-demo:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "jigsaw-app:build:production"
+              "browserTarget": "jigsaw-demo:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "jigsaw-app:build"
+            "browserTarget": "jigsaw-demo:build"
           }
         },
         "test": {
@@ -153,11 +153,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "jigsaw-app:serve"
+            "devServerTarget": "jigsaw-demo:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "jigsaw-app:serve:production"
+              "devServerTarget": "jigsaw-demo:serve:production"
             }
           }
         }
@@ -278,7 +278,7 @@
       }
     }
   },
-  "defaultProject": "jigsaw-app",
+  "defaultProject": "jigsaw-demo",
   "cli": {
     "analytics": "d2a728b2-b764-4978-a47d-7d76c3eeb242"
   }
