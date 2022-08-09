@@ -1,0 +1,9 @@
+<demo-template [data]="''" [text]="text['text']['resize']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button (click)="changeTableWidth()">改变table宽度</jigsaw-button>
+    <jigsaw-button (click)="changeBoxWidth()">改变box宽度</jigsaw-button>
+    <div class="box">
+        <jigsaw-table #tableCmp [data]="tableData" [width]="tableWidth" height="400"></jigsaw-table>
+    </div>
+</demo-template>
+

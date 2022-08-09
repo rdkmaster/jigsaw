@@ -64,6 +64,7 @@ import { RangeDataTimePickerAllComponent } from "./demo/range-date-time-picker/d
 import { DatePickerAllComponent } from "./demo/date-picker/demo.component";
 import { DateTimePickerAllComponent } from "./demo/date-time-picker/demo.component";
 import { TableBasicAllComponent } from "./demo/table-basic/demo.component";
+import {TableActionsAllComponent} from "./demo/table-actions/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -142,6 +143,7 @@ export const routerConfigPC = [
     { path: "pc/data-encapsulation", component: DataEncapsulationDemoComponent },
     { path: "pc/graph", component: GraphDemoComponent },
     { path: "pc/float", component: FloatDemoComponent },
+    { path: "pc/table-actions", component: TableActionsAllComponent},
 
 ];
 export const routerConfigMobile = [];
