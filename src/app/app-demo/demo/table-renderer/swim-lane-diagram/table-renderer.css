@@ -1,0 +1,98 @@
+.lane-box {
+    position: relative;
+}
+
+.lane-box p {
+    width: 80%;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.lane-box p.signal-desc {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lane-box p.from-to span {
+    width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lane-box p.from-to span.left {
+    float: left;
+}
+
+.lane-box p.from-to span.right {
+    float: right;
+}
+
+.lane-box div {
+    z-index: 500;
+}
+
+.lane-box b.arrow {
+    display: block;
+    height: 0;
+    border-top: 2px solid #333;
+    position: relative;
+}
+
+.lane-box b.arrow:after {
+    display: block;
+    content: ' ';
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #333;
+    border-right: 1px solid #333;
+    position: absolute;
+}
+
+.lane-box b.right-arrow:after {
+    left: 0;
+    top: -5px;
+    transform: rotate(225deg);
+}
+
+.lane-box b.left-arrow:after {
+    top: -5px;
+    right: 1px;
+    transform: rotate(45deg);
+}
+
+.lane-box i.use-time {
+    position: absolute;
+    top: -8px;
+}
+
+.lane-box i.left {
+    left: 0;
+}
+
+.lane-box i.right {
+    right: 0;
+}
+
+.dashed-line {
+    height: 0;
+    border: 1px dashed #666;
+}
+
+.signal-desc-title, .ne-desc-title {
+    z-index: 999999999999;
+    position: absolute;
+    height: 20px;
+    overflow: visible;
+    background-color: #ffbf00;
+    margin: 0 0 0 180px;
+}
+
+.ne-desc-title {
+    height: 40px;
+}
+
+.ne-desc-title.left {
+    margin: 0 0 0 90px;
+}

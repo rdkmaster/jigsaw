@@ -1,0 +1,10 @@
+<demo-template [data]="''" [text]="text['text']['sudoku']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <j-button (click)="newPuzzle()">
+            <span class="iconfont iconfont-e33a">重新开始</span>
+        </j-button>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnDefineGenerator" [hideHeader]="true" width="442px">
+        </jigsaw-table>
+    </div>
+</demo-template>
