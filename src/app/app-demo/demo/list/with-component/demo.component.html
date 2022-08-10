@@ -4,7 +4,7 @@
         <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems"
                 (selectedItemsChange)="handleSelect($event)" #listGroup>
             <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
-                <div>
+                <div class="goods-box">
                     <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"
                                 (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
                     <span class="logo iconfont iconfont-{{goods.logo}}"></span>

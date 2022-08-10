@@ -65,6 +65,8 @@ import { DatePickerAllComponent } from "./demo/date-picker/demo.component";
 import { DateTimePickerAllComponent } from "./demo/date-time-picker/demo.component";
 import { TableBasicAllComponent } from "./demo/table-basic/demo.component";
 import {TableActionsAllComponent} from "./demo/table-actions/demo.component";
+import {TableColumnDefinesAllComponent} from "./demo/table-column-defines/demo.component";
+import {TableBigDataAllComponent} from "./demo/table-big-data/demo.component";
 
 export const routerConfigPC = [
     { path: "pc/example", component: ExampleDemoComponent },
@@ -144,6 +146,8 @@ export const routerConfigPC = [
     { path: "pc/graph", component: GraphDemoComponent },
     { path: "pc/float", component: FloatDemoComponent },
     { path: "pc/table-actions", component: TableActionsAllComponent},
+    { path: "pc/table-column-defines", component: TableColumnDefinesAllComponent},
+    { path: "pc/table-big-data", component: TableBigDataAllComponent}
 
 ];
 export const routerConfigMobile = [];

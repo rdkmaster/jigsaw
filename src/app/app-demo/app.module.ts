@@ -87,6 +87,8 @@ import { DatePickerDemoModule } from "./demo/date-picker/demo.module";
 import { DateTimePickerDemoModule } from "./demo/date-time-picker/demo.module";
 import { TableBasicDemoModule } from "./demo/table-basic/demo.module";
 import {TableActionsDemoModule} from "./demo/table-actions/demo.module";
+import {TableColumnDefinesDemoModule} from "./demo/table-column-defines/demo.module";
+import {TableBigTableDemoModule} from "./demo/table-big-data/demo.module";
 
 
 @NgModule({
@@ -117,7 +119,8 @@ import {TableActionsDemoModule} from "./demo/table-actions/demo.module";
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
         GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule, TableBasicDemoModule, TableActionsDemoModule,
-        TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule
+        TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
+        TableColumnDefinesDemoModule, TableBigTableDemoModule
     ],
     providers: [
         {

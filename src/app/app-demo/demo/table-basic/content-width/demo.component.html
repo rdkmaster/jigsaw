@@ -1,0 +1,30 @@
+<demo-template [data]="''" [text]="text['text']['contentWidth']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>contentWidth默认值为'auto'</span>
+        <jigsaw-table [data]="tableData" height="400"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>设置contentWidth数值</span>
+        <jigsaw-table [data]="tableData" height="400" contentWidth="1500"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>contentWidth='auto'与columnDefine结合使用</span>
+        <p class="comment">限制了table的宽度为1000时，会产生横向滚动条，这时可以通过columnDefines来调节列宽</p>
+        <jigsaw-table [data]="tableData" width="1000" height="400" [columnDefines]="columnDefines"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>当contentWidth为'_inner_auto_'时，会根据表头内容自动伸展，可能会自动产生横向滚动条，但无法设置列宽，列宽没有响应性，</span>
+        <span style="color: red">不推荐使用</span>
+        <jigsaw-table maxHeight="400"
+                      [data]="tableData2"
+                      [columnDefines]="columnDefines2"
+                      [additionalColumnDefines]="additionalColumns2"
+                      contentWidth="_inner_auto_">
+        </jigsaw-table>
+    </div>
+</demo-template>
+

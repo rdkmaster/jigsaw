@@ -25,6 +25,7 @@ import {ChartIconDemoModule} from "../chart-icon/demo.module";
 import {TableBasicChartIconDemoComponent} from "./chart-icon/demo.component";
 import {TableBasicProgressDemoComponent} from "./progress/demo.component";
 import {TableBasicTreeTableDemoComponent} from "./tree-table/demo.component";
+import {TableBasicContentWidthDemoComponent} from "./content-width/demo.component";
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import {TableBasicTreeTableDemoComponent} from "./tree-table/demo.component";
         TableBasicChartIconDemoComponent,
         TableBasicProgressDemoComponent,
         TableBasicTreeTableDemoComponent,
+        TableBasicContentWidthDemoComponent
     ],
     imports: [
         DemoTemplateModule,
