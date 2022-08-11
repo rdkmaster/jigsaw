@@ -1,5 +1,5 @@
 
-<demo-template [data]="[]" [text]="text['text']['customIcons']">
+<demo-template [data]="''" [text]="text['text']['customIcons']">
     <jigsaw-process-status preSize="large" width="80%">
         <jigsaw-process-status-item *ngFor="let step of steps" [status]="step.status"
                                     [waitingIcon]="step.waitingIcon"

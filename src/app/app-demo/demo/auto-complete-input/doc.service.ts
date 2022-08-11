@@ -6,23 +6,23 @@ import { Injectable } from '@angular/core';
 export class AutoCompleteInputTextService {
     public text: object = {
         introduction: `
-            # Input 预设数据列表
+            # Input 提示输入框
+
+            输入框预设数据列表并根据输入内容提供对应的输入建议。
 
             ## 示例
         `,
         basic: `
-            ### 带默认值
+            ### 基础用法
         `,
         default: `
-            ### 嵌入式警示
-
-            直观显示各个Alert组件默认配置的效果。
+            ### 输入框带默认值
         `,
         withGroup: `
-            ### 分组
+            ### 数据列表带分组
         `,
         prefixSuffix: `
-            ### 前后额外信息
+            ### 前缀和后缀
         `
     }
 }

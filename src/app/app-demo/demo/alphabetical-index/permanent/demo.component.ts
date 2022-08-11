@@ -3,11 +3,11 @@ import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_ap
 import {AlphabeticalTextService} from "../doc.service";
 
 @Component({
-    selector: "alphabetical-index-in-dom",
+    selector: "alphabetical-index-permanent",
     templateUrl: "./demo.component.html",
     styleUrls: ["demo.component.css"]
 })
-export class AlphabeticalIndexInDomDemoComponent implements OnInit {
+export class AlphabeticalIndexPermanentDemoComponent implements OnInit {
     constructor(public text: AlphabeticalTextService) {
     }
     public pinyinDictionary: PinyinDictionary = {

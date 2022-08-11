@@ -6,16 +6,20 @@ import {Injectable} from '@angular/core';
 export class CascadeTextService {
     public text: object = {
         introduction: `
-            # Cascader 级联选择
+            # Cascade 级联选择
 
-            级联选择
+            级联选择框。
 
             ## 使用场景
+
+            - 需要从一组相关联的数据集合进行选择，例如省市区，公司层级，事物分类等。
+            - 从一个较大的数据集合中进行选择时，用多级分类进行分隔，方便选择。
+            - 比起Select组件，可以在同一个浮层中完成选择，有较好的体验。
 
             ## 示例
         `,
         basic: `
-            ### 级联选择
+            ### 基础用法
 
             以行政区选择作为场景，说明如何使用静态数据来实现级联数据的选择。
         `,

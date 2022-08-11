@@ -8,6 +8,8 @@ export class BoxTextService {
         introduction: `
             # Box 盒子布局器
 
+            用于布局的容器组件，方便快速搭建页面的基本结构。
+
             ## 示例
         `,
         form: `
@@ -22,7 +24,7 @@ export class BoxTextService {
             - \`vertical\` --> \`v\`;
             - \`vertical-reverse\` --> \`vr\`
 
-            关于box布局器的更多信息，请打开[这里](?open-desc=true#/pc/box/layout)。
+            关于box布局器的更多信息，请参考以下布局复杂页面demo。
         `,
         layout: `
             ### 布局复杂页面
@@ -31,7 +33,7 @@ export class BoxTextService {
 
             j-box布局器不仅可以很好的布局水平方向上元素，还可以很好的布局垂直方向上的元素。
 
-            水平方向上的布局功能和bootstrap的栅格功能非常类似，支持多种排列方式和对齐方式，具体参考[这个demo](#/pc/box/justify)。
+            水平方向上的布局功能和bootstrap的栅格功能非常类似，支持多种排列方式和对齐方式，具体参考Box的对齐方式demo。
             也支持嵌套布局，水平上可以继续嵌套另一个垂直布局或者水平布局（请参考本demo的代码）。
 
             j-box还能够在垂直方向上布局，这是bootstrap的栅格功能所不支持的。相同的，垂直方向上的布局也支持嵌套一个水平或者垂直布局。

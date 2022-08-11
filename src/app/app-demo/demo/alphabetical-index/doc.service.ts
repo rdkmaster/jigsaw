@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class AlphabeticalTextService {
     public text: object = {
         introduction: `
-            # 字母索引 Alphabetical-Index
+            # Alphabetical-Index 字母索引
 
             ## 示例
         `,
@@ -14,15 +14,13 @@ export class AlphabeticalTextService {
             ### 基础文字索引
         `,
         dictionary: `
-            ### 配置了拼音字典的基础文字索引
+            ### 配置拼音字典
         `,
         multiTone: `
             ### 多音字的内容索引
         `,
-        inDom: `
-            ### 嵌入
-
-            常驻状态
-        `,
+        permanent: `
+            ### 常驻状态
+        `
     }
 }

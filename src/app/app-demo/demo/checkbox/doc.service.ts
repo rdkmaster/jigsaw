@@ -22,7 +22,7 @@ export class CheckboxTextService {
             ### 基础复选框
 
             点击方框，实施对方框相应标签项的选择。
-            有三种状态：<code>unchecked</code> <code>checked</code> <code>indeterminate</code>
+            有三种状态：\`unchecked\` \`checked\` \`indeterminate\`
         `,
         minimalist: `
             ### 极简和普通模式

@@ -12,24 +12,28 @@ export class ButtonBarTextService {
 
             ## 使用场景
 
-            分段选择器用于在同一个页面空间占用下的内容切换。
+            按钮栏用于在同一个页面空间占用下的内容切换。
 
             ## 示例
         `,
         objectsArray: `
             ###  对象数组
+
+            按钮栏的数据是对象数组。
         `,
         stringArray: `
             ### 字符串数组
+
+            按钮栏的数据是字符串数组。
         `,
         colorType: `
-            ### color-type
+            ### Color Type
         `,
         icons: `
             ### 带图标按钮栏
         `,
         multipleChoice: `
-            ### 多选
+            ### 可多选
         `,
         setHeight: `
             #### 直接设置height
