@@ -68,29 +68,37 @@ $jigsaw-breadcrumb: #{$jigsaw-prefix}-breadcrumb;
         padding: 0 8px;
         font-size: $font-size-base;
         background: $bg-component;
+
         .#{$jigsaw-breadcrumb}-item {
             .#{$jigsaw-breadcrumb}-icon {
                 color: $brand-default;
             }
+
             .#{$jigsaw-breadcrumb}-label {
                 color: $brand-default;
+                font-size: $font-size-base;
+
                 &:hover {
                     text-decoration: underline;
                 }
+
                 &:active {
                     color: $brand-active;
                 }
             }
+
             &.#{$jigsaw-breadcrumb}-current {
-                font-size: $font-title-lg;
                 font-weight: bold;
                 color: $font-color-heading-bold;
                 padding-bottom: 4px;
+
                 .#{$jigsaw-breadcrumb}-icon {
                     color: $font-color-heading-bold;
                 }
+
                 .#{$jigsaw-breadcrumb}-label {
                     color: $font-color-heading-bold;
+                    font-size: $font-title-lg;
                     text-decoration: none;
                 }
             }
