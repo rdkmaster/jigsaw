@@ -1,3 +1,0 @@
-{
-    "jigsawTips": "这个文件只是一个占位符，实际使用时，是通过patch-demos.js把jigsaw-seed工程里对应的文件拷贝过来的覆盖这个文件的。"
-}

@@ -1,0 +1,14 @@
+.demo-setting-cntr {
+    display: flex;
+    flex-direction: column;
+}
+
+.demo-setting-cntr .demo-setting-item {
+    display: flex;
+    align-items: center;
+    margin-top: 8px;
+}
+
+.demo-setting-cntr .text {
+    margin-right: 4px;
+}

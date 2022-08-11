@@ -6,9 +6,9 @@ const seedPath = process.argv.length > 2 ? process.argv[2] : __dirname + '/../..
 checkBranch(seedPath);
 
 const angularJson = fs.readFileSync(seedPath + '/angular.json').toString().trim();
-writeCode('src/app/demo-description/angular.json', angularJson);
+writeCode('src/app/description/angular.json', angularJson);
 const packageJson = fs.readFileSync(seedPath + '/package.json').toString().trim();
-writeCode('src/app/demo-description/package.json', packageJson);
+writeCode('src/app/description/package.json', packageJson);
 
 processAllComponents('pc');
 processAllComponents('mobile');

@@ -1,0 +1,101 @@
+
+.app-wrap {
+    padding: 6px;
+}
+
+/* 容器 */
+.live-demo-wrap {
+    padding: 10px;
+}
+
+/* demo容器 block */
+.live-demo-wrap .live-demo-block {
+    float: left;
+    width: 48%;
+    min-width: 400px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-right: 2%;
+}
+
+/* demo容器 */
+.live-demo-wrap .live-demo {
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.live-demo.live-demo-block {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
+
+/* demo文字描述 */
+.live-demo p.comment {
+    margin-bottom: 10px;
+    color: #666;
+    /*color: #ccc;*/
+    font-size: 14px;
+}
+
+/* demo消息文字 */
+.live-demo p.message {
+    margin-top: 10px;
+    color: #999;
+    font-size: 14px;
+}
+
+.live-demo p.message.up {
+    margin: 0 0 10px;
+}
+
+/* demo消息高亮字 */
+.live-demo p.message span {
+    margin: 0 4px;
+    color: #666;
+    /*color: #ccc;*/
+}
+
+/* toggle */
+.live-demo .toggle {
+    padding-top: 10px;
+}
+
+.live-demo .toggle label {
+    margin: 0 10px 0 0;
+    font-weight: normal;
+    display: inline-block;
+    vertical-align: middle;
+    color: #999;
+}
+
+.live-demo .toggle.up {
+    padding: 0 0 10px;
+}
+
+/* margin-top margin-bottom */
+.live-demo .mgt {
+    margin-top: 10px;
+}
+
+.live-demo .mgb {
+    margin-bottom: 10px;
+}
+
+/* demo code */
+.live-demo code {
+    padding: 2px 4px;
+    margin: 0;
+    font-size: 85%;
+    background-color: rgba(27, 31, 35, 0.05);
+    border-radius: 3px;
+}
+
+/* clearfix */
+.live-demo-wrap .clearfix:before, .live-demo-wrap .clearfix:after {
+    display: table;
+    content: ' ';
+}
+.live-demo-wrap .clearfix:after {
+    clear: both;
+}
