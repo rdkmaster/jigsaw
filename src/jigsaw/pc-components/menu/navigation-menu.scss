@@ -111,10 +111,6 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                 display: none;
             }
 
-            .#{$jigsaw-nav-menu}-item-selected {
-                background-color: $nav-navigation !important;
-            }
-
             .#{$jigsaw-nav-menu}-item-top {
                 i:not(.#{$jigsaw-nav-menu}-item-arrow) {
                     margin-right: 0;
