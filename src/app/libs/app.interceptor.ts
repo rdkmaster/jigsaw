@@ -367,26 +367,26 @@ export class MockData {
         this.dataSet = {};
         // 模拟rest服务的数据
         this.dataSet['big-table-data'] = this.createBigTableData();
-        this.dataSet['cities'] = require('../../mock-data/cities.json');
-        this.dataSet['core-members'] = require('../../mock-data/core-members.json');
-        this.dataSet['countries'] = require('../../mock-data/countries.json');
-        this.dataSet['marketing'] = require('../../mock-data/marketing.json');
-        this.dataSet['hr-list-full'] = require('../../mock-data/hr-list-full.json');
-        this.dataSet['hr-list'] = require('../../mock-data/hr-list.json');
-        this.dataSet['hr-list-short'] = require('../../mock-data/hr-list-short.json');
-        this.dataSet['hr-list-complex'] = require('../../mock-data/hr-list-complex.json');
-        this.dataSet['fish-bone-1'] = require('../../mock-data/fish-bone-1.json');
-        this.dataSet['fish-bone-2'] = require('../../mock-data/fish-bone-2.json');
-        this.dataSet['tree-data'] = require('../../mock-data/tree-data.json');
-        this.dataSet['soduku-puzzles'] = require('../../mock-data/soduku-puzzles.json');
+        this.dataSet['cities'] = require('../mock-data/cities.json');
+        this.dataSet['core-members'] = require('../mock-data/core-members.json');
+        this.dataSet['countries'] = require('../mock-data/countries.json');
+        this.dataSet['marketing'] = require('../mock-data/marketing.json');
+        this.dataSet['hr-list-full'] = require('../mock-data/hr-list-full.json');
+        this.dataSet['hr-list'] = require('../mock-data/hr-list.json');
+        this.dataSet['hr-list-short'] = require('../mock-data/hr-list-short.json');
+        this.dataSet['hr-list-complex'] = require('../mock-data/hr-list-complex.json');
+        this.dataSet['fish-bone-1'] = require('../mock-data/fish-bone-1.json');
+        this.dataSet['fish-bone-2'] = require('../mock-data/fish-bone-2.json');
+        this.dataSet['tree-data'] = require('../mock-data/tree-data.json');
+        this.dataSet['soduku-puzzles'] = require('../mock-data/soduku-puzzles.json');
         this.dataSet['map/shanghai'] = require('echarts/map/json/province/shanghai.json');
         this.dataSet['map/china'] = require('echarts/map/json/china.json');
         this.dataSet['big-data-for-paging'] = this.createBigTableData(50000, 4);
 
         // 静态文件引用数据
-        this.dataSet['provinces.json'] = require('mock-data/provinces.json');
-        this.dataSet['cities.json'] = require('mock-data/cities.json');
-        this.dataSet['districts.json'] = require('mock-data/districts.json');
+        this.dataSet['provinces.json'] = require('app/mock-data/provinces.json');
+        this.dataSet['cities.json'] = require('app/mock-data/cities.json');
+        this.dataSet['districts.json'] = require('app/mock-data/districts.json');
     }
 
     static createBigTableData(rowLength = 5000, colLength = 200): RawTableData {

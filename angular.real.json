@@ -19,14 +19,14 @@
           "options": {
             "aot": true,
             "outputPath": "dist/jigsaw-app",
-            "index": "src/app/app-develop/index.html",
-            "main": "src/app/app-develop/main.ts",
+            "index": "src/app/for-internal/index.html",
+            "main": "src/app/for-internal/main.ts",
             "polyfills": "src/app/libs/polyfills.ts",
-            "tsConfig": "src/app/app-develop/tsconfig.app.json",
+            "tsConfig": "src/app/for-internal/tsconfig.app.json",
             "extractCss": true,
             "assets": [
               "src/app/libs/favicon.ico",
-              "src/app/app-develop/demo/pc/tree/icon/assets"
+              "src/app/for-internal/demo/pc/tree/icon/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
@@ -34,7 +34,7 @@
               "node_modules/@rdkmaster/icon-font/iconfont.css",
               "node_modules/codemirror/lib/codemirror.css",
               "node_modules/codemirror/theme/mbo.css",
-              "src/app/app-develop/styles.scss",
+              "src/app/for-internal/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
                 "bundleName": "themes/paletx-pro-light",
@@ -84,8 +84,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "src/app/environments/environment.ts",
+                  "with": "src/app/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
