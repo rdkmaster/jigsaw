@@ -4,14 +4,15 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "node build/scripts/extract-theme-variables.js && node build/scripts/create-component-wings-theme.js && node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
+        "start": "node build/scripts/extract-theme-variables.js && node build/scripts/create-component-wings-theme.js jigsaw-app && node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve --poll 500 --disable-host-check --host 0.0.0.0 --port ",
         "build": "gulp build:jigsaw:clean",
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-app": "ng build --prod --aot --delete-output-path",
         "build-formly": "gulp build:formly:clean",
         "test": "ts-node --project src/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
         "lint": "ng lint",
-        "e2e": "ng e2e"
+        "e2e": "ng e2e",
+        "start-external": "node build/scripts/extract-theme-variables.js && node build/scripts/create-component-wings-theme.js jigsaw-app-external && node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve jigsaw-app-external --poll 500 --disable-host-check --host 0.0.0.0 --port "
     },
     "private": true,
     "dependencies": {
