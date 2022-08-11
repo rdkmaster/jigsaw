@@ -13,7 +13,7 @@ import {
     Renderer2,
     ViewChild
 } from "@angular/core";
-import {Subscription} from "rxjs/internal/Subscription";
+import {Subscription} from "rxjs";
 import {JigsawResizableBoxBase} from "./common-box";
 import {CallbackRemoval} from "../../common/core/utils/common-utils";
 

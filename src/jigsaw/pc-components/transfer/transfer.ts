@@ -16,7 +16,7 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
-import { Subscription } from "rxjs/internal/Subscription";
+import { Subscription } from "rxjs";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { JigsawListModule } from "../list-and-tile/list";
