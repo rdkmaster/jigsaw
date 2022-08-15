@@ -8,10 +8,16 @@ export class ComboSelectTextService {
         introduction: `
             # Combo Select 组合框
 
+            将动作或菜单折叠到下拉菜单中。
+
+            ## 使用场景
+
+            当页面上的操作命令过多时，用此组件可以收纳操作元素。点击或移入触点，会出现一个下拉菜单。可在列表中进行选择，并执行相应的命令。
+
             ## 示例
         `,
         basic: `
-            ### 自定义下拉面板
+            ### 基础用法
         `,
         autoWidth: `
             ### 宽度自动对齐

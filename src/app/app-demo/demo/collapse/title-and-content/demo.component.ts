@@ -4,10 +4,11 @@ import { TableData, LineGraphData, PieGraphData } from "jigsaw/public_api";
 import { HttpClient } from "@angular/common/http";
 
 @Component({
-    selector: "collapse-advanced",
+    selector: "collapse-title-and-content",
     templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"]
 })
-export class CollapseAdvancedDemoComponent {
+export class CollapseTitleAndContentDemoComponent {
     tableData: TableData;
     public pieGraphDataByCol: PieGraphData;
     // @ts-ignore

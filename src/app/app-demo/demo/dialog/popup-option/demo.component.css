@@ -1,51 +1,27 @@
-.popup-option-demo {
-    padding: 5px 0;
+.show-box .box {
+    margin-right: 24px;
 }
 
-.popup-option-demo .show-box {
-    clear: both;
-    overflow: hidden;
-    margin-bottom: 20px;
-}
-
-.popup-option-demo .show-box .box {
-    width: 20%;
+.show-box .box .square{
+    width: 300px;
     height: 300px;
     line-height: 300px;
-    text-align: center;
-    color: #fff;
-    float: left;
-    margin-right: 10%;
 }
 
-.popup-option-demo .show-box .box:last-child {
-    margin-right: 0;
+.show-box .box .button{
+    margin-top:20px;
 }
 
-.popup-option-demo .show-box .box.left {
+.show-box .box .left {
     background-color: #ec6d6d;
 }
 
-.popup-option-demo .show-box .box.middle {
+.show-box .box .middle {
     background-color: #41addc;
 }
 
-.popup-option-demo .show-box .box.right {
+.show-box .box .right {
     background-color: #8ac9b6;
-}
-
-.popup-option-demo label {
-    display: inline-block;
-    vertical-align: middle;
-    width: 100px;
-}
-
-.popup-option-demo .line-box {
-    margin-bottom: 10px;
-}
-
-.popup-option-demo jigsaw-button {
-    margin-left: 103px;
 }
 
 .dialog-content {

@@ -4,7 +4,7 @@ import { Component } from "@angular/core";
     template: `
         <div>
             <p>Jigsaw组件演示，请选择对应的终端</p>
-            <a [routerLink]="['/pc']" title="桌面版"><span class="iconfont iconfont-e17d"></span></a>
+            <a [routerLink]="['/demo']" title="桌面版"><span class="iconfont iconfont-e17d"></span></a>
         </div>
     `,
     styles: [`
@@ -29,7 +29,7 @@ import { Component } from "@angular/core";
         a:hover .iconfont {
             color: var(--brand-hover);
         }
-        
+
         div {
             text-align: center;
             margin-top: 160px;

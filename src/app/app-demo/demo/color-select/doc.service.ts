@@ -18,22 +18,23 @@ export class ColorSelectTextService {
 
              ## 基本用法
         `,
-        basic: `
-           ### 自动模式
+        autoCommit: `
+           ### 自动提交色值
 
             这个DEMO详细演示了\`jigsaw-color-select\`组件中自动提交色值的用法。
         `,
-        confirm: `
-            ### 手动模式
+        manualCommit: `
+            ### 手动提交色值
 
             这个DEMO详细演示了\`jigsaw-color-select\`组件中手动提交色值的用法。
         `,
         limited: `
             ### limited 模式
-             这个DEMO详细演示了\`jigsaw-color-select\`组件中limit模式的用法。
+
+            这个DEMO详细演示了\`jigsaw-color-select\`组件中limit模式的用法。
         `,
-        noAlpha: `
-           ### 无透明度
+        removeTransparency: `
+           ### 取消透明度
         `,
     }
 }

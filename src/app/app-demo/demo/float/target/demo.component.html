@@ -1,5 +1,4 @@
 <demo-template [data]="''" [text]="text['text']['target']">
-
     <jigsaw-button-bar [data]="targets" [selectedItems]="'component'"
                        (selectedItemsChange)="target = $event[0].target">
     </jigsaw-button-bar>
@@ -8,7 +7,7 @@
           jigsawFloatOpenTrigger="click"
           jigsawFloatCloseTrigger="click"
           [jigsawFloatTarget]="target" [jigsawFloatOptions]="{useCustomizedBackground: true}"> click me!
-</span>
+    </span>
     <ng-template #jigsawFloatArea1>
         <div class="jigsawFloatArea1">
             dropdown placeholder 1

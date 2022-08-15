@@ -3,11 +3,11 @@ import {ColorSelectTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'color-select-comfirm',
+    selector: 'color-select-manual-commit',
     templateUrl: 'demo.component.html'
 })
 
-export class ColorSelectConfirmDemoComponent {
+export class ColorSelectManualCommitDemoComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},

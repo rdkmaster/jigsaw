@@ -6,7 +6,7 @@ import {Injectable} from "@angular/core";
 export class DataEncapsulationTextService {
     public text: object = {
         introduction: `
-         # IComponentData
+         # Data 前后端通信
          起始版本：v1.0.0
          [Jigsaw](https://github.com/rdkmaster/jigsaw)的数据总体分成两大分支：
          - \`ArrayCollection\` 这个分支只关注数组类型的集合；

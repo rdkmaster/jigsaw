@@ -8,6 +8,8 @@ export class FishBoneTextService {
         introduction: `
             # Fish Bone 鱼骨图
 
+            鱼骨图是一种发现问题“根本原因”的分析方法。
+
             ## TreeData动态变化的问题
 
             FishBone组件现在支持随TreeData动态刷新了。TreeData的数据处理可以直接放在\`onAjaxComplete\`中进行

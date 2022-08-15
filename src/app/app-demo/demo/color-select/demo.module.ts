@@ -1,16 +1,16 @@
 import {NgModule} from "@angular/core";
 import {ColorSelectDemoComponent} from "./demo.component";
 import {JigsawMarkdownModule} from "../../markdown/markdown";
-import {ColorSelectBasicDemoComponent} from "./basic/demo.component";
+import {ColorSelectAutoCommitDemoComponent} from "./auto-commit/demo.component";
 import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {JigsawColorSelectModule} from "jigsaw/public_api";
-import { ColorSelectConfirmDemoComponent} from "./confirm/demo.component";
+import { ColorSelectManualCommitDemoComponent} from "./manual-commit/demo.component";
 import {ColorSelectLimitedDemoComponent} from "./limited/demo.component";
-import {ColorSelectNoAlphaDemoComponent} from "./no-alpha/demo.component";
+import {ColorSelectRemoveTransparencyDemoComponent} from "./remove-transparency/demo.component";
 
 @NgModule({
-    declarations: [ColorSelectDemoComponent, ColorSelectBasicDemoComponent, ColorSelectConfirmDemoComponent,
-     ColorSelectLimitedDemoComponent, ColorSelectNoAlphaDemoComponent],
+    declarations: [ColorSelectDemoComponent, ColorSelectAutoCommitDemoComponent, ColorSelectManualCommitDemoComponent,
+     ColorSelectLimitedDemoComponent, ColorSelectRemoveTransparencyDemoComponent],
     imports: [ JigsawMarkdownModule, DemoTemplateModule, JigsawColorSelectModule]
 })
 export class ColorSelectDemoModule {

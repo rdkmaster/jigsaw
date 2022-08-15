@@ -2,28 +2,28 @@
 
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <span>jigsaw-date-time-picker</span>
+        <span>日期和时间选择</span>
         <jigsaw-date-time-picker [(date)]="date1" [gr]="'second'"
                                  [showConfirmButton]="showConfirmButton"></jigsaw-date-time-picker>
         <p>选择的时间是：{{date1 | json}}</p>
     </div>
 
     <div class="demo-showcase-v">
-        <span>jigsaw-range-date-time-picker</span>
+        <span>日期和时间范围选择</span>
         <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="'second'"
                                        [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-picker>
         <p>选择的时间是：BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}</p>
     </div>
 
     <div class="demo-showcase-v">
-        <span>jigsaw-date-time-select</span>
+        <span>日期和时间选择的下拉框模式</span>
         <jigsaw-date-time-select [(date)]="date2" [gr]="'second'"
                                  [showConfirmButton]="showConfirmButton"></jigsaw-date-time-select>
         <p>选择的时间是：{{date2 | json}}</p>
     </div>
 
     <div class="demo-showcase-v">
-        <span>jigsaw-range-date-time-select</span>
+        <span>日期和时间范围选择的下拉框模式</span>
         <jigsaw-range-date-time-select [(date)]="date3" [gr]="'second'"
                                        [showConfirmButton]="showConfirmButton"></jigsaw-range-date-time-select>
         <p>选择的时间是：{{date3 | json}}</p>

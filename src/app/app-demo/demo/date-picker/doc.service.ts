@@ -8,11 +8,7 @@ export class DatePickerTextService {
         introduction: `
             # Date Picker 日期选择
 
-            输入或选择日期时间的控件。
-
-            ## 使用场景
-
-            当用户需要输入一个日期，可以点击标准输入框，弹出日期面板进行选择。
+            输入或选择日期的控件（没有时分秒）。
 
             ## 示例
         `,

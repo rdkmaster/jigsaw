@@ -1,22 +1,10 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
-    <div class="line-box">
-        <label>位置：</label>
-        <jigsaw-radios [(value)]="selectedPositionType" trackItemBy="label">
-            <jigsaw-radio-option *ngFor="let popPositionType of popPositionTypes"
-                                 [value]="popPositionType">{{popPositionType.label}}
-            </jigsaw-radio-option>
-        </jigsaw-radios>
+    <span>偏差设置为16px</span>
+    <div *ngFor="let popPositionType of popPositionTypes" style="margin-bottom: 20px">
+        <jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog(popPositionType)">
+            {{popPositionType.label}}
+        </jigsaw-button>
     </div>
-    <div class="line-box" *ngIf="selectedPositionType?.label != '居中'">
-        <div *ngFor="let property of objectKeys(selectedPositionType?.offset)" class="offset-box">
-            <label>{{property}}: </label>
-            <jigsaw-numeric-input [(value)]="selectedPositionType.offset[property]"></jigsaw-numeric-input>
-            <span style="margin-left: 5px;">px</span>
-        </div>
-    </div>
-    <jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog()">
-        弹出 / 复位
-    </jigsaw-button>
 
     <ng-template #tpDialog>
         <jigsaw-dialog width="400px" (close)="closeDialog()" icon="iconfont iconfont-e3f0" caption="一个对话框">
@@ -31,4 +19,5 @@
             </div>
         </jigsaw-dialog>
     </ng-template>
+
 </demo-template>

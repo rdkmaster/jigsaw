@@ -24,13 +24,19 @@ export class CollapseTextService {
             演示了\`JigsawCollapse\`多个属性的基本用法
         `,
         rightArrow: `
-            ### 折叠项在右侧
+            ### 箭头靠右
         `,
         accordion: `
-            ### 手风琴样式
+            ### 手风琴
+
+            手风琴，每次只打开一个tab。默认打开第一个。
         `,
-        advanced: `
-            ### 高级用法
+        titleAndContent: `
+            ### 标题和内容
+
+            标题如果是纯文本，可以用\`header\`属性。
+
+            标题不是纯文本，使用\`j-title j-body\`。
         `,
     }
 }

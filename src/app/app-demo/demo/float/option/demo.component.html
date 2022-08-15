@@ -1,31 +1,31 @@
 <demo-template [data]="''" [text]="text['text']['option']">
-<div class="demo-showcase">
-    <span>改变可选项：</span>
-    <j-button class="iconfont iconfont-e9d8" jigsaw-float
+    <div class="demo-showcase">
+        <span>改变可选项：</span>
+        <j-button class="iconfont iconfont-e9d8" jigsaw-float
                   jigsawFloatOpenTrigger="click"
                   jigsawFloatCloseTrigger="click"
-                  [jigsawFloatOptions]="options"
+                  [jigsawFloatOptions]="offsetOptions"
                   [jigsawFloatTarget]="jigsawFloatArea"
                   [jigsawFloatPosition]="position">
-             改变偏移量
-   </j-button>
-    <j-button class="iconfont iconfont-e9d8" jigsaw-float
-          jigsawFloatOpenTrigger="click"
-          jigsawFloatCloseTrigger="click"
-          [jigsawFloatOptions]="options"
-          [jigsawFloatTarget]="jigsawFloatArea"
-          [jigsawFloatPosition]="position">
-             带阴影
-   </j-button>
-    <j-button class="iconfont iconfont-e9d8" jigsaw-float
-          jigsawFloatOpenTrigger="click"
-          jigsawFloatCloseTrigger="click"
-          [jigsawFloatOptions]="options"
-          [jigsawFloatTarget]="jigsawFloatArea"
-          [jigsawFloatPosition]="position">
+            改变偏移量
+        </j-button>
+        <j-button class="iconfont iconfont-e9d8" jigsaw-float
+                  jigsawFloatOpenTrigger="click"
+                  jigsawFloatCloseTrigger="click"
+                  [jigsawFloatOptions]="shadowOptions"
+                  [jigsawFloatTarget]="jigsawFloatArea"
+                  [jigsawFloatPosition]="position">
+            带阴影
+        </j-button>
+        <j-button class="iconfont iconfont-e9d8" jigsaw-float
+                  jigsawFloatOpenTrigger="click"
+                  jigsawFloatCloseTrigger="click"
+                  [jigsawFloatOptions]="arrayOptions"
+                  [jigsawFloatTarget]="jigsawFloatArea"
+                  [jigsawFloatPosition]="position">
             带箭头
-   </j-button>
-</div>
+        </j-button>
+    </div>
     <ng-template #jigsawFloatArea>
         <div class="jigsawFloatArea">
             dropdown placeholder

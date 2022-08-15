@@ -3,11 +3,11 @@ import {ColorSelectTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
-    selector: 'color-select-basic',
+    selector: 'color-select-remove-transparency',
     templateUrl: 'demo.component.html'
 })
 
-export class ColorSelectBasicDemoComponent {
+export class ColorSelectRemoveTransparencyDemoComponent {
     public data: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},

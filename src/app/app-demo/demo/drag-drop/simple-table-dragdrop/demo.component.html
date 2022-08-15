@@ -1,19 +1,31 @@
 <demo-template [data]="''" [text]="text['text']['simpleTableDragDrop']">
-    <div class="demo-container">
-        <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
-        </jigsaw-table>
-        <p>选中行 {{selectedRow}}</p>
-        <p>图标
-            <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.icon" [filterOnFocus]="false"
-                                        [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515']">
-            </jigsaw-auto-complete-input>
-        </p>
-        <p>提示
-            <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.title"></jigsaw-auto-complete-input>
-        </p>
-        <p>文本
-            <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.label"></jigsaw-auto-complete-input>
-        </p>
-        <a (click)="tableData.refresh()">更新</a>
+
+    <!-- start to learn the demo from here -->
+    <span class="tag-wrapper" *ngFor="let employee of employees"
+          jigsaw-draggable (jigsawDragStart)="dragStartHandle($event, employee)">
+        <jigsaw-tag>{{employee[0]}}</jigsaw-tag>
+    </span>
+    <br>
+    <br>
+
+    <div class="drop-wrap">
+        <jigsaw-table
+            jigsaw-droppable
+            #tableDrop
+            [data]="tableData"
+            [additionalColumnDefines]="additionalColumns"
+            (jigsawDragEnter)="tableDragEnterHandle($event)"
+            (jigsawDragOver)="tableDragOverHandle($event)"
+            (jigsawDragLeave)="tableDragLeaveHandle($event)"
+            (jigsawDrop)="tableDropHandle($event)"></jigsaw-table>
+
+        <div class="trash-box"
+             jigsaw-droppable
+             #trashDrop
+             (jigsawDragEnter)="trashDragEnterHandle($event)"
+             (jigsawDragOver)="trashDragOverHandle($event)"
+             (jigsawDragLeave)="trashDragLeaveHandle($event)"
+             (jigsawDrop)="trashDropHandle($event)">trash box - drag and drop an item here to remove it from the table
+        </div>
     </div>
 </demo-template>

@@ -8,8 +8,6 @@ export class DrawerTextService {
         introduction: `
             # Drawer 抽屉
 
-            ## 使用场景
-
             需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用抽屉在当前页面边缘打开一个弹框，承载相应的操作。与弹出框相比，抽屉承载的操作内容相对较多。
 
             ## 示例
@@ -18,7 +16,7 @@ export class DrawerTextService {
             ### 基础用法
         `,
         withDiv: `
-            ### Drawer with DIV
+            ### 带div的抽屉
 
             - \`container\`属性可以支持'.className'、'#id'、'[attr]'、'tagName'，向上寻找离抽屉最近的。
 
@@ -35,15 +33,10 @@ export class DrawerTextService {
             注意：容器上是不允许产生滚动条的，如果内容太长出现滚动条，请在内容的外面套一个wrapper，设置滚动样式
         `,
         withTab: `
-            ### Drawer with Tabs
-        `,
-        inDom: `
-            ### 文档流中的抽屉
-
-            将抽屉直接放到文档流中，可以实现抽屉拉开始，将旁边的视图挤开
+            ### 带tabs的抽屉
         `,
         drawInDraw: `
-            ### Drawer in Drawer
+            ### 抽屉中的抽屉
         `,
         emphasisHandler: `
             ### 抽屉把手样式

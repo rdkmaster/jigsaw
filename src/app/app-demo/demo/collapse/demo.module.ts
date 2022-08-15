@@ -7,11 +7,11 @@ import { CollapseDemoComponent } from "./demo.component";
 import { CollapseBasicDemoComponent } from "./basic/demo.component";
 import { CollapseRightArrowDemoComponent } from "./right-arrow/demo.component";
 import { CollapseAccordionDemoComponent } from "./accordion/demo.component";
-import { CollapseAdvancedDemoComponent } from "./advanced/demo.component";
+import { CollapseTitleAndContentDemoComponent } from "./title-and-content/demo.component";
 
 @NgModule({
     declarations: [CollapseDemoComponent, CollapseBasicDemoComponent, CollapseRightArrowDemoComponent, CollapseAccordionDemoComponent,
-        CollapseAdvancedDemoComponent],
+        CollapseTitleAndContentDemoComponent],
     imports: [DemoTemplateModule, JigsawMarkdownModule, JigsawButtonBarModule, JigsawButtonModule, JigsawCollapseModule, JigsawInputModule,
         CommonModule, JigsawTableModule, JigsawGraphModule]
 })

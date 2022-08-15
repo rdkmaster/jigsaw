@@ -8,11 +8,7 @@ export class DateTimePickerTextService {
         introduction: `
             # Date Time Picker 日期和时间选择
 
-            输入或选择日期时间的控件。
-
-            ## 使用场景
-
-            当用户需要输入一个日期，可以点击标准输入框，弹出日期面板进行选择。
+            输入或选择日期和时间的控件（有时分秒）。
 
             ## 示例
         `,
@@ -34,7 +30,7 @@ export class DateTimePickerTextService {
             limit采用宏的时候，会实时根据宏计算limit时间，并设置5分钟的误差，即宏时间往前5分钟作为limitStart，往后5分钟作为limitEnd
         `,
         dateTimeSelect: `
-            ### Date Time Select
+            ### 带下拉框模式
         `,
         confirmButton: `
             ### 带有确认按钮

@@ -1,10 +1,7 @@
 <demo-template [data]="''" [text]="text['text']['accordion']">
-<div class="demo-showcase-v">
-    <span style="font-size: 18px">手风琴</span>
     <j-collapse width="50%" mode="accordion">
         <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of goodsList">
             {{goods.desc}}
         </j-collapse-pane>
     </j-collapse>
-</div>
 </demo-template>

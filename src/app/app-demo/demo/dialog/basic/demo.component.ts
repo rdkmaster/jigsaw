@@ -8,28 +8,27 @@ import {DialogTextService} from "../doc.service";
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
+// <jigsaw-button click="i">{{item.label}}
+
 export class DialogBasicDemoComponent {
     public isModal: boolean = false;
     public popPositionTypes = [
-        {label: "居中"},
-        {label: "靠上", offset: {top: 16}},
-        {label: "靠左", offset: {left: 16}},
-        {label: "靠右", offset: {right: 16}},
-        {label: "靠下", offset: {bottom: 16}},
-        {label: "左上", offset: {left: 16, top: 16}},
-        {label: "左下", offset: {left: 16, bottom: 16}},
-        {label: "右上", offset: {right: 16, top: 16}},
-        {label: "右下", offset: {right: 16, bottom: 16}}
+        {label: "左上", value: "leftTop", offset: {left: 16, top: 16}},
+        {label: "顶部", value: "top", offset: {top: 16}},
+        {label: "右上", value: "rightTop", offset: {right: 16, top: 16}},
+        {label: "左部", value: "left", offset: {left: 16}},
+        {label: "中间", value: "center"},
+        {label: "右部", value: "right", offset: {right: 16}},
+        {label: "左下", value: "leftBottom", offset: {left: 16, bottom: 16}},
+        {label: "下部", value: "bottom", offset: {bottom: 16}},
+        {label: "右下", value: "rightBottom", offset: {right: 16, bottom: 16}}
     ];
-    public objectKeys = Object.keys;
-    public selectedPositionType: any;
     public popupInfo: PopupInfo;
 
     @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
     constructor(private _popupService: PopupService, public text: DialogTextService) {
-        this.selectedPositionType = this.popPositionTypes[0];
     }
     public closeDialog() {
         if (this.popupInfo) {
@@ -38,15 +37,16 @@ export class DialogBasicDemoComponent {
         }
     }
 
-    public popupComponentDialog() {
+    public popupComponentDialog(selectedPositionType) {
         const options: PopupOptions = {
             modal: !!this.isModal,
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut
         };
-        if (this.selectedPositionType.label != 'center') {
-            options.pos = this.selectedPositionType.label;
-            options.posOffset = this.selectedPositionType.offset;
+        options.pos = selectedPositionType.value;
+        if (selectedPositionType.value != 'center') {
+
+            options.posOffset = selectedPositionType.offset;
         }
 
         if (this.popupInfo) {

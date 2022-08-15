@@ -1,10 +1,10 @@
 import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from "../../demo-template/demo-template";
 import {DataEncapsulationDemoComponent} from "./demo.component";
+import {JigsawMarkdownModule} from "../../markdown/markdown";
 
 @NgModule({
     declarations: [DataEncapsulationDemoComponent],
-    imports:[DemoTemplateModule]
+    imports: [JigsawMarkdownModule]
 })
 export class DataEncapsulationDemoModule {
 }

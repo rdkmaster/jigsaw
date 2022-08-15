@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
     PopupSize, CommonUtils, FloatPosition
@@ -23,31 +23,52 @@ import {FloatTextService} from "../doc.service";
         }
     `]
 })
-export class FloatOptionDemoComponent implements OnInit {
+export class FloatOptionDemoComponent {
     showHideEffect = "";
     selectedPositionType = "";
-    offset: PopupPositionOffset = {};
-    showBorder = true;
-    showShadow = true;
-    showArrow = true;
     position: FloatPosition = 'bottomLeft';
     size: PopupSize = {};
-    options: PopupOptions = {useCustomizedBackground: true};
+
+    offsetOptions: PopupOptions = {
+        useCustomizedBackground: true,
+        showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
+        hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
+        posType: PopupPositionType[<string>this.selectedPositionType],
+        posOffset: {
+            top: -10,
+            left: 10
+        },
+        showBorder: true,
+        showShadow: false,
+        size: this.size,
+        borderType: 'default'
+    };
+
+    shadowOptions: PopupOptions = {
+        useCustomizedBackground: true,
+        showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
+        hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
+        posType: PopupPositionType[<string>this.selectedPositionType],
+        posOffset: {},
+        showBorder: true,
+        showShadow: true,
+        size: this.size,
+        borderType: 'default'
+    };
+
+    arrayOptions: PopupOptions = {
+        useCustomizedBackground: true,
+        showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
+        hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
+        posType: PopupPositionType[<string>this.selectedPositionType],
+        posOffset: {},
+        showBorder: true,
+        showShadow: false,
+        size: this.size,
+        borderType: 'pointer'
+    };
+
     constructor( public text: FloatTextService) {
-    }
-    valueChange() {
-        this.options = {useCustomizedBackground: true};
-        this.options.showEffect = PopupEffect[<string>this.showHideEffect + 'In'];
-        this.options.hideEffect = PopupEffect[<string>this.showHideEffect + 'Out'];
-        this.options.posType = PopupPositionType[<string>this.selectedPositionType];
-        this.options.posOffset = this.offset;
-        this.options.showBorder = this.showBorder;
-        this.options.showShadow = this.showShadow;
-        this.options.size = this.size;
-        this.options.borderType = this.showArrow ? 'pointer' : 'default';
-    }
-    ngOnInit() {
-        this.valueChange();
     }
 
 }

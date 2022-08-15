@@ -8,34 +8,24 @@ export class DialogTextService {
         introduction: `
             # Dialog 对话框
 
-            包含模态与非模态弹出框。
-
-            ## 使用场景
-
-            需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用弹出框在当前页面正中打开一个浮层，承载相应的操作。
-
-            ## 规范
-            - 弹出框始终悬浮于页面之上，模态弹出框的下方产生半透明的蒙层(color:#666 opacity:0.5)，关闭弹出框后，弹出框和蒙层消失。非模态弹出框中无须遮罩，且可以在弹框下层界面操作。
-            - 普通弹出框宽度最小为480px，最大为1000px。
-            - 使用表单时，需在弹出框底部区域（.modal-footer）设置表单按钮，请查看普通对话框，提供了外部按钮触发表单校验以及获取表单数据的方法示例。
-            - 弹出框中使用下拉选取，日期（范围）选择器组件时，需设置dropdownContainer="body"和scrollSelectors=[".modal-body"]，保证下拉面板不被遮挡。
+            需要用户处理事务，又不希望跳转页面以致打断工作流程时，可以使用弹框承载相应的操作。
 
             ## PopopService
              \`PopupService\`是[Jigsaw](https://github.com/rdkmaster/jigsaw)的基础弹出服务，所有弹出的场景，都是由这个服务来完成的。
 
             已知的场景有：
-            - [普通对话框](#/pc/dialog/buttons)
-            - [Alert对话框](#/pc/alert/popup)
+            - [普通对话框](#/demo/dialog)
+            - [Alert对话框](#/demo/alert)
             - 菜单
                 - 上下文菜单
                 - 导航菜单
             - Notification提示框
-            - [como-select组件](#/pc/combo-select/full)
-            - [select组件](#/pc/select/basic)
-            - [loading组件](#/pc/loading/full)
+            - [combo-select组件](#/demo/combo-select)
+            - [select组件](#/demo/select)
+            - [loading组件](#/demo/loading)
             - tooltip相关功能
-                - [tooltip指令](#/pc/tooltip/inline)
-                - [tooltip对话框](#/pc/tooltip/dialog)
+                - [tooltip指令](#/demo/tooltip)
+                - [tooltip对话框](#/demo/tooltip)
 
             可以看到\`PopupService\`在[Jigsaw](https://github.com/rdkmaster/jigsaw)中扮演着一个非常重要的角色，
             多多了解\`PopupService\`这个服务对在[Jigsaw](https://github.com/rdkmaster/jigsaw)中处理好弹出场景有很大的帮助。
@@ -61,28 +51,24 @@ export class DialogTextService {
             很大程度上得益于这个参数的强大扩展性，熟悉这个参数的各个属性对是否能够用好\`PopupService\`有着决定性的影响。
             关于这个参数的所有知识，都在[这里](/components/api/class/PopupOptions)。
             - \`initData\`：可选参数，只在\`what\`参数是一个组件时有效。这个对象会被赋值给组件实例中的\`initData\`属性，
-            可以参考[这个demo](#/pc/dialog/misc)中弹出对话框组件的代码，注意该demo的控制台打印。
+            可以参考[这个demo](#/demo/dialog)中弹出对话框组件的代码，注意该demo的控制台打印。
 
             ## 示例
         `,
         component: `
-            ### 弹出的三种方式
-
-            这个demo介绍了弹出对话框的3种主要方式：组件、模板、自定义
-
-            #### 组件方式
+            ### 以组件方式弹出对话框
         `,
-        dialogModal: `
-            #### 模板方式
+        modal: `
+            ### 模态框
         `,
         template: `
-            #### 自定义对话框
+            ### 以模板方式弹出对话框
         `,
         customize: `
-            #### 定制对话框
+            ### 以自定义方式弹出对话框
         `,
-        top: `
-            ### 控制对话框位置
+        topOffset: `
+            ### 对话框弹出位置
 
             这个demo演示了如何使用top属性来控制弹出的对话框的位置。
 
@@ -92,14 +78,19 @@ export class DialogTextService {
         `,
         inDom: `
             ### 用在dom中
+
+            jigsaw-dialog也是一个普通的组件，可以直接用在dom中。
         `,
         popupOption: `
-            ### 设置对话框弹出位置
+            ### 弹框选项
         `,
         basic: `
-            ### 对话框弹出的绝对位置
+            ### 普通对话框
 
-            这个demo介绍了弹出对话框四个方位弹出的绝对位置：靠上、靠左、靠右、靠下
+            这个demo介绍了弹出对话框四个方位弹出的绝对位置：靠上、靠左、靠右、靠下。
+        `,
+        point: `
+            ### 跟随鼠标的对话框
         `,
     }
 }

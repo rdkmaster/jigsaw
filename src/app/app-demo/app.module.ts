@@ -103,7 +103,7 @@ import {TableBigTableDemoModule} from "./demo/table-big-data/demo.module";
         RouterModule.forRoot([
             ...routerConfig,
             { path: '', component: SwitchDemoComponent },
-            { path: 'pc', component: PCDemoListComponent },
+            { path: 'demo', component: PCDemoListComponent },
             {
                 path: 'demo-code', component: DemoCodeComponent, children: [
                     { path: '**', component: DemoCodeComponent }
