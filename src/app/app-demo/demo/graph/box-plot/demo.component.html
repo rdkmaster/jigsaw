@@ -1,9 +1,7 @@
 <demo-template [data]="''" [text]="text['text']['boxPlot']">
-    <div class="live-demo-wrap">
-        <div class="live-demo">
-            <jigsaw-header [level]="2">BoxPlotGraphData静态数据</jigsaw-header>
-            <jigsaw-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
-        </div>
+    <div class="demo-showcase-v">
+        <span>BoxPlotGraphData静态数据</span>
+        <jigsaw-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 </demo-template>
 

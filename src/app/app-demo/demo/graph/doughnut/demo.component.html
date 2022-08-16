@@ -1,27 +1,17 @@
-<!-- ignore the following lines, they are not important to this demo -->
-
 <demo-template [data]="''" [text]="text['text']['doughnut']">
-    <div class="live-demo-wrap">
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">DoughnutGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="doughnut" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
+    <div class="demo-showcase-v">
+        <span>DoughnutGraphData静态数据</span>
+        <jigsaw-graph [data]="doughnut" (click)="handleClick($event)"></jigsaw-graph>
+    </div>
 
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">DoughnutRateGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="doughnutRate" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
+    <div class="demo-showcase-v">
+        <span>DoughnutRateGraphData静态数据</span>
+        <jigsaw-graph [data]="doughnutRate" (click)="handleClick($event)"></jigsaw-graph>
+    </div>
 
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">DoughnutScoreGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="doughnutScore" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
+    <div class="demo-showcase-v">
+        <span>DoughnutScoreGraphData静态数据</span>
+        <jigsaw-graph [data]="doughnutScore" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 </demo-template>
 

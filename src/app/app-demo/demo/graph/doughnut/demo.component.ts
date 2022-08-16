@@ -38,11 +38,5 @@ export class GraphDoughnutDemoComponent {
     handleClick($event) {
         console.log($event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用环形图';
-    description: string = require('!!raw-loader!./readme.md').default;
 }
 

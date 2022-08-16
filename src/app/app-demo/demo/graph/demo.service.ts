@@ -6,20 +6,25 @@ import {Injectable} from "@angular/core";
 export class GraphTextService {
     public text: object = {
         introduction: `
-        # Graph
+        # Graph 图形
+
         ## 示例
         `,
         basic: `
-        ### 基础
+        ### 基础用法
         `,
         bar: `
         ### 柱状图
+
+        这个demo展示了如何使用柱状图。
         `,
         boxPlot: `
         ### 箱线图
         `,
         doughnut: `
         ### 环形图
+
+        这个demo展示了如何使用环形图。
         `,
         funnelPlot: `
         ### 漏斗图
