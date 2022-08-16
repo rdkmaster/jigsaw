@@ -1,0 +1,7 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['stringArray']">
+    <jigsaw-button-bar [(selectedItems)]="selectedCity" [data]="cities" [multipleSelect]="multiple"
+                       [preSize]="selectedLabel.size"
+                       (selectedItemsChange)="selectChange($event)">
+    </jigsaw-button-bar>
+    <p>选择的城市是：{{selectedCityStr}}</p>
+</demo-template>

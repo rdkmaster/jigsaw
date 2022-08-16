@@ -1,0 +1,6 @@
+<demo-template [data]="''" [text]="text['text']['historyStorageKey']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-search-input #search1 width="200px" historyStorageKey="History key 1"
+                         historyStorageSize="3"></jigsaw-search-input>
+    <a (click)="search1.clearHistory()">清理历史记录</a>
+</demo-template>

@@ -1,0 +1,31 @@
+<demo-template [data]="''" [text]="text['text']['position']">
+<!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>图标在左，文字在右</span>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16"
+                     [text]="'编辑'" title="编辑" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+
+    <div class="demo-showcase">
+        <span>图标在上，文字在下</span>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e9f9'" [iconSize]="24"
+                     [text]="'提示'" title="提示" iconPosition="top" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+
+    <div class="demo-showcase">
+        <span>图标在右，文字在左</span>
+        <hr>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e9c7'" [iconSize]="24"
+        [text]="'下拉'" title="下拉" iconPosition="right" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+
+    <div class="demo-showcase">
+        <span>图标在下，文字在上</span>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e9b1'" [iconSize]="24"
+        [text]="'日历'" title="日历" iconPosition="bottom" (click)="onClick()">
+        </jigsaw-icon>
+    </div>
+</demo-template>

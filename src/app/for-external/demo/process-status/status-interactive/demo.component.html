@@ -1,0 +1,10 @@
+<demo-template [data]="''" [text]="text['text']['statusInteractive']">
+    <jigsaw-process-status preSize="large" direction="horizontal" width="80%">
+        <jigsaw-process-status-item *ngFor="let step of steps; index as idx" [status]="step.status">
+            <div jigsaw-title>{{step.title}}</div>
+            <div jigsaw-sub-title
+                 trustedHtml="单击<a (click)='skipStep({{idx}})'>这里</a>跳过此步骤"
+                 [trustedHtmlContext]="this"></div>
+        </jigsaw-process-status-item>
+    </jigsaw-process-status>
+</demo-template>

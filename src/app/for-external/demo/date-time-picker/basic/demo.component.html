@@ -1,0 +1,18 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>正常</span>
+        <jigsaw-date-time-picker [(date)]="date" gr="second"></jigsaw-date-time-picker>
+        选择的时间是：{{date}}
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>禁用</span>
+        <jigsaw-date-time-picker [disabled]="true"></jigsaw-date-time-picker>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>是否合法</span>
+        <jigsaw-date-time-picker [(date)]="date" gr="second" [valid]="false"></jigsaw-date-time-picker>
+    </div>
+</demo-template>

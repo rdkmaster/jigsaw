@@ -1,0 +1,35 @@
+.show-box .box {
+    margin-right: 24px;
+}
+
+.show-box .box .square{
+    width: 300px;
+    height: 300px;
+    line-height: 300px;
+}
+
+.show-box .box .button{
+    margin-top:20px;
+}
+
+.show-box .box .left {
+    background-color: #ec6d6d;
+}
+
+.show-box .box .middle {
+    background-color: #41addc;
+}
+
+.show-box .box .right {
+    background-color: #8ac9b6;
+}
+
+.dialog-content {
+    padding: 20px;
+}
+
+.dialog-content li {
+    font-size: 12px;
+    color: #999;
+}
+

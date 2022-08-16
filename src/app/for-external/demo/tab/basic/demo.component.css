@@ -1,0 +1,32 @@
+.container {
+    border: 1px solid #e9e9e9;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    margin: 0 0 16px;
+    -webkit-transition: all .2s;
+    transition: all .2s;
+    padding-bottom: 10px;
+}
+
+.content-box {
+    padding-bottom: 10px;
+}
+
+.content-box .content-title {
+    margin-bottom: 20px;
+}
+
+.content-box .content-line {
+    margin-bottom: 10px;
+}
+
+.content-box .content-line label {
+    display: inline-block;
+    width: 100px;
+}
+
+.content-box jigsaw-button {
+    margin-left: 104px;
+}

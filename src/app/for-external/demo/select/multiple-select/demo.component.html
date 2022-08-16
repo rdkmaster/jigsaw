@@ -1,0 +1,55 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['multipleSelect']">
+    <a (click)="clearSelection()">清除选中</a>
+
+    <jigsaw-markdown [markdown]="'#### 多选下拉选择'"></jigsaw-markdown>
+    <jigsaw-select [data]="dataList" [(value)]="selectedArrayData" [multipleSelect]="true" placeholder="请选择" width="160px" [size]="selectedLabel.size">
+    </jigsaw-select>
+
+    <jigsaw-markdown [markdown]="'#### 结果展开'"></jigsaw-markdown>
+    <jigsaw-select
+        [data]="dataList"
+        [(value)]="selectedArrayData1"
+        [multipleSelect]="true"
+        placeholder="请选择"
+        width="160px"
+        [useStatistics]="false"
+        (valueChange)="valueChange($event)"
+        [size]="selectedLabel.size"
+    ></jigsaw-select>
+
+    <jigsaw-markdown [markdown]="'#### 初始全选'"></jigsaw-markdown>
+    <jigsaw-select
+        [data]="dataListWithoutDisabled"
+        [(value)]="fullSelectedOption"
+        [multipleSelect]="true"
+        placeholder="请选择"
+        width="160px"
+        [useStatistics]="true"
+        (valueChange)="valueChange($event)"
+        [size]="selectedLabel.size"
+    ></jigsaw-select>
+
+    <jigsaw-markdown [markdown]="'#### 初始半选'"></jigsaw-markdown>
+    <jigsaw-select
+        [data]="dataListWithoutDisabled"
+        [(value)]="selectedOption"
+        [multipleSelect]="true"
+        placeholder="请选择"
+        width="160px"
+        [useStatistics]="true"
+        (valueChange)="valueChange($event)"
+        [size]="selectedLabel.size"
+    ></jigsaw-select>
+
+    <jigsaw-markdown [markdown]="'#### 普通数组'"></jigsaw-markdown>
+    <jigsaw-select
+        [data]="arrayDataList"
+        [(value)]="selectedArrayData2"
+        (valueChange)="valueChange($event)"
+        [multipleSelect]="true"
+        placeholder="请选择"
+        width="160px"
+        [useStatistics]="false"
+        [size]="selectedLabel.size"
+    ></jigsaw-select>
+</demo-template>

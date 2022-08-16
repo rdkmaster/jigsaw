@@ -1,0 +1,22 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['selectable']">
+    <div class="div-container">
+        <div>
+            <span>多选效果：</span>
+            <jigsaw-tag *ngFor="let item of tags; let idx = index;" color="preset-blue"
+                        selectedColor="preset-magenta" disabledColor="preset-gray"
+                        [disabled]="idx > 4" (selectChange)="onSelect(item, $event)" [size]="selectedLabel.size">
+                {{item}}
+            </jigsaw-tag>
+        </div>
+
+        <div>
+            <span>单选效果：</span>
+            <jigsaw-tag *ngFor="let item of tags1; let idx = index;" color="preset-blue"
+                        selectedColor="preset-magenta" disabledColor="preset-gray" toggleSelect='true'
+                        [select]="item.selected" [disabled]="idx > 4" (selectChange)="onSelect1(item)"
+                        [size]="selectedLabel.size">
+                {{item.label}}
+            </jigsaw-tag>
+        </div>
+    </div>
+</demo-template>

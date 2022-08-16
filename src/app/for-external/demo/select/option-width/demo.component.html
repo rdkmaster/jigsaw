@@ -1,0 +1,10 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['optionWidth']">
+    <jigsaw-numeric-input [(value)]="optionWidth" min="0" max="600" step="50">
+    </jigsaw-numeric-input>
+    <br>
+
+    <jigsaw-select [value]="'南京'" placeholder="请选择城市" [optionWidth]="optionWidth"
+                   [data]='["北京", "上海", "南京", "深圳", "长沙", "西安"]' style="margin-top: 12px" [size]="selectedLabel.size">
+    </jigsaw-select>
+
+</demo-template>

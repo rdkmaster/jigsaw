@@ -1,0 +1,6 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['limited']">
+    <jigsaw-color-select mode="limited" (colorChange)="_$colorChange($event)" color="#ba1621"
+                         [preSize]="selectedLabel.size"
+                         [limitedColors]="['#ba1621','#e43232','#e57409','#ffa940','#f7d216']">
+    </jigsaw-color-select>
+</demo-template>

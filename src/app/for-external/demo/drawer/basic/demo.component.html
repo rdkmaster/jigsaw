@@ -1,0 +1,14 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
+    <span *ngIf="touched" style="margin:auto;">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>
+
+    <j-drawer [(open)]="isOpen" (openChange)="touched = true" position="right"
+              [width]="width" [height]="height">
+        <div class="drawer-content">
+            这是一个展示内容的box
+        </div>
+    </j-drawer>
+</demo-template>
+
+

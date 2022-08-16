@@ -1,0 +1,6 @@
+<demo-template [data]="''" [text]="text['text']['presetValue']">
+    <!-- start to learn the demo from here -->
+    <j-list-lite width="200" [data]="goodsList" labelField="name" [selectedItems]="selectedItems"
+                 (selectedItemsChange)="handleSelect($event)" [multipleSelect]="true"></j-list-lite>
+    <p>选中的条目是: <span>{{selectedItemsStr}}</span></p>
+</demo-template>

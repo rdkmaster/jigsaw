@@ -1,0 +1,24 @@
+<demo-template [data]="''" [text]="text['text']['directive']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>指令按钮</span>
+        <a jigsaw-button (click)="onClick()" colorType="primary">使用 a 标签</a>
+        <button jigsaw-button (click)="onClick()" colorType="primary">使用 button 标签</button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>预设颜色</span>
+        <a jigsaw-button>Default</a>
+        <a jigsaw-button colorType="primary">Primary</a>
+        <a jigsaw-button colorType="warning">Warning</a>
+        <a jigsaw-button colorType="error">Error</a>
+    </div>
+
+    <div class="demo-showcase">
+        <span>预设大小</span>
+        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('small')">Small</a>
+        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize()">Default</a>
+        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('large')">Large</a>
+        <p>当前尺寸: {{size || "default"}}</p>
+    </div>
+</demo-template>

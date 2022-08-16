@@ -1,0 +1,8 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['clearable']">
+   <div class="demo-showcase">
+       <span>清除功能：</span>
+       <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
+                      placeholder="请选择城市" [data]="cityList" [clearable]="true" [size]="selectedLabel.size">
+       </jigsaw-select>
+   </div>
+</demo-template>

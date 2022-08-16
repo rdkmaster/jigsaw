@@ -1,0 +1,63 @@
+.public-variables-demo-ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+}
+
+.inline-message {
+    width: 940px;
+}
+
+.inline-message code {
+    padding: 2px 4px;
+    background: var(--bg-container);
+}
+
+.code-block {
+    background-color: var(--bg-container);
+    color: var(--font-color-default);
+    border: var(--border-color-default) 1px solid;
+    border-radius: 6px;
+    font-size: 85%;
+    line-height: 1.45;
+    overflow: auto;
+    padding: 16px;
+    width: 600px;
+    margin: 8px 0;
+}
+
+.public-variables-demo-ul div {
+    width: 100%;
+}
+
+.public-variables-demo-ul li {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #88888888;
+    padding: 12px 0;
+}
+
+.public-variables-demo-ul li:hover {
+    box-shadow: 0 5px 12px #88888888;
+}
+
+.public-variables-demo-ul li label:last-of-type {
+    font-weight: normal;
+    margin-top: 16px;
+}
+
+.public-variables-demo-ul li span {
+    cursor: pointer;
+    text-align: center;
+}
+
+.public-variables-demo-ul li span:hover {
+    font-weight: bold;
+}

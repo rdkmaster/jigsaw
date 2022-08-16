@@ -1,0 +1,13 @@
+<demo-template [data]="''" [text]="text['text']['complexScene']">
+    <div class=" live-demo live-demo-block">
+        <j-radios [(value)]="selectedGoods" trackItemBy="name"
+                  (valueChange)="radioChange($event)">
+            <j-radio-option *ngFor="let goods of goodsList" [value]="goods" [disabled]="!!goods.disabled">
+                <div class="goods-box">
+                    <span class="logo iconfont iconfont-{{goods.logo}}"></span>
+                    <p>{{goods.desc}}</p>
+                </div>
+            </j-radio-option>
+        </j-radios>
+        </div>
+</demo-template>

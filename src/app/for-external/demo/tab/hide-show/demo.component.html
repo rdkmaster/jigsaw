@@ -1,0 +1,22 @@
+<demo-template [data]="''" [text]="text['text']['hideShow']">
+    <!-- start to learn the demo from here -->
+    <div class="container">
+        <jigsaw-tabs #myTab>
+            <jigsaw-tab-pane>
+                <div jigsaw-title><span class="iconfont iconfont-e133"></span>tab 1</div>
+                <ng-template>tab content 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane [hidden]="true">
+                <span jigsaw-title><span class="iconfont iconfont-e133"></span>tab 2</span>
+                <ng-template>tab content 2</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+
+    <jigsaw-button (click)="hideTab1()" width="150">隐藏tab1</jigsaw-button>
+    <jigsaw-button (click)="showTab1()" width="150">显示tab1</jigsaw-button>
+
+    <jigsaw-button (click)="showTab2()" width="150">显示tab2</jigsaw-button>
+    <jigsaw-button (click)="hideTab2()" width="150">隐藏tab1</jigsaw-button>
+</demo-template>
+

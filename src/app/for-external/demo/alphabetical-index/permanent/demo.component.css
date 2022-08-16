@@ -1,0 +1,6 @@
+.demo-cntr {
+    display: flex;
+}
+.demo-cntr .demo-section{
+    margin-right: 32px;
+}

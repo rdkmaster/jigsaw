@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <jigsaw-process-status width="80%">
+        <jigsaw-process-status-item *ngFor="let step of steps" [status]="step.status">
+            {{step.title}}
+        </jigsaw-process-status-item>
+    </jigsaw-process-status>
+</demo-template>

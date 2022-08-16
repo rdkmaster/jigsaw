@@ -1,0 +1,5 @@
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['customSettingsCallback']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-tree-ext [(data)]="data" (beforeClick)="beforeClick($event)" [setting]="setting" [size]="selectedLabel.size">
+    </jigsaw-tree-ext>
+</demo-template>

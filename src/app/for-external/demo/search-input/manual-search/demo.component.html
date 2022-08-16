@@ -1,0 +1,15 @@
+<demo-template [data]="''" [text]="text['text']['manualSearch']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>手动搜索</span>
+        <jigsaw-search-input width="200px" [autoSearch]="false" (search)="value = $event">
+        </jigsaw-search-input>
+        <p>{{ " 搜索值为：" + value }}</p>
+    </div>
+
+    <div class="demo-showcase">
+        <span>手动搜索</span>
+        <jigsaw-search-input width="200px" [autoSearch]="false" (search)="value = $event" [disabled]="true">
+        </jigsaw-search-input>
+    </div>
+</demo-template>

@@ -1,0 +1,28 @@
+<demo-template [data]="''" [text]="text['text']['swimLaneDiagram']">
+    <!-- start to learn the demo from here -->
+    设置宽度
+    <jigsaw-slider min="150" max="300" [(value)]="colWidth" (valueChange)="changeWidth($event)" width="400">
+    </jigsaw-slider>
+
+    <ul class="ne-list">
+        <li *ngFor="let ne of neList; index as liIndex" class="li-{{liIndex}}"
+            (mouseover)="neHover=true;currentIndex=liIndex" (mouseleave)="neHover=false;currentIndex=liIndex">
+            {{ne.name}}<br>
+            {{ne.desc}}<br>
+            {{ne.ip}}
+            <div *ngIf="neHover&&currentIndex==liIndex">
+                {{'title.neName' | translate}}:{{ne.name}} <br/>
+                {{'title.neType' | translate}}:{{ne.desc}} <br/>
+                {{'title.nodeIp' | translate}}:{{ne.ip}}
+            </div>
+        </li>
+    </ul>
+
+    <jigsaw-table [data]="tableData"
+                  [columnDefines]="columnDefineGenerator"
+                  [columnDefineGeneratorContext]="this"
+                  (selectChange)="handleRowSelect($event)"
+                  (doubleClick)="handleDbRowSelect($event)"
+                  [hideHeader]="true">
+    </jigsaw-table>
+</demo-template>

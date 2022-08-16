@@ -1,0 +1,41 @@
+.public-variables-demo-ul {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+}
+
+.public-variables-demo-ul div {
+    width: 100%;
+}
+
+.public-variables-demo-ul li {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    height: 150px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 2px #88888888;
+    padding: 12px 0;
+}
+
+.public-variables-demo-ul li:hover {
+    box-shadow: 0 5px 12px #88888888;
+}
+
+.public-variables-demo-ul li label:last-of-type {
+    font-weight: normal;
+    margin-top: 16px;
+}
+
+.public-variables-demo-ul li span {
+    cursor: pointer;
+    text-align: center;
+}
+
+.public-variables-demo-ul li span:hover {
+    font-weight: bold;
+}

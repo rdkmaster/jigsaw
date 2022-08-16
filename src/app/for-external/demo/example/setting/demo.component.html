@@ -1,0 +1,33 @@
+<demo-template [data]="''" [text]="text['text']['setting']">
+
+    <!-- start to learn the demo from here -->
+    <div class="toast-basic-demo-cntr">
+        <div class="row">
+            <label>消息</label>
+            <jigsaw-input [(value)]="message" placeholder="输入消息内容"></jigsaw-input>
+            <a (click)="makeLongMessage()">长内容</a>
+        </div>
+
+        <div class="row">
+            <label>图标</label>
+            <jigsaw-input [(value)]="icon" placeholder="输入图标（可选）"
+                          title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
+            </jigsaw-input>
+            <p>例如：iconfont iconfont-e23e <a href="/#/pc/icon/icons">所有可用图标</a></p>
+        </div>
+
+        <div class="row">
+            <label>超时</label>
+            <jigsaw-slider min="0" max="20" [(value)]="timeout"></jigsaw-slider>
+            <span>{{timeout}} 秒</span>
+        </div>
+
+        <div class="row">
+            <label>宽度</label>
+            <jigsaw-slider min="60" max="600" [(value)]="width"></jigsaw-slider>
+            <span>{{width}} px</span>
+        </div>
+
+        <jigsaw-button width="200" (click)="show()">弹出消息框</jigsaw-button>
+    </div>
+</demo-template>

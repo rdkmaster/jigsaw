@@ -1,0 +1,18 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="demo-container">
+    <p>提示：单元格的值有如下选项</p>
+    <ul style="list-style:disc; margin-left:24px;">
+        <li>0~100的数值时：显示正常的进度条</li>
+        <li>为字符串success，或大于100的数字时，显示成功状态</li>
+        <li>为字符串warning时，显示警告状态</li>
+        <li>为字符串finish时，显示完成状态</li>
+        <li>为字符串disabled时，显示不可用状态</li>
+        <li>为字符串error或其他情况时，显示错误状态</li>
+    </ul>
+    <a (click)="startProcessing()">开始周期变化</a>
+    <jigsaw-table [data]="tableData" [columnDefines]="columns">
+    </jigsaw-table>
+</div>

@@ -1,0 +1,15 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+        <div class="demo-4 live-demo">
+            <jigsaw-header [level]="2">time-section: 垂直排列， 日期单选， 时间单选</jigsaw-header>
+            <br><br>
+            <jigsaw-checkbox [(checked)]="showDate">显示按月（showDate）</jigsaw-checkbox>
+            <jigsaw-checkbox [(checked)]="showWeek">显示按周（showWeek）</jigsaw-checkbox>
+            <jigsaw-checkbox [(checked)]="showEveryday">显示每天（showEveryday）</jigsaw-checkbox>
+            <br><br>
+            <j-time-section #dateTime [(value)]="timeSectionValue" [layout]="layout" [showLastDay]="true"
+                            [multipleHour]="multipleHour" [multipleDate]="multipleDate" [currentTime]="curTime"
+                            [showDate]="showDate" [showWeek]="showWeek" [showEveryday]="showEveryday"
+                            (valueChange)="sectionValueChange($event)">
+            </j-time-section>
+        </div>
+</demo-template>

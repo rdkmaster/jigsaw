@@ -1,0 +1,13 @@
+.block {
+    display: inline-block;
+    width: 230px;
+    vertical-align: top;
+}
+
+.context-menu {
+    width: 230px;
+    height: 260px;
+    background-color: #ddd;
+    border-radius: 4px;
+    display: inline-block;
+}

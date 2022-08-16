@@ -1,0 +1,27 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['circle']">
+    <div class="wrap">
+        <jigsaw-header>圆形Loading 各种size</jigsaw-header>
+
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading
+                [size]="selectedLabel.size"
+                [label]="'这是'+selectedLabel.label"
+                [percent]="percent"
+            ></jigsaw-circle-loading>
+        </div>
+        <jigsaw-header>圆形Loading 不显示标签</jigsaw-header>
+
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading
+                [size]="selectedLabel.size"
+                [percent]="percent"
+            ></jigsaw-circle-loading>
+        </div>
+
+        <jigsaw-header>圆形Loading 不显示百分比</jigsaw-header>
+
+        <div class="large-loading-cntr">
+            <jigsaw-circle-loading [size]="selectedLabel.size"></jigsaw-circle-loading>
+        </div>
+    </div>
+</demo-template>

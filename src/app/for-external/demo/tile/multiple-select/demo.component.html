@@ -1,0 +1,9 @@
+<demo-template [data]="''" [text]="text['text']['multipleSelect']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label"
+                 [multipleSelect]="true">
+        <jigsaw-tile-option *ngFor="let city of cities" [value]="city">
+            {{city.label}}
+        </jigsaw-tile-option>
+    </jigsaw-tile>
+</demo-template>

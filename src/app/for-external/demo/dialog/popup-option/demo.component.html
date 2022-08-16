@@ -1,0 +1,29 @@
+<demo-template [data]="''" [text]="text['text']['popupOption']">
+    <div class="show-box demo-showcase">
+        <div class="box demo-showcase-v">
+            <div #left class="left square"></div>
+            <jigsaw-button class="button" colorType="primary" width="300px" (click)="popupDialog1(dialog1)">红色弹出对话框</jigsaw-button>
+        </div>
+
+        <div class="box demo-showcase-v">
+            <div #middle class="middle square"></div>
+            <jigsaw-button class="button" colorType="primary" width="300px" (click)="popupDialog2(dialog1)">蓝色弹出对话框</jigsaw-button>
+        </div>
+
+        <div class="box demo-showcase-v">
+            <div #right class="right square"></div>
+            <jigsaw-button class="button" colorType="primary" width="300px" (click)="popupDialog3(dialog1)">绿色弹出对话框</jigsaw-button>
+        </div>
+    </div>
+
+    <ng-template #dialog1>
+        <jigsaw-dialog width="400px" icon="iconfont iconfont-e3f0" caption="对话框标题" (close)="close()">
+            <ul class="dialog-content">
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+                <li>对话框内容...</li>
+            </ul>
+        </jigsaw-dialog>
+    </ng-template>
+</demo-template>

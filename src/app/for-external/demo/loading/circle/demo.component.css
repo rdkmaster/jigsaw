@@ -1,0 +1,42 @@
+.wrap .block {
+    width: 500px;
+    line-height: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.large-loading-cntr {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    width: 400px;
+    height: 200px;
+}
+
+.large-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
+}
+
+.medium-loading-cntr {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    width: 400px;
+    height: 200px;
+}
+
+.medium-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
+}
+
+.small-loading-cntr {
+    display: inline-flex;
+    align-items: center;
+    position: relative;
+    width: 400px;
+    height: 200px;
+}
+
+.small-loading-cntr .jigsaw-circle-loading-host {
+    width: 100%;
+}

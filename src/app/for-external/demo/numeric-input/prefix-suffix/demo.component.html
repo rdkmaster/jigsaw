@@ -1,0 +1,20 @@
+<demo-template [(selectedLabel)]="selectedLabel" [text]="text['text']['prefixSuffix']">
+    <div class="demo-showcase">
+        <span>单位组合：</span>
+        <jigsaw-numeric-input placeholder="unit demo" suffix="单位" [size]="selectedLabel.size"></jigsaw-numeric-input>
+    </div>
+    <div class="demo-showcase">
+        <span>单位可选：</span>
+        <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120"
+                              (suffixChange)="_$unitChange($event)" width="300" [size]="selectedLabel.size">
+        </jigsaw-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>更多内容：</span>
+        <jigsaw-numeric-input placeholder="unit demo" width="300" suffixWidth="120" [size]="selectedLabel.size"
+                              [suffix]="_$icons" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
+        </jigsaw-numeric-input>
+    </div>
+</demo-template>
+

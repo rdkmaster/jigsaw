@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['grMonth']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <jigsaw-date-picker [(date)]="date" [gr]="'month'" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+        <p>选择的日期是：{{date | json}}</p>
+    </div>
+</demo-template>

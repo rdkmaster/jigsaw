@@ -1,0 +1,20 @@
+<demo-template [data]="''" [text]="text['text']['treeTable']">
+
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>基本用法</span>
+        <jigsaw-table [data]="treeTableData" [columnDefines]="columns"
+                      [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>分页</span>
+        <jigsaw-table [data]="localPageableTreeTableData" [columnDefines]="columns"
+                      [additionalColumnDefines]="additionalColumns"></jigsaw-table>
+        <jigsaw-pagination [data]="localPageableTreeTableData"
+                           [pageSizeOptions]="[5, 10, 20]"
+                           [showQuickJumper]="true"
+                           [searchable]="true"
+                           (search)="search($event)"></jigsaw-pagination>
+    </div>
+</demo-template>

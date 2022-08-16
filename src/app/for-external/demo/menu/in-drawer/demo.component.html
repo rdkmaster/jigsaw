@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['inDrawer']">
+    <!-- start to learn the demo from here -->
+        <j-drawer [floating]="false" [open]="true" height="302" width="216">
+            <jigsaw-navigation-menu [data]="data" (select)="menuSelect($event)" [showToggleButton]="false"
+                                    height="300"></jigsaw-navigation-menu>
+        </j-drawer>
+</demo-template>

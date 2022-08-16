@@ -1,0 +1,8 @@
+<demo-template [data]="''" [text]="text['text']['cellEditable']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-table [data]="tableData" [columnDefines]="columns" (edit)="onCellChange($event)"
+                  height="500px"></jigsaw-table>
+
+    更改数据的信息： {{changeMsg}}
+
+</demo-template>

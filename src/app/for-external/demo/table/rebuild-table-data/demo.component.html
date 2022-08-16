@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+
+
+
+<!-- start to learn the demo from here -->
+<j-button (click)="changeData()">click to change data</j-button>
+<jigsaw-table [data]="tableData" [columnDefines]="columns" ></jigsaw-table>
+
+<jigsaw-pagination style="margin-top: 8px"
+    [data]="tableData"
+    [pageSizeOptions]="[5, 10, 20]"
+    [searchable]="true"
+    [showQuickJumper]="true"
+></jigsaw-pagination>
+

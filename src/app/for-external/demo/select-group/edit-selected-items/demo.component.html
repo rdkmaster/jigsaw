@@ -1,0 +1,23 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"></jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>多选</jigsaw-header>
+<jigsaw-group-select #selectGroup [data]="dataList" [(value)]="selectedOptions" [multipleSelect]="true" [clearable]="true"
+    placeholder="请选择" width="160px" [useStatistics]="false" (valueChange)="valueChange($event)" optionCount="20">
+</jigsaw-group-select>
+
+<jigsaw-button (click)="changeSelectedItems('multiple')">修改已选数据</jigsaw-button>
+<jigsaw-button (click)="clearSelectedItems()">清除已选数据</jigsaw-button>
+<jigsaw-button (click)="editSelectedItems('multiple')">编辑选中条目</jigsaw-button>
+<jigsaw-button (click)="changeData()">修改输入数据</jigsaw-button>
+<jigsaw-button (click)="resetData('multiple')">重置输入数据</jigsaw-button>
+
+<jigsaw-header>单选</jigsaw-header>
+<jigsaw-group-select [data]="dataList2" [(value)]="selectedOption" [multipleSelect]="false" [clearable]="true"
+    placeholder="请选择" width="160px" (valueChange)="valueChange($event)" optionCount="20">
+</jigsaw-group-select>
+
+<jigsaw-button (click)="changeSelectedItems('single')">修改已选数据</jigsaw-button>
+<jigsaw-button (click)="editSelectedItems('single')">编辑选中条目</jigsaw-button>
+<jigsaw-button (click)="resetData('single')">重置输入数据</jigsaw-button>

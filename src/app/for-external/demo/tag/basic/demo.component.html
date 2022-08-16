@@ -1,0 +1,22 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['basic']">
+    <div class="demo-showcase">
+        <span>基础标签：</span>
+        <jigsaw-tag [closable]="false" [size]="selectedLabel.size">标签1</jigsaw-tag>
+    </div>
+    <div class="demo-showcase">
+        <span>可关闭标签：</span>
+        <jigsaw-tag [closable]="true" (close)="handleClose($event)" id="jigsaw-tag2" [size]="selectedLabel.size">标签2
+        </jigsaw-tag>
+    </div>
+    <div class="demo-showcase">
+        <span>长文本标签：</span>
+        <jigsaw-tag [closable]="false" (close)="handleClose($event)" [size]="selectedLabel.size">
+            A very very very very very very very long tag
+        </jigsaw-tag>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用标签</span>
+        <jigsaw-tag [closable]="false" [size]="selectedLabel.size" [disabled]="true">禁用</jigsaw-tag>
+    </div>
+    <j-button (click)="resetAllTags()">Reset all tags</j-button>
+</demo-template>

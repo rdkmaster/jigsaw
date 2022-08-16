@@ -1,0 +1,10 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['searchable']">
+    <div>
+        <jigsaw-markdown [markdown]="'#### 搜索功能'"></jigsaw-markdown>
+        <j-button style="margin-bottom: 6px" (click)="changeData()">change data</j-button>
+        <br>
+        <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
+                       placeholder="请选择城市" [data]="cityListForSelect" [searchable]="true" [size]="selectedLabel.size">
+        </jigsaw-select>
+    </div>
+</demo-template>

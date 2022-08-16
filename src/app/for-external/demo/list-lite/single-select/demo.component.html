@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['singleSelect']">
+    <!-- start to learn the demo from here -->
+    <j-list-lite width="200" [data]="goodsList" labelField="name"
+                 (selectedItemsChange)="handleSelect($event, 'selectedItems', 'name')">
+    </j-list-lite>
+    <p>选中的条目是: <span>{{selectedItems}}</span></p>
+</demo-template>

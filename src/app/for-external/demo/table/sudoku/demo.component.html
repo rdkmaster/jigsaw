@@ -1,0 +1,9 @@
+<demo-template [data]="''" [text]="text['text']['sudoku']">
+    <!-- start to learn the demo from here -->
+    <j-button (click)="newPuzzle()">
+        <span class="iconfont iconfont-e33a"> New Puzzle</span>
+    </j-button>
+    <br><br>
+    <jigsaw-table [data]="tableData" [columnDefines]="columnDefineGenerator" [hideHeader]="true" width="442px">
+    </jigsaw-table>
+</demo-template>

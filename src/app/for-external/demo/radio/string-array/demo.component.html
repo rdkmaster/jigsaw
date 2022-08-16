@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['dataIsStringArray']">
+    <j-radios [(value)]="selectedCity">
+        <j-radio-option *ngFor="let item of citys" [value]="item">
+            {{item}}
+        </j-radio-option>
+    </j-radios>
+</demo-template>

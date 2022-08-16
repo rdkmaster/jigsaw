@@ -1,0 +1,7 @@
+<demo-template [data]="''" [text]="text['text']['searchAndPaging']">
+    <j-cascade [data]="generator" [generatorContext]="this" [selectedItems]="lazyLoadSelectedItems"
+               labelField="name" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)"
+               [searchable]="true" [pageSize]="5" width="400">
+    </j-cascade>
+    <p class="message">选择的区域是：{{message}}</p>
+</demo-template>

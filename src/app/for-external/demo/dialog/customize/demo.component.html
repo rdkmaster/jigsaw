@@ -1,0 +1,19 @@
+<demo-template [data]="''" [text]="text['text']['customize']">
+    <jigsaw-button width="200" (click)="popupTemplate(freeTemplate)">
+        弹出定制对话框
+    </jigsaw-button>
+    <ng-template #freeTemplate>
+        <div class="pop-win">
+            <span class="close-btn" (click)="onAnswer()">X</span>
+            <h5>
+                还可以弹出任意内容，不受<code>jigsaw-dialog</code>等组件的约束<br>
+                这样可以弹出完全定制化的对话框来哦
+            </h5>
+            <div class="btn-group-box">
+                <jigsaw-button (click)="onAnswer('确定')">确定</jigsaw-button>
+                <jigsaw-button (click)="onAnswer('取消')">取消</jigsaw-button>
+            </div>
+        </div>
+    </ng-template>
+</demo-template>
+

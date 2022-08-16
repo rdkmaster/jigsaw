@@ -1,0 +1,19 @@
+<demo-template [data]="''" [text]="text['text']['events']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>单击已选中的城市试试 --></span>
+        <jigsaw-combo-select [showBorder]="true"
+                             [(value)]="selectedCity"
+                             (select)="onTagSelect($event)"
+                             (remove)="onTagRemove($event)"
+                             maxWidth="500" placeholder="选择一个城市">
+            <ng-template>
+                <div class="drop-down-container">
+                    <jigsaw-button *ngFor="let city of cities;" [colorType]="city.type"
+                                   (click)="onCityClick(city)">{{city.label}}
+                    </jigsaw-button>
+                </div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</demo-template>

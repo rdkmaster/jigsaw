@@ -1,0 +1,22 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>正常</span>
+        <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)">
+            <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                {{goods.name}}
+            </j-list-option>
+        </j-list>
+        <p>选中的条目是: <span>{{selectedItems}}</span></p>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>禁用</span>
+        <j-list width="200" trackItemBy="name" (selectedItemsChange)="handleSelect($event)" [disabled]="true">
+            <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                {{goods.name}}
+            </j-list-option>
+        </j-list>
+        <p>选中的条目是: <span>{{selectedItems}}</span></p>
+    </div>
+</demo-template>

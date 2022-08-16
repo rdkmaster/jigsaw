@@ -1,0 +1,43 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>单选/多选</span>
+        <j-tile [multipleSelect]="multipleSelect" trackItemBy="label" [showBorder]="false"
+                [selectedItems]="selectedItems1" (selectedItemsChange)="handleSelect($event)">
+            <j-tile-option *ngFor="let city of citys" [value]="city">
+                {{city.label}}
+            </j-tile-option>
+        </j-tile>
+        <div>
+            <label>切换多选：</label>
+            <j-switch [(checked)]="multipleSelect" (checkedChange)="clearSelectedItems()"></j-switch>
+        </div>
+        <p>选中的条目是: <span>{{selectedItemsStr1}}</span></p>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>有初始选中值</span>
+        <j-tile [multipleSelect]="true" [showBorder]="false" trackItemBy="label"
+                [selectedItems]="selectedItems2" (selectedItemsChange)="handleSelect2($event)">
+            <j-tile-option *ngFor="let city of citys" [value]="city">
+                {{city.label}}
+            </j-tile-option>
+        </j-tile>
+
+        <p>选中的条目是: <span>{{selectedItemsStr2}}</span></p>
+    </div>
+
+
+    <div class="demo-showcase-v">
+        <span>不可点击</span>
+        <j-tile [multipleSelect]="true" [showBorder]="false" trackItemBy="label"
+                [selectedItems]="selectedItems3" (selectedItemsChange)="handleSelect3($event)">
+            <j-tile-option *ngFor="let city of citys" [value]="city" [disabled]="city.disabled">
+                {{city.label}}
+            </j-tile-option>
+        </j-tile>
+
+        <p>选中的条目是: <span>{{selectedItemsStr3}}</span></p>
+    </div>
+</demo-template>

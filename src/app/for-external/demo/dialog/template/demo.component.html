@@ -1,0 +1,44 @@
+<demo-template [data]="''" [text]="text['text']['template']">
+    <jigsaw-button id="trigger3" width="200" (click)="popupTemplateDialog(tpDialog1)">
+        弹出自定义模态框
+    </jigsaw-button>
+
+    <jigsaw-button id="trigger4" width="200" (click)="popupDialogTemplate(tpDialog2, $event)">
+        弹出自定义基础对话框
+    </jigsaw-button>
+    <br><br>
+
+
+    <ng-template #tpDialog1>
+        <jigsaw-dialog width="50%" (close)="onAnswer()" caption="定义在template中的对话框" icon="iconfont iconfont-e3f0">
+            <div jigsaw-body>
+                <p class="dialog-content">
+                    这里演示了如何使用<code>ng-template</code>标签快速定义一个对话框模板，这个方式可以非常方便的定义一个对话框，
+                    并且这个对话框的逻辑与当前组件融合在一起，这是一把双刃剑，融合在一起的逻辑方便对话框内外相互调用，
+                    但也让代码变的耦合度高，可维护性下降。<br>
+                    <strong>建议：</strong>实际开发时，如果对话框逻辑很简单，那就采用<code>ng-template</code>
+                    的方式定义对话框，如果逻辑过多，则请尽早将对话框定义成组件。
+                </p>
+            </div>
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
+                <jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+
+    <ng-template #tpDialog2>
+        <jigsaw-dialog width="40%" (close)="onAnswer()" caption="对话框的标题" icon="iconfont iconfont-e3f0">
+            <div jigsaw-body>
+                <p class="dialog-content">
+                    这是另一个使用<code>ng-template</code>定义的对话框。
+                </p>
+            </div>
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="onAnswer('OK')">OK</jigsaw-button>
+                <jigsaw-button (click)="onAnswer('Cancel')">Cancel</jigsaw-button>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+</demo-template>
+

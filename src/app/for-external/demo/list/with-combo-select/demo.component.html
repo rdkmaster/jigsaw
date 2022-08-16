@@ -1,0 +1,20 @@
+<demo-template [data]="''" [text]="text['text']['withComboSelect']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <j-combo-select [(value)]="selectedItems" [clearable]="true" maxWidth="500px" labelField="name">
+            <ng-template>
+                <j-list [multipleSelect]="true" trackItemBy="name" [(selectedItems)]="selectedItems">
+                    <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods"
+                                   [disabled]="goods.disabled">
+                        <div>
+                            <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled"
+                                        mode="minimalist"></j-checkbox>
+                            <span class="logo iconfont iconfont-{{goods.logo}}"></span>
+                            <p>{{goods.desc}}</p>
+                        </div>
+                    </j-list-option>
+                </j-list>
+            </ng-template>
+        </j-combo-select>
+    </div>
+</demo-template>

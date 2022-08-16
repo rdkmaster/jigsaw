@@ -1,0 +1,8 @@
+<demo-template [data]="''" [text]="text['text']['basic']">
+    <!-- start to learn the demo from here -->
+    <j-breadcrumb [data]="breadcrumbItems" (select)="itemSelect($event)">
+    </j-breadcrumb>
+
+    <br>
+    <jigsaw-button (click)="resetBreadcrumbItems()">数据重置</jigsaw-button>
+</demo-template>

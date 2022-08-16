@@ -1,0 +1,18 @@
+<demo-template [data]="''" [text]="text['text']['html']">
+    <!-- start to learn the demo from here -->
+    <div>
+        <jigsaw-button style="margin-top: 6px" width="105px" jigsawTooltipRenderAs="html" [jigsawTooltip]="simpleHtml">
+            显示Tooltip
+        </jigsaw-button>
+    </div>
+
+    <div style="margin-top: 12px">
+        <jigsaw-button jigsawTooltipRenderAs="html" [jigsawTooltipContext]="this" [jigsawTooltip]="actionHtml"
+                       jigsawTooltipCloseDelay="200" style="margin-top: 6px" width="105px">
+            显示Tooltip
+        </jigsaw-button>
+        <p style="color: #999;">
+            有交互的情况下，必须使用jigsawTooltipContext来传递函数上下文，最好使用jigsawTooltipCloseDelay延长tooltip关闭时间
+        </p>
+    </div>
+</demo-template>

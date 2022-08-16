@@ -1,0 +1,7 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['colorType']">
+    <jigsaw-radios-lite [data]="colorTypeList" [(value)]="colorType">
+    </jigsaw-radios-lite><br>
+    <jigsaw-button-bar [data]="cities" [(selectedItems)]="selectedCity" [colorType]="colorType"
+                       [multipleSelect]="multiple" [preSize]="selectedLabel.size">
+    </jigsaw-button-bar>
+</demo-template>

@@ -1,0 +1,22 @@
+<demo-template [data]="''" [text]="text['text']['modal']" >
+    <span>偏差设置为16px</span>
+    <div *ngFor="let popPositionType of popPositionTypes" style="margin-bottom: 20px">
+        <jigsaw-button colorType="primary" width="200px" (click)="popupComponentDialog(popPositionType)">
+            {{popPositionType.label}}
+        </jigsaw-button>
+    </div>
+
+    <ng-template #tpDialog>
+        <jigsaw-dialog width="400px" (close)="closeDialog()" icon="iconfont iconfont-e3f0" caption="一个对话框">
+            <div jigsaw-body>
+                <p class="dialog-content">
+                    这是一个普通的对话框，请关注它的弹出位置
+                </p>
+            </div>
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="closeDialog()">确定</jigsaw-button>
+                <jigsaw-button (click)="closeDialog()">取消</jigsaw-button>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+</demo-template>

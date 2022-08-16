@@ -1,0 +1,20 @@
+<demo-template [data]="''" [text]="text['text']['expandPageable']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-buttons">
+        <span>展开方式</span>
+        <jigsaw-button-bar [data]="['toggle', 'show', 'hide']" [(selectedItems)]="action"></jigsaw-button-bar>
+    </div>
+    <div class="demo-buttons" style="display: flex;">
+        <span>数据更新后是否保持打开</span>
+        <jigsaw-switch [(checked)]="remainOpen"></jigsaw-switch>
+    </div>
+    <div class="demo-buttons">
+        <jigsaw-button (click)="updateData()">更新数据</jigsaw-button>
+        <jigsaw-button (click)="resetData()">重置数据</jigsaw-button>
+        <jigsaw-button (click)="expandRow(2)">展开/关闭第三行</jigsaw-button>
+    </div>
+    <jigsaw-table #tableCmp [data]="pageable" (rowExpand)="rowClick($event)">
+    </jigsaw-table>
+    <jigsaw-pagination [data]="pageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true" [showQuickJumper]="true">
+    </jigsaw-pagination>
+</demo-template>

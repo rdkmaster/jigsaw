@@ -1,0 +1,78 @@
+<demo-template [data]="''" [text]="text['text']['searchable']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase">
+        <span>本地数据过滤</span>
+        <j-combo-select maxWidth="500"
+                        [(value)]="selectedCountries"
+                        [clearable]="true"
+                        labelField="enName"
+                        [searchable]="true"
+                        placeholder="search a country..."
+                        (openChange)="onLocalSearchOpen($event)"
+                        (searchKeywordChange)="handleSearching($event, lpaCountries)">
+            <ng-template>
+                <div class="dropdown">
+                    <j-tile [(selectedItems)]="selectedCountries" [autoRemoveInvalidValue]="false"
+                            trackItemBy="enName" width="550px">
+                        <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
+                            {{country.enName}}
+                        </j-tile-option>
+                    </j-tile>
+                </div>
+            </ng-template>
+        </j-combo-select>
+        <p>选择的国家: {{toCountriesString(selectedCountries)}}</p>
+    </div>
+
+    <div class="demo-showcase">
+        <span>服务端数据过滤</span>
+        <j-combo-select maxWidth="500"
+                        [(value)]="selectedCountries2"
+                        [clearable]="true"
+                        labelField="enName"
+                        [searchable]="true"
+                        [searching]="spaCountries.busy"
+                        placeholder="输入中文也行"
+                        (openChange)="onServerSearchOpen($event)"
+                        (searchKeywordChange)="handleSearching($event, spaCountries)">
+            <ng-template>
+                <div class="dropdown">
+                    <j-tile [(selectedItems)]="selectedCountries2" [autoRemoveInvalidValue]="false"
+                            trackItemBy="enName" width="550px">
+                        <j-tile-option *ngFor="let country of spaCountries" [value]="country" width="100px">
+                            {{country.enName}}
+                        </j-tile-option>
+                    </j-tile>
+                </div>
+            </ng-template>
+        </j-combo-select>
+        <p>选择的国家: {{toCountriesString(selectedCountries2)}}</p>
+    </div>
+
+    <div class="demo-showcase">
+        <span>自定义过滤器</span>
+        <j-combo-select maxWidth="500"
+                        [(value)]="selectedCountries3"
+                        [clearable]="true"
+                        labelField="enName"
+                        placeholder="search a country..."
+                        (openChange)="onLocalSearchOpen($event)">
+            <ng-template>
+                <div class="dropdown-wrap">
+                    <j-input width="100%" (valueChange)="handleSearching($event, lpaCountries)">
+                        <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
+                    </j-input>
+                    <div class="dropdown">
+                        <j-tile [(selectedItems)]="selectedCountries3" [autoRemoveInvalidValue]="false"
+                                trackItemBy="enName" width="550px">
+                            <j-tile-option *ngFor="let country of lpaCountries" [value]="country" width="100px">
+                                {{country.enName}}
+                            </j-tile-option>
+                        </j-tile>
+                    </div>
+                </div>
+            </ng-template>
+        </j-combo-select>
+        <p>选择的国家: {{toCountriesString(selectedCountries3)}}</p>
+    </div>
+</demo-template>

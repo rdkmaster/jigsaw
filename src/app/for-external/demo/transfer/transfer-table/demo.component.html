@@ -1,0 +1,31 @@
+<demo-template [data]="''" [text]="text['text']['transferTable']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-header [level]="2">表格=>列表</jigsaw-header>
+    <ul>
+        <li class="demo-item">
+            <div class="item-buttons">
+                <span>输入数据：</span>
+                <jigsaw-button (click)="addItem()">新增行</jigsaw-button>
+                <jigsaw-button (click)="removeItem()">删除行</jigsaw-button>
+                <jigsaw-button (click)="changeDataFromObject()">通过fromObject()更新</jigsaw-button>
+            </div>
+
+            <div class="item-buttons">
+                <span>数据重置：</span>
+                <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
+                <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+            </div>
+            <!--        <div class="item-buttons">-->
+            <!--            <span>trackItemBy：</span>-->
+            <!--            <jigsaw-button-bar [selectedItems]="{field: trackItemBy}" [data]="-->
+            <!--                    [{label:'ID', field: 'id'}, {label:'姓名', field: 'name'}, {label:'职位', field: 'position'}]-->
+            <!--                " trackItemBy="field" (selectedItemsChange)="trackItemBy=$event[0].field;"></jigsaw-button-bar>-->
+            <!--        </div>-->
+        </li>
+        <li class="demo-item">
+            <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
+                        [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
+                        [trackItemBy]="trackItemBy" (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+        </li>
+    </ul>
+</demo-template>

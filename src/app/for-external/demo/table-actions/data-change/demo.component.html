@@ -1,0 +1,12 @@
+<demo-template [data]="''" [text]="text['text']['dataChange']">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button width="150" (click)="dataChange()">
+        改变表格数据
+    </jigsaw-button>
+
+    <jigsaw-button width="150" (click)="columnsChange()">
+        改变列
+    </jigsaw-button>
+
+    <jigsaw-table [data]="tableData" [columnDefines]="columns"></jigsaw-table>
+</demo-template>

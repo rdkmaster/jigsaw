@@ -1,0 +1,8 @@
+<demo-template [data]="''" [text]="text['text']['grSecond']">
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <jigsaw-date-time-picker [(date)]="date" [gr]="'second'"
+                                 (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
+        <p>选择的时间是：{{date | json}}</p>
+    </div>
+</demo-template>

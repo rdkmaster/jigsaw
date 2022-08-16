@@ -1,0 +1,20 @@
+.content-box {
+    padding-bottom: 10px;
+}
+
+.content-box .content-title {
+    margin-bottom: 20px;
+}
+
+.content-box .content-line {
+    margin-bottom: 10px;
+}
+
+.content-box .content-line label {
+    display: inline-block;
+    width: 100px;
+}
+
+.content-box jigsaw-button {
+    margin-left: 104px;
+}

@@ -1,0 +1,34 @@
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['primary']">
+    <div class="demo-showcase">
+        <span>正常 </span>
+        <jigsaw-button (click)="onClick()" colorType="primary"
+                       [disabled]="false" [preSize]="selectedLabel.size">
+            主导按钮
+        </jigsaw-button>
+        <jigsaw-button (click)="onClick()" colorType="error"
+                       [disabled]="false" [preSize]="selectedLabel.size">
+            错误按钮
+        </jigsaw-button>
+        <jigsaw-button (click)="onClick()" colorType="warning"
+                       [disabled]="false" [preSize]="selectedLabel.size">
+            警告按钮
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>禁用 </span>
+        <jigsaw-button (click)="onClick()" colorType="primary"
+                       [disabled]="true" [preSize]="selectedLabel.size">
+            主导按钮
+        </jigsaw-button>
+        <jigsaw-button (click)="onClick()" colorType="error"
+                       [disabled]="true" [preSize]="selectedLabel.size">
+            错误按钮
+        </jigsaw-button>
+        <jigsaw-button (click)="onClick()" colorType="warning"
+                       [disabled]="true" [preSize]="selectedLabel.size">
+            警告按钮
+        </jigsaw-button>
+    </div>
+</demo-template>
+

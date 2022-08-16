@@ -1,0 +1,36 @@
+<demo-template [data]="''" [text]="text['text']['contentField']">
+    <!-- start to learn the demo from here -->
+
+    <div class="demo-showcase-v">
+        <span>预设字段名(key)修改</span>
+        <label class="field-label">contentField: </label>
+        <j-input #contentField width="180" [value]="'file'"></j-input>
+
+        <label class="field-label">fileNameField: </label>
+        <j-input #fileNameField width="180" [value]="'filename'"></j-input>
+
+        <label class="field-label">fileVerify: </label>
+        <j-input #fileVerify width="180" [value]="'$svr/my-verifier.js'"></j-input>
+
+    </div>
+
+    <div class="demo-showcase-v">
+        <!-- 其他字段-->
+        <span>其他字段(key:value)</span>
+        <div *ngFor="let item of additionalFields; let last = last" style="margin-bottom: 8px">
+            <j-input width="130" [clearable]="false" [(value)]="item.field"></j-input>
+            :
+            <j-input width="180" [(value)]="item.value"></j-input>
+            <a *ngIf="last" (click)="addField()">add field</a>
+            <br/>
+        </div>
+        <div>
+            <jigsaw-button jigsaw-upload [uploadAdditionalFields]="readAdditionalFields"
+                           [uploadContentField]="contentField.value"
+                           [uploadFileNameField]="fileNameField.value" [uploadFileVerify]="fileVerify.value"
+                           (uploadStart)="onComplete($event)">
+                上传
+            </jigsaw-button>
+        </div>
+    </div>
+</demo-template>

@@ -1,0 +1,12 @@
+.nav-item {
+    font-weight: normal;
+    padding: 10px 16px;
+    background-color: #459df5;
+    color: #fff;
+    font-size: 15px;
+}
+
+.nav-item:hover {
+    background-color: #338ce6;
+    box-shadow: 0 0 3px 1px #338ce6;
+}

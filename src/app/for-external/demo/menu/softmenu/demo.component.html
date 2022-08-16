@@ -1,0 +1,9 @@
+<demo-template [data]="''" [text]="text['text']['softmenu']">
+    <!-- start to learn the demo from here -->
+    <label *ngFor="let menu of menuData" class="menu-item"
+           jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
+           jigsawCascadingMenuWidth="220" jigsawCascadingMenuTheme="light"
+           (jigsawCascadingMenuSelect)="menuSelect($event)">
+        {{menu.label}}
+    </label>
+</demo-template>
