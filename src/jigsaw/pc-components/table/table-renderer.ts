@@ -716,6 +716,13 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent($event.label)
     }
 
+    private _checkDataTypeValid() {
+        if (this.data?.every(item => item?.hasOwnProperty('label'))) {
+            return;
+        }
+        console.error('the data of table select renderer must be type of {label: string}[]')
+    }
+
     protected onDataRefresh() {
         if (this.initData instanceof Function) {
             const data = this.initData(this.tableData, this.row, this.column);
@@ -726,6 +733,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                         subscription.unsubscribe();
                         if (!this._hasDestroyed) {
                             this.data = value;
+                            this._checkDataTypeValid();
                             this._changeDetector.detectChanges();
                         }
                     },
@@ -739,9 +747,11 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                     });
             } else {
                 this.data = data;
+                this._checkDataTypeValid();
             }
         } else {
             this.data = this.initData;
+            this._checkDataTypeValid();
         }
         this._changeDetector.markForCheck();
     }
