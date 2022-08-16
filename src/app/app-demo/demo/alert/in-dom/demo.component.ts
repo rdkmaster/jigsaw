@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, AfterViewInit } from "@angular/core";
 import { AlertTextService } from "../doc.service";
 
 @Component({
@@ -11,6 +11,17 @@ import { AlertTextService } from "../doc.service";
         }
     `]
 })
-export class AlertInDomDemoComponent {
+export class AlertInDomDemoComponent implements AfterViewInit {
     constructor(public text: AlertTextService) { }
+    description: string;
+    // description: string = require('!!raw-loader!./demo.component.ts').default;
+
+    ngAfterViewInit(){
+        try {
+            this.description =  require('!!raw-loader!./demo.component.ts').default;
+        } catch (error) {
+            console.log(error)
+        }
+        console.log(this.description)
+    }
 }
