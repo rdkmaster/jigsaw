@@ -8,8 +8,14 @@
         <ng-content></ng-content>
     </div>
 
-    <a>查看本DEMO源码</a>
-    <div class="demo-code">
-        
+    <div #code class="demo-code">
+        <div>设置closable属性可以定义一个标签是否可移除。
+            默认的标签移除时会附带渐变动画，如果不想使用，可以设置disable-transitions属性，它接受一个Boolean，true 为关闭。
+        </div>
+    </div>
+
+    <div class="demo-button">
+        <i *ngIf="!expand" class="iconfont iconfont-e8b6" (click)="showCode()">查看源码</i>
+        <i *ngIf="expand" class="iconfont iconfont-e8b5" (click)="hideCode()">隐藏源码</i>
     </div>
 </div>
