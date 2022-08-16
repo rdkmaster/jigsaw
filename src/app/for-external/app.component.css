@@ -128,3 +128,7 @@
 .app-wrap .demo-showcase-v>*:not(:first-child) {
     margin-bottom: 8px;
 }
+
+pre, code {
+    white-space: pre-line;
+}
