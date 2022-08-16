@@ -26,6 +26,7 @@
             "extractCss": true,
             "assets": [
               "src/app/libs/favicon.ico",
+              "src/app/app-demo/assets",
               "src/app/app-demo/demo/tree/icon/assets"
             ],
             "styles": [
