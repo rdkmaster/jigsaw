@@ -1,7 +1,7 @@
 import {Component, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../app.interceptor";
+import {AjaxInterceptor} from "../../../../libs/app.interceptor";
 import {TableRendererTextService} from "../doc.service";
 
 @Component({

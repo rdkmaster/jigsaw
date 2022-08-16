@@ -89,6 +89,7 @@ import { TableBasicDemoModule } from "./demo/table-basic/demo.module";
 import {TableActionsDemoModule} from "./demo/table-actions/demo.module";
 import {TableColumnDefinesDemoModule} from "./demo/table-column-defines/demo.module";
 import {TableBigTableDemoModule} from "./demo/table-big-data/demo.module";
+import {TableRendererDemoModule} from "./demo/table-renderer/demo.module";
 
 
 @NgModule({
@@ -120,7 +121,7 @@ import {TableBigTableDemoModule} from "./demo/table-big-data/demo.module";
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
         GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule, TableBasicDemoModule, TableActionsDemoModule,
         TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
-        TableColumnDefinesDemoModule, TableBigTableDemoModule
+        TableColumnDefinesDemoModule, TableBigTableDemoModule, TableRendererDemoModule
     ],
     providers: [
         {

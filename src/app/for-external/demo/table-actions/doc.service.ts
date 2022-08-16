@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class TableActionsTextService {
     public text: object = {
         introduction: `
-            # Table 表格
+            # Table Actions 表格
 
             展示行列数据。
 

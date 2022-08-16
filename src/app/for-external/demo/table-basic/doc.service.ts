@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class TableBasicTextService {
     public text: object = {
         introduction: `
-            # Table 表格
+            # Table Basic 表格
 
             展示行列数据。
 
@@ -66,7 +66,7 @@ export class TableBasicTextService {
             ## 示例
         `,
         basic: `
-            ### 基础表格(行高为40px)
+            ### 基础用法
 
             适用于一般数据的展示。
         `,

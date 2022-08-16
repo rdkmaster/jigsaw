@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../../demo/demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../../libs/markdown/markdown';
+import {DemoTemplateModule} from '../../demo-template/demo-template';
+import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
 import {
     JigsawPaginationModule,
     JigsawTableModule,
@@ -106,7 +106,7 @@ import {TableSwimLaneCell} from "./swim-lane-diagram/table-renderer";
 })
 export class TableRendererDemoModule {
     constructor(translateService: TranslateService) {
-        //增加自定义词条，最后一个参数必须是true
+        // 增加自定义词条，最后一个参数必须是true
         translateService.setTranslation('zh', {
             title: {
                 neName: "网元名称",

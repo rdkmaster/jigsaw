@@ -18,22 +18,22 @@ export class LoadingTextService {
             ## 示例
         `,
         basic: `
-            ### 基础加载
+            ### 基础用法
         `,
         ball: `
-            ### 球状加载
+            ### 球状Loading
         `,
         bubble: `
-            ### 冒泡状加载
+            ### 冒泡状Loading
         `,
         fontIcon: `
-            ### Font-icon
+            ### 图标Loading
         `,
         circle: `
-            ### Circle
+            ### 圆形Loading
         `,
         color: `
-            ### Color
+            ### Loading的颜色
             `,
         customize: `
             ### 定制加载样式

@@ -8,10 +8,12 @@ export class TabTextService {
         introduction: `
             # Tabs 选项卡
 
+            选项卡切换组件。提供平级的区域将大块内容进行收纳和展现，保持界面整洁。
+
             ## 示例
         `,
         basic: `
-            ### 基础选项卡
+            ### 基础用法
 
             此demo主要描述tab的基本用法，包括如何使用渲染器来丰富tab头
 

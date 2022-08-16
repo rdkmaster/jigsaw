@@ -4,8 +4,7 @@ import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
     selector: "select-option-count",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class SelectOptionCountDemoComponent {

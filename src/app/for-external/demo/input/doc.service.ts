@@ -18,9 +18,8 @@ export class InputTextService {
             ## 示例
         `,
         basic: `
-            ### 单行文本框
+            ### 基础用法
 
-            基础
             单行文本框默认高度为大尺寸32px，长度根据实际内容设定，同一个表单中输入框尽量保持整齐；
             中尺寸单行文本框高度为28px；
             小尺寸单行文本框高度为24px。
@@ -29,11 +28,6 @@ export class InputTextService {
             ### 密码输入框
 
             根据业务需求，可选择使用一般密码输入框或带显示/隐藏密码功能的输入框。
-        `,
-        valueChange: `
-            ### 监听value变化
-
-            通过\`valueChange\`事件监听value变化
         `,
         clearable: `
             ### 关闭清除功能
@@ -46,22 +40,8 @@ export class InputTextService {
 
             使用控件的输入输出属性，设定图标并监听点击事件。
         `,
-        disabled: `
-            ### 禁用
-        `,
-        valid: `
-            ### valid 不知道名字
-        `,
-        select: `
-            ### 自动选中文本
-        `,
         prefixSuffix: `
             ### 组合输入框
-        `,
-        ignoreBlurOnclear: `
-            ### ignoreBlurOnclear 不知道
-
-            点击按钮打开表单，尝试编辑表单，在单元格不失去焦点的情况下点击修改按钮，即可看到数据已经修改的提示。
         `
     }
 }

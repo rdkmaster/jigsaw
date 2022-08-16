@@ -8,7 +8,7 @@ export class SearchInputTextService {
         introduction: `
             # Search 搜索框
 
-            输入数据，在输入的同时进行搜索。
+            输入数据，在输入后进行搜索。
 
             ## 使用场景
 

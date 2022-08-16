@@ -17,16 +17,10 @@ export class SliderTextService {
             ## 示例
         `,
         basic: `
-            ### 基本滑动条,滑动事件变化
+            ### 基本用法
         `,
         setMinMax: `
-            ### 设置了min和max的滑动条
-        `,
-        changeStep: `
-            ### 改变step
-        `,
-        doubleContact: `
-            ### 双触点滑动条
+            ### 设置最值
         `,
         mark: `
             ### 带标记滑动条
@@ -36,8 +30,8 @@ export class SliderTextService {
 
             垂直滑动条有默认高度240px
         `,
-        update: `
-            ### 更新value
+        step: `
+            ###　粒度
         `,
         multiValue: `
             ### 多个值情形

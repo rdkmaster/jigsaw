@@ -22,40 +22,40 @@ export class SelectTextService {
             当选项超过8条时，下拉框出滚动条。
         `,
         basic: `
-            ## 基础下拉框
+            ### 基础用法
 
             已选项用蓝色背景标识，中尺寸单选下拉框适用于紧凑型表单，小尺寸单选下拉框适用于表单。
         `,
         string: `
-            ## 数据来自字符串数组
+            ### 数据来自字符串数组
         `,
         optionCount: `
-            ## option-count
+            ### 显示数量
         `,
         lineEllipsis: `
-            ## 文本溢出
+            ### 文本溢出
 
             combo里的tag的最大宽度是76px，文本超出会显示省略号，鼠标移上去会有提示
         `,
         trigger: `
-            ## 下拉打开方式
+            ### 下拉打开方式
         `,
         searchable: `
-            ## Searchable
+            ### 搜索功能
         `,
         clearable: `
-            ## 清除功能
+            ### 清除功能
         `,
         multipleSelect: `
-            ## 不知道名字
+            ### 可多选
         `,
         optionWidth: `
-            ## 设置下拉列表宽度
+            ### 设置下拉列表宽度
 
             这个Demo演示了通过optionWidth属性来使得下拉列表的宽度变大的效果
         `,
        interaction: `
-            ## 联动
+            ### 联动
        `,
     }
 }

@@ -8,6 +8,8 @@ export class ListTextService {
         introduction: `
             # List 列表
 
+            最基础的列表展示，可承载文字、列表、图片、段落，常用于后台数据展示页面。
+
             ## 示例
         `,
         basic: `
@@ -17,7 +19,7 @@ export class ListTextService {
             ### 多组件复合用法
         `,
         withComboSelect: `
-            ### 与combo-select组合使用
+            ### 带下拉框
         `,
         menu: `
             ### 伪装成菜单

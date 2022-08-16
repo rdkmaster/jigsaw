@@ -21,16 +21,13 @@ export class ProgressTextService {
             ## 示例
         `,
         basic: `
-            ### 进度条
+            ### 基础用法
         `,
         functional: `
-            ### 图标形进度条，表格中的进度条
+            ### 四种状态
          `,
         textTop: `
             ### 文字在顶部
-        `,
-        status: `
-            ## 四种状态
         `,
         textFollow: `
             ### 用于卡片的巨型进度条
@@ -38,14 +35,5 @@ export class ProgressTextService {
         circle: `
             ## 圆形进度条
         `,
-        estimation: `
-            ## 估计进度
-
-            不是所有任何情况下都可以给定精确的进度值的，但一个事务大约需要花掉的时间，是相对容易预估出来的。
-            此时，可以调用此方法来让进度条继续往前走，给用户一个假象，这样比卡着不动的体验会好许多。
-        `,
-        top: `
-            ## 弹出顶部进度条
-        `
     }
 }

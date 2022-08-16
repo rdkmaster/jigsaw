@@ -45,13 +45,13 @@ export class GraphTextService {
         ### 模拟迁徙
         `,
         noData: `
-        ### 没有数据测试
+        ### 没有数据
         `,
         pie: `
         ### 饼图
         `,
         provinceMap: `
-        ### Province-Map
+        ### 省份地图
         `,
         radar: `
         ### 雷达图

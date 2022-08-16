@@ -67,6 +67,7 @@ import { TableBasicAllComponent } from "./demo/table-basic/demo.component";
 import {TableActionsAllComponent} from "./demo/table-actions/demo.component";
 import {TableColumnDefinesAllComponent} from "./demo/table-column-defines/demo.component";
 import {TableBigDataAllComponent} from "./demo/table-big-data/demo.component";
+import {TableRendererAllComponent} from "./demo/table-renderer/demo.component";
 
 export const routerConfigPC = [
     { path: "demo/example", component: ExampleDemoComponent },
@@ -117,7 +118,7 @@ export const routerConfigPC = [
     { path: "demo/date-picker", component: DatePickerAllComponent },
     { path: "demo/data-time-picker", component: DateTimePickerAllComponent },
     { path: "demo/table-basic", component: TableBasicAllComponent },
-    { path: "demo/radio-group", component: RadioGroupDemoComponent },
+    { path: "demo/radio", component: RadioGroupDemoComponent },
     { path: "demo/switch", component: SwitchDemoComponent },
     { path: "demo/alphabetical-index", component: AlphabeticalIndexDemoComponent },
     { path: "demo/rate", component: RateDemoComponent },
@@ -147,7 +148,8 @@ export const routerConfigPC = [
     { path: "demo/float", component: FloatDemoComponent },
     { path: "demo/table-actions", component: TableActionsAllComponent},
     { path: "demo/table-column-defines", component: TableColumnDefinesAllComponent},
-    { path: "demo/table-big-data", component: TableBigDataAllComponent}
+    { path: "demo/table-big-data", component: TableBigDataAllComponent},
+    { path: "demo/table-renderer", component: TableRendererAllComponent}
 
 ];
 export const routerConfigMobile = [];

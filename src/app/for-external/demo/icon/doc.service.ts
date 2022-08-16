@@ -8,10 +8,12 @@ export class IconTextService {
         introduction: `
             # Icon 图标
 
+            语义化的矢量图形。
+
             ## 示例
         `,
         basic: `
-            ### 仅图标
+            ### 基础用法
 
             只有图标，没有文字。
         `,

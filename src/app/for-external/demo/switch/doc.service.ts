@@ -18,7 +18,7 @@ export class SwitchTextService {
             ## 示例
         `,
         basic: `
-            ### 基础开关
+            ### 基础用法
         `,
         withText: `
             ### 带文字开关

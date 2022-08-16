@@ -4,7 +4,6 @@ import { DemoTemplateModule } from "../../demo-template/demo-template";
 import { CommonModule } from "@angular/common";
 import { JigsawButtonModule, JigsawSwitchModule, JigsawSliderModule } from "jigsaw/public_api";
 import { SliderStepDemoComponent } from "./step/demo.component";
-import { SliderChangeStepDemoComponent } from "./change-step/demo.component";
 import { SliderBasicDemoComponent } from "./basic/demo.component";
 import { SliderSetMinMaxDemoComponent } from "./min-max/demo.component";
 import { SliderMultiValueDemoComponent } from "./multi-value/demo.component";
@@ -25,7 +24,6 @@ import { SliderVerticalDemoComponent } from "./vertical/demo.component";
     declarations: [
         SliderDemoComponent,
         SliderStepDemoComponent,
-        SliderChangeStepDemoComponent,
         SliderBasicDemoComponent,
         SliderSetMinMaxDemoComponent,
         SliderMultiValueDemoComponent,

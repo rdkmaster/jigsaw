@@ -8,7 +8,7 @@ export class RadioTextService {
         introduction: `
             # Radio 单选框
 
-            单选框
+            在一组备选项中进行单选。
 
             ## 使用场景
 
@@ -16,25 +16,19 @@ export class RadioTextService {
             Radio 所有选项默认可见，方便用户在比较中选择，因此选项不宜过多。
 
             ## 示例
-
-            ### 基础单选框
         `,
-        // basic: `
-        //
-        //     点击圆圈，实施对圆圈对应的标签项的选择，只能单选，可以通过设置<code>value</code>的值取消单选。
-        // `,
         dataIsObejct: `
-            #### 数据是对象数组
+            ### 数据是对象数组
 
-            数据是对象数组时必须输入<code>trackItemBy</code>。
+            数据是对象数组时必须输入\`trackItemBy\`。
         `,
         dataIsStringArray: `
-            #### 数据是字符串数组
+            ### 数据是字符串数组
 
-            数据是对象数组时不需要输入<code>trackItemBy</code>。
+            数据是对象数组时不需要输入\`trackItemBy\`。
         `,
         complexScene: `
-            ### 复杂的场景
+            ### 复杂场景
         `,
         trackItemBy: `
             ### 单选按钮-TrackItemBy

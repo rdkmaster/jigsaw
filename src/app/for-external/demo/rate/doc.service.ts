@@ -6,21 +6,22 @@ import {Injectable} from '@angular/core';
 export class RateTextService {
     public text: object = {
         introduction: `
-           # Rate
+           # Rate 评分
 
-              打分
+           评分组件
+
+           ## 使用场景
+
+           - 对评价进行展示。
+           - 对事物进行快速的评级操作。
 
            ## 示例
         `,
         basic: `
-           ### 基本
-
-           基本用法
+           ### 基本用法
         `,
         half: `
-           ### 半星
-
-           支持选中半星
+           ### 支持选中半星
         `,
     }
 }

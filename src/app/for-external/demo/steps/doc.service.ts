@@ -30,22 +30,6 @@ export class StepsTextService {
         overLength: `
             ### 标题和描述过长时的表现
         `,
-        context: `
-            ### context属性
-
-            这个demo演示steps的数据中，context属性的用法。
-        `,
-        noData: `
-            ### Pagination空数据
-
-            此Demo展示了Pagination组件在空数据/数据延迟设置时的表现。
-        `,
-        gotoStep: `
-            ### 跳转方式
-        `,
-        events: `
-            ### 事件
-        `,
         manySteps: `
             ### 步骤数量极端的情况
 

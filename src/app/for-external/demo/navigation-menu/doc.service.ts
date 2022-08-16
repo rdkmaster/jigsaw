@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class NavigationMenuTextService {
     public text: object = {
         introduction: `
-            # Menu 菜单
+            # Navigation Menu 导航菜单
 
            为页面和功能提供导航的菜单列表。
 

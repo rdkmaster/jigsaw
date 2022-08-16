@@ -3,7 +3,7 @@ import {DemoTemplateModule} from '../../demo-template/demo-template';
 import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
 import {MovableAllComponent} from "./demo.component";
 import {JigsawMovableModule, JigsawAlertModule, JigsawButtonModule} from "jigsaw/public_api";
-import {MoveAndClickBasicDemoComponent} from "./move-and-click/demo.component";
+import {MoveAndClickBasicDemoComponent} from "./basic/demo.component";
 
 @NgModule({
     declarations: [
@@ -16,7 +16,6 @@ import {MoveAndClickBasicDemoComponent} from "./move-and-click/demo.component";
         JigsawMovableModule,
         JigsawAlertModule,
         JigsawButtonModule
-
     ]
 })
 export class MovableDemoModule {

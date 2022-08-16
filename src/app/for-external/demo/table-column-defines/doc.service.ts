@@ -6,7 +6,7 @@ import {Injectable} from '@angular/core';
 export class TableColumnDefinesTextService {
     public text: object = {
         introduction: `
-            # Table 表格
+            # Table Column Defines 表格
 
             展示行列数据。
 
@@ -65,18 +65,8 @@ export class TableColumnDefinesTextService {
 
             ## 示例
         `,
-        basic: `
-            ## 基础表格(行高为40px)
-
-            适用于一般数据的展示。
-        `,
         alignContent: `
             ### 对齐方式
-        `,
-        columnWidth: `
-            ### 自定义列宽
-
-            演示了设置表格列宽的效果，下表第一列固定50px，第二列按内容撑开，第三列固定100px，其他列由表格分配。
         `,
         columnVisible: `
             ### 显示列
