@@ -4,9 +4,27 @@
         [multipleSelect]="false" (selectedItemsChange)="onClick($event[0])" colorType="default" height="28">
     </jigsaw-button-bar>
 
-    <div class="demo-content" [ngClass]="{'no-content': !data}">
+    <div class="demo-content">
         <ng-content></ng-content>
     </div>
 
-    <a>查看本DEMO源码</a>
+    <div #codeCntr class="demo-code">
+        <jigsaw-tabs (selectChange)="reRunPrism()">
+            <ng-container *ngFor="let code of codes">
+                <jigsaw-tab-pane>
+                    <div jigsaw-title>{{code.label}}</div>
+                    <ng-template>
+                        <pre class="line-numbers">
+                            <code class="language-{{code.language}}">{{code.value}}</code>
+                    </pre>
+                    </ng-template>
+                </jigsaw-tab-pane>
+            </ng-container>
+        </jigsaw-tabs>
+    </div>
+
+    <div class="demo-button">
+        <i *ngIf="!expand" class="iconfont iconfont-e8b6" (click)="showCode()">查看源码</i>
+        <i *ngIf="expand" class="iconfont iconfont-e8b5" (click)="hideCode()">隐藏源码</i>
+    </div>
 </div>

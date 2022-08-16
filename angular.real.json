@@ -186,7 +186,8 @@
             "extractCss": true,
             "assets": [
               "src/app/libs/favicon.ico",
-              "src/app/for-external/demo/pc/tree/icon/assets"
+              "src/app/for-external/demo/pc/tree/icon/assets",
+              "src/app/for-external/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
