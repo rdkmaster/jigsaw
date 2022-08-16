@@ -3,7 +3,7 @@
     border: 1px solid #D9D9D9;
     border-radius: 4px;
     margin-top: 34px;
-    padding-bottom: 32px;
+    padding: 12px 32px 32px 32px;
 
     &.no-handler {
         margin-top: 15px;
@@ -11,24 +11,19 @@
 
     .demo-handler {
         position: relative;
-        top: -13px;
-        left: 30px;
+        top: -26px;
+        left: 24px;
         background: #fff;
     }
 
     .demo-content {
-        margin: 12px 32px 0px 32px;
+        padding-bottom: 16px;
         border-bottom: 1px dashed #D9D9D9;
-    }
-
-    .demo-content.no-content {
-        margin: 20px 30px 0px 30px;
     }
 
     .demo-code {
         height: 0;
         overflow: hidden;
-        transition: height .2s;
     }
 
     .demo-button {
