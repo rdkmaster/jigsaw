@@ -6,17 +6,18 @@ import {FloatTextService} from "../doc.service";
     selector: 'float-multi-level',
     templateUrl: './demo.component.html',
     styles: [`
-               .menu{
-                     margin:100px;
-                     border:1px solid #999;
-                     padding: 2px 10px;
-                     border-radius: 3px;
-               }
+        .menu {
+            margin: 100px;
+            border: 1px solid #999;
+            padding: 2px 10px;
+            border-radius: 3px;
+        }
     `]
 })
 export class FloatMultiLevelDemoComponent {
     public data: SimpleTreeData;
-    constructor( public text: FloatTextService) {
+
+    constructor(public text: FloatTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

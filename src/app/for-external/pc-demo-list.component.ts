@@ -6,7 +6,7 @@ import { routerConfigPC } from "./router-config";
     template: `
         <div *ngFor="let router of routes; index as i">
             <span>{{i+1}}.</span>
-            <a routerLink="{{getUrl(router)}}">{{router.path.replace('pc/', '')}}</a>
+            <a routerLink="{{getUrl(router)}}">{{router.path.replace('demo/', '')}}</a>
             <br/>
         </div>
     `
