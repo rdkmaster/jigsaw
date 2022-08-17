@@ -203,12 +203,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._fileInputElement.setAttribute('multiple', 'true');
         } else {
             this._fileInputElement.removeAttribute('multiple');
-            this.clear();
         }
         this._fileInputElement.setAttribute('accept', this.fileType);
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputElement, 'change', () => {
+                if (!this.multiple) {
+                    this.clear();
+                }
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
@@ -367,6 +369,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
+
+        if (!this.multiple) {
+            return;
+        }
 
         const waitingFile = this.files.find(f => f.state == 'pause');
         if (waitingFile) {
