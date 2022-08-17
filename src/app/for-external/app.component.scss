@@ -6,13 +6,14 @@
         align-items: center;
         margin-bottom: 16px;
 
+        >* {
+            margin-right: 8px;
+        }
+
         >span {
             margin-right: 24px;
         }
 
-        >*:not(:first-child) {
-            margin-right: 8px;
-        }
     }
 
     .demo-showcase-v {
@@ -20,12 +21,13 @@
         flex-direction: column;
         margin-bottom: 16px;
 
+        >* {
+            margin-bottom: 8px;
+        }
+
         >span {
             margin-bottom: 8px;
         }
 
-        >*:not(:first-child) {
-            margin-bottom: 8px;
-        }
     }
 }
