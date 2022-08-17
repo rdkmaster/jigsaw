@@ -1,0 +1,31 @@
+.app-wrap {
+    padding: 6px;
+
+    .demo-showcase {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        >span {
+            margin-right: 24px;
+        }
+
+        >*:not(:first-child) {
+            margin-right: 8px;
+        }
+    }
+
+    .demo-showcase-v {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        >span {
+            margin-bottom: 8px;
+        }
+
+        >*:not(:first-child) {
+            margin-bottom: 8px;
+        }
+    }
+}
