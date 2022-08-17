@@ -203,6 +203,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._fileInputElement.setAttribute('multiple', 'true');
         } else {
             this._fileInputElement.removeAttribute('multiple');
+            this.clear();
         }
         this._fileInputElement.setAttribute('accept', this.fileType);
 
@@ -224,10 +225,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return false;
         }
         const files = this._checkFiles(Array.from(fileInput.files || []));
-        if (!this.multiple) {
-            this.files.splice(0, this.files.length);
-            files.splice(1, files.length);
-        }
         fileInput.value = null;
         this.files.push(...files);
         if (files.length > 0) {
