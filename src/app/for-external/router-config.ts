@@ -67,9 +67,10 @@ import { TableActionsAllComponent } from "./demo/table-actions/demo.component";
 import { TableColumnDefinesAllComponent } from "./demo/table-column-defines/demo.component";
 import { TableBigDataAllComponent } from "./demo/table-big-data/demo.component";
 import { TableRendererAllComponent } from "./demo/table-renderer/demo.component";
+import { componentGroup } from './pc-demo-list.component';
 
 export const routerConfigPC = [
-    { path: "demo/alert", component: AlertDemoComponent },
+    { path: "demo/alert", component: AlertDemoComponent, group: componentGroup.message.id },
     {
         path: "demo/breadcrumb", component: BreadcrumbAllComponent,
         children: [
@@ -82,7 +83,8 @@ export const routerConfigPC = [
             {
                 path: 'buy/:id', component: BreadcrumbRouterBuy
             }
-        ]
+        ],
+        group: componentGroup.navigation.id
     },
     { path: "demo/combo-select", component: ComboSelectComponent },
     { path: "demo/auto-complete-input", component: AutoCompleteInputDemoComponent },

@@ -59,3 +59,15 @@ export class DemoListManager {
         return rc;
     }
 }
+
+export const componentGroup = {
+    general: { label: '通用', id: 1 },
+    entry: { label: '数据输入', id: 2 },
+    display: { label: '数据呈现', id: 3 },
+    navigation: { label: '导航', id: 4 },
+    message: { label: '消息与反馈', id: 5 },
+    container: { label: '容器', id: 6 },
+    layout: { label: '布局', id: 7 },
+    schema: { label: '模式', id: 8 },
+    other: { label: '其他', id: 9 }
+}

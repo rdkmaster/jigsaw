@@ -94,17 +94,16 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
     declarations: [
         AppComponent, PCDemoListComponent, SwitchDemoComponent
     ],
-    imports: [
+    imports: [RouterModule.forRoot([
+        ...routerConfig,
+        { path: '', component: SwitchDemoComponent },
+        { path: 'demo', component: PCDemoListComponent },
+        { path: '**', redirectTo: '/' }
+    ], { useHash: true }), TranslateModule.forRoot(),
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
         ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
         BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule, RangeDateTimeDemoModule, DatePickerDemoModule,
-        RouterModule.forRoot([
-            ...routerConfig,
-            { path: '', component: SwitchDemoComponent },
-            { path: 'demo', component: PCDemoListComponent },
-            { path: '**', redirectTo: '/' }
-        ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
         JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
@@ -113,7 +112,7 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
         GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule, TableBasicDemoModule, TableActionsDemoModule,
-        TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
+        BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
         TableColumnDefinesDemoModule, TableBigTableDemoModule, TableRendererDemoModule
     ],
     providers: [
