@@ -1,4 +1,3 @@
-import { ExampleDemoComponent } from './demo/example/demo.component';
 import { AlertDemoComponent } from "./demo/alert/demo.component";
 import { AutoCompleteInputDemoComponent } from "./demo/auto-complete-input/demo.component";
 import { HeaderDemoComponent } from "./demo/header/demo.component";
@@ -64,13 +63,12 @@ import { RangeDataTimePickerAllComponent } from "./demo/range-date-time-picker/d
 import { DatePickerAllComponent } from "./demo/date-picker/demo.component";
 import { DateTimePickerAllComponent } from "./demo/date-time-picker/demo.component";
 import { TableBasicAllComponent } from "./demo/table-basic/demo.component";
-import {TableActionsAllComponent} from "./demo/table-actions/demo.component";
-import {TableColumnDefinesAllComponent} from "./demo/table-column-defines/demo.component";
-import {TableBigDataAllComponent} from "./demo/table-big-data/demo.component";
-import {TableRendererAllComponent} from "./demo/table-renderer/demo.component";
+import { TableActionsAllComponent } from "./demo/table-actions/demo.component";
+import { TableColumnDefinesAllComponent } from "./demo/table-column-defines/demo.component";
+import { TableBigDataAllComponent } from "./demo/table-big-data/demo.component";
+import { TableRendererAllComponent } from "./demo/table-renderer/demo.component";
 
 export const routerConfigPC = [
-    { path: "demo/example", component: ExampleDemoComponent },
     { path: "demo/alert", component: AlertDemoComponent },
     {
         path: "demo/breadcrumb", component: BreadcrumbAllComponent,
@@ -146,11 +144,10 @@ export const routerConfigPC = [
     { path: "demo/data-encapsulation", component: DataEncapsulationDemoComponent },
     { path: "demo/graph", component: GraphDemoComponent },
     { path: "demo/float", component: FloatDemoComponent },
-    { path: "demo/table-actions", component: TableActionsAllComponent},
-    { path: "demo/table-column-defines", component: TableColumnDefinesAllComponent},
-    { path: "demo/table-big-data", component: TableBigDataAllComponent},
-    { path: "demo/table-renderer", component: TableRendererAllComponent}
-
+    { path: "demo/table-actions", component: TableActionsAllComponent },
+    { path: "demo/table-column-defines", component: TableColumnDefinesAllComponent },
+    { path: "demo/table-big-data", component: TableBigDataAllComponent },
+    { path: "demo/table-renderer", component: TableRendererAllComponent }
 ];
 export const routerConfigMobile = [];
 export const routerConfig = [...routerConfigPC, ...routerConfigMobile];
