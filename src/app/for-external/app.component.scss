@@ -2,6 +2,7 @@
     padding: 6px;
 
     .demo-showcase {
+
         display: flex;
         align-items: center;
         margin-bottom: 16px;
@@ -12,13 +13,16 @@
 
         >span {
             margin-right: 24px;
+            font-weight: bold;
         }
+
 
     }
 
     .demo-showcase-v {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         margin-bottom: 16px;
 
         >* {
@@ -27,7 +31,7 @@
 
         >span {
             margin-bottom: 8px;
+            font-weight: bold;
         }
-
     }
 }
