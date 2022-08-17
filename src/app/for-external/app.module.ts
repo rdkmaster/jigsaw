@@ -22,7 +22,6 @@ import { AjaxInterceptor } from '../libs/app.interceptor';
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./pc-demo-list.component";
 import { SwitchDemoComponent } from "./switch-demo.component";
-import { DemoCodeComponent } from "./demo-code.component";
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";
@@ -93,7 +92,7 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 
 @NgModule({
     declarations: [
-        AppComponent, PCDemoListComponent, SwitchDemoComponent, DemoCodeComponent
+        AppComponent, PCDemoListComponent, SwitchDemoComponent
     ],
     imports: [
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
@@ -104,11 +103,6 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
             ...routerConfig,
             { path: '', component: SwitchDemoComponent },
             { path: 'demo', component: PCDemoListComponent },
-            {
-                path: 'demo-code', component: DemoCodeComponent, children: [
-                    { path: '**', component: DemoCodeComponent }
-                ]
-            },
             { path: '**', redirectTo: '/' }
         ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
