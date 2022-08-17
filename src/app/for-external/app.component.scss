@@ -1,0 +1,33 @@
+.app-wrap {
+    padding: 6px;
+
+    .demo-showcase {
+        display: flex;
+        align-items: center;
+        margin-bottom: 16px;
+
+        >* {
+            margin-right: 8px;
+        }
+
+        >span {
+            margin-right: 24px;
+        }
+
+    }
+
+    .demo-showcase-v {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 16px;
+
+        >* {
+            margin-bottom: 8px;
+        }
+
+        >span {
+            margin-bottom: 8px;
+        }
+
+    }
+}
