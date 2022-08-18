@@ -716,6 +716,24 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent($event.label)
     }
 
+    private _formatData(data: any): { label: string }[] {
+        if (!(data instanceof Array) && !(data instanceof ArrayCollection)) {
+            return data;
+        }
+        return data.map(item => {
+            if (!item || item.hasOwnProperty('label')) {
+                // !item 表示下拉选项转成横线的情况
+                return item;
+            }
+            if (item && typeof item == 'object') {
+                // item是非法对象
+                console.error('the data of table select renderer must be type of Array<{label: string} | string>');
+                return item;
+            }
+            return {label: item};
+        })
+    }
+
     protected onDataRefresh() {
         if (this.initData instanceof Function) {
             const data = this.initData(this.tableData, this.row, this.column);
@@ -725,7 +743,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                     value => {
                         subscription.unsubscribe();
                         if (!this._hasDestroyed) {
-                            this.data = value;
+                            this.data = this._formatData(value);
                             this._changeDetector.detectChanges();
                         }
                     },
@@ -738,10 +756,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                         }
                     });
             } else {
-                this.data = data;
+                this.data = this._formatData(data);
             }
         } else {
-            this.data = this.initData;
+            this.data = this._formatData(this.initData);
         }
         this._changeDetector.markForCheck();
     }
