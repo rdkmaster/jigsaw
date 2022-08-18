@@ -27,7 +27,7 @@ jobs:
             - run:
                 name: Static Tests
                 command: |
-#                    node build/scripts/check-demo-import.js
+                    # node build/scripts/check-demo-import.js
                     node build/scripts/check-html-element-type.js
                     node build/scripts/check-import-path.js
                     node build/scripts/check-mark-for-check.js
