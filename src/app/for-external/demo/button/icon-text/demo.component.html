@@ -1,7 +1,8 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['iconText']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['iconText']" [codes]="text['codes']['iconText']">
     <div class="demo-showcase">
         <span>简约</span>
-        <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="none" [preSize]="selectedLabel.size">
+        <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="none"
+            [preSize]="selectedLabel.size">
             新增参数
         </jigsaw-button>
     </div>
@@ -29,7 +30,5 @@
             <span>图标在右侧</span>
             <span class="iconfont iconfont-e9ff"></span>
         </j-button>
-
     </div>
 </demo-template>
-

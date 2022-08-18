@@ -17,6 +17,7 @@ export class DemoTemplate implements AfterViewInit {
 
     @ViewChild('codeCntr')
     codeCntr: ElementRef;
+    
     @ViewChild('demoContent')
     demoContent: ElementRef;
 

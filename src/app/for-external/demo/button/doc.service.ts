@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
@@ -64,5 +64,52 @@ export class ButtonTextService {
         login: `
             ### 登录按钮
         `
+    }
+
+    public codes = {
+        key: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./key/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./key/demo.component.ts').default }
+        ],
+        primary: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./primary/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./primary/demo.component.ts').default }
+        ],
+        common: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./common/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./common/demo.component.ts').default }
+        ],
+        icon: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icon/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icon/demo.component.ts').default }
+        ],
+        iconText: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icon-text/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icon-text/demo.component.ts').default }
+        ],
+        loading: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./loading/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./loading/demo.component.ts').default }
+        ],
+        text: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./text/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./text/demo.component.ts').default }
+        ],
+        withChartIcon: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-chart-icon/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-chart-icon/demo.component.ts').default }
+        ],
+        functional: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./functional/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./functional/demo.component.ts').default }
+        ],
+        directive: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./directive/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./directive/demo.component.ts').default }
+        ],
+        login: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./login/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./login/demo.component.ts').default }
+        ]
     }
 }

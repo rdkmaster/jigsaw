@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
-export class AlphabeticalTextService {
-    public text: object = {
+export class AlphabeticalDocService {
+    public text = {
         introduction: `
             # Alphabetical-Index 字母索引
 

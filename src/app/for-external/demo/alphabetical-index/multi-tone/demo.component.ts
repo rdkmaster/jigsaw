@@ -1,13 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { ArrayCollection, InternalUtils, PinyinDictionary } from 'jigsaw/public_api';
-import { AlphabeticalTextService } from "../doc.service";
+import { AlphabeticalDocService } from "../doc.service";
 
 @Component({
     selector: "alphabetical-index-multi-tone",
     templateUrl: "./demo.component.html",
 })
 export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
-    constructor(public text: AlphabeticalTextService) {
+    constructor(public doc: AlphabeticalDocService) {
     }
     public pinyinDictionary: PinyinDictionary = {
         "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",

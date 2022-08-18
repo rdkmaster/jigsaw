@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
-import { AlphabeticalTextService } from "../doc.service";
+import { AlphabeticalDocService } from "../doc.service";
 
 @Component({
     selector: "alphabetical-index-dictionary",
     templateUrl: "./demo.component.html",
 })
 export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
-    constructor(public text: AlphabeticalTextService) {
+    constructor(public doc: AlphabeticalDocService) {
     }
     public mixCountries = [];
     public selected: string = '<无>';
