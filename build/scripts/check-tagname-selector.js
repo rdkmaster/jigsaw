@@ -11,7 +11,7 @@ if (hasError) {
 }
 
 function checkAll() {
-    const cmpHome = path.resolve(`${__dirname}/../../src/app/demo/pc`);
+    const cmpHome = path.resolve(`${__dirname}/../../src/app/for-internal/demo/pc`);
     const cmpFolders = fs.readdirSync(cmpHome);
     cmpFolders.forEach(cmpFolder => {
         const pathname = path.join(cmpHome, cmpFolder);
