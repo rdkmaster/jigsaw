@@ -1,7 +1,14 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['objectsArray']">
-    <jigsaw-button-bar [(selectedItems)]="selectedCity" [data]="cities" [multipleSelect]="multiple"
-                       [preSize]="selectedLabel.size"
-                       (selectedItemsChange)="selectChange($event)" colorType="default" optionWidth=80>
-    </jigsaw-button-bar>
-    <p>选择的城市是：{{selectedCityStr}}</p>
+    <div class="demo-showcase">
+        <jigsaw-button-bar
+            [(selectedItems)]="selectedCity"
+            [data]="cities"
+            [multipleSelect]="multiple"
+            [preSize]="selectedLabel.size"
+            (selectedItemsChange)="selectChange($event)"
+            colorType="default"
+            optionWidth="80"
+        >
+        </jigsaw-button-bar>
+    </div>
 </demo-template>

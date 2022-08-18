@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {ButtonBarTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ButtonBarTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -8,10 +8,10 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class ButtonBarSetHeightComponent {
-    public selectedLabel = {label: "大", size: "default"};
+    public selectedLabel = { label: "大", size: "default" };
     public data: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "大", size: "default"}
+        { label: "小", size: "small" },
+        { label: "大", size: "default" }
     ]);
     multiple: boolean = false;
     selectedCityStr: string;
@@ -22,5 +22,5 @@ export class ButtonBarSetHeightComponent {
         this.selectedCityStr = cityArr.join(',');
     }
 
-    constructor(public text: ButtonBarTextService) {}
+    constructor(public text: ButtonBarTextService) { }
 }

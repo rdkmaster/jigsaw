@@ -32,7 +32,7 @@ export class ButtonBarTextService {
         icons: `
             ### 带图标按钮栏
         `,
-        multipleChoice: `
+        multiple: `
             ### 可多选
         `,
         setHeight: `

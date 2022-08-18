@@ -1,8 +1,10 @@
 <demo-template [data]="''" [text]="text['text']['grItems']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-date-time-picker [(date)]="date" [grItems]="grItems"
-                                 (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
-        选择的时间是：{{date | json}}
+        <jigsaw-date-time-picker
+            [(date)]="date"
+            [grItems]="grItems"
+            (dateChange)="dateChange($event)"
+        ></jigsaw-date-time-picker>
     </div>
 </demo-template>

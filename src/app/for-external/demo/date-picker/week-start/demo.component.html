@@ -1,8 +1,12 @@
 <demo-template [data]="''" [text]="text['text']['weekStart']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-date-picker [(date)]="date" [weekStart]="'sun'" [firstWeekMustContains]="4" gr="week"
-                            (dateChange)="dateChange($event)"></jigsaw-date-picker>
-        <p>选择的日期是：{{date | json}}</p>
+        <jigsaw-date-picker
+            [(date)]="date"
+            [weekStart]="'sun'"
+            [firstWeekMustContains]="4"
+            gr="week"
+            (dateChange)="dateChange($event)"
+        ></jigsaw-date-picker>
     </div>
 </demo-template>

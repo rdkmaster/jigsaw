@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {CheckboxTextService} from "../doc.service";
-import {CheckBoxStatus} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { CheckboxTextService } from "../doc.service";
+import { CheckBoxStatus } from "jigsaw/public_api";
 
 @Component({
     selector: "checkbox-minimalist",
@@ -10,6 +10,6 @@ import {CheckBoxStatus} from "jigsaw/public_api";
 export class CheckboxMinimalistComponent {
     status = CheckBoxStatus.indeterminate;
     mode = ['normal'];
-    constructor(public text: CheckboxTextService) {}
+    constructor(public text: CheckboxTextService) { }
 
 }

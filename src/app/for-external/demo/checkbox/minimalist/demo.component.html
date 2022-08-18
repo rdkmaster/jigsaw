@@ -1,6 +1,3 @@
 <demo-template [data]="''" [text]="text['text']['minimalist']">
-    <jigsaw-button-bar [data]="['minimalist','normal']" [(selectedItems)]="mode">
-    </jigsaw-button-bar>
-    <br><br>
-    <jigsaw-checkbox enableIndeterminate="true" [(checked)]="status" [mode]="mode[0]">点击</jigsaw-checkbox>
+    <jigsaw-checkbox enableIndeterminate="true" [(checked)]="status" mode="minimalist">点击</jigsaw-checkbox>
 </demo-template>

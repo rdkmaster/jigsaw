@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {DateTimePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DateTimePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'date-time-picker-basic',

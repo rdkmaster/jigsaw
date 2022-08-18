@@ -127,7 +127,7 @@ export const routerConfigPC = [
     { path: "demo/list-lite", component: ListLiteAllComponent, group: componentGroup.general },
     { path: "demo/range-date-time-picker", component: RangeDataTimePickerAllComponent, group: componentGroup.general },
     { path: "demo/date-picker", component: DatePickerAllComponent, group: componentGroup.general },
-    { path: "demo/data-time-picker", component: DateTimePickerAllComponent, group: componentGroup.general },
+    { path: "demo/date-time-picker", component: DateTimePickerAllComponent, group: componentGroup.general },
     { path: "demo/table-basic", component: TableBasicAllComponent, group: componentGroup.display },
     { path: "demo/radio", component: RadioGroupDemoComponent, group: componentGroup.general },
     { path: "demo/switch", component: SwitchDemoComponent, group: componentGroup.general },

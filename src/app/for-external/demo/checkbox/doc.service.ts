@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -25,12 +25,12 @@ export class CheckboxTextService {
             有三种状态：\`unchecked\` \`checked\` \`indeterminate\`
         `,
         minimalist: `
-            ### 极简和普通模式
+            ### 极简模式
         `,
         checkall: `
-           ### 基础复选框全选
+            ### 基础复选框全选
 
-           勾选所有复选框，可实现全选效果。
+            勾选所有复选框，可实现全选效果。
         `
     }
 }

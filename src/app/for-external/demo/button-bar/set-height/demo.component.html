@@ -1,7 +1,12 @@
 <demo-template [data]="''" [text]="text['text']['setHeight']">
-    <jigsaw-button-bar [(selectedItems)]="selectedCity" [data]="cities" [multipleSelect]="multiple"
-                       height="60"
-                       (selectedItemsChange)="selectChange($event)">
-    </jigsaw-button-bar>
-    <p>选择的城市是：{{selectedCityStr}}</p>
+    <div class="demo-showcase">
+        <jigsaw-button-bar
+            [(selectedItems)]="selectedCity"
+            [data]="cities"
+            [multipleSelect]="multiple"
+            height="60"
+            (selectedItemsChange)="selectChange($event)"
+        >
+        </jigsaw-button-bar>
+    </div>
 </demo-template>
