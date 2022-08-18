@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_api';
-import {AlphabeticalTextService} from "../doc.service";
+import { Component, OnInit } from "@angular/core";
+import { ArrayCollection, InternalUtils, PinyinDictionary } from 'jigsaw/public_api';
+import { AlphabeticalTextService } from "../doc.service";
 
 @Component({
     selector: "alphabetical-index-multi-tone",
@@ -72,7 +72,7 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
     inputStr: string;
 
     ngOnInit() {
-    this.changeDataType('revise-data')
+        this.changeDataType('revise-data')
     }
 
     private _commonChineseChars = `
@@ -228,4 +228,12 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         娜朦羔酌圃黍蟆呕巍畸擅柑钮畴彬缕屉砚楔腻
     `.replace(/\s/g, '').split('');
     private _visibleAscChars = [];
+
+    // ====================================================================
+    // Ignore the following lines, they are not important to this demo.
+    // ====================================================================
+    codes = [
+        { label: "HTML", language: 'html', value: require('!!raw-loader!./demo.component.html').default, },
+        { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./demo.component.ts').default }
+    ];
 }

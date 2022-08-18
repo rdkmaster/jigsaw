@@ -1,5 +1,4 @@
-import { Component, OnInit } from "@angular/core";
-import { PopupPositionType } from 'jigsaw/public_api';
+import { Component } from "@angular/core";
 import { routerConfigPC, componentGroup } from "../router-config";
 
 @Component({

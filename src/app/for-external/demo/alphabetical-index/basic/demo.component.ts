@@ -1,6 +1,5 @@
-import {Component, OnInit} from "@angular/core";
-import {ArrayCollection, InternalUtils, PinyinDictionary} from 'jigsaw/public_api';
-import {AlphabeticalTextService} from "../doc.service";
+import { Component, OnInit } from "@angular/core";
+import { AlphabeticalTextService } from "../doc.service";
 
 @Component({
     selector: "alphabetical-index-basic",
@@ -105,4 +104,12 @@ export class AlphabeticalIndexBasicDemoComponent implements OnInit {
         })
         this.mixCountries = mixCountries;
     }
+
+    // ====================================================================
+    // Ignore the following lines, they are not important to this demo.
+    // ====================================================================
+    codes = [
+        { label: "HTML", language: 'html', value: require('!!raw-loader!./demo.component.html').default, },
+        { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./demo.component.ts').default }
+    ];
 }

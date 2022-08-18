@@ -1,11 +1,8 @@
-<demo-template [data]="''" [text]="text['text']['permanent']">
+<demo-template [data]="''" [text]="text['text']['permanent']" [codes]="codes">
     <div class="demo-showcase-v">
-       <span>默认归类算法</span>
-            <div class="demo-cntr">
-                <section class="demo-section">
-                    <jigsaw-alphabetical-index width="200px" [data]="data" [pinyinDictionary]="pinyinDictionary">
-                    </jigsaw-alphabetical-index>
-                </section>
-            </div>
+        <section class="demo-section">
+            <jigsaw-alphabetical-index width="200px" [data]="data" [pinyinDictionary]="pinyinDictionary">
+            </jigsaw-alphabetical-index>
+        </section>
     </div>
 </demo-template>
