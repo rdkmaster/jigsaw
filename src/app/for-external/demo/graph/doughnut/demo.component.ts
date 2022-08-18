@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {GraphTextService} from "../demo.service";
+import { Component } from '@angular/core';
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData } from "jigsaw/public_api";
+import { AjaxInterceptor } from "../../../../libs/app.interceptor";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-doughnut',

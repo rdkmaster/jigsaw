@@ -3,22 +3,18 @@
     <div class="demo-showcase">
         <span>正常</span>
         <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="预设数据列表例子" width="280"
-                                    (valueChange)="valueChanged($event)" [data]="_$dropdownData"
-                                    [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
-                                    [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
-                                    (iconSelect)="iconClick($event, 'back')">
+            (valueChange)="valueChanged($event)" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus"
+            [closeDropDownOnSelect]="closeDropDownOnSelect" [preIcon]="preIcons" [icon]="backIcon"
+            (preIconSelect)="iconClick($event, 'pre')" (iconSelect)="iconClick($event, 'back')">
         </jigsaw-auto-complete-input>
-        <p>输入值是: {{message}}</p>
     </div>
 
     <div class="demo-showcase">
         <span>禁用</span>
         <jigsaw-auto-complete-input [(value)]="inputValue" placeholder="预设数据列表例子" width="280"
-                                    (valueChange)="valueChanged($event)" [data]="_$dropdownData"
-                                    [filterOnFocus]="filterOnFocus" [closeDropDownOnSelect]="closeDropDownOnSelect"
-                                    [preIcon]="preIcons" [icon]="backIcon" (preIconSelect)="iconClick($event, 'pre')"
-                                    (iconSelect)="iconClick($event, 'back')"
-                                    [disabled]="true">
+            (valueChange)="valueChanged($event)" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus"
+            [closeDropDownOnSelect]="closeDropDownOnSelect" [preIcon]="preIcons" [icon]="backIcon"
+            (preIconSelect)="iconClick($event, 'pre')" (iconSelect)="iconClick($event, 'back')" [disabled]="true">
         </jigsaw-auto-complete-input>
     </div>
 </demo-template>

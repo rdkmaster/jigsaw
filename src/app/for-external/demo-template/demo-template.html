@@ -4,7 +4,7 @@
         [multipleSelect]="false" (selectedItemsChange)="onClick($event[0])" colorType="default" height="28">
     </jigsaw-button-bar>
 
-    <div class="demo-content">
+    <div #demoContent class="demo-content">
         <ng-content></ng-content>
     </div>
 

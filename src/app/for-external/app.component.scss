@@ -1,7 +1,9 @@
 .app-wrap {
     padding: 6px;
+    font-family: "Helevetica Neue", "PingFang SC", "Tahoma", "Microsoft Yahei";
 
     .demo-showcase {
+
         display: flex;
         align-items: center;
         margin-bottom: 16px;
@@ -12,13 +14,15 @@
 
         >span {
             margin-right: 24px;
+            font-weight: bold;
+            text-align-last: justify;
         }
-
     }
 
     .demo-showcase-v {
         display: flex;
         flex-direction: column;
+        align-items: flex-start;
         margin-bottom: 16px;
 
         >* {
@@ -27,7 +31,7 @@
 
         >span {
             margin-bottom: 8px;
+            font-weight: bold;
         }
-
     }
 }

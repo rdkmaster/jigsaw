@@ -37,6 +37,10 @@
 
         i {
             cursor: pointer;
+
+            &:hover {
+                color: var(--brand-hover);
+            }
         }
     }
 }

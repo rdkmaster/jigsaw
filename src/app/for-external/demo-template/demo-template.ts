@@ -1,4 +1,4 @@
-import { Component, NgModule, Input, Output, EventEmitter, ElementRef, ViewChild, Renderer2 } from '@angular/core';
+import { Component, NgModule, Input, Output, EventEmitter, ElementRef, ViewChild, Renderer2, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
 import { JigsawButtonBarModule, ArrayCollection, JigsawTabsModule } from "jigsaw/public_api";
@@ -11,12 +11,14 @@ declare const Prism: any;
     styleUrls: ['./demo-template.scss']
 })
 
-export class DemoTemplate {
+export class DemoTemplate implements AfterViewInit {
     constructor(private _renderer: Renderer2) {
     }
 
     @ViewChild('codeCntr')
     codeCntr: ElementRef;
+    @ViewChild('demoContent')
+    demoContent: ElementRef;
 
     @Input()
     public text: string = '';
@@ -59,6 +61,22 @@ export class DemoTemplate {
         setTimeout(() => {
             Prism.highlightAll();
         }, 0);
+    }
+
+    ngAfterViewInit() {
+        const spans = this.demoContent.nativeElement.querySelectorAll('.demo-showcase>span');
+        if (spans.length) {
+            let spanWidth = 0;
+            spans.forEach(span => {
+                if (span.offsetWidth > spanWidth) {
+                    spanWidth = span.offsetWidth;
+                }
+            });
+
+            spans.forEach(span => {
+                span.style.width = spanWidth + 'px';
+            })
+        }
     }
 }
 

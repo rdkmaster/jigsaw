@@ -8,38 +8,54 @@
     .md-p {
         margin: 10px 0;
     }
-    .md-blockquote, .md-ul, .md-ol, .md-dl, .md-table, .md-pre {
+
+    .md-blockquote,
+    .md-ul,
+    .md-ol,
+    .md-dl,
+    .md-table,
+    .md-pre {
         margin: 15px 0;
     }
 
     /* HEADERS
     =============================================================================*/
 
-    .md-h1, .md-h2, .md-h3, .md-h4, .md-h5, .md-h6 {
+    .md-h1,
+    .md-h2,
+    .md-h3,
+    .md-h4,
+    .md-h5,
+    .md-h6 {
         margin: 20px 0 10px;
         padding: 0;
-        font-weight: bold;
         -webkit-font-smoothing: antialiased;
     }
 
-    h1.md-h1 tt, h1.md-h1 code,
-    h2.md-h2 tt, h2.md-h2 code,
-    h3.md-h3 tt, h3.md-h3 code,
-    h4.md-h4 tt, h4.md-h4 code,
-    h5.md-h5 tt, h5.md-h5 code,
-    h6.md-h6 tt, h6.md-h6 code {
+    h1.md-h1 tt,
+    h1.md-h1 code,
+    h2.md-h2 tt,
+    h2.md-h2 code,
+    h3.md-h3 tt,
+    h3.md-h3 code,
+    h4.md-h4 tt,
+    h4.md-h4 code,
+    h5.md-h5 tt,
+    h5.md-h5 code,
+    h6.md-h6 tt,
+    h6.md-h6 code {
         font-size: inherit;
     }
 
     .md-h1 {
-        font-size: 28px;
-        color: #000;
+        font-size: 30px;
+        color: rgb(77, 77, 77);
     }
 
     .md-h2 {
         font-size: 24px;
         //border-bottom: 1px solid #ccc;
-        color: #000;
+        color: rgb(77, 77, 77);
     }
 
     .md-h3 {
@@ -59,12 +75,23 @@
         font-size: 14px;
     }
 
-    body>h2:first-child, body>h1:first-child, body>h1:first-child+h2, body>h3:first-child, body>h4:first-child, body>h5:first-child, body>h6:first-child {
+    body>h2:first-child,
+    body>h1:first-child,
+    body>h1:first-child+h2,
+    body>h3:first-child,
+    body>h4:first-child,
+    body>h5:first-child,
+    body>h6:first-child {
         margin-top: 0;
         padding-top: 0;
     }
 
-    a:first-child h1.md-h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 {
+    a:first-child h1.md-h1,
+    a:first-child h2,
+    a:first-child h3,
+    a:first-child h4,
+    a:first-child h5,
+    a:first-child h6 {
         margin-top: 0;
         padding-top: 0;
     }
@@ -81,13 +108,14 @@
     /* LISTS
     =============================================================================*/
 
-    .md-ul, .md-ol {
+    .md-ul,
+    .md-ol {
         padding-left: 30px;
         list-style: disc;
     }
 
-    ul.md-ul li > :first-child,
-    ol.md-ol li > :first-child,
+    ul.md-ul li> :first-child,
+    ol.md-ol li> :first-child,
     ul.md-ul li ul:first-of-type,
     ol.md-ol li ol:first-of-type,
     ul.md-ul li ol:first-of-type,
@@ -142,12 +170,15 @@
     /* CODE
     =============================================================================*/
 
-    .md-pre, .md-code, .md-tt {
+    .md-pre,
+    .md-code,
+    .md-tt {
         font-size: 12px;
         font-family: Consolas, "Liberation Mono", Courier, monospace;
     }
 
-    .md-code, .md-tt {
+    .md-code,
+    .md-tt {
         margin: 0 0px;
         padding: 0px 0px;
         white-space: nowrap;
@@ -176,7 +207,8 @@
         border-radius: 3px;
     }
 
-    pre.md-pre code, pre.md-pre tt {
+    pre.md-pre code,
+    pre.md-pre tt {
         background-color: transparent;
         border: none;
     }
@@ -194,7 +226,7 @@
         border-radius: 2px 2px 2px 2px;
         border-style: solid;
         border-width: 1px;
-        font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
         line-height: 10px;
         padding: 1px 4px;
     }
@@ -237,7 +269,8 @@
         font-weight: bold;
     }
 
-    table.md-table th, table.md-table td {
+    table.md-table th,
+    table.md-table td {
         border: 1px solid #ccc;
         padding: 6px 13px;
     }
@@ -258,4 +291,3 @@
         max-width: 100%
     }
 }
-

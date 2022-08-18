@@ -22,8 +22,6 @@ import { AjaxInterceptor } from '../libs/app.interceptor';
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./pc-demo-list.component";
 import { SwitchDemoComponent } from "./switch-demo.component";
-import { DemoCodeComponent } from "./demo-code.component";
-import { ExampleDemoModule } from './demo/example/demo.module';
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";
@@ -86,41 +84,35 @@ import { RangeDateTimeDemoModule } from "./demo/range-date-time-picker/demo.modu
 import { DatePickerDemoModule } from "./demo/date-picker/demo.module";
 import { DateTimePickerDemoModule } from "./demo/date-time-picker/demo.module";
 import { TableBasicDemoModule } from "./demo/table-basic/demo.module";
-import {TableActionsDemoModule} from "./demo/table-actions/demo.module";
-import {TableColumnDefinesDemoModule} from "./demo/table-column-defines/demo.module";
-import {TableBigTableDemoModule} from "./demo/table-big-data/demo.module";
-import {TableRendererDemoModule} from "./demo/table-renderer/demo.module";
+import { TableActionsDemoModule } from "./demo/table-actions/demo.module";
+import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.module";
+import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
+import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 
 
 @NgModule({
     declarations: [
-        AppComponent, PCDemoListComponent, SwitchDemoComponent, DemoCodeComponent
+        AppComponent, PCDemoListComponent, SwitchDemoComponent
     ],
-    imports: [
+    imports: [RouterModule.forRoot([
+        ...routerConfig,
+        { path: '', component: SwitchDemoComponent },
+        { path: 'demo', component: PCDemoListComponent },
+        { path: '**', redirectTo: '/' }
+    ], { useHash: true }), TranslateModule.forRoot(),
         BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
         MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
         ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
         BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule, RangeDateTimeDemoModule, DatePickerDemoModule,
-        RouterModule.forRoot([
-            ...routerConfig,
-            { path: '', component: SwitchDemoComponent },
-            { path: 'demo', component: PCDemoListComponent },
-            {
-                path: 'demo-code', component: DemoCodeComponent, children: [
-                    { path: '**', component: DemoCodeComponent }
-                ]
-            },
-            { path: '**', redirectTo: '/' }
-        ], { useHash: true }),
         JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
-        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, ExampleDemoModule, CascadeAllModule, AlertDemoModule,
+        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, CascadeAllModule, AlertDemoModule,
         HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
         ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
         LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
         ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
         ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
         GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule, TableBasicDemoModule, TableActionsDemoModule,
-        TranslateModule.forRoot(), BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
+        BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
         TableColumnDefinesDemoModule, TableBigTableDemoModule, TableRendererDemoModule
     ],
     providers: [
