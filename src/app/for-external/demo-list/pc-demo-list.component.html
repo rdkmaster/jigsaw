@@ -1,0 +1,5 @@
+<div *ngFor="let routers of routerGroup; index as i" class="demo-list-cntr">
+    <span>{{routers.groupName}}</span>
+    <a *ngFor="let router of routers.routers; index as i" routerLink="{{getUrl(router)}}">{{ i + 1 + '.' +
+        router.path.replace('demo/', '')}}</a>
+</div>

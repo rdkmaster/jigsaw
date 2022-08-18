@@ -1,0 +1,21 @@
+.demo-list-cntr {
+    position: relative;
+    min-height: 32px;
+    padding-top: 16px;
+    margin-bottom: 16px;
+
+    >span {
+        position: absolute;
+        top: 0;
+        font-weight: bold;
+    }
+
+    >a {
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        width: 160px;
+        padding: 0 8px;
+        height: 24px;
+    }
+}
