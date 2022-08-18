@@ -716,11 +716,17 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent($event.label)
     }
 
-    private _checkDataTypeValid() {
-        if (this.data?.every(item => item?.hasOwnProperty('label'))) {
-            return;
+    private _formatData(data: any): {label: string}[] {
+        if (!(data instanceof Array) && !(data instanceof ArrayCollection)) {
+            return data;
         }
-        console.error('the data of table select renderer must be type of {label: string}[]')
+        return data.map(item => {
+            if (!item || item.hasOwnProperty('label')) {
+                // !item 表示下拉选项转成横线的情况
+                return item;
+            }
+            return {label: item};
+        })
     }
 
     protected onDataRefresh() {
@@ -732,8 +738,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                     value => {
                         subscription.unsubscribe();
                         if (!this._hasDestroyed) {
-                            this.data = value;
-                            this._checkDataTypeValid();
+                            this.data = this._formatData(value);
                             this._changeDetector.detectChanges();
                         }
                     },
@@ -746,12 +751,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                         }
                     });
             } else {
-                this.data = data;
-                this._checkDataTypeValid();
+                this.data = this._formatData(data);
             }
         } else {
-            this.data = this.initData;
-            this._checkDataTypeValid();
+            this.data = this._formatData(this.initData);
         }
         this._changeDetector.markForCheck();
     }
