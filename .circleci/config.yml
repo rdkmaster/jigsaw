@@ -56,13 +56,13 @@ jobs:
             - run:
                   name: Unit test
                   command: npm test
-            - run:
-                  name: Testing patch demo
-                  command: |
-                        sh build/scripts/clone-seed.sh
-                        sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
-                        node build/scripts/patch-demos.js
-                        # git checkout src
+#            - run:
+#                  name: Testing patch demo
+#                  command: |
+#                        sh build/scripts/clone-seed.sh
+#                        sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
+#                        node build/scripts/patch-demos.js
+#                        # git checkout src
 
             - run:
                   name: Checking PR title
