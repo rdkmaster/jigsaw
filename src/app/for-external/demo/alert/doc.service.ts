@@ -30,4 +30,19 @@ export class AlertTextService {
             使用\`JigsawAlert\`组件自定义一个对话框。
         `
     }
+
+    public codes = {
+        popup: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./popup/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./popup/demo.component.ts').default }
+        ],
+        inDom: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./in-dom/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./in-dom/demo.component.ts').default }
+        ],
+        customized: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./customized/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customized/demo.component.ts').default }
+        ],
+    }
 }

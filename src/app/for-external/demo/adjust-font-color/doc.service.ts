@@ -16,4 +16,11 @@ export class AdjustFontColorTextService {
             展示了文本颜色如何在背景修改时自动调整黑/白，以达到合适的对比度。
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ]
+    }
 }

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ButtonTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
-
 @Component({
     selector: 'button-common',
     templateUrl: './demo.component.html'

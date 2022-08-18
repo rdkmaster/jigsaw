@@ -228,12 +228,4 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         娜朦羔酌圃黍蟆呕巍畸擅柑钮畴彬缕屉砚楔腻
     `.replace(/\s/g, '').split('');
     private _visibleAscChars = [];
-
-    // ====================================================================
-    // Ignore the following lines, they are not important to this demo.
-    // ====================================================================
-    codes = [
-        { label: "HTML", language: 'html', value: require('!!raw-loader!./demo.component.html').default, },
-        { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./demo.component.ts').default }
-    ];
 }

@@ -23,4 +23,23 @@ export class AlphabeticalTextService {
             ### 常驻状态
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        dictionary: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./dictionary/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./dictionary/demo.component.ts').default }
+        ],
+        multiTone: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multi-tone/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multi-tone/demo.component.ts').default }
+        ],
+        permanent: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./permanent/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./permanent/demo.component.ts').default }
+        ]
+    }
 }
