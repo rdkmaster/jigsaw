@@ -2,7 +2,7 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>极简模式1</span>
-        <p class="hints-text">给上传组件添加Loading（符合规范的Loading信息请<a href="/#/pc/upload/upload-result">参考这个demo</a>）
+        <p class="hints-text">给上传组件添加Loading（符合规范的Loading信息请参考本页Upload指令面板这个demo）
         </p>
         <div>
             <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
@@ -29,7 +29,7 @@
 
     <div class="demo-showcase-v">
         <span>极简模式3</span>
-        <p class="hints-text">展示结果（符合规范的结果展示请<a href="/#/pc/upload/upload-result">参考这个demo</a>）</p>
+        <p class="hints-text">展示结果（符合规范的结果展示请参考本页Upload指令面板这个demo）</p>
         <a j-upload (uploadStart)="showUploadFileName()" (uploadComplete)="showUploadFileName($event)"
            [uploadMinSize]="minSize" [uploadMaxSize]="maxSize" [uploadFileType]="fileType"
            [uploadMultiple]="multiple"

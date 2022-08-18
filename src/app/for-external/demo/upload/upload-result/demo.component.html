@@ -1,7 +1,6 @@
 <demo-template [data]="''" [text]="text['text']['uploadResult']">
     <!-- start to learn the demo from here -->
     <p style="margin-bottom: 12px">
-        提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。<br>
         <a (click)="clear()">清空所有已上传的文件</a>
     </p>
     <div class="demo-showcase-v">
@@ -15,7 +14,7 @@
     </div>
 
     <div class="demo-showcase-v">
-        <jigsaw-header>指令面板：无宽度高度限制</jigsaw-header>
+        <span>指令面板：无宽度高度限制</span>
         <div>
             <a j-upload #second>上传</a>
         </div>
@@ -25,7 +24,7 @@
     </div>
 
     <div class="demo-showcase-v">
-        <jigsaw-header>指令面板：上传按钮</jigsaw-header>
+        <span>指令面板：上传按钮</span>
         <div>
             <jigsaw-button j-upload #third>上传</jigsaw-button>
         </div>

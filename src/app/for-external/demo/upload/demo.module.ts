@@ -15,6 +15,7 @@ import {UploadDirectiveDemoComponent} from "./directive/demo.component";
 import {UploadAutoUploadDemoComponent} from "./toggle-auto-upload/demo.component";
 import {UploadContentFieldDemoComponent} from "./content-field/demo.component";
 import {CommonModule} from "@angular/common";
+import {UploadResultDemoComponent} from "./upload-result/demo.component";
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {CommonModule} from "@angular/common";
         ChangeTargetUrlDemoComponent,
         UploadDirectiveDemoComponent,
         UploadAutoUploadDemoComponent,
-        UploadContentFieldDemoComponent
+        UploadContentFieldDemoComponent,
+        UploadResultDemoComponent
 
     ],
     imports: [

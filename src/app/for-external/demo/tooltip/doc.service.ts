@@ -17,29 +17,19 @@ export class TooltipTextService {
             ## 示例
         `,
         basic: `
-            ### 基础tooltip
+            ### 基础用法
 
             鼠标移入则显示提示，移出消失，气泡浮层可以承载复杂文本和操作。
         `,
         html: `
-            ### 使用标签的tooltip
+            ### 渲染为html
 
             这个demo演示了Tooltip将内容渲染为html的效果，以及如何在html里添加简单的交互动作
         `,
-        move: `
-            ### 跟随宿主位置
-
-            这个demo演示了如何让Tooltip紧跟宿主的位置
-        `,
         trigger: `
-            ### 跟踪状态
+            ### 触发方式
 
             这个demo演示了如何通过编程的方式打开一个tooltip，并跟踪其开关状态
-        `,
-        theme: `
-            ### 明、暗两种主题的Tooltip
-
-            此demo展示了tooltip内置的明、暗样式
         `,
         scenes: `
             ### 特殊场景

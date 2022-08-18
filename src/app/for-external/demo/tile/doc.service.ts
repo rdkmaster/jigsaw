@@ -26,7 +26,7 @@ export class TileTextService {
             ### 初始选中值
         `,
         tileOptionWidth: `
-            ### 自动选中文本
+            ### 设置宽度
         `,
         tileLite: `
             ### 简易平铺

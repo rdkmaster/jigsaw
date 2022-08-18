@@ -11,7 +11,7 @@ export class ThemePropertiesTextService {
             ## 示例
         `,
         basic: `
-            ### 所有可用皮肤属性
+            ###
 
             此DEMO展示了在js中使用皮肤中各个属性的方法，提示：切换不同的皮肤时，这些属性的值会相应变化。
 

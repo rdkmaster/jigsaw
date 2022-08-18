@@ -8,8 +8,6 @@ export class TimePickerTextService {
         introduction: `
             # Time Picker 时分秒选择
 
-            ## 使用场景
-
             只适合时间选择。
 
             该选择器不显示年份、月份以及日期。
@@ -25,14 +23,8 @@ export class TimePickerTextService {
         gr: `
             ### 粒度 Gr
         `,
-        size: `
-            ### 设置高度
-        `,
         limit: `
             ### 限制可选日期
-        `,
-        popUpDown: `
-            ### popUpDown
         `
     }
 }

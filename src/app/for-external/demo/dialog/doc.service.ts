@@ -51,7 +51,7 @@ export class DialogTextService {
             很大程度上得益于这个参数的强大扩展性，熟悉这个参数的各个属性对是否能够用好\`PopupService\`有着决定性的影响。
             关于这个参数的所有知识，都在[这里](/components/api/class/PopupOptions)。
             - \`initData\`：可选参数，只在\`what\`参数是一个组件时有效。这个对象会被赋值给组件实例中的\`initData\`属性，
-            可以参考[这个demo](#/demo/dialog)中弹出对话框组件的代码，注意该demo的控制台打印。
+            可以参考本页中弹出对话框组件的代码，注意该demo的控制台打印。
 
             ## 示例
         `,

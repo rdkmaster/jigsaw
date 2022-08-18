@@ -6,7 +6,9 @@ import {Injectable} from "@angular/core";
 export class TrustedHtmlTextService {
     public text: Object = {
         introduction: `
-        #### 用途
+        # Trusted Html 富文本渲染器
+
+        ## 用途
         这个指令一般用于可复用复杂组件的内部，将组件外部输入的富文本展示到页面上。与 \`[innerHtml] 不同的是，
         \`[trustedHtml]\` 指令不对html文本的安全性做校验，保留了所有可能有安全隐患的属性和功能，
         得益于此，就可以将输入的html中的事件的回调函数保留下来，从而让组件具备更多用户自定义的能力。
@@ -20,7 +22,7 @@ export class TrustedHtmlTextService {
         的对象实例里作为计算上下文的。建议你打开这个demo的源码看看，应该对你理解这些话会有所裨益。
         你可以在下方js文本框中多定义几个函数，然后在html框中试着去调用他们。
 
-        #### 关于 \`[trustedHtmlContext]\` 属性
+        ## 关于 \`[trustedHtmlContext]\` 属性
         \`[trustedHtmlContext]\` 被 trustedHtml 指令用做计算所有的回调函数的上下文，并且它也被用做这些回调函数内部this指针的值
         这个demo为了方便将 \`[trustedHtmlContext]\` 的值设置为一个普通的变量，实际使用时，我们推荐将当前组件的引用直接当做上下文
         例如：
@@ -35,8 +37,11 @@ export class TrustedHtmlTextService {
         \`\`\`
         随后点击“say hello to trustedHtml”链接试试看。
 
+        ## 示例
         `,
         basic: `
+        ### 基本用法
+
         这是一个指令，用于将一段html文本插入到某个DOM元素中，是 Angular 内置指令 \`[innerHtml]\` 的火力增强版。`,
 
     }

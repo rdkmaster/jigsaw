@@ -290,7 +290,7 @@ export class TableRendererTextService {
 
             #### 关于列定义
 
-            列定义是表格里最重要的一个功能，它是玩转表格的一个重要技巧，详细可以参考[这里](?open-desc=true#/pc/table/renderer)。
+            列定义是表格里最重要的一个功能，它是玩转表格的一个重要技巧，详细可以参考本页列定义模式这个demo。
 
             #### 解释一下列产生器
 

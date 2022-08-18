@@ -17,7 +17,7 @@ export class TagTextService {
             ## 示例
         `,
         basic: `
-            ### 标签
+            ### 基础用法
         `,
         presetColor: `
             ### 内置颜色
@@ -36,7 +36,7 @@ export class TagTextService {
             添加[isAdd]="true"来设置Tag为Add状态，本demo最多可添加5个Tag，注意观察disabled效果
         `,
         withIcon: `
-            ### Tag与图标混用
+            ### 带图标
         `
     }
 }

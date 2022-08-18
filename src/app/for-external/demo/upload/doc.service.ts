@@ -19,10 +19,6 @@ export class UploadTextService {
             - 单文件手动上传。
 
             ## 示例
-
-            文件上传过程中，在文件名下方出现进度条，文件上传完成后，进度条消失。
-
-            鼠标放到每个文件所属行，出现删除图标，可对已上传/待上传的文件进行删除。
         `,
         basic: `
             ### 基本用法
@@ -84,7 +80,9 @@ export class UploadTextService {
 
             \`jigsaw-upload\`指令实现了\`IUploader\`接口，它可以与\`jigsaw-upload-result\`组件配合使用，作为\`jigsaw-upload\`指令的结果可视化显示器。
 
-            \`jigsaw-upload-result\`组件是\`IUploader\`上传结果的可视化显示器，它无法独立使用，必须配合实现了IUploader的类来使用
+            \`jigsaw-upload-result\`组件是\`IUploader\`上传结果的可视化显示器，它无法独立使用，必须配合实现了IUploader的类来使用。
+
+            提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。
         `,
         toggleAutoUpload: `
             ## 选择文件后不会自动上传
