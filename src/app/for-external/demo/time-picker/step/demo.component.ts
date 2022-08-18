@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TimePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TimePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'time-picker-step',

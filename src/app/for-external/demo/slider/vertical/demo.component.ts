@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
-import {SliderTextService} from "../doc.service";
-import {SliderMark, ArrayCollection} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { SliderTextService } from "../doc.service";
+import { SliderMark, ArrayCollection } from "jigsaw/public_api";
 
 @Component({
     selector: "slider-vertical",
     templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css", "./demo.component.css"]
+    styleUrls: ["./demo.component.css"]
 })
 
 export class SliderVerticalDemoComponent {
@@ -13,10 +13,10 @@ export class SliderVerticalDemoComponent {
     vertical = true;
     rangeValue = new ArrayCollection([10, 80]);
     marks: SliderMark[] = [
-        {value: 20, label: '20 ℃'},
-        {value: 40, label: '40 ℃'},
-        {value: 80, label: '80 ℃'}
+        { value: 20, label: '20 ℃' },
+        { value: 40, label: '40 ℃' },
+        { value: 80, label: '80 ℃' }
     ];
-    constructor(public text: SliderTextService) {}
+    constructor(public text: SliderTextService) { }
 
 }

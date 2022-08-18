@@ -1,11 +1,10 @@
-import {Component} from "@angular/core";
-import {SliderTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { SliderTextService } from "./doc.service";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: ["./public.css"]
+    templateUrl: './demo.component.html'
 })
 export class SliderDemoComponent {
-    constructor(public text: SliderTextService) {}
+    constructor(public text: SliderTextService) { }
 }
 

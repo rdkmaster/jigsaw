@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -31,7 +31,7 @@ export class SliderTextService {
             垂直滑动条有默认高度240px
         `,
         step: `
-            ###　粒度
+            ### 粒度
         `,
         multiValue: `
             ### 多个值情形

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SliderTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SliderTextService } from "../doc.service";
 
 @Component({
     selector: "slider-step",
@@ -7,11 +7,7 @@ import {SliderTextService} from "../doc.service";
 })
 
 export class SliderStepDemoComponent {
-    value3;
     valueStep = 1;
-    public sliderChange3(value) {
-        this.value3 = value;
-    }
-    constructor(public text: SliderTextService) {}
+    constructor(public text: SliderTextService) { }
 
 }

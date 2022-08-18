@@ -2,23 +2,23 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>对象数组</span>
-        <jigsaw-tile-lite [(selectedItems)]="selectedCity"
-                          trackItemBy="id"
-                          [multipleSelect]="true"
-                          (selectedItemsChange)="basicSelectChange($event)" [data]="cities" [showBorder]="false">
+        <jigsaw-tile-lite
+            [(selectedItems)]="selectedCity"
+            trackItemBy="id"
+            [multipleSelect]="true"
+            (selectedItemsChange)="basicSelectChange($event)"
+            [data]="cities"
+        >
         </jigsaw-tile-lite>
-        <p>选择的城市是：{{selectedCityStr}}</p>
     </div>
     <div class="demo-showcase-v">
         <span>字符串数组</span>
-        <jigsaw-tile-lite [(selectedItems)]="selectedCity2"
-                          [multipleSelect]="false"
-                          (selectedItemsChange)="basicSelectChange2($event)" [data]="cities2">
+        <jigsaw-tile-lite
+            [(selectedItems)]="selectedCity2"
+            [multipleSelect]="false"
+            (selectedItemsChange)="basicSelectChange2($event)"
+            [data]="cities2"
+        >
         </jigsaw-tile-lite>
-        <p>选择的城市是：{{selectedCityStr2}}</p>
     </div>
 </demo-template>
-
-
-
-

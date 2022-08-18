@@ -1,7 +1,12 @@
 <demo-template [data]="''" [text]="text['text']['setMinMax']">
     <div class="demo-showcase">
-        <span>取值范围4-20：</span>
-        <jigsaw-slider [value]="value" [min]="min" [max]="max" width="600"
-                       (change)="sliderChange($event)"></jigsaw-slider>
+        <span>设置最大值、最小值</span>
+        <jigsaw-slider
+            [value]="value"
+            [min]="min"
+            [max]="max"
+            width="600"
+            (change)="sliderChange($event)"
+        ></jigsaw-slider>
     </div>
 </demo-template>

@@ -1,10 +1,9 @@
-import {Component} from "@angular/core";
-import {SliderTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SliderTextService } from "../doc.service";
 
 @Component({
     selector: "slider-set-min-max",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["../public.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class SliderSetMinMaxDemoComponent {
@@ -15,6 +14,6 @@ export class SliderSetMinMaxDemoComponent {
     sliderChange(value) {
         this.value = value;
     }
-    constructor(public text: SliderTextService) {}
+    constructor(public text: SliderTextService) { }
 
 }
