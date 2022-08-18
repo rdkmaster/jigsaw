@@ -1,7 +1,7 @@
 import {task} from 'gulp';
 import {join} from 'path';
 import {existsSync} from "fs"
-import {routerConfig} from "../../../../src/app/router-config";
+import {routerConfig} from "../../../../src/app/for-internal/router-config";
 import {getRouterConfig} from "../util/get-router-config";
 
 /**

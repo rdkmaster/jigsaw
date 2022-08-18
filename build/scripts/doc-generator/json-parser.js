@@ -830,7 +830,7 @@ function getDemoList(metaInfo) {
 }
 
 function getDemoSummary(comp, demoName) {
-    const demoPath = `${__dirname}/../../../src/app/demo/pc/${comp}/${demoName}/demo.component.ts`;
+    const demoPath = `${__dirname}/../../../src/app/for-internal/demo/pc/${comp}/${demoName}/demo.component.ts`;
     const code = fs.readFileSync(demoPath).toString();
     const summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
     if (!summaryMatch) {

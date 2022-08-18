@@ -1,7 +1,7 @@
 import {task} from 'gulp';
 import {join} from 'path';
 import {writeFileSync} from "fs"
-import {routerConfigPC} from "../../../../src/app/router-config";
+import {routerConfigPC} from "../../../../src/app/for-internal/router-config";
 import {getRouterConfig} from "../util/get-router-config";
 
 /**

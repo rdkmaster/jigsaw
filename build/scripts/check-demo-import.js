@@ -24,7 +24,7 @@ function checkAll(platform) {
 }
 
 function processAllComponents(platform) {
-    const demoHome = path.resolve(`${__dirname}/../../src/app/demo/${platform}`);
+    const demoHome = path.resolve(`${__dirname}/../../src/app/for-internal/demo/${platform}`);
     const demoSetFolders = fs.readdirSync(demoHome);
     demoSetFolders.forEach(demoFolder => {
         let pathname = path.join(demoHome, demoFolder);
