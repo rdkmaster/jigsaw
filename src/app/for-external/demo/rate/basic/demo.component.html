@@ -1,10 +1,22 @@
 <demo-template [data]="''" [text]="text['text']['basic']">
-   <div class="demo-showcase">
-       <span style="font-size: 18px">正常</span>
-       <jigsaw-rate class="rate-font-size" max="5" icon="iconfont iconfont-e369" [(value)]="selectedValue" (valueChange)="selectChange($event)"></jigsaw-rate>
-   </div>
     <div class="demo-showcase">
-        <span style="font-size: 18px">禁用</span>
-        <jigsaw-rate class="rate-font-size" max="5" icon="iconfont iconfont-e369" [(value)]="selectedValue1" [disabled]="true"></jigsaw-rate>
+        <span>正常</span>
+        <jigsaw-rate
+            class="rate-font-size"
+            max="5"
+            icon="iconfont iconfont-e369"
+            [(value)]="selectedValue"
+            (valueChange)="selectChange($event)"
+        ></jigsaw-rate>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-rate
+            class="rate-font-size"
+            max="5"
+            icon="iconfont iconfont-e369"
+            [(value)]="selectedValue1"
+            [disabled]="true"
+        ></jigsaw-rate>
     </div>
 </demo-template>

@@ -3,7 +3,7 @@
     border: 1px solid #D9D9D9;
     border-radius: 4px;
     margin-top: 34px;
-    padding: 12px 32px 32px 32px;
+    padding: 12px 32px 0 32px;
 
     &.no-handler {
         margin-top: 15px;
@@ -28,7 +28,6 @@
     }
 
     .demo-button {
-        position: absolute;
         display: flex;
         justify-content: center;
         align-items: center;

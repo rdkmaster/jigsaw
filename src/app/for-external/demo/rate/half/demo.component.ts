@@ -1,10 +1,9 @@
-import {Component} from "@angular/core";
-import {RateTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { RateTextService } from "../doc.service";
 
 @Component({
     selector: "rate-half",
-    templateUrl: 'demo.component.html',
-    styleUrls: ['demo.component.css']
+    templateUrl: 'demo.component.html'
 })
 export class RateHalfDemoComponent {
     selectedHalfValue = 2.5;

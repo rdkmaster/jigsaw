@@ -5,7 +5,7 @@ import { AdjustFontColorTextService } from "../doc.service";
 @Component({
     selector: "adjust-font-color-basic",
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["./demo.component.scss"]
 })
 export class AdjustFontColorDemoComponent {
     public _$fontColor: string = "#000000";

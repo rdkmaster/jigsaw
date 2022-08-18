@@ -3,11 +3,11 @@
     <div class="demo-showcase-v">
         <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
             <j-list-option *ngFor="let title of titles" [value]="title">
-                <span j-title>{{title.title}}</span>
-                <div j-sub-title>{{title.subTitle}} <span *ngIf="title.subMenu" class="iconfont iconfont-e144"></span>
+                <span j-title>{{ title.title }}</span>
+                <div j-sub-title>
+                    {{ title.subTitle }} <span *ngIf="title.subMenu" class="iconfont iconfont-e144"></span>
                 </div>
             </j-list-option>
         </j-list>
-        <p>选中的菜单是: <span>{{selectedItems}}</span></p>
     </div>
 </demo-template>

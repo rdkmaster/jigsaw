@@ -1,17 +1,25 @@
 <demo-template [data]="''" [text]="text['text']['withComponent']">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems"
-                (selectedItemsChange)="handleSelect($event)" #listGroup>
+        <j-list
+            [multipleSelect]="true"
+            trackItemBy="name"
+            [selectedItems]="selectedItems"
+            (selectedItemsChange)="handleSelect($event)"
+            #listGroup
+        >
             <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
                 <div class="goods-box">
-                    <j-checkbox [(checked)]="listItem.selected" [disabled]="goods.disabled" mode="minimalist"
-                                (checkedChange)="listGroup.update(goods, $event)"></j-checkbox>
-                    <span class="logo iconfont iconfont-{{goods.logo}}"></span>
-                    <p>{{goods.desc}}</p>
+                    <j-checkbox
+                        [(checked)]="listItem.selected"
+                        [disabled]="goods.disabled"
+                        mode="minimalist"
+                        (checkedChange)="listGroup.update(goods, $event)"
+                    ></j-checkbox>
+                    <span class="logo iconfont iconfont-{{ goods.logo }}"></span>
+                    <p>{{ goods.desc }}</p>
                 </div>
             </j-list-option>
         </j-list>
-        <p>选中的菜单是: <span>{{selectedItemsStr}}</span></p>
     </div>
 </demo-template>

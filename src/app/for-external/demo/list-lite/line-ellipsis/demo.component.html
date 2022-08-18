@@ -1,6 +1,10 @@
 <demo-template [data]="''" [text]="text['text']['lineEllipsis']">
     <!-- start to learn the demo from here -->
-    <j-list-lite width="200" [data]="goodsList" labelField="name"
-                 [selectedItems]="selectedItems" (selectedItemsChange)="handleSelect($event)"></j-list-lite>
-    <p>选中的条目是: <span>{{selectedItemsStr}}</span></p>
+    <j-list-lite
+        width="200"
+        [data]="goodsList"
+        labelField="name"
+        [selectedItems]="selectedItems"
+        (selectedItemsChange)="handleSelect($event)"
+    ></j-list-lite>
 </demo-template>

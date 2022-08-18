@@ -4,8 +4,7 @@ import {JigsawTag, ArrayCollection} from "jigsaw/public_api";
 
 @Component({
     selector: "tag-with-icon",
-    templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    templateUrl: "./demo.component.html"
 })
 
 export class TagWithIconComponent {
