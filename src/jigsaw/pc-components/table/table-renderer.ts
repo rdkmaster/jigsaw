@@ -716,13 +716,18 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this.dispatchChangeEvent($event.label)
     }
 
-    private _formatData(data: any): {label: string}[] {
+    private _formatData(data: any): { label: string }[] {
         if (!(data instanceof Array) && !(data instanceof ArrayCollection)) {
             return data;
         }
         return data.map(item => {
             if (!item || item.hasOwnProperty('label')) {
                 // !item 表示下拉选项转成横线的情况
+                return item;
+            }
+            if (item && typeof item == 'object') {
+                // item是非法对象
+                console.error('the data of table select renderer must be type of Array<{label: string} | string>');
                 return item;
             }
             return {label: item};
