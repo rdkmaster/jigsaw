@@ -39,4 +39,31 @@ export class ButtonBarTextService {
             ### 直接设置height
         `
     }
+
+    public codes = {
+        objectsArray: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./objects-array/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./objects-array/demo.component.ts').default }
+        ],
+        stringArray: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./string-array/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./string-array/demo.component.ts').default }
+        ],
+        colorType: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./color-type/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./color-type/demo.component.ts').default }
+        ],
+        icons: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icons/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icons/demo.component.ts').default }
+        ],
+        multiple: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multiple/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multiple/demo.component.ts').default }
+        ],
+        setHeight: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./set-height/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./set-height/demo.component.ts').default }
+        ],
+    }
 }

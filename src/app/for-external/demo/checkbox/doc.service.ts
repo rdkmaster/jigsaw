@@ -33,4 +33,19 @@ export class CheckboxTextService {
             勾选所有复选框，可实现全选效果。
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        minimalist: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./minimalist/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./minimalist/demo.component.ts').default }
+        ],
+        checkall: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./checkall/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./checkall/demo.component.ts').default }
+        ],
+    }
 }

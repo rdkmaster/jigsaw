@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: "root"
@@ -25,5 +25,20 @@ export class ChartIconTextService {
 
         本Demo演示了chart-icon组件与表格配合使用的方法
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        withButton: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-button/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-button/demo.component.ts').default }
+        ],
+        withTable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-table/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-table/demo.component.ts').default }
+        ],
     }
 }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -31,5 +31,28 @@ export class TextareaTextService {
         select: `
             ### 自动选中文本
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        clearable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./clearable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./clearable/demo.component.ts').default }
+        ],
+        maxLength: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./max-length/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./max-length/demo.component.ts').default }
+        ],
+        resize: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./resize/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./resize/demo.component.ts').default }
+        ],
+        select: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./select/demo.component.ts').default }
+        ],
     }
 }

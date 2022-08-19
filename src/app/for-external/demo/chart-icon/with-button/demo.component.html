@@ -1,7 +1,4 @@
 <demo-template [data]="''" [text]="doc.text.withButton">
-    <jigsaw-checkbox [(checked)]="disabled" (checkedChange)="onDisabled($event)">
-        禁用 / 正常
-    </jigsaw-checkbox>
     <div class="demo-showcase-v">
         <span>普通按钮</span>
         <jigsaw-button colorType="default" [(disabled)]="disabled">
@@ -22,10 +19,15 @@
 
     <div class="demo-showcase-v">
         <span>大型按钮</span>
-        <jigsaw-button colorType="primary" width="280px" height="36px" style="font-size: 16px"
-                       [(disabled)]="disabled">
-            <jigsaw-line-chart-icon [data]="longData" width="240" height="24" style="margin-top: 4px"
-                                    [fill]="fill" [stroke]="stroke">
+        <jigsaw-button colorType="primary" width="280px" height="36px" style="font-size: 16px" [(disabled)]="disabled">
+            <jigsaw-line-chart-icon
+                [data]="longData"
+                width="240"
+                height="24"
+                style="margin-top: 4px"
+                [fill]="fill"
+                [stroke]="stroke"
+            >
             </jigsaw-line-chart-icon>
         </jigsaw-button>
     </div>
