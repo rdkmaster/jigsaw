@@ -1,4 +1,4 @@
-<demo-template [(selectedLabel)]="selectedLabel" [text]="doc.text.showOption">
+<demo-template [(selectedLabel)]="selectedLabel" [text]="doc.text.showOption" [codes]="doc.codes.showOption">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>默认情况</span>
@@ -10,9 +10,6 @@
             placeholder="请输入数字"
             [size]="selectedLabel.size"
         ></j-numeric-input>
-        <p class="message">
-            输入值是：<span>{{ value }}</span>
-        </p>
     </div>
 
     <div class="demo-showcase">
@@ -26,9 +23,6 @@
             [suffix]="'单位'"
             [size]="selectedLabel.size"
         ></j-numeric-input>
-        <p class="message">
-            输入值是：<span>{{ value3 }}</span>
-        </p>
     </div>
 
     <div class="demo-showcase">
@@ -42,9 +36,5 @@
             [suffix]="_$units"
             [size]="selectedLabel.size"
         ></j-numeric-input>
-        <p class="message">
-            输入值是：<span>{{ value2 }}</span>
-        </p>
     </div>
-
 </demo-template>

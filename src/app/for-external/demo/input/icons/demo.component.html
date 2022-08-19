@@ -1,17 +1,10 @@
-<demo-template [data]="''" [text]="doc.text.icons">
+<demo-template [data]="''" [text]="doc.text.icons" [codes]="doc.codes.icons">
     <!-- start to learn the demo from here -->
-    <jigsaw-input width="200" [preIcon]="preIcons" [icon]="backIcon"
-                  (preIconSelect)="iconClick($event, 'pre')"
-                  (iconSelect)="iconClick($event, 'back')"></jigsaw-input>
-    点击信息: {{message}}
+    <jigsaw-input
+        width="200"
+        [preIcon]="preIcons"
+        [icon]="backIcon"
+        (preIconSelect)="iconClick($event, 'pre')"
+        (iconSelect)="iconClick($event, 'back')"
+    ></jigsaw-input>
 </demo-template>
-
-
-
-
-
-
-
-
-
-

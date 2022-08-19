@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -32,16 +32,36 @@ export class InputTextService {
         clearable: `
             ### 关闭清除功能
         `,
-        focus: `
-            ### 获取焦点
-        `,
         icons: `
-            ### 加入图标，并有交互
+            ### 带图标
 
             使用控件的输入输出属性，设定图标并监听点击事件。
         `,
         prefixSuffix: `
             ### 组合输入框
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        password: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./password/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./password/demo.component.ts').default }
+        ],
+        clearable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./clearable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./clearable/demo.component.ts').default }
+        ],
+        icons: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icons/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icons/demo.component.ts').default }
+        ],
+        prefixSuffix: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./prefix-suffix/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./prefix-suffix/demo.component.ts').default }
+        ]
     }
 }

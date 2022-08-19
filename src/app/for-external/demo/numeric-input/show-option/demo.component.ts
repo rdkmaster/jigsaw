@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
-import {NumericInputTextService} from "../doc.service";
+import { NumericInputTextService } from "../doc.service";
 
 @Component({
     selector: 'numeric-input-show-option',
     templateUrl: "./demo.component.html"
 })
 export class NumericInputShowOptionDemoComponent {
-    public selectedLabel = {label: "中", size: "default"};
+    public selectedLabel = { label: "中", size: "default" };
     showOption: boolean = true;
     value: number;
     value2: number;
