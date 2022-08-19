@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.gauge">
+<demo-template [data]="''" [text]="doc.text.gauge" [codes]="doc.codes.gauge">
     <div class="demo-showcase-v">
         <span>KLineGraphData静态数据</span>
         <jigsaw-graph [data]="gaugeData" height="400" (click)="handleClick($event)"></jigsaw-graph>

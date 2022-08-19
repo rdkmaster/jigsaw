@@ -1,12 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.limit">
+<demo-template [data]="''" [text]="doc.text.limit" [codes]="doc.codes.limit">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <j-date-time-picker
-            [(date)]="date1"
-            gr="second"
-            [limitStart]="limitStart"
-            [limitEnd]="limitEnd"
-            [showConfirmButton]="showConfirmButton"
-        ></j-date-time-picker>
+        <j-date-time-picker [(date)]="date1" gr="second" [limitStart]="limitStart" [limitEnd]="limitEnd"
+            [showConfirmButton]="showConfirmButton"></j-date-time-picker>
     </div>
 </demo-template>

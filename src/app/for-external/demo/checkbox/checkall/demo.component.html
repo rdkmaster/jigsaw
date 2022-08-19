@@ -1,9 +1,11 @@
-<demo-template [data]="''" [text]="doc.text.checkall">
-<div class="jigsaw-border-bottom-solid">
-    <j-checkbox [(checked)]="checkAllStatus" [enableIndeterminate]="portion" (checkedChange)="allCheck()"  >全选</j-checkbox>
-</div>
-    <j-checkbox [(checked)]="option.a" (checkedChange)="checkStatus()" >选项A</j-checkbox>
-    <j-checkbox [(checked)]="option.b" (checkedChange)="checkStatus()" >选项B</j-checkbox>
-    <j-checkbox [(checked)]="option.c" (checkedChange)="checkStatus()" >选项C</j-checkbox>
-    <j-checkbox [(checked)]="option.d" (checkedChange)="checkStatus()" >选项D</j-checkbox>
+<demo-template [data]="''" [text]="doc.text.checkall" [codes]="doc.codes.checkall">
+    <div class="jigsaw-border-bottom-solid">
+        <j-checkbox [(checked)]="checkAllStatus" [enableIndeterminate]="portion" (checkedChange)="allCheck()"
+            >全选</j-checkbox
+        >
+    </div>
+    <j-checkbox [(checked)]="option.a" (checkedChange)="checkStatus()">选项A</j-checkbox>
+    <j-checkbox [(checked)]="option.b" (checkedChange)="checkStatus()">选项B</j-checkbox>
+    <j-checkbox [(checked)]="option.c" (checkedChange)="checkStatus()">选项C</j-checkbox>
+    <j-checkbox [(checked)]="option.d" (checkedChange)="checkStatus()">选项D</j-checkbox>
 </demo-template>

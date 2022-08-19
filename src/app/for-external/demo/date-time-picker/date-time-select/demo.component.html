@@ -1,11 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.dateTimeSelect">
+<demo-template [data]="''" [text]="doc.text.dateTimeSelect" [codes]="doc.codes.dateTimeSelect">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-date-time-select
-            [(date)]="date1"
-            [gr]="'second'"
-            (dateChange)="onDateChange($event)"
-            width="150"
-        ></jigsaw-date-time-select>
+        <jigsaw-date-time-select [(date)]="date1" [gr]="'second'" (dateChange)="onDateChange($event)" width="150">
+        </jigsaw-date-time-select>
     </div>
 </demo-template>

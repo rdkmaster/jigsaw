@@ -1,16 +1,11 @@
-<demo-template [data]="''" [text]="doc.text.maxHeight">
-<!-- start to learn the demo from here -->
+<demo-template [data]="''" [text]="doc.text.maxHeight" [codes]="doc.codes.maxHeight">
+    <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>单行显示</span>
-        <jigsaw-combo-select placeholder="请输入姓名~"
-                             [(value)]="selectedCity"
-                             maxWidth="300"
-                             [clearable]="true"
-                             maxHeight="16">
+        <jigsaw-combo-select placeholder="请输入姓名~" [(value)]="selectedCity" maxWidth="300" [clearable]="true"
+            maxHeight="16">
             <ng-template>
-                <jigsaw-tile [(selectedItems)]="selectedCity"
-                             trackItemBy="label"
-                             width="400px">
+                <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
                     <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                         {{city.label}}
                     </jigsaw-tile-option>
@@ -21,15 +16,10 @@
 
     <div class="demo-showcase">
         <span>多行显示</span>
-        <jigsaw-combo-select placeholder="请输入姓名~"
-                             [(value)]="selectedCity2"
-                             maxWidth="300"
-                             [clearable]="true"
-                             maxHeight="60">
+        <jigsaw-combo-select placeholder="请输入姓名~" [(value)]="selectedCity2" maxWidth="300" [clearable]="true"
+            maxHeight="60">
             <ng-template>
-                <jigsaw-tile [(selectedItems)]="selectedCity2"
-                             trackItemBy="label"
-                             width="400px">
+                <jigsaw-tile [(selectedItems)]="selectedCity2" trackItemBy="label" width="400px">
                     <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
                         {{city.label}}
                     </jigsaw-tile-option>
@@ -38,9 +28,3 @@
         </jigsaw-combo-select>
     </div>
 </demo-template>
-
-
-
-
-
-

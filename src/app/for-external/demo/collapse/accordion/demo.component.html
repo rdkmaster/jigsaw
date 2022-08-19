@@ -1,7 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.accordion">
+<demo-template [data]="''" [text]="doc.text.accordion" [codes]="doc.codes.accordion">
     <j-collapse width="50%" mode="accordion">
         <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of goodsList">
-            {{goods.desc}}
+            {{ goods.desc }}
         </j-collapse-pane>
     </j-collapse>
 </demo-template>

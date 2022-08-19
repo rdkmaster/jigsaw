@@ -1,10 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.grItems">
+<demo-template [data]="''" [text]="doc.text.grItems" [codes]="doc.codes.grItems">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-date-time-picker
-            [(date)]="date"
-            [grItems]="grItems"
-            (dateChange)="dateChange($event)"
-        ></jigsaw-date-time-picker>
+        <jigsaw-date-time-picker [(date)]="date" [grItems]="grItems" (dateChange)="dateChange($event)">
+        </jigsaw-date-time-picker>
     </div>
 </demo-template>

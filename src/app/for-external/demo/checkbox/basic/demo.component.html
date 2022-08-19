@@ -1,14 +1,14 @@
-<demo-template [data]="''" [text]="doc.text.basic">
-<div class="demo-showcase">
-    <span>正常</span>
-    <j-checkbox [(checked)]="demo1checked">选项1</j-checkbox>
-    <j-checkbox [(checked)]="demo1indeterminate" [enableIndeterminate]="true">选项2</j-checkbox>
-    <j-checkbox [(checked)]="demo1unchecked">选项3</j-checkbox>
-</div>
-<div class="demo-showcase">
-    <span>禁用</span>
-    <j-checkbox [checked]="demo2checked" [disabled]="true">选项4</j-checkbox>
-    <j-checkbox [checked]="demo2indeterminate" [disabled]="true" [enableIndeterminate]="true">选项5</j-checkbox>
-    <j-checkbox [checked]="demo2unchecked" [disabled]="true">选项6</j-checkbox>
-</div>
+<demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <j-checkbox [(checked)]="demo1checked">选项1</j-checkbox>
+        <j-checkbox [(checked)]="demo1indeterminate" [enableIndeterminate]="true">选项2</j-checkbox>
+        <j-checkbox [(checked)]="demo1unchecked">选项3</j-checkbox>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <j-checkbox [checked]="demo2checked" [disabled]="true">选项4</j-checkbox>
+        <j-checkbox [checked]="demo2indeterminate" [disabled]="true" [enableIndeterminate]="true">选项5</j-checkbox>
+        <j-checkbox [checked]="demo2unchecked" [disabled]="true">选项6</j-checkbox>
+    </div>
 </demo-template>

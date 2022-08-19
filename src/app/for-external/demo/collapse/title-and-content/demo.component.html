@@ -1,9 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.titleAndContent">
+<demo-template [data]="''" [text]="doc.text.titleAndContent" [codes]="doc.codes.titleAndContent">
     <j-collapse>
         <j-collapse-pane [isActive]="true">
-            <div j-title>
-                <span class="iconfont iconfont-ea4c"></span>Information
-            </div>
+            <div j-title><span class="iconfont iconfont-ea4c"></span>Information</div>
             <div j-body>
                 <div class="form-box">
                     <div class="form-line">
@@ -24,18 +22,14 @@
         </j-collapse-pane>
 
         <j-collapse-pane>
-            <div j-title>
-                <span class="iconfont iconfont-ea3e"></span>Table
-            </div>
+            <div j-title><span class="iconfont iconfont-ea3e"></span>Table</div>
             <div j-body>
                 <j-table [data]="tableData" height="200"></j-table>
             </div>
         </j-collapse-pane>
 
         <j-collapse-pane>
-            <div j-title>
-                <span class="iconfont iconfont-e547"></span>Graph
-            </div>
+            <div j-title><span class="iconfont iconfont-e547"></span>Graph</div>
             <div j-body>
                 <j-collapse mode="accordion">
                     <j-collapse-pane header="pie">

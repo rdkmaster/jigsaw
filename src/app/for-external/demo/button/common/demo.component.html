@@ -1,16 +1,11 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.common"
-    [codes]="doc.codes.common">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.common" [codes]="doc.codes.common">
     <div class="demo-showcase">
         <span>正常 </span>
-        <jigsaw-button [preSize]="selectedLabel.size">
-            确定
-        </jigsaw-button>
+        <jigsaw-button [preSize]="selectedLabel.size"> 确定 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>禁用 </span>
-        <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedLabel.size">
-            普通操作
-        </jigsaw-button>
+        <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedLabel.size"> 普通操作 </jigsaw-button>
     </div>
 </demo-template>

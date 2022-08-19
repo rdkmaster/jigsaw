@@ -1,15 +1,10 @@
-<demo-template [data]="''" [text]="doc.text.withTable">
-    <j-table width="500" [data]="tableData" [columnDefines]="columns">
-    </j-table>
+<demo-template [data]="''" [text]="doc.text.withTable" [codes]="doc.codes.withTable">
+    <j-table width="500" [data]="tableData" [columnDefines]="columns"> </j-table>
 
     <ng-template #pieRenderer let-context="context">
-        <jigsaw-pie-chart-icon [data]="context.cellData" radius="10" style="margin-top: 4px">
-        </jigsaw-pie-chart-icon>
+        <jigsaw-pie-chart-icon [data]="context.cellData" radius="10" style="margin-top: 4px"> </jigsaw-pie-chart-icon>
     </ng-template>
     <ng-template #lineRenderer let-context="context">
-        <jigsaw-line-chart-icon [data]="context.cellData">
-        </jigsaw-line-chart-icon>
+        <jigsaw-line-chart-icon [data]="context.cellData"> </jigsaw-line-chart-icon>
     </ng-template>
 </demo-template>
-
-

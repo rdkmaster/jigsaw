@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.customizeStatus">
+<demo-template [data]="''" [text]="doc.text.customizeStatus" [codes]="doc.codes.customizeStatus">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>预设状态 + 全默认值</span>
@@ -15,7 +15,7 @@
         <jigsaw-icon [status]="'process'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e035'" [text]="'处理中'">
         </jigsaw-icon>
         <jigsaw-icon [status]="'custom'" [iconSize]="fontSize" [icon]="'iconfont iconfont-e77d'" [text]="'自定义状态'"
-                     iconColor="purple">
+            iconColor="purple">
         </jigsaw-icon>
     </div>
 </demo-template>

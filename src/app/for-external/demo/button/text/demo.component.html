@@ -1,7 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.text">
-     <!-- start to learn the demo from here -->
-    <jigsaw-button (click)="onClick()" colorType="none"
-                   [preSize]="selectedLabel.size">
-        文字
-    </jigsaw-button>
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.text" [codes]="doc.codes.text">
+    <!-- start to learn the demo from here -->
+    <jigsaw-button (click)="onClick()" colorType="none" [preSize]="selectedLabel.size"> 文字 </jigsaw-button>
 </demo-template>

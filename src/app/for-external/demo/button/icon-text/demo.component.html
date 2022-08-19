@@ -1,8 +1,12 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.iconText" [codes]="doc.codes.iconText">
     <div class="demo-showcase">
         <span>简约</span>
-        <jigsaw-button (click)="onClick()" icon="iconfont iconfont-e0a1" colorType="none"
-            [preSize]="selectedLabel.size">
+        <jigsaw-button
+            (click)="onClick()"
+            icon="iconfont iconfont-e0a1"
+            colorType="none"
+            [preSize]="selectedLabel.size"
+        >
             新增参数
         </jigsaw-button>
     </div>
@@ -11,7 +15,9 @@
         <span>属性</span>
         <j-button icon="iconfont iconfont-e247" [preSize]="selectedLabel.size">通过icon属性</j-button>
         <j-button icon="iconfont iconfont-e247" iconPosition="left" [preSize]="selectedLabel.size">图标在左侧</j-button>
-        <j-button icon="iconfont iconfont-e247" iconPosition="right" [preSize]="selectedLabel.size">图标在右侧</j-button>
+        <j-button icon="iconfont iconfont-e247" iconPosition="right" [preSize]="selectedLabel.size"
+            >图标在右侧</j-button
+        >
     </div>
 
     <div class="demo-showcase">
