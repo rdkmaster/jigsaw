@@ -34,6 +34,6 @@ export class ListMenuDemoComponent {
     handleSelect(selectedItems) {
         this.selectedItems = selectedItems.map(item => item.title).toString()
     }
-    constructor(public text: ListTextService) {
+    constructor(public doc: ListTextService) {
     }
 }

@@ -51,6 +51,6 @@ export class ListLiteWithComboDemoComponent {
         },
     ]);
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
     }
 }

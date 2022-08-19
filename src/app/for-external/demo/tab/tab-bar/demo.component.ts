@@ -13,7 +13,7 @@ export class TabTabBarComponent implements OnInit{
     public tabBarData2: TabBarData[];
     public selectedIndex = 0;
 
-    constructor(public http: HttpClient, public text: TabTextService) {
+    constructor(public http: HttpClient, public doc: TabTextService) {
     }
 
     ngOnInit() {

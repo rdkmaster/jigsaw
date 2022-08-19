@@ -92,7 +92,7 @@ export class TableBasicSetHeaderSortDemoComponent {
         ]
     };
 
-    constructor(public text: TableBasicTextService) {
+    constructor(public doc: TableBasicTextService) {
         // new TableData(data, field, header)这种形式无法默认排序，必须使用fromObject创建数据
         this.tableDataFromObject = new TableData();
         this.tableDataFromObject.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');

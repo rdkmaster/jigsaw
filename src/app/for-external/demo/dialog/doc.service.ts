@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class DialogTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Dialog 对话框
 

@@ -49,6 +49,6 @@ export class ListLitePresetValueDemoComponent {
         this.selectedItemsStr = selectedItems.map(item => item.name).toString()
     }
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
     }
 }

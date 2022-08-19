@@ -26,7 +26,7 @@ export class TableBasicTreeTableDemoComponent {
         return Array.from(new Array(4).keys()).map(num => `cell${level}-${num}`)
     }
 
-    constructor(public text: TableBasicTextService) {
+    constructor(public doc: TableBasicTextService) {
         this.treeTableData = new TreeTableData();
         this.treeTableData.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],

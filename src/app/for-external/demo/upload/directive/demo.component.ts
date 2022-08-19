@@ -35,6 +35,6 @@ export class UploadDirectiveDemoComponent {
         this.uploadedFile = !!files ? files.map(f => f.name).join(', ') : '正在上传...';
     }
 
-    constructor(public text: UploadTextService) {
+    constructor(public doc: UploadTextService) {
     }
 }

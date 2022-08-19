@@ -20,6 +20,6 @@ import {FloatTextService} from "../doc.service";
     `]
 })
 export class FloatBasicDemoComponent {
-    constructor(public text: FloatTextService) {
+    constructor(public doc: FloatTextService) {
     }
 }

@@ -29,6 +29,6 @@ export class BadgeMaskDemoComponent {
         console.log('host click');
     }
 
-    constructor(public text: BadgeTextService) {
+    constructor(public doc: BadgeTextService) {
     }
 }

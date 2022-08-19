@@ -14,7 +14,7 @@ export class TableCellSelectRenderDemoComponent {
 
     tableData: TableData;
 
-    constructor(private http: HttpClient, public text: TableRendererTextService) {
+    constructor(private http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-short');

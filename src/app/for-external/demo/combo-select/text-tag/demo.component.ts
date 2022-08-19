@@ -30,7 +30,7 @@ export class ComboSelectTextTagDemoComponent {
 
     selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 
 }

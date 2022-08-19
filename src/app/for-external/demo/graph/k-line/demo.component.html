@@ -2,7 +2,7 @@
 
 
 
-<demo-template [data]="''" [text]="text['text']['kLine']">
+<demo-template [data]="''" [text]="doc.text.kLine">
     <div class="live-demo">
         <jigsaw-header [level]="2">KLineGraphData静态数据</jigsaw-header>
         <jigsaw-graph [data]="kLineData" height="400" (click)="handleClick($event)"></jigsaw-graph>

@@ -11,7 +11,7 @@ import {TableRendererTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class TableCheckboxColumnObjectCellDemoComponent {
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         // 对ajax返回过来的数据进行预处理

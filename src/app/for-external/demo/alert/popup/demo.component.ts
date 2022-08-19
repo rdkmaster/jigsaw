@@ -30,6 +30,6 @@ export class AlertPopupDemoComponent {
         JigsawConfirmAlert.show(info);
     }
 
-    constructor(public text: AlertTextService) {
+    constructor(public doc: AlertTextService) {
     }
 }

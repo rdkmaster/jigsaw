@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class CheckboxTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Checkbox 复选框
 

@@ -11,7 +11,7 @@ export class JigsawStepVerticalDemoComponent {
 
     current = 0;
 
-    constructor(public text: StepsTextService) {
+    constructor(public doc: StepsTextService) {
         for (let i = 0; i < 6; i++) {
             this.data.push(this._createStepData());
         }

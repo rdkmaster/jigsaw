@@ -5,6 +5,6 @@ import {ChartIconTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class ChartIconDemoComponent {
-    constructor(public text: ChartIconTextService) {
+    constructor(public doc: ChartIconTextService) {
     }
 }

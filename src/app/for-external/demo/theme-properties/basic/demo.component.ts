@@ -50,6 +50,6 @@ export class ThemePropertiesBasicDemoComponent {
         return JigsawTheme.getProperty('--blue-2');
     }
 
-    constructor(public text: ThemePropertiesTextService) {
+    constructor(public doc: ThemePropertiesTextService) {
     }
 }

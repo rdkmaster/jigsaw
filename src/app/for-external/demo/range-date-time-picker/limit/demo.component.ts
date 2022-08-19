@@ -11,6 +11,6 @@ export class RangeDateTimeLimitComponent {
     limitStart = 'now-5d';
     limitEnd = 'now+5d';
 
-    constructor(public text: RangeDataTimePickerTextService) {
+    constructor(public doc: RangeDataTimePickerTextService) {
     }
 }

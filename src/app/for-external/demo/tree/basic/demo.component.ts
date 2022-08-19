@@ -24,7 +24,7 @@ export class ZtreeDemoComponent implements AfterViewInit {
     //     }
     // }
 
-    constructor(public text: TreeTextService) {
+    constructor(public doc: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.fromObject([
             {

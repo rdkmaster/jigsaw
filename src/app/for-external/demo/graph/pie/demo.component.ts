@@ -11,7 +11,7 @@ import {GraphTextService} from "../demo.service";
 export class GraphPieDemoComponent {
     public pieGraphData: PieGraphData;
 
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.pieGraphData = new PieGraphData();
         this.pieGraphData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
         this.pieGraphData.data = [120, 220, 150, 320, 820];

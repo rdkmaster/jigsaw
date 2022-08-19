@@ -6,6 +6,6 @@ import {InputTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class InputClearableDemoComponent {
-    constructor(public text: InputTextService) {
+    constructor(public doc: InputTextService) {
     }
 }

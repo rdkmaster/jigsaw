@@ -45,6 +45,6 @@ export class FloatTargetDemoComponent implements AfterViewInit {
         this.targets[0].target = this.jigsawFloatArea1;
         this.targets[1].target = this.jigsawFloatArea2;
     }
-constructor( public text: FloatTextService) {
+constructor( public doc: FloatTextService) {
 }
 }

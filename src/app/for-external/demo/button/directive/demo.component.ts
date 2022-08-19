@@ -7,7 +7,7 @@ import {ButtonTextService} from "../doc.service";
 })
 export class ButtonDirectiveDemoComponent {
     public size: string = "";
-    constructor(public text: ButtonTextService) {}
+    constructor(public doc: ButtonTextService) {}
     onClick() {
         alert('hello jigsaw button');
     }

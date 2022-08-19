@@ -15,7 +15,7 @@ export class PaginationNoDataDemoComponent {
     ]);
     paginationData: LocalPageableTableData;
 
-    constructor(public text: PaginationTextService) {
+    constructor(public doc: PaginationTextService) {
         this.paginationData = new LocalPageableTableData();
         this.paginationData.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],

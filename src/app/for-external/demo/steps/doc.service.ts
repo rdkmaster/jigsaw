@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class StepsTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Steps 步骤条
 

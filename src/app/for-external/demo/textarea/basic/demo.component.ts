@@ -11,6 +11,6 @@ export class TextareaBasicDemoComponent {
 
     @ViewChild('myTextarea') myTextarea: JigsawTextarea;
 
-    constructor(public text: TextareaTextService) {
+    constructor(public doc: TextareaTextService) {
     }
 }

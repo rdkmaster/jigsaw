@@ -14,7 +14,7 @@ export class LoadingBasicDemoComponent {
     public isLoading: boolean = false;
     public label:string = '提交';
 
-    constructor(public loadingService: LoadingService, public text: LoadingTextService) {
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
     }
 
     popupBlockLoading() {

@@ -29,5 +29,5 @@ export class SelectLineEllipsisDemoComponent {
     selectChange(selectedItem: any) {
         this.selectedCityName = selectedItem.label;
     }
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 }

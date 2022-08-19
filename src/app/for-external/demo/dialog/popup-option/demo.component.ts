@@ -32,7 +32,7 @@ export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public text: DialogTextService) {
+    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public doc: DialogTextService) {
     }
 
     ngOnInit() {

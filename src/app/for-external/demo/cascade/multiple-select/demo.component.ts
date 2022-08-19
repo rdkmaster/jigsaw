@@ -11,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 export class CascadeMultipleComponent {
     areas: SimpleTreeData;
     message: string = '';
-    constructor(http: HttpClient, public text: CascadeTextService) {
+    constructor(http: HttpClient, public doc: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this.areas = data);
     }

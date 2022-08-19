@@ -14,6 +14,6 @@ export class SliderSetMinMaxDemoComponent {
     sliderChange(value) {
         this.value = value;
     }
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 
 }

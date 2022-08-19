@@ -5,6 +5,6 @@ import { IconTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class IconAllComponent {
-    constructor(public text: IconTextService) { }
+    constructor(public doc: IconTextService) { }
 }
 

@@ -5,6 +5,6 @@ import { ListLiteTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class ListLiteAllComponent {
-    constructor(public text: ListLiteTextService) { }
+    constructor(public doc: ListLiteTextService) { }
 }
 

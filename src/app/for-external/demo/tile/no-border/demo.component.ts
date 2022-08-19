@@ -49,6 +49,6 @@ export class TileSelectNoBorderDemoComponent {
         this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
     }
 
-    constructor(public text: TileTextService) {
+    constructor(public doc: TileTextService) {
     }
 }

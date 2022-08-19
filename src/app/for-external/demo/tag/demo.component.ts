@@ -5,6 +5,6 @@ import {TagTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class TagDemoComponent {
-    constructor(public text: TagTextService) {
+    constructor(public doc: TagTextService) {
     }
 }

@@ -6,7 +6,7 @@ import {ProcessStatusTextService} from "../doc.service";
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusInteractiveComponent {
-    constructor(private _changeDetector: ChangeDetectorRef, public text: ProcessStatusTextService) {
+    constructor(private _changeDetector: ChangeDetectorRef, public doc: ProcessStatusTextService) {
     }
     steps = [
         {

@@ -14,7 +14,7 @@ export class LoadingCircleDemoComponent {
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
-    constructor(public loadingService: LoadingService, public text: LoadingTextService) {
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
         setInterval(() => {
             this.percent = (this.percent + Math.random() * 10) % 100;
         }, 500);

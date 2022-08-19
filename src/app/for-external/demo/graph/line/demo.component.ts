@@ -1,8 +1,7 @@
-import {Component} from "@angular/core";
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {LineGraphData, LineGraphDataByRow} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {GraphTextService} from "../demo.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { LineGraphData } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-line',
@@ -10,7 +9,7 @@ import {GraphTextService} from "../demo.service";
 })
 export class GraphLineDemoComponent {
     lineBarData: LineGraphData;
-    constructor(public http: HttpClient, public  text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.lineBarData = new LineGraphData();
         this.lineBarData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         this.lineBarData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];
@@ -24,11 +23,5 @@ export class GraphLineDemoComponent {
             [210, 310, 410, 320, 1320]
         ];
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用折线图';
-    description: string = require('!!raw-loader!./readme.md').default;
 }
 

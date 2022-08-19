@@ -7,7 +7,7 @@ import { AlphabeticalDocService } from "../doc.service";
     templateUrl: "./demo.component.html"
 })
 export class AlphabeticalIndexPermanentDemoComponent implements OnInit {
-    constructor(public text: AlphabeticalDocService) {
+    constructor(public doc: AlphabeticalDocService) {
     }
     public pinyinDictionary: PinyinDictionary = {
         "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",

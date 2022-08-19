@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class NavigationMenuTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Navigation Menu 导航菜单
 

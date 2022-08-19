@@ -48,6 +48,6 @@ export class RadioComplexSceneComponent {
         console.log(`switch message is: ${message.name}`);
     }
 
-    constructor(public text: RadioTextService) {}
+    constructor(public doc: RadioTextService) {}
 
 }

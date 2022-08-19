@@ -8,6 +8,6 @@ import {NumericInputTextService} from "../doc.service";
 export class NumericInputStepDemoComponent {
     public selectedLabel = {label: "中", size: "default"};
 
-    constructor(public text: NumericInputTextService) {
+    constructor(public doc: NumericInputTextService) {
     }
 }

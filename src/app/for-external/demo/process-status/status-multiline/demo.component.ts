@@ -9,7 +9,7 @@ import {ProcessStatusTextService} from "../doc.service";
 export class ProcessStatusMultilineComponent {
     steps = [];
 
-    constructor( public text: ProcessStatusTextService) {
+    constructor( public doc: ProcessStatusTextService) {
         for (let i = 0; i < 50; i++) {
             this.steps.push(this._createStepData(i));
         }

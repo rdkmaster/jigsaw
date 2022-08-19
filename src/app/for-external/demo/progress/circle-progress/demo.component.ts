@@ -7,6 +7,6 @@ import { ArrayCollection } from "jigsaw/public_api";
     templateUrl: "./demo.component.html"
 })
 export class CircleProgressDemoComponent {
-    constructor(public text: ProgressTextService) {
+    constructor(public doc: ProgressTextService) {
     }
 }

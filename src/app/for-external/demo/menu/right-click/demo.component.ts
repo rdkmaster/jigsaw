@@ -51,5 +51,5 @@ export class MenuRightClickDemoComponent {
         JigsawMenu.show(event, {data: this.dropdownData, width: 250}, this.menuSelect.bind(this));
     }
 
-    constructor(public text: MenuTextService) {}
+    constructor(public doc: MenuTextService) {}
 }

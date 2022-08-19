@@ -15,6 +15,6 @@ export class TabsEditableDemoComponent {
         tab.addTab('new tab', content);
     }
 
-    constructor(public text: TabTextService) {
+    constructor(public doc: TabTextService) {
     }
 }

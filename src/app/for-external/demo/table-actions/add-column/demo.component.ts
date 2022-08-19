@@ -45,7 +45,7 @@ export class MyTableCellOption extends TableCellRendererBase {
 export class TableAddColumnDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableActionsTextService) {
+    constructor(http: HttpClient, public doc: TableActionsTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

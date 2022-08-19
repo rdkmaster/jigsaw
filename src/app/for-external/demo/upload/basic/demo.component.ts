@@ -32,6 +32,6 @@ export class UploadBasicDemoComponent {
         console.log("uploadRemove触发了", $event)
     }
 
-    constructor(public text: UploadTextService) {
+    constructor(public doc: UploadTextService) {
     }
 }

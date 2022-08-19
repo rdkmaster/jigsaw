@@ -6,7 +6,7 @@ import {RangeDataTimePickerTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeBasicDemoComponent implements AfterViewInit {
-    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public doc: RangeDataTimePickerTextService) {
     }
 
     beginDate = "now-1d";

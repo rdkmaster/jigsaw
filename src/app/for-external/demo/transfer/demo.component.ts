@@ -5,6 +5,6 @@ import {TransferTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class TransferDemoComponent {
-    constructor(public text: TransferTextService) {
+    constructor(public doc: TransferTextService) {
     }
 }

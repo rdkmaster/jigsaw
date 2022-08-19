@@ -30,6 +30,6 @@ export class SelectStringDemoComponent {
         console.log("the select city is:", selectedItem);
         this.selectedCityForSelect2 = selectedItem;
     }
-    constructor( public text: SelectTextService) {
+    constructor( public doc: SelectTextService) {
     }
 }

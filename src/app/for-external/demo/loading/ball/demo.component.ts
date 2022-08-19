@@ -12,7 +12,7 @@ export class LoadingBallDemoComponent implements AfterViewInit {
 
     blockLoading: PopupInfo;
 
-    constructor(public loadingService: LoadingService,  public text: LoadingTextService) {
+    constructor(public loadingService: LoadingService,  public doc: LoadingTextService) {
     }
 
     popupBlockLoading() {

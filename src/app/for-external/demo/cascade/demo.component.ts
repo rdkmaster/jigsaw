@@ -5,6 +5,6 @@ import {CascadeTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class CascadeAllComponent {
-    constructor(public text: CascadeTextService) {}
+    constructor(public doc: CascadeTextService) {}
 }
 

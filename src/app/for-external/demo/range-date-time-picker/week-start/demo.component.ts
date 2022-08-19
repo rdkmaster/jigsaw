@@ -10,6 +10,6 @@ export class RangeDateTimeWeekStartComponent {
 
     endDate = "now";
 
-    constructor(public text: RangeDataTimePickerTextService) {
+    constructor(public doc: RangeDataTimePickerTextService) {
     }
 }

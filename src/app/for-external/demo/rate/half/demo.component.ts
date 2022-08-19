@@ -11,6 +11,6 @@ export class RateHalfDemoComponent {
     selectChange(value: any) {
         console.log(value);
     }
-    constructor(public text: RateTextService) {
+    constructor(public doc: RateTextService) {
     }
 }

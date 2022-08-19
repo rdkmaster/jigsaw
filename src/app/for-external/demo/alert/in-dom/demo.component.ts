@@ -12,5 +12,5 @@ import { AlertTextService } from "../doc.service";
     `]
 })
 export class AlertInDomDemoComponent {
-    constructor(public text: AlertTextService) { }
+    constructor(public doc: AlertTextService) { }
 }

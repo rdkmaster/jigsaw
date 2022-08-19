@@ -13,6 +13,6 @@ export class NumericInputBasicDemoComponent {
         console.log($event, typeof $event == 'number');
     }
 
-    constructor(public text: NumericInputTextService) {
+    constructor(public doc: NumericInputTextService) {
     }
 }

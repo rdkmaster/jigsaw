@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class PopupTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # PopupService 弹出服务
 

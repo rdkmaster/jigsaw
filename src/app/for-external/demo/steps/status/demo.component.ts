@@ -36,7 +36,7 @@ export class JigsawStepstatusDemoComponent {
     ]
     current = 0;
 
-    constructor(public text: StepsTextService) {
+    constructor(public doc: StepsTextService) {
 
     }
 

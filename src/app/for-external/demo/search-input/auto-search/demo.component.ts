@@ -7,6 +7,6 @@ import {SearchInputTextService} from "../doc.service";
 })
 export class SearchInputAutoSearchDemoComponent {
     value: string = '';
-    constructor(public text: SearchInputTextService) {
+    constructor(public doc: SearchInputTextService) {
     }
 }

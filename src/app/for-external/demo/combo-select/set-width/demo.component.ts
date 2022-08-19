@@ -9,7 +9,7 @@ export class ComboSelectSetWidthDemoComponent {
     width: string = '200';
     width2: string = '400';
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 
 }

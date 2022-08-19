@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class ListTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # List 列表
 

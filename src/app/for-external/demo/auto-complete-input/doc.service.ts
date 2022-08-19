@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class AutoCompleteInputTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Input 提示输入框
 

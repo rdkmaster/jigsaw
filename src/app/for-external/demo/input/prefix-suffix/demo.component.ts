@@ -61,6 +61,6 @@ export class InputPrefixSuffixDemoComponent {
     public _$unitChange(event: any) {
         console.log('prefix-suffix selected: ', event);
     }
-    constructor(public text: InputTextService) {
+    constructor(public doc: InputTextService) {
     }
 }

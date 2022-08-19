@@ -7,6 +7,6 @@ import {DrawerTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerWithTabDemoComponent {
-    constructor(public text: DrawerTextService) {
+    constructor(public doc: DrawerTextService) {
     }
 }

@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class DragDropTextService{
-    public text: object = {
+    public text = {
         introduction: `
         # Drag and Drop 拖拽
 

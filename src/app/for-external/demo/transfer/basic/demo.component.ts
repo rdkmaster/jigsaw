@@ -22,7 +22,7 @@ export class TransferBasicDemoComponent {
 
 
 
-    constructor(public text: TransferTextService, _http: HttpClient) {
+    constructor(public doc: TransferTextService, _http: HttpClient) {
         this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
         this.selectedItems = new ArrayCollection(["上海", "南京"]);
         this.data1 = new LocalPageableArray();

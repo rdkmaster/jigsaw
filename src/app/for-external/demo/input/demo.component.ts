@@ -5,6 +5,6 @@ import {InputTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class InputAllComponent {
-    constructor(public text: InputTextService) {}
+    constructor(public doc: InputTextService) {}
 }
 

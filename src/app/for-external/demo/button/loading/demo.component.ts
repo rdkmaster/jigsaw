@@ -18,7 +18,7 @@ export class ButtonLoadingComponent {
     ]);
     public selectedLabel = {label: "默认", size: "default"};
 
-    constructor(public text: ButtonTextService) {}
+    constructor(public doc: ButtonTextService) {}
     onLoading() {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';

@@ -5,6 +5,6 @@ import {CheckboxTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class CheckBoxDemoComponent {
-    constructor(public text: CheckboxTextService) {
+    constructor(public doc: CheckboxTextService) {
     }
 }

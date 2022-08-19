@@ -14,6 +14,6 @@ export class SliderBasicDemoComponent {
 
     sliderChange(value) {
     }
-    constructor(public text: SliderTextService) {}
+    constructor(public doc: SliderTextService) {}
 
 }

@@ -5,6 +5,6 @@ import { AlertTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class AlertDemoComponent {
-    constructor(public text: AlertTextService) { }
+    constructor(public doc: AlertTextService) { }
 }
 

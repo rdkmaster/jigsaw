@@ -18,7 +18,7 @@ import {TableRendererTextService} from "../doc.service";
 export class TableAddCheckboxColumnPageableDemoComponent {
     pageable: LocalPageableTableData | PageableTableData;
 
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });

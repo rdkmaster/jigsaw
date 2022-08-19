@@ -30,7 +30,7 @@ export class ComboSelectOpenDemoComponent {
         {label: "哈尔滨"}
     ];
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 
 }

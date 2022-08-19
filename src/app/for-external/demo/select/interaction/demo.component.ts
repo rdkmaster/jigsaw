@@ -42,6 +42,6 @@ export class SelectInteractionDemoComponent {
         console.log("valueChange事件触发了", selectedItem);
     }
 
-    constructor( public text: SelectTextService) {
+    constructor( public doc: SelectTextService) {
     }
 }

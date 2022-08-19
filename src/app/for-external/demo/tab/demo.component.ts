@@ -5,6 +5,6 @@ import {TabTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TabAllComponent {
-    constructor(public text: TabTextService) {}
+    constructor(public doc: TabTextService) {}
 }
 

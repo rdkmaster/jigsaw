@@ -37,7 +37,7 @@ export class ChartIconButtonDemoComponent {
         }, 1000);
     }
 
-    constructor( public text: ChartIconTextService) {
+    constructor( public doc: ChartIconTextService) {
         this._startUpdating();
     }
 }

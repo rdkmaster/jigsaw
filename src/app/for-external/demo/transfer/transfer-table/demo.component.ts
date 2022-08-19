@@ -8,7 +8,7 @@ import {TransferTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class TransferTableDemoComponent {
-    constructor(public text: TransferTextService) {
+    constructor(public doc: TransferTextService) {
         this.data = new TableData(
             [
                 [

@@ -18,7 +18,7 @@ export class DialogPointDemoComponent {
 
     public title: string = 'Title of the dialog';
 
-    constructor(private _popupService: PopupService, public text: DialogTextService) {
+    constructor(private _popupService: PopupService, public doc: DialogTextService) {
     }
     popupComponentDialogAtPoint(event) {
         const initData = {inputData: 'some data...'};

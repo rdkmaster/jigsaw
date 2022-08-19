@@ -5,6 +5,6 @@ import {DialogTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class DialogDemoComponent {
-    constructor(public text: DialogTextService) {
+    constructor(public doc: DialogTextService) {
     }
 }

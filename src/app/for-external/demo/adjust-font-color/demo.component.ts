@@ -5,6 +5,6 @@ import { AdjustFontColorTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class AdjustFontColorAllDemoComponent {
-    constructor(public text: AdjustFontColorTextService) { }
+    constructor(public doc: AdjustFontColorTextService) { }
 }
 

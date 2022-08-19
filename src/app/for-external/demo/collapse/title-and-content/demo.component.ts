@@ -14,7 +14,7 @@ export class CollapseTitleAndContentDemoComponent {
     // @ts-ignore
     public lineGraphData: LineGraphData;
 
-    constructor(public text: CollapseTextService, http: HttpClient) {
+    constructor(public doc: CollapseTextService, http: HttpClient) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

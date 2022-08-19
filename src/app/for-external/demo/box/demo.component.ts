@@ -5,6 +5,6 @@ import {BoxTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class BoxAllComponent {
-    constructor(public text: BoxTextService) {}
+    constructor(public doc: BoxTextService) {}
 }
 

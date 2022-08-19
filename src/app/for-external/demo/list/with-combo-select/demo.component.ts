@@ -49,6 +49,6 @@ export class ListWithComboSelectDemoComponent {
         },
     ]);
 
-    constructor(public text: ListTextService) {
+    constructor(public doc: ListTextService) {
     }
 }

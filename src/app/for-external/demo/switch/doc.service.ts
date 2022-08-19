@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class SwitchTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Switch 开关
 

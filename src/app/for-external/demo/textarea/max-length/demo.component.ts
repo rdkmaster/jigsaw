@@ -13,6 +13,6 @@ export class TextareaMaxLengthDemoComponent {
         console.log(' input value: ', $event)
     }
 
-    constructor(public text: TextareaTextService) {
+    constructor(public doc: TextareaTextService) {
     }
 }

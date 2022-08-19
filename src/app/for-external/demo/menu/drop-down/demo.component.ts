@@ -45,5 +45,5 @@ export class MenuDropDownDemoComponent {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    constructor(public text: MenuTextService) {}
+    constructor(public doc: MenuTextService) {}
 }

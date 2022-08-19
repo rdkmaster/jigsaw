@@ -5,6 +5,6 @@ import {PopupTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class PopupDemoComponent {
-    constructor( public text: PopupTextService) {
+    constructor( public doc: PopupTextService) {
     }
 }

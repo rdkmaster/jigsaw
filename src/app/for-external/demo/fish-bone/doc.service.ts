@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class FishBoneTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Fish Bone 鱼骨图
 

@@ -5,6 +5,6 @@ import {DrawerTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class DrawerAllComponent {
-    constructor(public text: DrawerTextService) {}
+    constructor(public doc: DrawerTextService) {}
 }
 

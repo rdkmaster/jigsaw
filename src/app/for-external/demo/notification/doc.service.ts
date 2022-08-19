@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class NotificationTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Notification 通知提醒框
 

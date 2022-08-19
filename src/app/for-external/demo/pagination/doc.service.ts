@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class PaginationTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Pagination 分页器
 

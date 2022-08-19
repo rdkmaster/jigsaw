@@ -22,5 +22,5 @@ export class ButtonBarStringArrayComponent {
         this.selectedCityStr = cityArr.join(',');
     }
 
-    constructor(public text: ButtonBarTextService) {}
+    constructor(public doc: ButtonBarTextService) {}
 }

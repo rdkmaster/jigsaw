@@ -15,7 +15,7 @@ export class ButtonTextDemoComponent {
     ]);
     public selectedLabel = {label: "默认", size: "default"};
 
-    constructor(public text: ButtonTextService) {}
+    constructor(public doc: ButtonTextService) {}
     onClick() {
         alert('hello jigsaw button');
     }

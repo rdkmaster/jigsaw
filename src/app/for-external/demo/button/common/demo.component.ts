@@ -14,5 +14,5 @@ export class ButtonCommonComponent {
         { label: "默认", size: "default" }
     ]);
     public selectedLabel = { label: "默认", size: "default" };
-    constructor(public text: ButtonTextService) { }
+    constructor(public doc: ButtonTextService) { }
 }

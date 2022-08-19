@@ -24,6 +24,6 @@ export class UploadManualClearDemoComponent {
     @ViewChild("demo7", { read: JigsawUpload })
     public uploader7: JigsawUpload;
 
-    constructor(public text: UploadTextService) {
+    constructor(public doc: UploadTextService) {
     }
 }

@@ -19,6 +19,6 @@ export class DialogInDomDemoComponent {
         }
     }
 
-    constructor(public text: DialogTextService) {
+    constructor(public doc: DialogTextService) {
     }
 }

@@ -16,7 +16,7 @@ export class TableExpandPageableDemoComponent {
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
 
-    constructor(private http: HttpClient, public text: TableActionsTextService) {
+    constructor(private http: HttpClient, public doc: TableActionsTextService) {
         this.resetData();
     }
 

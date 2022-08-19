@@ -21,6 +21,6 @@ export class TagWithIconComponent {
         this.tags.forEach(tag => tag.show());
     }
 
-    constructor(public text: TagTextService) {}
+    constructor(public doc: TagTextService) {}
 
 }

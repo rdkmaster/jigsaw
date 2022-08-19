@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class FloatTextService {
-    public text: object = {
+    public text = {
         introduction: `
         # Float 任意视图下拉
 

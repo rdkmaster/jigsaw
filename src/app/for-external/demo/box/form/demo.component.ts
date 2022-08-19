@@ -37,6 +37,6 @@ export class FormDemoComponent {
         this.rangeTimeComboValue[1].label = this.rangeTime.endDate;
         this.rangeTimeComboValue.refresh();
     }
-    constructor(public text: BoxTextService) {
+    constructor(public doc: BoxTextService) {
     }
 }

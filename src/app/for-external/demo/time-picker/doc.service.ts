@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TimePickerTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Time Picker 时分秒选择
 

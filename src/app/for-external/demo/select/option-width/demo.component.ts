@@ -15,6 +15,6 @@ export class SelectOptionWidthDemoComponent {
         {label: "大", size: "large"}
     ]);
     optionWidth = 400;
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 
 }

@@ -11,7 +11,7 @@ import {TableActionsTextService} from "../doc.service";
 export class TableResizeDemoComponent implements OnInit {
     tableData: TableData;
 
-    constructor(http: HttpClient, public elementRef: ElementRef, public text: TableActionsTextService) {
+    constructor(http: HttpClient, public elementRef: ElementRef, public doc: TableActionsTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

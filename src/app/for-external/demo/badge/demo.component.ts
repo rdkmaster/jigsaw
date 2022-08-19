@@ -5,6 +5,6 @@ import {BadgeTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class BadgeAllComponent {
-    constructor(public text: BadgeTextService) {}
+    constructor(public doc: BadgeTextService) {}
 }
 

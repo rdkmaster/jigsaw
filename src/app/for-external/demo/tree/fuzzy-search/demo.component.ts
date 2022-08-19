@@ -21,7 +21,7 @@ export class ZtreeFuzzySearchComponent {
 
     public data: SimpleTreeData;
 
-    constructor(http: HttpClient, public text: TreeTextService) {
+    constructor(http: HttpClient, public doc: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");

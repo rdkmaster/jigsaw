@@ -16,6 +16,6 @@ export class FloatInitDataDemoComponent {
     public initData: any = {
         inputData: 'some data...'
     };
-constructor( public text: FloatTextService) {
+constructor( public doc: FloatTextService) {
 }
 }

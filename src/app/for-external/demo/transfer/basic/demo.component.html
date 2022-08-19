@@ -1,22 +1,44 @@
-<demo-template [data]="''" [text]="text['text']['basic']">
- <div class="demo-showcase-v">
-     <span>普通数据：</span>
-     <ul>
-         <li class="demo-item">
-             <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
-                         [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer"></j-transfer>
-         </li>
-     </ul>
- </div>
+<demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <div class="demo-showcase-v">
-        <span>禁用：</span>
-        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedItems"
-                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [disabled]="true"></j-transfer>
+        <span>普通数据</span>
+        <ul>
+            <li class="demo-item">
+                <j-transfer
+                    width="100%"
+                    height="500"
+                    [data]="data"
+                    [selectedItems]="selectedItems"
+                    [sourceRenderer]="sourceRenderer"
+                    [destRenderer]="targetRenderer"
+                ></j-transfer>
+            </li>
+        </ul>
+    </div>
+    <div class="demo-showcase-v">
+        <span>禁用</span>
+        <j-transfer
+            width="100%"
+            height="500"
+            [data]="data"
+            [selectedItems]="selectedItems"
+            [sourceRenderer]="sourceRenderer"
+            [destRenderer]="targetRenderer"
+            [disabled]="true"
+        ></j-transfer>
     </div>
     <div class="demo-showcase-v">
         <span>左边列表至少选择一个条目到右边的列表中</span>
-        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData" [sourceRenderer]="sourceRenderer"
-                    [destRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
-                    [trackItemBy]="trackItemBy" [valid]="selectedData.length > 0"></j-transfer>
+        <j-transfer
+            width="100%"
+            height="500"
+            [data]="data"
+            [selectedItems]="selectedData"
+            [sourceRenderer]="sourceRenderer"
+            [destRenderer]="targetRenderer"
+            [labelField]="labelField"
+            [subLabelField]="subLabelField"
+            [trackItemBy]="trackItemBy"
+            [valid]="selectedData.length > 0"
+        ></j-transfer>
     </div>
 </demo-template>

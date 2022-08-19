@@ -21,7 +21,7 @@ export class TableBasicContentWidthDemoComponent {
 
     constructor(public viewContainerRef: ViewContainerRef,
                 public renderer: Renderer2,
-                public text: TableBasicTextService,
+                public doc: TableBasicTextService,
                 http: HttpClient) {
         this.tableData = new TableData(
             [

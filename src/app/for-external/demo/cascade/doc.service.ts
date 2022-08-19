@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class CascadeTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Cascade 级联选择
 

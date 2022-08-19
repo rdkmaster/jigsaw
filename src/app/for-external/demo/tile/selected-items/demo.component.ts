@@ -22,6 +22,6 @@ export class TileSelectSelectedItemsComponent implements AfterContentInit {
         this.selectedCity = new ArrayCollection([{label: "深圳"}]);
     }
 
-    constructor(public text: TileTextService) {
+    constructor(public doc: TileTextService) {
     }
 }

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class BoxTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Box 盒子布局器
 

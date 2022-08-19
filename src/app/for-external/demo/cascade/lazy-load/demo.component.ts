@@ -36,7 +36,7 @@ export class CascadeLazyLoadComponent {
             return result;
         }, []).join(' | ');
     }
-    constructor(public http: HttpClient, public text: CascadeTextService) {
+    constructor(public http: HttpClient, public doc: CascadeTextService) {
     }
 
 }

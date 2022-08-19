@@ -5,6 +5,6 @@ import {ColorSelectTextService} from "./doc.service";
     templateUrl: 'demo.component.html',
 })
 export class ColorSelectDemoComponent {
-    constructor(public text: ColorSelectTextService) {
+    constructor(public doc: ColorSelectTextService) {
     }
 }

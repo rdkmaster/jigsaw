@@ -9,7 +9,7 @@ import {ChartIconTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class ChartIconBasicDemoComponent {
-    constructor( public text: ChartIconTextService) {
+    constructor( public doc: ChartIconTextService) {
         setInterval(() => {
             this.shortData = this.shortData.map(_ => InternalUtils.randomNumber(0, 10));
             this.longData.push(InternalUtils.randomNumber(0, 10));

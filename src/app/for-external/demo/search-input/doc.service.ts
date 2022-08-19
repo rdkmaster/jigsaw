@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class SearchInputTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Search 搜索框
 

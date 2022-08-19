@@ -5,6 +5,6 @@ import {DragDropTextService} from "./doc.service";
     templateUrl: 'demo.component.html',
 })
 export class DragDropDemoComponent {
-    constructor( public text: DragDropTextService) {
+    constructor( public doc: DragDropTextService) {
     }
 }

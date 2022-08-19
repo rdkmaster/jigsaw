@@ -16,7 +16,7 @@ export class GraphBasicDemoComponent implements OnInit {
             text: '补丁 - 堆叠区域图'
         }
     };
-    constructor( public text: GraphTextService) {
+    constructor( public doc: GraphTextService) {
     }
     handleClick(info){
         console.log(info);

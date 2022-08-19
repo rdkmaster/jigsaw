@@ -15,7 +15,7 @@ export class ZtreeXMLDataDemoComponent {
     ]);
 
     public data: SimpleTreeData;
-    constructor(public text: TreeTextService) {
+    constructor(public doc: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

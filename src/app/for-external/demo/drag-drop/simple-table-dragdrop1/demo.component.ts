@@ -20,7 +20,7 @@ export class TableDragDemoComponent {
         icon: 'iconfont iconfont-e515', title: '拖拽换行', label: ''
     };
 
-    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public text: DragDropTextService) {
+    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: DragDropTextService) {
         this.tableData = new TableData(
             [
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 1],

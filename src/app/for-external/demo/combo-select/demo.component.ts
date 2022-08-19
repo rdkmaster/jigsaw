@@ -5,6 +5,6 @@ import { ComboSelectTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class ComboSelectComponent {
-    constructor(public text: ComboSelectTextService) { }
+    constructor(public doc: ComboSelectTextService) { }
 }
 

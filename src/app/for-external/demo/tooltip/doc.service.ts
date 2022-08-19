@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TooltipTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Tooltip 多功能提示
 

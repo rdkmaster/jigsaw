@@ -28,7 +28,7 @@ export class ToastLongTextDemoComponent implements AfterViewInit{
         this.message = "这是一个有长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长文本的Toast提示框！"
     }
 
-    constructor(public text: ToastTextService) {
+    constructor(public doc: ToastTextService) {
     }
     ngAfterViewInit(): void {
         this.makeLongMessage()

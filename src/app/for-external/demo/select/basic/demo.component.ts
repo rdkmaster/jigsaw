@@ -38,6 +38,6 @@ export class SelectBasicDemoComponent {
     valueChange($event) {
         console.log($event);
     }
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 
 }

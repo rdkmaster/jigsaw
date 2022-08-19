@@ -15,6 +15,6 @@ export class DatePickerGrItemDemoComponent {
         {label: "Month", value: TimeGr.month}
     ];
 
-    constructor(public text: DatePickerTextService) {
+    constructor(public doc: DatePickerTextService) {
     }
 }

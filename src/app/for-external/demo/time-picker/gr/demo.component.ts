@@ -12,6 +12,6 @@ export class TimePickerGrDemoComponent {
 
     valueChange($event) {
     }
-    constructor(public text: TimePickerTextService) {
+    constructor(public doc: TimePickerTextService) {
     }
 }

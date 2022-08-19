@@ -32,7 +32,7 @@ export class TableBasicAddIDWithPagingComponent {
         }
     }];
 
-    constructor(http: HttpClient, public text: TableBasicTextService) {
+    constructor(http: HttpClient, public doc: TableBasicTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries',
         });

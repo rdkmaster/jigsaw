@@ -40,6 +40,6 @@ export class ListLiteWithIconDemoComponent {
         },
     ];
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
     }
 }

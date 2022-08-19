@@ -13,7 +13,7 @@ export class DialogTopOffSetDemoComponent {
 
     top = "10%";
 
-    constructor(private popupService: PopupService, public text: DialogTextService) {
+    constructor(private popupService: PopupService, public doc: DialogTextService) {
     }
 
     close() {

@@ -10,7 +10,7 @@ import {TableData} from "jigsaw/public_api";
 export class TableBasicBasicComponent {
     tableData: TableData;
 
-    constructor(public text: TableBasicTextService) {
+    constructor(public doc: TableBasicTextService) {
         this.tableData = new TableData(
             [
                 [

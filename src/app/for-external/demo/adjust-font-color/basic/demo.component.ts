@@ -56,6 +56,6 @@ export class AdjustFontColorDemoComponent {
         this.anyToRGBResult = CommonUtils.anyToRGB(v);
     }
 
-    constructor(public text: AdjustFontColorTextService) {
+    constructor(public doc: AdjustFontColorTextService) {
     }
 }

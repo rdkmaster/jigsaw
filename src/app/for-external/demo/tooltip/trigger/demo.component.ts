@@ -22,6 +22,6 @@ export class TooltipTriggerDemoComponent {
         this.open = false;
     }
 
-    constructor(public text: TooltipTextService) {
+    constructor(public doc: TooltipTextService) {
     }
 }

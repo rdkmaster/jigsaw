@@ -11,6 +11,6 @@ export class IconBasicDemoComponent {
         alert('你戳到我啦');
     }
 
-    constructor(public text: IconTextService) {
+    constructor(public doc: IconTextService) {
     }
 }

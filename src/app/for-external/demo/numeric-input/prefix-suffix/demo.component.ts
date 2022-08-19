@@ -36,7 +36,7 @@ export class NumericInputPrefixSuffixDemoComponent {
         console.log('prefix-suffix selected: ', event);
     }
 
-    constructor(public text: NumericInputTextService) {
+    constructor(public doc: NumericInputTextService) {
     }
 
 }

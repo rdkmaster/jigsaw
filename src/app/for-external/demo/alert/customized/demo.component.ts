@@ -7,5 +7,5 @@ import { AlertTextService } from "../doc.service";
     encapsulation: ViewEncapsulation.None
 })
 export class CustomizeAlertDemoComponent {
-    constructor(public text: AlertTextService) { }
+    constructor(public doc: AlertTextService) { }
 }

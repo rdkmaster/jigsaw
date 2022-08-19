@@ -5,6 +5,6 @@ import {TimePickerTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class TimePickerDemoComponent {
-    constructor( public text: TimePickerTextService) {
+    constructor( public doc: TimePickerTextService) {
     }
 }

@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="text['text']['multipleSelect']">
+<demo-template [data]="''" [text]="doc.text.multipleSelect">
     <j-cascade [data]="areas" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)" width="400">
     </j-cascade>
     <p>选择的区域是：{{message}}</p>

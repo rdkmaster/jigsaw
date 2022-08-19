@@ -29,6 +29,6 @@ export class RadioDataIsObjectComponent {
     public radioChange2(message: any) {
         console.log(`switch message is: ${message.pro_name}`);
     }
-    constructor(public text: RadioTextService) {}
+    constructor(public doc: RadioTextService) {}
 
 }

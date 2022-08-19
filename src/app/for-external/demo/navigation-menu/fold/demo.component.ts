@@ -10,7 +10,7 @@ export class NavigationFoldDemoComponent {
     public data3: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
 
-    constructor(public text: NavigationMenuTextService) {
+    constructor(public doc: NavigationMenuTextService) {
         const xmlData = `
             <node>
                 <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

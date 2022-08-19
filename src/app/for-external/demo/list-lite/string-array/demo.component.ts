@@ -14,6 +14,6 @@ export class ListLiteStringArrayDemoComponent {
         this[property] = selectedItems.map(item => labelField ? item[labelField] : item).toString()
     }
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
     }
 }

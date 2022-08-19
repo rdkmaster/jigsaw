@@ -9,6 +9,6 @@ export class TimePickerBasicDemoComponent {
     time;
     valueChange($event) {
     }
-    constructor(public text: TimePickerTextService) {
+    constructor(public doc: TimePickerTextService) {
     }
 }

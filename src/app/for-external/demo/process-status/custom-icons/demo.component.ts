@@ -68,6 +68,6 @@ export class ProcessStatusCustomIconsComponent {
             skippedIcon: 'iconfont iconfont-e339'
         },
     ];
-constructor( public text: ProcessStatusTextService) {
+constructor( public doc: ProcessStatusTextService) {
 }
 }

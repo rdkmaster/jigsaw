@@ -7,6 +7,6 @@ import {TextareaTextService} from "../doc.service";
 })
 export class TextareaClearableDemoComponent {
     textareaValue: any;
-    constructor(public text: TextareaTextService) {
+    constructor(public doc: TextareaTextService) {
     }
 }

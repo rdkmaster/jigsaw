@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['interaction']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.interaction">
     <jigsaw-select [data]="simpleDataList" [multipleSelect]="false" placeholder="请选择" width="160px"
                    (valueChange)="relateSelectChange($event)"   [size]="selectedLabel.size"></jigsaw-select>
     <div style="height: 8px;"></div>

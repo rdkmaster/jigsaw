@@ -5,6 +5,6 @@ import {TableBigDataTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TableBigDataAllComponent {
-    constructor(public text: TableBigDataTextService) {}
+    constructor(public doc: TableBigDataTextService) {}
 }
 

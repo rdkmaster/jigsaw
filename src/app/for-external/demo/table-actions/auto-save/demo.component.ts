@@ -18,7 +18,7 @@ import {TableActionsTextService} from "../doc.service";
 export class TableAutoSaveDemoComponent {
     tableData: TableData;
 
-    constructor(private popupService: PopupService, public text: TableActionsTextService) {
+    constructor(private popupService: PopupService, public doc: TableActionsTextService) {
         this.tableData = new TableData(
             [["Garrett Winters1", "Accountant", 8000, "Tokyo", "一些描述信息"]],
             ["name", "position", "salary", "office", "extn"],

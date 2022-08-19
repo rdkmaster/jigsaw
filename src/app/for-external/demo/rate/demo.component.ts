@@ -5,6 +5,6 @@ import {RateTextService} from "./doc.service";
     templateUrl: 'demo.component.html',
 })
 export  class RateDemoComponent {
-    constructor(public text: RateTextService) {
+    constructor(public doc: RateTextService) {
     }
 }

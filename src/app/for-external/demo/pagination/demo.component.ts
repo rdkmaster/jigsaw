@@ -5,6 +5,6 @@ import {PaginationTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class PaginationAllComponent {
-    constructor(public text: PaginationTextService) {}
+    constructor(public doc: PaginationTextService) {}
 }
 

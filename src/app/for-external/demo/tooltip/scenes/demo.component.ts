@@ -6,6 +6,6 @@ import {TooltipTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class TooltipScenesDemoComponent {
-    constructor(public text: TooltipTextService) {
+    constructor(public doc: TooltipTextService) {
     }
 }

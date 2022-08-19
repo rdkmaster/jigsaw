@@ -14,7 +14,7 @@ export class CheckboxBasicComponent {
     public demo2checked = CheckBoxStatus.checked;
     public demo2indeterminate = CheckBoxStatus.indeterminate;
     public demo2unchecked = CheckBoxStatus.unchecked;
-    constructor(public text: CheckboxTextService) {
+    constructor(public doc: CheckboxTextService) {
     }
 
 }

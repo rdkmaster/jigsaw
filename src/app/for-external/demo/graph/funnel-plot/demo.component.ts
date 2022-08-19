@@ -9,7 +9,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphFunnelPlotDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.funnelPlotData = new FunnelPlotGraphData();
         this.funnelPlotData.title = '漏斗图';
         this.funnelPlotData.rowDescriptor = ['访问', '咨询', '订单', '点击', '展现'];

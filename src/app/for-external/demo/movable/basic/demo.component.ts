@@ -33,7 +33,7 @@ export class MoveAndClickBasicDemoComponent {
         return e.clientX == this.mouseStartPosition.x && e.clientY == this.mouseStartPosition.y
     }
 
-    constructor(public text: MovableTextService) {
+    constructor(public doc: MovableTextService) {
     }
 
 }

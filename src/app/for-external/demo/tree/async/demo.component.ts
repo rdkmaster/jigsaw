@@ -37,7 +37,7 @@ export class ZTreeAsyncDemoComponent {
 
     public data = new SimpleTreeData();
 
-    constructor(public text: TreeTextService) {
+    constructor(public doc: TreeTextService) {
         this.data.fromObject([
             {key: '1', name: 'n1', label: "n1", isParent: true},
             {key: '2', name: 'n2', label: "n2", isParent: true},

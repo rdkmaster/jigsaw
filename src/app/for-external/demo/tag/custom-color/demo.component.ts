@@ -18,5 +18,5 @@ export class TagCustomColorComponent {
         {label: "小", size: "small"},
         {label: "大", size: "medium"},
     ]);
-    constructor(public text: TagTextService) {}
+    constructor(public doc: TagTextService) {}
 }

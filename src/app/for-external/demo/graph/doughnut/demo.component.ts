@@ -9,7 +9,7 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphDoughnutDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.doughnut = new DoughnutGraphData();
         this.doughnut.rowDescriptor = ["终端", "无线网", "互联网", "核心网"];
         this.doughnut.data = [

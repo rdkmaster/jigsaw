@@ -13,6 +13,6 @@ export class SearchInputDebounceDemoComponent {
         console.log("demo search event:", $event);
         this.searchKey = $event;
     }
-    constructor(public text: SearchInputTextService) {
+    constructor(public doc: SearchInputTextService) {
     }
 }

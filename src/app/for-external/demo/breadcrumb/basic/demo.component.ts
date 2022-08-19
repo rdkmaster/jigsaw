@@ -9,7 +9,7 @@ import {BreadcrumbTextService} from "../doc.service";
 export class BreadcrumbBasicDemoComponent {
     breadcrumbItems: any[];
 
-    constructor(public text: BreadcrumbTextService) {
+    constructor(public doc: BreadcrumbTextService) {
         this.resetBreadcrumbItems();
     }
 

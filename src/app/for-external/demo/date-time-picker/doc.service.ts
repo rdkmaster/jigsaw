@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class DateTimePickerTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Date Time Picker 日期和时间选择
 

@@ -17,5 +17,5 @@ export class TagBasicComponent {
         { label: "大", size: "medium" }
     ]);
 
-    constructor(public text: TagTextService) { }
+    constructor(public doc: TagTextService) { }
 }

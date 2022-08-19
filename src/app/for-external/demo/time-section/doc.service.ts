@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TimeSectionTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Time Section 时段选择器
 

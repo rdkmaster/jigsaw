@@ -13,7 +13,7 @@ export class TableAutoPageableDemoComponent {
     pageable: LocalPageableTableData;
     hideHeader: boolean = false;
 
-    constructor(http: HttpClient, public cdr: ChangeDetectorRef, public text: TableActionsTextService) {
+    constructor(http: HttpClient, public cdr: ChangeDetectorRef, public doc: TableActionsTextService) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.fromAjax('mock-data/hr-list');

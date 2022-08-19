@@ -26,6 +26,6 @@ export class JigsawHideShowTabComponent {
         this.myTab.showTab(1);
     }
 
-    constructor(public text: TabTextService) {
+    constructor(public doc: TabTextService) {
     }
 }

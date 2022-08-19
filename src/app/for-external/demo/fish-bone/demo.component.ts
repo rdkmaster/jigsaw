@@ -5,6 +5,6 @@ import {FishBoneTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class FishBoneAllComponent {
-    constructor(public text: FishBoneTextService) {}
+    constructor(public doc: FishBoneTextService) {}
 }
 

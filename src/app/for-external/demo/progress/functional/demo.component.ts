@@ -14,7 +14,7 @@ export class ProgressFunctionalComponent {
     public selectedLabel = {label: "大", size: "default"};
 
     progressValue: number = 32;
-    constructor(public text: ProgressTextService) {
+    constructor(public doc: ProgressTextService) {
     }
 
 }

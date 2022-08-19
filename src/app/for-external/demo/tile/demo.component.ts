@@ -5,6 +5,6 @@ import {TileTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TileAllComponent {
-    constructor(public text: TileTextService) {}
+    constructor(public doc: TileTextService) {}
 }
 

@@ -37,6 +37,6 @@ export class NotificationBasicDemoComponent {
         JigsawNotification.showInfo('这是一条消息的提示消息', '带有标题的提示消息');
     }
 
-    constructor(public text: NotificationTextService) {
+    constructor(public doc: NotificationTextService) {
     }
 }

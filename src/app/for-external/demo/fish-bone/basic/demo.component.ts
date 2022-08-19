@@ -11,7 +11,7 @@ import {FishBoneTextService} from "../doc.service";
 export class FishBoneBasicComponent {
 
     data: SimpleTreeData;
-    constructor(public http: HttpClient, public _zone: NgZone, public text: FishBoneTextService) {
+    constructor(public http: HttpClient, public _zone: NgZone, public doc: FishBoneTextService) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([

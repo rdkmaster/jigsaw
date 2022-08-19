@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class AlertTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Alert 警示框
 

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class DrawerTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Drawer 抽屉
 

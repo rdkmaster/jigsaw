@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['loading']" [codes]="text['codes']['loading']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.loading" [codes]="doc.codes.loading">
     <div class="demo-showcase">
         <span>正常</span>
         <jigsaw-button (click)="onLoading()" colorType="primary" height="32px" [disabled]="disabled"

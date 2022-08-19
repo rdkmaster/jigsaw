@@ -25,7 +25,7 @@ export class TableSwitchRendererDemoComponent {
         }
     ];
 
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         function dataReviser(data: TableData) {
             data.data = data.data.slice(0, 12);
             data = JSON.parse(JSON.stringify(data));

@@ -14,7 +14,7 @@ import {TableBigDataTextService} from "../doc.service";
 export class BigTableDataDemoComponent {
     tableData: BigTableData;
 
-    constructor(public http: HttpClient, public text: TableBigDataTextService) {
+    constructor(public http: HttpClient, public doc: TableBigDataTextService) {
         this.tableData = new BigTableData(http, 'mock-data/big-table-data');
         this.tableData.pagingInfo.pageSize = 1000;
         this.tableData.viewport.rows = 10;

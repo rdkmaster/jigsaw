@@ -11,7 +11,7 @@ export class LocalPagingDataDemoComponent {
 
     pageable: LocalPageableTableData;
 
-    constructor(http: HttpClient, public text: TableBasicTextService) {
+    constructor(http: HttpClient, public doc: TableBasicTextService) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;

@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="text['text']['lazyLoad']">
+<demo-template [data]="''" [text]="doc.text.lazyLoad">
     <j-cascade [dataGenerator]="generator" [generatorContext]="this" labelField="name"
                (selectedItemsChange)="parseMessage($event)" width="400">
     </j-cascade>

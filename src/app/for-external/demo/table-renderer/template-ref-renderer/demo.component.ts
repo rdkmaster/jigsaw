@@ -49,7 +49,7 @@ export class TableRendererOfTemplateRefDemoComponent {
         }
     ];
 
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

@@ -5,6 +5,6 @@ import {TableRendererTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TableRendererAllComponent {
-    constructor(public text: TableRendererTextService) {}
+    constructor(public doc: TableRendererTextService) {}
 }
 

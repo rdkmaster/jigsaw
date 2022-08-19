@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class ColorSelectTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Color Select 颜色选择
 

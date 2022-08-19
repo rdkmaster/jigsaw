@@ -30,6 +30,6 @@ export class TagSelectableComponent {
         this.tags1.forEach ( tag => tag.selected = false);
         this.tags1[idx].selected = true;
     }
-    constructor(public text: TagTextService) {}
+    constructor(public doc: TagTextService) {}
 
 }

@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="text['text']['searchAndPaging']">
+<demo-template [data]="''" [text]="doc.text.searchAndPaging">
     <j-cascade [data]="generator" [generatorContext]="this" [selectedItems]="lazyLoadSelectedItems"
                labelField="name" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)"
                [searchable]="true" [pageSize]="5" width="400">

@@ -5,6 +5,6 @@ import {SwitchTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class SwitchDemoComponent {
-    constructor( public text: SwitchTextService) {
+    constructor( public doc: SwitchTextService) {
     }
 }

@@ -9,6 +9,6 @@ import {InputTextService} from "../doc.service";
 export class InputBasicComponent {
     public units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public inputValue: any;
-    constructor(public text: InputTextService) {}
+    constructor(public doc: InputTextService) {}
 
 }

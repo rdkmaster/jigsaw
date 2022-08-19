@@ -24,7 +24,7 @@ export class TableCalendarDemoComponent {
         }
     ];
 
-    constructor(public text: TableRendererTextService) {
+    constructor(public doc: TableRendererTextService) {
         this.tableData = new CalendarTableData(
             [
                 [69, 16, 4, 47, 27, 54, 100],

@@ -56,6 +56,6 @@ export class NotificationAdvancedDemoComponent {
                 innerHtmlContext: this
             });
     }
-    constructor(public text: NotificationTextService) {
+    constructor(public doc: NotificationTextService) {
     }
 }

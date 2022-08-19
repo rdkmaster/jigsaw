@@ -13,7 +13,7 @@ export class LoadingFontIconDemoComponent implements AfterViewInit{
     blockLoading: PopupInfo;
     globalLoading: PopupInfo;
 
-    constructor(public loadingService: LoadingService, public text: LoadingTextService) {
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
     }
 
     popupBlockLoading() {

@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['searchable']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.searchable">
     <div>
         <jigsaw-markdown [markdown]="'#### 搜索功能'"></jigsaw-markdown>
         <j-button style="margin-bottom: 6px" (click)="changeData()">change data</j-button>

@@ -29,7 +29,7 @@ export class MenuInDialogDemo {
     public autoDispose: boolean = false;
     public timeout: number = 3000;
 
-    constructor(private ps: PopupService, public text: MenuTextService) {
+    constructor(private ps: PopupService, public doc: MenuTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

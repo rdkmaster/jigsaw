@@ -14,6 +14,6 @@ export class DrawerEmphasisHandlerDemoComponent {
     offsetRight: string;
     offsetBottom: string;
 
-    constructor(public text: DrawerTextService) {
+    constructor(public doc: DrawerTextService) {
     }
 }

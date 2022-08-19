@@ -11,7 +11,7 @@ export class TableSelectRowDemoComponent {
     tableData: TableData;
     selectedRow: number = 5;
 
-    constructor(http: HttpClient, public text: TableActionsTextService) {
+    constructor(http: HttpClient, public doc: TableActionsTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

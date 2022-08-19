@@ -8,7 +8,7 @@ import {SimpleNode, SimpleTreeData} from "jigsaw/public_api";
 })
 export class NavigationWithBadgeDemoComponent {
     public data4: SimpleTreeData = new SimpleTreeData();
-    constructor(public text: NavigationMenuTextService) {
+    constructor(public doc: NavigationMenuTextService) {
         this.data4.fromXML(`
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" badgeValue="12">

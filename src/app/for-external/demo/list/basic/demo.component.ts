@@ -45,6 +45,6 @@ export class ListBasicDemoComponent {
         },
     ];
 
-    constructor(public text: ListTextService) {
+    constructor(public doc: ListTextService) {
     }
 }

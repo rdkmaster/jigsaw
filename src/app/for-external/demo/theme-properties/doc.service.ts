@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class ThemePropertiesTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Theme Properties 皮肤属性
 

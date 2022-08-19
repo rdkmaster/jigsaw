@@ -1,11 +1,11 @@
-<demo-template [data]="''" [text]="text['text']['simpleTableDragDrop']">
+<demo-template [data]="''" [text]="doc.text.simpleTableDragDrop">
     <div class="demo-container">
         <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
         </jigsaw-table>
         <p>选中行 {{selectedRow}}</p>
         <p>图标
             <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.icon" [filterOnFocus]="false"
-                                        [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515']">
+                                        [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515' ]">
             </jigsaw-auto-complete-input>
         </p>
         <p>提示

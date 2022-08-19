@@ -5,6 +5,6 @@ import {TableActionsTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TableActionsAllComponent {
-    constructor(public text: TableActionsTextService) {}
+    constructor(public doc: TableActionsTextService) {}
 }
 

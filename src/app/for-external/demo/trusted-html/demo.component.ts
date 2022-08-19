@@ -5,6 +5,6 @@ import {TrustedHtmlTextService} from "./doc.service";
     templateUrl: 'demo.component.html'
 })
 export class TrustedHtmlDemoComponent {
-    constructor( public text: TrustedHtmlTextService) {
+    constructor( public doc: TrustedHtmlTextService) {
     }
 }

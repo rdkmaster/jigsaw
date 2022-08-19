@@ -35,7 +35,7 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
         this.selectedCityStr = this.selectedCity.map(city => city.label).join(',');
     }
 
-    constructor(public text: TileTextService) {
+    constructor(public doc: TileTextService) {
     }
 
 }

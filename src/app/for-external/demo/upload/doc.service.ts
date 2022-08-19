@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class UploadTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Upload 文件上传
 

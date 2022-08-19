@@ -11,7 +11,7 @@ import {LoadingTextService} from "../doc.service";
 export class LoadingCustomizeDemoComponent implements AfterViewInit{
     @ViewChild('block') block: ElementRef;
 
-    constructor(public loadingService: LoadingService, public text: LoadingTextService) {
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
     }
 
     blockLoading: PopupInfo;

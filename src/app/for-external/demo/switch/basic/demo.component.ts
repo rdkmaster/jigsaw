@@ -15,5 +15,5 @@ export class SwitchBasicComponent {
     ]);
     public checked: boolean;
     public selectedLabel = {label: "中", size: "medium"};
-    constructor(public text: SwitchTextService) {}
+    constructor(public doc: SwitchTextService) {}
 }

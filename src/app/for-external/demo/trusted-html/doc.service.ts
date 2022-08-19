@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class TrustedHtmlTextService {
-    public text: Object = {
+    public text = {
         introduction: `
         # Trusted Html 富文本渲染器
 

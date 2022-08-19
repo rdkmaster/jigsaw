@@ -28,6 +28,6 @@ export class FloatPositionDemoComponent {
     floatPosition6 = "leftBottom";
     floatPosition7 = "rightTop";
     floatPosition8 = "rightBottom";
-    constructor( public text: FloatTextService) {
+    constructor( public doc: FloatTextService) {
     }
 }

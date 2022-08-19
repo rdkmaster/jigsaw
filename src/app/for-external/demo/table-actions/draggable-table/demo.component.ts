@@ -14,7 +14,7 @@ export class TableDraggableDemoComponent {
         icon: 'iconfont iconfont-e515', title: '拖拽换行', label: ''
     };
 
-    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public text: TableActionsTextService) {
+    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: TableActionsTextService) {
         this.tableData = new TableData(
             [
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 1],

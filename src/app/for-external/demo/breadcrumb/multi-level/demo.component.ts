@@ -15,5 +15,5 @@ export class BreadcrumbFoldDemoComponent {
         // 也支持label属性
         {label: "业务样本"}
     ];
-    constructor(public text: BreadcrumbTextService) {}
+    constructor(public doc: BreadcrumbTextService) {}
 }

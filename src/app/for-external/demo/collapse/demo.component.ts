@@ -5,6 +5,6 @@ import {CollapseTextService} from "./doc.service";
     templateUrl: "demo.component.html",
 })
 export class CollapseDemoComponent {
-    constructor(public text: CollapseTextService) {
+    constructor(public doc: CollapseTextService) {
     }
 }

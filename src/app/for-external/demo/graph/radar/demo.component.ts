@@ -8,7 +8,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphRadarDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.radarData = new RadarGraphData();
         this.radarData.title = '基础雷达图';
         this.radarData.rowDescriptor = ['预算分配（Allocated Budget）', '实际开销（Actual Spending）'];

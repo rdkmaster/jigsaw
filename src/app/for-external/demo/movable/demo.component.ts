@@ -5,6 +5,6 @@ import {MovableTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class MovableAllComponent {
-    constructor(public text: MovableTextService) { }
+    constructor(public doc: MovableTextService) { }
 }
 

@@ -32,6 +32,6 @@ export class BreadcrumbHintDemoComponent {
             hint: "业务样本就是除了业务管理和业务清单以外的内容。"
         }
     ];
-    constructor(public text: BreadcrumbTextService) {
+    constructor(public doc: BreadcrumbTextService) {
     }
 }

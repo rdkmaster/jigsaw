@@ -55,6 +55,6 @@ export class AutoCompleteInputPrefixSuffixDemoComponent {
         console.log('prefix-suffix selected: ', event);
     }
 
-    constructor(public text: AutoCompleteInputTextService) {
+    constructor(public doc: AutoCompleteInputTextService) {
     }
 }

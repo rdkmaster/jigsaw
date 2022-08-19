@@ -30,6 +30,6 @@ export class UploadContentFieldDemoComponent {
         console.log(data);
     }
 
-    constructor(public text: UploadTextService) {
+    constructor(public doc: UploadTextService) {
     }
 }

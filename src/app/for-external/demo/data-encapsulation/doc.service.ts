@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: 'root'
 })
 export class DataEncapsulationTextService {
-    public text: object = {
+    public text = {
         introduction: `
          # Data 前后端通信
          起始版本：v1.0.0

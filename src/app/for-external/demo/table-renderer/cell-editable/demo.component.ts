@@ -46,7 +46,7 @@ export class MyTableCellEditor extends TableCellRendererBase implements AfterVie
 export class TableSetCellEditableDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

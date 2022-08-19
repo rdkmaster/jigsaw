@@ -13,6 +13,6 @@ export class DateTimePickerConfirmButtonDemoComponent {
     beginDate = "now-1d";
     endDate = "now";
 
-    constructor(public text: DateTimePickerTextService) {
+    constructor(public doc: DateTimePickerTextService) {
     }
 }

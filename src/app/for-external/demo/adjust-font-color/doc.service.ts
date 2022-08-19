@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class AdjustFontColorTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Adjust Font Color 自适应文本颜色
 

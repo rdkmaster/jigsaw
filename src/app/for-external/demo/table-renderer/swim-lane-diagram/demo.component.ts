@@ -23,7 +23,7 @@ export class SwimLaneDiagramDemoComponent {
         {name: 'PCRF', desc: 'XNSAEGW02', ip: '221.177.187.112'},
     ];
 
-    constructor(public elementRef: ElementRef, public text: TableRendererTextService) {
+    constructor(public elementRef: ElementRef, public doc: TableRendererTextService) {
         this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
         for (let i = 0; i < this.neList.length; i++) {
             this.tableData.field.push('swimLang' + i);

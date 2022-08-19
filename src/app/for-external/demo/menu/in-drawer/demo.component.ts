@@ -9,7 +9,7 @@ import {MenuTextService} from "../doc.service";
 export class NavigationInDrawerDemoComponent {
     public data: SimpleTreeData = new SimpleTreeData();
 
-    constructor(public text: MenuTextService) {
+    constructor(public doc: MenuTextService) {
         const xmlData = `
             <node>
                 <node label="通用" icon="iconfont iconfont-e4b8" isActive="true" selected="true">

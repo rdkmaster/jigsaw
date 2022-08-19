@@ -27,7 +27,7 @@ export class TableBasicProgressDemoComponent {
         }
     }];
 
-    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public text: TableBasicTextService) {
+    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: TableBasicTextService) {
         this.tableData = new TableData(
             [
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 'success'],

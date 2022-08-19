@@ -10,7 +10,7 @@ export class RangeDateTimeGrMonthComponent implements AfterContentInit {
 
     endDate = "now";
 
-    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public doc: RangeDataTimePickerTextService) {
     }
 
     ngAfterContentInit() {

@@ -41,7 +41,7 @@ export class ZTreeIconDemoComponent implements AfterViewInit {
         nodeClose: "e9e0"
     };
 
-    constructor(public text: TreeTextService) {
+    constructor(public doc: TreeTextService) {
         this.xml.fromXML(`
             <node>
                 <node label="Web代码" open="true" iconUnicode="e25c">

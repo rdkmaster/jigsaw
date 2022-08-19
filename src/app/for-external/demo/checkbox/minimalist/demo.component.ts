@@ -10,6 +10,6 @@ import { CheckBoxStatus } from "jigsaw/public_api";
 export class CheckboxMinimalistComponent {
     status = CheckBoxStatus.indeterminate;
     mode = ['normal'];
-    constructor(public text: CheckboxTextService) { }
+    constructor(public doc: CheckboxTextService) { }
 
 }

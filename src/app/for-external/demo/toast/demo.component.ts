@@ -5,6 +5,6 @@ import {ToastTextService} from "./doc.service";
     templateUrl:　"demo.component.html"
 })
 export class ToastDemoComponent {
-    constructor(public text: ToastTextService) {
+    constructor(public doc: ToastTextService) {
     }
 }

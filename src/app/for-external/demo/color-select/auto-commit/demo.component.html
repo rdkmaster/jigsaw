@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="text['text']['autoCommit']">
+<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.autoCommit">
     <jigsaw-color-select color="#e57409" [enableConfirm]="false" (colorChange)="_$colorChange($event)"
                          [preSize]="selectedLabel.size">
     </jigsaw-color-select>

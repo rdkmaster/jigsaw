@@ -12,6 +12,6 @@ export class DateTimeSelectDemoComponent {
         console.log($event);
     }
 
-    constructor(public text: DateTimePickerTextService) {
+    constructor(public doc: DateTimePickerTextService) {
     }
 }

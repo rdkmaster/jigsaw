@@ -5,6 +5,6 @@ import { AutoCompleteInputTextService } from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class AutoCompleteInputDemoComponent {
-    constructor(public text: AutoCompleteInputTextService) { }
+    constructor(public doc: AutoCompleteInputTextService) { }
 }
 

@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class ComboSelectTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Combo Select 组合框
 

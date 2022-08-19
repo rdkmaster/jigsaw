@@ -18,6 +18,6 @@ export class DatePickerMarkDemoComponent {
         {date: {from: 'now-32d', to: 'now-30d'}, mark: 'warn', label: '提醒日期'},
     ];
 
-    constructor(public text: DatePickerTextService) {
+    constructor(public doc: DatePickerTextService) {
     }
 }

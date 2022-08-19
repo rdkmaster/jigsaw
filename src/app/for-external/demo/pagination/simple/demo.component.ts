@@ -18,7 +18,7 @@ export class PaginationSimpleDemoComponent {
     pageableForSimple: LocalPageableTableData;
     pageSizeOptions = [5, 10, 12];
 
-    constructor(http: HttpClient, public text: PaginationTextService) {
+    constructor(http: HttpClient, public doc: PaginationTextService) {
         this.pageableForSimple = new LocalPageableTableData();
         this.pageableForSimple.http = http;
         // 小尺寸的分页通过data设置pageSize

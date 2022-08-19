@@ -41,6 +41,6 @@ export class ComboSelectChangeEventsDemoComponent {
         btn.type = '';
     }
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 }

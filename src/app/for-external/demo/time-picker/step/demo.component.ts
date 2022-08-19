@@ -10,6 +10,6 @@ export class TimePickerStepDemoComponent {
     step = [5];
     valueChange($event) {
     }
-    constructor(public text: TimePickerTextService) {
+    constructor(public doc: TimePickerTextService) {
     }
 }

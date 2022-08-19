@@ -68,7 +68,7 @@ export class FloatOptionDemoComponent {
         borderType: 'pointer'
     };
 
-    constructor( public text: FloatTextService) {
+    constructor( public doc: FloatTextService) {
     }
 
 }

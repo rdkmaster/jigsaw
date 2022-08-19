@@ -8,6 +8,6 @@ import { DateTimePickerTextService } from "../doc.service";
 export class DateTimePickerBasicDemoComponent {
     date = 'now';
 
-    constructor(public text: DateTimePickerTextService) {
+    constructor(public doc: DateTimePickerTextService) {
     }
 }

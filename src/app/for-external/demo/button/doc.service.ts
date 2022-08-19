@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class ButtonTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Button按钮
 

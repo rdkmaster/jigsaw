@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class MovableTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Movable 可移动
 

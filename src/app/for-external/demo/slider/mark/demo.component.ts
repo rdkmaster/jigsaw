@@ -18,6 +18,6 @@ export class SliderMarkDemoComponent {
 
     rangeValue = new ArrayCollection([30, 50, 60]);
 
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 
 }

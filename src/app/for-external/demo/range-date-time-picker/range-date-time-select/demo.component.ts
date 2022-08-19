@@ -13,6 +13,6 @@ export class RangeDateTimeSelectComponent {
         console.log($event)
     }
 
-    constructor(public text: RangeDataTimePickerTextService) {
+    constructor(public doc: RangeDataTimePickerTextService) {
     }
 }

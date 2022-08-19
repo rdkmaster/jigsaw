@@ -51,7 +51,7 @@ export class ListLiteMultipleSelectDemoComponent {
     }
 
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
 
     }
 }

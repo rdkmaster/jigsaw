@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
     providedIn: 'root'
 })
 export class LoadingTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Loading 加载中
 

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class InputTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Input 输入框
 

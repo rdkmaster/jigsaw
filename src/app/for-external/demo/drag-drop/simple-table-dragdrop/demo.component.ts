@@ -22,7 +22,7 @@ export class TableDragDemoComponent {
         ["Johnny", "Accountant", "$16346", "2017/4/26", "R&D Dept III", 403]
     ];
 
-    constructor(public renderer: Renderer2, public elementRef: ElementRef, public text: DragDropTextService) {
+    constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: DragDropTextService) {
         this.tableData = new TableData([
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
                 ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],

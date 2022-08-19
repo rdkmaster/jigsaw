@@ -33,6 +33,6 @@ export class SelectTriggerDemoComponent {
     openTrigger = "mouseenter";
     closeTrigger = "mouseleave";
 
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 
 }

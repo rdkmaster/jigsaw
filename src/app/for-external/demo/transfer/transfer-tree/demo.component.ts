@@ -13,7 +13,7 @@ export class TransferTreeDemoComponent {
     public sourceRenderer = TransferTreeSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
-    constructor(public http: HttpClient, public text: TransferTextService) {
+    constructor(public http: HttpClient, public doc: TransferTextService) {
         this.data = new SimpleTreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");

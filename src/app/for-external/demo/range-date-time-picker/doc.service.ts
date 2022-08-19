@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class RangeDataTimePickerTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Date Time (Range) 日期时间范围选择
 

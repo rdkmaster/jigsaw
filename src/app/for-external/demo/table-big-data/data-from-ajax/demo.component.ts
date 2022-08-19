@@ -10,7 +10,7 @@ import {TableBigDataTextService} from "../doc.service";
 export class TableDataFromAjaxDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableBigDataTextService) {
+    constructor(http: HttpClient, public doc: TableBigDataTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

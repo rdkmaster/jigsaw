@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class BreadcrumbTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Breadcrumb 面包屑
 

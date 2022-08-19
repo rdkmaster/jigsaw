@@ -53,7 +53,7 @@ export class TableAutoFillUpDemoComponent {
         }
     ]
 
-    constructor(public text: TableActionsTextService) {
+    constructor(public doc: TableActionsTextService) {
         this.tableData = new TableData(
             [
                 ["Tiger Nixon1", "System Architect", "8000"],

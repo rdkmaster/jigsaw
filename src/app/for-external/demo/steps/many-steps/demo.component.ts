@@ -15,7 +15,7 @@ export class JigsawStepManyStepsDemoComponent {
     @ViewChild('hScrollbar', {read: PerfectScrollbarDirective})
     private _hScrollbar: PerfectScrollbarDirective;
 
-    constructor(private _cdr: ChangeDetectorRef, public text: StepsTextService) {
+    constructor(private _cdr: ChangeDetectorRef, public doc: StepsTextService) {
         for (let i = 0; i < this.count; i++) {
             this.data.push(this._createStepData());
         }

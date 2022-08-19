@@ -1,8 +1,8 @@
-<demo-template [data]="''" [text]="text['text']['expandPageable']">
+<demo-template [data]="''" [text]="doc.text.expandPageable">
     <!-- start to learn the demo from here -->
     <div class="demo-buttons">
         <span>展开方式</span>
-        <jigsaw-button-bar [data]="['toggle', 'show', 'hide']" [(selectedItems)]="action"></jigsaw-button-bar>
+        <jigsaw-button-bar [data]="['toggle', 'show', 'hide' ]" [(selectedItems)]="action"></jigsaw-button-bar>
     </div>
     <div class="demo-buttons" style="display: flex;">
         <span>数据更新后是否保持打开</span>

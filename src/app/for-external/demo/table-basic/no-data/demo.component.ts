@@ -9,7 +9,7 @@ import {TableBasicTextService} from "../doc.service";
 export class TableBasicNoDataDemoComponent {
     tableData: TableData;
 
-    constructor(public text: TableBasicTextService) {
+    constructor(public doc: TableBasicTextService) {
         this.tableData = new TableData(
             [],
             ["name", "position", "salary", "title1", "enroll-date", "office", "extn", "title2", "title3"],

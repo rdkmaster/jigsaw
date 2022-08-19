@@ -41,7 +41,7 @@ export class TrustedHtmlBasicComponent {
      */
     context:any;
 
-    constructor( public text: TrustedHtmlTextService) {
+    constructor( public doc: TrustedHtmlTextService) {
         this.onCodeChange(this.jsCode);
     }
 

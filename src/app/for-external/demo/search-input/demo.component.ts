@@ -5,6 +5,6 @@ import {SearchInputTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class SearchInputAllComponent {
-    constructor(public text: SearchInputTextService) {}
+    constructor(public doc: SearchInputTextService) {}
 }
 

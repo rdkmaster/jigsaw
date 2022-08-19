@@ -30,7 +30,7 @@ export class JigsawStepOverLengthDemoComponent {
 
     current = 0;
 
-    constructor(public text: StepsTextService) {
+    constructor(public doc: StepsTextService) {
         for (let i = 2; i < 5; i++) {
             this.data.push(this._createStepData());
         }

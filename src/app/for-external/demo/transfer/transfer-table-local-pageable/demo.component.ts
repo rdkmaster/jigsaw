@@ -11,7 +11,7 @@ import {TransferTextService} from "../doc.service";
 })
 export class TransferTableLocalPageableDemoComponent {
 
-    constructor(http: HttpClient, public text: TransferTextService) {
+    constructor(http: HttpClient, public doc: TransferTextService) {
         this.data = new LocalPageableTableData();
         this.data.http = http;
         this.data.pagingInfo.pageSize = 10;

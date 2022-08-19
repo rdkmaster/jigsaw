@@ -12,6 +12,6 @@ export class TooltipHtmlDemoComponent {
     onclick() {
         alert('你点击了tooltip里的超链了！')
     }
-    constructor(public text: TooltipTextService) {
+    constructor(public doc: TooltipTextService) {
     }
 }

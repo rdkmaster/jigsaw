@@ -35,7 +35,7 @@ export class TabHeadlessDemoComponent {
 
     lineBarGraphData: LineGraphData;
 
-    constructor(http: HttpClient, public text: TabTextService) {
+    constructor(http: HttpClient, public doc: TabTextService) {
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');

@@ -7,7 +7,7 @@ import {ProgressTextService} from "../doc.service";
 })
 export class ProgressTextFollowComponent {
     progressValue: number = 32;
-    constructor(public text: ProgressTextService) {
+    constructor(public doc: ProgressTextService) {
     }
 
 }

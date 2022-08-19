@@ -5,6 +5,6 @@ import {NotificationTextService} from "./doc.service";
     templateUrl: "demo.component.html",
 })
 export class NotificationDemoComponent {
-    constructor(public text: NotificationTextService) {
+    constructor(public doc: NotificationTextService) {
     }
 }

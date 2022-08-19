@@ -10,7 +10,7 @@ import {AjaxInterceptor, MockData} from "../../../../libs/app.interceptor";
 })
 
 export class CascadeSearchAndPagingComponent {
-    constructor(public http: HttpClient, public text: CascadeTextService) {
+    constructor(public http: HttpClient, public doc: CascadeTextService) {
     }
 
     lazyLoadSelectedItems: any[];

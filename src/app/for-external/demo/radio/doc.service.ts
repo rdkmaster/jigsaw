@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class RadioTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Radio 单选框
 

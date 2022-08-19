@@ -10,7 +10,7 @@ import {GraphTextService} from "../demo.service";
 export class GraphMapDemoComponent implements AfterViewInit {
     data: AbstractGraphData;
 
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
 
     }
 

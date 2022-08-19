@@ -6,6 +6,6 @@ import {TableColumnDefinesDemoModule} from "./demo.module";
     templateUrl: './demo.component.html',
 })
 export class TableColumnDefinesAllComponent {
-    constructor(public text: TableColumnDefinesTextService) {}
+    constructor(public doc: TableColumnDefinesTextService) {}
 }
 

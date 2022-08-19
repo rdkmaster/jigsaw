@@ -5,6 +5,6 @@ import {TimeSectionTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class TimeSectionDemoComponent {
-    constructor( public text: TimeSectionTextService) {
+    constructor( public doc: TimeSectionTextService) {
     }
 }

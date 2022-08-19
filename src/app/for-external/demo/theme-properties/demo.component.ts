@@ -6,6 +6,6 @@ import {ThemePropertiesTextService} from "./doc.service";
 })
 export class ThemePropertiesAllComponent {
 
-    constructor(public text: ThemePropertiesTextService) {}
+    constructor(public doc: ThemePropertiesTextService) {}
 }
 

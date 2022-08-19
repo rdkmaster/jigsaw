@@ -9,6 +9,6 @@ import {IconTextService} from "../doc.service";
 export class IconCustomizeStatusDemoComponent {
     fontSize = 12;
 
-    constructor(public text: IconTextService) {
+    constructor(public doc: IconTextService) {
     }
 }

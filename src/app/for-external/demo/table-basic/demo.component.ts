@@ -5,6 +5,6 @@ import {TableBasicTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TableBasicAllComponent {
-    constructor(public text: TableBasicTextService) {}
+    constructor(public doc: TableBasicTextService) {}
 }
 

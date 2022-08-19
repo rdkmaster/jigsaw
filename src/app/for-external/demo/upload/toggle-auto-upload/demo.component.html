@@ -1,8 +1,8 @@
-<demo-template [data]="''" [text]="text['text']['toggleAutoUpload']">
+<demo-template [data]="''" [text]="doc.text.toggleAutoUpload">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <label>文件上传方式：</label>
-        <jigsaw-button-bar [data]="['自动', '手动']" [selectedItems]="'手动'"
+        <jigsaw-button-bar [data]="['自动', '手动' ]" [selectedItems]="'手动'"
                            (selectedItemsChange)="uploadImmediately = $event[0] == '自动'">
         </jigsaw-button-bar>
         <a (click)="clear()">清空所有已上传的文件</a>

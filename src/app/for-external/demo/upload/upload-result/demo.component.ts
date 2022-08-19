@@ -9,7 +9,7 @@ import {UploadTextService} from "../doc.service";
 export class UploadResultDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        public text: UploadTextService
+        public doc: UploadTextService
     ) {}
 
     @ViewChild("first", { read: JigsawUploadDirective })

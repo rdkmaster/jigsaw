@@ -32,6 +32,6 @@ export class DaySectionPickerDemoComponent {
         console.log('time section change to ', $event);
     }
 
-    constructor(public text: TimeSectionTextService) {
+    constructor(public doc: TimeSectionTextService) {
     }
 }

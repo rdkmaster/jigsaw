@@ -15,6 +15,6 @@ export class ToastBasicDemoComponent {
     show() {
         JigsawToast.show('这是Toast默认提示框')
     }
-    constructor(public text: ToastTextService) {
+    constructor(public doc: ToastTextService) {
     }
 }

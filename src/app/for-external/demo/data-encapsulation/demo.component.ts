@@ -5,6 +5,6 @@ import {DataEncapsulationTextService} from "./doc.service";
     templateUrl: 'demo.component.html',
 })
 export class DataEncapsulationDemoComponent {
-    constructor( public text: DataEncapsulationTextService) {
+    constructor( public doc: DataEncapsulationTextService) {
     }
 }

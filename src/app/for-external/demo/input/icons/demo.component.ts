@@ -25,6 +25,6 @@ export class InputIconDemoComponent {
         this.message = `${position} icon "${event}" is clicked.`;
     }
 
-    constructor(public text: InputTextService) {
+    constructor(public doc: InputTextService) {
     }
 }

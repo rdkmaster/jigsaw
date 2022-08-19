@@ -28,6 +28,6 @@ export class ToastFunctionalDemoComponent {
         JigsawToast.showInfo('这是Toast信息提示框')
     }
 
-    constructor(public text: ToastTextService) {
+    constructor(public doc: ToastTextService) {
     }
 }

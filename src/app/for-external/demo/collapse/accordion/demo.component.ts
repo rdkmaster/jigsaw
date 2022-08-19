@@ -38,7 +38,7 @@ export class CollapseAccordionDemoComponent {
         },
     ];
 
-    constructor(public text: CollapseTextService) {
+    constructor(public doc: CollapseTextService) {
     }
 
 }

@@ -7,6 +7,6 @@ import {TooltipTextService} from "../doc.service";
 })
 export class TooltipBasicDemoComponent {
     tooltipMessage: string = '一个提示';
-    constructor(public text: TooltipTextService) {
+    constructor(public doc: TooltipTextService) {
     }
 }

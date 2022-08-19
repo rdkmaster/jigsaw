@@ -7,6 +7,6 @@ import {DatePickerTextService} from "../doc.service";
 })
 export class DatePickerBasicDemoComponent {
     date;
-    constructor(public text: DatePickerTextService) {
+    constructor(public doc: DatePickerTextService) {
     }
 }

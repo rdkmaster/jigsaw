@@ -5,6 +5,6 @@ import {FloatTextService} from "./doc.service";
     templateUrl: 'demo.component.html'
 })
 export class FloatDemoComponent {
-    constructor( public text: FloatTextService) {
+    constructor( public doc: FloatTextService) {
     }
 }

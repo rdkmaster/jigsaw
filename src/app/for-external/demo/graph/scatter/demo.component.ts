@@ -9,7 +9,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphScatterDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.scatterData = new ScatterGraphData();
         this.scatterData.title = '散点图';
         this.scatterData.data = [

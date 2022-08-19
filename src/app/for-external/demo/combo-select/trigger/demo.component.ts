@@ -17,6 +17,6 @@ import {ComboSelectTextService} from "../doc.service";
 export class ComboSelectTriggerDemoComponent {
     public open: boolean = true;
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 }

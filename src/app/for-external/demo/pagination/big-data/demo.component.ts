@@ -20,7 +20,7 @@ export class PaginationBigDataDemoComponent {
     pageSizeOptions = [5, 10, 12];
     showQuickJumper = true;
 
-    constructor(http: HttpClient, public text: PaginationTextService) {
+    constructor(http: HttpClient, public doc: PaginationTextService) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 2;

@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="text['text']['basic']">
+<demo-template [data]="''" [text]="doc.text.basic">
     <!-- start to learn the demo from here -->
     <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
     <span *ngIf="touched" style="margin:auto;">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>

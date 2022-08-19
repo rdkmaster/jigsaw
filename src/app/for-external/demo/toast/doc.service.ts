@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class ToastTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Toast 及时消息
 

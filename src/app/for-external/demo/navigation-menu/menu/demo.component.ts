@@ -9,7 +9,7 @@ import {JigsawNavigationMenu} from "jigsaw/public_api";
 })
 export class NavigationMenuDemoComponent {
     public data2: SimpleTreeData = new SimpleTreeData();
-    constructor(public text: NavigationMenuTextService) {
+    constructor(public doc: NavigationMenuTextService) {
         const xmlData = `
             <node>
                 <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

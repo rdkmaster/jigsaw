@@ -4,6 +4,6 @@ import {RadioTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class RadioGroupDemoComponent {
-    constructor(public text: RadioTextService) {
+    constructor(public doc: RadioTextService) {
     }
 }

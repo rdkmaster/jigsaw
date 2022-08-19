@@ -17,6 +17,6 @@ export class ColorSelectLimitedDemoComponent {
     public _$colorChange(color: string) {
         console.log(color);
     }
-    constructor(public text: ColorSelectTextService) {
+    constructor(public doc: ColorSelectTextService) {
     }
 }

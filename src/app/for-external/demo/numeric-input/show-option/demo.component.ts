@@ -13,6 +13,6 @@ export class NumericInputShowOptionDemoComponent {
     value3: number;
     public _$units = ["单位（GB）", "单位（MB）", "单位（KB）"];
 
-    constructor(public text: NumericInputTextService) {
+    constructor(public doc: NumericInputTextService) {
     }
 }

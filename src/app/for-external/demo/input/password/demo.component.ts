@@ -7,5 +7,5 @@ import {InputTextService} from "../doc.service";
 })
 
 export class InputPasswordComponent {
-    constructor(public text: InputTextService) {}
+    constructor(public doc: InputTextService) {}
 }

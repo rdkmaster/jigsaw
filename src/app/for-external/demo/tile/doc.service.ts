@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TileTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Tile 平铺
 

@@ -60,6 +60,6 @@ export class ListWithComponentDemoComponent {
         this.selectedItemsStr = selectedItems.map(item => item.name).toString()
     }
 
-    constructor(public text: ListTextService) {
+    constructor(public doc: ListTextService) {
     }
 }

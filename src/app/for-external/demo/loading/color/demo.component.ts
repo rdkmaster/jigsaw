@@ -13,7 +13,7 @@ export class LoadingColorDemoComponent {
     public paused = 'running';
     constructor(private _renderer: Renderer2,
                 private _el: ElementRef,
-                public text: LoadingTextService) {
+                public doc: LoadingTextService) {
     }
 
     public setElementsStyle(tags: string, props: string, val: string | boolean | number) {

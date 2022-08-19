@@ -8,7 +8,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphStripDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.stripData = new StripGraphData();
         this.stripData.header = ["搜狐视频", "乐视视频", "土豆视频", "奇异PPS视频", "优酷视频", "腾讯视频"];
         this.stripData.data = [

@@ -20,6 +20,6 @@ export class UploadSingleDemoComponent {
         console.log("uploadComplete触发了", $event)
     }
 
-    constructor(public text: UploadTextService) {
+    constructor(public doc: UploadTextService) {
     }
 }

@@ -92,6 +92,6 @@ export class SelectMultipleSelectDemoComponent {
     valueChange($event) {
         console.log($event);
     }
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 
 }

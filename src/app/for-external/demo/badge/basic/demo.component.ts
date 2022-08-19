@@ -40,6 +40,6 @@ export class BadgeBasicDemoComponent {
         {label: "西安", id: 6}
     ]
 
-    constructor(public text: BadgeTextService) {
+    constructor(public doc: BadgeTextService) {
     }
 }

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TableRendererTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Table Renderer 表格
 

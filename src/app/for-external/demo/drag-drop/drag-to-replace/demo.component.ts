@@ -45,6 +45,6 @@ export class DragToReplaceDemoComponent {
         this._replacedEl = dragInfo.element.innerHTML;
         dragInfo.element.innerHTML = dragInfo.dragDropData;
     }
-    constructor( public text: DragDropTextService) {
+    constructor( public doc: DragDropTextService) {
     }
 }

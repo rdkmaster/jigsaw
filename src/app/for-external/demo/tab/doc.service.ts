@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TabTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Tabs 选项卡
 

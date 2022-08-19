@@ -9,7 +9,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphBoxPlotDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.boxPlotData = new BoxPlotGraphData();
         this.boxPlotData.title = 'Michelson-Morley Experiment';
         this.boxPlotData.data = [

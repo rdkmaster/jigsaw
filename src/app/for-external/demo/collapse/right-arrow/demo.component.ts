@@ -12,6 +12,6 @@ export class CollapseRightArrowDemoComponent {
 
     public isActive = true;
     public arrowPos = 'right';
-    constructor(public text: CollapseTextService) {
+    constructor(public doc: CollapseTextService) {
     }
 }

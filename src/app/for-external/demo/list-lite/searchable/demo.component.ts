@@ -49,6 +49,6 @@ export class ListLiteSearchableDemoComponent {
         this[property] = selectedItems.map(item => item[labelField]).toString()
     }
 
-    constructor(public text: ListLiteTextService) {
+    constructor(public doc: ListLiteTextService) {
     }
 }

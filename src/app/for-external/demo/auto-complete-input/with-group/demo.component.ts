@@ -25,6 +25,6 @@ export class AutoCompleteInputGroupDemoComponent {
         items: ['自定义代码块']
     }];
 
-    constructor(public text: AutoCompleteInputTextService) {
+    constructor(public doc: AutoCompleteInputTextService) {
     }
 }

@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class CollapseTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Collapse 折叠
 

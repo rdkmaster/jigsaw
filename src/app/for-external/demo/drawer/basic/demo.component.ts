@@ -17,6 +17,6 @@ export class DrawerBasicDemoComponent {
         this.touched = true;
     }
 
-    constructor(public text: DrawerTextService) {
+    constructor(public doc: DrawerTextService) {
     }
 }

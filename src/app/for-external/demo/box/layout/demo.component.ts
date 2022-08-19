@@ -19,7 +19,7 @@ export class BoxLayoutDemoComponent {
         this.resizeInfo = `Box's width is changed to be ${box.element.offsetWidth} px.`;
     }
 
-    constructor(public text: BoxTextService) {
+    constructor(public doc: BoxTextService) {
     }
 
 }

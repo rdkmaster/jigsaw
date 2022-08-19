@@ -22,6 +22,6 @@ export class AutoCompleteInputBasicDemoComponent {
         this.message = `${position} icon "${event}" is clicked.`;
     }
 
-    constructor(public text: AutoCompleteInputTextService) {
+    constructor(public doc: AutoCompleteInputTextService) {
     }
 }

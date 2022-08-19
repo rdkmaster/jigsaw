@@ -5,6 +5,6 @@ import {UploadTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class UploadAllComponent {
-    constructor(public text: UploadTextService) {}
+    constructor(public doc: UploadTextService) {}
 }
 

@@ -6,5 +6,5 @@ import {HeaderTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class HeaderSecondLevelComponent {
-    constructor(public text: HeaderTextService) {}
+    constructor(public doc: HeaderTextService) {}
 }

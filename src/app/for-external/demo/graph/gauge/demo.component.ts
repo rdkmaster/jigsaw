@@ -9,7 +9,7 @@ import {GraphTextService} from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphGaugeDemoComponent {
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.gaugeData = new GaugeGraphData();
         this.gaugeData.rowDescriptor = ['完成率'];
         this.gaugeData.data = 35;

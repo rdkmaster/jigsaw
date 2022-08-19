@@ -17,6 +17,6 @@ export class DateTimePickerLimitComponent {
     limitStart = 'now-5d';
     limitEnd = 'now+5d';
 
-    constructor(public text: DateTimePickerTextService) {
+    constructor(public doc: DateTimePickerTextService) {
     }
 }

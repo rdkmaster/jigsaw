@@ -13,7 +13,7 @@ export class SudokuGameComponent {
     puzzles: string[][];
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableRendererTextService) {
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
         this.tableData.subscribe((event) => this.checkBoardStatus(event));
         http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {

@@ -24,5 +24,5 @@ export class ButtonBarIconsComponent {
     unlabeledTypes = this.types.map(t => ({id: t.id, icon: t.icon, label: ''}));
     selectedTypes = [{id: 4}];
 
-    constructor(public text: ButtonBarTextService) {}
+    constructor(public doc: ButtonBarTextService) {}
 }

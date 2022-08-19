@@ -1,4 +1,4 @@
-<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="text['text']['fuzzySearch']">
+<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="doc.text.fuzzySearch">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-input (valueChange)="treeExt.fuzzySearch($event)" placeholder="输入搜索内容" width="100px"></jigsaw-input>

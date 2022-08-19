@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class BadgeTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Badge 多功能徽标
 

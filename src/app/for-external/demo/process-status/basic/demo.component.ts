@@ -32,6 +32,6 @@ export class ProcessStatusBasicComponent {
             status: "waiting"
         },
     ];
-    constructor( public text: ProcessStatusTextService) {
+    constructor( public doc: ProcessStatusTextService) {
     }
 }

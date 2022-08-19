@@ -8,7 +8,7 @@ import {TextareaTextService} from "../doc.service";
 })
 export class TextareaResizeDemoComponent {
 
-    constructor(public text: TextareaTextService) {
+    constructor(public doc: TextareaTextService) {
     }
 
 }

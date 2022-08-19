@@ -8,6 +8,6 @@ import { SliderTextService } from "../doc.service";
 
 export class SliderStepDemoComponent {
     valueStep = 1;
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 
 }

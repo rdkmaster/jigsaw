@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class HeaderTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Header标题
 

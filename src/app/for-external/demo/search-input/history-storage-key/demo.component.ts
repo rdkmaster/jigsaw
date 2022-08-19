@@ -6,6 +6,6 @@ import {SearchInputTextService} from "../doc.service";
     templateUrl: "./demo.component.html"
 })
 export class SearchInputHistoryStorageKeyDemoComponent {
-    constructor(public text: SearchInputTextService) {
+    constructor(public doc: SearchInputTextService) {
     }
 }

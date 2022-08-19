@@ -21,6 +21,6 @@ export class SelectClearableDemoComponent {
         console.log("select city is: " + selectedItem);
     }
 
-    constructor(public text: SelectTextService) {}
+    constructor(public doc: SelectTextService) {}
 
 }

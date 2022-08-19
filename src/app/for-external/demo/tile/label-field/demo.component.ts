@@ -16,6 +16,6 @@ export class TileSelectLabelFieldComponent {
         {name: "西安"}
     ]);
 
-    constructor(public text: TileTextService) {
+    constructor(public doc: TileTextService) {
     }
 }

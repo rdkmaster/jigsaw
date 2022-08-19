@@ -5,6 +5,6 @@ import {StepsTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class StepsAllComponent {
-    constructor(public text: StepsTextService) {}
+    constructor(public doc: StepsTextService) {}
 }
 

@@ -79,7 +79,7 @@ export class TransferListLocalPageableDemoComponent {
         }
     ];
 
-    constructor(public _http: HttpClient, public text: TransferTextService) {
+    constructor(public _http: HttpClient, public doc: TransferTextService) {
         this.data = new LocalPageableArray();
         this.data.http = _http;
         this.data.pagingInfo.pageSize = 15;

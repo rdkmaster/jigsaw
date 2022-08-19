@@ -11,7 +11,7 @@ import {TableRendererTextService} from "../doc.service";
 export class TableCellEditablePropertyDemoComponent {
     tableData: TableData;
 
-    constructor(public text: TableRendererTextService) {
+    constructor(public doc: TableRendererTextService) {
         this.tableData = new TableData(
             [
                 [

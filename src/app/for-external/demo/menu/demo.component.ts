@@ -5,6 +5,6 @@ import {MenuTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class MenuAllComponent {
-    constructor(public text: MenuTextService) {}
+    constructor(public doc: MenuTextService) {}
 }
 

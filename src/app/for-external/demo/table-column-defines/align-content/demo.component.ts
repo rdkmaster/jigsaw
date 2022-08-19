@@ -59,7 +59,7 @@ export class TableAlignContentDemoComponent {
         }
     ];
 
-    constructor(public text: TableColumnDefinesTextService) {
+    constructor(public doc: TableColumnDefinesTextService) {
         this.tableData = new TableData(
             [
                 [

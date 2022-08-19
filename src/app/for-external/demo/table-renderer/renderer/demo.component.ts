@@ -25,7 +25,7 @@ export class TableRendererDemoComponent {
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
-    constructor(public http: HttpClient, public text: TableRendererTextService) {
+    constructor(public http: HttpClient, public doc: TableRendererTextService) {
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 50;
         this.tableData.http = http;

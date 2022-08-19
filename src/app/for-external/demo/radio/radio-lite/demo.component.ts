@@ -22,6 +22,6 @@ export class RadioLiteComponent {
         { label: "禁用4", disabled: true }
     ]
 
-    constructor( public text: RadioTextService) {
+    constructor( public doc: RadioTextService) {
     }
 }

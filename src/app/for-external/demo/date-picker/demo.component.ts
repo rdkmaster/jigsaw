@@ -5,6 +5,6 @@ import {DatePickerTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class DatePickerAllComponent {
-    constructor(public text: DatePickerTextService) {}
+    constructor(public doc: DatePickerTextService) {}
 }
 

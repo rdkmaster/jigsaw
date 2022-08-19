@@ -9,7 +9,7 @@ export class TextareaSelectDemoComponent {
 
     select: boolean = true;
 
-    constructor(public text: TextareaTextService) {
+    constructor(public doc: TextareaTextService) {
     }
 
 }

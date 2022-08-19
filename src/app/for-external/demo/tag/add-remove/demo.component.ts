@@ -51,6 +51,6 @@ export class TagAddRemoveComponent {
         this.tags.splice(idx, 1);
     }
 
-    constructor(public text: TagTextService) {}
+    constructor(public doc: TagTextService) {}
 
 }

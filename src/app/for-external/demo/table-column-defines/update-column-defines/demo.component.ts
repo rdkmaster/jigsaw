@@ -9,7 +9,7 @@ import {TableColumnDefinesTextService} from "../doc.service";
 export class TableUpdateColumnDefinesDemoComponent {
     tableData: TableData;
 
-    constructor(public text: TableColumnDefinesTextService) {
+    constructor(public doc: TableColumnDefinesTextService) {
         this.tableData = new TableData(
             [
                 [

@@ -18,7 +18,7 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
         this.tableData.refresh();
     }
 
-    constructor( public text: ChartIconTextService) {
+    constructor( public doc: ChartIconTextService) {
         setInterval(() => {
             this.randomData();
             this.tableData.refresh();

@@ -14,6 +14,6 @@ export class SliderMultiValueDemoComponent {
         console.log("传递出来的对象:");
         console.log(value);
     }
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 
 }

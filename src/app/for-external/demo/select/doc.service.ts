@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class SelectTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Select 下拉选取
 

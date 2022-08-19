@@ -8,6 +8,6 @@ import {ComboSelectTextService} from "../doc.service";
 export class ComboDropDownStatusDemoComponent {
     name: string = 'Jigsaw';
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 }

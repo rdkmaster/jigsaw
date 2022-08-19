@@ -10,7 +10,7 @@ import {TableBasicTextService} from "../doc.service";
 export class TableBasicAddIDColumnDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableBasicTextService) {
+    constructor(http: HttpClient, public doc: TableBasicTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

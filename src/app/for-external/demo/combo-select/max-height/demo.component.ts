@@ -33,7 +33,7 @@ export class ComboSelectMaxHeightDemoComponent {
         {label: "乌鲁木齐"}
     ];
 
-    constructor(public text: ComboSelectTextService) {
+    constructor(public doc: ComboSelectTextService) {
     }
 
 }

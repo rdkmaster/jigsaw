@@ -6,6 +6,6 @@ import {NavigationMenuTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class NavigationMenuAllDemoComponent {
-constructor(public text: NavigationMenuTextService) {
+constructor(public doc: NavigationMenuTextService) {
 }
 }

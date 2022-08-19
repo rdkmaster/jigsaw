@@ -18,6 +18,6 @@ export class TabsTitleRendererComponent {
     titleChanged(titleInfo: TabTitleInfo) {
         console.log("New title info: ", titleInfo);
     }
-    constructor(public text: TabTextService) {
+    constructor(public doc: TabTextService) {
     }
 }

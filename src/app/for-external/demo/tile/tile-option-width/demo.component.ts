@@ -16,6 +16,6 @@ export class TileSelectOptionWidthComponent {
         {label: "西安"}
     ]);
 
-    constructor(public text: TileTextService) {
+    constructor(public doc: TileTextService) {
     }
 }

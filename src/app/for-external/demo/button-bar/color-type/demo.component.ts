@@ -19,6 +19,6 @@ export class ButtonBarColorTypeComponent {
     cities = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
     selectedCity: any[] = ['南京'];
 
-    constructor(public text: ButtonBarTextService) {}
+    constructor(public doc: ButtonBarTextService) {}
 
 }

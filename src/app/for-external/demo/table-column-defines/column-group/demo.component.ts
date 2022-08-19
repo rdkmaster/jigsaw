@@ -10,7 +10,7 @@ import {TableColumnDefinesTextService} from "../doc.service";
 export class TableColumnGroupDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient, public text: TableColumnDefinesTextService) {
+    constructor(http: HttpClient, public doc: TableColumnDefinesTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

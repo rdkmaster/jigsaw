@@ -38,6 +38,6 @@ export class FloatTriggerDemoComponent {
     }
 
 
-    constructor( public text: FloatTextService) {
+    constructor( public doc: FloatTextService) {
     }
 }

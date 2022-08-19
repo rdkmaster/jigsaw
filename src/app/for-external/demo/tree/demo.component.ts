@@ -5,6 +5,6 @@ import {TreeTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class ZtreeAllComponent {
-    constructor(public text: TreeTextService) {}
+    constructor(public doc: TreeTextService) {}
 }
 

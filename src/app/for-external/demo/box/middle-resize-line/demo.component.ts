@@ -7,6 +7,6 @@ import {BoxTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class BoxMiddleResizeLineDemoComponent {
-    constructor(public text: BoxTextService) {
+    constructor(public doc: BoxTextService) {
     }
 }

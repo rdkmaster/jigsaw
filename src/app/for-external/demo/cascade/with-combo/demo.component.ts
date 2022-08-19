@@ -10,7 +10,7 @@ import {CascadeData, ArrayCollection} from "jigsaw/public_api";
 })
 
 export class CascadeWithComboComponent {
-    constructor(public http: HttpClient, public text: CascadeTextService) {
+    constructor(public http: HttpClient, public doc: CascadeTextService) {
     }
 
     levelInfos = [

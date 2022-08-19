@@ -17,7 +17,7 @@ import {FloatTextService} from "../doc.service";
 export class FloatMultiLevelDemoComponent {
     public data: SimpleTreeData;
 
-    constructor(public text: FloatTextService) {
+    constructor(public doc: FloatTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

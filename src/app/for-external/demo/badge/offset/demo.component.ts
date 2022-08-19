@@ -21,6 +21,6 @@ export class BadgeOffsetDemoComponent {
         {label: "大", size: "large"}
     ]);
 
-    constructor(public text: BadgeTextService) {
+    constructor(public doc: BadgeTextService) {
     }
 }

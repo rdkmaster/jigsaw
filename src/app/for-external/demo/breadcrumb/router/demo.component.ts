@@ -23,7 +23,7 @@ import {BreadcrumbTextService} from "../doc.service";
     `]
 })
 export class BreadcrumbRouterDemoComponent {
-    constructor(public productService: ProductService, public text: BreadcrumbTextService) {
+    constructor(public productService: ProductService, public doc: BreadcrumbTextService) {
     }
 
     routes: BreadcrumbRouteConfig[] = [

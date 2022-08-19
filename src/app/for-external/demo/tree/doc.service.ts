@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class TreeTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Tree 树形
 

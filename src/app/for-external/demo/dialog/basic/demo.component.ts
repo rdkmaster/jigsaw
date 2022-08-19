@@ -28,7 +28,7 @@ export class DialogBasicDemoComponent {
     @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
-    constructor(private _popupService: PopupService, public text: DialogTextService) {
+    constructor(private _popupService: PopupService, public doc: DialogTextService) {
     }
     public closeDialog() {
         if (this.popupInfo) {

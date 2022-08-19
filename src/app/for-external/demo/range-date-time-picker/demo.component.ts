@@ -5,6 +5,6 @@ import {RangeDataTimePickerTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class RangeDataTimePickerAllComponent {
-    constructor(public text: RangeDataTimePickerTextService) {}
+    constructor(public doc: RangeDataTimePickerTextService) {}
 }
 

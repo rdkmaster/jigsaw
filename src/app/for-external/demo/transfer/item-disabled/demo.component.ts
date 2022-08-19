@@ -8,7 +8,7 @@ import {TransferTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class TransferItemDisabledDemoComponent {
-    constructor(private _http: HttpClient, public text: TransferTextService) {
+    constructor(private _http: HttpClient, public doc: TransferTextService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
         this.data.fromAjax('mock-data/countries');

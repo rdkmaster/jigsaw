@@ -15,7 +15,7 @@ export class TableDataWithPopupDemoComponent {
     tableData: TableData;
 
     constructor(private _popupService: PopupService,
-                http: HttpClient, public text: TableActionsTextService) {
+                http: HttpClient, public doc: TableActionsTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

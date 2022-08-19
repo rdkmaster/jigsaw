@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class ChartIconTextService {
-    public text: object = {
+    public text = {
         introduction: `
         # Chart Icon 图形化图标
 

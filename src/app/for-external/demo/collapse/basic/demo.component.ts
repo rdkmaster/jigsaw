@@ -10,6 +10,6 @@ export class CollapseBasicDemoComponent {
         console.log(isActive);
     }
     public isActive = true;
-    constructor(public text: CollapseTextService) {
+    constructor(public doc: CollapseTextService) {
     }
 }

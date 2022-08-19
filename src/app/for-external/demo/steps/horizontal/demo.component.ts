@@ -41,7 +41,7 @@ export class JigsawStepHorizontalDemoComponent {
     steps: StepItem[] = [];
     step = 2;
 
-    constructor(public text: StepsTextService) {
+    constructor(public doc: StepsTextService) {
         this.steps = JSON.parse(JSON.stringify(this.data));
     }
 

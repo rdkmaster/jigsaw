@@ -5,6 +5,6 @@ import {ProcessStatusTextService} from "./doc.service";
     templateUrl: "demo.component.html"
 })
 export class ProcessStatusDemoComponent {
-    constructor( public text: ProcessStatusTextService) {
+    constructor( public doc: ProcessStatusTextService) {
     }
 }

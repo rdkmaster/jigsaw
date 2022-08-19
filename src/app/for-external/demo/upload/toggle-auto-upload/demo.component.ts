@@ -9,7 +9,7 @@ import {UploadTextService} from "../doc.service";
 export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        public text: UploadTextService
+        public doc: UploadTextService
     ) {}
     public uploadImmediately: boolean = false;
 

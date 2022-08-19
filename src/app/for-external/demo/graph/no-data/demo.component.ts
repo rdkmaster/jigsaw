@@ -9,6 +9,6 @@ import {GraphTextService} from "../demo.service";
 
 export class GraphWithNoDataDemoComponent {
     data: AbstractGraphData;
-    constructor(public text: GraphTextService) {
+    constructor(public doc: GraphTextService) {
     }
 }

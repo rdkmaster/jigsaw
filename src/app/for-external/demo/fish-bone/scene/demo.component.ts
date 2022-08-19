@@ -12,7 +12,7 @@ import {FishBoneTextService} from "../doc.service";
 })
 export class FishBoneSceneComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient, public _zone: NgZone, public text: FishBoneTextService) {
+    constructor(public http: HttpClient, public _zone: NgZone, public doc: FishBoneTextService) {
         // 在ChartIcon注册Custom Pie
         ChartIconFactory.registerCustomPie();
 

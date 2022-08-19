@@ -5,6 +5,6 @@ import { SliderTextService } from "./doc.service";
     templateUrl: './demo.component.html'
 })
 export class SliderDemoComponent {
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 }
 

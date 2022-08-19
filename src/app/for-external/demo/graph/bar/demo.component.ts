@@ -10,7 +10,7 @@ import {GraphTextService} from "../demo.service";
 })
 export class GraphBarChartDemoComponent {
     barData: BarGraphData;
-    constructor(public http: HttpClient, public text: GraphTextService) {
+    constructor(public http: HttpClient, public doc: GraphTextService) {
         this.barData = new BarGraphData();
         this.barData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         this.barData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];

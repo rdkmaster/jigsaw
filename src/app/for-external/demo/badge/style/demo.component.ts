@@ -21,7 +21,7 @@ export class BadgeStyleDemoComponent {
         {label: "大", size: "large"}
     ]);
 
-    constructor(public text: BadgeTextService) {
+    constructor(public doc: BadgeTextService) {
     }
 
 }

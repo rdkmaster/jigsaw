@@ -5,6 +5,6 @@ import {GraphTextService} from "./demo.service";
     templateUrl: 'demo.component.html'
 })
 export class GraphDemoComponent{
-    constructor( public text: GraphTextService) {
+    constructor( public doc: GraphTextService) {
     }
 }

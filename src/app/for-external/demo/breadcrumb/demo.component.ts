@@ -5,6 +5,6 @@ import {BreadcrumbTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class BreadcrumbAllComponent {
-    constructor(public text: BreadcrumbTextService) {}
+    constructor(public doc: BreadcrumbTextService) {}
 }
 

@@ -5,6 +5,6 @@ import {NumericInputTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class NumericInputAllComponent {
-    constructor(public text: NumericInputTextService) {}
+    constructor(public doc: NumericInputTextService) {}
 }
 

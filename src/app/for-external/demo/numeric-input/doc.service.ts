@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class NumericInputTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Numeric Input 数字输入框
 

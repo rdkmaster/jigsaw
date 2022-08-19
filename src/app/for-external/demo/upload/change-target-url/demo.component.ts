@@ -7,7 +7,7 @@ import {UploadTextService} from "../doc.service";
     templateUrl: "./demo.component.html"
 })
 export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, public text: UploadTextService) {}
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public doc: UploadTextService) {}
     public uploadImmediately: boolean = false;
 
     @ViewChild("first", { read: JigsawUploadDirective })

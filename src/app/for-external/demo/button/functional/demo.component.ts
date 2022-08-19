@@ -19,5 +19,5 @@ export class ButtonFunctionalComponent {
         alert('Hello Jigsaw Button ^_^');
     }
 
-    constructor(public text: ButtonTextService) {}
+    constructor(public doc: ButtonTextService) {}
 }

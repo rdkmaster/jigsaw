@@ -17,6 +17,6 @@ export class SliderVerticalDemoComponent {
         { value: 40, label: '40 ℃' },
         { value: 80, label: '80 ℃' }
     ];
-    constructor(public text: SliderTextService) { }
+    constructor(public doc: SliderTextService) { }
 
 }

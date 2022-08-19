@@ -23,6 +23,6 @@ export class BadgeMaxValueDemoComponent {
 
     public count: number = 100;
 
-    constructor(public text: BadgeTextService) {
+    constructor(public doc: BadgeTextService) {
     }
 }

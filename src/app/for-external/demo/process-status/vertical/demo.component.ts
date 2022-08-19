@@ -6,7 +6,7 @@ import {ProcessStatusTextService} from "../doc.service";
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusVerticalFullComponent {
-    constructor(public text: ProcessStatusTextService) {
+    constructor(public doc: ProcessStatusTextService) {
     }
     steps = [
         {

@@ -17,7 +17,7 @@ export class ComboSelectSearchableDemoComponent {
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
     selectedCountries3: any;
 
-    constructor(public http: HttpClient, public text: ComboSelectTextService) {
+    constructor(public http: HttpClient, public doc: ComboSelectTextService) {
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.pagingInfo.pageSize=1000;

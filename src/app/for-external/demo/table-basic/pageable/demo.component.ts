@@ -13,7 +13,7 @@ import {TableBasicTextService} from "../doc.service";
 export class TableBasicPageableDemoComponent {
     pageable: PageableTableData;
 
-    constructor(http: HttpClient, public text: TableBasicTextService) {
+    constructor(http: HttpClient, public doc: TableBasicTextService) {
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });

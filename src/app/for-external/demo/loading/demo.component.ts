@@ -4,6 +4,6 @@ import {LoadingTextService} from "./doc.service";
     templateUrl: "demo.component.html",
 })
 export class LoadingDemoComponent {
-    constructor(public text: LoadingTextService) {
+    constructor(public doc: LoadingTextService) {
     }
 }

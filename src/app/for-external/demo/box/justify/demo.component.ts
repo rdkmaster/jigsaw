@@ -16,6 +16,6 @@ export class BoxJustifyDemoComponent {
     align = 'center';
     alignArr = ['start', 'end', 'center', 'baseline', 'stretch'];
 
-    constructor(public text: BoxTextService) {
+    constructor(public doc: BoxTextService) {
     }
 }

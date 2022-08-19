@@ -21,7 +21,7 @@ import { AppComponent } from './app.component';
 import { AjaxInterceptor } from '../libs/app.interceptor';
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./demo-list/pc-demo-list.component";
-import { SwitchDemoComponent } from "./switch-demo.component";
+import { SwitchDemoComponent } from "./demo-list/switch-demo.component";
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";

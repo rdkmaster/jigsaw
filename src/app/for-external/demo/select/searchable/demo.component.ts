@@ -46,6 +46,6 @@ export class SelectSearchableDemoComponent {
         }));
     }
 
-    constructor( public text: SelectTextService) {
+    constructor( public doc: SelectTextService) {
     }
 }

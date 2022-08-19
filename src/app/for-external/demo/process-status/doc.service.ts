@@ -4,7 +4,7 @@ import {Injectable} from "@angular/core";
     providedIn: "root"
 })
 export class ProcessStatusTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Progress Status 流程图
 

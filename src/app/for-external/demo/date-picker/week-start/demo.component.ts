@@ -23,6 +23,6 @@ export class DatePickerWeekStartComponent {
         console.log($event);
     }
 
-    constructor(public text: DatePickerTextService) {
+    constructor(public doc: DatePickerTextService) {
     }
 }

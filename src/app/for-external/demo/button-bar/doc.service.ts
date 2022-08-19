@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ButtonBarTextService {
-    public text: object = {
+    public text = {
         introduction: `
             # Button-bar 按钮栏
 
@@ -36,7 +36,7 @@ export class ButtonBarTextService {
             ### 可多选
         `,
         setHeight: `
-            #### 直接设置height
+            ### 直接设置height
         `
     }
 }

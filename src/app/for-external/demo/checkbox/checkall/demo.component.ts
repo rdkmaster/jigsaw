@@ -55,7 +55,7 @@ export class CheckboxCheckAllComponent {
     }
 
     constructor(
-        public text: CheckboxTextService
+        public doc: CheckboxTextService
     ) {
         this.checkStatus()
     }

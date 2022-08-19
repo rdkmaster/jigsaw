@@ -5,6 +5,6 @@ import {ButtonBarTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class ButtonBarAllComponent {
-    constructor(public text: ButtonBarTextService) {}
+    constructor(public doc: ButtonBarTextService) {}
 }
 

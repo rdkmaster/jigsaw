@@ -14,6 +14,6 @@ export class DatePickerGrWeekComponent {
         console.log($event);
     }
 
-    constructor(public text: DatePickerTextService) {
+    constructor(public doc: DatePickerTextService) {
     }
 }

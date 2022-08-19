@@ -120,7 +120,7 @@ export class TransferListDemoComponent {
         }
     ]
 
-    constructor(public http: HttpClient, public text: TransferTextService) {
+    constructor(public http: HttpClient, public doc: TransferTextService) {
         this.data = new ArrayCollection(this.allData);
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }

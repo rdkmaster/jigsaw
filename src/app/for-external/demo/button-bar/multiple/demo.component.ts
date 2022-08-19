@@ -30,6 +30,6 @@ export class ButtonBarMultipleComponent {
         this.selectedCityStr = cityArr.map(city => city.label).join(',');
     }
 
-    constructor(public text: ButtonBarTextService) { }
+    constructor(public doc: ButtonBarTextService) { }
 
 }

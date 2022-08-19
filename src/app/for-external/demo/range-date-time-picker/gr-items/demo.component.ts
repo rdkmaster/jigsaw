@@ -22,7 +22,7 @@ export class RangeDateTimeGrItemsComponent implements AfterViewInit {
             {label: "Month", value: TimeGr.month}
         ];
 
-    constructor(public changeDetectorRef: ChangeDetectorRef, public text: RangeDataTimePickerTextService) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, public doc: RangeDataTimePickerTextService) {
     }
 
     ngAfterViewInit() {

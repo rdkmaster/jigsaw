@@ -12,7 +12,7 @@ export class DateTimePickerGrMinuteComponent {
         console.log($event);
     }
 
-    constructor(public text: DateTimePickerTextService) {
+    constructor(public doc: DateTimePickerTextService) {
     }
 
 }

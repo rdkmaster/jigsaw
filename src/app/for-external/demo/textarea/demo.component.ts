@@ -5,6 +5,6 @@ import {TextareaTextService} from "./doc.service";
     templateUrl: './demo.component.html',
 })
 export class TextareaAllComponent {
-    constructor(public text: TextareaTextService) {}
+    constructor(public doc: TextareaTextService) {}
 }
 
