@@ -1,28 +1,15 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.trigger">
-    <span>触发打开：</span>
-    <jigsaw-radios [(value)]="openTrigger">
-        <jigsaw-radio-option id="openByClick" value="click">鼠标单击</jigsaw-radio-option>
-        <jigsaw-radio-option id="openByHover" value="mouseenter">鼠标滑入</jigsaw-radio-option>
-        <jigsaw-radio-option id="openByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
-    </jigsaw-radios>
-    <br /><br />
-    <span>触发关闭：</span>
-    <jigsaw-radios [(value)]="closeTrigger">
-        <jigsaw-radio-option id="closeByClick" value="click">鼠标单击</jigsaw-radio-option>
-        <jigsaw-radio-option id="closeByLeave" value="mouseleave">鼠标滑出</jigsaw-radio-option>
-        <jigsaw-radio-option id="closeByNone" value="none">不响应鼠标事件</jigsaw-radio-option>
-    </jigsaw-radios>
-    <br /><br />
-
-    <jigsaw-select
-        id="test-select"
-        [(value)]="selectedCityForSelect"
-        (valueChange)="selectChange($event)"
-        [data]="cityListForSelect"
-        placeholder="请选择城市"
-        [openTrigger]="openTrigger"
-        [closeTrigger]="closeTrigger"
-        [size]="selectedLabel.size"
-    >
-    </jigsaw-select>
+    <div class="demo-showcase">
+        <jigsaw-select
+            id="test-select"
+            [(value)]="selectedCityForSelect"
+            (valueChange)="selectChange($event)"
+            [data]="cityListForSelect"
+            placeholder="请选择城市"
+            openTrigger="mouseenter"
+            closeTrigger="mouseleave"
+            [size]="selectedLabel.size"
+        >
+        </jigsaw-select>
+    </div>
 </demo-template>

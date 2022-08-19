@@ -1,12 +1,14 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.optionCount">
-<div class="demo-showcase">
-    <span>设置选项数量：</span>
-    <jigsaw-select [(value)]="selectedCityForSelect"
-                   (valueChange)="selectChange($event)"
-                   placeholder="请选择城市"
-                   [optionCount]="3"
-                   [data]="cityListForSelect"
-                   [size]="selectedLabel.size">
-    </jigsaw-select>
-</div>
+    <div class="demo-showcase">
+        <span>设置选项数量</span>
+        <jigsaw-select
+            [(value)]="selectedCityForSelect"
+            (valueChange)="selectChange($event)"
+            placeholder="请选择城市"
+            [optionCount]="3"
+            [data]="cityListForSelect"
+            [size]="selectedLabel.size"
+        >
+        </jigsaw-select>
+    </div>
 </demo-template>

@@ -1,11 +1,13 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.string">
-<div class="demo-showcase">
-    <span>字符串数组：</span>
-    <jigsaw-select [(value)]="selectedCityForSelect2"
-                   (valueChange)="selectChange2($event)"
-                   placeholder="请选择城市"
-                   [size]="selectedLabel.size"
-                   [data]="cityArrayList">
-    </jigsaw-select>
-</div>
+    <div class="demo-showcase">
+        <span>字符串数组</span>
+        <jigsaw-select
+            [(value)]="selectedCityForSelect2"
+            (valueChange)="selectChange2($event)"
+            placeholder="请选择城市"
+            [size]="selectedLabel.size"
+            [data]="cityArrayList"
+        >
+        </jigsaw-select>
+    </div>
 </demo-template>

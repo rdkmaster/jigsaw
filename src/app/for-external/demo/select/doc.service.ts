@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 @Injectable({
     providedIn: 'root'
 })
@@ -54,8 +54,51 @@ export class SelectTextService {
 
             这个Demo演示了通过optionWidth属性来使得下拉列表的宽度变大的效果
         `,
-       interaction: `
+        interaction: `
             ### 联动
-       `,
+        `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        string: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./string/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./string/demo.component.ts').default }
+        ],
+        optionCount: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./option-count/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./option-count/demo.component.ts').default }
+        ],
+        lineEllipsis: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./line-ellipsis/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./line-ellipsis/demo.component.ts').default }
+        ],
+        trigger: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./trigger/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./trigger/demo.component.ts').default }
+        ],
+        searchable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./searchable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./searchable/demo.component.ts').default }
+        ],
+        clearable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./clearable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./clearable/demo.component.ts').default }
+        ],
+        multipleSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multiple-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multiple-select/demo.component.ts').default }
+        ],
+        optionWidth: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./option-width/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./option-width/demo.component.ts').default }
+        ],
+        interaction: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./interaction/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./interaction/demo.component.ts').default }
+        ],
     }
 }

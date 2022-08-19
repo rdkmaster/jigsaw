@@ -1,8 +1,12 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.lineEllipsis">
-    <jigsaw-select [(value)]="selectedCityForSelect"
-                   (valueChange)="selectChange($event)"
-                   placeholder="请选择城市"
-                   [data]="cityListForSelect"
-                   [size]="selectedLabel.size">
-    </jigsaw-select>
+    <div class="demo-showcase">
+        <jigsaw-select
+            [(value)]="selectedCityForSelect"
+            (valueChange)="selectChange($event)"
+            placeholder="请选择城市"
+            [data]="cityListForSelect"
+            [size]="selectedLabel.size"
+        >
+        </jigsaw-select>
+    </div>
 </demo-template>
