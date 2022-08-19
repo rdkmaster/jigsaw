@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -49,5 +49,24 @@ export class BreadcrumbTextService {
             提供一个生成面包屑节点信息的函数即可，面包屑组件会把匹配到的参数值文本传递给这个函数，
             从而可以生成一个更加具体、生动的面包屑节点。
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        hints: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./hints/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hints/demo.component.ts').default }
+        ],
+        multiLevel: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multi-level/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multi-level/demo.component.ts').default }
+        ],
+        router: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./router/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./router/demo.component.ts').default }
+        ],
     }
 }

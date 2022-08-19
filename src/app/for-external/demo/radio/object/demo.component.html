@@ -1,19 +1,16 @@
-<demo-template [data]="''" [text]="doc.text.dataIsObejct">
+<demo-template [data]="''" [text]="doc.text.object">
     <div style="margin-bottom: 20px">
-        <j-radios [(value)]="selectedCity" trackItemBy="name"
-                  (valueChange)="radioChange($event)">
+        <j-radios [(value)]="selectedCity" trackItemBy="name" (valueChange)="radioChange($event)">
             <j-radio-option *ngFor="let item of cities" [value]="item">
-                {{item.name}}
+                {{ item.name }}
             </j-radio-option>
         </j-radios>
     </div>
 
     <div>
-        <jigsaw-radios [(value)]="selectedProduct"
-                       (valueChange)="radioChange2($event)"
-                       trackItemBy="pro_name,pro_type">
+        <jigsaw-radios [(value)]="selectedProduct" (valueChange)="radioChange2($event)" trackItemBy="pro_name,pro_type">
             <jigsaw-radio-option *ngFor="let item of products" [value]="item">
-                {{item.pro_name}}
+                {{ item.pro_name }}
             </jigsaw-radio-option>
         </jigsaw-radios>
     </div>

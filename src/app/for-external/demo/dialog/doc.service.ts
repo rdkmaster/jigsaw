@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -92,5 +92,44 @@ export class DialogTextService {
         point: `
             ### 跟随鼠标的对话框
         `,
+    }
+
+    public codes = {
+        component: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./component/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./component/demo.component.ts').default }
+        ],
+        modal: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./modal/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./modal/demo.component.ts').default }
+        ],
+        template: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./template/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./template/demo.component.ts').default }
+        ],
+        customize: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./customize/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default }
+        ],
+        topOffset: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./top-offset/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./top-offset/demo.component.ts').default }
+        ],
+        inDom: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./in-dom/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./in-dom/demo.component.ts').default }
+        ],
+        popupOption: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./popup-option/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./popup-option/demo.component.ts').default }
+        ],
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        point: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./point/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./point/demo.component.ts').default }
+        ]
     }
 }

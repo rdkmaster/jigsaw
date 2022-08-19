@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -35,5 +35,28 @@ export class StepsTextService {
 
             演示当步骤数较多和较少等极端情况下展示效果
         `
+    }
+
+    public codes = {
+        horizontal: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./horizontal/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./horizontal/demo.component.ts').default }
+        ],
+        vertical: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./vertical/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./vertical/demo.component.ts').default }
+        ],
+        status: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./status/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./status/demo.component.ts').default }
+        ],
+        overLength: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./over-length/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./over-length/demo.component.ts').default }
+        ],
+        manySteps: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./many-steps/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./many-steps/demo.component.ts').default }
+        ],
     }
 }

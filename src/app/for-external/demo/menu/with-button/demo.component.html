@@ -2,26 +2,31 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>风格1</span>
-        <p style="margin-top: 8px">
-            <jigsaw-button jigsawCascadingMenu [jigsawCascadingMenuData]="dropdownData"
-                           jigsawCascadingMenuWidth="230" jigsawCascadingMenuTheme="dark"
-                           (jigsawCascadingMenuSelect)="menuSelect($event)">
-                操作 <span class="iconfont iconfont-e24c"></span>
-            </jigsaw-button>
-            风格1：单击按钮直接弹出菜单
-        </p>
+        <jigsaw-button
+            jigsawCascadingMenu
+            [jigsawCascadingMenuData]="dropdownData"
+            jigsawCascadingMenuWidth="230"
+            jigsawCascadingMenuTheme="dark"
+            (jigsawCascadingMenuSelect)="menuSelect($event)"
+        >
+            操作 <span class="iconfont iconfont-e24c"></span>
+        </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>风格2</span>
-        <p style="margin-top: 8px">
-            <jigsaw-button>
-                <span>新建工程</span>
-                <span style="margin-left:8px" class="iconfont iconfont-e24c" jigsawCascadingMenu
-                      [jigsawCascadingMenuData]="dropdownData" jigsawCascadingMenuWidth="230"
-                      jigsawCascadingMenuTheme="dark" (jigsawCascadingMenuSelect)="menuSelect($event)">
-                </span>
-            </jigsaw-button>
-        </p>
+        <jigsaw-button>
+            <span>新建工程</span>
+            <span
+                style="margin-left: 8px"
+                class="iconfont iconfont-e24c"
+                jigsawCascadingMenu
+                [jigsawCascadingMenuData]="dropdownData"
+                jigsawCascadingMenuWidth="230"
+                jigsawCascadingMenuTheme="dark"
+                (jigsawCascadingMenuSelect)="menuSelect($event)"
+            >
+            </span>
+        </jigsaw-button>
     </div>
 </demo-template>

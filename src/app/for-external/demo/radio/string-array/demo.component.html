@@ -1,7 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.dataIsStringArray">
+<demo-template [data]="''" [text]="doc.text.stringArray">
     <j-radios [(value)]="selectedCity">
         <j-radio-option *ngFor="let item of citys" [value]="item">
-            {{item}}
+            {{ item }}
         </j-radio-option>
     </j-radios>
 </demo-template>

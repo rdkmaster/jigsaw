@@ -1,24 +1,6 @@
-<!-- ignore the following lines, they are not important to this demo -->
-
-
-
-<!-- start to learn the demo from here -->
 <demo-template [data]="''" [text]="doc.text.gauge">
-    <div class="live-demo-wrap">
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">KLineGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="gaugeData" height="400" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
+    <div class="demo-showcase-v">
+        <span>KLineGraphData静态数据</span>
+        <jigsaw-graph [data]="gaugeData" height="400" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 </demo-template>
-
-
-
-
-
-
-
-
-

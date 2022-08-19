@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -31,5 +31,20 @@ export class HeaderTextService {
 
             分组标题之内进行再分组时，可使用小标题。
         `
+    }
+
+    public codes = {
+        firstLevel: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./first-level/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./first-level/demo.component.ts').default }
+        ],
+        secondLevel: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./second-level/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./second-level/demo.component.ts').default }
+        ],
+        thirdLevel: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./third-level/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./third-level/demo.component.ts').default }
+        ],
     }
 }

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -27,5 +27,20 @@ export class NotificationTextService {
         advanced: `
             ### 带操作的全局提示
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        functional: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./functional/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./functional/demo.component.ts').default }
+        ],
+        advanced: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./advanced/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./advanced/demo.component.ts').default }
+        ],
     }
 }

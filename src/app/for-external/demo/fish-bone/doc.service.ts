@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -17,14 +17,14 @@ export class FishBoneTextService {
             TreeData的ajax callback处理顺序是：
             \`\`\`
             ajaxSuccessHandler
-                 |
-                 V
+                |
+                V
             fromObject: 根据ajax返回的数据，生成TreeData
-                 |
-                 V
+                |
+                V
             refresh: 刷新数据，异步操作
-                 |
-                 V
+                |
+                V
             onAjaxSuccess --> onAjaxComplete --> onRefresh
 
             \`\`\`
@@ -40,5 +40,16 @@ export class FishBoneTextService {
         scene: `
             ### 实用场景
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        scene: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./scene/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./scene/demo.component.ts').default }
+        ]
     }
 }

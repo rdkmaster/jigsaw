@@ -17,7 +17,7 @@ export class IconTextService {
 
             只有图标，没有文字。
         `,
-        IconText: `
+        iconText: `
             ### 图文都有
 
             既有图标，又有文字。
@@ -34,5 +34,32 @@ export class IconTextService {
         customizeStatus: `
             ### 自定义状态
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        iconText: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icon-text/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icon-text/demo.component.ts').default }
+        ],
+        similarHyperlink: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./similar-hyperlink/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./similar-hyperlink/demo.component.ts').default }
+        ],
+        position: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./position/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./position/demo.component.ts').default }
+        ],
+        status: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./status/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./status/demo.component.ts').default }
+        ],
+        customizeStatus: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./customize-status/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize-status/demo.component.ts').default }
+        ],
     }
 }

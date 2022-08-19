@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -26,5 +26,24 @@ export class TimePickerTextService {
         limit: `
             ### 限制可选日期
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        step: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./step/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./step/demo.component.ts').default }
+        ],
+        gr: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr/demo.component.ts').default }
+        ],
+        limit: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./limit/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./limit/demo.component.ts').default }
+        ]
     }
 }

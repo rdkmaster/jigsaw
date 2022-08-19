@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {RadarGraphData} from "jigsaw/public_api";
-import {GraphTextService} from "../demo.service";
+import { Component } from '@angular/core';
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { RadarGraphData } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-radar',
@@ -25,10 +25,4 @@ export class GraphRadarDemoComponent {
     handleClick($event) {
         console.log($event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用雷达图';
-    description: string = require('!!raw-loader!./readme.md').default;
 }

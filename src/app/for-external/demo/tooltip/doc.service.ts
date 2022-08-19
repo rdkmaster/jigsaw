@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -21,7 +21,7 @@ export class TooltipTextService {
 
             鼠标移入则显示提示，移出消失，气泡浮层可以承载复杂文本和操作。
         `,
-        html: `
+        htmlRenderer: `
             ### 渲染为html
 
             这个demo演示了Tooltip将内容渲染为html的效果，以及如何在html里添加简单的交互动作
@@ -34,5 +34,24 @@ export class TooltipTextService {
         scenes: `
             ### 特殊场景
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        htmlRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./html-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./html-renderer/demo.component.ts').default }
+        ],
+        trigger: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./trigger/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./trigger/demo.component.ts').default }
+        ],
+        scenes: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./scenes/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./scenes/demo.component.ts').default }
+        ],
     }
 }

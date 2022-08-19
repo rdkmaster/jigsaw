@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -25,5 +25,20 @@ export class ToastTextService {
         longText: `
             ### 长文本提示框
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        functional: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./functional/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./functional/demo.component.ts').default }
+        ],
+        longText: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./long-text/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./long-text/demo.component.ts').default }
+        ],
     }
 }

@@ -1,9 +1,17 @@
-
 <demo-template [data]="''" [text]="doc.text.topOffset">
-    <jigsaw-button (click)="popupDialog1(dialog1)">弹出模态框</jigsaw-button>
-    {{message}}
+    <div class="demo-showcase">
+        <jigsaw-button (click)="popupDialog1(dialog1)">弹出模态框</jigsaw-button>
+    </div>
+    
     <ng-template #dialog1>
-        <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="对话框标题" [top]="top" (close)="close()">
+        <jigsaw-dialog
+            class="dialog-container"
+            width="40%"
+            caption="dialog title"
+            icon="对话框标题"
+            [top]="top"
+            (close)="close()"
+        >
             <ul class="dialog-content">
                 <li>对话框内容...</li>
                 <li>对话框内容...</li>
@@ -15,5 +23,4 @@
             </div>
         </jigsaw-dialog>
     </ng-template>
-
 </demo-template>

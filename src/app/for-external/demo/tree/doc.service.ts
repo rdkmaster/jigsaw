@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +40,32 @@ export class TreeTextService {
         fuzzySearch: `
             ### 模糊搜索
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        editable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./editable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./editable/demo.component.ts').default }
+        ],
+        async: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./async/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./async/demo.component.ts').default }
+        ],
+        xmlData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./xml-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./xml-data/demo.component.ts').default }
+        ],
+        icon: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./icon/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./icon/demo.component.ts').default }
+        ],
+        fuzzySearch: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./fuzzy-search/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./fuzzy-search/demo.component.ts').default }
+        ],
     }
 }

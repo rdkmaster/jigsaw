@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {KLineGraphData} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {GraphTextService} from "../demo.service";
+import { Component } from '@angular/core';
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { KLineGraphData } from "jigsaw/public_api";
+import { AjaxInterceptor } from "../../../../libs/app.interceptor";
+import { GraphTextService } from "../demo.service";
 
-function random(min,max) {
+function random(min, max) {
     const range = max - min;
     const rand = Math.random();
-    return(min + Math.round(rand * range));
+    return (min + Math.round(rand * range));
 }
 
 @Component({
@@ -30,11 +30,5 @@ export class GraphKLineDemoComponent {
     handleClick($event) {
         console.log($event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用K线图';
-    description: string = require('!!raw-loader!./readme.md').default;
 }
 

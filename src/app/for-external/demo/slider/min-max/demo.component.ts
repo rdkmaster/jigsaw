@@ -7,13 +7,12 @@ import { SliderTextService } from "../doc.service";
 })
 
 export class SliderSetMinMaxDemoComponent {
-    value: number = 10;
+    value1: number = 10;
+    value2: number = 10;
+    value3: number = 10;
     min = 4;
     max = 20;
 
-    sliderChange(value) {
-        this.value = value;
-    }
     constructor(public doc: SliderTextService) { }
 
 }

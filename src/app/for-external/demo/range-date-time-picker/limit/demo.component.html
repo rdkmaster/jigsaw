@@ -1,11 +1,13 @@
 <demo-template [data]="''" [text]="doc.text.limit">
     <!-- start to learn the demo from here -->
-    <j-range-date-time-picker
-        [(beginDate)]="beginDate"
-        [(endDate)]="endDate"
-        [limitStart]="limitStart"
-        [limitEnd]="limitEnd"
-        gr="second">
-    </j-range-date-time-picker>
-    <p>beginDate: <span>{{beginDate}}</span>, end: <span>{{endDate}}</span></p>
+    <div class="demo-showcase-v">
+        <j-range-date-time-picker
+            [(beginDate)]="beginDate"
+            [(endDate)]="endDate"
+            [limitStart]="limitStart"
+            [limitEnd]="limitEnd"
+            gr="second"
+        >
+        </j-range-date-time-picker>
+    </div>
 </demo-template>

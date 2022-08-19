@@ -1,5 +1,7 @@
 <demo-template [data]="''" [text]="doc.text.manualClear">
     <!-- start to learn the demo from here -->
-    <a (click)="uploader7.clear()">点击清空</a>
-    <jigsaw-upload width="300px" #demo7 [uploadImmediately]="false"></jigsaw-upload>
+    <div class="demo-showcase-v">
+        <jigsaw-upload width="300px" #demo7 [uploadImmediately]="false"></jigsaw-upload>
+        <jigsaw-button (click)="uploader7.clear()">点击清空</jigsaw-button>
+    </div>
 </demo-template>

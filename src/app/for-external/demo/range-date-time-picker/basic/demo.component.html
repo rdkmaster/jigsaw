@@ -1,9 +1,7 @@
 <demo-template [data]="''" [text]="doc.text.basic">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <h5>时间配置支持时间宏 s(秒),m(分钟),h(小时),d(天),w(周),M(月),y(年) 并且支持计算 如 now-10d now+10m</h5>
         <jigsaw-range-date-time-picker [(beginDate)]="beginDate" [(endDate)]="endDate" gr="second">
         </jigsaw-range-date-time-picker>
-        <p>BeginDate : {{beginDate | json}} , EndDate : {{endDate| json}}</p>
     </div>
 </demo-template>

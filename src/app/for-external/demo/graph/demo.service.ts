@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: 'root'
@@ -40,6 +40,9 @@ export class GraphTextService {
         `,
         line: `
         ### 折线图
+
+        数据的一列为一个系列情形，请使用 LineBarGraphData
+        作为数据。这个和一般的数据库表的结构非常契合，推荐优先使用。
         `,
         map: `
         ### 模拟迁徙
@@ -65,5 +68,76 @@ export class GraphTextService {
         strip: `
         ### 条形图
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        bar: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./bar/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./bar/demo.component.ts').default }
+        ],
+        boxPlot: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./box-plot/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./box-plot/demo.component.ts').default }
+        ],
+        doughnut: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./doughnut/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./doughnut/demo.component.ts').default }
+        ],
+        funnelPlot: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./funnel-plot/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./funnel-plot/demo.component.ts').default }
+        ],
+        gauge: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gauge/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gauge/demo.component.ts').default }
+        ],
+        heat: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./heat/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./heat/demo.component.ts').default }
+        ],
+        kLine: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./k-line/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./k-line/demo.component.ts').default }
+        ],
+        line: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./line/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./line/demo.component.ts').default }
+        ],
+        map: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./map/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./map/demo.component.ts').default }
+        ],
+        noData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./no-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./no-data/demo.component.ts').default }
+        ],
+        pie: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./pie/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./pie/demo.component.ts').default }
+        ],
+        provinceMap: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./province-map/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./province-map/demo.component.ts').default }
+        ],
+        radar: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./radar/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./radar/demo.component.ts').default }
+        ],
+        scatter: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./scatter/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./scatter/demo.component.ts').default }
+        ],
+        stackArea: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./stack-area/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./stack-area/demo.component.ts').default }
+        ],
+        strip: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./strip/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./strip/demo.component.ts').default }
+        ],
     }
 }

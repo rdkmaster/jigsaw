@@ -25,4 +25,23 @@ export class ListTextService {
             ### 伪装成菜单
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        withComponent: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-component/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-component/demo.component.ts').default }
+        ],
+        withComboSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-combo-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-combo-select/demo.component.ts').default }
+        ],
+        menu: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./menu/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./menu/demo.component.ts').default }
+        ],
+    }
 }

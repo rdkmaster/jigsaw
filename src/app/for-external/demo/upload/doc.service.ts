@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -94,12 +94,65 @@ export class UploadTextService {
         changeTargetUrl: `
             ## 修改目标URL
 
-            这个demo复现了在动态修改目标URL时上传指令的一个问题
+            这个demo复现了在动态修改目标URL时上传指令的一个问题。
+
+            提示：这里上传的所有结果都是模拟出来的，包括上传失败和失败的原因都是随机模拟出来的。
         `,
         directive: `
         ## Upload指令
 
-        本demo展示了\`jigsaw-upload\`指令的基本用法
+        本demo展示了\`jigsaw-upload\`指令的基本用法。
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        single: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./single/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./single/demo.component.ts').default }
+        ],
+        hideResults: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./hide-results/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hide-results/demo.component.ts').default }
+        ],
+        profileType: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./profile-type/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./profile-type/demo.component.ts').default }
+        ],
+        manualUpload: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./manual-upload/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./manual-upload/demo.component.ts').default }
+        ],
+        manualClear: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./manual-clear/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./manual-clear/demo.component.ts').default }
+        ],
+        setSize: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./set-size/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./set-size/demo.component.ts').default }
+        ],
+        contentField: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./content-field/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./content-field/demo.component.ts').default }
+        ],
+        uploadResult: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./upload-result/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./upload-result/demo.component.ts').default }
+        ],
+        toggleAutoUpload: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./toggle-auto-upload/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./toggle-auto-upload/demo.component.ts').default }
+        ],
+        changeTargetUrl: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./change-target-url/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./change-target-url/demo.component.ts').default }
+        ],
+        directive: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./directive/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./directive/demo.component.ts').default }
+        ]
     }
 }

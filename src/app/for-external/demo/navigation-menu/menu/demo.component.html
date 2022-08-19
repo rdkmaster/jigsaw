@@ -1,5 +1,6 @@
-<demo-template [data]="''" [text]="doc.text.menu" >
-    <jigsaw-header [level]="2">一级菜单</jigsaw-header>
-    <jigsaw-navigation-menu style="margin-top:26px" [data]="data2" (select)="onMenuSelect($event)" width="180">
-    </jigsaw-navigation-menu>
+<demo-template [data]="''" [text]="doc.text.menu">
+    <div class="demo-showcase">
+        <jigsaw-navigation-menu style="margin-top: 26px" [data]="data2" (select)="onMenuSelect($event)" width="180">
+        </jigsaw-navigation-menu>
+    </div>
 </demo-template>

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -37,5 +37,36 @@ export class DateTimePickerTextService {
 
             仅在粒度为 'hour', 'minute', 'second' 时才有效。
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        grSecond: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-second/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-second/demo.component.ts').default }
+        ],
+        grMinute: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-minute/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-minute/demo.component.ts').default }
+        ],
+        grItems: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-items/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-items/demo.component.ts').default }
+        ],
+        limit: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./limit/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./limit/demo.component.ts').default }
+        ],
+        dateTimeSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./date-time-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./date-time-select/demo.component.ts').default }
+        ],
+        confirmButton: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./confirm-button/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./confirm-button/demo.component.ts').default }
+        ],
     }
 }

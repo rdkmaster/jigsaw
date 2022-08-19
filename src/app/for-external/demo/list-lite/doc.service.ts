@@ -49,4 +49,43 @@ export class ListLiteTextService {
             使用\`icon\`属性来指定一个图标，使用\`suffixIcon\`属性来指定一个副图标。
         `
     }
+
+    public codes = {
+        singleSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./single-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./single-select/demo.component.ts').default }
+        ],
+        multipleSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multiple-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multiple-select/demo.component.ts').default }
+        ],
+        stringArray: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./string-array/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./string-array/demo.component.ts').default }
+        ],
+        lineEllipsis: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./line-ellipsis/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./line-ellipsis/demo.component.ts').default }
+        ],
+        optionCount: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./option-count/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./option-count/demo.component.ts').default }
+        ],
+        presetValue: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./preset-value/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./preset-value/demo.component.ts').default }
+        ],
+        searchable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./searchable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./searchable/demo.component.ts').default }
+        ],
+        withCombo: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-combo/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-combo/demo.component.ts').default }
+        ],
+        withIcon: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-icon/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-icon/demo.component.ts').default }
+        ],
+    }
 }

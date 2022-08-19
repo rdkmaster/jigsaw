@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +18,8 @@ export class RangeDataTimePickerTextService {
         `,
         basic: `
             ### 基本用法
+
+            时间配置支持时间宏 s(秒),m(分钟),h(小时),d(天),w(周),M(月),y(年) 并且支持计算 如 now-10d now+10m
         `,
         grWeek: `
             ### 粒度为周
@@ -39,5 +41,36 @@ export class RangeDataTimePickerTextService {
         weekStart: `
             ### 自定义起始周期
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        grWeek: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-week/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-week/demo.component.ts').default }
+        ],
+        grMonth: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-month/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-month/demo.component.ts').default }
+        ],
+        grItems: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./gr-items/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./gr-items/demo.component.ts').default }
+        ],
+        limit: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./limit/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./limit/demo.component.ts').default }
+        ],
+        rangeDateTimeSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./range-date-time-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./range-date-time-select/demo.component.ts').default }
+        ],
+        weekStart: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./week-start/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./week-start/demo.component.ts').default }
+        ],
     }
 }

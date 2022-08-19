@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +8,7 @@ export class MenuTextService {
         introduction: `
             # Menu 菜单
 
-           为页面和功能提供导航的菜单列表。
+            为页面和功能提供导航的菜单列表。
 
             ## 使用场景
 
@@ -52,5 +52,40 @@ export class MenuTextService {
         navInline: `
             ## 内嵌导航菜单
         `
+    }
+
+    public codes = {
+        softmenu: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./softmenu/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./softmenu/demo.component.ts').default }
+        ],
+        horizontalNavigation: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./horizontal-navigation/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./horizontal-navigation/demo.component.ts').default }
+        ],
+        inDialog: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./in-dialog/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./in-dialog/demo.component.ts').default }
+        ],
+        withButton: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-button/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-button/demo.component.ts').default }
+        ],
+        dropDown: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./drop-down/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./drop-down/demo.component.ts').default }
+        ],
+        rightClick: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./right-click/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./right-click/demo.component.ts').default }
+        ],
+        inDrawer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./in-drawer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./in-drawer/demo.component.ts').default }
+        ],
+        navInline: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./nav-inline/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./nav-inline/demo.component.ts').default }
+        ],
     }
 }

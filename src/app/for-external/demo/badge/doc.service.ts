@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -44,5 +44,32 @@ export class BadgeTextService {
 
             这个DEMO详细演示了\`jigsaw-badge\`指令的各个位置的用法。
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        mask: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./mask/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./mask/demo.component.ts').default }
+        ],
+        maxValue: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./max-value/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./max-value/demo.component.ts').default }
+        ],
+        status: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./status/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./status/demo.component.ts').default }
+        ],
+        style: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./style/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./style/demo.component.ts').default }
+        ],
+        offset: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./offset/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./offset/demo.component.ts').default }
+        ],
     }
 }

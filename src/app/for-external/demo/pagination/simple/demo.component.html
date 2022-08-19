@@ -1,13 +1,14 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.simple">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-pagination [data]="pageableForSimple"
-                           (currentChange)="getCurrentPage($event)"
-                           mode="simple"
-                           [searchable]="false"
-                           [pageSizeOptions]="pageSizeOptions"
-                           [size]="selectedLabel.size">
+        <jigsaw-pagination
+            [data]="pageableForSimple"
+            (currentChange)="getCurrentPage($event)"
+            mode="simple"
+            [searchable]="false"
+            [pageSizeOptions]="pageSizeOptions"
+            [size]="selectedLabel.size"
+        >
         </jigsaw-pagination>
-        <p>当前第{{pageableForSimple.pagingInfo.currentPage}}页</p>
     </div>
 </demo-template>

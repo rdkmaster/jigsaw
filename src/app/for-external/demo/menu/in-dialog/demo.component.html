@@ -1,55 +1,49 @@
 <demo-template [data]="''" [text]="doc.text.inDialog">
     <!-- start to learn the demo from here -->
-
-    <div style="margin-bottom: 6px">
-        <span>对话框自动关闭</span>
-        <jigsaw-switch [(checked)]="autoDispose"></jigsaw-switch>
-    </div>
-    <div *ngIf="autoDispose">
-        <span>关闭倒计时(ms)</span>
-        <jigsaw-numeric-input [(value)]="timeout" [step]="1000" width="70px">
-        </jigsaw-numeric-input>
-    </div>
-
-
-    <p><a (click)="popup(dialog)">弹出对话框</a></p>
+    <jigsaw-button (click)="popup(dialog)">弹出对话框</jigsaw-button>
 
     <ng-template #dialog>
         <jigsaw-dialog width="600" height="400" (close)="dispose()">
-            <div jigsaw-title>
-                <span class="iconfont iconfont-e3f0"></span>对话框里的菜单
-            </div>
+            <div jigsaw-title><span class="iconfont iconfont-e3f0"></span>对话框里的菜单</div>
             <div jigsaw-body style="padding: 8px; height: 100%; position: relative">
-                <div style="height: 100%; width: 200px"
-                     [perfectScrollbar]="{suppressScrollX: true,wheelPropagation: true}">
+                <div
+                    style="height: 100%; width: 200px"
+                    [perfectScrollbar]="{ suppressScrollX: true, wheelPropagation: true }"
+                >
                     <jigsaw-collapse width="100%">
                         <j-collapse-pane [isActive]="true">
-                            <div j-title>
-                                <span class="iconfont iconfont-ea4c"></span> 功能组1
-                            </div>
+                            <div j-title><span class="iconfont iconfont-ea4c"></span> 功能组1</div>
                             <div j-body>
-                                <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%"
-                                             [showBorder]="false">
+                                <jigsaw-menu
+                                    [data]="data"
+                                    (select)="menuSelect($event)"
+                                    width="100%"
+                                    [showBorder]="false"
+                                >
                                 </jigsaw-menu>
                             </div>
                         </j-collapse-pane>
                         <j-collapse-pane [isActive]="false">
-                            <div j-title>
-                                <span class="iconfont iconfont-ea4c"></span> 功能组2
-                            </div>
+                            <div j-title><span class="iconfont iconfont-ea4c"></span> 功能组2</div>
                             <div j-body>
-                                <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%"
-                                             [showBorder]="false">
+                                <jigsaw-menu
+                                    [data]="data"
+                                    (select)="menuSelect($event)"
+                                    width="100%"
+                                    [showBorder]="false"
+                                >
                                 </jigsaw-menu>
                             </div>
                         </j-collapse-pane>
                         <j-collapse-pane [isActive]="false">
-                            <div j-title>
-                                <span class="iconfont iconfont-ea4c"></span> 功能组3
-                            </div>
+                            <div j-title><span class="iconfont iconfont-ea4c"></span> 功能组3</div>
                             <div j-body>
-                                <jigsaw-menu [data]="data" (select)="menuSelect($event)" width="100%"
-                                             [showBorder]="false">
+                                <jigsaw-menu
+                                    [data]="data"
+                                    (select)="menuSelect($event)"
+                                    width="100%"
+                                    [showBorder]="false"
+                                >
                                 </jigsaw-menu>
                             </div>
                         </j-collapse-pane>
@@ -57,16 +51,17 @@
                 </div>
 
                 <div class="content">
-                    <p style="margin-bottom: 8px;">
-                        <a jigsawCascadingMenu style="margin-right: 8px"
-                           [jigsawCascadingMenuWidth]="150"
-                           [jigsawCascadingMenuData]="data"
-                           (jigsawCascadingMenuSelect)="menuSelect($event)">
+                    <p style="margin-bottom: 8px">
+                        <a
+                            jigsawCascadingMenu
+                            style="margin-right: 8px"
+                            [jigsawCascadingMenuWidth]="150"
+                            [jigsawCascadingMenuData]="data"
+                            (jigsawCascadingMenuSelect)="menuSelect($event)"
+                        >
                             打开下拉菜单
                         </a>
-                        <a jigsawFloat [jigsawFloatTarget]="float">
-                            打开下拉视图
-                        </a>
+                        <a jigsawFloat [jigsawFloatTarget]="float"> 打开下拉视图 </a>
                     </p>
                     <div (contextmenu)="showContext($event)" class="context-menu">
                         <p>右击这里</p>
@@ -81,21 +76,20 @@
     </ng-template>
 
     <ng-template #float>
-        <div style="width:250px;height:200px;padding:8px 16px">
-            <a jigsawCascadingMenu style="margin-right: 8px"
-               [jigsawCascadingMenuWidth]="150"
-               [jigsawCascadingMenuData]="data"
-               (jigsawCascadingMenuSelect)="menuSelect($event)">
+        <div style="width: 250px; height: 200px; padding: 8px 16px">
+            <a
+                jigsawCascadingMenu
+                style="margin-right: 8px"
+                [jigsawCascadingMenuWidth]="150"
+                [jigsawCascadingMenuData]="data"
+                (jigsawCascadingMenuSelect)="menuSelect($event)"
+            >
                 打开下拉菜单
             </a>
-            <a jigsawFloat [jigsawFloatTarget]="float">
-                打开下拉视图
-            </a>
+            <a jigsawFloat [jigsawFloatTarget]="float"> 打开下拉视图 </a>
             <div (contextmenu)="showContext($event)" class="context-menu">
                 <p>右击这里</p>
             </div>
         </div>
     </ng-template>
-
 </demo-template>
-

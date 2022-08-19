@@ -1,7 +1,7 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {StripColorGraphData, StripGraphData, StripSequenceGraphData} from "jigsaw/public_api";
-import {GraphTextService} from "../demo.service";
+import { Component } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { StripColorGraphData, StripGraphData, StripSequenceGraphData } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-strip',
@@ -39,11 +39,5 @@ export class GraphStripDemoComponent {
     handleClick($event) {
         console.log($event);
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '这个demo展示了如何使用条形图';
-    description: string = require('!!raw-loader!./readme.md').default;
 }
 

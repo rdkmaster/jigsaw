@@ -1,39 +1,15 @@
-<!-- ignore the following lines, they are not important to this demo -->
-
-
-
-<!-- start to learn the demo from here -->
 <demo-template [data]="''" [text]="doc.text.strip">
-    <div class="live-demo-wrap">
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">StripGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="stripData" height="300" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
-
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">StripSequenceGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="stripSequenceData" height="300" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
-
-        <div class="clearfix">
-            <div class="live-demo live-demo-block">
-                <jigsaw-header [level]="2">StripSequenceGraphData静态数据</jigsaw-header>
-                <jigsaw-graph [data]="stripColorData" (click)="handleClick($event)"></jigsaw-graph>
-            </div>
-        </div>
-
+    <!-- start to learn the demo from here -->
+    <div class="demo-showcase-v">
+        <span>StripGraphData静态数据</span>
+        <jigsaw-graph [data]="stripData" height="300" (click)="handleClick($event)"></jigsaw-graph>
+    </div>
+    <div class="demo-showcase-v">
+        <span>StripSequenceGraphData静态数据</span>
+        <jigsaw-graph [data]="stripSequenceData" height="300" (click)="handleClick($event)"></jigsaw-graph>
+    </div>
+    <div class="demo-showcase-v">
+        <span>StripSequenceGraphData静态数据</span>
+        <jigsaw-graph [data]="stripColorData" (click)="handleClick($event)"></jigsaw-graph>
     </div>
 </demo-template>
-
-
-
-
-
-
-
-
-

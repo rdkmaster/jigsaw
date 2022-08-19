@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +40,36 @@ export class PaginationTextService {
 
             此Demo展示了Pagination组件在空数据/数据延迟设置时的表现。
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        fold: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./fold/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./fold/demo.component.ts').default }
+        ],
+        simple: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./simple/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./simple/demo.component.ts').default }
+        ],
+        withSearchBox: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-search-box/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-search-box/demo.component.ts').default }
+        ],
+        hidden: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./hidden/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hidden/demo.component.ts').default }
+        ],
+        bigData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./big-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./big-data/demo.component.ts').default }
+        ],
+        noData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./no-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./no-data/demo.component.ts').default }
+        ],
     }
 }

@@ -2,21 +2,28 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>空数据（默认模式）</span>
-        <jigsaw-pagination [data]="paginationData" [pageSizeOptions]="[5, 10, 20]" [searchable]="false"
-                           [showQuickJumper]="true"
-                           (currentChange)="getCurrentPage($event)" (pageSizeChange)="getPageSize($event)"
-                           [size]="selectedLabel.size">
+        <jigsaw-pagination
+            [data]="paginationData"
+            [pageSizeOptions]="[5, 10, 20]"
+            [searchable]="false"
+            [showQuickJumper]="true"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            [size]="selectedLabel.size"
+        >
         </jigsaw-pagination>
-        <p>当前第{{paginationData.pagingInfo.currentPage}}页</p>
     </div>
 
     <div class="demo-showcase-v">
         <span>空数据（简约模式）</span>
-        <jigsaw-pagination [data]="paginationData" (currentChange)="getCurrentPage($event)" mode="simple"
-                           [searchable]="false"
-                           [pageSizeOptions]="[5, 10, 20]" [size]="selectedLabel.size">
+        <jigsaw-pagination
+            [data]="paginationData"
+            (currentChange)="getCurrentPage($event)"
+            mode="simple"
+            [searchable]="false"
+            [pageSizeOptions]="[5, 10, 20]"
+            [size]="selectedLabel.size"
+        >
         </jigsaw-pagination>
-        <p>当前第{{paginationData.pagingInfo.currentPage}}页</p>
     </div>
-
 </demo-template>
