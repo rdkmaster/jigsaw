@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -29,7 +29,30 @@ export class TimeSectionTextService {
             ### 天选择器
         `,
         horizontal: `
-            ### 多选
+            ### 水平时间段选择器
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        timeSectionPicker: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./time-section-picker/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./time-section-picker/demo.component.ts').default }
+        ],
+        weekSectionPicker: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./week-section-picker/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./week-section-picker/demo.component.ts').default }
+        ],
+        daySectionPicker: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./day-section-picker/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./day-section-picker/demo.component.ts').default }
+        ],
+        horizontal: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./horizontal/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./horizontal/demo.component.ts').default }
+        ],
     }
 }

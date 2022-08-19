@@ -12,7 +12,7 @@ import { TransferTableLocalPageableDemoComponent } from "./transfer-table-local-
 import { TransferTreeDemoComponent } from "./transfer-tree/demo.component";
 @NgModule({
     declarations: [TransferDemoComponent, TransferBasicDemoComponent, TransferItemDisabledDemoComponent, TransferListDemoComponent,
-        TransferListLocalPageableDemoComponent, TransferTableDemoComponent, TransferTableLocalPageableDemoComponent, TransferTreeDemoComponent],
+        TransferListLocalPageableDemoComponent, TransferTableDemoComponent, TransferTableLocalPageableDemoComponent, TransferTreeDemoComponent, TransferTableLocalPageableDemoComponent],
     imports: [JigsawMarkdownModule, JigsawTransferModule, JigsawHeaderModule, JigsawButtonModule, DemoTemplateModule]
 })
 export class TransferDemoModule {

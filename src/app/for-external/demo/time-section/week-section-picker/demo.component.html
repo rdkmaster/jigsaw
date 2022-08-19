@@ -1,11 +1,8 @@
-<demo-template [data]="''" [text]="doc.text.weekSectionPicker">
-        <div class="demo-2 live-demo">
-            <jigsaw-header [level]="2">week-section-picker：按周选择</jigsaw-header>
-            <br><br>
-            <j-week-section-picker [(value)]="weekSection" [multipleSelect]="multipleSelect2"
-                                   (valueChange)="weekValueChange($event)">
-            </j-week-section-picker>
-            <br>
-        </div>
-
+<demo-template [data]="''" [text]="doc.text.weekSectionPicker" [codes]="doc.codes.weekSectionPicker">
+    <j-week-section-picker
+        [(value)]="weekSection"
+        [multipleSelect]="multipleSelect2"
+        (valueChange)="weekValueChange($event)"
+    >
+    </j-week-section-picker>
 </demo-template>

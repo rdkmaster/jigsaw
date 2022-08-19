@@ -5,8 +5,7 @@ import {TransferTextService} from "../doc.service";
 
 @Component({
     selector: 'transfer-tree-transfer',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TransferTreeDemoComponent {
 

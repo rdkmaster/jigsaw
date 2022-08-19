@@ -5,8 +5,7 @@ import {TransferTextService} from "../doc.service";
 
 @Component({
     selector: 'transfer-list-local-pageable-transfer',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TransferListLocalPageableDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;

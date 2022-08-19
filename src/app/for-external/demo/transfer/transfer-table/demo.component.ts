@@ -4,8 +4,7 @@ import {TransferTextService} from "../doc.service";
 
 @Component({
     selector: 'transfer-table-transfer',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TransferTableDemoComponent {
     constructor(public doc: TransferTextService) {

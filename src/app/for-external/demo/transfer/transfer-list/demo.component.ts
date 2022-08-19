@@ -1,12 +1,11 @@
-import {Component} from "@angular/core";
-import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
-import {HttpClient} from '@angular/common/http';
-import {TransferTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import { HttpClient } from '@angular/common/http';
+import { TransferTextService } from "../doc.service";
 
 @Component({
     selector: 'transfer-list-transfer',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TransferListDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
