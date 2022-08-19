@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: "root"
@@ -49,5 +49,36 @@ export class FloatTextService {
 
         演示了如何改变float option参数。
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        initData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./init-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./init-data/demo.component.ts').default }
+        ],
+        multiLevel: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multi-level/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multi-level/demo.component.ts').default }
+        ],
+        position: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./position/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./position/demo.component.ts').default }
+        ],
+        target: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./target/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./target/demo.component.ts').default }
+        ],
+        trigger: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./trigger/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./trigger/demo.component.ts').default }
+        ],
+        option: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./option/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./option/demo.component.ts').default }
+        ],
     }
 }

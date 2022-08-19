@@ -1,10 +1,9 @@
-import {Component} from "@angular/core";
-import {TrustedHtmlTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TrustedHtmlTextService } from "../doc.service";
 
 @Component({
     selector: 'trusted-html-basic',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TrustedHtmlBasicComponent {
     html = this.stripPrefixSpaces(`
@@ -39,9 +38,9 @@ export class TrustedHtmlBasicComponent {
      * 这样的话，我们在定义html字符串中的回调函数的时候，就可以像定义普通的angular事件的回调函数一样了，是不是非常方便？
      * 为了说明这一点，你可以将JS源码文本框的值改为字符串"this.context = this"，随后点击“say hello to trustedHtml”链接试试看。
      */
-    context:any;
+    context: any;
 
-    constructor( public doc: TrustedHtmlTextService) {
+    constructor(public doc: TrustedHtmlTextService) {
         this.onCodeChange(this.jsCode);
     }
 

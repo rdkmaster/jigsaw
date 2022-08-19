@@ -5,8 +5,8 @@ import { DragDropDemoComponent } from "./demo.component";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawDraggableModule, JigsawDroppableModule, JigsawTableModule, JigsawTagModule, JigsawTableRendererModule, JigsawAutoCompleteInputModule } from "jigsaw/public_api";
 import { DragToReplaceDemoComponent } from "./drag-to-replace/demo.component";
-import {TableDragDemoComponent} from "./simple-table-dragdrop/demo.component";
-import {TableDragDeleteRow, TableDragReplaceRow} from "./simple-table-dragdrop/table-renderer";
+import {TableDragDemoComponent} from "./simple-table-drag-drop/demo.component";
+import {TableDragDeleteRow, TableDragReplaceRow} from "./simple-table-drag-drop/table-renderer";
 
 @NgModule({
     declarations: [DragDropDemoComponent, DragToReplaceDemoComponent, TableDragDemoComponent, TableDragReplaceRow, TableDragDeleteRow],

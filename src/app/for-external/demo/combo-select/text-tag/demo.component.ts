@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import {ComboSelectTextService} from "../doc.service";
+import { ComboSelectTextService } from "../doc.service";
 
 @Component({
     selector: 'combo-select-text-tag',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    templateUrl: './demo.component.html'
 })
 export class ComboSelectTextTagDemoComponent {
     textTag = false;

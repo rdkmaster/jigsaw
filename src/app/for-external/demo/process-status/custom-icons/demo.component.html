@@ -1,14 +1,18 @@
-
 <demo-template [data]="''" [text]="doc.text.customIcons">
-    <jigsaw-process-status preSize="large" width="80%">
-        <jigsaw-process-status-item *ngFor="let step of steps" [status]="step.status"
-                                    [waitingIcon]="step.waitingIcon"
-                                    [doneIcon]="step.doneIcon"
-                                    [processingIcon]="step.processingIcon"
-                                    [errorIcon]="step.errorIcon"
-                                    [warningIcon]="step.warningIcon"
-                                    [skippedIcon]="step.skippedIcon">
-            {{step.title}}
-        </jigsaw-process-status-item>
-    </jigsaw-process-status>
+    <div class="demo-showcase">
+        <jigsaw-process-status preSize="large">
+            <jigsaw-process-status-item
+                *ngFor="let step of steps"
+                [status]="step.status"
+                [waitingIcon]="step.waitingIcon"
+                [doneIcon]="step.doneIcon"
+                [processingIcon]="step.processingIcon"
+                [errorIcon]="step.errorIcon"
+                [warningIcon]="step.warningIcon"
+                [skippedIcon]="step.skippedIcon"
+            >
+                {{ step.title }}
+            </jigsaw-process-status-item>
+        </jigsaw-process-status>
+    </div>
 </demo-template>

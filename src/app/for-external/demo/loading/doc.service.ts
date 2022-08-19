@@ -37,7 +37,38 @@ export class LoadingTextService {
             `,
         customize: `
             ### 定制加载样式
-          `,
+        `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        ball: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./ball/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./ball/demo.component.ts').default }
+        ],
+        bubble: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./bubble/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./bubble/demo.component.ts').default }
+        ],
+        fontIcon: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./font-icon/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./font-icon/demo.component.ts').default }
+        ],
+        circle: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./circle/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./circle/demo.component.ts').default }
+        ],
+        color: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./color/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./color/demo.component.ts').default }
+        ],
+        customize: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./customize/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default }
+        ],
     }
 }
 

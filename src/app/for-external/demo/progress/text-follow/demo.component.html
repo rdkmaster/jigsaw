@@ -1,10 +1,4 @@
 <demo-template [data]="''" [text]="doc.text.textFollow">
-    <div class="demo-showcase">
-        <span>进度值</span>
-        <j-numeric-input min="0" max="110" [(value)]="progressValue">
-        </j-numeric-input>
-    </div>
-
     <div style="margin-top:20px">
         <j-progress [value]="progressValue" width="100%" preSize="large" [animate]="false"
                     labelPosition="followRight" [showMarker]="true"></j-progress>

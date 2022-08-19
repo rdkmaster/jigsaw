@@ -1,9 +1,4 @@
 <demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic">
-<div class="demo-showcase">
-    <span>进度值</span>
-    <j-numeric-input min="0" max="110" [(value)]="progressValue">
-    </j-numeric-input>
-</div>
     <div class="demo-showcase">
         <span>默认尺寸</span>
         <j-progress [value]="progressValue" [preSize]="selectedLabel.size"></j-progress>

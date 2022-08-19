@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -20,9 +20,9 @@ export class TabTextService {
             #### lazy延迟加载内容
 
             jigsaw-tab-pane有个\`lazy\`布尔型属性，用来控制内容的加载形式。
-             - 为\`true\`时表示延迟加载，即对应的tab激活时，才把内容加载出来；
-             - 为\`false\`时，组件初始化时就加载；
-             - 默认\`lazy\`的值是\`true\`，即采用延迟加载的形式。
+            - 为\`true\`时表示延迟加载，即对应的tab激活时，才把内容加载出来；
+            - 为\`false\`时，组件初始化时就加载；
+            - 默认\`lazy\`的值是\`true\`，即采用延迟加载的形式。
 
             tab内容被加载后，即使切换到其他tab，内容也不会销毁，数据依旧保留。
         `,
@@ -50,11 +50,41 @@ export class TabTextService {
         `,
         tabBar: `
             ### 独立的tab-bar
-        `,
-        manySteps: `
-            ### 步骤数量极端的情况
-
-            演示当步骤数较多和较少等极端情况下展示效果
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        editable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./editable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./editable/demo.component.ts').default }
+        ],
+        background: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./background/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./background/demo.component.ts').default }
+        ],
+        headless: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./headless/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./headless/demo.component.ts').default }
+        ],
+        hideShow: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./hide-show/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hide-show/demo.component.ts').default }
+        ],
+        titleRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./title-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./title-renderer/demo.component.ts').default }
+        ],
+        type: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./type/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./type/demo.component.ts').default }
+        ],
+        tabBar: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./tab-bar/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./tab-bar/demo.component.ts').default }
+        ]
     }
 }

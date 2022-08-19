@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -60,5 +60,40 @@ export class CascadeTextService {
 
             \`searchable\`为\`true\`时可以搜索；\`pageSize\`默认是\`Infinity\`，即不分页，设置了\`pageSize\`数值即可实现分页。
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        lazyLoad: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./lazy-load/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./lazy-load/demo.component.ts').default }
+        ],
+        selectedItems: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./selected-items/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./selected-items/demo.component.ts').default }
+        ],
+        multipleSelect: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./multiple-select/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multiple-select/demo.component.ts').default }
+        ],
+        trackItemBy: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./track-item-by/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./track-item-by/demo.component.ts').default }
+        ],
+        showAll: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./show-all/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./show-all/demo.component.ts').default }
+        ],
+        withCombo: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-combo/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-combo/demo.component.ts').default }
+        ],
+        searchAndPaging: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./search-and-paging/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./search-and-paging/demo.component.ts').default }
+        ]
     }
 }

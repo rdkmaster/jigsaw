@@ -1,11 +1,14 @@
 <demo-template [data]="''" [text]="doc.text.basic">
-
-    <span class="iconfont iconfont-e9d8" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea"
-          [jigsawFloatOptions]="{useCustomizedBackground: true}"> hover me!
-    </span>
+    <div class="demo-showcase">
+        <jigsaw-button
+            jigsaw-float
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            鼠标悬浮试试
+        </jigsaw-button>
+    </div>
     <ng-template #jigsawFloatArea>
-        <div class="jigsawFloatArea">
-            dropdown placeholder
-        </div>
+        <div class="jigsawFloatArea">dropdown placeholder</div>
     </ng-template>
 </demo-template>

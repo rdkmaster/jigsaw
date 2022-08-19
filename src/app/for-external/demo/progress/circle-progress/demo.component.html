@@ -1,27 +1,38 @@
-<demo-template [data]="''" [text]="doc.text.circle">
-    <section>
-        <jigsaw-header>圆形进度条primary状态</jigsaw-header>
-        <jigsaw-circle-progress [status]="'processing'" [value]="0"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'processing'" [value]="9.9"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'processing'" [value]="53.89"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'processing'" [value]="100"></jigsaw-circle-progress>
-
-        <jigsaw-header>圆形进度条success状态</jigsaw-header>
-        <jigsaw-circle-progress [status]="'success'" [value]="0"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'success'" [value]="9.9"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'success'" [value]="53.89"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'success'" [value]="100"></jigsaw-circle-progress>
-
-        <jigsaw-header>圆形进度条warning状态</jigsaw-header>
-        <jigsaw-circle-progress [status]="'block'" [value]="0"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'block'" [value]="53.89"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'block'" [value]="100"></jigsaw-circle-progress>
-
-        <jigsaw-header>圆形进度条error状态</jigsaw-header>
-        <jigsaw-circle-progress [status]="'error'" [value]="0"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'error'" [value]="9.9"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'error'" [value]="53.89"></jigsaw-circle-progress>
-        <jigsaw-circle-progress [status]="'error'" [value]="100"></jigsaw-circle-progress>
-    </section>
+<demo-template [data]="''" [text]="doc.text.circleProgress">
+    <div class="demo-showcase-v">
+        <span>圆形进度条primary状态</span>
+        <div>
+            <jigsaw-circle-progress [status]="'processing'" [value]="0"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'processing'" [value]="9.9"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'processing'" [value]="53.89"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'processing'" [value]="100"></jigsaw-circle-progress>
+        </div>
+    </div>
+    <div class="demo-showcase-v">
+        <span>圆形进度条success状态</span>
+        <div>
+            <jigsaw-circle-progress [status]="'success'" [value]="0"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'success'" [value]="9.9"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'success'" [value]="53.89"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'success'" [value]="100"></jigsaw-circle-progress>
+        </div>
+    </div>
+    <div class="demo-showcase-v">
+        <span>圆形进度条warning状态</span>
+        <div>
+            <jigsaw-circle-progress [status]="'block'" [value]="0"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'block'" [value]="9.9"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'block'" [value]="53.89"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'block'" [value]="100"></jigsaw-circle-progress>
+        </div>
+    </div>
+    <div class="demo-showcase-v">
+        <span>圆形进度条error状态</span>
+        <div>
+            <jigsaw-circle-progress [status]="'error'" [value]="0"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'error'" [value]="9.9"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'error'" [value]="53.89"></jigsaw-circle-progress>
+            <jigsaw-circle-progress [status]="'error'" [value]="100"></jigsaw-circle-progress>
+        </div>
+    </div>
 </demo-template>

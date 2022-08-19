@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -35,11 +35,38 @@ export class DrawerTextService {
         withTab: `
             ### 带tabs的抽屉
         `,
-        drawInDraw: `
+        drawerInDrawer: `
             ### 抽屉中的抽屉
         `,
         emphasisHandler: `
             ### 抽屉把手样式
         `
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        withDiv: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-div/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-div/demo.component.ts').default }
+        ],
+        withScrollbar: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-scrollbar/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-scrollbar/demo.component.ts').default }
+        ],
+        withTab: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-tab/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-tab/demo.component.ts').default }
+        ],
+        drawerInDrawer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./drawer-in-drawer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./drawer-in-drawer/demo.component.ts').default }
+        ],
+        emphasisHandler: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./emphasis-handler/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./emphasis-handler/demo.component.ts').default }
+        ],
     }
 }

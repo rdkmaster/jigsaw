@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -38,5 +38,24 @@ export class CollapseTextService {
 
             标题不是纯文本，使用\`j-title j-body\`。
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        rightArrow: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./right-arrow/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./right-arrow/demo.component.ts').default }
+        ],
+        accordion: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./accordion/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./accordion/demo.component.ts').default }
+        ],
+        titleAndContent: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./title-and-content/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./title-and-content/demo.component.ts').default }
+        ],
     }
 }

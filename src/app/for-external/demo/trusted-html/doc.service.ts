@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 
 @Injectable({
     providedIn: "root"
@@ -44,5 +44,12 @@ export class TrustedHtmlTextService {
 
         这是一个指令，用于将一段html文本插入到某个DOM元素中，是 Angular 内置指令 \`[innerHtml]\` 的火力增强版。`,
 
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ]
     }
 }

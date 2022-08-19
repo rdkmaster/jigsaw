@@ -1,14 +1,11 @@
-<demo-template [data]="''" [text]="doc.text.basic">
-
-    <div class="demo-container">
-        <jigsaw-header [level]="2">基本用法</jigsaw-header>
+<demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
+    <div class="demo-showcase-v">
+        <span>基本用法</span>
         <span>提示：修改下面的HTML/JS代码立即可以生效，支持事件、样式等</span>
-        <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context">
-        </div>
-        <p><strong>HTML 源码</strong></p>
-        <jigsaw-textarea [(value)]="html"></jigsaw-textarea>
-        <p><strong>JS 源码</strong></p>
-        <jigsaw-textarea [(value)]="jsCode" (valueChange)="onCodeChange($event)">
-        </jigsaw-textarea>
+        <div class="host" [trustedHtml]="html" [trustedHtmlContext]="context"></div>
+        <span>HTML 源码</span>
+        <jigsaw-textarea style="width: 450px; height: 160px; font-family: monospace" [(value)]="html"></jigsaw-textarea>
+        <span>JS 源码</span>
+        <jigsaw-textarea style="width: 450px; height: 160px; font-family: monospace" [(value)]="jsCode" (valueChange)="onCodeChange($event)"> </jigsaw-textarea>
     </div>
 </demo-template>

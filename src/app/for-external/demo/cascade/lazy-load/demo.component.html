@@ -1,6 +1,12 @@
 <demo-template [data]="''" [text]="doc.text.lazyLoad">
-    <j-cascade [dataGenerator]="generator" [generatorContext]="this" labelField="name"
-               (selectedItemsChange)="parseMessage($event)" width="400">
-    </j-cascade>
-    <p>选择的区域是：{{message}}</p>
+    <div class="demo-showcase">
+        <j-cascade
+            [dataGenerator]="generator"
+            [generatorContext]="this"
+            labelField="name"
+            (selectedItemsChange)="parseMessage($event)"
+            width="400"
+        >
+        </j-cascade>
+    </div>
 </demo-template>

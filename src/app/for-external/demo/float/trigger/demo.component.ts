@@ -1,22 +1,9 @@
-import {Component} from '@angular/core';
-import {FloatTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { FloatTextService } from "../doc.service";
 
 @Component({
     selector: 'float-trigger',
-    templateUrl: './demo.component.html',
-    styles: [`
-               .iconfont-e9d8{
-                     margin:100px
-               }
-               .jigsawFloatArea{
-                   width:150px;
-                   height:60px;
-                   background:orange;
-                   color:#fff;
-                   text-align:center;
-                   line-height:60px;
-               }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class FloatTriggerDemoComponent {
     closeTrigger = "mouseleave";
@@ -38,6 +25,6 @@ export class FloatTriggerDemoComponent {
     }
 
 
-    constructor( public doc: FloatTextService) {
+    constructor(public doc: FloatTextService) {
     }
 }

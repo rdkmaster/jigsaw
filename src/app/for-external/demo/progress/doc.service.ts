@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -25,15 +25,38 @@ export class ProgressTextService {
         `,
         functional: `
             ### 四种状态
-         `,
+        `,
         textTop: `
             ### 文字在顶部
         `,
         textFollow: `
             ### 用于卡片的巨型进度条
         `,
-        circle: `
+        circleProgress: `
             ## 圆形进度条
         `,
+    }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        functional: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./functional/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./functional/demo.component.ts').default }
+        ],
+        textTop: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./text-top/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./text-top/demo.component.ts').default }
+        ],
+        textFollow: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./text-follow/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./text-follow/demo.component.ts').default }
+        ],
+        circleProgress: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./circle-progress/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./circle-progress/demo.component.ts').default }
+        ],
     }
 }

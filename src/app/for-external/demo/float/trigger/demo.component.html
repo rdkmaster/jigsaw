@@ -1,33 +1,40 @@
 <demo-template [data]="''" [text]="doc.text.trigger">
     <div class="demo-showcase">
-        <span class="iconfont iconfont-e9d8" jigsaw-float
-              [jigsawFloatOpenTrigger]="openTrigger"
-              [jigsawFloatCloseTrigger]="closeTrigger"
-              [jigsawFloatTarget]="jigsawFloatArea" [(jigsawFloatOpen)]="open"
-              [jigsawFloatOptions]="{useCustomizedBackground: true}">
-              滑入滑出
-        </span>
-        <span class="iconfont iconfont-e9d8" jigsaw-float
-              [jigsawFloatOpenTrigger]="openTrigger1"
-              [jigsawFloatCloseTrigger]="closeTrigger1"
-              [jigsawFloatTarget]="jigsawFloatArea" [(jigsawFloatOpen)]="open1"
-              [jigsawFloatOptions]="{useCustomizedBackground: true}">
-              单击
-        </span>
-        <span class="iconfont iconfont-e9d8" jigsaw-float
-              [jigsawFloatOpenTrigger]="openTrigger2"
-              [jigsawFloatCloseTrigger]="closeTrigger2"
-              [jigsawFloatTarget]="jigsawFloatArea" [(jigsawFloatOpen)]="open2"
-              [jigsawFloatOptions]="{useCustomizedBackground: true}">
-             不响应鼠标事件
-        </span>
-        <j-button (click)="openFloat()">open</j-button>
-        <j-button (click)="closeFloat()">close</j-button>
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger"
+            [jigsawFloatCloseTrigger]="closeTrigger"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            滑入滑出
+        </jigsaw-button>
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger1"
+            [jigsawFloatCloseTrigger]="closeTrigger1"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open1"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            单击
+        </jigsaw-button>
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger2"
+            [jigsawFloatCloseTrigger]="closeTrigger2"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open2"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            不响应鼠标事件
+        </jigsaw-button>
     </div>
     <ng-template #jigsawFloatArea>
-        <div class="jigsawFloatArea">
-            dropdown placeholder
-        </div>
+        <div class="jigsawFloatArea">dropdown placeholder</div>
     </ng-template>
 </demo-template>
-

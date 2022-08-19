@@ -1,5 +1,5 @@
-import {AfterViewInit, Component, ElementRef, Renderer2, Injector} from "@angular/core";
-import {TableCellRendererBase, DragDropInfo, CommonUtils} from "jigsaw/public_api";
+import { AfterViewInit, Component, ElementRef, Renderer2, Injector } from "@angular/core";
+import { TableCellRendererBase, DragDropInfo, CommonUtils } from "jigsaw/public_api";
 
 /*
  * 换行

@@ -103,4 +103,51 @@ export class ComboSelectTextService {
             ### 触发下拉框方式
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        autoWidth: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./auto-width/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./auto-width/demo.component.ts').default }
+        ],
+        dropDownStatus: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./drop-down-status/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./drop-down-status/demo.component.ts').default }
+        ],
+        events: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./events/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./events/demo.component.ts').default }
+        ],
+        maxHeight: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./max-height/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./max-height/demo.component.ts').default }
+        ],
+        single: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./single/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./single/demo.component.ts').default }
+        ],
+        open: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./open/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./open/demo.component.ts').default }
+        ],
+        searchable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./searchable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./searchable/demo.component.ts').default }
+        ],
+        setWidth: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./set-width/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./set-width/demo.component.ts').default }
+        ],
+        textTag: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./text-tag/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./text-tag/demo.component.ts').default }
+        ],
+        trigger: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./trigger/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./trigger/demo.component.ts').default }
+        ],
+    }
 }

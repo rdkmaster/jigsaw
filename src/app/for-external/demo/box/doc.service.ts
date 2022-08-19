@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -71,5 +71,24 @@ export class BoxTextService {
 
             这个demo展示了如何让resize line看起来在两个box中间。
         `
+    }
+
+    public codes = {
+        form: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./form/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./form/demo.component.ts').default }
+        ],
+        justify: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./justify/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./justify/demo.component.ts').default }
+        ],
+        layout: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./layout/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./layout/demo.component.ts').default }
+        ],
+        middleResizeLine: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./middle-resize-line/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./middle-resize-line/demo.component.ts').default }
+        ],
     }
 }

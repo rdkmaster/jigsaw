@@ -1,12 +1,13 @@
 <demo-template [data]="''" [text]="doc.text.initData">
-
-    <span class="iconfont iconfont-e9d8" jigsaw-float
-          jigsawFloatOpenTrigger="click"
-          jigsawFloatCloseTrigger="click"
-          [jigsawFloatTarget]="target"
-          [jigsawFloatInitData]="initData" [jigsawFloatOptions]="{useCustomizedBackground: true}">
-
-        click me!
-
-    </span>
+    <div class="demo-showcase">
+        <jigsaw-button
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            [jigsawFloatTarget]="target"
+            [jigsawFloatInitData]="initData"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+            >鼠标悬浮试试
+        </jigsaw-button>
+    </div>
 </demo-template>

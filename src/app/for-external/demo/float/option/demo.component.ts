@@ -1,27 +1,13 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 import {
     PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
     PopupSize, CommonUtils, FloatPosition
 } from "jigsaw/public_api";
-import {FloatTextService} from "../doc.service";
+import { FloatTextService } from "../doc.service";
 
 @Component({
     selector: 'float-option',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .iconfont-e9d8 {
-            color: blue;
-        }
-
-        .jigsawFloatArea {
-            width: 150px;
-            height: 60px;
-            background: orange;
-            color: #fff;
-            text-align: center;
-            line-height: 60px;
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class FloatOptionDemoComponent {
     showHideEffect = "";
@@ -68,7 +54,7 @@ export class FloatOptionDemoComponent {
         borderType: 'pointer'
     };
 
-    constructor( public doc: FloatTextService) {
+    constructor(public doc: FloatTextService) {
     }
 
 }
