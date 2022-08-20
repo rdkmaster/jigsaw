@@ -68,7 +68,7 @@ export class TableRendererTextService {
         cellRender: `
             ### 单元格渲染
         `,
-        cellselectRenderer: `
+        cellSelectRenderer: `
             ### 单元格下拉框
         `,
         htmlRenderer: `
@@ -337,5 +337,72 @@ export class TableRendererTextService {
 
             最后，值得一提的是，修改列定义是一个耗时操作，因此应该尽量避免修改列定义，建议通过Ux的手段来避免。
         `,
+    }
+
+    public codes = {
+        cellRender: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./cell-render/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./cell-render/demo.component.ts').default }
+        ],
+        cellSelectRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./cell-select-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./cell-select-renderer/demo.component.ts').default }
+        ],
+        htmlRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./html-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./html-renderer/demo.component.ts').default }
+        ],
+        renderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./renderer/demo.component.ts').default }
+        ],
+        headerRender: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./header-render/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./header-render/demo.component.ts').default }
+        ],
+        templateRefRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./template-ref-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./template-ref-renderer/demo.component.ts').default }
+        ],
+        switchRenderer: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./switch-renderer/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./switch-renderer/demo.component.ts').default }
+        ],
+        checkboxColumn: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./checkbox-column/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./checkbox-column/demo.component.ts').default }
+        ],
+        checkboxColumnObjectCell: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./checkbox-column-object-cell/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./checkbox-column-object-cell/demo.component.ts').default }
+        ],
+        checkboxColumnPageable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./checkbox-column-pageable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./checkbox-column-pageable/demo.component.ts').default }
+        ],
+        cellEditable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./cell-editable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./cell-editable/demo.component.ts').default }
+        ],
+        cellEditableProperty: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./cell-editable-property/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./cell-editable-property/demo.component.ts').default }
+        ],
+        mixinTable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./mixin-table/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./mixin-table/demo.component.ts').default }
+        ],
+        calendar: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./calendar/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./calendar/demo.component.ts').default }
+        ],
+        sudoku: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./sudoku/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./sudoku/demo.component.ts').default }
+        ],
+        swimLaneDiagram: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./swim-lane-diagram/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./swim-lane-diagram/demo.component.ts').default }
+        ]
     }
 }

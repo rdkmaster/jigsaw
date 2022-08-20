@@ -1,6 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.gr">
-    <!--    <jigsaw-button-bar [data]="['time','time_hour_minute','time_minute_second','time_hour" [(selectedItems)]="gr">-->
-    <!--    </jigsaw-button-bar>-->
+<demo-template [data]="''" [text]="doc.text.gr" [codes]="doc.codes.gr">
     <div class="demo-showcase">
         <span>正常时分秒</span>
         <j-time-picker [(value)]="time" [gr]="gr[0]" (valueChange)="valueChange($event)"></j-time-picker>

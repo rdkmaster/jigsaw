@@ -76,4 +76,15 @@ export class TableBigDataTextService {
             ### 数据来组Ajax
         `,
     }
+
+    public codes = {
+        bigTable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./big-table/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./big-table/demo.component.ts').default }
+        ],
+        dataFromAjax: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./data-from-ajax/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./data-from-ajax/demo.component.ts').default }
+        ],
+    }
 }

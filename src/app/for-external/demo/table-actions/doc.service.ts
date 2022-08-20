@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-    providedIn: 'root'
+    providedIn: "root",
 })
 export class TableActionsTextService {
     public text = {
@@ -134,6 +134,49 @@ export class TableActionsTextService {
             ### 自动保存
 
             点击按钮打开表单，尝试编辑表单，在单元格不失去焦点的情况下点击修改按钮，即可看到数据已经修改的提示。
-        `
+        `,
+    };
+
+    public codes = {
+        autoFillUp: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./auto-fill-up/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./auto-fill-up/demo.component.ts').default }
+        ],
+        autoPageSizing: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./auto-page-sizing/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./auto-page-sizing/demo.component.ts').default }
+        ],
+        addColumn: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./add-column/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./add-column/demo.component.ts').default }
+        ],
+        dataChange: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./data-change/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./data-change/demo.component.ts').default }
+        ],
+        draggableTable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./draggable-table/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./draggable-table/demo.component.ts').default }
+        ],
+        selectRow: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./select-row/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./select-row/demo.component.ts').default }
+        ],
+        resize: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./resize/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./resize/demo.component.ts').default }
+        ],
+        expandPageable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./expand-pageable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./expand-pageable/demo.component.ts').default }
+        ],
+        withPopup: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./with-popup/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./with-popup/demo.component.ts').default }
+        ],
+        autoSave: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./auto-save/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./auto-save/demo.component.ts').default }
+        ],
     }
 }

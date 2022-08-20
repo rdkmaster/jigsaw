@@ -156,4 +156,59 @@ export class TableBasicTextService {
             通过\`columnDefines\`的\`width\`属性设置的列宽优先级更好，可以覆盖掉\`contentWidth\`的计算结果。
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ],
+        noData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./no-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./no-data/demo.component.ts').default }
+        ],
+        fixedHeader: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./fixed-header/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./fixed-header/demo.component.ts').default }
+        ],
+        hideHeader: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./hide-header/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hide-header/demo.component.ts').default }
+        ],
+        sortable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./sortable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./sortable/demo.component.ts').default }
+        ],
+        indexColumn: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./index-column/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./index-column/demo.component.ts').default }
+        ],
+        indexColumnWithPaging: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./index-column-with-paging/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./index-column-with-paging/demo.component.ts').default }
+        ],
+        pageable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./pageable/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./pageable/demo.component.ts').default }
+        ],
+        pageableReady: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./pageable-ready/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./pageable-ready/demo.component.ts').default }
+        ],
+        localPagingData: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./local-paging-data/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./local-paging-data/demo.component.ts').default }
+        ],
+        progress: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./progress/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./progress/demo.component.ts').default }
+        ],
+        treeTable: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./tree-table/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./tree-table/demo.component.ts').default }
+        ],
+        contentWidth: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./content-width/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./content-width/demo.component.ts').default }
+        ],
+    }
 }

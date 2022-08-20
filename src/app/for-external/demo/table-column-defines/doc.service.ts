@@ -74,7 +74,7 @@ export class TableColumnDefinesTextService {
         updateAdditionalColumnDefines: `
             ### 更新额外列定义
         `,
-        updataColumnDefine: `
+        updateColumnDefine: `
             ### 更新列定义
         `,
         updateColumnDefines: `
@@ -89,5 +89,40 @@ export class TableColumnDefinesTextService {
         columnGroup: `
             ### 列单元格合并
         `
+    }
+
+    public codes = {
+        alignContent: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./align-content/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./align-content/demo.component.ts').default }
+        ],
+        columnVisible: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./column-visible/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./column-visible/demo.component.ts').default }
+        ],
+        updateAdditionalColumnDefines: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./update-additional-column-defines/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./update-additional-column-defines/demo.component.ts').default }
+        ],
+        updateColumnDefine: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./update-column-define/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./update-column-define/demo.component.ts').default }
+        ],
+        updateColumnDefines: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./update-column-defines/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./update-column-defines/demo.component.ts').default }
+        ],
+        headerClass: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./header-class/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./header-class/demo.component.ts').default }
+        ],
+        setCellClass: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./set-cell-class/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./set-cell-class/demo.component.ts').default }
+        ],
+        columnGroup: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./column-group/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./column-group/demo.component.ts').default }
+        ],
     }
 }

@@ -37,4 +37,11 @@ export class ThemePropertiesTextService {
             \`\`\`
         `
     }
+
+    public codes = {
+        basic: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./basic/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./basic/demo.component.ts').default }
+        ]
+    }
 }

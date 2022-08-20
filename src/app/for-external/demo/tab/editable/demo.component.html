@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.editable">
+<demo-template [data]="''" [text]="doc.text.editable" [codes]="doc.codes.editable">
 
     <!-- start to learn the demo from here -->
     <jigsaw-tabs [editable]="true" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
