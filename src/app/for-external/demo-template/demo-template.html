@@ -1,7 +1,15 @@
 <jigsaw-markdown [markdown]="text"></jigsaw-markdown>
 <div class="demo-cntr" [ngClass]="{'no-handler': !data}">
-    <jigsaw-button-bar *ngIf="!!data" class="demo-handler" [(selectedItems)]="selectedLabel" [data]="data"
-        [multipleSelect]="false" (selectedItemsChange)="onClick($event[0])" colorType="default" height="28">
+    <jigsaw-button-bar
+        *ngIf="!!data"
+        class="demo-handler"
+        [(selectedItems)]="selectedLabel"
+        [data]="data"
+        [multipleSelect]="false"
+        (selectedItemsChange)="onClick($event[0])"
+        colorType="default"
+        height="28"
+    >
     </jigsaw-button-bar>
 
     <div #demoContent class="demo-content">
@@ -24,7 +32,11 @@
     </div>
 
     <div class="demo-button">
-        <i *ngIf="!expand" class="iconfont iconfont-e8b6" (click)="showCode()">查看源码</i>
-        <i *ngIf="expand" class="iconfont iconfont-e8b5" (click)="hideCode()">隐藏源码</i>
+        <i *ngIf="!expand" class="iconfont iconfont-e8b6" (click)="showCode()"
+            >查看源码</i
+        >
+        <i *ngIf="expand" class="iconfont iconfont-e8b5" (click)="hideCode()"
+            >隐藏源码</i
+        >
     </div>
 </div>

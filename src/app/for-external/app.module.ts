@@ -1,8 +1,8 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { BrowserModule } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { RouterModule } from "@angular/router";
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import {
     JigsawFloatModule,
@@ -15,10 +15,10 @@ import {
     JigsawCheckBoxModule,
     JigsawNumericInputModule,
     JigsawSelectModule,
-    MajorStyle
+    MajorStyle,
 } from "jigsaw/public_api";
-import { AppComponent } from './app.component';
-import { AjaxInterceptor } from '../libs/app.interceptor';
+import { AppComponent } from "./app.component";
+import { AjaxInterceptor } from "../libs/app.interceptor";
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./demo-list/pc-demo-list.component";
 import { SwitchDemoComponent } from "./demo-list/switch-demo.component";
@@ -89,31 +89,97 @@ import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.m
 import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
 import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 
-
 @NgModule({
-    declarations: [
-        AppComponent, PCDemoListComponent, SwitchDemoComponent
-    ],
-    imports: [RouterModule.forRoot([
-        ...routerConfig,
-        { path: '', component: SwitchDemoComponent },
-        { path: 'demo', component: PCDemoListComponent },
-        { path: '**', redirectTo: '/' }
-    ], { useHash: true }), TranslateModule.forRoot(),
-        BrowserModule, BrowserAnimationsModule, HttpClientModule, DrawerDemoModule, IconDemoModule, InputDemoModule,
-        MenuDemoModule, NumericInputDemoModule, PaginationDemoModule, SearchInputDemoModule, StepsDemoModule, TextareaDemoModule,
-        ZtreeDemoModule, UploadDemoModule, AdjustFontColorDemoModule, ThemePropertiesDemoModule, MovableDemoModule, TabsDemoModule,
-        BoxDemoModule, TileSelectDemoModule, ListDemoModule, ListLiteDemoModule, RangeDateTimeDemoModule, DatePickerDemoModule,
-        JigsawRootModule, CheckBoxDemoModule, JigsawFloatModule, JigsawListLiteModule, JigsawTreeExtModule, JigsawButtonBarModule,
-        JigsawCheckBoxModule, JigsawNumericInputModule, JigsawSelectModule, CascadeAllModule, AlertDemoModule,
-        HeaderDemoModule, AutoCompleteInputDemoModule, FishBoneDemoModule, AlphabeticalIndexDemoModule, RateDemoModule,
-        ColorSelectDemoModule, CollapseDemoModule, BadgeDemoModule, DialogDemoModule, ComboSelectDemoModule, IconsDemoModule,
-        LoadingDemoModule, NavigationMenuDemoModule, NotificationDemoModule, ToastDemoModule, TooltipDemoModule, TagDemoModule,
-        ProgressDemoModule, ProcessStatusDemoModule, SliderAllDemoModule, TrustedHtmlDemoModule, TransferDemoModule, TimeSectionDemoModule,
-        ChartIconDemoModule, TimePickerDemoModule, SelectDemoModule, DragDropDemoModule, PopupDemoModule, DataEncapsulationDemoModule,
-        GraphDemoModule, FloatDemoModule, DateTimePickerDemoModule, TableBasicDemoModule, TableActionsDemoModule,
-        BreadcrumbDemoModule, ButtonDemoModule, ButtonBarDemoModule, RadioGroupDemoModule, SwitchDemoModule,
-        TableColumnDefinesDemoModule, TableBigTableDemoModule, TableRendererDemoModule
+    declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent],
+    imports: [
+        RouterModule.forRoot(
+            [
+                ...routerConfig,
+                { path: "", component: SwitchDemoComponent },
+                { path: "demo", component: PCDemoListComponent },
+                { path: "**", redirectTo: "/" },
+            ],
+            { useHash: true }
+        ),
+        TranslateModule.forRoot(),
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        DrawerDemoModule,
+        IconDemoModule,
+        InputDemoModule,
+        MenuDemoModule,
+        NumericInputDemoModule,
+        PaginationDemoModule,
+        SearchInputDemoModule,
+        StepsDemoModule,
+        TextareaDemoModule,
+        ZtreeDemoModule,
+        UploadDemoModule,
+        AdjustFontColorDemoModule,
+        ThemePropertiesDemoModule,
+        MovableDemoModule,
+        TabsDemoModule,
+        BoxDemoModule,
+        TileSelectDemoModule,
+        ListDemoModule,
+        ListLiteDemoModule,
+        RangeDateTimeDemoModule,
+        DatePickerDemoModule,
+        JigsawRootModule,
+        CheckBoxDemoModule,
+        JigsawFloatModule,
+        JigsawListLiteModule,
+        JigsawTreeExtModule,
+        JigsawButtonBarModule,
+        JigsawCheckBoxModule,
+        JigsawNumericInputModule,
+        JigsawSelectModule,
+        CascadeAllModule,
+        AlertDemoModule,
+        HeaderDemoModule,
+        AutoCompleteInputDemoModule,
+        FishBoneDemoModule,
+        AlphabeticalIndexDemoModule,
+        RateDemoModule,
+        ColorSelectDemoModule,
+        CollapseDemoModule,
+        BadgeDemoModule,
+        DialogDemoModule,
+        ComboSelectDemoModule,
+        IconsDemoModule,
+        LoadingDemoModule,
+        NavigationMenuDemoModule,
+        NotificationDemoModule,
+        ToastDemoModule,
+        TooltipDemoModule,
+        TagDemoModule,
+        ProgressDemoModule,
+        ProcessStatusDemoModule,
+        SliderAllDemoModule,
+        TrustedHtmlDemoModule,
+        TransferDemoModule,
+        TimeSectionDemoModule,
+        ChartIconDemoModule,
+        TimePickerDemoModule,
+        SelectDemoModule,
+        DragDropDemoModule,
+        PopupDemoModule,
+        DataEncapsulationDemoModule,
+        GraphDemoModule,
+        FloatDemoModule,
+        DateTimePickerDemoModule,
+        TableBasicDemoModule,
+        TableActionsDemoModule,
+        BreadcrumbDemoModule,
+        ButtonDemoModule,
+        ButtonBarDemoModule,
+        RadioGroupDemoModule,
+        SwitchDemoModule,
+        TableColumnDefinesDemoModule,
+        TableBigTableDemoModule,
+        TableRendererDemoModule,
+        JigsawSelectModule,
     ],
     providers: [
         {
@@ -121,17 +187,17 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
             useClass: AjaxInterceptor,
             multi: true,
         },
-        TranslateService
+        TranslateService,
     ],
-    bootstrap: [AppComponent]
+    bootstrap: [AppComponent],
 })
 export class AppModule {
     constructor() {
         let themeName: SupportedTheme, majorStyle: MajorStyle;
         const themeString = localStorage.getItem("jigsawDemoTheme");
         if (themeString === null) {
-            themeName = 'paletx-pro';
-            majorStyle = 'light';
+            themeName = "paletx-pro";
+            majorStyle = "light";
         } else {
             const themeData = JSON.parse(themeString);
             themeName = themeData.name;
@@ -140,4 +206,3 @@ export class AppModule {
         JigsawTheme.changeTheme(themeName, majorStyle);
     }
 }
-

@@ -1,18 +1,18 @@
 .app-wrap {
+    position: relative;
     padding: 6px;
     font-family: "Helevetica Neue", "PingFang SC", "Tahoma", "Microsoft Yahei";
 
     .demo-showcase {
-
         display: flex;
         align-items: center;
         margin-bottom: 16px;
 
-        >* {
+        > * {
             margin-right: 8px;
         }
 
-        >span {
+        > span {
             margin-right: 24px;
             font-weight: bold;
             text-align-last: justify;
@@ -25,13 +25,23 @@
         align-items: flex-start;
         margin-bottom: 16px;
 
-        >* {
+        > * {
             margin-bottom: 8px;
         }
 
-        >span {
+        > span {
             margin-bottom: 8px;
             font-weight: bold;
         }
+    }
+
+    .theme-select {
+        position: absolute;
+        top: 20px;
+        right: 14px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 33px;
     }
 }

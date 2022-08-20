@@ -1,15 +1,21 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
-import {AdjustFontColorAllDemoComponent} from "./demo.component";
-import {JigsawButtonModule, JigsawHeaderModule, JigsawInputModule, JigsawTagModule, JigsawColorSelectModule} from "jigsaw/public_api";
-import { CommonModule } from '@angular/common';
-import {AdjustFontColorDemoComponent} from "./basic/demo.component";
+import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
+import { AdjustFontColorAllDemoComponent } from "./demo.component";
+import {
+    JigsawButtonModule,
+    JigsawHeaderModule,
+    JigsawInputModule,
+    JigsawTagModule,
+    JigsawColorSelectModule,
+} from "jigsaw/public_api";
+import { CommonModule } from "@angular/common";
+import { AdjustFontColorDemoComponent } from "./basic/demo.component";
 
 @NgModule({
     declarations: [
         AdjustFontColorAllDemoComponent,
-        AdjustFontColorDemoComponent
+        AdjustFontColorDemoComponent,
     ],
     imports: [
         DemoTemplateModule,
@@ -19,9 +25,7 @@ import {AdjustFontColorDemoComponent} from "./basic/demo.component";
         JigsawInputModule,
         JigsawTagModule,
         JigsawColorSelectModule,
-        CommonModule
-
-    ]
+        CommonModule,
+    ],
 })
-export class AdjustFontColorDemoModule {
-}
+export class AdjustFontColorDemoModule {}
