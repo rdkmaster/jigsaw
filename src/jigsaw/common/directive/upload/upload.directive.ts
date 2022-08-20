@@ -371,6 +371,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         this.progress.emit(fileInfo);
 
         if (!this.multiple) {
+            this.complete.emit(this.files);
             return;
         }
 
