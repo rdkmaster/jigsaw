@@ -1,11 +1,12 @@
 <demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.common" [codes]="doc.codes.common">
+    <!-- start to learn the demo from here -->
     <div class="demo-showcase">
-        <span>正常 </span>
+        <span>正常</span>
         <jigsaw-button [preSize]="selectedSize.size"> 确定 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
-        <span>禁用 </span>
+        <span>禁用</span>
         <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedSize.size"> 普通操作 </jigsaw-button>
     </div>
 </demo-template>

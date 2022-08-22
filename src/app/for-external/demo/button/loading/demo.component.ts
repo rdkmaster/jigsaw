@@ -10,13 +10,7 @@ export class ButtonLoadingComponent {
     public disabled: boolean = false;
     public label: string = 'click to load';
     public isLoading = false;
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" },
-        { label: "默认", size: "default" }
-    ]);
-    onLoading() {
+    public onLoading() {
         this.isLoading = !this.isLoading;
         this.label = this.isLoading ? 'loading...' : 'click to load';
         this.disabled = true;
@@ -27,7 +21,12 @@ export class ButtonLoadingComponent {
         }, 3000);
     }
 
+    public sizes: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" },
+        { label: "默认", size: "default" }
+    ]);
     public selectedSize = { label: "默认", size: "default" };
-
     constructor(public doc: ButtonTextService) { }
 }

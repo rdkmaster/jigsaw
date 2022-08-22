@@ -123,44 +123,4 @@ export class TransferListDemoComponent {
         this.data = new ArrayCollection(this.allData);
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }
-
-    addItem() {
-        let id = Date.now();
-        this.data.push({
-            id: id,
-            name: "添加元素", remark: "副属信息"
-        });
-        this.data.refresh();
-    }
-
-    removeItem() {
-        this.data.pop();
-        this.selectedItems.length = 0;
-        this.data.refresh();
-    }
-
-    changeDataFromArray() {
-        this.data.fromArray(new ArrayCollection(this.allData.filter((item, i) => {
-            return i < 9
-        })))
-    }
-
-    changeDataFromAjax() {
-        this.data.http = this.http;
-        this.data.fromAjax('mock-data/provinces.json');
-    }
-
-    resetInputData() {
-        this.data = new ArrayCollection(this.allData);
-    }
-
-    selectedItemsChange($event) {
-        console.log($event)
-    }
-
-    resetSelectedData() {
-        this.selectedItems = new ArrayCollection(this.allData.filter((item, i) => {
-            return i < 3
-        }));
-    }
 }

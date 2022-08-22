@@ -9,7 +9,7 @@ import { ArrayCollection } from 'jigsaw/public_api';
 export class ButtonDirectiveDemoComponent {
     public size: string = "";
 
-    onClick() {
+    public onClick() {
         alert('hello jigsaw button');
     }
 

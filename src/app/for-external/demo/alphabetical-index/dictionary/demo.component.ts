@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { AlphabeticalDocService } from "../doc.service";
+import { PinyinDictionary } from 'jigsaw/public_api';
 
 @Component({
     selector: "alphabetical-index-dictionary",
@@ -86,6 +87,19 @@ export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
         ["niue", "纽埃", "niu"],
         ["pakistan", "巴基斯坦", "pak"],
     ]
+
+    /**
+     * 多音字修正
+     */
+    public pinyinDictionary: PinyinDictionary = {
+        "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",
+        "侗": "D", "侧": "Z", "便": "P", "冯": "P", "凹": "W", "刨": "B", "券": "X", "刹": "S",
+        "剿": "C", "勺": "B", "匙": "C", "区": "O", "卒": "C", "单": "S", "卡": "Q", "厂": "A",
+        "厕": "S", "厦": "S", "参": "S", "句": "G", "叨": "T", "召": "Z", "吁": "X", "合": "G",
+        "吓": "H", "否": "P", "吭": "H", "呔": "D", "呲": "Z", "呵": "K", "咀": "Z", "咖": "G",
+        "咯": "G", "哦": "E", "喏": "R", "喔": "O", "嗄": "A", "嗌": "A", "圈": "J", "坏": "P",
+        "壳": "Q", "夹": "G", "奇": "J", "姥": "M", "宿": "X", "尿": "S", "峙": "S", "幢": "C"
+    };
 
     ngOnInit() {
         const mixCountries = [];

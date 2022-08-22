@@ -67,8 +67,6 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         return InternalUtils.randomNumber(0, 1) ? enStr + zhStr : zhStr + enStr;
     }
 
-    inputStr: string;
-
     ngOnInit() {
         this.changeDataType('revise-data')
     }

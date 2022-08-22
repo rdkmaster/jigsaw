@@ -8,7 +8,7 @@ import { ArrayCollection } from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class ButtonFunctionalComponent {
-    onClick() {
+    public onClick() {
         alert('Hello Jigsaw Button ^_^');
     }
 

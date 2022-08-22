@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ButtonTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { ButtonTextService } from "../doc.service";
 
 
 @Component({
@@ -7,9 +7,9 @@ import {ButtonTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class ButtonLoginComponent {
-    onClick() {
+    public onClick() {
         alert('Hello Jigsaw Button ^_^');
     }
 
-    constructor(public doc: ButtonTextService) {}
+    constructor(public doc: ButtonTextService) { }
 }
