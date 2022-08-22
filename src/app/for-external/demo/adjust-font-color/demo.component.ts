@@ -7,4 +7,3 @@ import { AdjustFontColorTextService } from "./doc.service";
 export class AdjustFontColorAllDemoComponent {
     constructor(public doc: AdjustFontColorTextService) { }
 }
-

@@ -28,4 +28,4 @@ import { AdjustFontColorDemoComponent } from "./basic/demo.component";
         CommonModule,
     ],
 })
-export class AdjustFontColorDemoModule {}
+export class AdjustFontColorDemoModule { }
