@@ -8,11 +8,9 @@ import { ArrayCollection } from 'jigsaw/public_api';
 })
 export class ButtonDirectiveDemoComponent {
     public size: string = "";
+
     onClick() {
         alert('hello jigsaw button');
-    }
-    changeSize(type?: string) {
-        this.size = type;
     }
 
     public sizes: object[] = new ArrayCollection([
