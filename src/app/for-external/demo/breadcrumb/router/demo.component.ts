@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {BreadcrumbNode, BreadcrumbRouteConfig} from "jigsaw/public_api";
-import {ProductService} from "./product.service";
-import {BreadcrumbTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { BreadcrumbNode, BreadcrumbRouteConfig } from "jigsaw/public_api";
+import { ProductService } from "./product.service";
+import { BreadcrumbTextService } from "../doc.service";
 
 @Component({
     selector: 'breadcrumb-router',
@@ -27,10 +27,10 @@ export class BreadcrumbRouterDemoComponent {
     }
 
     routes: BreadcrumbRouteConfig[] = [
-        {'/pc/breadcrumb': {label: 'Product List', icon: 'iconfont iconfont-e12e'}},
-        {'/pc/breadcrumb/list/*': this.listBreadcrumbGenerator},
-        {'/pc/breadcrumb/detail/*': this.detailBreadcrumbGenerator},
-        {'/pc/breadcrumb/buy/*': this.buyBreadcrumbGenerator},
+        { '/pc/breadcrumb': { label: 'Product List', icon: 'iconfont iconfont-e12e' } },
+        { '/pc/breadcrumb/list/*': this.listBreadcrumbGenerator },
+        { '/pc/breadcrumb/detail/*': this.detailBreadcrumbGenerator },
+        { '/pc/breadcrumb/buy/*': this.buyBreadcrumbGenerator },
     ];
 
     listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
@@ -44,7 +44,7 @@ export class BreadcrumbRouterDemoComponent {
         return [
             // 节点的顺序是面包屑从左往右的显示顺序
             this.getListNode(detail.typeId),
-            {label: detail.name}
+            { label: detail.name }
         ];
     };
 
@@ -56,32 +56,32 @@ export class BreadcrumbRouterDemoComponent {
             // 节点的顺序是面包屑从左往右的显示顺序
             this.getListNode(detail.typeId),
             this.getDetailNode(detail),
-            {label: 'Buy', icon: 'iconfont iconfont-e385'}
+            { label: 'Buy', icon: 'iconfont iconfont-e385' }
         ];
     }
 
     getDetailNode(detail) {
-        return {label: detail.name, routeLink: '/pc/breadcrumb/detail/' + detail.id} // 请尽量使用绝对路径
+        return { label: detail.name, routeLink: '/pc/breadcrumb/detail/' + detail.id } // 请尽量使用绝对路径
     }
 
     getListNode(typeId) {
         let listNode;
         switch (typeId) {
             case 0:
-                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
+                listNode = { label: 'Fruits', icon: 'iconfont iconfont-e135' };
                 break;
             case 1:
-                listNode = {label: 'Digital', icon: 'iconfont iconfont-e12e'};
+                listNode = { label: 'Digital', icon: 'iconfont iconfont-e12e' };
                 break;
             default:
-                listNode = {label: 'Fruits', icon: 'iconfont iconfont-e135'};
+                listNode = { label: 'Fruits', icon: 'iconfont iconfont-e135' };
         }
         listNode.routeLink = '/pc/breadcrumb/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
     }
 
     productTypeList = [
-        {id: 0, name: 'Fruits'},
-        {id: 1, name: 'Digital'}
+        { id: 0, name: 'Fruits' },
+        { id: 1, name: 'Digital' }
     ];
 }

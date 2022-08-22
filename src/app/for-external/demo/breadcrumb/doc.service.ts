@@ -30,7 +30,7 @@ export class BreadcrumbTextService {
 
             面包屑的标签可以配置一些提示信息，带有提示信息的标签右侧会出现一个问号图标
         `,
-        multiLevel: `
+        fold: `
             ### 面包屑折叠
 
             面包屑的标签数超过指定数目时进行折叠。
@@ -60,13 +60,16 @@ export class BreadcrumbTextService {
             { label: "HTML", language: 'html', value: require('!!raw-loader!./hints/demo.component.html').default, },
             { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./hints/demo.component.ts').default }
         ],
-        multiLevel: [
-            { label: "HTML", language: 'html', value: require('!!raw-loader!./multi-level/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./multi-level/demo.component.ts').default }
+        fold: [
+            { label: "HTML", language: 'html', value: require('!!raw-loader!./fold/demo.component.html').default, },
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./fold/demo.component.ts').default }
         ],
         router: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./router/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./router/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./router/demo.component.ts').default },
+            { label: "buy.ts", language: 'typescript', value: require('!!raw-loader!./router/buy/buy.ts').default },
+            { label: "detail.ts", language: 'typescript', value: require('!!raw-loader!./router/detail/detail.ts').default },
+            { label: "list.ts", language: 'typescript', value: require('!!raw-loader!./router/list/list.ts').default }
         ],
     }
 }
