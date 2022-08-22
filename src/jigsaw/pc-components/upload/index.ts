@@ -150,8 +150,8 @@ export class JigsawUploadModule {
                 "fileMaxSizeError": "Error detail: Size of the file is more than the maxSize",
 
                 "select": "Select",
-                "singleFile": " or drag file here, single file accepted.",
-                "multipleFiles": " or drag files here, multiple files accepted.",
+                "singleFile": " or drop file here, single file accepted.",
+                "multipleFiles": " or drop files here, multiple files accepted.",
                 "acceptAllTypes": "Accept all types of files",
                 "acceptSpecificTypes": "Accept {{ file }} files only"
             }
