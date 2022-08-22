@@ -8,8 +8,8 @@ import { AutoCompleteInputTextService } from "../doc.service";
 })
 
 export class AutoCompleteInputGroupDemoComponent {
-    inputValue: any;
-    filterOnFocus: boolean = false;
+    public inputValue: any;
+    public filterOnFocus: boolean = false;
 
     public _$dropdownData: string[] | DropDownValue[] = [{
         category: '事件与数据',

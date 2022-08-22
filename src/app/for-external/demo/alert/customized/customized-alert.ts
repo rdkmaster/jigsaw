@@ -1,5 +1,5 @@
-import {Component, ViewChild, ViewEncapsulation} from "@angular/core";
-import {DialogBase, JigsawDialog, JigsawAlert} from "jigsaw/public_api";
+import { Component, ViewChild, ViewEncapsulation } from "@angular/core";
+import { DialogBase, JigsawDialog, JigsawAlert } from "jigsaw/public_api";
 
 @Component({
     selector: 'my-alert',
@@ -10,8 +10,7 @@ import {DialogBase, JigsawDialog, JigsawAlert} from "jigsaw/public_api";
 export class CustomizedAlert extends DialogBase {
     @ViewChild(JigsawAlert) dialog: JigsawDialog;
 
-    afterClose(message?) {
+    public afterClose(message?) {
         console.log("after close..." + (message ? message : ''));
     }
-
 }

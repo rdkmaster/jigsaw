@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { AlertTextService } from "../doc.service";
 
 @Component({

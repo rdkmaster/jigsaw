@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {AutoCompleteInputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { AutoCompleteInputTextService } from "../doc.service";
 
 @Component({
     selector: 'auto-complete-input-prefix-suffix',

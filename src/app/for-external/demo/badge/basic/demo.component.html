@@ -2,91 +2,188 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>与文本搭配</span>
-        <span jigsaw-badge jigsawBadgeValue="5" [jigsawBadgeSize]="selectedSize.size" jigsawBadgePosition="right"
-            jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]=-15 style="margin-right: 50px;">异常</span>
-
-        <span jigsaw-badge jigsawBadgeValue="99" [jigsawBadgeSize]="selectedSize.size" jigsawBadgeMaxValue="1000"
-            jigsawBadgePosition="right" jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]=-15
-            style="margin-right: 50px;">告警</span>
+        <p
+            jigsaw-badge
+            jigsawBadgeValue="5"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgePosition="right"
+            jigsawBadgeStatus="error"
+            [jigsawBadgeHorizontalOffset]="-15"
+        >
+            异常
+        </p>
+        <p
+            jigsaw-badge
+            jigsawBadgeValue="99"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgeMaxValue="1000"
+            jigsawBadgePosition="right"
+            jigsawBadgeStatus="warn"
+            [jigsawBadgeHorizontalOffset]="-15"
+        >
+            告警
+        </p>
     </div>
 
     <div class="demo-showcase">
         <span>与按钮搭配</span>
-        <jigsaw-button jigsaw-badge [jigsawBadgeSize]="selectedSize.size" jigsawBadgeValue="dot">确定
-        </jigsaw-button>
+        <jigsaw-button jigsaw-badge [jigsawBadgeSize]="selectedSize.size" jigsawBadgeValue="dot">确定 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>与开关搭配</span>
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size"></jigsaw-switch>
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size"></jigsaw-switch>
+        <jigsaw-switch
+            jigsaw-badge
+            [jigsawBadgeValue]="dot"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+        ></jigsaw-switch>
+        <jigsaw-switch
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+        ></jigsaw-switch>
     </div>
 
     <div class="demo-showcase">
         <span>与图标搭配</span>
-        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size" jigsawBadgeStatus="critical" jigsawBadgeTitle="this is a title"
-            [icon]="'iconfont iconfont-e64b'" [iconSize]="100">
+        <jigsaw-icon
+            jigsaw-badge
+            [jigsawBadgeValue]="'dot'"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgeStatus="critical"
+            jigsawBadgeTitle="this is a title"
+            [icon]="'iconfont iconfont-e64b'"
+            [iconSize]="100"
+        >
         </jigsaw-icon>
 
-        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-            [jigsawBadgeStyle]="'solid'" jigsawBadgeStatus="success" jigsawBadgeTitle="this is a title"
-            [jigsawBadgeSize]="selectedSize.size" [jigsawBadgePointerCursor]="true" [icon]="'iconfont iconfont-e64b'"
-            [iconSize]="100">
+        <jigsaw-icon
+            jigsaw-badge
+            [jigsawBadgeValue]="999"
+            jigsawBadgePosition="right"
+            jigsawBadgeMaxValue="50"
+            [jigsawBadgeStyle]="'solid'"
+            jigsawBadgeStatus="success"
+            jigsawBadgeTitle="this is a title"
+            [jigsawBadgeSize]="selectedSize.size"
+            [jigsawBadgePointerCursor]="true"
+            [icon]="'iconfont iconfont-e64b'"
+            [iconSize]="100"
+        >
         </jigsaw-icon>
 
-        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
-            [jigsawBadgeStyle]="'none'" jigsawBadgeStatus="warn" [jigsawBadgeSize]="selectedSize.size"
-            jigsawBadgeTitle="this is a title" [icon]="'iconfont iconfont-e64b'" [iconSize]="100">
+        <jigsaw-icon
+            jigsaw-badge
+            [jigsawBadgeValue]="999"
+            jigsawBadgePosition="right"
+            jigsawBadgeMaxValue="50"
+            [jigsawBadgeStyle]="'none'"
+            jigsawBadgeStatus="warn"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgeTitle="this is a title"
+            [icon]="'iconfont iconfont-e64b'"
+            [iconSize]="100"
+        >
         </jigsaw-icon>
 
-        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgePosition="right"
-            jigsawBadgeMaxValue="50" [jigsawBadgeStyle]="'none'" [jigsawBadgeSize]="selectedSize.size"
-            jigsawBadgeTitle="this is a title" [icon]="'iconfont iconfont-e64b'" [iconSize]="100">
+        <jigsaw-icon
+            jigsaw-badge
+            [jigsawBadgeValue]="'iconfont iconfont-e8f5'"
+            jigsawBadgePosition="right"
+            jigsawBadgeMaxValue="50"
+            [jigsawBadgeStyle]="'none'"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgeTitle="this is a title"
+            [icon]="'iconfont iconfont-e64b'"
+            [iconSize]="100"
+        >
         </jigsaw-icon>
     </div>
 
     <div class="demo-showcase">
         <span>与平铺搭配</span>
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size"></jigsaw-tile-lite>
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="nice" [jigsawBadgeSize]="selectedSize.size"
-            jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
+        <jigsaw-tile-lite
+            [data]="cities"
+            jigsaw-badge
+            [jigsawBadgeValue]="dot"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+        ></jigsaw-tile-lite>
+        <jigsaw-tile-lite
+            [data]="cities"
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            [jigsawBadgeSize]="selectedSize.size"
+            jigsawBadgePosition="rightTop"
+        ></jigsaw-tile-lite>
     </div>
 
     <div class="demo-showcase">
         <span>与输入框搭配</span>
         <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">
         </jigsaw-input>
-        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size"></jigsaw-input>
+        <jigsaw-input
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+        ></jigsaw-input>
     </div>
 
     <div class="demo-showcase">
         <span>与复选框搭配</span>
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size">checkbox
+        <jigsaw-checkbox
+            jigsaw-badge
+            [jigsawBadgeValue]="dot"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            >checkbox
         </jigsaw-checkbox>
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size">checkbox
+        <jigsaw-checkbox
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            >checkbox
         </jigsaw-checkbox>
     </div>
 
     <div class="demo-showcase">
         <span>与按钮栏搭配</span>
-        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop" [data]="cities"
-            [jigsawBadgeSize]="selectedSize.size"></jigsaw-button-bar>
-        <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size" [data]="cities"></jigsaw-button-bar>
+        <jigsaw-button-bar
+            jigsaw-badge
+            [jigsawBadgeValue]="dot"
+            jigsawBadgePosition="rightTop"
+            [data]="cities"
+            [jigsawBadgeSize]="selectedSize.size"
+        ></jigsaw-button-bar>
+        <jigsaw-button-bar
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            [data]="cities"
+        ></jigsaw-button-bar>
     </div>
 
     <div class="demo-showcase-v">
         <span>与单选框搭配</span>
-        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size" [data]="cities"></jigsaw-radios-lite>
-        <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop"
-            [jigsawBadgeSize]="selectedSize.size" [data]="cities"></jigsaw-radios-lite>
+        <jigsaw-radios-lite
+            jigsaw-badge
+            [jigsawBadgeValue]="dot"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            [data]="cities"
+        ></jigsaw-radios-lite>
+        <jigsaw-radios-lite
+            jigsaw-badge
+            [jigsawBadgeValue]="nice"
+            jigsawBadgePosition="rightTop"
+            [jigsawBadgeSize]="selectedSize.size"
+            [data]="cities"
+        ></jigsaw-radios-lite>
     </div>
 </demo-template>

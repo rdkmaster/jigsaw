@@ -42,7 +42,9 @@ export class AlertTextService {
         ],
         customized: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./customized/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customized/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customized/demo.component.ts').default },
+            { label: "customized-alert.html", language: 'html', value: require('!!raw-loader!./customized/customized-alert.html').default, },
+            { label: "customized-alert.ts", language: 'typescript', value: require('!!raw-loader!./customized/customized-alert.ts').default }
         ],
     }
 }

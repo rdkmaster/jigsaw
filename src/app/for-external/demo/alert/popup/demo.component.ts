@@ -7,25 +7,25 @@ import { AlertTextService } from "../doc.service";
     templateUrl: './demo.component.html',
 })
 export class AlertPopupDemoComponent {
-    header = '这是一个标题';
-    message = '弹出的信息也可以直接给一个字符串，Alert会将此字符串作为主消息显示出来。';
+    public header = '这是一个标题';
+    public message = '弹出的信息也可以直接给一个字符串，Alert会将此字符串作为主消息显示出来。';
 
-    commonInfoAlert() {
+    public commonInfoAlert() {
         const info = { header: this.header, message: this.message };
         JigsawInfoAlert.show(info);
     }
 
-    commonWarningAlert() {
+    public commonWarningAlert() {
         const info = { header: this.header, message: this.message };
         JigsawWarningAlert.show(info);
     }
 
-    commonErrorAlert() {
+    public commonErrorAlert() {
         const info = { header: this.header, message: this.message };
         JigsawErrorAlert.show(info);
     }
 
-    commonConfirmAlert() {
+    public commonConfirmAlert() {
         const info = { header: this.header, message: this.message };
         JigsawConfirmAlert.show(info);
     }
