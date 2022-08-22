@@ -388,7 +388,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             CommonUtils.safeInvokeCallback(context, callback, [node]);
         });
         const popOpt = {
-            pos: {x: event.clientX, y: event.clientY}, posType: PopupPositionType.fixed
+            pos: {x: event.pageX, y: event.pageY}, posType: PopupPositionType.fixed
         };
         const info = PopupService.instance.popup(JigsawMenuHelper, popOpt, ctx);
         info.extra = cascadingMenuFlag;

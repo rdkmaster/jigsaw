@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {IconsTextService} from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,4 +12,6 @@ export class IconsDemoComponent implements OnInit {
         const source = require('!!raw-loader!@rdkmaster/icon-font/iconfont.html').default;
         iframeDoc.write(source);
     }
+
+    constructor(public doc: IconsTextService) { }
 }
