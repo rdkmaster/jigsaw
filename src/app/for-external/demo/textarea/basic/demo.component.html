@@ -4,7 +4,9 @@
         <span>正常</span>
         <jigsaw-textarea #myTextarea width="400px" height="100px" [(value)]="textareaValue" placeholder="basic demo">
         </jigsaw-textarea>
-        <p class="notes">输入值是：<span id="bind-property">{{textareaValue}}</span></p>
+        <p class="notes">
+            输入值是：<span id="bind-property">{{ textareaValue }}</span>
+        </p>
     </div>
 
     <div class="demo-showcase-v">
@@ -13,10 +15,7 @@
     </div>
 
     <div class="demo-showcase-v">
-        <span>是否合法</span>
-        <jigsaw-textarea #textarea [valid]="textarea.value.length > 2"
-                         placeholder="输入至少3个字符">
-        </jigsaw-textarea>
+        <span>校验</span>
+        <jigsaw-textarea #textarea [valid]="textarea.value.length > 2" placeholder="输入至少3个字符"> </jigsaw-textarea>
     </div>
 </demo-template>
-

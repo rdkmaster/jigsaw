@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
-import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer, LocalPageableArray, TableData} from "jigsaw/public_api";
-import {TransferTextService} from "../doc.service";
-import {HttpClient} from "@angular/common/http";
+import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer, LocalPageableArray, TableData } from "jigsaw/public_api";
+import { TransferTextService } from "../doc.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
     selector: 'transfer-basic',
@@ -15,12 +15,10 @@ export class TransferBasicDemoComponent {
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
 
-    data: ArrayCollection<any>;
-    selectedItems: ArrayCollection<any>;
-    data1: LocalPageableArray<any>;
-    selectedData: ArrayCollection<any>;
-
-
+    public data: ArrayCollection<any>;
+    public selectedItems: ArrayCollection<any>;
+    public data1: LocalPageableArray<any>;
+    public selectedData: ArrayCollection<any>;
 
     constructor(public doc: TransferTextService, _http: HttpClient) {
         this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);

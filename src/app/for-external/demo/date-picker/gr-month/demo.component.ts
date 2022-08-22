@@ -1,16 +1,15 @@
-import {Component} from "@angular/core";
-import {DatePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DatePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'date-picker-gr-month',
     templateUrl: './demo.component.html'
 })
 export class DatePickerGrMonthComponent {
-    date = "now";
+    public date = "now";
+    public gr = ['date'];
 
-    gr = ['date'];
-
-    dateChange($event) {
+    public dateChange($event) {
         console.log($event);
     }
 

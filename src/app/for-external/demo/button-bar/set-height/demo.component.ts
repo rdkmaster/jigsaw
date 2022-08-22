@@ -8,19 +8,14 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class ButtonBarSetHeightComponent {
-    public selectedSize = { label: "大", size: "default" };
+    public cities = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
+    public selectedCity: any[] = ['南京'];
+    public multiple: boolean = false;
+
     public sizes: object[] = new ArrayCollection([
         { label: "小", size: "small" },
         { label: "大", size: "default" }
     ]);
-    multiple: boolean = false;
-    selectedCityStr: string;
-    selectedCity: any[] = ['南京'];
-    cities = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
-
-    selectChange(cityArr: ArrayCollection<any>) {
-        this.selectedCityStr = cityArr.join(',');
-    }
-
+    public selectedSize = { label: "大", size: "default" };
     constructor(public doc: ButtonBarTextService) { }
 }

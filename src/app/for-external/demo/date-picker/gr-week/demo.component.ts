@@ -1,16 +1,15 @@
-import {Component} from "@angular/core";
-import {DatePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DatePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'date-picker-gr-week',
     templateUrl: './demo.component.html'
 })
 export class DatePickerGrWeekComponent {
-    date = "now";
+    public date = "now";
+    public gr = ['date'];
 
-    gr = ['date'];
-
-    dateChange($event) {
+    public dateChange($event) {
         console.log($event);
     }
 

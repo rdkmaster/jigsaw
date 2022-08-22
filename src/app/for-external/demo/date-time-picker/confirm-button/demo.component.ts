@@ -1,17 +1,17 @@
-import {Component} from "@angular/core";
-import {DateTimePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DateTimePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'date-time-picker-confirm-button',
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerConfirmButtonDemoComponent {
-    showConfirmButton = true;
-    date1 = 'now';
-    date2 = 'now';
-    date3 = {beginDate: 'now-1d', endDate: 'now'};
-    beginDate = "now-1d";
-    endDate = "now";
+    public showConfirmButton = true;
+    public date1 = 'now';
+    public date2 = 'now';
+    public date3 = { beginDate: 'now-1d', endDate: 'now' };
+    public beginDate = "now-1d";
+    public endDate = "now";
 
     constructor(public doc: DateTimePickerTextService) {
     }
