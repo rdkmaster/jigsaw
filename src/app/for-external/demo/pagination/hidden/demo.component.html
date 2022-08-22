@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.hidden" [codes]="doc.codes.hidden">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.hidden" [codes]="doc.codes.hidden">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>隐藏单页数</span>
@@ -11,7 +11,7 @@
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
             widh="710px"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>
@@ -27,7 +27,7 @@
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
             widh="710px"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>
@@ -43,7 +43,7 @@
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
             widh="710px"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>

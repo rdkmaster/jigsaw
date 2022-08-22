@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.noData" [codes]="doc.codes.noData">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.noData" [codes]="doc.codes.noData">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>空数据（默认模式）</span>
@@ -9,7 +9,7 @@
             [showQuickJumper]="true"
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>
@@ -22,7 +22,7 @@
             mode="simple"
             [searchable]="false"
             [pageSizeOptions]="[5, 10, 20]"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>

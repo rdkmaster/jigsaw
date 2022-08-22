@@ -1,10 +1,10 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.multiple" [codes]="doc.codes.multiple">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.multiple" [codes]="doc.codes.multiple">
     <div class="demo-showcase">
         <jigsaw-button-bar
             [(selectedItems)]="selectedCity"
             [data]="cities"
             [multipleSelect]="multiple"
-            [preSize]="selectedLabel.size"
+            [preSize]="selectedSize.size"
             (selectedItemsChange)="selectChange($event)"
             colorType="default"
             optionWidth="80"

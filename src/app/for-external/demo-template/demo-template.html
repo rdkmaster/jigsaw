@@ -3,7 +3,7 @@
     <jigsaw-button-bar
         *ngIf="!!data"
         class="demo-handler"
-        [(selectedItems)]="selectedLabel"
+        [(selectedItems)]="selectedSize"
         [data]="data"
         [multipleSelect]="false"
         (selectedItemsChange)="onClick($event[0])"

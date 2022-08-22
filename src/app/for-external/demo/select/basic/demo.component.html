@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <div class="demo-showcase">
         <span>正常</span>
         <jigsaw-group-select
@@ -9,7 +9,7 @@
             width="160px"
             optionCount="8"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-group-select>
     </div>
@@ -23,7 +23,7 @@
             width="160px"
             optionCount="8"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-group-select>
     </div>
@@ -37,7 +37,7 @@
             width="160px"
             optionCount="8"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-group-select>
     </div>

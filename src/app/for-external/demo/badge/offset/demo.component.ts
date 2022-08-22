@@ -14,7 +14,7 @@ export class BadgeOffsetDemoComponent {
         'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',
     ];
 
-    public selectedLabel = {label: "中", size: "normal"};
+    public selectedSize = {label: "中", size: "normal"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},

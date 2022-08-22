@@ -1,10 +1,10 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.withText" [codes]="doc.codes.withText">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.withText" [codes]="doc.codes.withText">
     <div class="demo-showcase">
         <span>正常状态带文字</span>
         <jigsaw-switch
             onLabel="Jigsaw is great!"
             offLabel="Jigsaw is perfect!"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></jigsaw-switch>
     </div>
     <div class="demo-showcase">
@@ -12,14 +12,14 @@
         <jigsaw-switch
             [checked]="true"
             [disabled]="true"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
             onLabel="Jigsaw is great!"
             offLabel="Jigsaw is perfect!"
         ></jigsaw-switch>
         <jigsaw-switch
             [checked]="false"
             [disabled]="true"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
             onLabel="Jigsaw is great!"
             offLabel="Jigsaw is perfect!"
         ></jigsaw-switch>

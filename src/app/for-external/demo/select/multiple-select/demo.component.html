@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.multipleSelect" [codes]="doc.codes.multipleSelect">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.multipleSelect" [codes]="doc.codes.multipleSelect">
     <div class="demo-showcase">
         <span>多选下拉</span>
         <jigsaw-select
@@ -7,7 +7,7 @@
             [multipleSelect]="true"
             placeholder="请选择"
             width="160px"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-select>
     </div>
@@ -21,7 +21,7 @@
             width="160px"
             [useStatistics]="false"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></jigsaw-select>
     </div>
     <div class="demo-showcase">
@@ -34,7 +34,7 @@
             width="160px"
             [useStatistics]="true"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></jigsaw-select>
     </div>
     <div class="demo-showcase">
@@ -47,7 +47,7 @@
             width="160px"
             [useStatistics]="true"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></jigsaw-select>
     </div>
     <div class="demo-showcase">
@@ -60,7 +60,7 @@
             placeholder="请选择"
             width="160px"
             [useStatistics]="false"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></jigsaw-select>
     </div>
 </demo-template>

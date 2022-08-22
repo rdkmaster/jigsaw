@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.clearable" [codes]="doc.codes.clearable">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.clearable" [codes]="doc.codes.clearable">
     <div class="demo-showcase">
         <span>清除功能</span>
         <jigsaw-select
@@ -7,7 +7,7 @@
             placeholder="请选择城市"
             [data]="cityList"
             [clearable]="true"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-select>
     </div>

@@ -6,10 +6,7 @@ import { AlphabeticalDocService } from "../doc.service";
     templateUrl: "./demo.component.html",
 })
 export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
-    constructor(public doc: AlphabeticalDocService) {
-    }
     public mixCountries = [];
-    public selected: string = '<无>';
     public countries = [
         ["portugal", "葡萄牙", "prt"],
         ["slovenia", "斯洛文尼亚", "svn"],
@@ -98,5 +95,8 @@ export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
+    }
+
+    constructor(public doc: AlphabeticalDocService) {
     }
 }

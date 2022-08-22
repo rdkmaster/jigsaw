@@ -8,12 +8,12 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SwitchBasicComponent {
-    public data: object[] = new ArrayCollection([
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},
         {label: "大", size: "default"}
     ]);
     public checked: boolean;
-    public selectedLabel = {label: "中", size: "medium"};
+    public selectedSize = {label: "中", size: "medium"};
     constructor(public doc: SwitchTextService) {}
 }

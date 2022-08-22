@@ -9,7 +9,7 @@ import {TreeTextService} from "../doc.service";
 export class ZTreeIconDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
 
-    public selectedLabel = {label: "中", size: "medium"};
+    public selectedSize = {label: "中", size: "medium"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},

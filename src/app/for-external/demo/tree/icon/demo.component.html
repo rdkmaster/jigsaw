@@ -1,14 +1,14 @@
-<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="doc.text.icon" [codes]="doc.codes.icon">
+<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.icon" [codes]="doc.codes.icon">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>使用XML作为数据源（推荐）</span>
-        <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedLabel.size">
+        <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedSize.size">
         </jigsaw-tree-ext>
     </div>
 
     <div class="demo-showcase-v">
         <span>在数据源中配置svg图片</span>
-        <jigsaw-tree-ext [(data)]="xml2" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedLabel.size">
+        <jigsaw-tree-ext [(data)]="xml2" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedSize.size">
         </jigsaw-tree-ext>
     </div>
 </demo-template>

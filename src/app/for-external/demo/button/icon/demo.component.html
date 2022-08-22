@@ -1,11 +1,11 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.icon" [codes]="doc.codes.icon">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.icon" [codes]="doc.codes.icon">
     <div class="demo-showcase">
         <span class="comment">正常</span>
         <jigsaw-button
-            (click)="onClick()"
             icon="iconfont iconfont-e35b"
             colorType="default"
-            [preSize]="selectedLabel.size"
+            [preSize]="selectedSize.size"
+            (click)="onClick()"
         >
         </jigsaw-button>
     </div>
@@ -16,7 +16,7 @@
             icon="iconfont iconfont-e35b"
             colorType="default"
             [disabled]="true"
-            [preSize]="selectedLabel.size"
+            [preSize]="selectedSize.size"
         >
         </jigsaw-button>
     </div>

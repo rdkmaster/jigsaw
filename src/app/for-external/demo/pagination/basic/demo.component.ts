@@ -9,8 +9,8 @@ import { ArrayCollection } from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class PaginationBasicDemoComponent {
-    public selectedLabel = {label: "中", size: "medium"};
-    public data: object[] = new ArrayCollection([
+    public selectedSize = {label: "中", size: "medium"};
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},
         {label: "大", size: "large"}

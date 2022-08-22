@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.trigger" [codes]="doc.codes.trigger">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.trigger" [codes]="doc.codes.trigger">
     <div class="demo-showcase">
         <jigsaw-select
             id="test-select"
@@ -8,7 +8,7 @@
             placeholder="请选择城市"
             openTrigger="mouseenter"
             closeTrigger="mouseleave"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-select>
     </div>

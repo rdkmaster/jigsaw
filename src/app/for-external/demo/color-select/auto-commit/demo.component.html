@@ -1,5 +1,5 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.autoCommit" [codes]="doc.codes.autoCommit">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.autoCommit" [codes]="doc.codes.autoCommit">
     <jigsaw-color-select color="#e57409" [enableConfirm]="false" (colorChange)="_$colorChange($event)"
-        [preSize]="selectedLabel.size">
+        [preSize]="selectedSize.size">
     </jigsaw-color-select>
 </demo-template>

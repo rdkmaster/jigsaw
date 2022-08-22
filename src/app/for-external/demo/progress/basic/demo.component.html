@@ -1,6 +1,6 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <div class="demo-showcase">
         <span>默认尺寸</span>
-        <j-progress [value]="progressValue" [preSize]="selectedLabel.size"></j-progress>
+        <j-progress [value]="progressValue" [preSize]="selectedSize.size"></j-progress>
     </div>
 </demo-template>

@@ -13,7 +13,7 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class BadgeMaskDemoComponent {
-    public selectedLabel = {label: "中", size: "normal"};
+    public selectedSize = {label: "中", size: "normal"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},

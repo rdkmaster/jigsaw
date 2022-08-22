@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.searchable" [codes]="doc.codes.searchable">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.searchable" [codes]="doc.codes.searchable">
     <div class="demo-showcase">
         <jigsaw-select
             [(value)]="selectedCityForSelect"
@@ -6,7 +6,7 @@
             placeholder="请选择城市"
             [data]="cityListForSelect"
             [searchable]="true"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-select>
     </div>

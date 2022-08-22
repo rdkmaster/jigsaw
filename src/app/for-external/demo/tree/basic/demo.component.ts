@@ -11,7 +11,7 @@ export class ZtreeDemoComponent implements AfterViewInit {
 
     public data: SimpleTreeData;
 
-    public selectedLabel = {label: "中", size: "medium"};
+    public selectedSize = {label: "中", size: "medium"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},

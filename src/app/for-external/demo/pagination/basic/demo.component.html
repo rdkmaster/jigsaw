@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-pagination [data]="pageable"
@@ -9,7 +9,7 @@
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"
                            widh="710px"
-                           [size]="selectedLabel.size">
+                           [size]="selectedSize.size">
         </jigsaw-pagination>
     </div>
 </demo-template>

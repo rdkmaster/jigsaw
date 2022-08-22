@@ -1,15 +1,15 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.icons" [codes]="doc.codes.icons">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.icons" [codes]="doc.codes.icons">
     <div class="demo-showcase">
         <span>带图标</span>
         <jigsaw-button-bar [data]="types" [(selectedItems)]="selectedTypes" [multipleSelect]="multiple" trackItemBy="id"
-                           [preSize]="selectedLabel.size">
+                           [preSize]="selectedSize.size">
         </jigsaw-button-bar>
     </div>
 
     <div class="demo-showcase">
         <span>仅图标</span>
         <jigsaw-button-bar [data]="unlabeledTypes" [multipleSelect]="multiple" trackItemBy="id"
-                           [preSize]="selectedLabel.size">
+                           [preSize]="selectedSize.size">
         </jigsaw-button-bar>
     </div>
 </demo-template>

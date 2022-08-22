@@ -8,7 +8,7 @@ import {TreeTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class ZtreeFuzzySearchComponent {
-    public selectedLabel = {label: "中", size: "medium"};
+    public selectedSize = {label: "中", size: "medium"};
     public labelData: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "medium"},

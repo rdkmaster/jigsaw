@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.selectable" [codes]="doc.codes.selectable">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.selectable" [codes]="doc.codes.selectable">
     <div class="div-container">
         <div class="demo-showcase">
             <span>多选效果</span>
@@ -9,7 +9,7 @@
                 disabledColor="preset-gray"
                 [disabled]="idx > 4"
                 (selectChange)="onSelect(item, $event)"
-                [size]="selectedLabel.size"
+                [size]="selectedSize.size"
             >
                 {{ item }}
             </jigsaw-tag>
@@ -26,7 +26,7 @@
                 [select]="item.selected"
                 [disabled]="idx > 4"
                 (selectChange)="onSelect1(item)"
-                [size]="selectedLabel.size"
+                [size]="selectedSize.size"
             >
                 {{ item.label }}
             </jigsaw-tag>

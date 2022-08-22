@@ -1,14 +1,14 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.circle" [codes]="doc.codes.circle"> 
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.circle" [codes]="doc.codes.circle"> 
     <div class="demo-showcase">
         <span>正常</span>
-        <jigsaw-circle-loading [size]="selectedLabel.size" label="loading" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="selectedSize.size" label="loading" [percent]="percent"></jigsaw-circle-loading>
     </div>
     <div class="demo-showcase">
         <span>无标签</span>
-        <jigsaw-circle-loading [size]="selectedLabel.size" [percent]="percent"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="selectedSize.size" [percent]="percent"></jigsaw-circle-loading>
     </div>
     <div class="demo-showcase">
         <span>无百分比</span>
-        <jigsaw-circle-loading [size]="selectedLabel.size"></jigsaw-circle-loading>
+        <jigsaw-circle-loading [size]="selectedSize.size"></jigsaw-circle-loading>
     </div>
 </demo-template>

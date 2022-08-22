@@ -1,4 +1,4 @@
-<demo-template [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <!-- start to learn the demo from here -->
 
     <div class="demo-showcase">
@@ -9,7 +9,7 @@
             max="110"
             placeholder="请输入数字"
             (valueChange)="valueChange($event)"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></j-numeric-input>
     </div>
 
@@ -21,7 +21,7 @@
             min="10"
             max="110"
             placeholder="请输入数字"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
             (valueChange)="valueChange($event)"
         ></j-numeric-input>
     </div>
@@ -35,7 +35,7 @@
             min="10"
             max="110"
             placeholder="请输入数字"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
             (valueChange)="valueChange($event)"
         ></j-numeric-input>
     </div>

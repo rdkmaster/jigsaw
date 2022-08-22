@@ -7,7 +7,7 @@ import {NumericInputTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class NumericInputPrefixSuffixDemoComponent {
-    public selectedLabel = {label: "中", size: "default"};
+    public selectedSize = {label: "中", size: "default"};
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public _$icons: GroupOptionValue[] = [
         {

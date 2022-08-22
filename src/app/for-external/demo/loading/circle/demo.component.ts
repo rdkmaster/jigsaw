@@ -18,12 +18,12 @@ export class LoadingCircleDemoComponent {
             this.percent = (this.percent + Math.random() * 10) % 100;
         }, 500);
     }
-    public data: object[] = new ArrayCollection([
+    public sizes: object[] = new ArrayCollection([
         { label: "小", size: "small" },
         { label: "中", size: "medium" },
         { label: "大", size: "large" },
     ]);
-    public selectedLabel = { label: "中", size: "medium" };
+    public selectedSize = { label: "中", size: "medium" };
     popupBlockLoading() {
         if (!this.blockLoading) {
             this.blockLoading = this.loadingService.show(this.block);

@@ -45,7 +45,7 @@ export class DemoTemplate implements AfterViewInit {
     ]);
 
     @Input()
-    public selectedLabel: object = { label: "中", size: "default" };
+    public selectedSize: object = { label: "中", size: "default" };
 
     @Input()
     public codes = [
@@ -54,14 +54,14 @@ export class DemoTemplate implements AfterViewInit {
     ];
 
     @Output()
-    public selectedLabelChange = new EventEmitter<object>();
+    public selectedSizeChange = new EventEmitter<object>();
 
     expand: boolean = false;
 
     selectedIndex: number = 0;
 
     onClick(size: object) {
-        this.selectedLabelChange.emit(size);
+        this.selectedSizeChange.emit(size);
     }
 
     showCode() {

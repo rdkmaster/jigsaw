@@ -1,6 +1,6 @@
-<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <!-- start to learn the demo from here -->
-    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedLabel.size">
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedSize.size">
     </jigsaw-tree-ext>
 
     <p>建议使用xml作为数据源，<a href="#/pc/tree/xml-data">详见这里</a>。</p>

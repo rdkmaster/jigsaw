@@ -1,5 +1,5 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.removeTransparency" [codes]="doc.codes.removeTransparency">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.removeTransparency" [codes]="doc.codes.removeTransparency">
     <jigsaw-color-select color="#e57409" [enableConfirm]="true" [enableOpacity]="false"
-                         (colorChange)="_$colorChange($event)" [preSize]="selectedLabel.size">
+                         (colorChange)="_$colorChange($event)" [preSize]="selectedSize.size">
     </jigsaw-color-select>
 </demo-template>

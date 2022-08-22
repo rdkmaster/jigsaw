@@ -7,8 +7,6 @@ import { AlphabeticalDocService } from "../doc.service";
     templateUrl: "./demo.component.html",
 })
 export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
-    constructor(public doc: AlphabeticalDocService) {
-    }
     public pinyinDictionary: PinyinDictionary = {
         "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",
         "侗": "D", "侧": "Z", "便": "P", "冯": "P", "凹": "W", "刨": "B", "券": "X", "刹": "S",
@@ -228,4 +226,7 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         娜朦羔酌圃黍蟆呕巍畸擅柑钮畴彬缕屉砚楔腻
     `.replace(/\s/g, '').split('');
     private _visibleAscChars = [];
+
+    constructor(public doc: AlphabeticalDocService) {
+    }
 }

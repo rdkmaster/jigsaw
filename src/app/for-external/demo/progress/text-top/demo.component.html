@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.textTop" [codes]="doc.codes.textTop">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.textTop" [codes]="doc.codes.textTop">
     <div class="demo-showcase">
         <span>文字在顶部</span>
         <j-progress
@@ -6,7 +6,7 @@
             width="400"
             labelPosition="top"
             [showMarker]="true"
-            [preSize]="selectedLabel.size"
+            [preSize]="selectedSize.size"
         ></j-progress>
         <j-progress
             [value]="progressValue"
@@ -14,7 +14,7 @@
             labelPosition="top"
             [showMarker]="true"
             status="block"
-            [preSize]="selectedLabel.size"
+            [preSize]="selectedSize.size"
         ></j-progress>
     </div>
 </demo-template>

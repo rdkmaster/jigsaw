@@ -6,7 +6,7 @@ import { NumericInputTextService } from "../doc.service";
     templateUrl: "./demo.component.html"
 })
 export class NumericInputShowOptionDemoComponent {
-    public selectedLabel = { label: "中", size: "default" };
+    public selectedSize = { label: "中", size: "default" };
     showOption: boolean = true;
     value: number;
     value2: number;

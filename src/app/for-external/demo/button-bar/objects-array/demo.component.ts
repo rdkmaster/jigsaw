@@ -8,8 +8,8 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class ButtonBarObjectsArrayComponent {
-    public selectedLabel = {label: "大", size: "default"};
-    public data: object[] = new ArrayCollection([
+    public selectedSize = {label: "大", size: "default"};
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "大", size: "default"}
     ]);

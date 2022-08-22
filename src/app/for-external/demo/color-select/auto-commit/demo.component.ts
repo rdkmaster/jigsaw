@@ -8,12 +8,12 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class ColorSelectAutoCommitDemoComponent {
-    public data: object[] = new ArrayCollection([
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "中", size: "normal"},
         {label: "大", size: "large"}
     ]);
-    public selectedLabel = {label: "中", size: "normal"};
+    public selectedSize = {label: "中", size: "normal"};
     public _$colorChange(color: string) {
         console.log(color);
     }

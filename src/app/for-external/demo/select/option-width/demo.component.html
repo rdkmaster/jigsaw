@@ -1,4 +1,4 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.optionWidth" [codes]="doc.codes.optionWidth">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.optionWidth" [codes]="doc.codes.optionWidth">
     <div class="demo-showcase">
         <jigsaw-select
             [value]="'南京'"
@@ -6,7 +6,7 @@
             [optionWidth]="optionWidth"
             [data]="['北京', '上海', '南京', '深圳', '长沙', '西安']"
             style="margin-top: 12px"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         >
         </jigsaw-select>
     </div>

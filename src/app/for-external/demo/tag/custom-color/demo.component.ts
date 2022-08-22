@@ -13,8 +13,8 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class TagCustomColorComponent {
-    public selectedLabel = {label: "大", size: "medium"};
-    public data: object[] = new ArrayCollection([
+    public selectedSize = {label: "大", size: "medium"};
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "大", size: "medium"},
     ]);

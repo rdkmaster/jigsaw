@@ -1,24 +1,24 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.primary" [codes]="doc.codes.primary">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.primary" [codes]="doc.codes.primary">
     <div class="demo-showcase">
         <span>正常</span>
-        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size"> 确定 </jigsaw-button>
+        <jigsaw-button colorType="primary" [preSize]="selectedSize.size"> 确定 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>禁用</span>
-        <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedLabel.size"> 重点操作 </jigsaw-button>
+        <jigsaw-button colorType="primary" [disabled]="true" [preSize]="selectedSize.size"> 重点操作 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>表单中</span>
-        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size"> 确定 </jigsaw-button>
-        <jigsaw-button [preSize]="selectedLabel.size"> 取消 </jigsaw-button>
+        <jigsaw-button colorType="primary" [preSize]="selectedSize.size"> 确定 </jigsaw-button>
+        <jigsaw-button [preSize]="selectedSize.size"> 取消 </jigsaw-button>
     </div>
 
     <div class="demo-showcase">
         <span>步骤条</span>
-        <jigsaw-button [preSize]="selectedLabel.size"> 上一步 </jigsaw-button>
-        <jigsaw-button colorType="primary" [preSize]="selectedLabel.size"> 下一步 </jigsaw-button>
-        <jigsaw-button [preSize]="selectedLabel.size"> 取消 </jigsaw-button>
+        <jigsaw-button [preSize]="selectedSize.size"> 上一步 </jigsaw-button>
+        <jigsaw-button colorType="primary" [preSize]="selectedSize.size"> 下一步 </jigsaw-button>
+        <jigsaw-button [preSize]="selectedSize.size"> 取消 </jigsaw-button>
     </div>
 </demo-template>

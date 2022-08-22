@@ -1,4 +1,4 @@
-<demo-template [data]="labelData" [(selectedLabel)]="selectedLabel" [text]="doc.text.mask" [codes]="doc.codes.mask">
+<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.mask" [codes]="doc.codes.mask">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <div style="display: inline-block">
@@ -19,7 +19,7 @@
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 jigsawBadgeValue="iconfont iconfont-e91d"
             ></jigsaw-icon>
         </div>
@@ -41,7 +41,7 @@
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 jigsawBadgeValue="iconfont iconfont-e91d"
             ></jigsaw-icon>
         </div>
@@ -59,7 +59,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="rightBottom"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
@@ -81,7 +81,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="leftTop"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
@@ -103,7 +103,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="left"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
@@ -125,7 +125,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="leftBottom"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="light"
@@ -154,7 +154,7 @@
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 jigsawBadgeValue="iconfont iconfont-e91d"
             ></jigsaw-icon>
         </div>
@@ -172,7 +172,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="right"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
@@ -194,7 +194,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="rightBottom"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
@@ -216,7 +216,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="leftTop"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
@@ -238,7 +238,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="left"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
@@ -260,7 +260,7 @@
                 "
                 icon="iconfont iconfont-e8fb"
                 jigsawBadgePosition="leftBottom"
-                [jigsawBadgeSize]="selectedLabel.size"
+                [jigsawBadgeSize]="selectedSize.size"
                 iconSize="100"
                 jigsawBadge
                 jigsawBadgeMask="dark"
@@ -276,7 +276,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="error"
             jigsawBadgeValue="iconfont iconfont-e91d"
             [jigsawBadgePointerCursor]="true"
@@ -287,7 +287,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="normal"
             jigsawBadgeValue="iconfont iconfont-e91d"
             [jigsawBadgePointerCursor]="true"
@@ -298,7 +298,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="warn"
             jigsawBadgeValue="iconfont iconfont-e91d"
             [jigsawBadgePointerCursor]="true"
@@ -310,7 +310,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="error"
             jigsawBadgeValue="dot"
             [jigsawBadgePointerCursor]="true"
@@ -322,7 +322,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="normal"
             jigsawBadgeValue="dot"
             [jigsawBadgePointerCursor]="true"
@@ -334,7 +334,7 @@
             (jigsawBadgeClick)="select($event)"
             (click)="_$btn()"
             jigsawBadgeMask="default"
-            [jigsawBadgeSize]="selectedLabel.size"
+            [jigsawBadgeSize]="selectedSize.size"
             jigsawBadgeStatus="warn"
             jigsawBadgeValue="dot"
             [jigsawBadgePointerCursor]="true"

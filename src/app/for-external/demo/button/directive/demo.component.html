@@ -1,23 +1,23 @@
-<demo-template [data]="''" [text]="doc.text.directive" [codes]="doc.codes.directive">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.directive" [codes]="doc.codes.directive">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>指令按钮</span>
-        <a jigsaw-button (click)="onClick()" colorType="primary">使用 a 标签</a>
-        <button jigsaw-button (click)="onClick()" colorType="primary">使用 button 标签</button>
+        <a jigsaw-button (click)="onClick()" colorType="primary" [preSize]="selectedSize.size">使用 a 标签</a>
+        <button jigsaw-button (click)="onClick()" colorType="primary" [preSize]="selectedSize.size">使用 button 标签</button>
     </div>
 
     <div class="demo-showcase">
         <span>预设颜色</span>
-        <a jigsaw-button>Default</a>
-        <a jigsaw-button colorType="primary">Primary</a>
-        <a jigsaw-button colorType="warning">Warning</a>
-        <a jigsaw-button colorType="error">Error</a>
+        <a jigsaw-button >Default</a>
+        <a jigsaw-button colorType="primary" [preSize]="selectedSize.size">Primary</a>
+        <a jigsaw-button colorType="warning" [preSize]="selectedSize.size">Warning</a>
+        <a jigsaw-button colorType="error" [preSize]="selectedSize.size">Error</a>
     </div>
 
     <div class="demo-showcase">
         <span>预设大小</span>
-        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('small')">Small</a>
-        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize()">Default</a>
-        <a jigsaw-button [preSize]="size" colorType="primary" (click)="changeSize('large')">Large</a>
+        <a jigsaw-button [preSize]="selectedSize.size" colorType="primary" (click)="changeSize('small')">Small</a>
+        <a jigsaw-button [preSize]="selectedSize.size" colorType="primary" (click)="changeSize()">Default</a>
+        <a jigsaw-button [preSize]="selectedSize.size" colorType="primary" (click)="changeSize('large')">Large</a>
     </div>
 </demo-template>

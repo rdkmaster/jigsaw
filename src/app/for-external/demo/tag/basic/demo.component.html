@@ -1,22 +1,22 @@
-<demo-template [data]="data" [(selectedLabel)]="selectedLabel" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <div class="demo-showcase">
         <span>基础标签</span>
-        <jigsaw-tag [closable]="false" [size]="selectedLabel.size">标签1</jigsaw-tag>
+        <jigsaw-tag [closable]="false" [size]="selectedSize.size">标签1</jigsaw-tag>
     </div>
     <div class="demo-showcase">
         <span>可关闭标签</span>
-        <jigsaw-tag [closable]="true" [size]="selectedLabel.size">标签1 </jigsaw-tag>
-        <jigsaw-tag [closable]="true" [size]="selectedLabel.size">标签2 </jigsaw-tag>
-        <jigsaw-tag [closable]="false" [size]="selectedLabel.size">标签3 </jigsaw-tag>
+        <jigsaw-tag [closable]="true" [size]="selectedSize.size">标签1 </jigsaw-tag>
+        <jigsaw-tag [closable]="true" [size]="selectedSize.size">标签2 </jigsaw-tag>
+        <jigsaw-tag [closable]="false" [size]="selectedSize.size">标签3 </jigsaw-tag>
     </div>
     <div class="demo-showcase">
         <span>长文本标签</span>
-        <jigsaw-tag [closable]="false" [size]="selectedLabel.size">
+        <jigsaw-tag [closable]="false" [size]="selectedSize.size">
             A very very very very very very very long tag
         </jigsaw-tag>
     </div>
     <div class="demo-showcase">
         <span>禁用标签</span>
-        <jigsaw-tag [closable]="false" [size]="selectedLabel.size" [disabled]="true">禁用</jigsaw-tag>
+        <jigsaw-tag [closable]="false" [size]="selectedSize.size" [disabled]="true">禁用</jigsaw-tag>
     </div>
 </demo-template>

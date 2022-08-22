@@ -1,4 +1,4 @@
-<demo-template [(selectedLabel)]="selectedLabel" [text]="doc.text.showOption" [codes]="doc.codes.showOption">
+<demo-template [(selectedSize)]="selectedSize" [text]="doc.text.showOption" [codes]="doc.codes.showOption">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>默认情况</span>
@@ -8,7 +8,7 @@
             min="1"
             max="110"
             placeholder="请输入数字"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></j-numeric-input>
     </div>
 
@@ -21,7 +21,7 @@
             max="110"
             placeholder="请输入数字"
             [suffix]="'单位'"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></j-numeric-input>
     </div>
 
@@ -34,7 +34,7 @@
             max="110"
             placeholder="请输入数字"
             [suffix]="_$units"
-            [size]="selectedLabel.size"
+            [size]="selectedSize.size"
         ></j-numeric-input>
     </div>
 </demo-template>

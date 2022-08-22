@@ -6,7 +6,7 @@ import {NumericInputTextService} from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class NumericInputStepDemoComponent {
-    public selectedLabel = {label: "中", size: "default"};
+    public selectedSize = {label: "中", size: "default"};
 
     constructor(public doc: NumericInputTextService) {
     }

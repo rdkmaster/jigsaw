@@ -7,11 +7,11 @@ import {ProgressTextService} from "../doc.service";
     templateUrl: './demo.component.html',
 })
 export class ProgressBasicComponent {
-    public data: object[] = new ArrayCollection([
+    public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
         {label: "大", size: "default"},
     ]);
-    public selectedLabel = {label: "大", size: "default"};
+    public selectedSize = {label: "大", size: "default"};
 
     progressValue: number = 32;
     constructor(public doc: ProgressTextService) {
