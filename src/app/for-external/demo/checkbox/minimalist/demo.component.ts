@@ -8,8 +8,7 @@ import { CheckBoxStatus } from "jigsaw/public_api";
 })
 
 export class CheckboxMinimalistComponent {
-    status = CheckBoxStatus.indeterminate;
-    mode = ['normal'];
-    constructor(public doc: CheckboxTextService) { }
+    public status = CheckBoxStatus.indeterminate;
 
+    constructor(public doc: CheckboxTextService) { }
 }

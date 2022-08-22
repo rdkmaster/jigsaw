@@ -1,13 +1,15 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
 import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
-import {TransferTextService} from "../doc.service";
+import { TransferTextService } from "../doc.service";
 
 @Component({
     selector: 'transfer-list-local-pageable-transfer',
     templateUrl: './demo.component.html'
 })
 export class TransferListLocalPageableDemoComponent {
+    public data: LocalPageableArray<any>;
+    public selectedData: ArrayCollection<any>;
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
@@ -78,6 +80,10 @@ export class TransferListLocalPageableDemoComponent {
         }
     ];
 
+    public selectedItemsChange($event) {
+        console.log($event)
+    }
+
     constructor(public _http: HttpClient, public doc: TransferTextService) {
         this.data = new LocalPageableArray();
         this.data.http = _http;
@@ -100,44 +106,4 @@ export class TransferListLocalPageableDemoComponent {
                 shortName: 'blz'
             }]);
     }
-
-    ngOnInit() {
-
-    }
-
-    changeDataFromArray() {
-        this.data.fromArray(this.dataArray);
-    }
-
-    resetInputData() {
-        this.data = new LocalPageableArray();
-        this.data.http = this._http;
-        this.data.pagingInfo.pageSize = 15;
-        this.data.pagingInfo.currentPage = undefined;
-        this.data.pagingInfo.itemHeight = undefined;
-        this.data.pagingInfo.autoPageSizing = false;
-        this.data.fromAjax('mock-data/countries');
-        this.data.dataReviser = (td: TableData) => TableData.toArray(td);
-    }
-
-    resetSelectedData() {
-        this.selectedData = new ArrayCollection([
-            {
-                enName: "andorra",
-                shortName: "and",
-                zhName: "安道尔"
-            },
-            {
-                enName: 'belize',
-                zhName: '伯里兹',
-                shortName: 'blz'
-            }]);
-    }
-
-    selectedItemsChange($event) {
-        console.log($event)
-    }
-
-    data: LocalPageableArray<any>;
-    selectedData: ArrayCollection<any>;
 }

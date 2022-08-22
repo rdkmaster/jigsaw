@@ -6,7 +6,7 @@ import { DateTimePickerTextService } from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerBasicDemoComponent {
-    date = 'now';
+    public date = 'now';
 
     constructor(public doc: DateTimePickerTextService) {
     }

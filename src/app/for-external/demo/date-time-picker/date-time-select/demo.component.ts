@@ -1,14 +1,14 @@
-import {Component} from "@angular/core";
-import {DateTimePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DateTimePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'date-time-picker-date-time-select',
     templateUrl: './demo.component.html'
 })
 export class DateTimeSelectDemoComponent {
-    date1='now';
+    public date1 = 'now';
 
-    onDateChange($event) {
+    public onDateChange($event) {
         console.log($event);
     }
 

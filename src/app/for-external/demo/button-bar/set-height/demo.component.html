@@ -1,12 +1,6 @@
 <demo-template [data]="''" [text]="doc.text.setHeight" [codes]="doc.codes.setHeight">
     <div class="demo-showcase">
-        <jigsaw-button-bar
-            [(selectedItems)]="selectedCity"
-            [data]="cities"
-            [multipleSelect]="multiple"
-            height="60"
-            (selectedItemsChange)="selectChange($event)"
-        >
+        <jigsaw-button-bar height="60" [data]="cities" [(selectedItems)]="selectedCity" [multipleSelect]="multiple">
         </jigsaw-button-bar>
     </div>
 </demo-template>

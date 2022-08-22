@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {CheckboxTextService} from "../doc.service";
-import {CheckBoxStatus} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { CheckboxTextService } from "../doc.service";
+import { CheckBoxStatus } from "jigsaw/public_api";
 
 @Component({
     selector: "checkbox-checkall",
@@ -54,9 +54,7 @@ export class CheckboxCheckAllComponent {
         }
     }
 
-    constructor(
-        public doc: CheckboxTextService
-    ) {
+    constructor(public doc: CheckboxTextService) {
         this.checkStatus()
     }
 }

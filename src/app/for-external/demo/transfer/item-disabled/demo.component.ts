@@ -1,13 +1,22 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
-import {TransferTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { ArrayCollection, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import { TransferTextService } from "../doc.service";
 
 @Component({
     selector: 'transfer-item-disabled',
     templateUrl: './demo.component.html'
 })
 export class TransferItemDisabledDemoComponent {
+    public data: ArrayCollection<any>;
+
+    public sourceRenderer = TransferListSourceRenderer;
+    public targetRenderer = TransferListDestRenderer;
+
+    public labelField = 'zhName';
+    public subLabelField = 'enName';
+    public trackItemBy = 'shortName';
+
     constructor(private _http: HttpClient, public doc: TransferTextService) {
         this.data = new ArrayCollection();
         this.data.http = _http;
@@ -19,13 +28,4 @@ export class TransferItemDisabledDemoComponent {
             })
         }
     }
-
-    data: ArrayCollection<any>;
-
-    public sourceRenderer = TransferListSourceRenderer;
-    public targetRenderer = TransferListDestRenderer;
-
-    public labelField = 'zhName';
-    public subLabelField = 'enName';
-    public trackItemBy = 'shortName';
 }
