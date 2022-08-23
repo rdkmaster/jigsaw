@@ -1,10 +1,8 @@
 <demo-template [data]="''" [text]="doc.text.template" [codes]="doc.codes.template">
     <div class="demo-showcase">
-        <jigsaw-button id="trigger3" width="200" (click)="popupTemplateDialog(tpDialog1)">
-            弹出自定义模态框
-        </jigsaw-button>
+        <jigsaw-button id="trigger3" (click)="popupTemplateDialog(tpDialog1)"> 弹出自定义模态框 </jigsaw-button>
 
-        <jigsaw-button id="trigger4" width="200" (click)="popupDialogTemplate(tpDialog2, $event)">
+        <jigsaw-button id="trigger4" (click)="popupDialogTemplate(tpDialog2, $event)">
             弹出自定义基础对话框
         </jigsaw-button>
     </div>

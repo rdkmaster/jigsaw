@@ -1,11 +1,8 @@
 <demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
-    <div class="demo-showcase-v">
-        <span>偏差设置为16px</span>
-        <div *ngFor="let popPositionType of popPositionTypes" style="margin-bottom: 20px">
-            <jigsaw-button (click)="popupComponentDialog(popPositionType)">
-                {{ popPositionType.label }}
-            </jigsaw-button>
-        </div>
+    <div class="demo-showcase-sudoku">
+        <jigsaw-button *ngFor="let popPositionType of popPositionTypes" (click)="popupComponentDialog(popPositionType)">
+            {{ popPositionType.label }}
+        </jigsaw-button>
     </div>
 
     <ng-template #tpDialog>

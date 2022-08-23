@@ -1,9 +1,9 @@
-import {Component, ViewEncapsulation} from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import {
     PopupInfo,
     PopupService
 } from "jigsaw/public_api";
-import {DialogTextService} from "../doc.service";
+import { DialogTextService } from "../doc.service";
 
 @Component({
     selector: 'dialog-customize',
@@ -12,23 +12,20 @@ import {DialogTextService} from "../doc.service";
     encapsulation: ViewEncapsulation.None
 })
 export class DialogCustomizeDemoComponent {
-    dialogInfo1: PopupInfo;
-    dialogInfo2: PopupInfo;
-    dialogInfo3: PopupInfo;
+    public dialogInfo1: PopupInfo;
+    public dialogInfo2: PopupInfo;
+    public dialogInfo3: PopupInfo;
 
     public title: string = 'Title of the dialog';
-
-    constructor(private _popupService: PopupService, public doc: DialogTextService) {
-    }
     /*
     * popup user defined template
     * */
-    popupTemplate(tp) {
+    public popupTemplate(tp) {
         // 默认皮肤不会给弹框设置背景，其他皮肤会给弹框加默认背景
-        this.dialogInfo3 = this._popupService.popup(tp, {useCustomizedBackground: true});
+        this.dialogInfo3 = this._popupService.popup(tp, { useCustomizedBackground: true });
     }
 
-    onAnswer(message: string) {
+    public onAnswer(message: string) {
         if (message) {
             alert(`The message is "${message}".`);
         } else {
@@ -43,5 +40,8 @@ export class DialogCustomizeDemoComponent {
         if (this.dialogInfo3) {
             this.dialogInfo3.dispose();
         }
+    }
+
+    constructor(private _popupService: PopupService, public doc: DialogTextService) {
     }
 }

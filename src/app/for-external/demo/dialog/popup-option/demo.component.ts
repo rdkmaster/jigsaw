@@ -1,9 +1,9 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
-import {DialogTextService} from "../doc.service";
+import { DialogTextService } from "../doc.service";
 
 @Component({
     selector: 'dialog-popup-option',
@@ -11,59 +11,34 @@ import {DialogTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
-
-    dialogInfo: PopupInfo;
-
-    option: PopupOptions;
-
-    popPositionTypes: any[];
-
-    selectedPositionType: any;
-
-    poses: object[];
-
-    selectedPos: any;
-
-    detailPos: PopupPoint;
-
-    offset: PopupPositionOffset;
-
     @ViewChild("left") left: ElementRef;
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
 
-    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public doc: DialogTextService) {
-    }
+    public dialogInfo: PopupInfo;
+    public option: PopupOptions;
+    public popPositionTypes: any[];
+    public selectedPositionType: any;
+    public poses: object[];
+    public selectedPos: any;
+    public detailPos: PopupPoint;
+    public offset: PopupPositionOffset;
 
-    ngOnInit() {
-        // this.generatePopPosition();
-        this.detailPos = {x: null, y: null};
-        this.offset = {top: 10, left: 10, right: null, bottom: null};
-        this.option = {
-            modal: false,
-            posType: PopupPositionType.absolute
-        };
-    }
-
-    ngAfterViewInit(): void {
-        this.generatePopPos();
-    }
-
-    close() {
+    public close() {
         this.dialogInfo.dispose();
     }
 
-    generatePopPos() {
+    public generatePopPos() {
         this.poses = [];
-        this.poses.push({label: "red box", ele: this.left});
-        this.poses.push({label: "blue box", ele: this.middle});
-        this.poses.push({label: "green box", ele: this.right});
-        this.poses.push({label: "no reference"});
-        this.poses.push({label: "point"});
+        this.poses.push({ label: "red box", ele: this.left });
+        this.poses.push({ label: "blue box", ele: this.middle });
+        this.poses.push({ label: "green box", ele: this.right });
+        this.poses.push({ label: "no reference" });
+        this.poses.push({ label: "point" });
         this.selectedPos = this.poses[0];
         this._cdr.detectChanges();
     }
-    popupDialog1(ele: TemplateRef<any>) {
+    public popupDialog1(ele: TemplateRef<any>) {
         this.option.posOffset = {
             top: 10,
             left: 10,
@@ -81,7 +56,7 @@ export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
         console.log(this.option);
         this.dialogInfo = this.popupService.popup(ele, this.option);
     }
-    popupDialog2(ele: TemplateRef<any>) {
+    public popupDialog2(ele: TemplateRef<any>) {
         this.option.posOffset = {
             top: 20,
             left: 0,
@@ -99,7 +74,7 @@ export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
         console.log(this.option);
         this.dialogInfo = this.popupService.popup(ele, this.option);
     }
-    popupDialog3(ele: TemplateRef<any>) {
+    public popupDialog3(ele: TemplateRef<any>) {
         this.option.posOffset = {
             top: 30,
             left: 0,
@@ -116,5 +91,21 @@ export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
         }
         console.log(this.option);
         this.dialogInfo = this.popupService.popup(ele, this.option);
+    }
+
+    ngOnInit() {
+        this.detailPos = { x: null, y: null };
+        this.offset = { top: 10, left: 10, right: null, bottom: null };
+        this.option = {
+            modal: false,
+            posType: PopupPositionType.absolute
+        };
+    }
+
+    ngAfterViewInit(): void {
+        this.generatePopPos();
+    }
+
+    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public doc: DialogTextService) {
     }
 }

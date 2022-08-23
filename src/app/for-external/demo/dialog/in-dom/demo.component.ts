@@ -1,14 +1,9 @@
-import {Component} from "@angular/core";
-import {DialogTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DialogTextService } from "../doc.service";
 
 @Component({
     selector: 'dialog-in-dom',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .iconfont {
-            margin-right: 5px
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class DialogInDomDemoComponent {
     public onAnswer(label?) {

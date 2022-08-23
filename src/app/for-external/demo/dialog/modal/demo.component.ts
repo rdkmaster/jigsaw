@@ -4,7 +4,8 @@ import { DialogTextService } from "../doc.service";
 
 @Component({
     selector: 'dialog-modal',
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.scss']
 })
 export class DialogModalDemoComponent {
     public isModal: boolean = true;

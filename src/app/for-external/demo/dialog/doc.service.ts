@@ -97,7 +97,9 @@ export class DialogTextService {
     public codes = {
         component: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./component/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./component/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./component/demo.component.ts').default },
+            { label: "user-dialog.html", language: 'html', value: require('!!raw-loader!./component/user-dialog/user-dialog.html').default },
+            { label: "user-dialog.ts", language: 'typescript', value: require('!!raw-loader!./component/user-dialog/user-dialog.ts').default }
         ],
         modal: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./modal/demo.component.html').default, },
@@ -109,7 +111,8 @@ export class DialogTextService {
         ],
         customize: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./customize/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default },
+            { label: "CSS", language: 'css', value: require('!!raw-loader!./customize/demo.component.css').default }
         ],
         topOffset: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./top-offset/demo.component.html').default, },
@@ -129,7 +132,9 @@ export class DialogTextService {
         ],
         point: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./point/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./point/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./point/demo.component.ts').default },
+            { label: "user-dialog.html", language: 'html', value: require('!!raw-loader!./component/user-dialog/user-dialog.html').default },
+            { label: "user-dialog.ts", language: 'typescript', value: require('!!raw-loader!./component/user-dialog/user-dialog.ts').default }
         ]
     }
 }

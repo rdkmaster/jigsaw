@@ -4,7 +4,8 @@ import { DialogTextService } from "../doc.service";
 
 @Component({
     selector: 'dialog-basic',
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.scss']
 })
 
 export class DialogBasicDemoComponent {
@@ -25,8 +26,6 @@ export class DialogBasicDemoComponent {
     @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
-    constructor(private _popupService: PopupService, public doc: DialogTextService) {
-    }
     public closeDialog() {
         if (this.popupInfo) {
             this.popupInfo.dispose();
@@ -42,7 +41,6 @@ export class DialogBasicDemoComponent {
         };
         options.pos = selectedPositionType.value;
         if (selectedPositionType.value != 'center') {
-
             options.posOffset = selectedPositionType.offset;
         }
 
@@ -51,5 +49,8 @@ export class DialogBasicDemoComponent {
         } else {
             this.popupInfo = this._popupService.popup(this._tpDialog, options);
         }
+    }
+
+    constructor(private _popupService: PopupService, public doc: DialogTextService) {
     }
 }

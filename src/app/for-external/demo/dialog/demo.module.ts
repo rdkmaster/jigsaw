@@ -7,7 +7,7 @@ import { DialogBasicDemoComponent } from "./basic/demo.component";
 import { DialogModalDemoComponent } from "./modal/demo.component";
 import { DialogInDomDemoComponent } from "./in-dom/demo.component";
 import { DialogPointDemoComponent } from "./point/demo.component";
-import { UserDialog2Component } from "./point/user-dialog2/user-dialog";
+import { UserDialog2Component } from "./point/user-dialog/user-dialog";
 import { DialogTemplateDemoComponent } from "./template/demo.component";
 import { DialogCustomizeDemoComponent } from "./customize/demo.component";
 import { DialogTopOffSetDemoComponent } from "./top-offset/demo.component";
