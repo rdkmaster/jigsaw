@@ -1,6 +1,5 @@
-import {Component} from "@angular/core";
-import {RadioTextService} from "../doc.service";
-import {ArrayCollection} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { RadioTextService } from "../doc.service";
 
 @Component({
     selector: "radio-group-complex-scene",
@@ -9,8 +8,8 @@ import {ArrayCollection} from "jigsaw/public_api";
 })
 
 export class RadioComplexSceneComponent {
-    selectedGoods = {name: 'car'};
-    goodsList = [
+    public selectedGoods = { name: 'car' };
+    public goodsList = [
         {
             logo: 'e187',
             name: 'bicycle',
@@ -48,6 +47,5 @@ export class RadioComplexSceneComponent {
         console.log(`switch message is: ${message.name}`);
     }
 
-    constructor(public doc: RadioTextService) {}
-
+    constructor(public doc: RadioTextService) { }
 }

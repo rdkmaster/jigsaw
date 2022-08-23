@@ -1,15 +1,15 @@
-import {Component} from "@angular/core";
-import {RangeDataTimePickerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { RangeDataTimePickerTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-range-date-time-select',
     templateUrl: './demo.component.html',
 })
 export class RangeDateTimeSelectComponent {
-    date = {beginDate: 'now-1d', endDate: 'now'};
-    gr = ['date'];
+    public date = { beginDate: 'now-1d', endDate: 'now' };
+    public gr = ['date'];
 
-    dateChange($event) {
+    public dateChange($event) {
         console.log($event)
     }
 

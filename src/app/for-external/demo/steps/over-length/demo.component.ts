@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {InternalUtils} from "jigsaw/public_api";
-import {StepsTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InternalUtils } from "jigsaw/public_api";
+import { StepsTextService } from "../doc.service";
 
 @Component({
     selector: 'steps-over-length',
     templateUrl: "./demo.component.html"
 })
 export class JigsawStepOverLengthDemoComponent {
-    data = [
+    public data = [
         {
             title: "这是非常长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的title",
             status: "normal",
@@ -28,13 +28,7 @@ export class JigsawStepOverLengthDemoComponent {
         }
     ];
 
-    current = 0;
-
-    constructor(public doc: StepsTextService) {
-        for (let i = 2; i < 5; i++) {
-            this.data.push(this._createStepData());
-        }
-    }
+    public current = 0;
 
     private _createStepData() {
         const statuses = ["error", "warning", "normal", "normal", "normal"];
@@ -45,5 +39,11 @@ export class JigsawStepOverLengthDemoComponent {
             status: status,
             subTitle: '描述信息'
         };
+    }
+
+    constructor(public doc: StepsTextService) {
+        for (let i = 2; i < 5; i++) {
+            this.data.push(this._createStepData());
+        }
     }
 }

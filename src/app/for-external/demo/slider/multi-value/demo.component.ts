@@ -8,12 +8,13 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SliderMultiValueDemoComponent {
-    rangeValue = new ArrayCollection([30, 50, 60]);
+    public rangeValue = new ArrayCollection([30, 50, 60]);
 
-    handleValueChange(value) {
+    public handleValueChange(value) {
         console.log("传递出来的对象:");
         console.log(value);
     }
+
     constructor(public doc: SliderTextService) { }
 
 }

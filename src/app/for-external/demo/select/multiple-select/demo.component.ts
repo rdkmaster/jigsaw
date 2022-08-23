@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SelectTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -8,13 +8,7 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SelectMultipleSelectDemoComponent {
-    public selectedSize = {label: "中", size: "medium"};
-    public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
-    dataList = new ArrayCollection([
+    public dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
         { label: "禁用选项3", disabled: true },
@@ -28,7 +22,7 @@ export class SelectMultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]);
 
-    dataListWithoutDisabled = new ArrayCollection([
+    public dataListWithoutDisabled = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
         { label: "文本选项3" },
@@ -42,7 +36,7 @@ export class SelectMultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]);
 
-    fullSelectedOption = new ArrayCollection([
+    public fullSelectedOption = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
         { label: "文本选项3" },
@@ -56,14 +50,14 @@ export class SelectMultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]);
 
-    selectedOption = new ArrayCollection([
+    public selectedOption = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
         { label: "文本选项3" },
         { label: "文本选项4" }
     ]);
 
-    arrayDataList = [
+    public arrayDataList = [
         { label: "文本选项1" },
         { label: "文本选项2" },
         { label: "禁用选项3", disabled: true },
@@ -77,21 +71,20 @@ export class SelectMultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]
 
-    selectedArrayData = [{ label: "文本选项1" }];
-    selectedArrayData1 = null;
-    selectedArrayData2 = undefined;
+    public selectedArrayData = [{ label: "文本选项1" }];
+    public selectedArrayData1 = null;
+    public selectedArrayData2 = undefined;
 
-    clearSelection() {
-        this.selectedArrayData = null;
-        this.selectedArrayData1 = null;
-        this.selectedArrayData2 = null;
-        this.selectedOption = null;
-        this.fullSelectedOption = null;
-    }
-
-    valueChange($event) {
+    public valueChange($event) {
         console.log($event);
     }
-    constructor(public doc: SelectTextService) {}
+
+    public sizes: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" }
+    ]);
+    public selectedSize = { label: "中", size: "medium" };
+    constructor(public doc: SelectTextService) { }
 
 }

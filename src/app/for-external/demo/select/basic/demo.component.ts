@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {SelectTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
-class ForeverBusyArrayCollection extends  ArrayCollection<any>{
+class ForeverBusyArrayCollection extends ArrayCollection<any>{
     _busy = true;
 }
 
@@ -12,18 +12,12 @@ class ForeverBusyArrayCollection extends  ArrayCollection<any>{
 })
 
 export class SelectBasicDemoComponent {
-    public selectedSize = {label: "中", size: "medium"};
-    public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
-    foreverBusyArray = new ForeverBusyArrayCollection();
-    selectedCityForSelect: any;
-    disabled: boolean = false;
-    valid: boolean = true;
+    public foreverBusyArray = new ForeverBusyArrayCollection();
+    public selectedCityForSelect: any;
+    public disabled: boolean = false;
+    public valid: boolean = true;
 
-    dataList = new ArrayCollection([
+    public dataList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
         {
             groupName: "分组标题2",
@@ -35,9 +29,15 @@ export class SelectBasicDemoComponent {
         },
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
-    valueChange($event) {
+    public valueChange($event) {
         console.log($event);
     }
-    constructor(public doc: SelectTextService) {}
 
+    public sizes: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" }
+    ]);
+    public selectedSize = { label: "中", size: "medium" };
+    constructor(public doc: SelectTextService) { }
 }

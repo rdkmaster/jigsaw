@@ -1,7 +1,7 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, AdditionalColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, AdditionalColumnDefine, TableCellRendererBase } from "jigsaw/public_api";
+import { TableActionsTextService } from "../doc.service";
 
 /*
  * 操作列头

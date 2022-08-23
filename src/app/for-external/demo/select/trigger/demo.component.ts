@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SelectTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -8,14 +8,8 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SelectTriggerDemoComponent {
-    public selectedSize = {label: "中", size: "medium"};
-    public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
-    selectedCityForSelect: any;
-    cityListForSelect = new ArrayCollection([
+    public selectedCityForSelect: any;
+    public cityListForSelect = new ArrayCollection([
         { label: "北京" },
         { label: "上海" },
         { label: "南京" },
@@ -24,15 +18,15 @@ export class SelectTriggerDemoComponent {
         { label: "西安" }
     ]);
 
-    selectedCityName: string;
+    public openTrigger = "mouseenter";
+    public closeTrigger = "mouseleave";
 
-    public selectChange(selectedItem: any) {
-        this.selectedCityName = selectedItem.label;
-    }
-
-    openTrigger = "mouseenter";
-    closeTrigger = "mouseleave";
-
-    constructor(public doc: SelectTextService) {}
+    public sizes: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" }
+    ]);
+    public selectedSize = { label: "中", size: "medium" };
+    constructor(public doc: SelectTextService) { }
 
 }

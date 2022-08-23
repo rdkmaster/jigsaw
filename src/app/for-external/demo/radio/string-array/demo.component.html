@@ -1,7 +1,9 @@
 <demo-template [data]="''" [text]="doc.text.stringArray" [codes]="doc.codes.stringArray">
-    <j-radios [(value)]="selectedCity">
-        <j-radio-option *ngFor="let item of citys" [value]="item">
-            {{ item }}
-        </j-radio-option>
-    </j-radios>
+    <div class="demo-showcase">
+        <j-radios [(value)]="selectedCity">
+            <j-radio-option *ngFor="let item of citys" [value]="item">
+                {{ item }}
+            </j-radio-option>
+        </j-radios>
+    </div>
 </demo-template>

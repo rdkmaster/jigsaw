@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SelectTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -8,13 +8,14 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SelectOptionWidthDemoComponent {
-    public selectedSize = {label: "中", size: "medium"};
+    public optionWidth = 400;
+
     public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" }
     ]);
-    optionWidth = 400;
-    constructor(public doc: SelectTextService) {}
+    public selectedSize = { label: "中", size: "medium" };
+    constructor(public doc: SelectTextService) { }
 
 }

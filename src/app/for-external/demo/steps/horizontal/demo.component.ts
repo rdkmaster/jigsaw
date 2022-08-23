@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {InternalUtils, StepItem} from "jigsaw/public_api";
-import {StepsTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { StepItem } from "jigsaw/public_api";
+import { StepsTextService } from "../doc.service";
 
 @Component({
     selector: 'steps-horizontal',
     templateUrl: "./demo.component.html"
 })
 export class JigsawStepHorizontalDemoComponent {
-    data = [
+    public data = [
         {
             title: "类型",
             status: "normal"
@@ -38,14 +38,14 @@ export class JigsawStepHorizontalDemoComponent {
         }
     ];
 
-    steps: StepItem[] = [];
-    step = 2;
-
-    constructor(public doc: StepsTextService) {
-        this.steps = JSON.parse(JSON.stringify(this.data));
-    }
+    public steps: StepItem[] = [];
+    public step = 2;
 
     public currentChange(event: number) {
         console.log(`${event} is selected: `, this.steps[event]);
+    }
+
+    constructor(public doc: StepsTextService) {
+        this.steps = JSON.parse(JSON.stringify(this.data));
     }
 }

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SliderTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SliderTextService } from "../doc.service";
 
 @Component({
     selector: "slider-basic",
@@ -7,13 +7,14 @@ import {SliderTextService} from "../doc.service";
 })
 
 export class SliderBasicDemoComponent {
-    value: number = 70;
-    value1: number = 30;
-    disabled: boolean = false;
-    disabled1: boolean = true;
+    public value: number = 70;
+    public value1: number = 30;
+    public disabled: boolean = false;
 
-    sliderChange(value) {
+    public sliderChange(value) {
+        console.log(value)
     }
-    constructor(public doc: SliderTextService) {}
+
+    constructor(public doc: SliderTextService) { }
 
 }

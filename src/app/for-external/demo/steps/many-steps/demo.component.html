@@ -1,5 +1,8 @@
 <demo-template [data]="''" [text]="doc.text.manySteps" [codes]="doc.codes.manySteps">
     <!-- start to learn the demo from here -->
-    <jigsaw-steps #hScrollbar [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}"
-                  [data]="data" [(current)]="current"></jigsaw-steps>
+    <jigsaw-steps
+        [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
+        [data]="data"
+        [(current)]="current"
+    ></jigsaw-steps>
 </demo-template>

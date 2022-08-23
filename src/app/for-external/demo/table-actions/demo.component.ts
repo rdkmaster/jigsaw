@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {TableActionsTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { TableActionsTextService } from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',
 })
 export class TableActionsAllComponent {
-    constructor(public doc: TableActionsTextService) {}
+    constructor(public doc: TableActionsTextService) { }
 }
 

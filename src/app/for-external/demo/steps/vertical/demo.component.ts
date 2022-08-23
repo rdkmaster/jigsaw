@@ -1,21 +1,15 @@
-import {Component} from "@angular/core";
-import {InternalUtils} from "jigsaw/public_api";
-import {StepsTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InternalUtils } from "jigsaw/public_api";
+import { StepsTextService } from "../doc.service";
 
 @Component({
     selector: 'steps-vertical',
     templateUrl: "./demo.component.html"
 })
 export class JigsawStepVerticalDemoComponent {
-    data = [];
+    public data = [];
 
-    current = 0;
-
-    constructor(public doc: StepsTextService) {
-        for (let i = 0; i < 6; i++) {
-            this.data.push(this._createStepData());
-        }
-    }
+    public current = 0;
 
     private _createStepData() {
         const statuses = ["error", "warning", "normal", "normal", "normal"];
@@ -30,5 +24,11 @@ export class JigsawStepVerticalDemoComponent {
 
     public currentChange(event: number) {
         console.log(`${event} is selected: `, this.data[event]);
+    }
+
+    constructor(public doc: StepsTextService) {
+        for (let i = 0; i < 6; i++) {
+            this.data.push(this._createStepData());
+        }
     }
 }

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SwitchTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SwitchTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -8,12 +8,13 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SwitchBasicComponent {
-    public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "default"}
-    ]);
     public checked: boolean;
-    public selectedSize = {label: "中", size: "medium"};
-    constructor(public doc: SwitchTextService) {}
+
+    public sizes: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "default" }
+    ]);
+    public selectedSize = { label: "中", size: "medium" };
+    constructor(public doc: SwitchTextService) { }
 }

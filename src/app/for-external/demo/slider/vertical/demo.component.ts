@@ -9,14 +9,14 @@ import { SliderMark, ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SliderVerticalDemoComponent {
-    value = 10;
-    vertical = true;
-    rangeValue = new ArrayCollection([10, 80]);
-    marks: SliderMark[] = [
+    public value = 10;
+    public vertical = true;
+    public rangeValue = new ArrayCollection([10, 80]);
+    public marks: SliderMark[] = [
         { value: 20, label: '20 ℃' },
         { value: 40, label: '40 ℃' },
         { value: 80, label: '80 ℃' }
     ];
-    constructor(public doc: SliderTextService) { }
 
+    constructor(public doc: SliderTextService) { }
 }

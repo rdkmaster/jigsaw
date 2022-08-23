@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {SelectTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { SelectTextService } from "./doc.service";
 
 @Component({
     templateUrl: "demo.component.html"

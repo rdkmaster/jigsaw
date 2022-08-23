@@ -8,7 +8,7 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class SliderMarkDemoComponent {
-    marks = [
+    public marks = [
         { value: 20, label: '20 ℃' },
         { value: 40, label: '40 ℃' },
         {
@@ -16,8 +16,7 @@ export class SliderMarkDemoComponent {
         }
     ];
 
-    rangeValue = new ArrayCollection([30, 50, 60]);
+    public rangeValue = new ArrayCollection([30, 50, 60]);
 
     constructor(public doc: SliderTextService) { }
-
 }
