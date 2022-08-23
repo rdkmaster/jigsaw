@@ -10,12 +10,12 @@ import { FloatTextService } from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class FloatOptionDemoComponent {
-    showHideEffect = "";
-    selectedPositionType = "";
-    position: FloatPosition = 'bottomLeft';
-    size: PopupSize = {};
+    public showHideEffect = "";
+    public selectedPositionType = "";
+    public position: FloatPosition = 'bottomLeft';
+    public size: PopupSize = {};
 
-    offsetOptions: PopupOptions = {
+    public offsetOptions: PopupOptions = {
         useCustomizedBackground: true,
         showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
         hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
@@ -30,7 +30,7 @@ export class FloatOptionDemoComponent {
         borderType: 'default'
     };
 
-    shadowOptions: PopupOptions = {
+    public shadowOptions: PopupOptions = {
         useCustomizedBackground: true,
         showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
         hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
@@ -42,7 +42,7 @@ export class FloatOptionDemoComponent {
         borderType: 'default'
     };
 
-    arrayOptions: PopupOptions = {
+    public arrayOptions: PopupOptions = {
         useCustomizedBackground: true,
         showEffect: PopupEffect[<string>this.showHideEffect + 'In'],
         hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],

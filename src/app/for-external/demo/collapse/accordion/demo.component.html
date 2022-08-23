@@ -1,6 +1,6 @@
 <demo-template [data]="''" [text]="doc.text.accordion" [codes]="doc.codes.accordion">
     <j-collapse width="50%" mode="accordion">
-        <j-collapse-pane [header]="goods.name" [isActive]="goods.active" *ngFor="let goods of goodsList">
+        <j-collapse-pane *ngFor="let goods of goodsList" [header]="goods.name" [isActive]="goods.active">
             {{ goods.desc }}
         </j-collapse-pane>
     </j-collapse>

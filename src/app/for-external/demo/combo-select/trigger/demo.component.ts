@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {ComboSelectTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { ComboSelectTextService } from "../doc.service";
 
 @Component({
     selector: 'combo-select-trigger',

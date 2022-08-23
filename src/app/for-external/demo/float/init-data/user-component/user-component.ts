@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Output} from "@angular/core";
-import {IPopupable} from "jigsaw/public_api";
+import { Component, EventEmitter, Output } from "@angular/core";
+import { IPopupable } from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'user-component.html',
@@ -14,7 +14,7 @@ import {IPopupable} from "jigsaw/public_api";
     `]
 })
 export class UserComponent implements IPopupable {
-    initData: any;
+    public initData: any;
 
     @Output()
     public answer: EventEmitter<any> = new EventEmitter<any>();

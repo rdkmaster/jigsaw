@@ -9,9 +9,8 @@ import { HttpClient } from "@angular/common/http";
     styleUrls: ["./demo.component.css"]
 })
 export class CollapseTitleAndContentDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
     public pieGraphDataByCol: PieGraphData;
-    // @ts-ignore
     public lineGraphData: LineGraphData;
 
     constructor(public doc: CollapseTextService, http: HttpClient) {
@@ -27,5 +26,4 @@ export class CollapseTitleAndContentDemoComponent {
         this.lineGraphData.http = http;
         this.lineGraphData.fromAjax('mock-data/marketing');
     }
-
 }

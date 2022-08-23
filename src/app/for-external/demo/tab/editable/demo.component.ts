@@ -1,17 +1,16 @@
-import {Component} from '@angular/core';
-import {TabTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { TabTextService } from "../doc.service";
 
 @Component({
     selector: 'tab-editable',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TabsEditableDemoComponent {
-    show(msg) {
+    public show(msg) {
         alert(msg);
     }
 
-    add(tab, content) {
+    public add(tab, content) {
         tab.addTab('new tab', content);
     }
 

@@ -2,12 +2,18 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>正常</span>
-        <jigsaw-combo-select [disabled]="false" [(value)]="selectedCity" [open]="false" maxWidth="500"
-            [clearable]="true" placeholder="请选择">
+        <jigsaw-combo-select
+            [disabled]="false"
+            [(value)]="selectedCity"
+            [open]="false"
+            maxWidth="500"
+            [clearable]="true"
+            placeholder="请选择"
+        >
             <ng-template>
                 <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
                     <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
-                        {{city.label}}
+                        {{ city.label }}
                     </jigsaw-tile-option>
                 </jigsaw-tile>
             </ng-template>
@@ -16,12 +22,18 @@
 
     <div class="demo-showcase">
         <span>禁用</span>
-        <jigsaw-combo-select [disabled]="true" [(value)]="selectedCity" [open]="false" maxWidth="500" [clearable]="true"
-            placeholder="请选择">
+        <jigsaw-combo-select
+            [disabled]="true"
+            [(value)]="selectedCity"
+            [open]="false"
+            maxWidth="500"
+            [clearable]="true"
+            placeholder="请选择"
+        >
             <ng-template>
                 <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
                     <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
-                        {{city.label}}
+                        {{ city.label }}
                     </jigsaw-tile-option>
                 </jigsaw-tile>
             </ng-template>
@@ -30,12 +42,18 @@
 
     <div class="demo-showcase">
         <span>校验</span>
-        <jigsaw-combo-select [valid]="false" [(value)]="selectedCity" [open]="false" maxWidth="500" [clearable]="true"
-            placeholder="请选择">
+        <jigsaw-combo-select
+            [valid]="false"
+            [(value)]="selectedCity"
+            [open]="false"
+            maxWidth="500"
+            [clearable]="true"
+            placeholder="请选择"
+        >
             <ng-template>
                 <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
                     <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
-                        {{city.label}}
+                        {{ city.label }}
                     </jigsaw-tile-option>
                 </jigsaw-tile>
             </ng-template>

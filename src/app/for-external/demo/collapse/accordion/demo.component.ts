@@ -1,23 +1,19 @@
 import { Component } from "@angular/core";
-import {CollapseTextService} from "../doc.service";
+import { CollapseTextService } from "../doc.service";
 
 @Component({
     selector: "collapse-accordion",
     templateUrl: "./demo.component.html",
 })
 export class CollapseAccordionDemoComponent {
-
-
-    goodsList = [
+    public goodsList = [
         {
             name: 'bicycle',
-            // tslint:disable-next-line:max-line-length
             desc: 'A bicycle, also called a cycle or bike, is a human-powered, pedal-driven, single-track vehicle, having two wheels attached to a frame, one behind the other.',
             active: true
         },
         {
             name: 'camera',
-            // tslint:disable-next-line:max-line-length
             desc: 'A camera is an optical instrument for recording or capturing images, which may be stored locally, transmitted to another location, or both.'
         },
         {
@@ -40,5 +36,4 @@ export class CollapseAccordionDemoComponent {
 
     constructor(public doc: CollapseTextService) {
     }
-
 }

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {DrawerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DrawerTextService } from "../doc.service";
 
 @Component({
     selector: 'drawer-with-div',
@@ -7,12 +7,12 @@ import {DrawerTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerWithDivDemoComponent {
-    height: string = 'calc(100% - 30px)';
+    public height: string = 'calc(100% - 30px)';
 
-    offsetLeft: string;
-    offsetTop: string = '28';
-    offsetRight: string;
-    offsetBottom: string;
+    public offsetLeft: string;
+    public offsetTop: string = '28';
+    public offsetRight: string;
+    public offsetBottom: string;
 
     constructor(public doc: DrawerTextService) {
     }

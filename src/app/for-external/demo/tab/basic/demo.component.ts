@@ -1,15 +1,17 @@
-import {AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {TableData, LineGraphData, JigsawProgress} from "jigsaw/public_api";
-import {TabTextService} from "../doc.service";
+import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { TableData, LineGraphData, JigsawProgress } from "jigsaw/public_api";
+import { TabTextService } from "../doc.service";
 
 @Component({
     selector: 'tab-basic',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class JigsawTabsDemoComponent implements AfterViewInit {
-    fruitList: TableData = new TableData(
+    @ViewChild('progress')
+    progress: JigsawProgress;
+
+    public fruitList: TableData = new TableData(
         [
             ["banana", "$12.0", "The banana is an edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.", "Southeast Asia"],
             ["apple", "$21.0", "The apple tree is a deciduous tree in the rose family best known for its sweet, pomaceous fruit, the apple.", "Shan Dong, China"],
@@ -22,14 +24,8 @@ export class JigsawTabsDemoComponent implements AfterViewInit {
         ["Name", "Price", "Description", "Origin"]
     );
 
-    @ViewChild('progress')
-    progress: JigsawProgress;
 
-    ngAfterViewInit() {
-        this.startEstimating();
-    }
-
-    startEstimating() {
+    public startEstimating() {
         if (!this.progress) {
             return;
         }
@@ -37,12 +33,16 @@ export class JigsawTabsDemoComponent implements AfterViewInit {
         this.progress.startEstimating(10000, 99.99);
     }
 
-    testEvent(value) {
+    public testEvent(value) {
         console.info(value);
     }
 
-    selectedIndexChange($event) {
+    public selectedIndexChange($event) {
         console.log($event);
+    }
+
+    ngAfterViewInit() {
+        this.startEstimating();
     }
 
     public lineBarGraphData: LineGraphData;

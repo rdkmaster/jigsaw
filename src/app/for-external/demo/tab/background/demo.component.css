@@ -5,7 +5,7 @@
 .demo-container {
     width: calc(100vw - 360px);
     position: relative;
-    height: 400px;
+    height: 200px;
     padding: 0 16px;
     background: var(--bg-container);
     box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);

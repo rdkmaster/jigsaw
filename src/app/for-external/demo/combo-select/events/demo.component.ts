@@ -1,23 +1,23 @@
-import {Component} from '@angular/core';
-import {ArrayCollection} from "jigsaw/public_api";
-import {ComboSelectTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { ArrayCollection } from "jigsaw/public_api";
+import { ComboSelectTextService } from "../doc.service";
 
 @Component({
     selector: 'combo-select-events',
     templateUrl: './demo.component.html'
 })
 export class ComboSelectChangeEventsDemoComponent {
-    selectedCity = new ArrayCollection();
-    cities = [
-        {label: '北京', type: '', closable: false},
-        {label: '上海', type: '', closable: false},
-        {label: '南京', type: ''},
-        {label: '深圳', type: ''},
-        {label: '长沙', type: ''},
-        {label: '西安', type: ''},
-        {label: '盐城', type: ''},
-        {label: '徐州', type: ''},
-        {label: '连云港', type: ''},
+    public selectedCity = new ArrayCollection();
+    public cities = [
+        { label: '北京', type: '', closable: false },
+        { label: '上海', type: '', closable: false },
+        { label: '南京', type: '' },
+        { label: '深圳', type: '' },
+        { label: '长沙', type: '' },
+        { label: '西安', type: '' },
+        { label: '盐城', type: '' },
+        { label: '徐州', type: '' },
+        { label: '连云港', type: '' },
     ];
 
     onCityClick(city) {
@@ -33,7 +33,7 @@ export class ComboSelectChangeEventsDemoComponent {
     }
 
     onTagSelect(btn) {
-        this.cities.forEach(btn => btn.type = this.selectedCity.indexOf(btn) == -1 ? '': 'danger');
+        this.cities.forEach(btn => btn.type = this.selectedCity.indexOf(btn) == -1 ? '' : 'danger');
         btn.type = 'primary';
     }
 

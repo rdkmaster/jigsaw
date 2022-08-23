@@ -1,22 +1,21 @@
 <demo-template [data]="''" [text]="doc.text.editable" [codes]="doc.codes.editable">
-
     <!-- start to learn the demo from here -->
-    <jigsaw-tabs [editable]="true" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
-        <jigsaw-tab-pane title="tab1">
-            <ng-template>tab content 1</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab2">
-            <ng-template>tab content 2</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab3">
-            <ng-template>tab content 3</ng-template>
-        </jigsaw-tab-pane>
-        <jigsaw-tab-pane title="tab4">
-            <ng-template>tab content 4</ng-template>
-        </jigsaw-tab-pane>
-    </jigsaw-tabs>
+    <div class="demo-showcase-v">
+        <jigsaw-tabs width="100%" [editable]="true" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
+            <jigsaw-tab-pane title="tab1">
+                <ng-template>tab content 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2">
+                <ng-template>tab content 2</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template>tab content 3</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template>tab content 4</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
 
-    <ng-template #newTab>
-        new tab content
-    </ng-template>
+    <ng-template #newTab> new tab content </ng-template>
 </demo-template>

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {FloatTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { FloatTextService } from "../doc.service";
 
 @Component({
     selector: 'float-basic',

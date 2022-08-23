@@ -6,12 +6,12 @@ import { FloatTextService } from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class FloatTriggerDemoComponent {
-    closeTrigger = "mouseleave";
+    public closeTrigger = "mouseleave";
     public openTrigger: string = "mouseenter";
-    openTrigger1 = "click";
-    closeTrigger1 = "click";
-    openTrigger2 = "none";
-    closeTrigger2 = "none";
+    public openTrigger1 = "click";
+    public closeTrigger1 = "click";
+    public openTrigger2 = "none";
+    public closeTrigger2 = "none";
 
     public open: boolean = false;
     public open1: boolean = false;
@@ -23,7 +23,6 @@ export class FloatTriggerDemoComponent {
     public closeFloat() {
         this.open2 = false;
     }
-
 
     constructor(public doc: FloatTextService) {
     }

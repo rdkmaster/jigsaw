@@ -58,7 +58,9 @@ export class FloatTextService {
         ],
         initData: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./init-data/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./init-data/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./init-data/demo.component.ts').default },
+            { label: "user-component.html", language: 'html', value: require('!!raw-loader!./init-data/user-component/user-component.html').default, },
+            { label: "user-component.ts", language: 'typescript', value: require('!!raw-loader!./init-data/user-component/user-component.ts').default }
         ],
         multiLevel: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./multi-level/demo.component.html').default, },
@@ -70,7 +72,9 @@ export class FloatTextService {
         ],
         target: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./target/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./target/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./target/demo.component.ts').default },
+            { label: "user-component.html", language: 'html', value: require('!!raw-loader!./target/user-component/user-component.html').default, },
+            { label: "user-component.ts", language: 'typescript', value: require('!!raw-loader!./target/user-component/user-component.ts').default }
         ],
         trigger: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./trigger/demo.component.html').default, },

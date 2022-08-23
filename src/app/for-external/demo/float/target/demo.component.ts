@@ -1,6 +1,6 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild} from '@angular/core';
-import {User1Component} from "./user-component/user-component";
-import {FloatTextService} from "../doc.service";
+import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
+import { User1Component } from "./user-component/user-component";
+import { FloatTextService } from "../doc.service";
 
 @Component({
     selector: 'float-target',
@@ -37,14 +37,14 @@ export class FloatTargetDemoComponent implements AfterViewInit {
 
     public target: any = User1Component;
     public targets: any[] = [
-        {label: "template1"}, {label: "template2"},
-        {label: "component", target: this.target}
+        { label: "template1" }, { label: "template2" },
+        { label: "component", target: this.target }
     ];
 
     ngAfterViewInit() {
         this.targets[0].target = this.jigsawFloatArea1;
         this.targets[1].target = this.jigsawFloatArea2;
     }
-constructor( public doc: FloatTextService) {
-}
+    constructor(public doc: FloatTextService) {
+    }
 }

@@ -1,15 +1,14 @@
 <demo-template [data]="''" [text]="doc.text.searchAndPaging" [codes]="doc.codes.searchAndPaging">
     <div class="demo-showcase">
         <j-cascade
+            width="400"
             [data]="generator"
             [generatorContext]="this"
             [selectedItems]="lazyLoadSelectedItems"
             labelField="name"
             [multipleSelect]="true"
-            (selectedItemsChange)="parseMessage($event)"
             [searchable]="true"
             [pageSize]="5"
-            width="400"
         >
         </j-cascade>
     </div>

@@ -7,11 +7,10 @@ import { ComboSelectTextService } from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class ComboSelectTextTagDemoComponent {
-    textTag = false;
-    clearable = true;
-    multipleSelect = false;
-
-    cities = [
+    public textTag = false;
+    public clearable = true;
+    public multipleSelect = false;
+    public cities = [
         { label: "北京", closable: false },
         { label: "上海", closable: false },
         { label: "南京" },
@@ -27,9 +26,8 @@ export class ComboSelectTextTagDemoComponent {
         { label: "哈尔滨" }
     ];
 
-    selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
+    public selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
 
     constructor(public doc: ComboSelectTextService) {
     }
-
 }

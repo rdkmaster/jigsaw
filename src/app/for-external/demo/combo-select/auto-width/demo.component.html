@@ -1,13 +1,21 @@
 <demo-template [data]="''" [text]="doc.text.autoWidth" [codes]="doc.codes.autoWidth">
     <!-- start to learn the demo from here -->
-    <jigsaw-combo-select placeholder="请输入姓名~" autoWidth="true" [(value)]="selectedCity" [clearable]="true"
-        [open]="false" maxWidth="500">
-        <ng-template>
-            <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
-                <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="21.4%">
-                    {{city.label}}
-                </jigsaw-tile-option>
-            </jigsaw-tile>
-        </ng-template>
-    </jigsaw-combo-select>
+    <div class="demo-showcase">
+        <jigsaw-combo-select
+            maxWidth="500"
+            placeholder="请选择城市"
+            autoWidth="true"
+            [(value)]="selectedCity"
+            [clearable]="true"
+            [open]="false"
+        >
+            <ng-template>
+                <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label">
+                    <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="21.4%">
+                        {{ city.label }}
+                    </jigsaw-tile-option>
+                </jigsaw-tile>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
 </demo-template>

@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/public_api";
-import {FloatTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SimpleTreeData } from "jigsaw/public_api";
+import { FloatTextService } from "../doc.service";
 
 @Component({
     selector: 'float-multi-level',

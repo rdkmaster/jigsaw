@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {DrawerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DrawerTextService } from "../doc.service";
 
 @Component({
     selector: 'drawer-basic',
@@ -7,12 +7,12 @@ import {DrawerTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class DrawerBasicDemoComponent {
-    isOpen: boolean = false;
-    touched = false;
-    width: string = '20%';
-    height: string = '100%';
+    public isOpen: boolean = false;
+    public touched = false;
+    public width: string = '20%';
+    public height: string = '100%';
 
-    toggle() {
+    public toggle() {
         this.isOpen = !this.isOpen;
         this.touched = true;
     }

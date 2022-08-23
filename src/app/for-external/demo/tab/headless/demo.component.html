@@ -1,18 +1,17 @@
 <demo-template [data]="''" [text]="doc.text.headless" [codes]="doc.codes.headless">
-
     <!-- start to learn the demo from here -->
     <div class="container">
-        <div class="items">
-            <span>隐藏tab头</span>
-            <jigsaw-switch [(checked)]="headless"></jigsaw-switch>
-        </div>
-        <div class="items">
-            <jigsaw-button-bar style="display:block;" [data]="tabs" [selectedItems]="tabs[selectedIndex]"
-                               (selectedItemsChange)="selectedIndex = $event[0].idx">
+        <div class="demo-showcase">
+            <jigsaw-button-bar
+                style="display: block"
+                [data]="tabs"
+                [selectedItems]="tabs[selectedIndex]"
+                (selectedItemsChange)="selectedIndex = $event[0].idx"
+            >
             </jigsaw-button-bar>
         </div>
         <div style="border: 1px solid #eee; width: 600px">
-            <jigsaw-tabs [headless]="headless" height="200px" [selectedIndex]="selectedIndex">
+            <jigsaw-tabs height="200px" headless="true" [selectedIndex]="selectedIndex">
                 <jigsaw-tab-pane title="Tab 1">
                     <ng-template>This is the body of the first tab</ng-template>
                 </jigsaw-tab-pane>
@@ -34,4 +33,3 @@
         </div>
     </div>
 </demo-template>
-

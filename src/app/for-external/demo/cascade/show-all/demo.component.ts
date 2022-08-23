@@ -1,8 +1,8 @@
-import {Component} from "@angular/core";
-import {CascadeTextService} from "../doc.service";
-import {SimpleTreeData} from "jigsaw/public_api";
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import { Component } from "@angular/core";
+import { CascadeTextService } from "../doc.service";
+import { SimpleTreeData } from "jigsaw/public_api";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
 
 @Component({
     selector: "cascade-show-all",
@@ -10,7 +10,7 @@ import {map} from "rxjs/operators";
 })
 
 export class CascadeShowAllComponent {
-    areas: SimpleTreeData;
+    public areas: SimpleTreeData;
 
     constructor(http: HttpClient, public doc: CascadeTextService) {
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
@@ -22,14 +22,5 @@ export class CascadeShowAllComponent {
                 return data;
             }))
             .subscribe((data: SimpleTreeData) => this.areas = data);
-    }
-
-    message: string = '';
-
-    parseMessage(selectedItems) {
-        this.message = selectedItems.reduce((result, item) => {
-            result.push(item.label);
-            return result;
-        }, []).join(' | ');
     }
 }

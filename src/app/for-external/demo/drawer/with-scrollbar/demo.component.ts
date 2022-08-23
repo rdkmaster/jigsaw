@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {DrawerTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { DrawerTextService } from "../doc.service";
 
 @Component({
     selector: 'drawer-with-scrollbar',

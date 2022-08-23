@@ -4,13 +4,12 @@
         <j-combo-select [value]="comboValue1">
             <ng-template>
                 <j-cascade
-                    style="min-height: 335px"
+                    width="418"
+                    labelField="name"
                     [(selectedItems)]="selectedItems1"
                     [dataGenerator]="generator"
                     [generatorContext]="this"
-                    labelField="name"
-                    (selectedItemsChange)="parseMessage($event)"
-                    width="418"
+                    style="min-height: 335px"
                 >
                 </j-cascade>
             </ng-template>
@@ -22,14 +21,13 @@
         <j-combo-select [value]="comboValue2">
             <ng-template>
                 <j-cascade
-                    style="min-height: 335px"
+                    width="418"
+                    labelField="name"
                     [(selectedItems)]="selectedItems2"
                     [dataGenerator]="generator"
                     [generatorContext]="this"
-                    labelField="name"
                     [multipleSelect]="true"
-                    (selectedItemsChange)="parseMultipleMessage($event)"
-                    width="418"
+                    style="min-height: 335px"
                 >
                 </j-cascade>
             </ng-template>

@@ -1,6 +1,6 @@
-import {Component, OnInit} from "@angular/core";
-import {TabTextService} from "../doc.service";
-import {HttpClient} from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { TabTextService } from "../doc.service";
+import { HttpClient } from "@angular/common/http";
 import { TabBarData } from "jigsaw/public_api";
 
 @Component({
@@ -8,13 +8,10 @@ import { TabBarData } from "jigsaw/public_api";
     templateUrl: "./demo.component.html",
 })
 
-export class TabTabBarComponent implements OnInit{
+export class TabTabBarComponent implements OnInit {
     public tabBarData: Array<string>;
     public tabBarData2: TabBarData[];
     public selectedIndex = 0;
-
-    constructor(public http: HttpClient, public doc: TabTextService) {
-    }
 
     ngOnInit() {
         this.tabBarData = ["Tab 1", "Tab 2", `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`, "Tab 4"];
@@ -31,16 +28,15 @@ export class TabTabBarComponent implements OnInit{
                 html: `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`
             },
             {
-                html: `
-                    <span>更多</span>
-                    <span (click)="_$more()" class="tab-icon-more iconfont iconfont-e2b7"></span>
-                `,
-                htmlContext: this
+                html: `<span>更多</span>`,
             },
             {
                 label: "Tab 5",
                 hidden: true
             }
         ];
+    }
+
+    constructor(public http: HttpClient, public doc: TabTextService) {
     }
 }

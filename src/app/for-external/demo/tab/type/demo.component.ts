@@ -1,20 +1,20 @@
 import { Component } from "@angular/core";
-import {TabTextService} from "../doc.service";
+import { TabTextService } from "../doc.service";
 
 @Component({
     selector: 'tab-type',
     templateUrl: "./demo.component.html"
 })
 export class TabsTypeDemoComponent {
-    editable: boolean = true;
+    public editable: boolean = true;
 
-    show(msg) {
+    public show(msg) {
         alert(msg);
     }
-
-    add(tab, content) {
+    public add(tab, content) {
         tab.addTab("new tab", content);
     }
+
     constructor(public doc: TabTextService) {
     }
 }

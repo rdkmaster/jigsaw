@@ -1,26 +1,25 @@
-import {Component} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {ArrayCollection, TableData, LineGraphData} from "jigsaw/public_api";
-import {TabTextService} from "../doc.service";
+import { Component } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { ArrayCollection, TableData, LineGraphData } from "jigsaw/public_api";
+import { TabTextService } from "../doc.service";
 
 @Component({
     selector: 'tab-headless',
-    templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    templateUrl: './demo.component.html'
 })
 export class TabHeadlessDemoComponent {
+    public headless: boolean = true;
+    public lineBarGraphData: LineGraphData;
+    public selectedIndex = 0;
 
-    headless:boolean = true;
-
-    tabs = new ArrayCollection([
-        {label: "Tab 1", idx: 0},
-        {label: "Tab 2", idx: 1},
-        {label: "Tab 3", idx: 2},
-        {label: "Tab 4", idx: 3}
+    public tabs = new ArrayCollection([
+        { label: "Tab 1", idx: 0 },
+        { label: "Tab 2", idx: 1 },
+        { label: "Tab 3", idx: 2 },
+        { label: "Tab 4", idx: 3 }
     ]);
-    selectedIndex = 0;
 
-    fruitList: TableData = new TableData(
+    public fruitList: TableData = new TableData(
         [
             ["banana", "$12.0", "The banana is an edible fruit – botanically a berry – produced by several kinds of large herbaceous flowering plants in the genus Musa.", "Southeast Asia"],
             ["apple", "$21.0", "The apple tree is a deciduous tree in the rose family best known for its sweet, pomaceous fruit, the apple.", "Shan Dong, China"],
@@ -32,8 +31,6 @@ export class TabHeadlessDemoComponent {
         ["name", "price", "desc", "origin"],
         ["Name", "Price", "Description", "Origin"]
     );
-
-    lineBarGraphData: LineGraphData;
 
     constructor(http: HttpClient, public doc: TabTextService) {
         this.lineBarGraphData = new LineGraphData();
