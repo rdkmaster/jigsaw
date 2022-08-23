@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-option-count',
     templateUrl: './demo.component.html'
 })
 export class ListLiteOptionCountDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -49,15 +49,4 @@ export class ListLiteOptionCountDemoComponent {
             })
         });
     }
-
-    selectedItems;
-    handleSelect(selectedItems) {
-        this.selectedItems = selectedItems.map(item => item.name).toString()
-    }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
 }

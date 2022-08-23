@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {DragDropTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { DragDropTextService } from "./doc.service";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
 export class DragDropDemoComponent {
-    constructor( public doc: DragDropTextService) {
+    constructor(public doc: DragDropTextService) {
     }
 }

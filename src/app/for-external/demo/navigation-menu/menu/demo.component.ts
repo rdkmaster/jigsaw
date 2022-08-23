@@ -1,14 +1,22 @@
-import {Component,  QueryList, ViewChildren} from "@angular/core";
-import {NavigationMenuTextService} from "../doc.service";
-import {SimpleNode, SimpleTreeData} from "jigsaw/public_api";
-import {JigsawNavigationMenu} from "jigsaw/public_api";
+import { Component, QueryList, ViewChildren } from "@angular/core";
+import { NavigationMenuTextService } from "../doc.service";
+import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
+import { JigsawNavigationMenu } from "jigsaw/public_api";
 
 @Component({
     selector: "nav-menu",
     templateUrl: "demo.component.html",
 })
 export class NavigationMenuDemoComponent {
-    public data2: SimpleTreeData = new SimpleTreeData();
+    @ViewChildren(JigsawNavigationMenu)
+    public data: SimpleTreeData = new SimpleTreeData();
+    public menus: QueryList<JigsawNavigationMenu>;
+    public selectedMenuLabel = '';
+
+    public onMenuSelect(node: SimpleNode) {
+        console.log(`${node.label} 被点击了!!!`);
+    }
+
     constructor(public doc: NavigationMenuTextService) {
         const xmlData = `
             <node>
@@ -24,18 +32,6 @@ export class NavigationMenuDemoComponent {
                 <node label="标准图标10" icon="iconfont iconfont-e367"></node>
             </node>
         `;
-        this.data2.fromXML(xmlData)
-    }
-    @ViewChildren(JigsawNavigationMenu)
-    menus: QueryList<JigsawNavigationMenu>;
-    selectedMenuLabel = '';
-
-    selectMenu(): void {
-        this.menus.forEach(menu => {
-            menu.selectMenu('label', this.selectedMenuLabel);
-        });
-    }
-    onMenuSelect(node: SimpleNode) {
-        console.log(`${node.label} 被点击了!!!`);
+        this.data.fromXML(xmlData)
     }
 }

@@ -1,15 +1,17 @@
 <demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <jigsaw-pagination [data]="pageable"
-                           [pageSizeOptions]="pageSizeOptions"
-                           [searchable]="false"
-                           [showQuickJumper]="true"
-                           mode="complex"
-                           (currentChange)="getCurrentPage($event)"
-                           (pageSizeChange)="getPageSize($event)"
-                           widh="710px"
-                           [size]="selectedSize.size">
+        <jigsaw-pagination
+            widh="710px"
+            mode="complex"
+            [data]="pageable"
+            [pageSizeOptions]="pageSizeOptions"
+            [searchable]="false"
+            [showQuickJumper]="true"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            [size]="selectedSize.size"
+        >
         </jigsaw-pagination>
     </div>
 </demo-template>

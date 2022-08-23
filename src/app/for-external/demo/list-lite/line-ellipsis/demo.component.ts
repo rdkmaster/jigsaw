@@ -1,13 +1,14 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-line-ellipsis',
     templateUrl: './demo.component.html'
 })
 export class ListLiteLineEllipsisDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public selectedItems: any[];
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -39,14 +40,6 @@ export class ListLiteLineEllipsisDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    selectedItems: any[];
-
-    selectedItemsStr: string;
-
-    handleSelect(selectedItems) {
-        this.selectedItemsStr = selectedItems.map(item => item.name).toString()
-    }
 
     constructor(public doc: ListLiteTextService) {
     }

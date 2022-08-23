@@ -1,10 +1,4 @@
 <demo-template [data]="''" [text]="doc.text.singleSelect" [codes]="doc.codes.singleSelect">
     <!-- start to learn the demo from here -->
-    <j-list-lite
-        width="200"
-        [data]="goodsList"
-        labelField="name"
-        (selectedItemsChange)="handleSelect($event, 'selectedItems', 'name')"
-    >
-    </j-list-lite>
+    <j-list-lite width="200" [data]="goodsList" labelField="name"> </j-list-lite>
 </demo-template>

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {BoxTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { BoxTextService } from "../doc.service";
 
 @Component({
     selector: 'box-middle-resize-line',

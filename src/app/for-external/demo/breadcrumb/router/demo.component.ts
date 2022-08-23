@@ -5,39 +5,21 @@ import { BreadcrumbTextService } from "../doc.service";
 
 @Component({
     selector: 'breadcrumb-router',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .demo-container h3 {
-            font-size: 16px;
-            color: #333;
-            margin-bottom: 6px;
-        }
-
-        .demo-container p {
-            margin-bottom: 4px;
-        }
-
-        .demo-container j-breadcrumb {
-            margin-bottom: 12px;
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class BreadcrumbRouterDemoComponent {
-    constructor(public productService: ProductService, public doc: BreadcrumbTextService) {
-    }
-
-    routes: BreadcrumbRouteConfig[] = [
+    public routes: BreadcrumbRouteConfig[] = [
         { '/pc/breadcrumb': { label: 'Product List', icon: 'iconfont iconfont-e12e' } },
         { '/pc/breadcrumb/list/*': this.listBreadcrumbGenerator },
         { '/pc/breadcrumb/detail/*': this.detailBreadcrumbGenerator },
         { '/pc/breadcrumb/buy/*': this.buyBreadcrumbGenerator },
     ];
 
-    listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+    public listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         return this.getListNode(parseInt(routeNode));
     }
 
-    detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+    public detailBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/detail/1这边的routeNode是1
         const detail = this.productService.getProductById(parseInt(routeNode));
         // 自定义面包屑节点
@@ -48,7 +30,7 @@ export class BreadcrumbRouterDemoComponent {
         ];
     };
 
-    buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
+    public buyBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
         // routeNode指当前url的最后一个节点，比如url为breadcrumb/router/buy/1这边的routeNode是1
         const detail = this.productService.getProductById(parseInt(routeNode));
         // 自定义面包屑节点
@@ -60,11 +42,11 @@ export class BreadcrumbRouterDemoComponent {
         ];
     }
 
-    getDetailNode(detail) {
+    public getDetailNode(detail) {
         return { label: detail.name, routeLink: '/pc/breadcrumb/detail/' + detail.id } // 请尽量使用绝对路径
     }
 
-    getListNode(typeId) {
+    public getListNode(typeId) {
         let listNode;
         switch (typeId) {
             case 0:
@@ -80,8 +62,11 @@ export class BreadcrumbRouterDemoComponent {
         return listNode;
     }
 
-    productTypeList = [
+    public productTypeList = [
         { id: 0, name: 'Fruits' },
         { id: 1, name: 'Digital' }
     ];
+
+    constructor(public productService: ProductService, public doc: BreadcrumbTextService) {
+    }
 }

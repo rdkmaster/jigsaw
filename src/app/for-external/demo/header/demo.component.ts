@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {HeaderTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { HeaderTextService } from "./doc.service";
 
 @Component({
     templateUrl: './demo.component.html',

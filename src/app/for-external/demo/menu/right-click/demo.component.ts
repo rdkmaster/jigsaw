@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData, JigsawMenu} from "jigsaw/public_api";
-import {MenuTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SimpleTreeData, JigsawMenu } from "jigsaw/public_api";
+import { MenuTextService } from "../doc.service";
 
 @Component({
     selector: 'menu-right-click',
@@ -42,14 +42,14 @@ export class MenuRightClickDemoComponent {
         return data;
     }
 
-    menuSelect(node: SimpleTreeData) {
+    public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    showContext(event: any) {
+    public showContext(event: any) {
         console.log(111 + event);
-        JigsawMenu.show(event, {data: this.dropdownData, width: 250}, this.menuSelect.bind(this));
+        JigsawMenu.show(event, { data: this.dropdownData, width: 250 }, this.menuSelect.bind(this));
     }
 
-    constructor(public doc: MenuTextService) {}
+    constructor(public doc: MenuTextService) { }
 }

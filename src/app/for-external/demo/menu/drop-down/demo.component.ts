@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/public_api";
-import {MenuTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SimpleTreeData } from "jigsaw/public_api";
+import { MenuTextService } from "../doc.service";
 
 @Component({
     selector: 'menu-drop-down',
@@ -41,9 +41,9 @@ export class MenuDropDownDemoComponent {
         return data;
     }
 
-    menuSelect(node: SimpleTreeData) {
+    public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    constructor(public doc: MenuTextService) {}
+    constructor(public doc: MenuTextService) { }
 }

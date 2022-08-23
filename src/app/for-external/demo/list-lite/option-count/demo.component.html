@@ -1,10 +1,4 @@
 <demo-template [data]="''" [text]="doc.text.optionCount" [codes]="doc.codes.optionCount">
     <!-- start to learn the demo from here -->
-    <j-list-lite
-        width="200"
-        [data]="goodsList"
-        labelField="name"
-        (selectedItemsChange)="handleSelect($event)"
-        [optionCount]="4"
-    ></j-list-lite>
+    <j-list-lite width="200" [data]="goodsList" labelField="name" [optionCount]="4"></j-list-lite>
 </demo-template>

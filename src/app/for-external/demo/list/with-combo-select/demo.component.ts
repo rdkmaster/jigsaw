@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
-import {ListTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ArrayCollection } from "jigsaw/public_api";
+import { ListTextService } from "../doc.service";
 
 @Component({
     selector: 'list-with-combo-select',
     templateUrl: './demo.component.html',
 })
 export class ListWithComboSelectDemoComponent {
-    goodsList = [
+    public goodsList = [
         {
             logo: 'e187',
             name: 'bicycle',
@@ -41,7 +41,7 @@ export class ListWithComboSelectDemoComponent {
         },
     ];
 
-    selectedItems = new ArrayCollection([
+    public selectedItems = new ArrayCollection([
         {
             logo: 'book',
             name: 'book',

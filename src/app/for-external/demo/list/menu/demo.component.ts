@@ -1,13 +1,12 @@
-import {Component} from "@angular/core";
-import {ArrayCollection} from "jigsaw/public_api";
-import {ListTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ListTextService } from "../doc.service";
 
 @Component({
     selector: 'list-menu',
     templateUrl: './demo.component.html',
 })
 export class ListMenuDemoComponent {
-    titles = [
+    public titles = [
         {
             title: 'Settings',
             subTitle: 'Ctrl+Alt+A',
@@ -30,10 +29,6 @@ export class ListMenuDemoComponent {
         }
     ];
 
-    selectedItems: string;
-    handleSelect(selectedItems) {
-        this.selectedItems = selectedItems.map(item => item.title).toString()
-    }
     constructor(public doc: ListTextService) {
     }
 }

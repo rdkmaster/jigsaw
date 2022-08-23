@@ -1,15 +1,15 @@
-import {Component} from "@angular/core";
-import {NumericInputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { NumericInputTextService } from "../doc.service";
 
 @Component({
     selector: 'numeric-input-basic',
-  templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html'
 })
 export class NumericInputBasicDemoComponent {
-    public selectedSize = {label: "中", size: "default"};
-    value: number;
+    public selectedSize = { label: "中", size: "default" };
+    public value: number;
 
-    valueChange($event) {
+    public valueChange($event) {
         console.log($event, typeof $event == 'number');
     }
 

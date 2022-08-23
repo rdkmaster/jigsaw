@@ -1,18 +1,10 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {InputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { InputTextService } from "../doc.service";
 
 @Component({
     selector: 'input-prefix-suffix',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .demo-container {
-            margin: 20px;
-        }
-        .demo-container jigsaw-input {
-            margin-bottom: 10px;
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class InputPrefixSuffixDemoComponent {
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];

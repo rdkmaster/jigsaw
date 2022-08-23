@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpRequest } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { KLineGraphData } from "jigsaw/public_api";
-import { AjaxInterceptor } from "../../../../libs/app.interceptor";
 import { GraphTextService } from "../demo.service";
 
 function random(min, max) {
@@ -15,6 +14,12 @@ function random(min, max) {
     templateUrl: './demo.component.html'
 })
 export class GraphKLineDemoComponent {
+    public kLineData: KLineGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.kLineData = new KLineGraphData();
         this.kLineData.header = ["2016.04.24", "2016.04.25", "2016.04.26", "2016.05.27", "2016.04.28", "2016.04.29", "2016.04.30", "2016.05.01", "2016.05.02", "2016.05.03", "2016.05.04", "2016.05.05", "2016.05.06", "2016.05.07"
@@ -23,12 +28,6 @@ export class GraphKLineDemoComponent {
         this.kLineData.data = Array.from(new Array(31)).map(() => {
             return Array.from(new Array(24)).map(item => random(0, 100))
         });
-    }
-
-    kLineData: KLineGraphData;
-
-    handleClick($event) {
-        console.log($event);
     }
 }
 

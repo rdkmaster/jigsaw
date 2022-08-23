@@ -3,15 +3,15 @@
     <div class="demo-showcase-v">
         <span>默认模式</span>
         <jigsaw-pagination
+            widh="710px"
             [data]="pageable"
             [pageSizeOptions]="pageSizeOptions"
             [searchable]="searchable"
             [showQuickJumper]="showQuickJumper"
             [pageSizeOptions]="[2, 5, 10]"
+            [size]="selectedSize.size"
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
-            widh="710px"
-            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>
@@ -19,12 +19,12 @@
     <div class="demo-showcase-v">
         <span>简约模式</span>
         <jigsaw-pagination
-            [data]="pageableForSimple"
-            (currentChange)="getCurrentPage($event)"
             mode="simple"
+            [data]="pageableForSimple"
             [searchable]="searchable"
             [pageSizeOptions]="pageSizeOptions"
             [size]="selectedSize.size"
+            (currentChange)="getCurrentPage($event)"
         >
         </jigsaw-pagination>
     </div>

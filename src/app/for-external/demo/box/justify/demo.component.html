@@ -4,7 +4,7 @@
         <label>direction(布局方向): </label>
         <j-radios [(value)]="direction">
             <j-radio-option *ngFor="let item of directionArr" [value]="item">
-                {{item}}
+                {{ item }}
             </j-radio-option>
         </j-radios>
     </div>
@@ -12,7 +12,7 @@
         <label>justify(主轴对齐): </label>
         <j-radios [(value)]="justify">
             <j-radio-option *ngFor="let item of justifyArr" [value]="item">
-                {{item}}
+                {{ item }}
             </j-radio-option>
         </j-radios>
     </div>
@@ -20,7 +20,7 @@
         <label>align(垂直主轴对齐): </label>
         <j-radios [(value)]="align">
             <j-radio-option *ngFor="let item of alignArr" [value]="item">
-                {{item}}
+                {{ item }}
             </j-radio-option>
         </j-radios>
     </div>
@@ -39,6 +39,4 @@
             <p class="inner-content h40">box4</p>
         </div>
     </j-box>
-
 </demo-template>
-

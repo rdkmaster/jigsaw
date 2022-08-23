@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {BoxTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { BoxTextService } from "../doc.service";
 
 @Component({
     selector: 'box-layout',
@@ -7,15 +7,15 @@ import {BoxTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class BoxLayoutDemoComponent {
-    arr = new Array(20);
+    public arr = new Array(20);
 
-    resizeInfo: string;
+    public resizeInfo: string;
 
-    handleResizeStart(box) {
+    public handleResizeStart(box) {
         this.resizeInfo = 'Box is resizing';
     }
 
-    handleResize(box) {
+    public handleResize(box) {
         this.resizeInfo = `Box's width is changed to be ${box.element.offsetWidth} px.`;
     }
 

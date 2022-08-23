@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {InputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InputTextService } from "../doc.service";
 
 @Component({
     selector: 'input-clearable',

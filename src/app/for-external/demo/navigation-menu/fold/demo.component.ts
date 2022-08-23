@@ -1,14 +1,22 @@
-import {Component} from "@angular/core";
-import {NavigationMenuTextService} from "../doc.service";
-import {SimpleNode, SimpleTreeData} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { NavigationMenuTextService } from "../doc.service";
+import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
 
 @Component({
     selector: "nav-fold",
     templateUrl: "demo.component.html",
 })
 export class NavigationFoldDemoComponent {
-    public data3: SimpleTreeData = new SimpleTreeData();
+    public data: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
+
+    public onMenuSelect(node: SimpleNode) {
+        console.log(`${node.label} 被点击了!!!`);
+    }
+
+    public onCollapsedChanged(event: boolean) {
+        console.log(event, this.collapsed);
+    }
 
     constructor(public doc: NavigationMenuTextService) {
         const xmlData = `
@@ -25,12 +33,6 @@ export class NavigationFoldDemoComponent {
                 <node label="标准图标10" icon="iconfont iconfont-e367"></node>
             </node>
         `;
-        this.data3.fromXML(xmlData);
-    }
-    onMenuSelect(node: SimpleNode) {
-        console.log(`${node.label} 被点击了!!!`);
-    }
-    onCollapsedChanged(event: boolean) {
-        console.log(event, this.collapsed);
+        this.data.fromXML(xmlData);
     }
 }

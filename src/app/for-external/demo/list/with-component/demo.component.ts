@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {ListTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ListTextService } from "../doc.service";
 
 @Component({
     selector: 'list-with-component',
@@ -7,7 +7,7 @@ import {ListTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class ListWithComponentDemoComponent {
-    goodsList = [
+    public goodsList = [
         {
             logo: 'e187',
             name: 'bicycle',
@@ -41,7 +41,7 @@ export class ListWithComponentDemoComponent {
         },
     ];
 
-    selectedItems = [
+    public selectedItems = [
         {
             logo: 'e187',
             name: 'bicycle',
@@ -53,12 +53,6 @@ export class ListWithComponentDemoComponent {
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
     ];
-
-    selectedItemsStr: string  = this.selectedItems.map(item => item.name).toString();
-
-    handleSelect(selectedItems) {
-        this.selectedItemsStr = selectedItems.map(item => item.name).toString()
-    }
 
     constructor(public doc: ListTextService) {
     }

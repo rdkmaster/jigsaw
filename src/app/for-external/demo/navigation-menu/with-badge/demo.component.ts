@@ -1,15 +1,19 @@
-import {Component,} from "@angular/core";
-import {NavigationMenuTextService} from "../doc.service";
-import {SimpleNode, SimpleTreeData} from "jigsaw/public_api";
+import { Component, } from "@angular/core";
+import { NavigationMenuTextService } from "../doc.service";
+import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
 
 @Component({
     selector: "nav-with-badge",
     templateUrl: "demo.component.html",
 })
 export class NavigationWithBadgeDemoComponent {
-    public data4: SimpleTreeData = new SimpleTreeData();
+    public data: SimpleTreeData = new SimpleTreeData();
+    public onMenuSelect(node: SimpleNode) {
+        console.log(`${node.label} 被点击了!!!`);
+    }
+
     constructor(public doc: NavigationMenuTextService) {
-        this.data4.fromXML(`
+        this.data.fromXML(`
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true" badgeValue="12">
                     <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8" badgeValue="3"></node>
@@ -27,8 +31,5 @@ export class NavigationWithBadgeDemoComponent {
                 <node label="告警设置" icon="iconfont iconfont-e36f"></node>
             </node>
         `)
-    }
-    onMenuSelect(node: SimpleNode) {
-        console.log(`${node.label} 被点击了!!!`);
     }
 }

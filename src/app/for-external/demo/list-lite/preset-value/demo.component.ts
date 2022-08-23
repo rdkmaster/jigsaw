@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-preset-value',
     templateUrl: './demo.component.html'
 })
 export class ListLitePresetValueDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -41,13 +41,7 @@ export class ListLitePresetValueDemoComponent {
     ];
 
     // selectedItems只要包含trackItemBy的name字段就能在组件中显示出来
-    selectedItems = [{name: 'bicycle',}, {name: 'book',}];
-
-    selectedItemsStr: string = this.selectedItems.map(item => item.name).toString();
-
-    handleSelect(selectedItems) {
-        this.selectedItemsStr = selectedItems.map(item => item.name).toString()
-    }
+    public selectedItems = [{ name: 'bicycle', }, { name: 'book', }];
 
     constructor(public doc: ListLiteTextService) {
     }

@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {JigsawListLite, ArrayCollection,} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { JigsawListLite, ArrayCollection, } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-searchable',
     templateUrl: './demo.component.html'
 })
 export class ListLiteSearchableDemoComponent {
-    goodsList = new ArrayCollection([
+    public goodsList = new ArrayCollection([
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -42,12 +42,6 @@ export class ListLiteSearchableDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ]);
-
-    selectedItems: string;
-
-    handleSelect(selectedItems: any[], property: string, labelField: string) {
-        this[property] = selectedItems.map(item => item[labelField]).toString()
-    }
 
     constructor(public doc: ListLiteTextService) {
     }

@@ -1,7 +1,7 @@
 <demo-template [data]="''" [text]="doc.text.menu" [codes]="doc.codes.menu">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <j-list width="200" trackItemBy="title" (selectedItemsChange)="handleSelect($event)">
+        <j-list width="200" trackItemBy="title">
             <j-list-option *ngFor="let title of titles" [value]="title">
                 <span j-title>{{ title.title }}</span>
                 <div j-sub-title>

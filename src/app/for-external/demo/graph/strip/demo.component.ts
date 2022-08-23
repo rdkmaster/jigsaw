@@ -8,6 +8,16 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphStripDemoComponent {
+    public stripData: StripGraphData;
+
+    public stripSequenceData: StripSequenceGraphData;
+
+    public stripColorData: StripColorGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.stripData = new StripGraphData();
         this.stripData.header = ["搜狐视频", "乐视视频", "土豆视频", "奇异PPS视频", "优酷视频", "腾讯视频"];
@@ -28,16 +38,6 @@ export class GraphStripDemoComponent {
         this.stripColorData.title = '各市得分排名';
         this.stripColorData.header = ["保定", "石家庄", "唐山", "秦皇岛", "邢台", "承德"];
         this.stripColorData.data = [30, 66, 71, 88, 93, 98];
-    }
-
-    stripData: StripGraphData;
-
-    stripSequenceData: StripSequenceGraphData;
-
-    stripColorData: StripColorGraphData;
-
-    handleClick($event) {
-        console.log($event);
     }
 }
 

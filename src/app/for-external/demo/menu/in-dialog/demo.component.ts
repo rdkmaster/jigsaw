@@ -1,6 +1,6 @@
-import {Component, TemplateRef} from "@angular/core";
-import {SimpleTreeData, PopupService, PopupInfo, JigsawMenu} from "jigsaw/public_api";
-import {MenuTextService} from "../doc.service";
+import { Component, TemplateRef } from "@angular/core";
+import { SimpleTreeData, PopupService, PopupInfo, JigsawMenu } from "jigsaw/public_api";
+import { MenuTextService } from "../doc.service";
 
 @Component({
     selector: 'menu-in-dialog',
@@ -59,17 +59,17 @@ export class MenuInDialogDemo {
         `);
     }
 
-    menuSelect(node: SimpleTreeData) {
+    public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    showContext(event: any) {
-        JigsawMenu.show(event, {data: this.data, width: 150}, this.menuSelect.bind(this));
+    public showContext(event: any) {
+        JigsawMenu.show(event, { data: this.data, width: 150 }, this.menuSelect.bind(this));
     }
 
     private popupInfo: PopupInfo;
 
-    popup(dialog: TemplateRef<any>) {
+    public popup(dialog: TemplateRef<any>) {
         this.popupInfo = this.ps.popup(dialog);
         if (this.autoDispose) {
             setTimeout(() => {
@@ -78,7 +78,7 @@ export class MenuInDialogDemo {
         }
     }
 
-    dispose() {
+    public dispose() {
         this.popupInfo.dispose();
     }
 }

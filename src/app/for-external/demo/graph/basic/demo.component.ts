@@ -1,24 +1,22 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {AbstractGraphData, EchartOptions, JigsawGraph} from "jigsaw/public_api";
-import {GraphTextService} from "../demo.service";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AbstractGraphData, EchartOptions, JigsawGraph } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-basic',
     templateUrl: './demo.component.html'
 })
 export class GraphBasicDemoComponent implements OnInit {
-    data: AbstractGraphData;
-
     @ViewChild("graph") graph: JigsawGraph;
+    public data: AbstractGraphData;
 
-    patchOption = {
+    public patchOption = {
         title: {
             text: '补丁 - 堆叠区域图'
         }
     };
-    constructor( public doc: GraphTextService) {
-    }
-    handleClick(info){
+
+    public handleClick(info) {
         console.log(info);
     }
 
@@ -26,6 +24,9 @@ export class GraphBasicDemoComponent implements OnInit {
         let graphData = new GraphDataDemo();
         this.data = graphData;
         graphData.optionsPatch = this.patchOption;
+    }
+
+    constructor(public doc: GraphTextService) {
     }
 }
 
@@ -71,28 +72,28 @@ export class GraphDataDemo extends AbstractGraphData {
                     name: '邮件营销',
                     type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {}},
+                    areaStyle: { normal: {} },
                     data: [120, 132, 101, 134, 90, 230, 210]
                 },
                 {
                     name: '联盟广告',
                     type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {}},
+                    areaStyle: { normal: {} },
                     data: [220, 182, 191, 234, 290, 330, 310]
                 },
                 {
                     name: '视频广告',
                     type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {}},
+                    areaStyle: { normal: {} },
                     data: [150, 232, 201, 154, 190, 330, 410]
                 },
                 {
                     name: '直接访问',
                     type: 'line',
                     stack: '总量',
-                    areaStyle: {normal: {}},
+                    areaStyle: { normal: {} },
                     data: [320, 332, 301, 334, 390, 330, 320]
                 },
                 {
@@ -105,7 +106,7 @@ export class GraphDataDemo extends AbstractGraphData {
                             position: 'top'
                         }
                     },
-                    areaStyle: {normal: {}},
+                    areaStyle: { normal: {} },
                     data: [820, 932, 901, 934, 1290, 1330, 1320]
                 }
             ]

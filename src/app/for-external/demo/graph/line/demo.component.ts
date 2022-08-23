@@ -8,7 +8,8 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphLineDemoComponent {
-    lineBarData: LineGraphData;
+    public lineBarData: LineGraphData;
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.lineBarData = new LineGraphData();
         this.lineBarData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];

@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData} from "jigsaw/public_api";
-import {MenuTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SimpleTreeData } from "jigsaw/public_api";
+import { MenuTextService } from "../doc.service";
 
 @Component({
     selector: 'menu-nav-inline',
@@ -31,7 +31,7 @@ export class NavigationMenuInlineDemoComponent {
         this.data.fromXML(xmlData);
     }
 
-    menuSelect(node: SimpleTreeData) {
+    public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
 }

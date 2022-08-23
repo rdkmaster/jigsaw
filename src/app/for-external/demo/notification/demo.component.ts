@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {NotificationTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { NotificationTextService } from "./doc.service";
 
 @Component({
     templateUrl: "demo.component.html",

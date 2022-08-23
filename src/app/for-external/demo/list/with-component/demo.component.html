@@ -1,20 +1,13 @@
 <demo-template [data]="''" [text]="doc.text.withComponent" [codes]="doc.codes.withComponent">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
-        <j-list
-            [multipleSelect]="true"
-            trackItemBy="name"
-            [selectedItems]="selectedItems"
-            (selectedItemsChange)="handleSelect($event)"
-            #listGroup
-        >
+        <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems" #listGroup>
             <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
                 <div class="goods-box">
                     <j-checkbox
+                        mode="minimalist"
                         [(checked)]="listItem.selected"
                         [disabled]="goods.disabled"
-                        mode="minimalist"
-                        (checkedChange)="listGroup.update(goods, $event)"
                     ></j-checkbox>
                     <span class="logo iconfont iconfont-{{ goods.logo }}"></span>
                     <p>{{ goods.desc }}</p>

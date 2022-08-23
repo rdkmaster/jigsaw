@@ -1,14 +1,19 @@
-import {Component} from '@angular/core';
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {BoxPlotGraphData} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {GraphTextService} from "../demo.service";
+import { Component } from '@angular/core';
+import { HttpClient } from "@angular/common/http";
+import { BoxPlotGraphData } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-box-plot',
     templateUrl: './demo.component.html'
 })
 export class GraphBoxPlotDemoComponent {
+    public boxPlotData: BoxPlotGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.boxPlotData = new BoxPlotGraphData();
         this.boxPlotData.title = 'Michelson-Morley Experiment';
@@ -20,11 +25,4 @@ export class GraphBoxPlotDemoComponent {
             [890, 840, 780, 810, 760, 810, 790, 810, 820, 850, 870, 870, 810, 740, 810, 940, 950, 800, 810, 870]
         ];
     }
-
-    boxPlotData: BoxPlotGraphData;
-
-    handleClick($event) {
-        console.log($event);
-    }
-
 }

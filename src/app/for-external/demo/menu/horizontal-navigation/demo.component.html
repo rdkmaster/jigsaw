@@ -1,9 +1,14 @@
 <demo-template [data]="''" [text]="doc.text.horizontalNavigation" [codes]="doc.codes.horizontalNavigation">
     <!-- start to learn the demo from here -->
-    <label *ngFor="let menu of topBarData" class="nav-item"
-           jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
-           jigsawCascadingMenuWidth="250" jigsawCascadingMenuTheme="navigation"
-           (jigsawCascadingMenuSelect)="menuSelect($event)">
-        {{menu.label}}
+    <label
+        *ngFor="let menu of topBarData"
+        class="nav-item"
+        jigsawCascadingMenu
+        [jigsawCascadingMenuData]="menu.data"
+        jigsawCascadingMenuWidth="250"
+        jigsawCascadingMenuTheme="navigation"
+        (jigsawCascadingMenuSelect)="menuSelect($event)"
+    >
+        {{ menu.label }}
     </label>
 </demo-template>

@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {CheckboxTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { CheckboxTextService } from "./doc.service";
 
 @Component({
     templateUrl: "demo.component.html"

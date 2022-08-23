@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {InputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InputTextService } from "../doc.service";
 
 @Component({
     selector: "input-password",
@@ -7,5 +7,5 @@ import {InputTextService} from "../doc.service";
 })
 
 export class InputPasswordComponent {
-    constructor(public doc: InputTextService) {}
+    constructor(public doc: InputTextService) { }
 }

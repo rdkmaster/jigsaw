@@ -1,11 +1,11 @@
 <demo-template [data]="''" [text]="doc.text.fold" [codes]="doc.codes.fold">
     <div class="demo-showcase">
         <jigsaw-navigation-menu
-            [data]="data3"
+            width="180"
+            [data]="data"
             (select)="onMenuSelect($event)"
             [(collapsed)]="collapsed"
             (collapsedChange)="onCollapsedChanged($event)"
-            width="180"
         >
         </jigsaw-navigation-menu>
     </div>

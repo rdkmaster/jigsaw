@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-single-select',
     templateUrl: './demo.component.html'
 })
 export class ListLiteSingleSelectDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -42,12 +42,6 @@ export class ListLiteSingleSelectDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    selectedItems: string;
-
-    handleSelect(selectedItems: any[], property: string, labelField?: string) {
-        this[property] = selectedItems.map(item => labelField ? item[labelField] : item).toString()
-    }
 
     constructor(public doc: ListLiteTextService) {
     }

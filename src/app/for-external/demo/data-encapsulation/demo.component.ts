@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {DataEncapsulationTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { DataEncapsulationTextService } from "./doc.service";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
 export class DataEncapsulationDemoComponent {
-    constructor( public doc: DataEncapsulationTextService) {
+    constructor(public doc: DataEncapsulationTextService) {
     }
 }

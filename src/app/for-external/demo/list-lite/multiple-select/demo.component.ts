@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-multiple-select',
     templateUrl: './demo.component.html'
 })
 export class ListLiteMultipleSelectDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -43,15 +43,6 @@ export class ListLiteMultipleSelectDemoComponent {
         },
     ];
 
-
-    selectedItems: string;
-
-    handleSelect(selectedItems: any[], property: string, labelField?: string) {
-        this[property] = selectedItems.map(item => labelField ? item[labelField] : item).toString()
-    }
-
-
     constructor(public doc: ListLiteTextService) {
-
     }
 }

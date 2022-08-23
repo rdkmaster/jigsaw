@@ -1,12 +1,12 @@
-import {Component} from "@angular/core";
-import {NumericInputTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { NumericInputTextService } from "../doc.service";
 
 @Component({
     selector: 'numeric-input-step',
     templateUrl: './demo.component.html'
 })
 export class NumericInputStepDemoComponent {
-    public selectedSize = {label: "中", size: "default"};
+    public selectedSize = { label: "中", size: "default" };
 
     constructor(public doc: NumericInputTextService) {
     }

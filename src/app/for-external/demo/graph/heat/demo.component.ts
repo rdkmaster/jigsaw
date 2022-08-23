@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpRequest } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { HeatGraphData } from "jigsaw/public_api";
-import { AjaxInterceptor } from "../../../../libs/app.interceptor";
 import { GraphTextService } from "../demo.service";
 
 @Component({
@@ -9,6 +8,12 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphHeatDemoComponent {
+    public heatData: HeatGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.heatData = new HeatGraphData();
         this.heatData.data = [
@@ -17,12 +22,6 @@ export class GraphHeatDemoComponent {
             ['Saturday', 'Friday', 'Thursday', 'Wednesday', 'Tuesday', 'Monday', 'Sunday']
         ];
 
-    }
-
-    heatData: HeatGraphData;
-
-    handleClick($event) {
-        console.log($event);
     }
 }
 

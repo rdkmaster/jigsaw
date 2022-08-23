@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {GroupOptionValue} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { GroupOptionValue } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-with-icon',
     templateUrl: './demo.component.html'
 })
 export class ListLiteWithIconDemoComponent {
-    withIcon: GroupOptionValue[] = [
+    public withIcon: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',

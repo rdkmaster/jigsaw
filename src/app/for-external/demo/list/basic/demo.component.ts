@@ -1,17 +1,12 @@
-import {Component} from "@angular/core";
-import {ListTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ListTextService } from "../doc.service";
 
 @Component({
     selector: 'list-basic',
     templateUrl: './demo.component.html'
 })
 export class ListBasicDemoComponent {
-    selectedItems: string;
-    handleSelect(selectedItems) {
-        this.selectedItems = selectedItems.map(item => item.name).toString()
-    }
-
-    goodsList = [
+    public goodsList = [
         {
             logo: 'e187',
             name: 'bicycle',

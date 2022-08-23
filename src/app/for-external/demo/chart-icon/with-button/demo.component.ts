@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {InternalUtils, JigsawTheme} from "jigsaw/public_api";
-import {ChartIconTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InternalUtils, JigsawTheme } from "jigsaw/public_api";
+import { ChartIconTextService } from "../doc.service";
 
 @Component({
     selector: 'chart-icon-with-button',
@@ -15,7 +15,7 @@ export class ChartIconButtonDemoComponent {
     public stroke = '#2b8ae3';
     private _interval;
 
-    onDisabled(disabled: boolean) {
+    public onDisabled(disabled: boolean) {
         if (disabled) {
             clearInterval(this._interval);
             this.colors = ['#ddd'];
@@ -37,7 +37,7 @@ export class ChartIconButtonDemoComponent {
         }, 1000);
     }
 
-    constructor( public doc: ChartIconTextService) {
+    constructor(public doc: ChartIconTextService) {
         this._startUpdating();
     }
 }

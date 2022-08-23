@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {ArrayCollection, GroupOptionValue, JigsawListLite} from "jigsaw/public_api";
-import {ListLiteTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ArrayCollection, GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
+import { ListLiteTextService } from "../doc.service";
 
 @Component({
     selector: 'list-lite-with-combo',
     templateUrl: './demo.component.html'
 })
 export class ListLiteWithComboDemoComponent {
-    goodsList: GroupOptionValue[] = [
+    public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
             name: 'bicycle',
@@ -43,7 +43,7 @@ export class ListLiteWithComboDemoComponent {
         },
     ];
 
-    selectedItems6 = new ArrayCollection([
+    public selectedItems6 = new ArrayCollection([
         {
             icon: 'iconfont iconfont-e565',
             name: 'book',

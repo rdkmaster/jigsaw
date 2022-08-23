@@ -8,6 +8,12 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphRadarDemoComponent {
+    public radarData: RadarGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.radarData = new RadarGraphData();
         this.radarData.title = '基础雷达图';
@@ -18,11 +24,5 @@ export class GraphRadarDemoComponent {
             [5000, 14000, 28000, 31000, 42000, 21000],
             [6500, 16000, 30000, 38000, 52000, 25000]
         ];
-    }
-
-    radarData: RadarGraphData;
-
-    handleClick($event) {
-        console.log($event);
     }
 }

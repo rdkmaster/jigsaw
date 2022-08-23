@@ -2,15 +2,15 @@
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-pagination
+            widh="710px"
+            mode="folding"
             [data]="pageable"
             [pageSizeOptions]="pageSizeOptions"
             [searchable]="false"
             [showQuickJumper]="true"
-            mode="folding"
+            [size]="selectedSize.size"
             (currentChange)="getCurrentPage($event)"
             (pageSizeChange)="getPageSize($event)"
-            widh="710px"
-            [size]="selectedSize.size"
         >
         </jigsaw-pagination>
     </div>

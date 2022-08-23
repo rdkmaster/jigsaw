@@ -1,15 +1,15 @@
-import {Component} from "@angular/core";
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {BarGraphData, BarGraphDataByRow} from "jigsaw/public_api";
-import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {GraphTextService} from "../demo.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BarGraphData } from "jigsaw/public_api";
+import { GraphTextService } from "../demo.service";
 
 @Component({
     selector: 'graph-bar-chart',
     templateUrl: './demo.component.html'
 })
 export class GraphBarChartDemoComponent {
-    barData: BarGraphData;
+    public barData: BarGraphData;
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.barData = new BarGraphData();
         this.barData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];

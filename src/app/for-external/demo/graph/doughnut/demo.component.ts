@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpRequest } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData } from "jigsaw/public_api";
-import { AjaxInterceptor } from "../../../../libs/app.interceptor";
 import { GraphTextService } from "../demo.service";
 
 @Component({
@@ -9,6 +8,16 @@ import { GraphTextService } from "../demo.service";
     templateUrl: './demo.component.html'
 })
 export class GraphDoughnutDemoComponent {
+    public doughnut: DoughnutGraphData;
+
+    public doughnutRate: DoughnutRateGraphData;
+
+    public doughnutScore: DoughnutScoreGraphData;
+
+    public handleClick($event) {
+        console.log($event);
+    }
+
     constructor(public http: HttpClient, public doc: GraphTextService) {
         this.doughnut = new DoughnutGraphData();
         this.doughnut.rowDescriptor = ["终端", "无线网", "互联网", "核心网"];
@@ -26,17 +35,6 @@ export class GraphDoughnutDemoComponent {
         this.doughnutScore = new DoughnutScoreGraphData();
         this.doughnutScore.rowDescriptor = ["IELTS得分"];
         this.doughnutScore.data = [78];
-
-    }
-
-    doughnut: DoughnutGraphData;
-
-    doughnutRate: DoughnutRateGraphData;
-
-    doughnutScore: DoughnutScoreGraphData;
-
-    handleClick($event) {
-        console.log($event);
     }
 }
 

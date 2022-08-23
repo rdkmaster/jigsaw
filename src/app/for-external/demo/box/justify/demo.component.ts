@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {BoxTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { BoxTextService } from "../doc.service";
 
 @Component({
     selector: 'box-justify',
@@ -7,14 +7,14 @@ import {BoxTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class BoxJustifyDemoComponent {
-    direction = 'horizontal';
-    directionArr = ['horizontal', 'horizontal-reverse', 'vertical', 'vertical-reverse'];
+    public direction = 'horizontal';
+    public directionArr = ['horizontal', 'horizontal-reverse', 'vertical', 'vertical-reverse'];
 
-    justify = 'around';
-    justifyArr = ['start', 'end', 'center', 'between', 'around'];
+    public justify = 'around';
+    public justifyArr = ['start', 'end', 'center', 'between', 'around'];
 
-    align = 'center';
-    alignArr = ['start', 'end', 'center', 'baseline', 'stretch'];
+    public align = 'center';
+    public alignArr = ['start', 'end', 'center', 'baseline', 'stretch'];
 
     constructor(public doc: BoxTextService) {
     }
