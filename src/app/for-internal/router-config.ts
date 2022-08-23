@@ -256,6 +256,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/header/demo-set.module').then(m => m.HeaderDemoModule),
     },
     {
+        path: "pc/ribbon",
+        loadChildren: () => import('./demo/pc/ribbon/demo-set.module').then(m => m.RibbonDemoModule),
+    },
+    {
         path: "pc/theme",
         loadChildren: () => import('./demo/pc/theme/demo-set.module').then(m => m.ThemeDemoModule),
     },
