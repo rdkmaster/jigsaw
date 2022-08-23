@@ -3,11 +3,15 @@
     <div class="demo-showcase-v">
         <jigsaw-button (click)="selectedRow = 2">选择第三行</jigsaw-button>
 
-        <jigsaw-table #Table1 height="400px" [data]="tableData"
-                      [(selectedRow)]="selectedRow"
-                      (selectedRowChange)="getCurrentRow()">
+        <jigsaw-table
+            #Table1
+            height="400px"
+            [data]="tableData"
+            [(selectedRow)]="selectedRow"
+            (selectedRowChange)="getCurrentRow()"
+        >
         </jigsaw-table>
 
-        <p>row index {{selectedRow}} was selected</p>
+        <p>row index {{ selectedRow }} was selected</p>
     </div>
 </demo-template>

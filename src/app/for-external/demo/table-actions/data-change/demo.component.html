@@ -1,12 +1,9 @@
 <demo-template [data]="''" [text]="doc.text.dataChange" [codes]="doc.codes.dataChange">
     <!-- start to learn the demo from here -->
-    <jigsaw-button width="150" (click)="dataChange()">
-        改变表格数据
-    </jigsaw-button>
+    <div class="demo-showcase">
+        <jigsaw-button (click)="dataChange()"> 改变表格数据 </jigsaw-button>
+        <jigsaw-button (click)="columnsChange()"> 改变列 </jigsaw-button>
+    </div>
 
-    <jigsaw-button width="150" (click)="columnsChange()">
-        改变列
-    </jigsaw-button>
-
-    <jigsaw-table [data]="tableData" [columnDefines]="columns"></jigsaw-table>
+    <jigsaw-table height="400" [data]="tableData" [columnDefines]="columns"></jigsaw-table>
 </demo-template>

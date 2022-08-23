@@ -1,26 +1,26 @@
-import {Component, ViewChild} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, JigsawTable} from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import { Component, ViewChild } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, JigsawTable } from "jigsaw/public_api";
+import { TableActionsTextService } from "../doc.service";
 
 @Component({
     selector: 'table-select-row',
     templateUrl: './demo.component.html'
 })
 export class TableSelectRowDemoComponent {
-    tableData: TableData;
-    selectedRow: number = 5;
+    @ViewChild('Table1')
+    private _table: JigsawTable;
+
+    public tableData: TableData;
+    public selectedRow: number = 5;
+
+    public getCurrentRow() {
+        console.log(`row number ${this._table.selectedRow} was selected`);
+    }
 
     constructor(http: HttpClient, public doc: TableActionsTextService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
-    }
-
-    @ViewChild('Table1')
-    private _table: JigsawTable;
-
-    getCurrentRow() {
-        console.log(`row number ${this._table.selectedRow} was selected`);
     }
 }

@@ -33,7 +33,7 @@ export class MyTableHeadOption extends TableCellRendererBase {
     `]
 })
 export class MyTableCellOption extends TableCellRendererBase {
-    clickHandler(actioin) {
+    public clickHandler(actioin) {
         alert(`正在${actioin}第 ${this.row + 1} 行的数据！`)
     }
 }
@@ -43,15 +43,9 @@ export class MyTableCellOption extends TableCellRendererBase {
     templateUrl: './demo.component.html'
 })
 export class TableAddColumnDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableActionsTextService) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-    }
-
-    additionalColumns: AdditionalColumnDefine[] = [{
+    public additionalColumns: AdditionalColumnDefine[] = [{
         header: {
             renderer: MyTableHeadOption,
         },
@@ -59,4 +53,10 @@ export class TableAddColumnDemoComponent {
             renderer: MyTableCellOption
         }
     }];
+
+    constructor(http: HttpClient, public doc: TableActionsTextService) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/hr-list');
+    }
 }

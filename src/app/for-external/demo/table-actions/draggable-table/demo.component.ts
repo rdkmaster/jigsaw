@@ -1,6 +1,6 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
 import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import { TableActionsTextService } from "../doc.service";
 
 @Component({
     selector: 'table-draggable-table',
@@ -13,6 +13,20 @@ export class TableDraggableDemoComponent {
     public rendererInitData = {
         icon: 'iconfont iconfont-e515', title: '拖拽换行', label: ''
     };
+
+    public additionalColumns: AdditionalColumnDefine[] = [
+        {
+            pos: 0,
+            width: "40px",
+            header: {
+                text: "拖拽换行",
+            },
+            cell: {
+                renderer: TableDragReplaceRow,
+                rendererInitData: this.rendererInitData
+            }
+        }
+    ];
 
     public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: TableActionsTextService) {
         this.tableData = new TableData(
@@ -34,18 +48,4 @@ export class TableDraggableDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]
         );
     }
-
-    public additionalColumns: AdditionalColumnDefine[] = [
-        {
-            pos: 0,
-            width: "40px",
-            header: {
-                text: "拖拽换行",
-            },
-            cell: {
-                renderer: TableDragReplaceRow,
-                rendererInitData: this.rendererInitData
-            }
-        }
-    ];
 }

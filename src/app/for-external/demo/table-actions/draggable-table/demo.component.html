@@ -1,27 +1,5 @@
 <demo-template [data]="''" [text]="doc.text.draggableTable" [codes]="doc.codes.draggableTable">
     <!-- start to learn the demo from here -->
-    <div class="demo-showcase-v">
-        <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
-        </jigsaw-table>
-        <p>选中行 {{ selectedRow }}</p>
-        <p>
-            图标
-            <jigsaw-auto-complete-input
-                width="150px"
-                [(value)]="rendererInitData.icon"
-                [filterOnFocus]="false"
-                [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515']"
-            >
-            </jigsaw-auto-complete-input>
-        </p>
-        <p>
-            提示
-            <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.title"></jigsaw-auto-complete-input>
-        </p>
-        <p>
-            文本
-            <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.label"></jigsaw-auto-complete-input>
-        </p>
-        <a (click)="tableData.refresh()">更新</a>
-    </div>
+    <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
+    </jigsaw-table>
 </demo-template>

@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, ArrayCollection, TreeTableData, TreeTableCellRenderer, LocalPageableTableData } from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import { TableActionsTextService } from "../doc.service";
 
 @Component({
     selector: 'table-auto-fill-up',
@@ -8,11 +8,11 @@ import {TableActionsTextService} from "../doc.service";
     styleUrls: ["./demo.component.css"]
 })
 export class TableAutoFillUpDemoComponent {
-    checked: boolean = true;
+    public checked: boolean = true;
 
-    tableData: TableData;
+    public tableData: TableData;
 
-    columnsCommonRender: ColumnDefine[] = [
+    public columnsCommonRender: ColumnDefine[] = [
         {
             target: "name",
             width: "40%",

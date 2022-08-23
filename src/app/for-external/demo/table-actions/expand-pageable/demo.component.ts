@@ -1,7 +1,7 @@
 import { Component, ViewChild } from "@angular/core";
 import { JigsawTable, PageableTableData } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
-import {TableActionsTextService} from "../doc.service";
+import { TableActionsTextService } from "../doc.service";
 
 @Component({
     selector: 'table-expand-pageable',
@@ -9,18 +9,14 @@ import {TableActionsTextService} from "../doc.service";
     styleUrls: ['./demo.component.css']
 })
 export class TableExpandPageableDemoComponent {
-    action = ['toggle'];
-    pageable: PageableTableData;
-    remainOpen: boolean = false;
-
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
 
-    constructor(private http: HttpClient, public doc: TableActionsTextService) {
-        this.resetData();
-    }
+    public action = ['toggle'];
+    public pageable: PageableTableData;
+    public remainOpen: boolean = false;
 
-    rowClick(rowIndex: number) {
+    public rowClick(rowIndex: number) {
         console.log(rowIndex)
         const html = this.getExpansionHtml(rowIndex);
         if (!html) {
@@ -31,7 +27,7 @@ export class TableExpandPageableDemoComponent {
         });
     }
 
-    getExpansionHtml(rowIndex: number) {
+    public getExpansionHtml(rowIndex: number) {
         const data = this.pageable.data[rowIndex]
         const items = this.pageable.header.map((header, idx) =>
             `<li onclick="showValue('${data[idx]}')">
@@ -70,27 +66,31 @@ export class TableExpandPageableDemoComponent {
         `;
     }
 
-    showValue(value: string) {
+    public showValue(value: string) {
         alert('The value is ' + value);
     }
 
-    updateData() {
+    public updateData() {
         this.pageable = new PageableTableData(this.http, {
             url: 'mock-data/hr-list-full', body: { aa: 11, bb: 22 }, method: 'post'
         });
         this.pageable.pagingInfo.pageSize = 5;
     }
 
-    resetData() {
+    public resetData() {
         this.pageable = new PageableTableData(this.http, {
             url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'
         });
         this.pageable.pagingInfo.pageSize = 5;
     }
 
-    expandRow(rowIndex: number) {
+    public expandRow(rowIndex: number) {
         this.tableCmp.expand(rowIndex, this.getExpansionHtml(2), this, {
             remainOpenAfterDataChanges: this.remainOpen, action: <any>this.action[0]
         });
+    }
+
+    constructor(private http: HttpClient, public doc: TableActionsTextService) {
+        this.resetData();
     }
 }
