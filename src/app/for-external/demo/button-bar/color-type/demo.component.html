@@ -1,11 +1,61 @@
 <demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.colorType" [codes]="doc.codes.colorType">
-    <jigsaw-radios-lite [data]="colorTypeList" [(value)]="colorType"> </jigsaw-radios-lite><br />
-    <jigsaw-button-bar
-        [data]="cities"
-        [(selectedItems)]="selectedCity"
-        [colorType]="colorType"
-        [multipleSelect]="multiple"
-        [preSize]="selectedSize.size"
-    >
-    </jigsaw-button-bar>
+    <div class="demo-showcase-v">
+        <span>默认</span>
+        <jigsaw-button-bar
+            colorType="default"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>重要</span>
+        <jigsaw-button-bar
+            colorType="primary"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>警告</span>
+        <jigsaw-button-bar
+            colorType="warning"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>危险</span>
+        <jigsaw-button-bar
+            colorType="danger"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>错误</span>
+        <jigsaw-button-bar
+            colorType="error"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
 </demo-template>

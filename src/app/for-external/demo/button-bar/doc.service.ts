@@ -27,7 +27,7 @@ export class ButtonBarTextService {
             按钮栏的数据是字符串数组。
         `,
         colorType: `
-            ### Color Type
+            ### 预设颜色
         `,
         icons: `
             ### 带图标按钮栏

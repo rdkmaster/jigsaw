@@ -10,9 +10,6 @@ import { ArrayCollection } from "jigsaw/public_api";
 export class ButtonBarColorTypeComponent {
     public cities = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
     public selectedCity: any[] = ['南京'];
-    
-    public colorTypeList = ['default', 'primary', 'warning', 'danger', 'error'];
-    public colorType: string = 'warning';
     public multiple: boolean = false;
 
     public sizes: object[] = new ArrayCollection([

@@ -8,16 +8,16 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 export class ButtonLoadingComponent {
     public disabled: boolean = false;
-    public label: string = 'click to load';
+    public label: string = '点击加载';
     public isLoading = false;
     public onLoading() {
         this.isLoading = !this.isLoading;
-        this.label = this.isLoading ? 'loading...' : 'click to load';
+        this.label = this.isLoading ? '加载中...' : '点击加载';
         this.disabled = true;
         setTimeout(() => {
             this.disabled = false;
             this.isLoading = !this.isLoading;
-            this.label = this.isLoading ? 'loading...' : 'click to load';
+            this.label = this.isLoading ? '加载中...' : '点击加载';
         }, 3000);
     }
 

@@ -1,6 +1,5 @@
 <demo-template [data]="''" [text]="doc.text.multipleSelect" [codes]="doc.codes.multipleSelect">
     <div class="demo-showcase">
-        <j-cascade [data]="areas" [multipleSelect]="true" (selectedItemsChange)="parseMessage($event)" width="400">
-        </j-cascade>
+        <j-cascade width="400" [data]="areas" [multipleSelect]="true"> </j-cascade>
     </div>
 </demo-template>
