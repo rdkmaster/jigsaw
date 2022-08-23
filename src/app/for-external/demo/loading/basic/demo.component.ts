@@ -1,6 +1,6 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService} from "jigsaw/public_api";
-import {LoadingTextService} from "../doc.service";
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { LoadingService } from "jigsaw/public_api";
+import { LoadingTextService } from "../doc.service";
 
 @Component({
     selector: 'loading-basic',
@@ -12,19 +12,16 @@ export class LoadingBasicDemoComponent {
     private _block: ElementRef;
 
     public isLoading: boolean = false;
-    public label:string = '提交';
+    public label: string = '提交';
 
-    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
-    }
-
-    popupBlockLoading() {
+    public popupBlockLoading() {
         const blockLoading = this.loadingService.show(this._block);
         setTimeout(() => {
             blockLoading.dispose();
         }, 3000)
     }
 
-    startToLoad() {
+    public startToLoad() {
         this.isLoading = true;
         this.label = 'Loading...';
         setTimeout(() => {
@@ -33,10 +30,7 @@ export class LoadingBasicDemoComponent {
         }, 3000)
     }
 
-    // popupGlobalLoading() {
-    //     const globalLoading = this.loadingService.show();
-    //     setTimeout(() => {
-    //         globalLoading.dispose();
-    //     }, 3000)
-    // }
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
+    }
+
 }

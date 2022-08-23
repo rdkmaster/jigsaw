@@ -1,14 +1,12 @@
-import {ChangeDetectorRef, Component} from "@angular/core";
-import {ProcessStatusTextService} from "../doc.service";
+import { ChangeDetectorRef, Component } from "@angular/core";
+import { ProcessStatusTextService } from "../doc.service";
 
 @Component({
     selector: 'process-status-interactive',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusInteractiveComponent {
-    constructor(private _changeDetector: ChangeDetectorRef, public doc: ProcessStatusTextService) {
-    }
-    steps = [
+    public steps = [
         {
             title: 'starting',
             status: "starting",
@@ -48,8 +46,11 @@ export class ProcessStatusInteractiveComponent {
         }
     ];
 
-    skipStep(index){
+    public skipStep(index) {
         this.steps[index].status = "skipped";
         this._changeDetector.detectChanges();
+    }
+
+    constructor(private _changeDetector: ChangeDetectorRef, public doc: ProcessStatusTextService) {
     }
 }

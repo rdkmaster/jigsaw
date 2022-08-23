@@ -1,7 +1,7 @@
-import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core";
-import {TableData, AdditionalColumnDefine, DragDropInfo} from "jigsaw/public_api";
-import {TableDragDeleteRow, TableDragReplaceRow} from "./table-renderer";
-import {DragDropTextService} from "../doc.service";
+import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
+import { TableData, AdditionalColumnDefine, DragDropInfo } from "jigsaw/public_api";
+import { TableDragDeleteRow, TableDragReplaceRow } from "./table-renderer";
+import { DragDropTextService } from "../doc.service";
 
 @Component({
     selector: 'dragdrop-simple-table',
@@ -10,9 +10,9 @@ import {DragDropTextService} from "../doc.service";
     encapsulation: ViewEncapsulation.None
 })
 export class TableDragDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
-    employees: any[] = [
+    public employees: any[] = [
         ["Andy", "Coder", "$17149", "2017/4/26", "R&D Dept I", 65],
         ["Vivian", "Accountant", "$18272", "2017/4/22", "R&D Dept II", 892],
         ["Wendy", "Coder", "$17257", "2017/4/26", "HR I", 394],
@@ -22,16 +22,7 @@ export class TableDragDemoComponent {
         ["Johnny", "Accountant", "$16346", "2017/4/26", "R&D Dept III", 403]
     ];
 
-    constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: DragDropTextService) {
-        this.tableData = new TableData([
-                ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
-                ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],
-                ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 796]],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
-    }
-
-    additionalColumns: AdditionalColumnDefine[] = [
+    public additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '10%',
@@ -57,13 +48,13 @@ export class TableDragDemoComponent {
     ];
 
     //拖拽用户块
-    dragStartHandle(dragInfo: DragDropInfo, employee:any) {
+    public dragStartHandle(dragInfo: DragDropInfo, employee: any) {
         console.log('drag start');
         dragInfo.dragDropData = employee;
     }
 
     //数据拖入表格
-    tableDragEnterHandle(dragInfo: DragDropInfo) {
+    public tableDragEnterHandle(dragInfo: DragDropInfo) {
         console.log('drag enter');
         dragInfo.event.dataTransfer.dropEffect = 'move';
         if (dragInfo.event.dataTransfer.effectAllowed == 'move') {
@@ -71,7 +62,7 @@ export class TableDragDemoComponent {
         }
     }
 
-    tableDragOverHandle(dragInfo: DragDropInfo) {
+    public tableDragOverHandle(dragInfo: DragDropInfo) {
         console.log('drag over');
         dragInfo.event.dataTransfer.dropEffect = 'move';
         if (dragInfo.event.dataTransfer.effectAllowed == 'move') {
@@ -79,12 +70,12 @@ export class TableDragDemoComponent {
         }
     }
 
-    tableDragLeaveHandle(dragInfo: DragDropInfo) {
+    public tableDragLeaveHandle(dragInfo: DragDropInfo) {
         console.log('drag leave');
         this.renderer.removeClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
     }
 
-    tableDropHandle(dragInfo: DragDropInfo) {
+    public tableDropHandle(dragInfo: DragDropInfo) {
         console.log('drop');
         this.renderer.removeClass(this.elementRef.nativeElement.querySelector('jigsaw-table'), 'over');
         const index = this.employees.findIndex(employee => employee.toString() === dragInfo.dragDropData.toString());
@@ -119,5 +110,14 @@ export class TableDragDemoComponent {
         const delRowIndex = dragInfo.dragDropData;
         this.tableData.data.splice(delRowIndex, 1);
         this.tableData.refresh();
+    }
+
+    constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: DragDropTextService) {
+        this.tableData = new TableData([
+            ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
+            ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],
+            ["Eason", "Coder", "$17636", "2017/4/24", "Marketing I", 796]],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 }

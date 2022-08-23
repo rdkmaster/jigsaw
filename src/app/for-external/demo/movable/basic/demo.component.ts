@@ -1,24 +1,24 @@
-import {Component} from "@angular/core";
-import {JigsawInfoAlert} from "jigsaw/public_api";
-import {MovableTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { JigsawInfoAlert } from "jigsaw/public_api";
+import { MovableTextService } from "../doc.service";
 
 @Component({
     selector: 'move-and-click-basic',
     templateUrl: 'demo.component.html'
 })
 export class MoveAndClickBasicDemoComponent {
-    mouseStartPosition = {x: null, y: null};
+    public mouseStartPosition = { x: null, y: null };
 
-    handleButtonClick() {
+    public handleButtonClick() {
         JigsawInfoAlert.show('the movable button is clicked!');
     }
 
-    recordMouseStartPosition(event) {
+    public recordMouseStartPosition(event) {
         this.mouseStartPosition.x = event.clientX;
         this.mouseStartPosition.y = event.clientY;
     }
 
-    handleMouseUp(event) {
+    public handleMouseUp(event) {
         if (this.isClickAction(event)) {
             this.handleButtonClick();
         }
@@ -29,7 +29,7 @@ export class MoveAndClickBasicDemoComponent {
      * @param {MouseEvent} e
      * @returns {boolean}
      */
-    isClickAction(e: MouseEvent) {
+    public isClickAction(e: MouseEvent) {
         return e.clientX == this.mouseStartPosition.x && e.clientY == this.mouseStartPosition.y
     }
 

@@ -6,18 +6,18 @@ import { TrustedHtmlTextService } from "../doc.service";
     templateUrl: './demo.component.html'
 })
 export class TrustedHtmlBasicComponent {
-    html = this.stripPrefixSpaces(`
+    public html = this.stripPrefixSpaces(`
         <a onclick="hello('trustedHtml directive')">
             <i class="iconfont iconfont-e9ee"></i>
             say hello to trustedHtml
         </a>
         <p style="margin-top:6px">让下面的输入框失去焦点试试触发事件</p>
         <div contenteditable="true" onblur="onBlur()"
-             style="width:200px; height:32px; border-radius:4px;
+            style="width:200px; height:32px; border-radius:4px;
                     border:solid 1px #cdcdcd;">
         </div>
     `);
-    jsCode = this.stripPrefixSpaces(`
+    public jsCode = this.stripPrefixSpaces(`
         // 这边不要使用箭头函数，因为很多浏览器还不支持原生es6
         this.context = {
             hello: who => {
@@ -38,13 +38,9 @@ export class TrustedHtmlBasicComponent {
      * 这样的话，我们在定义html字符串中的回调函数的时候，就可以像定义普通的angular事件的回调函数一样了，是不是非常方便？
      * 为了说明这一点，你可以将JS源码文本框的值改为字符串"this.context = this"，随后点击“say hello to trustedHtml”链接试试看。
      */
-    context: any;
+    public context: any;
 
-    constructor(public doc: TrustedHtmlTextService) {
-        this.onCodeChange(this.jsCode);
-    }
-
-    onCodeChange(code) {
+    public onCodeChange(code) {
         try {
             eval(code);
         } catch (e) {
@@ -52,26 +48,30 @@ export class TrustedHtmlBasicComponent {
         }
     }
 
-    stripPrefixSpaces(source: string): string {
+    public stripPrefixSpaces(source: string): string {
         const lines = source.split(/\n/g);
         source = '';
         lines.forEach(line => source += line.substring(8) + '\n');
         return source.trim();
     }
 
-    jigsaw = 'jigsaw';
+    public jigsaw = 'jigsaw';
 
     /**
      * 将JS源码文本框的值改为字符串"this.context = this"，则会将这个类的实例作为trustedHtml的上下文，那么html文本中的hello()函数
      * 相应的也就指向了下面这个方法了。注意到我们在方法内部还同时引用到了this是的其他属性，这也是没有问题的。
      */
-    hello() {
+    public hello() {
         // notice that we are referencing a member property of this class!
         alert('great! you are using trustedHtml directive with the best way ' +
             'recommended by the ' + this.jigsaw + ' team.');
     }
 
-    onBlur() {
+    public onBlur() {
         this.hello();
+    }
+
+    constructor(public doc: TrustedHtmlTextService) {
+        this.onCodeChange(this.jsCode);
     }
 }

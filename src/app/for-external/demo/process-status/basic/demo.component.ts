@@ -1,12 +1,12 @@
-import {Component} from "@angular/core";
-import {ProcessStatusTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ProcessStatusTextService } from "../doc.service";
 
 @Component({
     selector: 'process-status-basic',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusBasicComponent {
-    steps = [
+    public steps = [
         {
             title: 'done',
             status: "done"
@@ -32,6 +32,7 @@ export class ProcessStatusBasicComponent {
             status: "waiting"
         },
     ];
-    constructor( public doc: ProcessStatusTextService) {
+    
+    constructor(public doc: ProcessStatusTextService) {
     }
 }

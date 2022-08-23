@@ -1,6 +1,5 @@
 import { Component } from "@angular/core";
-import {ProgressTextService} from "../doc.service";
-import { ArrayCollection } from "jigsaw/public_api";
+import { ProgressTextService } from "../doc.service";
 
 @Component({
     selector: 'circle-progress',

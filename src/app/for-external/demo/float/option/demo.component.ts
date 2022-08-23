@@ -21,8 +21,8 @@ export class FloatOptionDemoComponent {
         hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
         posType: PopupPositionType[<string>this.selectedPositionType],
         posOffset: {
-            top: -10,
-            left: 10
+            top: 10,
+            left: -20
         },
         showBorder: true,
         showShadow: false,
@@ -36,7 +36,7 @@ export class FloatOptionDemoComponent {
         hideEffect: PopupEffect[<string>this.showHideEffect + 'Out'],
         posType: PopupPositionType[<string>this.selectedPositionType],
         posOffset: {},
-        showBorder: true,
+        showBorder: false,
         showShadow: true,
         size: this.size,
         borderType: 'default'
@@ -49,7 +49,7 @@ export class FloatOptionDemoComponent {
         posType: PopupPositionType[<string>this.selectedPositionType],
         posOffset: {},
         showBorder: true,
-        showShadow: false,
+        showShadow: true,
         size: this.size,
         borderType: 'pointer'
     };

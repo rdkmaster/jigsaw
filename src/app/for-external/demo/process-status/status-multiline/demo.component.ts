@@ -1,19 +1,13 @@
-import {Component} from "@angular/core";
-import {InternalUtils} from "jigsaw/public_api";
-import {ProcessStatusTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { InternalUtils } from "jigsaw/public_api";
+import { ProcessStatusTextService } from "../doc.service";
 
 @Component({
     selector: 'process-status-multiline',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusMultilineComponent {
-    steps = [];
-
-    constructor( public doc: ProcessStatusTextService) {
-        for (let i = 0; i < 50; i++) {
-            this.steps.push(this._createStepData(i));
-        }
-    }
+    public steps = [];
 
     public changeStatus(idx: number) {
         this.steps = this.steps.concat([]);
@@ -58,8 +52,13 @@ export class ProcessStatusMultilineComponent {
         this.presize = 'default';
     }
 
-
     public _$selectChange($event) {
         console.log($event);
+    }
+
+    constructor(public doc: ProcessStatusTextService) {
+        for (let i = 0; i < 50; i++) {
+            this.steps.push(this._createStepData(i));
+        }
     }
 }

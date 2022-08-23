@@ -1,4 +1,4 @@
-<demo-template style="height:750px " [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template style="height: 750px" [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
     <div class="wrap">
         <div class="block">
             <div #block class="content-box">
@@ -13,7 +13,7 @@
                 </div>
                 <div class="content-line">
                     <label>地址: </label>
-                    <jigsaw-input ></jigsaw-input>
+                    <jigsaw-input></jigsaw-input>
                 </div>
                 <jigsaw-button (click)="popupBlockLoading()" colorType="primary">提交</jigsaw-button>
             </div>
@@ -34,7 +34,7 @@
 
                 <jigsaw-button (click)="startToLoad()" height="32px" colorType="primary">
                     <jigsaw-circle-loading *ngIf="isLoading" [size]="'small'"></jigsaw-circle-loading>
-                    <span>{{label}} </span>
+                    <span>{{ label }} </span>
                 </jigsaw-button>
             </div>
         </div>

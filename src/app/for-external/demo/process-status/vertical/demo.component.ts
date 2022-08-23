@@ -1,14 +1,12 @@
-import {Component} from "@angular/core";
-import {ProcessStatusTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ProcessStatusTextService } from "../doc.service";
 
 @Component({
     selector: 'process-status-vertical',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusVerticalFullComponent {
-    constructor(public doc: ProcessStatusTextService) {
-    }
-    steps = [
+    public steps = [
         {
             title: 'done',
             subTitle: 'Add a window to configure its compare paramenters',
@@ -41,4 +39,6 @@ export class ProcessStatusVerticalFullComponent {
         },
     ];
 
+    constructor(public doc: ProcessStatusTextService) {
+    }
 }

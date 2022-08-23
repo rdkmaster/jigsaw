@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import {JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils} from "jigsaw/public_api";
-import {ThemePropertiesTextService} from "../doc.service";
+import { JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils } from "jigsaw/public_api";
+import { ThemePropertiesTextService } from "../doc.service";
 
 @Component({
     selector: "theme-properties-basic",

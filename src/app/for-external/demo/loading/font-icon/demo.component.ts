@@ -1,22 +1,19 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService, PopupInfo, JigsawFontLoading} from "jigsaw/public_api";
-import {LoadingTextService} from "../doc.service";
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { LoadingService, PopupInfo, JigsawFontLoading } from "jigsaw/public_api";
+import { LoadingTextService } from "../doc.service";
 
 @Component({
     selector: 'loading-font-icon',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class LoadingFontIconDemoComponent implements AfterViewInit{
+export class LoadingFontIconDemoComponent implements AfterViewInit {
     @ViewChild('block') block: ElementRef;
 
-    blockLoading: PopupInfo;
-    globalLoading: PopupInfo;
+    public blockLoading: PopupInfo;
+    public globalLoading: PopupInfo;
 
-    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
-    }
-
-    popupBlockLoading() {
+    public popupBlockLoading() {
         if (!this.blockLoading) {
             this.blockLoading = this.loadingService.show(this.block, JigsawFontLoading);
         }
@@ -24,5 +21,8 @@ export class LoadingFontIconDemoComponent implements AfterViewInit{
 
     ngAfterViewInit(): void {
         this.popupBlockLoading()
+    }
+
+    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
     }
 }

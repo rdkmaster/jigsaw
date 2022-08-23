@@ -67,7 +67,10 @@ export class LoadingTextService {
         ],
         customize: [
             { label: "HTML", language: 'html', value: require('!!raw-loader!./customize/demo.component.html').default, },
-            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default }
+            { label: "Typescript", language: 'typescript', value: require('!!raw-loader!./customize/demo.component.ts').default },
+            { label: "defined-loading.css", language: 'css', value: require('!!raw-loader!./customize/defined-loading/defined-loading.css').default },
+            { label: "defined-loading.html", language: 'html', value: require('!!raw-loader!./customize/defined-loading/defined-loading.html').default },
+            { label: "defined-loading.ts", language: 'typescript', value: require('!!raw-loader!./customize/defined-loading/defined-loading.ts').default },
         ],
     }
 }
