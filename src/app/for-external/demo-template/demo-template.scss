@@ -1,6 +1,6 @@
 .demo-cntr {
     position: relative;
-    border: 1px solid #d9d9d9;
+    border: 1px solid var(--border-color-default);
     border-radius: 4px;
     margin-top: 34px;
     padding: 12px 32px 0 32px;
@@ -14,12 +14,12 @@
         position: relative;
         top: -26px;
         left: 24px;
-        background: #fff;
+        background: var(--bg-body);
     }
 
     .demo-content {
         padding-bottom: 16px;
-        border-bottom: 1px dashed #d9d9d9;
+        border-bottom: 1px dashed var(--border-color-default);
     }
 
     .demo-code {
