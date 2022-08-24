@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { TableCellRendererBase } from "jigsaw/public_api";
 
 /*
  * 泳道流程图

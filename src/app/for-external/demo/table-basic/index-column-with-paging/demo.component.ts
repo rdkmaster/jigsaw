@@ -1,19 +1,19 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import {
     PageableTableData, AdditionalColumnDefine, ColumnDefine, TableValueGenerators,
     SortAs, SortOrder
 } from "jigsaw/public_api";
-import {TableBasicTextService} from "../doc.service";
+import { TableBasicTextService } from "../doc.service";
 
 @Component({
     selector: 'table-basic-index-column-with-paging',
     templateUrl: './demo.component.html'
 })
 export class TableBasicAddIDWithPagingComponent {
-    pageable: PageableTableData;
+    public pageable: PageableTableData;
 
-    columns: ColumnDefine[] = [{
+    public columns: ColumnDefine[] = [{
         target: 'id',
         header: {
             sortable: true,
@@ -22,7 +22,7 @@ export class TableBasicAddIDWithPagingComponent {
         }
     }];
 
-    additionalColumns: AdditionalColumnDefine[] = [{
+    public additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         header: {
             text: '#'

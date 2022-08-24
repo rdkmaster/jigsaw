@@ -1,28 +1,19 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, JigsawInfoAlert} from "jigsaw/public_api";
-import {NumberRenderer} from "./number-renderer";
-import {CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED} from "./utils";
-import {TableRendererTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, JigsawInfoAlert } from "jigsaw/public_api";
+import { NumberRenderer } from "./number-renderer";
+import { CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED } from "./utils";
+import { TableRendererTextService } from "../doc.service";
 
 @Component({
     selector: 'table-sudoku',
     templateUrl: './demo.component.html'
 })
 export class SudokuGameComponent {
-    puzzles: string[][];
-    tableData: TableData;
+    public puzzles: string[][];
+    public tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
-        this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
-        this.tableData.subscribe((event) => this.checkBoardStatus(event));
-        http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {
-            this.puzzles = data;
-            this.newPuzzle();
-        });
-    }
-
-    columnDefineGenerator() {
+    public columnDefineGenerator() {
         return {
             cell: {
                 noPadding: true,
@@ -31,14 +22,14 @@ export class SudokuGameComponent {
         }
     }
 
-    newPuzzle() {
+    public newPuzzle() {
         const rawData = this.puzzles[(Math.random() * this.puzzles.length).toFixed(0)];
         this.tableData.data = rawData.concat();
         this.tableData.refresh();
         this.tableData.emit(PUZZLE_RESET);
     }
 
-    checkBoardStatus(event) {
+    public checkBoardStatus(event) {
         if (event !== CHECK_PUZZLE_STATUS) {
             return;
         }
@@ -48,11 +39,11 @@ export class SudokuGameComponent {
             if (hasError) {
                 return;
             }
-            row.forEach((cellData:string, colIdx:number) => {
+            row.forEach((cellData: string, colIdx: number) => {
                 if (hasError) {
                     return;
                 }
-                const target = {row: rowIdx, column: colIdx};
+                const target = { row: rowIdx, column: colIdx };
                 hasError = cellData.match(/^\d$/) ? isTargetConflicted(this.tableData, cellData, target) : true;
             })
         });
@@ -60,5 +51,14 @@ export class SudokuGameComponent {
             JigsawInfoAlert.show("It's great! You've solved the puzzle!");
             this.tableData.emit(PUZZLE_SOLVED);
         }
+    }
+
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
+        this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
+        this.tableData.subscribe((event) => this.checkBoardStatus(event));
+        http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {
+            this.puzzles = data;
+            this.newPuzzle();
+        });
     }
 }

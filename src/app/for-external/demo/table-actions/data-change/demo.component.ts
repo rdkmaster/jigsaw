@@ -1,21 +1,14 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, ColumnDefine, DefaultCellRenderer} from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, ColumnDefine, DefaultCellRenderer } from "jigsaw/public_api";
+import { TableActionsTextService } from "../doc.service";
 
 @Component({
     selector: 'table-data-change',
     templateUrl: './demo.component.html'
 })
 export class TableDataChangeDemoComponent {
-    tableData: TableData;
-
-    constructor(http: HttpClient, public doc: TableActionsTextService) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-    }
-
+    public tableData: TableData;
     columns: ColumnDefine[] = [
         {
             target: 'name',
@@ -26,13 +19,19 @@ export class TableDataChangeDemoComponent {
         },
     ];
 
-    dataChange() {
+    public dataChange() {
         this.tableData = new TableData(this.tableData.data.slice(0, 3), this.tableData.field, this.tableData.header);
         console.log(this.tableData.data)
     }
 
-    columnsChange() {
+    public columnsChange() {
         this.columns[0].width = '30%';
         this.tableData.refresh();
+    }
+
+    constructor(http: HttpClient, public doc: TableActionsTextService) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/hr-list');
     }
 }

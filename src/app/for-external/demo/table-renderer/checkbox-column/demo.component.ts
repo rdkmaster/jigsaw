@@ -1,34 +1,23 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import {
     TableData, AdditionalColumnDefine, AdditionalTableData, TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import { TableRendererTextService } from "../doc.service";
 
 @Component({
     selector: 'table-checkbox-column',
     templateUrl: './demo.component.html'
 })
 export class TableAddCheckboxColumnDemoComponent {
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-        this.tableData.onAjaxComplete(() => {
-            setTimeout(() => {
-                if(this.additionalData) console.log(this.additionalData.data);
-            }, 1000)
-        })
-    }
-
-    tableData: TableData;
-    selectedRows: string;
-    additionalData: AdditionalTableData;
+    public tableData: TableData;
+    public selectedRows: string;
+    public additionalData: AdditionalTableData;
     //控制表头中的checkbox是否禁用
-    headerDisabled = false;
+    public headerDisabled = false;
 
-    additionalColumns: AdditionalColumnDefine[] = [{
+    public additionalColumns: AdditionalColumnDefine[] = [{
         pos: 1,
         width: 30,
         header: {
@@ -54,7 +43,7 @@ export class TableAddCheckboxColumnDemoComponent {
         }
     }];
 
-    additionalDataChange() {
+    public additionalDataChange() {
         this.selectedRows = this.getSelectedRows(this.additionalData);
     }
 
@@ -62,12 +51,23 @@ export class TableAddCheckboxColumnDemoComponent {
      * 获取选中的行
      * @param additionalData
      */
-    getSelectedRows(additionalData) {
+    public getSelectedRows(additionalData) {
         return additionalData.data.reduce((selectedRows, item, index) => {
             if (item[0]) {
                 selectedRows.push(index);
             }
             return selectedRows;
         }, []).join(',');
+    }
+
+    constructor(http: HttpClient, public doc: TableRendererTextService) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/hr-list');
+        this.tableData.onAjaxComplete(() => {
+            setTimeout(() => {
+                if (this.additionalData) console.log(this.additionalData.data);
+            }, 1000)
+        })
     }
 }

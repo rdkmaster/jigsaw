@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TooltipTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TooltipTextService } from "../doc.service";
 
 @Component({
     selector: 'tooltip-trigger',

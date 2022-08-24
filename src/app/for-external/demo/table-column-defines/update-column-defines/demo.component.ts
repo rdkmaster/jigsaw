@@ -1,43 +1,19 @@
-import {Component} from "@angular/core";
-import {ColumnDefine, JigsawTheme, TableData} from "jigsaw/public_api";
-import {TableColumnDefinesTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { ColumnDefine, JigsawTheme, TableData } from "jigsaw/public_api";
+import { TableColumnDefinesTextService } from "../doc.service";
 
 @Component({
     selector: 'table-update-column-defines',
     templateUrl: './demo.component.html'
 })
 export class TableUpdateColumnDefinesDemoComponent {
-    tableData: TableData;
-
-    constructor(public doc: TableColumnDefinesTextService) {
-        this.tableData = new TableData(
-            [
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ]
-            ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
-    }
+    public tableData: TableData;
 
     // 这里为了能让demo同时适配深浅色系才做的这么复杂，如果应用没有深浅色系前的需求，则无需搞这么复杂
-    optionStyle = `background-color: ${JigsawTheme.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
-    columnDefines: ColumnDefine[];
+    public optionStyle = `background-color: ${JigsawTheme.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
+    public columnDefines: ColumnDefine[];
 
-    changeColumnDefine() {
+    public changeColumnDefine() {
         this.columnDefines = [
             {
                 target: 2,
@@ -64,12 +40,36 @@ export class TableUpdateColumnDefinesDemoComponent {
                 "cell": {
                     "renderer": "html",
                     "data": (td, row, col) => !parseInt(td.data[row][col]) ? td.data[row][col] : `<a (click)="onClick1(${row}, ${col})">${td.data[row][col]}</a>`,
-                    "innerHtmlContext": {onClick1: (row, col) => console.log(row, col)}
+                    "innerHtmlContext": { onClick1: (row, col) => console.log(row, col) }
                 }
             }
         ];
         setTimeout(() => {
             this.tableData.refresh();
         })
+    }
+
+    constructor(public doc: TableColumnDefinesTextService) {
+        this.tableData = new TableData(
+            [
+                [
+                    "Tiger Nixon1",
+                    "System Architect",
+                    "$320,00",
+                    "2011/04/25",
+                    "Edinburgh",
+                    "542"
+                ],
+                [
+                    "Garrett Winters1",
+                    "Accountant",
+                    "$170,7",
+                    "2011/07/25",
+                    "Tokyo",
+                    "8422"
+                ]
+            ],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 }

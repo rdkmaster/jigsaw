@@ -1,45 +1,43 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
 import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } from "jigsaw/public_api";
-import {UploadTextService} from "../doc.service";
+import { UploadTextService } from "../doc.service";
 
 @Component({
     selector: 'upload-change-target-url',
     templateUrl: "./demo.component.html"
 })
 export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
-    constructor(private _changeDetectorRef: ChangeDetectorRef, public doc: UploadTextService) {}
-    public uploadImmediately: boolean = false;
-
     @ViewChild("first", { read: JigsawUploadDirective })
     public uploader1: IUploader;
     @ViewChild("second", { read: JigsawUploadDirective })
     public uploader2: IUploader;
-
     @ViewChildren(JigsawUploadResult)
-    results: QueryList<JigsawUploadResult>;
+    public results: QueryList<JigsawUploadResult>;
 
-    public onChange(msg: string, data: UploadFileInfo | UploadFileInfo[]) {
-        console.log(msg, "!!!!!!", data);
-    }
+    public uploadImmediately: boolean = false;
 
-    multiple: boolean;
-    fileType = ".png";
-    maxSize: number = 1024;
-    minSize: number = 0;
+    public multiple: boolean;
+    public fileType = ".png";
+    public maxSize: number = 1024;
+    public minSize: number = 0;
 
-    toBeChangedUrl1 = "/rdk/service/common";
-    uploadConfirm() {
+    public toBeChangedUrl1 = "/rdk/service/common";
+    public uploadConfirm() {
         this.toBeChangedUrl1 = "/rdk/service/common/upload";
         this.uploader1.upload();
     }
 
-    toBeChangedUrl2 = "/rdk/service/common";
-    editTargetUrl(){
+    public toBeChangedUrl2 = "/rdk/service/common";
+    public editTargetUrl() {
         this.toBeChangedUrl2 = "/rdk/service/common/upload";
     }
 
-    clear() {
+    public clear() {
         this.results.toArray().forEach(r => r.clear());
+    }
+
+    public onChange(msg: string, data: UploadFileInfo | UploadFileInfo[]) {
+        console.log(msg, "!!!!!!", data);
     }
 
     ngOnInit() {
@@ -51,9 +49,5 @@ export class ChangeTargetUrlDemoComponent implements OnInit, AfterViewInit {
         this._changeDetectorRef.detectChanges();
     }
 
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "这个demo复现了在动态修改目标URL时上传指令的一个问题";
-    description: string = '';
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public doc: UploadTextService) { }
 }

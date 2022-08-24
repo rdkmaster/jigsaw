@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TextareaTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TextareaTextService } from "../doc.service";
 
 @Component({
     selector: 'textarea-max-length',

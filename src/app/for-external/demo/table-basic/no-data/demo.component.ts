@@ -1,13 +1,13 @@
-import {Component} from "@angular/core";
-import {TableData} from "jigsaw/public_api";
-import {TableBasicTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TableData } from "jigsaw/public_api";
+import { TableBasicTextService } from "../doc.service";
 
 @Component({
     selector: 'table-basic-no-data',
     templateUrl: './demo.component.html'
 })
 export class TableBasicNoDataDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
     constructor(public doc: TableBasicTextService) {
         this.tableData = new TableData(

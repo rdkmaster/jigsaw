@@ -1,14 +1,14 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData} from "jigsaw/public_api";
-import {TableBigDataTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData } from "jigsaw/public_api";
+import { TableBigDataTextService } from "../doc.service";
 
 @Component({
     selector: 'table-data-from-ajax',
     templateUrl: './demo.component.html'
 })
 export class TableDataFromAjaxDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
     constructor(http: HttpClient, public doc: TableBigDataTextService) {
         this.tableData = new TableData();

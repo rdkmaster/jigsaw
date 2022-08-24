@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TransferTextService} from "./doc.service";
+import { Component } from "@angular/core";
+import { TransferTextService } from "./doc.service";
 
 @Component({
     templateUrl: "demo.component.html"

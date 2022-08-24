@@ -1,20 +1,13 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import { UploadFileInfo } from 'jigsaw/public_api';
-import {UploadTextService} from "../doc.service";
+import { UploadTextService } from "../doc.service";
 
 @Component({
     selector: 'upload-content-field',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .field-label {
-            width: 137px;
-            margin-bottom: 16px;
-            /*text-align: right;*/
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
 export class UploadContentFieldDemoComponent {
-    additionalFields = [{field: 'an-additional-field', value: 'value of the field'}];
+    public additionalFields = [{ field: 'an-additional-field', value: 'value of the field' }];
 
     get readAdditionalFields(): { [p: string]: string } {
         const fields = {};
@@ -22,8 +15,8 @@ export class UploadContentFieldDemoComponent {
         return fields;
     }
 
-    addField() {
-        this.additionalFields.push({field: 'new-field', value: ''});
+    public addField() {
+        this.additionalFields.push({ field: 'new-field', value: '' });
     }
 
     public onComplete(data: UploadFileInfo | UploadFileInfo[]) {

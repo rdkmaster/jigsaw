@@ -1,20 +1,25 @@
-import {Component} from "@angular/core";
-import {SimpleTreeData, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { SimpleTreeData, ArrayCollection } from "jigsaw/public_api";
+import { TreeTextService } from "../doc.service";
 
 @Component({
     selector: 'tree-xml-data',
     templateUrl: './demo.component.html'
 })
 export class ZtreeXMLDataDemoComponent {
-    public selectedSize = {label: "中", size: "medium"};
-    public labelData: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
-
     public data: SimpleTreeData;
+
+    public onClick(msg: any) {
+        console.log("click");
+        console.log(msg);
+    }
+
+    public labelData: object[] = new ArrayCollection([
+        { label: "小", size: "small" },
+        { label: "中", size: "medium" },
+        { label: "大", size: "large" }
+    ]);
+    public selectedSize = { label: "中", size: "medium" };
     constructor(public doc: TreeTextService) {
         this.data = new SimpleTreeData();
         this.data.fromXML(`
@@ -50,10 +55,5 @@ export class ZtreeXMLDataDemoComponent {
                 <node label="父节点3 - 没有子节点" isParent="true"></node>
             </node>
         `)
-    }
-
-    public onClick(msg: any) {
-        console.log("click");
-        console.log(msg);
     }
 }

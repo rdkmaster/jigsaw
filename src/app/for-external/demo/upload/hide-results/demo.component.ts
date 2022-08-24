@@ -1,22 +1,22 @@
 import { Component } from "@angular/core";
-import {UploadTextService} from "../doc.service";
+import { UploadTextService } from "../doc.service";
 
 @Component({
     selector: 'upload-hide-results',
     templateUrl: './demo.component.html'
 })
 export class UploadHideResultsDemoComponent {
-    fileType = '.txt';
+    public fileType = '.txt';
 
-    uploadStart($event) {
+    public uploadStart($event) {
         console.log("uploadStart触发了", $event)
     }
 
-    uploadProgress($event) {
+    public uploadProgress($event) {
         console.log("uploadProgress触发了", $event)
     }
 
-    uploadComplete($event) {
+    public uploadComplete($event) {
         console.log("uploadComplete触发了", $event)
     }
 

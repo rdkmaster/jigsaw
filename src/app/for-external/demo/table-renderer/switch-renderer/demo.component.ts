@@ -1,23 +1,23 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer, AdditionalColumnDefine} from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer, AdditionalColumnDefine } from "jigsaw/public_api";
+import { TableRendererTextService } from "../doc.service";
 
 @Component({
     selector: 'table-switch-renderer',
     templateUrl: './demo.component.html'
 })
 export class TableSwitchRendererDemoComponent {
-    tableData1: TableData;
-    tableData2: TableData;
-    columns1: ColumnDefine[];
-    columns2: ColumnDefine[];
-    changeMsg: string;
-    editable = true;
-    additional: AdditionalColumnDefine[] = [
+    public tableData1: TableData;
+    public tableData2: TableData;
+    public columns1: ColumnDefine[];
+    public columns2: ColumnDefine[];
+    public changeMsg: string;
+    public editable = true;
+    public additional: AdditionalColumnDefine[] = [
         {
             header: {
-                renderer: TableHeadCheckboxRenderer, rendererInitData: {title: '测试扩展列'}
+                renderer: TableHeadCheckboxRenderer, rendererInitData: { title: '测试扩展列' }
             },
             cell: {
                 renderer: TableCellSwitchRenderer
@@ -50,29 +50,29 @@ export class TableSwitchRendererDemoComponent {
         this.createColumnDefines(false);
     }
 
-    public createColumnDefines(readonly: boolean):void {
+    public createColumnDefines(readonly: boolean): void {
         this.columns1 = [
             {
                 target: 'marriage',
                 cell: {
                     renderer: TableCellSwitchRenderer,
-                    rendererInitData: {readonly}
+                    rendererInitData: { readonly }
                 }
             },
-            {target: 'position', visible: false}, {target: 'salary', visible: false},
-            {target: 'office', visible: false}, {target: 'desc', visible: false},
-            {target: 'position', visible: false}
+            { target: 'position', visible: false }, { target: 'salary', visible: false },
+            { target: 'office', visible: false }, { target: 'desc', visible: false },
+            { target: 'position', visible: false }
         ];
         this.columns2 = [...this.columns1];
         this.columns2[0] = {
             target: 'marriage',
             cell: {
                 renderer: TableCellSwitchRenderer,
-                rendererInitData: {readonly}
+                rendererInitData: { readonly }
             },
             header: {
                 renderer: TableHeadCheckboxRenderer,
-                rendererInitData: () => ({disabled: !this.editable, title: '测试内置列'})
+                rendererInitData: () => ({ disabled: !this.editable, title: '测试内置列' })
             }
         }
         setTimeout(() => {

@@ -1,15 +1,15 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import {
     TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellPasswordRenderer,
 } from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import { TableRendererTextService } from "../doc.service";
 
 @Component({
     selector: 'table-cell-editable-property',
     templateUrl: './demo.component.html',
 })
 export class TableCellEditablePropertyDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
     constructor(public doc: TableRendererTextService) {
         this.tableData = new TableData(
@@ -107,15 +107,15 @@ export class TableCellEditablePropertyDemoComponent {
                 editable: true,
                 editorRenderer: TableCellTextEditorRenderer,
                 editorRendererInitData:
-                    {
-                        placeholder: "Type to edit...",
-                        password: true
-                    }
+                {
+                    placeholder: "Type to edit...",
+                    password: true
+                }
             }
         }
     ];
 
-    changeMsg='';
+    changeMsg = '';
     onCellChange(value) {
         this.changeMsg = `field: '${value.field}', row: ${value.row}, column: ${value.column}, cellData: ${value.cellData}, oldCellData: ${value.oldCellData}`;
         let rows = value.row instanceof Array ? value.row : [value.row];

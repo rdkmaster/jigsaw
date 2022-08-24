@@ -3,15 +3,19 @@
 
     <div class="demo-showcase-v">
         <span>预设字段名(key)修改</span>
-        <label class="field-label">contentField: </label>
-        <j-input #contentField width="180" [value]="'file'"></j-input>
+        <div class="demo-showcase">
+            <span class="field-label">contentField </span>
+            <j-input #contentField width="180" [value]="'file'"></j-input>
+        </div>
 
-        <label class="field-label">fileNameField: </label>
-        <j-input #fileNameField width="180" [value]="'filename'"></j-input>
-
-        <label class="field-label">fileVerify: </label>
-        <j-input #fileVerify width="180" [value]="'$svr/my-verifier.js'"></j-input>
-
+        <div class="demo-showcase">
+            <span class="field-label">fileNameField</span>
+            <j-input #fileNameField width="180" [value]="'filename'"></j-input>
+        </div>
+        <div class="demo-showcase">
+            <span class="field-label">fileVerify</span>
+            <j-input #fileVerify width="180" [value]="'$svr/my-verifier.js'"></j-input>
+        </div>
     </div>
 
     <div class="demo-showcase-v">
@@ -22,13 +26,17 @@
             :
             <j-input width="180" [(value)]="item.value"></j-input>
             <a *ngIf="last" (click)="addField()">add field</a>
-            <br/>
+            <br />
         </div>
         <div>
-            <jigsaw-button jigsaw-upload [uploadAdditionalFields]="readAdditionalFields"
-                           [uploadContentField]="contentField.value"
-                           [uploadFileNameField]="fileNameField.value" [uploadFileVerify]="fileVerify.value"
-                           (uploadStart)="onComplete($event)">
+            <jigsaw-button
+                jigsaw-upload
+                [uploadAdditionalFields]="readAdditionalFields"
+                [uploadContentField]="contentField.value"
+                [uploadFileNameField]="fileNameField.value"
+                [uploadFileVerify]="fileVerify.value"
+                (uploadStart)="onComplete($event)"
+            >
                 上传
             </jigsaw-button>
         </div>

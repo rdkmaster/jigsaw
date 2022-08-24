@@ -1,28 +1,20 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import {
     BigTableData, ViewportScrollEvent, AdditionalColumnDefine, ColumnDefine,
     TableValueGenerators
 } from "jigsaw/public_api";
-import {OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer} from "./renderers";
-import {TableBigDataTextService} from "../doc.service";
+import { OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer } from "./renderers";
+import { TableBigDataTextService } from "../doc.service";
 
 @Component({
-    selector:'table-big-table',
+    selector: 'table-big-table',
     templateUrl: './demo.component.html'
 })
 export class BigTableDataDemoComponent {
-    tableData: BigTableData;
+    public tableData: BigTableData;
 
-    constructor(public http: HttpClient, public doc: TableBigDataTextService) {
-        this.tableData = new BigTableData(http, 'mock-data/big-table-data');
-        this.tableData.pagingInfo.pageSize = 1000;
-        this.tableData.viewport.rows = 10;
-        this.tableData.viewport.columns = 10;
-        this.tableData.fromAjax();
-    }
-
-    columnDefines: ColumnDefine[] = [
+    public columnDefines: ColumnDefine[] = [
         {
             target: 'field-2',
             width: 120,
@@ -42,7 +34,7 @@ export class BigTableDataDemoComponent {
         },
     ];
 
-    additionalColumnDefines: AdditionalColumnDefine[] = [
+    public additionalColumnDefines: AdditionalColumnDefine[] = [
         {
             pos: 0,
             width: '50px',
@@ -55,14 +47,22 @@ export class BigTableDataDemoComponent {
         }
     ];
 
-    selectedStep = 10;
+    public selectedStep = 10;
 
-    viewChangeMessage: string = '';
+    public viewChangeMessage: string = '';
 
-    handleViewChange(event: ViewportScrollEvent) {
+    public handleViewChange(event: ViewportScrollEvent) {
         // 使用setTimeout触发变更检查
         setTimeout(() => {
             this.viewChangeMessage = `${event.direction == 'horizontal' ? '水平' : '垂直'}方向移动到${event.scrollTo}`;
         });
+    }
+
+    constructor(public http: HttpClient, public doc: TableBigDataTextService) {
+        this.tableData = new BigTableData(http, 'mock-data/big-table-data');
+        this.tableData.pagingInfo.pageSize = 1000;
+        this.tableData.viewport.rows = 10;
+        this.tableData.viewport.columns = 10;
+        this.tableData.fromAjax();
     }
 }

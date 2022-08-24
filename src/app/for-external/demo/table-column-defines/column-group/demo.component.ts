@@ -1,22 +1,16 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {TableData, ColumnDefine} from "jigsaw/public_api"
-import {TableColumnDefinesTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { TableData, ColumnDefine } from "jigsaw/public_api"
+import { TableColumnDefinesTextService } from "../doc.service";
 
 @Component({
     selector: 'table-column-group',
     templateUrl: './demo.component.html'
 })
 export class TableColumnGroupDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableColumnDefinesTextService) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-    }
-
-    columns: ColumnDefine[] = [
+    public columns: ColumnDefine[] = [
         {
             target: "position",
             group: true
@@ -25,4 +19,10 @@ export class TableColumnGroupDemoComponent {
             group: true
         }
     ];
+    
+    constructor(http: HttpClient, public doc: TableColumnDefinesTextService) {
+        this.tableData = new TableData();
+        this.tableData.http = http;
+        this.tableData.fromAjax('mock-data/hr-list');
+    }
 }

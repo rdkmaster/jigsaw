@@ -1,10 +1,10 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import {
     RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
     CommonUtils, SortAs, SortOrder, JigsawTheme
 } from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import { TableRendererTextService } from "../doc.service";
 
 @Component({
     selector: 'table-html-renderer',
@@ -87,7 +87,7 @@ export class TableHtmlRendererDemoComponent {
         let curUnit = unitSelect.options[unitSelect.selectedIndex].value;
         console.log(curUnit);
         this.tableData.data = this.tableData.data.concat().map(row => {
-            row[3] = curUnit == '￥' ? row[3]*7 : Math.round(row[3]/7);
+            row[3] = curUnit == '￥' ? row[3] * 7 : Math.round(row[3] / 7);
             return row;
         });
         this.tableData.refresh();

@@ -1,16 +1,23 @@
-import {Component} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
-import {PageableTableData, ColumnDefine} from "jigsaw/public_api";
-import {TableBasicTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { PageableTableData, ColumnDefine } from "jigsaw/public_api";
+import { TableBasicTextService } from "../doc.service";
 
 @Component({
     selector: 'table-basic-pageable-ready',
     templateUrl: './demo.component.html'
 })
 export class TableBasicPageableReadyDemoComponent {
-    pageable: PageableTableData;
-    pageableReady: PageableTableData;
-
+    public pageable: PageableTableData;
+    public pageableReady: PageableTableData;
+    public columnDefines: ColumnDefine[] = [
+        {
+            target: 0,
+            header: {
+                sortable: true
+            }
+        }
+    ];
 
     constructor(http: HttpClient, public doc: TableBasicTextService) {
         this.pageable = new PageableTableData(http, {
@@ -31,13 +38,4 @@ export class TableBasicPageableReadyDemoComponent {
         this.pageableReady.ready = false;
         this.pageableReady.pagingInfo.pageSize = 5;
     }
-
-    columnDefines: ColumnDefine[] = [
-        {
-            target: 0,
-            header: {
-                sortable: true
-            }
-        }
-    ];
 }

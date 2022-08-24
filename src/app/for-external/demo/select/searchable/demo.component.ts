@@ -10,8 +10,8 @@ import {
 })
 
 export class SelectSearchableDemoComponent {
-    selectedCityForSelect: any;
-    cityListForSelect = new ArrayCollection([
+    public selectedCityForSelect: any;
+    public cityListForSelect = new ArrayCollection([
         { label: "北京" },
         { label: "上海" },
         { label: "南京" },

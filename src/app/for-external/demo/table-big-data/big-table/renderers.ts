@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TableCellRendererBase} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { TableCellRendererBase } from "jigsaw/public_api";
 
 @Component({
     template: `
@@ -22,9 +22,9 @@ import {TableCellRendererBase} from "jigsaw/public_api";
 })
 export class OfficeHeaderRenderer extends TableCellRendererBase {
     officeList = [
-        {label: 'data-1'}, {label: 'data-2'},
-        {label: 'data-3'}, {label: 'data-4'},
-        {label: 'data-5'}, {label: 'data-6'},
+        { label: 'data-1' }, { label: 'data-2' },
+        { label: 'data-3' }, { label: 'data-4' },
+        { label: 'data-5' }, { label: 'data-6' },
     ];
     selectedOffices = this.officeList.concat();
 
@@ -54,5 +54,5 @@ export class OfficeCellRenderer extends TableCellRendererBase {
     `
 })
 export class PositionHeaderRenderer extends TableCellRendererBase {
-    listItems = [{label: 'All Positions'}, {label: 'Developer'}, {label: 'System Architect'}, {label: 'Test Engineer'}];
+    listItems = [{ label: 'All Positions' }, { label: 'Developer' }, { label: 'System Architect' }, { label: 'Test Engineer' }];
 }

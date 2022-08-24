@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {TagTextService} from "../doc.service";
+import { Component } from "@angular/core";
+import { TagTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
 
 @Component({
@@ -9,27 +9,27 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 
 export class TagSelectableComponent {
-    public selectedSize = {label: "大", size: "medium"};
+    public selectedSize = { label: "大", size: "medium" };
     public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "大", size: "medium"}
+        { label: "小", size: "small" },
+        { label: "大", size: "medium" }
     ]);
-    tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Disabled1', 'Disabled2'];
-    tags1 = [
-        {label: 'Tag1', selected: true}, {label: 'Tag2'}, {label: 'Tag3'},
-        {label: 'Tag4'}, {label: 'Tag5'}, {label: 'Disabled1'}, {label: 'Disabled2'}
+    public tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Disabled1', 'Disabled2'];
+    public tags1 = [
+        { label: 'Tag1', selected: true }, { label: 'Tag2' }, { label: 'Tag3' },
+        { label: 'Tag4' }, { label: 'Tag5' }, { label: 'Disabled1' }, { label: 'Disabled2' }
     ];
-    selectedColor = ['preset-magenta'];
+    public selectedColor = ['preset-magenta'];
 
-    onSelect(tag: string, selected: boolean) {
+    public onSelect(tag: string, selected: boolean) {
         console.log(tag, ':', selected);
     }
 
-    onSelect1(tag: { label: string, selected: boolean }) {
+    public onSelect1(tag: { label: string, selected: boolean }) {
         const idx = this.tags1.indexOf(tag);
-        this.tags1.forEach ( tag => tag.selected = false);
+        this.tags1.forEach(tag => tag.selected = false);
         this.tags1[idx].selected = true;
     }
-    constructor(public doc: TagTextService) {}
+    constructor(public doc: TagTextService) { }
 
 }

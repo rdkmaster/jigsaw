@@ -1,18 +1,12 @@
-import {AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader} from "jigsaw/public_api";
-import {UploadTextService} from "../doc.service";
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
+import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } from "jigsaw/public_api";
+import { UploadTextService } from "../doc.service";
 
 @Component({
     selector: 'upload-toggle-auto-upload',
     templateUrl: "./demo.component.html"
 })
 export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
-    constructor(
-        private _changeDetectorRef: ChangeDetectorRef,
-        public doc: UploadTextService
-    ) {}
-    public uploadImmediately: boolean = false;
-
     @ViewChild("first", { read: JigsawUploadDirective })
     public uploader1: IUploader;
     @ViewChild("second", { read: JigsawUploadDirective })
@@ -21,7 +15,6 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
     public uploader3: IUploader;
     @ViewChild("forth", { read: JigsawUploadDirective })
     public uploader4: IUploader;
-
     @ViewChildren(JigsawUploadResult)
     results: QueryList<JigsawUploadResult>;
 
@@ -29,12 +22,13 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
         console.log(msg, "!!!!!!", data);
     }
 
-    multiple: boolean;
-    fileType = ".png";
-    maxSize: number = 1024;
-    minSize: number = 0;
+    public multiple: boolean;
+    public fileType = ".png";
+    public maxSize: number = 1024;
+    public minSize: number = 0;
+    public uploadImmediately: boolean = false;
 
-    clear() {
+    public clear() {
         this.results.toArray().forEach(r => r.clear());
     }
 
@@ -46,4 +40,6 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
         console.log(`AfterViewInit, uploader:`, this.uploader1);
         this._changeDetectorRef.detectChanges();
     }
+
+    constructor(private _changeDetectorRef: ChangeDetectorRef, public doc: UploadTextService) { }
 }
