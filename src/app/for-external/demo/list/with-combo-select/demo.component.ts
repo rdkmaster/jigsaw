@@ -5,6 +5,7 @@ import { ListTextService } from "../doc.service";
 @Component({
     selector: 'list-with-combo-select',
     templateUrl: './demo.component.html',
+    styleUrls:['./demo.component.css']
 })
 export class ListWithComboSelectDemoComponent {
     public goodsList = [

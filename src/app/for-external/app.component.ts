@@ -31,5 +31,7 @@ export class AppComponent {
             majorStyle = themeData.style;
         // localStorage.setItem("jigsawDemoTheme", JSON.stringify({name: themeName, majorStyle: majorStyle}));
         JigsawTheme.changeTheme(themeName, majorStyle);
+        const stylesSheets = document.getElementById('jigsaw-app-for-external-code-theme') as HTMLAnchorElement;
+        stylesSheets.href = `app/for-external/assets/prism-${themeData.style}.css`;
     }
 }
