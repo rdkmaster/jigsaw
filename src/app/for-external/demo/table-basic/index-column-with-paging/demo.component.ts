@@ -1,16 +1,18 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     PageableTableData, AdditionalColumnDefine, ColumnDefine, TableValueGenerators,
     SortAs, SortOrder
 } from "jigsaw/public_api";
-import { TableBasicTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-index-column-with-paging',
     templateUrl: './demo.component.html'
 })
-export class TableBasicAddIDWithPagingComponent {
+export class TableBasicAddIDWithPagingComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/index-column-with-paging";
+
     public pageable: PageableTableData;
 
     public columns: ColumnDefine[] = [{
@@ -32,7 +34,8 @@ export class TableBasicAddIDWithPagingComponent {
         }
     }];
 
-    constructor(http: HttpClient, public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/countries',
         });

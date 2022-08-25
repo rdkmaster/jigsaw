@@ -1,13 +1,15 @@
-import { AfterViewChecked, AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from "@angular/common/http";
-import { TableData, LineGraphData, JigsawProgress } from "jigsaw/public_api";
-import { TabTextService } from "../doc.service";
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {JigsawProgress, LineGraphData, TableData} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tab-basic',
     templateUrl: './demo.component.html'
 })
-export class JigsawTabsDemoComponent implements AfterViewInit {
+export class JigsawTabsDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/tab/basic";
+
     @ViewChild('progress')
     progress: JigsawProgress;
 
@@ -47,7 +49,8 @@ export class JigsawTabsDemoComponent implements AfterViewInit {
 
     public lineBarGraphData: LineGraphData;
 
-    constructor(http: HttpClient, public doc: TabTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');

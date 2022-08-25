@@ -1,11 +1,11 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { AlertTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'alert-customized',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class CustomizeAlertDemoComponent {
-    constructor(public doc: AlertTextService) { }
+export class CustomizeAlertDemoComponent extends AsyncDescription {
+    public demoPath = 'demo/alert/customized';
 }

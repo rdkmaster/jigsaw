@@ -1,10 +1,10 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     LocalPageableTableData, PageableTableData, AdditionalColumnDefine, AdditionalTableData,
     TableCellCheckboxRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'checkbox-column-pageable-table',
@@ -15,7 +15,9 @@ import { TableRendererTextService } from "../doc.service";
         }
     `]
 })
-export class TableAddCheckboxColumnPageableDemoComponent {
+export class TableAddCheckboxColumnPageableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/checkbox-column-pageable";
+
     public pageable: LocalPageableTableData | PageableTableData;
     public selectedRows: string;
     public allSelectedRows: any;
@@ -81,7 +83,8 @@ export class TableAddCheckboxColumnPageableDemoComponent {
         this.pageable.filter(filter, context);
     }
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'
         });

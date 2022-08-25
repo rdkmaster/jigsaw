@@ -1,13 +1,15 @@
-import { Component, QueryList, ViewChildren } from "@angular/core";
-import { NavigationMenuTextService } from "../doc.service";
-import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
-import { JigsawNavigationMenu } from "jigsaw/public_api";
+import {Component, ElementRef, QueryList, ViewChildren} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import { SimpleNode, SimpleTreeData, JigsawNavigationMenu } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "nav-menu",
     templateUrl: "demo.component.html",
 })
-export class NavigationMenuDemoComponent {
+export class NavigationMenuDemoComponent extends AsyncDescription {
+    public demoPath = "demo/navigation-menu/menu";
+
     @ViewChildren(JigsawNavigationMenu)
     public data: SimpleTreeData = new SimpleTreeData();
     public menus: QueryList<JigsawNavigationMenu>;
@@ -17,7 +19,8 @@ export class NavigationMenuDemoComponent {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    constructor(public doc: NavigationMenuTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         const xmlData = `
             <node>
                 <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

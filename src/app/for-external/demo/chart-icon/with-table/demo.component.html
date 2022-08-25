@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.withTable" [codes]="doc.codes.withTable">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <j-table width="500" [data]="tableData" [columnDefines]="columns"> </j-table>
 
     <ng-template #pieRenderer let-context="context">

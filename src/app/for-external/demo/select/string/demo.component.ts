@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-string",
     templateUrl: "demo.component.html"
 })
-export class SelectStringDemoComponent {
+export class SelectStringDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/string";
+
     public selectedCityForSelect: string;
     public cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
@@ -16,6 +18,4 @@ export class SelectStringDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) {
-    }
 }

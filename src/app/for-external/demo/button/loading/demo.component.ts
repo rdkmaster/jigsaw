@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { ButtonTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'button-loading',
     templateUrl: './demo.component.html'
 })
-export class ButtonLoadingComponent {
+export class ButtonLoadingComponent extends AsyncDescription {
+    public demoPath = "demo/button/loading";
+
     public disabled: boolean = false;
     public label: string = '点击加载';
     public isLoading = false;
@@ -28,5 +30,4 @@ export class ButtonLoadingComponent {
         { label: "默认", size: "default" }
     ]);
     public selectedSize = { label: "默认", size: "default" };
-    constructor(public doc: ButtonTextService) { }
 }

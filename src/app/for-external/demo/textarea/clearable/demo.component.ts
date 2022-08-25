@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { TextareaTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'textarea-clearable',
     templateUrl: './demo.component.html'
 })
-export class TextareaClearableDemoComponent {
-    public textareaValue: any;
+export class TextareaClearableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/textarea/clearable";
 
-    constructor(public doc: TextareaTextService) {
-    }
+    public textareaValue: any;
 }

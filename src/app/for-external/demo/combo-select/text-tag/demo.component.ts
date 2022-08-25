@@ -1,15 +1,18 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import { ComboSelectTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-text-tag',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectTextTagDemoComponent {
+export class ComboSelectTextTagDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/text-tag";
+
     public textTag = false;
     public clearable = true;
     public multipleSelect = false;
+    public selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
     public cities = [
         { label: "北京", closable: false },
         { label: "上海", closable: false },
@@ -25,9 +28,4 @@ export class ComboSelectTextTagDemoComponent {
         { label: "连云港3" },
         { label: "哈尔滨" }
     ];
-
-    public selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
-
-    constructor(public doc: ComboSelectTextService) {
-    }
 }

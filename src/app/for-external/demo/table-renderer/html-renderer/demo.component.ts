@@ -1,19 +1,22 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
     CommonUtils, SortAs, SortOrder, JigsawTheme
 } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'table-html-renderer',
     templateUrl: './demo.component.html'
 })
-export class TableHtmlRendererDemoComponent {
+export class TableHtmlRendererDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/html-renderer";
+
     tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

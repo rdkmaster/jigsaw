@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
-import { TransferTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'transfer-table-transfer',
     templateUrl: './demo.component.html'
 })
-export class TransferTableDemoComponent {
+export class TransferTableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/transfer/transfer-table";
+
     public data: TableData;
     public selectedItems: ArrayCollection<ListOption>;
     public sourceRenderer = TransferTableSourceRenderer;
@@ -19,7 +22,8 @@ export class TransferTableDemoComponent {
         console.log($event)
     }
 
-    constructor(public doc: TransferTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new TableData(
             [
                 [

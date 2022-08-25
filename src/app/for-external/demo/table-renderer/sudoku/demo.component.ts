@@ -1,15 +1,17 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, JigsawInfoAlert } from "jigsaw/public_api";
 import { NumberRenderer } from "./number-renderer";
 import { CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED } from "./utils";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-sudoku',
     templateUrl: './demo.component.html'
 })
-export class SudokuGameComponent {
+export class SudokuGameComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/sudoku";
+
     public puzzles: string[][];
     public tableData: TableData;
 
@@ -53,7 +55,8 @@ export class SudokuGameComponent {
         }
     }
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData([], '123456789'.split('').map(n => 'c' + n));
         this.tableData.subscribe((event) => this.checkBoardStatus(event));
         http.get('mock-data/soduku-puzzles').subscribe((data: string[][]) => {

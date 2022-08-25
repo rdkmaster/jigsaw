@@ -1,13 +1,16 @@
-import { Component, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
-import { PopupEffect, PopupInfo, PopupOptions, PopupService } from "jigsaw/public_api";
-import { DialogTextService } from "../doc.service";
+import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'dialog-modal',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.scss']
 })
-export class DialogModalDemoComponent {
+export class DialogModalDemoComponent extends AsyncDescription {
+    public demoPath = "demo/dialog/modal";
+
     public isModal: boolean = true;
     public popPositionTypes = [
         { label: "左上", value: "leftTop", offset: { left: 16, top: 16 } },
@@ -25,7 +28,8 @@ export class DialogModalDemoComponent {
     @ViewChild('tpDialog')
     private _tpDialog: TemplateRef<any>;
 
-    constructor(private _popupService: PopupService, public doc: DialogTextService) {
+    constructor(private _popupService: PopupService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
     public closeDialog() {
         if (this.popupInfo) {

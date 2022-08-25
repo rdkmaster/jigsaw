@@ -1,16 +1,20 @@
-import { Component } from "@angular/core";
-import { TableBasicTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { TableData } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "table-basic-basic",
     templateUrl: "./demo.component.html"
 })
 
-export class TableBasicBasicComponent {
+export class TableBasicBasicComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/basic";
+
     public tableData: TableData;
 
-    constructor(public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 [

@@ -1,7 +1,7 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, AdditionalColumnDefine, TableCellRendererBase } from "jigsaw/public_api";
-import { TableActionsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 /*
  * 操作列头
@@ -33,8 +33,8 @@ export class MyTableHeadOption extends TableCellRendererBase {
     `]
 })
 export class MyTableCellOption extends TableCellRendererBase {
-    public clickHandler(actioin) {
-        alert(`正在${actioin}第 ${this.row + 1} 行的数据！`)
+    public clickHandler(action) {
+        alert(`正在${action}第 ${this.row + 1} 行的数据！`)
     }
 }
 
@@ -42,7 +42,9 @@ export class MyTableCellOption extends TableCellRendererBase {
     selector: 'table-add-column',
     templateUrl: './demo.component.html'
 })
-export class TableAddColumnDemoComponent {
+export class TableAddColumnDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/add-column";
+
     public tableData: TableData;
 
     public additionalColumns: AdditionalColumnDefine[] = [{
@@ -54,7 +56,8 @@ export class TableAddColumnDemoComponent {
         }
     }];
 
-    constructor(http: HttpClient, public doc: TableActionsTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

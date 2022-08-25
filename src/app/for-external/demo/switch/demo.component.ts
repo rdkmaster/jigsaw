@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { SwitchTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class SwitchDemoComponent {
-    constructor(public doc: SwitchTextService) {
-    }
+export class SwitchDemoComponent extends AsyncDescription {
+    public demoPath = "demo/switch";
+
 }

@@ -1,13 +1,16 @@
-import { Component } from "@angular/core";
-import { CheckboxTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { CheckBoxStatus } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "checkbox-checkall",
     templateUrl: "demo.component.html",
     styleUrls: ['demo.component.css']
 })
-export class CheckboxCheckAllComponent {
+export class CheckboxCheckAllComponent extends AsyncDescription {
+    public demoPath = "demo/checkbox/checkall";
+
     public option = {
         'a': CheckBoxStatus.checked,
         'b': CheckBoxStatus.checked,
@@ -54,7 +57,8 @@ export class CheckboxCheckAllComponent {
         }
     }
 
-    constructor(public doc: CheckboxTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.checkStatus()
     }
 }

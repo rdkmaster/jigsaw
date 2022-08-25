@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { StepItem } from "jigsaw/public_api";
-import { StepsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'steps-horizontal',
     templateUrl: "./demo.component.html"
 })
-export class JigsawStepHorizontalDemoComponent {
+export class JigsawStepHorizontalDemoComponent extends AsyncDescription {
+    public demoPath = "demo/steps/horizontal";
+
     public data = [
         {
             title: "类型",
@@ -43,9 +45,5 @@ export class JigsawStepHorizontalDemoComponent {
 
     public currentChange(event: number) {
         console.log(`${event} is selected: `, this.steps[event]);
-    }
-
-    constructor(public doc: StepsTextService) {
-        this.steps = JSON.parse(JSON.stringify(this.data));
     }
 }

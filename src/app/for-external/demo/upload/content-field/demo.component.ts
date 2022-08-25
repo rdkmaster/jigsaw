@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { UploadFileInfo } from 'jigsaw/public_api';
-import { UploadTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'upload-content-field',
     templateUrl: './demo.component.html'
 })
-export class UploadContentFieldDemoComponent {
+export class UploadContentFieldDemoComponent extends AsyncDescription {
+    public demoPath = "demo/upload/content-field";
+
     public additionalFields = [{ field: 'an-additional-field', value: 'value of the field' }];
 
     get readAdditionalFields(): { [p: string]: string } {
@@ -21,8 +23,5 @@ export class UploadContentFieldDemoComponent {
 
     public onComplete(data: UploadFileInfo | UploadFileInfo[]) {
         console.log(data);
-    }
-
-    constructor(public doc: UploadTextService) {
     }
 }

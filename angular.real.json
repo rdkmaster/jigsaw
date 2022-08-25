@@ -32,9 +32,7 @@
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/@rdkmaster/icon-font/iconfont.css",
-              "node_modules/codemirror/lib/codemirror.css",
-              "node_modules/codemirror/theme/mbo.css",
-              "src/app/for-internal/styles.scss",
+              "src/app/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
                 "bundleName": "themes/paletx-pro-light",
@@ -71,13 +69,7 @@
               "node_modules/moment/min/moment.min.js",
               "node_modules/ztree/js/jquery.ztree.all.js",
               "node_modules/ztree/js/jquery.ztree.exhide.js",
-              "node_modules/peity/jquery.peity.min.js",
-              "node_modules/codemirror/lib/codemirror.js",
-              "node_modules/codemirror/mode/javascript/javascript.js",
-              "node_modules/codemirror/mode/css/css.js",
-              "node_modules/codemirror/mode/sass/sass.js",
-              "node_modules/codemirror/mode/xml/xml.js",
-              "node_modules/codemirror/addon/edit/matchbrackets.js"
+              "node_modules/peity/jquery.peity.min.js"
             ]
           },
           "configurations": {
@@ -187,15 +179,14 @@
             "assets": [
               "src/app/libs/favicon.ico",
               "src/app/for-external/demo/pc/tree/icon/assets",
-              "src/app/for-external/assets"
+              "src/app/for-external/assets",
+              "src/app/for-external/demo"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/@rdkmaster/icon-font/iconfont.css",
-              "node_modules/codemirror/lib/codemirror.css",
-              "node_modules/codemirror/theme/mbo.css",
-              "src/app/for-external/styles.scss",
+              "src/app/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
                 "bundleName": "themes/paletx-pro-light",
@@ -233,12 +224,8 @@
               "node_modules/ztree/js/jquery.ztree.all.js",
               "node_modules/ztree/js/jquery.ztree.exhide.js",
               "node_modules/peity/jquery.peity.min.js",
-              "node_modules/codemirror/lib/codemirror.js",
-              "node_modules/codemirror/mode/javascript/javascript.js",
-              "node_modules/codemirror/mode/css/css.js",
-              "node_modules/codemirror/mode/sass/sass.js",
-              "node_modules/codemirror/mode/xml/xml.js",
-              "node_modules/codemirror/addon/edit/matchbrackets.js"
+              "node_modules/prismjs/prism.js",
+              "src/app/for-external/demo-template/description-and-sources.js"
             ]
           },
           "configurations": {

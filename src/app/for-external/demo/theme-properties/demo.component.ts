@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { ThemePropertiesTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ThemePropertiesAllComponent {
-    constructor(public doc: ThemePropertiesTextService) { }
+export class ThemePropertiesAllComponent extends AsyncDescription {
+    public demoPath = "demo/theme-properties";
+
 }
 

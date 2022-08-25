@@ -8,7 +8,7 @@ import {
 } from "jigsaw/public_api";
 import {JigsawStepHorizontalDemoComponent} from "./horizontal/demo.component";
 import {JigsawStepVerticalDemoComponent} from "./vertical/demo.component";
-import {JigsawStepstatusDemoComponent} from "./status/demo.component";
+import {JigsawStepStatusDemoComponent} from "./status/demo.component";
 import {JigsawStepManyStepsDemoComponent} from "./many-steps/demo.component";
 import {JigsawStepOverLengthDemoComponent} from "./over-length/demo.component";
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
@@ -18,7 +18,7 @@ import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
         StepsAllComponent,
         JigsawStepHorizontalDemoComponent,
         JigsawStepVerticalDemoComponent,
-        JigsawStepstatusDemoComponent,
+        JigsawStepStatusDemoComponent,
         JigsawStepManyStepsDemoComponent,
         JigsawStepOverLengthDemoComponent
 

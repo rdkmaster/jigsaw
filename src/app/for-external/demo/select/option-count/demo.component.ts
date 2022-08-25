@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-option-count",
     templateUrl: "./demo.component.html"
 })
+export class SelectOptionCountDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/option-count";
 
-export class SelectOptionCountDemoComponent {
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         { label: "北京" },
@@ -24,6 +25,4 @@ export class SelectOptionCountDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
-
 }

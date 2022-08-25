@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { ListLiteTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-lite-line-ellipsis',
     templateUrl: './demo.component.html'
 })
-export class ListLiteLineEllipsisDemoComponent {
+export class ListLiteLineEllipsisDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite/line-ellipsis";
+
     public selectedItems: any[];
     public goodsList: GroupOptionValue[] = [
         {
@@ -40,7 +42,4 @@ export class ListLiteLineEllipsisDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    constructor(public doc: ListLiteTextService) {
-    }
 }

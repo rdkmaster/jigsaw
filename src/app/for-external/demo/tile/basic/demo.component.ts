@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
-import { TileTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tile-basic',
     templateUrl: './demo.component.html'
 })
-export class TileSelectBasicDemoComponent {
-    public citys = new ArrayCollection([
+export class TileSelectBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/tile/basic";
+
+    public cities = new ArrayCollection([
         { label: "北京" },
         { label: "上海", disabled: true },
         { label: "南京" },
@@ -47,8 +49,5 @@ export class TileSelectBasicDemoComponent {
 
     public handleSelect3(selectedItems) {
         this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
-    }
-
-    constructor(public doc: TileTextService) {
     }
 }

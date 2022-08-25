@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { StripColorGraphData, StripGraphData, StripSequenceGraphData } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-strip',
     templateUrl: './demo.component.html'
 })
-export class GraphStripDemoComponent {
+export class GraphStripDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/strip";
+
     public stripData: StripGraphData;
 
     public stripSequenceData: StripSequenceGraphData;
@@ -18,7 +20,8 @@ export class GraphStripDemoComponent {
         console.log($event);
     }
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.stripData = new StripGraphData();
         this.stripData.header = ["搜狐视频", "乐视视频", "土豆视频", "奇异PPS视频", "优酷视频", "腾讯视频"];
         this.stripData.data = [

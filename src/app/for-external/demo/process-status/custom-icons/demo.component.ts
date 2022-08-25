@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { ProcessStatusTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "process-status-custom-icons",
     templateUrl: './demo.component.html'
 })
-export class ProcessStatusCustomIconsComponent {
+export class ProcessStatusCustomIconsComponent extends AsyncDescription {
+    public demoPath = "demo/process-status/custom-icons";
+
     public steps = [
         {
             title: 'done',
@@ -68,7 +70,4 @@ export class ProcessStatusCustomIconsComponent {
             skippedIcon: 'iconfont iconfont-e339'
         },
     ];
-    
-    constructor(public doc: ProcessStatusTextService) {
-    }
 }

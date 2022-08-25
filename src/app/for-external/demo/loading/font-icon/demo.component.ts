@@ -1,13 +1,16 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import { LoadingService, PopupInfo, JigsawFontLoading } from "jigsaw/public_api";
-import { LoadingTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'loading-font-icon',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class LoadingFontIconDemoComponent implements AfterViewInit {
+export class LoadingFontIconDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/loading/font-icon";
+
     @ViewChild('block') block: ElementRef;
 
     public blockLoading: PopupInfo;
@@ -23,6 +26,7 @@ export class LoadingFontIconDemoComponent implements AfterViewInit {
         this.popupBlockLoading()
     }
 
-    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
+    constructor(public loadingService: LoadingService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

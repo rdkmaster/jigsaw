@@ -1,16 +1,19 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { LineGraphData } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-line',
     templateUrl: './demo.component.html'
 })
-export class GraphLineDemoComponent {
+export class GraphLineDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/line";
+
     public lineBarData: LineGraphData;
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.lineBarData = new LineGraphData();
         this.lineBarData.rowDescriptor = ['周一', '周二', '周三', '周四', '周五', '周六', '周日'];
         this.lineBarData.header = ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'];

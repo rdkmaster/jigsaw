@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.presetColor" [codes]="doc.codes.presetColor">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <section class="demo-showcase-v">
         <span>内置颜色的标签</span>
         <jigsaw-tag color="preset-blue" [size]="selectedSize.size">蓝色标签</jigsaw-tag>

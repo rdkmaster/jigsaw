@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { InputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'input-prefix-suffix',
     templateUrl: './demo.component.html'
 })
-export class InputPrefixSuffixDemoComponent {
+export class InputPrefixSuffixDemoComponent extends AsyncDescription {
+    public demoPath = "demo/input/prefix-suffix";
+
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public _$prefix = ['上行流量', '下行流量'];
     public _$prefixIcons: GroupOptionValue[] = [
@@ -52,7 +54,5 @@ export class InputPrefixSuffixDemoComponent {
 
     public _$unitChange(event: any) {
         console.log('prefix-suffix selected: ', event);
-    }
-    constructor(public doc: InputTextService) {
     }
 }

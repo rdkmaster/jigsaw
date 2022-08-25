@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
-import { ButtonTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 
 @Component({
     selector: 'button-icon-text',
     templateUrl: './demo.component.html'
 })
-export class ButtonIconTextComponent {
+export class ButtonIconTextComponent extends AsyncDescription {
+    public demoPath = "demo/button/icon-text";
+
     public onClick() {
         alert('Hello Jigsaw Button ^_^');
     }
@@ -19,5 +21,4 @@ export class ButtonIconTextComponent {
         { label: "默认", size: "default" }
     ]);
     public selectedSize = { label: "默认", size: "default" };
-    constructor(public doc: ButtonTextService) { }
 }

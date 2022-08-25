@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { StepsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'steps-status',
     templateUrl: "./demo.component.html"
 })
-export class JigsawStepstatusDemoComponent {
+export class JigsawStepStatusDemoComponent extends AsyncDescription {
+    public demoPath = "demo/steps/status";
+
     public data = [
         {
             title: '这是error',
@@ -37,8 +39,5 @@ export class JigsawStepstatusDemoComponent {
 
     public currentChange(event: number) {
         console.log(`${event} is selected: `, this.data[event]);
-    }
-
-    constructor(public doc: StepsTextService) {
     }
 }

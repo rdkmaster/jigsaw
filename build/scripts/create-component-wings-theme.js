@@ -109,9 +109,10 @@ if (fs.existsSync(wingsThemeOutput)) {
 
 const styleFiles = styleFilesParser();
 const angularJson = require(`../../angular.real.json`);
-const options = angularJson.projects[process.argv[2]].architect.build.options;
+const options = angularJson.projects["jigsaw-app-internal"].architect.build.options;
 options.styles = options.styles.filter(style => typeof style === 'string' ||
     (style.input && style.input.indexOf('/wings-theme/')) === -1);
+angularJson.projects["jigsaw-app-external"].architect.build.options.styles = options.styles;
 
 const commonImport = `
         @import "../settings/paletx-pro-base.scss";

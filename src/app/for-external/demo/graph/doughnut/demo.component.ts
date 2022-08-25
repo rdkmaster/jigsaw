@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-doughnut',
     templateUrl: './demo.component.html'
 })
-export class GraphDoughnutDemoComponent {
+export class GraphDoughnutDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/doughnut";
+
     public doughnut: DoughnutGraphData;
 
     public doughnutRate: DoughnutRateGraphData;
@@ -18,7 +20,8 @@ export class GraphDoughnutDemoComponent {
         console.log($event);
     }
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.doughnut = new DoughnutGraphData();
         this.doughnut.rowDescriptor = ["终端", "无线网", "互联网", "核心网"];
         this.doughnut.data = [

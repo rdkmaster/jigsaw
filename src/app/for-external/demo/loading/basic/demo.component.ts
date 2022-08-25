@@ -1,13 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { LoadingService } from "jigsaw/public_api";
-import { LoadingTextService } from "../doc.service";
+import {HttpClient} from "@angular/common/http";
+import {ArrayCollection, LoadingService} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'loading-basic',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class LoadingBasicDemoComponent {
+export class LoadingBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/loading/basic";
+
     @ViewChild('block')
     private _block: ElementRef;
 
@@ -30,7 +33,7 @@ export class LoadingBasicDemoComponent {
         }, 3000)
     }
 
-    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
+    constructor(public loadingService: LoadingService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
-
 }

@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { ListTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-basic',
     templateUrl: './demo.component.html'
 })
-export class ListBasicDemoComponent {
+export class ListBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list/basic";
+
     public goodsList = [
         {
             logo: 'e187',
@@ -39,7 +41,4 @@ export class ListBasicDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    constructor(public doc: ListTextService) {
-    }
 }

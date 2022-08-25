@@ -1,13 +1,15 @@
 import { HttpClient } from "@angular/common/http";
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
-import { TransferTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'transfer-list-local-pageable-transfer',
     templateUrl: './demo.component.html'
 })
-export class TransferListLocalPageableDemoComponent {
+export class TransferListLocalPageableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/transfer/transfer-list-local-pageable";
+
     public data: LocalPageableArray<any>;
     public selectedData: ArrayCollection<any>;
     public sourceRenderer = TransferListSourceRenderer;
@@ -17,76 +19,14 @@ export class TransferListLocalPageableDemoComponent {
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
 
-    public dataArray = [
-        {
-            "enName": "andorra",
-            "zhName": "安道尔",
-            "shortName": "and"
-        },
-        {
-            "enName": "angola",
-            "zhName": "安哥拉",
-            "shortName": "ago"
-        },
-        {
-            "enName": "antartica",
-            "zhName": "南极",
-            "shortName": "ata"
-        },
-        {
-            "enName": "armenia",
-            "zhName": "亚美尼亚",
-            "shortName": "arm"
-        },
-        {
-            "enName": "aruba",
-            "zhName": "阿魯巴",
-            "shortName": "abw"
-        },
-        {
-            "enName": "austria",
-            "zhName": "奥地利",
-            "shortName": "aut"
-        },
-        {
-            "enName": "bahamas",
-            "zhName": "巴哈马",
-            "shortName": "bhs"
-        },
-        {
-            "enName": "bangladesh",
-            "zhName": "孟加拉国",
-            "shortName": "bgd"
-        },
-        {
-            "enName": "barbados",
-            "zhName": "巴巴多斯",
-            "shortName": "brb"
-        },
-        {
-            "enName": "belarus",
-            "zhName": "白俄罗斯",
-            "shortName": "blr"
-        },
-        {
-            "enName": "belize",
-            "zhName": "伯里兹",
-            "shortName": "blz"
-        },
-        {
-            "enName": "benin",
-            "zhName": "贝宁",
-            "shortName": "ben"
-        }
-    ];
-
     public selectedItemsChange($event) {
         console.log($event)
     }
 
-    constructor(public _http: HttpClient, public doc: TransferTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new LocalPageableArray();
-        this.data.http = _http;
+        this.data.http = http;
         this.data.pagingInfo.pageSize = 15;
         this.data.pagingInfo.currentPage = undefined;
         this.data.pagingInfo.itemHeight = undefined;

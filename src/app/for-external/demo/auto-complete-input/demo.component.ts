@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { AutoCompleteInputTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class AutoCompleteInputDemoComponent {
-    constructor(public doc: AutoCompleteInputTextService) { }
+export class AutoCompleteInputDemoComponent extends AsyncDescription {
+    public demoPath = "demo/auto-complete-input";
+
 }
 

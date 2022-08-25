@@ -1,7 +1,8 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { TableData, AdditionalColumnDefine, DragDropInfo } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 import { TableDragDeleteRow, TableDragReplaceRow } from "./table-renderer";
-import { DragDropTextService } from "../doc.service";
 
 @Component({
     selector: 'dragdrop-simple-table',
@@ -9,7 +10,9 @@ import { DragDropTextService } from "../doc.service";
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class TableDragDemoComponent {
+export class TableDragDemoComponent extends AsyncDescription {
+    public demoPath = "demo/drag-drop/simple-table-drag-drop";
+
     public tableData: TableData;
 
     public employees: any[] = [
@@ -112,7 +115,8 @@ export class TableDragDemoComponent {
         this.tableData.refresh();
     }
 
-    constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: DragDropTextService) {
+    constructor(public renderer: Renderer2, public elementRef: ElementRef, http: HttpClient) {
+        super(http, elementRef);
         this.tableData = new TableData([
             ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 316],
             ["Shirley", "Accountant", "$11845", "2017/4/25", "R&D Dept II", 711],

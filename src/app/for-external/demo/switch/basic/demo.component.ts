@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { SwitchTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "switch-basic",
     templateUrl: "./demo.component.html"
 })
 
-export class SwitchBasicComponent {
+export class SwitchBasicComponent extends AsyncDescription {
+    public demoPath = "demo/switch/basic";
+
     public checked: boolean;
 
     public sizes: object[] = new ArrayCollection([
@@ -16,5 +18,4 @@ export class SwitchBasicComponent {
         { label: "大", size: "default" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SwitchTextService) { }
 }

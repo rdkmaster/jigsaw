@@ -1,18 +1,17 @@
 import { Component } from "@angular/core";
-import { NumericInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'numeric-input-basic',
     templateUrl: './demo.component.html'
 })
-export class NumericInputBasicDemoComponent {
+export class NumericInputBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/numeric-input/basic";
+
     public selectedSize = { label: "中", size: "default" };
     public value: number;
 
     public valueChange($event) {
         console.log($event, typeof $event == 'number');
-    }
-
-    constructor(public doc: NumericInputTextService) {
     }
 }

@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { TileTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TileAllComponent {
-    constructor(public doc: TileTextService) { }
+export class TileAllComponent extends AsyncDescription {
+    public demoPath = "demo/tile";
+
 }
 

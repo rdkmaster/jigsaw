@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-multiple-select",
     templateUrl: "./demo.component.html"
 })
 
-export class SelectMultipleSelectDemoComponent {
+export class SelectMultipleSelectDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/multiple-select";
+
     public dataList = new ArrayCollection([
         { label: "文本选项1" },
         { label: "文本选项2" },
@@ -85,6 +87,4 @@ export class SelectMultipleSelectDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
-
 }

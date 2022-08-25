@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
-import { ButtonTextService } from "../doc.service";
 import { ArrayCollection } from 'jigsaw/public_api';
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'button-directive',
     templateUrl: './demo.component.html'
 })
-export class ButtonDirectiveDemoComponent {
+export class ButtonDirectiveDemoComponent extends AsyncDescription {
+    public demoPath = "demo/button/directive";
+
     public size: string = "";
 
     public onClick() {
@@ -20,5 +22,4 @@ export class ButtonDirectiveDemoComponent {
         { label: "默认", size: "default" }
     ]);
     public selectedSize = { label: "默认", size: "default" };
-    constructor(public doc: ButtonTextService) { }
 }

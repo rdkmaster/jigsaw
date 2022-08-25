@@ -1,4 +1,4 @@
-import {Component, Renderer2, ViewContainerRef} from "@angular/core";
+import {Component, ElementRef, Renderer2, ViewContainerRef} from "@angular/core";
 import {
     TableData,
     ColumnDefine,
@@ -7,22 +7,22 @@ import {
     TableHeadCheckboxRenderer,
     TableCellCheckboxRenderer
 } from "jigsaw/public_api"
-import {TableBasicTextService} from "../doc.service";
 import {HttpClient} from "@angular/common/http";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-content-width',
     templateUrl: './demo.component.html'
 })
-export class TableBasicContentWidthDemoComponent {
+export class TableBasicContentWidthDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/content-width";
+
     tableData: TableData;
     tableData2: TableData;
     additionalData: AdditionalTableData;
 
-    constructor(public viewContainerRef: ViewContainerRef,
-                public renderer: Renderer2,
-                public doc: TableBasicTextService,
-                http: HttpClient) {
+    constructor(public viewContainerRef: ViewContainerRef, public renderer: Renderer2, http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 ["2017-05-05 16:59:40", "S1-U", "4G", "152551111", "unknown", "CMNET.MNC000.MCC460.GPRS", 180698],

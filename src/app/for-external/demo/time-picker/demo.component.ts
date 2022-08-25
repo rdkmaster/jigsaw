@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { TimePickerTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class TimePickerDemoComponent {
-    constructor(public doc: TimePickerTextService) {
-    }
+export class TimePickerDemoComponent extends AsyncDescription {
+    public demoPath = "demo/time-picker";
+
 }

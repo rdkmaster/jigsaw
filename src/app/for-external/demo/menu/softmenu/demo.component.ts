@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
-    selector: 'menu-softmenu',
+    selector: 'menu-soft-menu',
     templateUrl: './demo.component.html',
     styleUrls: [`./demo.component.css`]
 })
-export class MenuSoftmenuDemoComponent {
+export class MenuSoftMenuDemoComponent extends AsyncDescription {
+    public demoPath = "demo/menu/softmenu";
+
     public menuData: any[] = this.initMenuData();
 
     private initMenuData(): any[] {
@@ -96,6 +98,4 @@ export class MenuSoftmenuDemoComponent {
     public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
-
-    constructor(public doc: MenuTextService) { }
 }

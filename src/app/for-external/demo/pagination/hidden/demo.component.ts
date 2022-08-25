@@ -1,14 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { LocalPageableTableData } from "jigsaw/public_api";
-import { PaginationTextService } from "../doc.service";
-import { ArrayCollection } from "jigsaw/public_api";
+import { LocalPageableTableData, ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'pagination-hidden',
     templateUrl: './demo.component.html'
 })
-export class PaginationHiddenDemoComponent {
+export class PaginationHiddenDemoComponent extends AsyncDescription {
+    public demoPath = "demo/pagination/hidden";
+
     public searchable: boolean = false;
     public pageable: LocalPageableTableData;
     public pageableForSimple: LocalPageableTableData;
@@ -28,7 +29,8 @@ export class PaginationHiddenDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(http: HttpClient, public doc: PaginationTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;

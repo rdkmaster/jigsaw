@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { ColorSelectTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
-export class ColorSelectDemoComponent {
-    constructor(public doc: ColorSelectTextService) {
-    }
+export class ColorSelectDemoComponent extends AsyncDescription {
+    public demoPath = "demo/color-select";
+
 }

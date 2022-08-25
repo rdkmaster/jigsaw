@@ -1,15 +1,21 @@
-import { Component } from "@angular/core";
-import { CascadeTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient, HttpRequest } from "@angular/common/http";
-import { ArrayCollection, CascadeData } from "jigsaw/public_api";
+import { CascadeData } from "jigsaw/public_api";
 import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "cascade-search-and-paging",
     templateUrl: "./demo.component.html"
 })
 
-export class CascadeSearchAndPagingComponent {
+export class CascadeSearchAndPagingComponent extends AsyncDescription {
+    public demoPath = "demo/cascade/search-and-paging";
+
+    constructor(private http: HttpClient, el: ElementRef) {
+        super(http, el);
+    }
+
     public lazyLoadSelectedItems: any[];
 
     public levelInfos = [
@@ -39,11 +45,7 @@ export class CascadeSearchAndPagingComponent {
         const item3 = { id: 677, name: "雨花台区", cityId: 63 };
         this.lazyLoadSelectedItems = [item1, item2, item3];
     }
-
-    constructor(public http: HttpClient, public doc: CascadeTextService) {
-    }
 }
-
 
 /* 模拟请求代码 start */
 

@@ -1,14 +1,15 @@
-import { Component, OnInit } from "@angular/core";
-import { TabTextService } from "../doc.service";
+import {Component, ElementRef, OnInit} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TabBarData } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "tab-tab-bar",
     templateUrl: "./demo.component.html",
 })
+export class TabTabBarComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/tab/tab-bar";
 
-export class TabTabBarComponent implements OnInit {
     public tabBarData: Array<string>;
     public tabBarData2: TabBarData[];
     public selectedIndex = 0;
@@ -37,6 +38,7 @@ export class TabTabBarComponent implements OnInit {
         ];
     }
 
-    constructor(public http: HttpClient, public doc: TabTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

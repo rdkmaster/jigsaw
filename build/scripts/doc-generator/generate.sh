@@ -35,7 +35,7 @@ if [ "$?" != "0" ]; then
     exit 1
 fi
 
-node comp-data-relationship-svg-parser.js
+node comp-sizeController-relationship-svg-parser.js
 if [ "$?" != "0" ]; then
     echo "ERROR: component data relationiship error!"
     exit 1

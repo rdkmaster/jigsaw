@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { BoxTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class BoxAllComponent {
-    constructor(public doc: BoxTextService) { }
+export class BoxAllComponent extends AsyncDescription {
+    public demoPath = "demo/box";
+
 }
 

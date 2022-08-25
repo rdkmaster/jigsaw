@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import { ComboSelectTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-events',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectChangeEventsDemoComponent {
+export class ComboSelectChangeEventsDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/events";
+
     public selectedCity = new ArrayCollection();
     public cities = [
         { label: '北京', type: '', closable: false },
@@ -39,8 +41,5 @@ export class ComboSelectChangeEventsDemoComponent {
 
     onTagRemove(btn) {
         btn.type = '';
-    }
-
-    constructor(public doc: ComboSelectTextService) {
     }
 }

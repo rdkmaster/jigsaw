@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { CollapseTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "collapse-accordion",
     templateUrl: "./demo.component.html",
 })
-export class CollapseAccordionDemoComponent {
+export class CollapseAccordionDemoComponent extends AsyncDescription {
+    public demoPath = "demo/collapse/accordion";
+
     public goodsList = [
         {
             name: 'bicycle',
@@ -33,7 +35,4 @@ export class CollapseAccordionDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    constructor(public doc: CollapseTextService) {
-    }
 }

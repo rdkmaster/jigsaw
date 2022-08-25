@@ -1,12 +1,14 @@
 import {AfterContentInit, Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
-import {TileTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tile-tile-lite',
     templateUrl: './demo.component.html'
 })
-export class TileLiteBasicDemoComponent implements AfterContentInit {
+export class TileLiteBasicDemoComponent extends AsyncDescription implements AfterContentInit {
+    public demoPath = "demo/tile/tile-lite";
+
     selectedCityStr: string;
     selectedCity: ArrayCollection<any>;
     cities = new ArrayCollection([
@@ -34,8 +36,4 @@ export class TileLiteBasicDemoComponent implements AfterContentInit {
         this.selectedCity = new ArrayCollection([{label: "深圳", id: 1}, {label: "西安", id: 6}]);
         this.selectedCityStr = this.selectedCity.map(city => city.label).join(',');
     }
-
-    constructor(public doc: TileTextService) {
-    }
-
 }

@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'menu-horizontal-navigation',
     templateUrl: './demo.component.html',
     styleUrls: [`./demo.component.css`]
 })
-export class MenuHorizontalNavigationDemoComponent {
+export class MenuHorizontalNavigationDemoComponent extends AsyncDescription {
+    public demoPath = "demo/menu/horizontal-navigation";
+
     public topBarData: any[] = this.initTopBarData();
 
     private initTopBarData(): any[] {
@@ -87,6 +89,4 @@ export class MenuHorizontalNavigationDemoComponent {
     public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
-
-    constructor(public doc: MenuTextService) { }
 }

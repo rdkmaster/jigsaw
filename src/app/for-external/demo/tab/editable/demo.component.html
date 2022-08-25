@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.editable" [codes]="doc.codes.editable">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-tabs width="100%" [editable]="true" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">

@@ -1,7 +1,7 @@
-<demo-template [data]="''" [text]="doc.text.stringArray" [codes]="doc.codes.stringArray">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <j-radios [(value)]="selectedCity">
-            <j-radio-option *ngFor="let item of citys" [value]="item">
+            <j-radio-option *ngFor="let item of cities" [value]="item">
                 {{ item }}
             </j-radio-option>
         </j-radios>

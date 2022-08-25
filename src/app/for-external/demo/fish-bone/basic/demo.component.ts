@@ -1,17 +1,20 @@
-import {Component, ViewEncapsulation, NgZone} from "@angular/core";
+import {Component, ViewEncapsulation, NgZone, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
-import {FishBoneTextService} from "../doc.service";
+import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'fish-bone-basic',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FishBoneBasicComponent {
+export class FishBoneBasicComponent extends AsyncDescription {
+    public demoPath = "demo/fish-bone/basic";
+
 
     data: SimpleTreeData;
-    constructor(public http: HttpClient, public _zone: NgZone, public doc: FishBoneTextService) {
+    constructor(public http: HttpClient, public _zone: NgZone, el: ElementRef) {
+        super(http, el);
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([

@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { UploadTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'upload-set-size',
     templateUrl: './demo.component.html'
 })
-export class UploadSetSizeDemoComponent {
+export class UploadSetSizeDemoComponent extends AsyncDescription {
+    public demoPath = "demo/upload/set-size";
+
     public fileType = '.txt';
 
     public uploadStart($event) {
@@ -18,8 +20,5 @@ export class UploadSetSizeDemoComponent {
 
     public uploadComplete($event) {
         console.log("uploadComplete触发了", $event)
-    }
-
-    constructor(public doc: UploadTextService) {
     }
 }

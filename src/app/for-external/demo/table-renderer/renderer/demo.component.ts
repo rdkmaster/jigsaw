@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     LocalPageableTableData, AdditionalColumnDefine, AdditionalTableData, ColumnDefine,
@@ -11,21 +11,24 @@ import {
     OfficeHeaderRenderer,
     PositionHeaderRenderer,
 } from "./renderers";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-renderer',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererDemoComponent {
+export class TableRendererDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/renderer";
+
     @ViewChild('operation') operationTemplate: TemplateRef<any>;
 
     message: string = 'change message goes here ...';
     tableData: LocalPageableTableData;
     additionalData: AdditionalTableData;
 
-    constructor(public http: HttpClient, public doc: TableRendererTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new LocalPageableTableData();
         this.tableData.pagingInfo.pageSize = 50;
         this.tableData.http = http;

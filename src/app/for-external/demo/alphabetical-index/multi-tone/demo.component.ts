@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ArrayCollection, InternalUtils, PinyinDictionary } from 'jigsaw/public_api';
-import { AlphabeticalDocService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "alphabetical-index-multi-tone",
     templateUrl: "./demo.component.html",
 })
-export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
+export class AlphabeticalIndexMultiToneDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/alphabetical-index/multi-tone";
+
     public pinyinDictionary: PinyinDictionary = {
         "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",
         "侗": "D", "侧": "Z", "便": "P", "冯": "P", "凹": "W", "刨": "B", "券": "X", "刹": "S",
@@ -50,6 +52,8 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         }
         this.data = new ArrayCollection(source);
     }
+
+    private _visibleAscChars = [];
 
     private _getRandomString(minEnLen, maxEnLen, minZhLen, maxZhLen): string {
         const enLen = InternalUtils.randomNumber(minEnLen, maxEnLen);
@@ -223,8 +227,4 @@ export class AlphabeticalIndexMultiToneDemoComponent implements OnInit {
         囱翘揩椰碘钧咖蓉寞熬蛹赎阎橱膳驯遮窟瑟隘
         娜朦羔酌圃黍蟆呕巍畸擅柑钮畴彬缕屉砚楔腻
     `.replace(/\s/g, '').split('');
-    private _visibleAscChars = [];
-
-    constructor(public doc: AlphabeticalDocService) {
-    }
 }

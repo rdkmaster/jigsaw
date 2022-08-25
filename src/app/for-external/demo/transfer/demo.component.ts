@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { TransferTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class TransferDemoComponent {
-    constructor(public doc: TransferTextService) {
-    }
+export class TransferDemoComponent extends AsyncDescription {
+    public demoPath = "demo/transfer";
+
 }

@@ -1,9 +1,10 @@
 import { Component } from "@angular/core";
-import { PopupTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class PopupDemoComponent {
-    constructor(public doc: PopupTextService) { }
+export class PopupDemoComponent extends AsyncDescription {
+    public demoPath = "demo/popup";
+
 }

@@ -1,15 +1,13 @@
 import { Component } from "@angular/core";
-import { RangeDataTimePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'range-date-time-picker-week-start',
     templateUrl: './demo.component.html'
 })
-export class RangeDateTimeWeekStartComponent {
+export class RangeDateTimeWeekStartComponent extends AsyncDescription {
+    public demoPath = "demo/range-date-time-picker/week-start";
+
     public beginDate = "now-1M";
-
     public endDate = "now";
-
-    constructor(public doc: RangeDataTimePickerTextService) {
-    }
 }

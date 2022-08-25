@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { RateTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
-export class RateDemoComponent {
-    constructor(public doc: RateTextService) {
-    }
+export class RateDemoComponent extends AsyncDescription {
+    public demoPath = "demo/rate";
+
 }

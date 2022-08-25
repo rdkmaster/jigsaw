@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>时间选择器</span>
         <j-time-picker [(value)]="time" (valueChange)="valueChange($event)"></j-time-picker>

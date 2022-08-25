@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { SearchInputTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class SearchInputAllComponent {
-    constructor(public doc: SearchInputTextService) { }
+export class SearchInputAllComponent extends AsyncDescription {
+    public demoPath = "demo/search-input";
+
 }
 

@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { BoxPlotGraphData } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-box-plot',
     templateUrl: './demo.component.html'
 })
-export class GraphBoxPlotDemoComponent {
+export class GraphBoxPlotDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/box-plot";
+
     public boxPlotData: BoxPlotGraphData;
 
     public handleClick($event) {
         console.log($event);
     }
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.boxPlotData = new BoxPlotGraphData();
         this.boxPlotData.title = 'Michelson-Morley Experiment';
         this.boxPlotData.data = [

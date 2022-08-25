@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { RangeDataTimePickerTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class RangeDataTimePickerAllComponent {
-    constructor(public doc: RangeDataTimePickerTextService) { }
+export class RangeDataTimePickerAllComponent extends AsyncDescription {
+    public demoPath = "demo/range-date-time-picker";
+
 }
 

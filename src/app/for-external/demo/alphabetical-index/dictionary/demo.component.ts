@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
-import { AlphabeticalDocService } from "../doc.service";
 import { PinyinDictionary } from 'jigsaw/public_api';
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "alphabetical-index-dictionary",
     templateUrl: "./demo.component.html",
 })
-export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
+export class AlphabeticalIndexDictionaryDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/alphabetical-index/dictionary";
+
     public mixCountries = [];
     public countries = [
         ["portugal", "葡萄牙", "prt"],
@@ -109,8 +111,5 @@ export class AlphabeticalIndexDictionaryDemoComponent implements OnInit {
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
-    }
-
-    constructor(public doc: AlphabeticalDocService) {
     }
 }

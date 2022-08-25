@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { ComboSelectTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ComboSelectComponent {
-    constructor(public doc: ComboSelectTextService) { }
-}
+export class ComboSelectComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select";
 
+}

@@ -1,16 +1,19 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {
      TableData, ColumnDefine,
     DataSortInfo, SortAs, SortOrder,
     JigsawTable
 } from "jigsaw/public_api";
-import {TableBasicTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-sortable',
     templateUrl: './demo.component.html'
 })
-export class TableBasicSetHeaderSortDemoComponent {
+export class TableBasicSetHeaderSortDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/sortable";
+
     @ViewChild(JigsawTable) table: JigsawTable;
 
     tableDataFromObject: TableData;
@@ -92,7 +95,8 @@ export class TableBasicSetHeaderSortDemoComponent {
         ]
     };
 
-    constructor(public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         // new TableData(data, field, header)这种形式无法默认排序，必须使用fromObject创建数据
         this.tableDataFromObject = new TableData();
         this.tableDataFromObject.sortInfo = new DataSortInfo(SortAs.string, SortOrder.asc, 'name');

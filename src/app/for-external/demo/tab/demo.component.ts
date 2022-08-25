@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { TabTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TabAllComponent {
-    constructor(public doc: TabTextService) { }
+export class TabAllComponent extends AsyncDescription {
+    public demoPath = "demo/tab";
+
 }
 

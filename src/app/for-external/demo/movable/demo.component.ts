@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import {MovableTextService} from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class MovableAllComponent {
-    constructor(public doc: MovableTextService) { }
+export class MovableAllComponent extends AsyncDescription {
+    public demoPath = "demo/movable";
+
 }
 

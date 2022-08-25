@@ -1,14 +1,15 @@
 import { Component } from "@angular/core";
-import { TagTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "tag-selectable",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
+export class TagSelectableComponent extends AsyncDescription {
+    public demoPath = "demo/tag/selectable";
 
-export class TagSelectableComponent {
     public selectedSize = { label: "大", size: "medium" };
     public sizes: object[] = new ArrayCollection([
         { label: "小", size: "small" },
@@ -30,6 +31,4 @@ export class TagSelectableComponent {
         this.tags1.forEach(tag => tag.selected = false);
         this.tags1[idx].selected = true;
     }
-    constructor(public doc: TagTextService) { }
-
 }

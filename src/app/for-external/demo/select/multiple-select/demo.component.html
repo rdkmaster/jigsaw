@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.multipleSelect" [codes]="doc.codes.multipleSelect">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>多选下拉</span>
         <jigsaw-select

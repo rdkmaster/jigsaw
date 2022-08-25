@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData, JigsawMenu } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'menu-right-click',
     templateUrl: './demo.component.html',
     styleUrls: [`./demo.component.css`]
 })
-export class MenuRightClickDemoComponent {
+export class MenuRightClickDemoComponent extends AsyncDescription {
+    public demoPath = "demo/menu/right-click";
+
     public dropdownData: SimpleTreeData = this.initDropdownData();
 
     private initDropdownData(): SimpleTreeData {
@@ -50,6 +52,4 @@ export class MenuRightClickDemoComponent {
         console.log(111 + event);
         JigsawMenu.show(event, { data: this.dropdownData, width: 250 }, this.menuSelect.bind(this));
     }
-
-    constructor(public doc: MenuTextService) { }
 }

@@ -1,4 +1,5 @@
-<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.async" [codes]="doc.codes.async">
+<demo-template [sizeController]="labelData" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <!-- start to learn the demo from here -->
     <jigsaw-tree-ext [(setting)]="setting" [(data)]="data" [size]="selectedSize.size">
     </jigsaw-tree-ext>

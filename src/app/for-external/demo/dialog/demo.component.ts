@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { DialogTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class DialogDemoComponent {
-    constructor(public doc: DialogTextService) {
-    }
+export class DialogDemoComponent extends AsyncDescription {
+    public demoPath = "demo/dialog";
+
 }

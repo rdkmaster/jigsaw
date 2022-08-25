@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BadgeTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'badge-mask',
@@ -12,7 +12,9 @@ import { ArrayCollection } from "jigsaw/public_api";
     `]
 })
 
-export class BadgeMaskDemoComponent {
+export class BadgeMaskDemoComponent extends AsyncDescription {
+    public demoPath = "demo/badge/mask";
+
     public select($event) {
         console.log('badge click: ', $event);
     }
@@ -27,6 +29,4 @@ export class BadgeMaskDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "normal" };
-    constructor(public doc: BadgeTextService) {
-    }
 }

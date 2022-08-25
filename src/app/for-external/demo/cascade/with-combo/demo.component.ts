@@ -1,15 +1,17 @@
-import { Component } from "@angular/core";
-import { CascadeTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient, HttpRequest } from "@angular/common/http";
-import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
 import { CascadeData } from "jigsaw/public_api";
+import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "cascade-with-combo",
     templateUrl: "./demo.component.html"
 })
 
-export class CascadeWithComboComponent {
+export class CascadeWithComboComponent extends AsyncDescription {
+    public demoPath = "demo/cascade/with-combo";
+
     public comboValue1: any[];
     public comboValue2: any[];
     public selectedItems1: any[];
@@ -34,7 +36,8 @@ export class CascadeWithComboComponent {
         }
     }
 
-    constructor(public http: HttpClient, public doc: CascadeTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }
 

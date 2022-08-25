@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { AutoCompleteInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'auto-complete-input-basic',
     templateUrl: './demo.component.html'
 })
 
-export class AutoCompleteInputBasicDemoComponent {
+export class AutoCompleteInputBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/auto-complete-input/basic";
+
     public inputValue: any;
     public filterOnFocus: boolean = false;
     public closeDropDownOnSelect: boolean = true;
@@ -21,8 +23,5 @@ export class AutoCompleteInputBasicDemoComponent {
     }
     public iconClick(event: string, position: string) {
         console.log(event, position);
-    }
-
-    constructor(public doc: AutoCompleteInputTextService) {
     }
 }

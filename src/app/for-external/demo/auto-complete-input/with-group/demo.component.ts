@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { DropDownValue } from "jigsaw/public_api";
-import { AutoCompleteInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'auto-complete-input-with-group',
     templateUrl: './demo.component.html'
 })
 
-export class AutoCompleteInputGroupDemoComponent {
+export class AutoCompleteInputGroupDemoComponent extends AsyncDescription {
+    public demoPath = "demo/auto-complete-input/with-group";
+
     public inputValue: any;
     public filterOnFocus: boolean = false;
 
@@ -24,7 +26,4 @@ export class AutoCompleteInputGroupDemoComponent {
         category: '高级',
         items: ['自定义代码块']
     }];
-
-    constructor(public doc: AutoCompleteInputTextService) {
-    }
 }

@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { SimpleTreeData } from "jigsaw/public_api";
-import { FloatTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'float-multi-level',
@@ -14,10 +15,13 @@ import { FloatTextService } from "../doc.service";
         }
     `]
 })
-export class FloatMultiLevelDemoComponent {
+export class FloatMultiLevelDemoComponent extends AsyncDescription {
+    public demoPath = "demo/float/multi-level";
+
     public data: SimpleTreeData;
 
-    constructor(public doc: FloatTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

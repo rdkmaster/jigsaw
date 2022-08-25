@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { LocalPageableTableData, ColumnDefine, SortAs, SortOrder, TableCellTextEditorRenderer } from "jigsaw/public_api";
-import { TableBasicTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-local-paging-data',
     templateUrl: './demo.component.html'
 })
-export class LocalPagingDataDemoComponent {
+export class LocalPagingDataDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/local-paging-data";
+
     public pageable: LocalPageableTableData;
 
     public columns: ColumnDefine[] = [
@@ -44,7 +46,8 @@ export class LocalPagingDataDemoComponent {
         this.pageable.filter($event);
     }
 
-    constructor(http: HttpClient, public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
         this.pageable.pagingInfo.pageSize = 10;

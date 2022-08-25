@@ -1,13 +1,16 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/public_api";
-import { TableActionsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-draggable-table',
     templateUrl: "demo.component.html",
     encapsulation: ViewEncapsulation.None
 })
-export class TableDraggableDemoComponent {
+export class TableDraggableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/draggable-table";
+
     public tableData: TableData;
     public selectedRow: number = -1;
     public rendererInitData = {
@@ -28,7 +31,8 @@ export class TableDraggableDemoComponent {
         }
     ];
 
-    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: TableActionsTextService) {
+    public constructor(public renderer: Renderer2, public elementRef: ElementRef, http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 1],

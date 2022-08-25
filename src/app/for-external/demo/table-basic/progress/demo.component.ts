@@ -1,13 +1,16 @@
 import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core";
-import {ColumnDefine, InternalUtils, TableCellProgressRenderer, TableData} from "jigsaw/public_api";
-import {TableBasicTextService} from "../doc.service";
+import {ColumnDefine, TableCellProgressRenderer, TableData} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'table-basic-progress',
     templateUrl: "demo.component.html",
     encapsulation: ViewEncapsulation.None
 })
-export class TableBasicProgressDemoComponent {
+export class TableBasicProgressDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/progress";
+
     public tableData: TableData;
 
     public columns: ColumnDefine[]= [{
@@ -27,7 +30,8 @@ export class TableBasicProgressDemoComponent {
         }
     }];
 
-    public constructor(public renderer: Renderer2, public elementRef: ElementRef, public doc: TableBasicTextService) {
+    public constructor(public renderer: Renderer2, public elementRef: ElementRef, http: HttpClient) {
+        super(http, elementRef);
         this.tableData = new TableData(
             [
                 ["Emily", "Coder", "$15128", "2017/4/21", "HR II", 'success'],

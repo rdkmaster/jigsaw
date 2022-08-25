@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { CommonUtils } from "jigsaw/public_api";
-import { AdjustFontColorTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "adjust-font-color-basic",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.scss"]
 })
-export class AdjustFontColorDemoComponent {
+export class AdjustFontColorDemoComponent extends AsyncDescription {
+    public demoPath = "demo/adjust-font-color/basic";
+
     public _$fontColor: string = "#000000";
     public _$background: string = "#e57409";
     public _$colorChange(color: string) {
@@ -54,8 +56,5 @@ export class AdjustFontColorDemoComponent {
     anyToRGBResult: string = "";
     anyToRGB(v) {
         this.anyToRGBResult = CommonUtils.anyToRGB(v);
-    }
-
-    constructor(public doc: AdjustFontColorTextService) {
     }
 }

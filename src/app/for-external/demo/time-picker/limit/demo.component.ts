@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { TimePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'time-picker-limit',
     templateUrl: './demo.component.html'
 })
-export class TimePickerLimitDemoComponent {
+export class TimePickerLimitDemoComponent extends AsyncDescription {
+    public demoPath = "demo/time-picker/limit";
+
     public time;
 
     public limitStart = '08:30:00';
@@ -14,8 +16,5 @@ export class TimePickerLimitDemoComponent {
 
     public valueChange($event) {
         console.log($event)
-    }
-
-    constructor(public doc: TimePickerTextService) {
     }
 }

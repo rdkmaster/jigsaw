@@ -1,15 +1,19 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { SimpleTreeData } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'menu-nav-inline',
     templateUrl: './demo.component.html',
 })
-export class NavigationMenuInlineDemoComponent {
+export class NavigationMenuInlineDemoComponent extends AsyncDescription {
+    public demoPath = "demo/menu/nav-inline";
+
     public data: SimpleTreeData = new SimpleTreeData();
 
-    constructor(public doc: MenuTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         const xmlData = `
             <node>
                 <node label="通用" icon="iconfont iconfont-e4b8" isActive="true" selected="true">

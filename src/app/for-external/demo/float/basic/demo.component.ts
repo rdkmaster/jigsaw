@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { FloatTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'float-basic',
@@ -19,7 +19,7 @@ import { FloatTextService } from "../doc.service";
         }
     `]
 })
-export class FloatBasicDemoComponent {
-    constructor(public doc: FloatTextService) {
-    }
+export class FloatBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/float/basic";
+
 }

@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.object" [codes]="doc.codes.object">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <j-radios [(value)]="selectedCity" trackItemBy="name" (valueChange)="radioChange($event)">
             <j-radio-option *ngFor="let item of cities" [value]="item">

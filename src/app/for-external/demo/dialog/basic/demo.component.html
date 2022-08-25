@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-sudoku">
         <jigsaw-button *ngFor="let popPositionType of popPositionTypes" (click)="popupComponentDialog(popPositionType)">
             {{ popPositionType.label }}

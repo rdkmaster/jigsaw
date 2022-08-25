@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { TextareaTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'textarea-resize',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
-export class TextareaResizeDemoComponent {
-    constructor(public doc: TextareaTextService) {
-    }
+export class TextareaResizeDemoComponent extends AsyncDescription {
+    public demoPath = "demo/textarea/resize";
 
 }

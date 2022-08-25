@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { TimeSectionTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'time-section-basic',
     templateUrl: './demo.component.html'
 })
-export class TimeSectionBasicDemoComponent {
+export class TimeSectionBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/time-section/basic";
+
     public timeSectionValue: any = { time: ['05:00-06:00'], date: [{ label: 2, value: 2 }] };
     public layout = 'vertical';
     public curTime = '2020-02';
@@ -17,8 +19,5 @@ export class TimeSectionBasicDemoComponent {
 
     public sectionValueChange($event) {
         console.log('time section change to ', $event);
-    }
-
-    constructor(public doc: TimeSectionTextService) {
     }
 }

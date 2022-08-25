@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import { BreadcrumbTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'breadcrumb-multi-level',
     templateUrl: "./demo.component.html"
 })
-export class BreadcrumbFoldDemoComponent {
+export class BreadcrumbFoldDemoComponent extends AsyncDescription {
+    public demoPath = "demo/breadcrumb/fold";
+
     public foldThreshold = 4;
     public data: (string | BreadcrumbNode)[] = [
         { label: "主页", icon: "iconfont iconfont-e647" },
@@ -15,6 +17,4 @@ export class BreadcrumbFoldDemoComponent {
         // 也支持label属性
         { label: "业务样本" }
     ];
-
-    constructor(public doc: BreadcrumbTextService) { }
 }

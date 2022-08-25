@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { ArrayCollection, GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
-import { ListLiteTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-lite-with-combo',
     templateUrl: './demo.component.html'
 })
-export class ListLiteWithComboDemoComponent {
+export class ListLiteWithComboDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite/with-combo";
+
     public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -50,7 +52,4 @@ export class ListLiteWithComboDemoComponent {
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
     ]);
-
-    constructor(public doc: ListLiteTextService) {
-    }
 }

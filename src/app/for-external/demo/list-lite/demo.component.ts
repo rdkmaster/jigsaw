@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { ListLiteTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ListLiteAllComponent {
-    constructor(public doc: ListLiteTextService) { }
+export class ListLiteAllComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite";
+
 }
 

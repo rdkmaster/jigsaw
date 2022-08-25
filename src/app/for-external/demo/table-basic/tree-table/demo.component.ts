@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { Subscription } from 'rxjs';
+import {HttpClient} from "@angular/common/http";
 import {
     AdditionalColumnDefine,
     ColumnDefine,
@@ -9,13 +10,14 @@ import {
     TreeTableCellRenderer,
     TreeTableData
 } from "jigsaw/public_api";
-import { TableBasicTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-tree-table',
     templateUrl: './demo.component.html'
 })
-export class TableBasicTreeTableDemoComponent {
+export class TableBasicTreeTableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/tree-table";
 
     public treeTableData: TreeTableData;
     public localPageableTreeTableData: PageableTreeTableData;
@@ -62,7 +64,8 @@ export class TableBasicTreeTableDemoComponent {
         }
     }
 
-    constructor(public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.treeTableData = new TreeTableData();
         this.treeTableData.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],

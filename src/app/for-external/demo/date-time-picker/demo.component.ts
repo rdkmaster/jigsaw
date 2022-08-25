@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { DateTimePickerTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class DateTimePickerAllComponent {
-    constructor(public doc: DateTimePickerTextService) { }
+export class DateTimePickerAllComponent extends AsyncDescription {
+    public demoPath = "demo/date-time-picker";
+
 }
 

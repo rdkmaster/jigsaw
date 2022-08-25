@@ -1,12 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
 import { JigsawTab } from "jigsaw/public_api";
-import { TabTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tab-hide-show',
     templateUrl: "./demo.component.html"
 })
-export class JigsawHideShowTabComponent {
+export class JigsawHideShowTabComponent extends AsyncDescription {
+    public demoPath = "demo/tab/hide-show";
+
     @ViewChild('myTab') myTab: JigsawTab;
 
     public hideTab1() {
@@ -23,8 +25,5 @@ export class JigsawHideShowTabComponent {
 
     public showTab2() {
         this.myTab.showTab(1);
-    }
-
-    constructor(public doc: TabTextService) {
     }
 }

@@ -1,12 +1,12 @@
 import { Component } from "@angular/core";
-import { DrawerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'drawer-with-scrollbar',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DrawerWithScrollbarDemoComponent {
-    constructor(public doc: DrawerTextService) {
-    }
+export class DrawerWithScrollbarDemoComponent extends AsyncDescription {
+    public demoPath = "demo/drawer/with-scrollbar";
+
 }

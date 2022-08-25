@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { DragDropInfo } from "jigsaw/public_api";
-import { DragDropTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'drag-to-replace',
     templateUrl: 'demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DragToReplaceDemoComponent {
+export class DragToReplaceDemoComponent extends AsyncDescription {
+    public demoPath = "demo/drag-drop/drag-to-replace";
+
     private _replacedEl: string;
 
     public dragStartHandle(dragInfo: DragDropInfo) {
@@ -43,8 +45,5 @@ export class DragToReplaceDemoComponent {
         console.log('drop');
         this._replacedEl = dragInfo.element.innerHTML;
         dragInfo.element.innerHTML = dragInfo.dragDropData;
-    }
-
-    constructor(public doc: DragDropTextService) {
     }
 }

@@ -1,14 +1,16 @@
-import {Component, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {Component, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, AdditionalColumnDefine, ColumnDefine} from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'template-ref-renderer-table',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TableRendererOfTemplateRefDemoComponent {
+export class TableRendererOfTemplateRefDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/template-ref-renderer";
+
     @ViewChild('headIcon') headIcon: TemplateRef<any>;
     @ViewChild('checkboxRenderer') checkboxRenderer: TemplateRef<any>;
     @ViewChild('cellOption') cellOption: TemplateRef<any>;
@@ -49,7 +51,8 @@ export class TableRendererOfTemplateRefDemoComponent {
         }
     ];
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

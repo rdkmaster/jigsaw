@@ -1,11 +1,14 @@
-import { ChangeDetectorRef, Component } from "@angular/core";
-import { ProcessStatusTextService } from "../doc.service";
+import {ChangeDetectorRef, Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'process-status-interactive',
     templateUrl: './demo.component.html',
 })
-export class ProcessStatusInteractiveComponent {
+export class ProcessStatusInteractiveComponent extends AsyncDescription {
+    public demoPath = "demo/process-status/status-interactive";
+
     public steps = [
         {
             title: 'starting',
@@ -51,6 +54,7 @@ export class ProcessStatusInteractiveComponent {
         this._changeDetector.detectChanges();
     }
 
-    constructor(private _changeDetector: ChangeDetectorRef, public doc: ProcessStatusTextService) {
+    constructor(private _changeDetector: ChangeDetectorRef, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

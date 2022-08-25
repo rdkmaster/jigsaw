@@ -1,6 +1,7 @@
-import { Component, TemplateRef } from "@angular/core";
+import {Component, ElementRef, TemplateRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { SimpleTreeData, PopupService, PopupInfo, JigsawMenu } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'menu-in-dialog',
@@ -24,12 +25,15 @@ import { MenuTextService } from "../doc.service";
         }
     `]
 })
-export class MenuInDialogDemo {
+export class MenuInDialogDemo extends AsyncDescription {
+    public demoPath = "demo/menu/in-dialog";
+
     public data: SimpleTreeData;
     public autoDispose: boolean = false;
     public timeout: number = 3000;
 
-    constructor(private ps: PopupService, public doc: MenuTextService) {
+    constructor(private ps: PopupService, http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new SimpleTreeData();
         this.data.fromXML(`
             <node>

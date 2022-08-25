@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { SimpleTreeData } from "jigsaw/public_api";
-import { MenuTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'menu-drop-down',
     templateUrl: './demo.component.html'
 })
-export class MenuDropDownDemoComponent {
+export class MenuDropDownDemoComponent extends AsyncDescription {
+    public demoPath = "demo/menu/drop-down";
+
     public dropdownData: SimpleTreeData = this.initDropdownData();
 
     private initDropdownData(): SimpleTreeData {
@@ -44,6 +46,4 @@ export class MenuDropDownDemoComponent {
     public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
     }
-
-    constructor(public doc: MenuTextService) { }
 }

@@ -1,12 +1,13 @@
 import { Component } from "@angular/core";
-import { SliderTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "slider-basic",
     templateUrl: "./demo.component.html",
 })
+export class SliderBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/slider/basic";
 
-export class SliderBasicDemoComponent {
     public value: number = 70;
     public value1: number = 30;
     public disabled: boolean = false;
@@ -14,7 +15,4 @@ export class SliderBasicDemoComponent {
     public sliderChange(value) {
         console.log(value)
     }
-
-    constructor(public doc: SliderTextService) { }
-
 }

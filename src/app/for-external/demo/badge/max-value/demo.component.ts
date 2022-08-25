@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BadgeTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'badge-max-value',
@@ -13,7 +13,9 @@ import { ArrayCollection } from "jigsaw/public_api";
     `]
 })
 
-export class BadgeMaxValueDemoComponent {
+export class BadgeMaxValueDemoComponent extends AsyncDescription {
+    public demoPath = "demo/badge/max-value";
+
     public count: number = 100;
 
     public labelData: object[] = new ArrayCollection([
@@ -22,6 +24,4 @@ export class BadgeMaxValueDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "normal" };
-    constructor(public doc: BadgeTextService) {
-    }
 }

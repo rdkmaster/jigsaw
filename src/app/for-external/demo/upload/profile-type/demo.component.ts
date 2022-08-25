@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { UploadTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'upload-profile-type',
     templateUrl: './demo.component.html'
 })
-export class UploadProfileTypeDemoComponent {
+export class UploadProfileTypeDemoComponent extends AsyncDescription {
+    public demoPath = "demo/upload/profile-type";
+
     public fileType = '.txt';
 
     public uploadStart($event) {
@@ -18,8 +20,5 @@ export class UploadProfileTypeDemoComponent {
 
     public uploadComplete($event) {
         console.log("uploadComplete触发了", $event)
-    }
-
-    constructor(public doc: UploadTextService) {
     }
 }

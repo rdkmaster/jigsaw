@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { ProcessStatusTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'process-status-basic',
     templateUrl: './demo.component.html',
 })
-export class ProcessStatusBasicComponent {
+export class ProcessStatusBasicComponent extends AsyncDescription {
+    public demoPath = "demo/process-status/basic";
+
     public steps = [
         {
             title: 'done',
@@ -32,7 +34,4 @@ export class ProcessStatusBasicComponent {
             status: "waiting"
         },
     ];
-    
-    constructor(public doc: ProcessStatusTextService) {
-    }
 }

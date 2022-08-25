@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.icons" [codes]="doc.codes.icons">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>带图标</span>
         <jigsaw-button-bar [data]="types" [(selectedItems)]="selectedTypes" [multipleSelect]="multiple" trackItemBy="id"

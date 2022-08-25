@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { User1Component } from "./user-component/user-component";
-import { FloatTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'float-target',
@@ -29,7 +29,9 @@ import { FloatTextService } from "../doc.service";
         }
     `]
 })
-export class FloatTargetDemoComponent implements AfterViewInit {
+export class FloatTargetDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/float/target";
+
     @ViewChild('jigsawFloatArea1')
     jigsawFloatArea1: TemplateRef<any>;
     @ViewChild('jigsawFloatArea2')
@@ -44,7 +46,5 @@ export class FloatTargetDemoComponent implements AfterViewInit {
     ngAfterViewInit() {
         this.targets[0].target = this.jigsawFloatArea1;
         this.targets[1].target = this.jigsawFloatArea2;
-    }
-    constructor(public doc: FloatTextService) {
     }
 }

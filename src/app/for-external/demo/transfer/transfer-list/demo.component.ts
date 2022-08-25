@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
-import { TransferTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'transfer-list-transfer',
     templateUrl: './demo.component.html'
 })
-export class TransferListDemoComponent {
+export class TransferListDemoComponent extends AsyncDescription {
+    public demoPath = "demo/transfer/transfer-list";
+
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
     public data: ArrayCollection<any>;
@@ -117,9 +119,10 @@ export class TransferListDemoComponent {
             "name": "海南省",
             "remark": "省份"
         }
-    ]
+    ];
 
-    constructor(public http: HttpClient, public doc: TransferTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new ArrayCollection(this.allData);
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }

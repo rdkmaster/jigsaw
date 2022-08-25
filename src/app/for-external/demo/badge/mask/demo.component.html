@@ -1,4 +1,5 @@
-<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.mask" [codes]="doc.codes.mask">
+<demo-template [sizeController]="labelData" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <div style="display: inline-block">
@@ -134,7 +135,7 @@
             ></jigsaw-icon>
         </div>
     </div>
-    
+
     <div class="demo-showcase">
         <div style="display: inline-block">
             <jigsaw-icon

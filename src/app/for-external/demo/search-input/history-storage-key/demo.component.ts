@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import {SearchInputTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'search-input-history-storage-key',
     templateUrl: "./demo.component.html"
 })
-export class SearchInputHistoryStorageKeyDemoComponent {
-    constructor(public doc: SearchInputTextService) {
-    }
+export class SearchInputHistoryStorageKeyDemoComponent extends AsyncDescription {
+    public demoPath = "demo/search-input/history-storage-key";
+
 }

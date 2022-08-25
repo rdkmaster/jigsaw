@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
-import { CheckboxTextService } from "../doc.service";
 import { CheckBoxStatus } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "checkbox-minimalist",
     templateUrl: "./demo.component.html",
 })
 
-export class CheckboxMinimalistComponent {
-    public status = CheckBoxStatus.indeterminate;
+export class CheckboxMinimalistComponent extends AsyncDescription {
+    public demoPath = "demo/checkbox/minimalist";
 
-    constructor(public doc: CheckboxTextService) { }
+    public status = CheckBoxStatus.indeterminate;
 }

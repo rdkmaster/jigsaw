@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DateTimePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'time-picker-limit-date',
@@ -11,12 +11,11 @@ import { DateTimePickerTextService } from "../doc.service";
         }
     `]
 })
-export class DateTimePickerLimitComponent {
+export class DateTimePickerLimitComponent extends AsyncDescription {
+    public demoPath = "demo/date-time-picker/limit";
+
     public showConfirmButton = true;
     public date1 = "now";
     public limitStart = 'now-5d';
     public limitEnd = 'now+5d';
-
-    constructor(public doc: DateTimePickerTextService) {
-    }
 }

@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { ListLiteTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-lite-with-icon',
     templateUrl: './demo.component.html'
 })
-export class ListLiteWithIconDemoComponent {
+export class ListLiteWithIconDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite/with-icon";
+
     public withIcon: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -39,7 +41,4 @@ export class ListLiteWithIconDemoComponent {
             suffixIcon: 'iconfont iconfont-ea03'
         },
     ];
-
-    constructor(public doc: ListLiteTextService) {
-    }
 }

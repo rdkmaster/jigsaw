@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { RadiosGroupValue } from 'jigsaw/public_api';
-import {RadioTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "radio-lite",
     templateUrl: "./demo.component.html"
 })
-export class RadioLiteComponent {
+export class RadioLiteComponent extends AsyncDescription {
+    public demoPath = "demo/radio/radio-lite";
+
     public selectedItem: RadiosGroupValue | string;
     public selectedItem1: RadiosGroupValue | string;
     public cities: (RadiosGroupValue | string)[] = [
@@ -21,7 +23,4 @@ export class RadioLiteComponent {
         { label: "禁用3", disabled: true },
         { label: "禁用4", disabled: true }
     ]
-
-    constructor( public doc: RadioTextService) {
-    }
 }

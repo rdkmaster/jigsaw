@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { TableData, TableCellRendererBase, CommonUtils } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class CalendarTableData extends TableData {
     year: number = new Date().getFullYear();
@@ -11,7 +12,9 @@ export class CalendarTableData extends TableData {
     selector: 'table-calendar',
     templateUrl: './demo.component.html'
 })
-export class TableCalendarDemoComponent {
+export class TableCalendarDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/calendar";
+
     public tableData: CalendarTableData;
 
     public colDef = [
@@ -24,7 +27,8 @@ export class TableCalendarDemoComponent {
         }
     ];
 
-    constructor(public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new CalendarTableData(
             [
                 [69, 16, 4, 47, 27, 54, 100],

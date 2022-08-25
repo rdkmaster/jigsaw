@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { InputTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class InputAllComponent {
-    constructor(public doc: InputTextService) { }
+export class InputAllComponent extends AsyncDescription {
+    public demoPath = "demo/input";
+
 }
 

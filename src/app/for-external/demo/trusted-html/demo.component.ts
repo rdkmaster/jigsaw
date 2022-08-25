@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { TrustedHtmlTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: 'demo.component.html'
 })
-export class TrustedHtmlDemoComponent {
-    constructor(public doc: TrustedHtmlTextService) {
-    }
+export class TrustedHtmlDemoComponent extends AsyncDescription {
+    public demoPath = "demo/trusted-html";
+
 }

@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
 import { JigsawToast } from 'jigsaw/public_api';
-import { ToastTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'toast-basic',
     templateUrl: './demo.component.html'
 })
-export class ToastBasicDemoComponent {
+export class ToastBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/toast/basic";
+
     public show() {
         JigsawToast.show('这是Toast默认提示框')
-    }
-
-    constructor(public doc: ToastTextService) {
     }
 }

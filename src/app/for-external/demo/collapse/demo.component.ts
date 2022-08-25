@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { CollapseTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html",
 })
-export class CollapseDemoComponent {
-    constructor(public doc: CollapseTextService) {
-    }
+export class CollapseDemoComponent extends AsyncDescription {
+    public demoPath = "demo/collapse";
+
 }

@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { ListTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-menu',
     templateUrl: './demo.component.html',
 })
-export class ListMenuDemoComponent {
+export class ListMenuDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list/menu";
+
     public titles = [
         {
             title: 'Settings',
@@ -28,7 +30,4 @@ export class ListMenuDemoComponent {
             subMenu: true
         }
     ];
-
-    constructor(public doc: ListTextService) {
-    }
 }

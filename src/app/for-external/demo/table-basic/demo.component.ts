@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { TableBasicTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TableBasicAllComponent {
-    constructor(public doc: TableBasicTextService) { }
+export class TableBasicAllComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic";
+
 }
 

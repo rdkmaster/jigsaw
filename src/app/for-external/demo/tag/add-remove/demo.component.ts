@@ -1,7 +1,6 @@
 import {Component, ViewChild} from "@angular/core";
-import {TagTextService} from "../doc.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import {JigsawInput} from "jigsaw/public_api";
+import { ArrayCollection, JigsawInput} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "tag-add-remove",
@@ -9,7 +8,9 @@ import {JigsawInput} from "jigsaw/public_api";
     styleUrls: ["./demo.component.css"]
 })
 
-export class TagAddRemoveComponent {
+export class TagAddRemoveComponent extends AsyncDescription {
+    public demoPath = "demo/tag/add-remove";
+
     public selectedSize = {label: "大", size: "medium"};
     public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
@@ -50,7 +51,4 @@ export class TagAddRemoveComponent {
         const idx = this.tags.indexOf(tag);
         this.tags.splice(idx, 1);
     }
-
-    constructor(public doc: TagTextService) {}
-
 }

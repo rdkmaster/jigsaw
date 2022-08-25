@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import { ComboSelectTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-max-height',
     templateUrl: './demo.component.html',
 })
-export class ComboSelectMaxHeightDemoComponent {
+export class ComboSelectMaxHeightDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/max-height";
+
 
     public selectedCity = new ArrayCollection([{ label: "北京" }]);
     public selectedCity2 = new ArrayCollection([{ label: "北京" }]);
@@ -32,8 +34,4 @@ export class ComboSelectMaxHeightDemoComponent {
         { label: "长春" },
         { label: "乌鲁木齐" }
     ];
-
-    constructor(public doc: ComboSelectTextService) {
-    }
-
 }

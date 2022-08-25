@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.optionCount" [codes]="doc.codes.optionCount">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>设置选项数量</span>
         <jigsaw-select

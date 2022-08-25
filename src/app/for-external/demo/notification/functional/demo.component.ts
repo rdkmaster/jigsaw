@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { JigsawNotification } from "jigsaw/public_api";
-import { NotificationTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'notification-functional',
@@ -11,7 +11,9 @@ import { NotificationTextService } from "../doc.service";
         }
     `]
 })
-export class NotificationFunctionalDemoComponent {
+export class NotificationFunctionalDemoComponent extends AsyncDescription {
+    public demoPath = "demo/notification/functional";
+
 
     public showSuccess() {
         JigsawNotification.showSuccess('这是一条成功的提示消息', { timeout: 8000 });
@@ -31,8 +33,5 @@ export class NotificationFunctionalDemoComponent {
 
     public showInfo2() {
         JigsawNotification.showInfo('这是一条消息的提示消息', '带有标题的提示消息');
-    }
-
-    constructor(public doc: NotificationTextService) {
     }
 }

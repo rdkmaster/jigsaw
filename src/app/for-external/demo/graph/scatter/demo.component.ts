@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
-import { HttpClient, HttpRequest } from "@angular/common/http";
-import { ScatterGraphData } from "jigsaw/public_api";
-import { AjaxInterceptor } from "../../../../libs/app.interceptor";
-import { GraphTextService } from "../demo.service";
+import {Component, ElementRef} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {ScatterGraphData} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-scatter',
     templateUrl: './demo.component.html'
 })
-export class GraphScatterDemoComponent {
+export class GraphScatterDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/scatter";
+
     public scatterData: ScatterGraphData;
 
     public handleClick($event) {
         console.log($event);
     }
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.scatterData = new ScatterGraphData();
         this.scatterData.title = '散点图';
         this.scatterData.data = [

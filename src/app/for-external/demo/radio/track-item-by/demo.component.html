@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.trackItemBy" [codes]="doc.codes.trackItemBy">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <jigsaw-radios [(value)]="selectedProduct" (valueChange)="radioChange($event)" trackItemBy="pro_name,pro_type">
             <jigsaw-radio-option *ngFor="let item of products" [value]="item">

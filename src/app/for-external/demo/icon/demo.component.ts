@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { IconTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class IconAllComponent {
-    constructor(public doc: IconTextService) { }
+export class IconAllComponent extends AsyncDescription {
+    public demoPath = "demo/icon";
+
 }
 

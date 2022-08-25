@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.stackArea" [codes]="doc.codes.stackArea">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-v">
         <span>StackAreaGraphData静态数据</span>
         <jigsaw-graph [data]="stackAreaData" (click)="handleClick($event)"></jigsaw-graph>

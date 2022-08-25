@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer, AdditionalColumnDefine } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-switch-renderer',
     templateUrl: './demo.component.html'
 })
-export class TableSwitchRendererDemoComponent {
+export class TableSwitchRendererDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/switch-renderer";
+
     public tableData1: TableData;
     public tableData2: TableData;
     public columns1: ColumnDefine[];
@@ -25,7 +27,8 @@ export class TableSwitchRendererDemoComponent {
         }
     ];
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         function dataReviser(data: TableData) {
             data.data = data.data.slice(0, 12);
             data = JSON.parse(JSON.stringify(data));

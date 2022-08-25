@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { ListLiteTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-lite-option-count',
     templateUrl: './demo.component.html'
 })
-export class ListLiteOptionCountDemoComponent {
+export class ListLiteOptionCountDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite/option-count";
+
     public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -40,7 +43,8 @@ export class ListLiteOptionCountDemoComponent {
         },
     ];
 
-    constructor(public doc: ListLiteTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         [1, 2, 3, 4, 5, 6].forEach((item, index) => {
             this.goodsList.push({
                 icon: 'iconfont iconfont-bicycle',

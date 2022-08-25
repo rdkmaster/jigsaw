@@ -1,15 +1,14 @@
-import { Component } from '@angular/core';
-import {
-    PopupEffect, PopupOptions, PopupPositionOffset, PopupPositionType,
-    PopupSize, CommonUtils, FloatPosition
-} from "jigsaw/public_api";
-import { FloatTextService } from "../doc.service";
+import {Component} from '@angular/core';
+import {FloatPosition, PopupEffect, PopupOptions, PopupPositionType, PopupSize} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'float-option',
     templateUrl: './demo.component.html'
 })
-export class FloatOptionDemoComponent {
+export class FloatOptionDemoComponent extends AsyncDescription {
+    public demoPath = "demo/float/option";
+
     public showHideEffect = "";
     public selectedPositionType = "";
     public position: FloatPosition = 'bottomLeft';
@@ -53,8 +52,4 @@ export class FloatOptionDemoComponent {
         size: this.size,
         borderType: 'pointer'
     };
-
-    constructor(public doc: FloatTextService) {
-    }
-
 }

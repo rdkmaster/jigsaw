@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import { BreadcrumbTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'breadcrumb-basic',
     templateUrl: "./demo.component.html"
 })
-export class BreadcrumbBasicDemoComponent {
+export class BreadcrumbBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/breadcrumb/basic";
+
     public breadcrumbItems = [
         { id: 0, label: "Home", icon: "iconfont iconfont-e647" },
         { id: 1, label: "Digital", icon: "iconfont iconfont-e12e" },
@@ -19,6 +21,4 @@ export class BreadcrumbBasicDemoComponent {
         const idx = this.breadcrumbItems.findIndex(i => item === i);
         this.breadcrumbItems = this.breadcrumbItems.slice(0, idx + 1);
     }
-
-    constructor(public doc: BreadcrumbTextService) { }
 }

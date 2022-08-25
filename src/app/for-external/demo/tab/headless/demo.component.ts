@@ -1,13 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { ArrayCollection, TableData, LineGraphData } from "jigsaw/public_api";
-import { TabTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tab-headless',
     templateUrl: './demo.component.html'
 })
-export class TabHeadlessDemoComponent {
+export class TabHeadlessDemoComponent extends AsyncDescription {
+    public demoPath = "demo/tab/headless";
+
     public headless: boolean = true;
     public lineBarGraphData: LineGraphData;
     public selectedIndex = 0;
@@ -32,7 +34,8 @@ export class TabHeadlessDemoComponent {
         ["Name", "Price", "Description", "Origin"]
     );
 
-    constructor(http: HttpClient, public doc: TabTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.lineBarGraphData = new LineGraphData();
         this.lineBarGraphData.http = http;
         this.lineBarGraphData.fromAjax('mock-data/marketing');

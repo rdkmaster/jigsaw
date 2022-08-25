@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { HeaderTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class HeaderDemoComponent {
-    constructor(public doc: HeaderTextService) {
-    }
+export class HeaderDemoComponent extends AsyncDescription {
+    public demoPath = "demo/header";
+
 }

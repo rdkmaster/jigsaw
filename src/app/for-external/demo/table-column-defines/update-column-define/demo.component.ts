@@ -1,13 +1,15 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
-import {TableColumnDefinesTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
-    selector: 'table-updata-column-define',
+    selector: 'table-update-column-define',
     templateUrl: './demo.component.html'
 })
-export class TableColumnSetWidthDemoComponent {
+export class TableColumnSetWidthDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-column-defines/update-column-define";
+
     tableData: TableData;
     @ViewChild('table') table: JigsawTable;
 
@@ -21,7 +23,8 @@ export class TableColumnSetWidthDemoComponent {
         this.table.update();
     }
 
-    constructor(http: HttpClient, public doc: TableColumnDefinesTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

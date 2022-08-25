@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
-import { ListLiteTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-lite-multiple-select',
     templateUrl: './demo.component.html'
 })
-export class ListLiteMultipleSelectDemoComponent {
+export class ListLiteMultipleSelectDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list-lite/multiple-select";
+
     public goodsList: GroupOptionValue[] = [
         {
             icon: 'iconfont iconfont-e187',
@@ -42,7 +44,4 @@ export class ListLiteMultipleSelectDemoComponent {
             desc: 'A puzzle is a game, problem, or toy that tests a person\'s ingenuity or knowledge.'
         },
     ];
-
-    constructor(public doc: ListLiteTextService) {
-    }
 }

@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { FishBoneTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class FishBoneAllComponent {
-    constructor(public doc: FishBoneTextService) { }
+export class FishBoneAllComponent extends AsyncDescription {
+    public demoPath = "demo/fish-bone";
+
 }
 

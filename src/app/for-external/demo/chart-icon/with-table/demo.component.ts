@@ -1,12 +1,15 @@
-import {AfterViewInit, Component, TemplateRef, ViewChild} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { ColumnDefine, InternalUtils, TableData} from "jigsaw/public_api";
-import {ChartIconTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'chart-icon-with-table',
     templateUrl: './demo.component.html'
 })
-export class ChartIconTableDemoComponent implements AfterViewInit {
+export class ChartIconTableDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/chart-icon/with-table";
+
     tableData: TableData;
 
     @ViewChild("pieRenderer")
@@ -18,7 +21,8 @@ export class ChartIconTableDemoComponent implements AfterViewInit {
         this.tableData.refresh();
     }
 
-    constructor( public doc: ChartIconTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         setInterval(() => {
             this.randomData();
             this.tableData.refresh();

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ComboSelectTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-trigger',
@@ -14,9 +14,8 @@ import { ComboSelectTextService } from "../doc.service";
         }
     `]
 })
-export class ComboSelectTriggerDemoComponent {
-    public open: boolean = true;
+export class ComboSelectTriggerDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/trigger";
 
-    constructor(public doc: ComboSelectTextService) {
-    }
+    public open: boolean = true;
 }

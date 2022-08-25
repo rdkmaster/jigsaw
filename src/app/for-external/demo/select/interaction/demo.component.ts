@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
-import { ArrayCollection } from "jigsaw/public_api";
-import { InternalUtils } from "jigsaw/public_api";
+import { ArrayCollection, InternalUtils } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-interaction",
     templateUrl: "demo.component.html",
 })
-export class SelectInteractionDemoComponent {
+export class SelectInteractionDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/interaction";
+
     public simpleDataList = new ArrayCollection([
         { label: "A" },
         { label: "B" },
@@ -41,6 +42,4 @@ export class SelectInteractionDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) {
-    }
 }

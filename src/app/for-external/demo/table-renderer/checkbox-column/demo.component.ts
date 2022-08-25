@@ -1,16 +1,18 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     TableData, AdditionalColumnDefine, AdditionalTableData, TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-checkbox-column',
     templateUrl: './demo.component.html'
 })
-export class TableAddCheckboxColumnDemoComponent {
+export class TableAddCheckboxColumnDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/checkbox-column";
+
     public tableData: TableData;
     public selectedRows: string;
     public additionalData: AdditionalTableData;
@@ -60,7 +62,8 @@ export class TableAddCheckboxColumnDemoComponent {
         }, []).join(',');
     }
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { JigsawInfoAlert } from "jigsaw/public_api";
-import { MovableTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'move-and-click-basic',
     templateUrl: 'demo.component.html'
 })
-export class MoveAndClickBasicDemoComponent {
+export class MoveAndClickBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/movable/basic";
+
     public mouseStartPosition = { x: null, y: null };
 
     public handleButtonClick() {
@@ -32,8 +34,4 @@ export class MoveAndClickBasicDemoComponent {
     public isClickAction(e: MouseEvent) {
         return e.clientX == this.mouseStartPosition.x && e.clientY == this.mouseStartPosition.y
     }
-
-    constructor(public doc: MovableTextService) {
-    }
-
 }

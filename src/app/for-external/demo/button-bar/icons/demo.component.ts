@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { ButtonBarTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "button-bar-icons",
     templateUrl: "./demo.component.html",
 })
 
-export class ButtonBarIconsComponent {
+export class ButtonBarIconsComponent extends AsyncDescription {
+    public demoPath = "demo/button-bar/icons";
+
     public multiple: boolean = false;
 
     public types = new ArrayCollection([
@@ -24,5 +26,4 @@ export class ButtonBarIconsComponent {
         { label: "大", size: "default" }
     ]);
     public selectedSize = { label: "大", size: "default" };
-    constructor(public doc: ButtonBarTextService) { }
 }

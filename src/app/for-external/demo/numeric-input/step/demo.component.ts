@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { NumericInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'numeric-input-step',
     templateUrl: './demo.component.html'
 })
-export class NumericInputStepDemoComponent {
-    public selectedSize = { label: "中", size: "default" };
+export class NumericInputStepDemoComponent extends AsyncDescription {
+    public demoPath = "demo/numeric-input/step";
 
-    constructor(public doc: NumericInputTextService) {
-    }
+    public selectedSize = { label: "中", size: "default" };
 }

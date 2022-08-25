@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { DatePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'date-picker-week-start',
@@ -16,13 +16,12 @@ import { DatePickerTextService } from "../doc.service";
         }
     `]
 })
-export class DatePickerWeekStartComponent {
+export class DatePickerWeekStartComponent extends AsyncDescription {
+    public demoPath = "demo/date-picker/week-start";
+
     public date = "now";
 
     public dateChange($event) {
         console.log($event);
-    }
-
-    constructor(public doc: DatePickerTextService) {
     }
 }

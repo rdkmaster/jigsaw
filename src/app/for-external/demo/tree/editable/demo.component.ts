@@ -1,13 +1,15 @@
-import {Component, ViewChild} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {ZTreeSettings, SimpleTreeData, JigsawTreeExt, ArrayCollection} from "jigsaw/public_api";
-import {TreeTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tree-editable',
     templateUrl: './demo.component.html'
 })
-export class ZtreeDemoEditableComponent {
+export class ZtreeDemoEditableComponent extends AsyncDescription {
+    public demoPath = "demo/tree/editable";
+
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
 
@@ -37,11 +39,8 @@ export class ZtreeDemoEditableComponent {
         }
     };
 
-    editNode() {
-        this.treeExt.editName(this.treeExt.ztree.getSelectedNodes()[0]);
-    }
-
-    constructor(http: HttpClient, public doc: TreeTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new SimpleTreeData();
         this.data.http = http;
         this.data.fromAjax("mock-data/tree-data");

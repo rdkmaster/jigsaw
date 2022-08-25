@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
-import { DrawerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'drawer-basic',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DrawerBasicDemoComponent {
+export class DrawerBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/drawer/basic";
+
     public isOpen: boolean = false;
     public touched = false;
     public width: string = '20%';
@@ -15,8 +17,5 @@ export class DrawerBasicDemoComponent {
     public toggle() {
         this.isOpen = !this.isOpen;
         this.touched = true;
-    }
-
-    constructor(public doc: DrawerTextService) {
     }
 }

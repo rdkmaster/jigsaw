@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils } from "jigsaw/public_api";
-import { ThemePropertiesTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "theme-properties-basic",
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
-export class ThemePropertiesBasicDemoComponent {
+export class ThemePropertiesBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/theme-properties/basic";
+
     public get properties(): ThemeProperty[][] {
         // API给的数据是一个数组，直接平铺出来不好看，这里给归归类
         const classified: { [type: string]: ThemeProperty[] } = {}, types = [], bg = JigsawTheme.getProperty('--bg-active');
@@ -48,8 +50,5 @@ export class ThemePropertiesBasicDemoComponent {
 
     public get codeTagBg(): string {
         return JigsawTheme.getProperty('--blue-2');
-    }
-
-    constructor(public doc: ThemePropertiesTextService) {
     }
 }

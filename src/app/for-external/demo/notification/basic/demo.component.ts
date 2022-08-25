@@ -1,17 +1,14 @@
 import { Component } from '@angular/core';
 import { JigsawNotification } from "jigsaw/public_api";
-import { NotificationTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'notification-basic',
-    templateUrl: './demo.component.html',
-    styles: [`
-        .wrapper {
-            width: 380px;
-        }
-    `]
+    templateUrl: './demo.component.html'
 })
-export class NotificationBasicDemoComponent {
+export class NotificationBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/notification/basic";
+
     public ButtonSize: string = 'medium';
     public showWithOptions() {
         JigsawNotification.show('这是消息框的默认样子！', { icon: undefined });
@@ -35,8 +32,5 @@ export class NotificationBasicDemoComponent {
 
     public showInfo2() {
         JigsawNotification.showInfo('这是一条消息的提示消息', '带有标题的提示消息');
-    }
-
-    constructor(public doc: NotificationTextService) {
     }
 }

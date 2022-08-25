@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { CascadeTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class CascadeAllComponent {
-    constructor(public doc: CascadeTextService) { }
+export class CascadeAllComponent extends AsyncDescription {
+    public demoPath = "demo/cascade";
+
 }
 

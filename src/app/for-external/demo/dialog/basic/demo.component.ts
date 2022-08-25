@@ -1,6 +1,7 @@
-import { Component, TemplateRef, ViewChild, ViewEncapsulation } from "@angular/core";
-import { PopupEffect, PopupInfo, PopupOptions, PopupService } from "jigsaw/public_api";
-import { DialogTextService } from "../doc.service";
+import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {PopupEffect, PopupInfo, PopupOptions, PopupService} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'dialog-basic',
@@ -8,7 +9,9 @@ import { DialogTextService } from "../doc.service";
     styleUrls: ['./demo.component.scss']
 })
 
-export class DialogBasicDemoComponent {
+export class DialogBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/dialog/basic";
+
     public isModal: boolean = false;
     public popPositionTypes = [
         { label: "左上", value: "leftTop", offset: { left: 16, top: 16 } },
@@ -51,6 +54,7 @@ export class DialogBasicDemoComponent {
         }
     }
 
-    constructor(private _popupService: PopupService, public doc: DialogTextService) {
+    constructor(private _popupService: PopupService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

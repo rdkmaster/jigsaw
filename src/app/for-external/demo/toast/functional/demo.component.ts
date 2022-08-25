@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { JigsawToast } from 'jigsaw/public_api';
-import { ToastTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'toast-functional',
@@ -11,7 +11,9 @@ import { ToastTextService } from "../doc.service";
         }
     `]
 })
-export class ToastFunctionalDemoComponent {
+export class ToastFunctionalDemoComponent extends AsyncDescription {
+    public demoPath = "demo/toast/functional";
+
     public showSuccess() {
         JigsawToast.showSuccess('这是Toast成功提示框')
     }
@@ -26,8 +28,5 @@ export class ToastFunctionalDemoComponent {
 
     public showInfo() {
         JigsawToast.showInfo('这是Toast信息提示框')
-    }
-
-    constructor(public doc: ToastTextService) {
     }
 }

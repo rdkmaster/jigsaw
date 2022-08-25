@@ -1,11 +1,14 @@
-import { Component } from "@angular/core";
-import { TrustedHtmlTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'trusted-html-basic',
     templateUrl: './demo.component.html'
 })
-export class TrustedHtmlBasicComponent {
+export class TrustedHtmlBasicComponent extends AsyncDescription {
+    public demoPath = "demo/trusted-html/basic";
+
     public html = this.stripPrefixSpaces(`
         <a onclick="hello('trustedHtml directive')">
             <i class="iconfont iconfont-e9ee"></i>
@@ -71,7 +74,8 @@ export class TrustedHtmlBasicComponent {
         this.hello();
     }
 
-    constructor(public doc: TrustedHtmlTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.onCodeChange(this.jsCode);
     }
 }

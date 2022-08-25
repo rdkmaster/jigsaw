@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { RadioTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "radio-group-complex-scene",
@@ -7,7 +7,9 @@ import { RadioTextService } from "../doc.service";
     styleUrls: ["./demo.component.css"]
 })
 
-export class RadioComplexSceneComponent {
+export class RadioComplexSceneComponent extends AsyncDescription {
+    public demoPath = "demo/radio/complex-scene";
+
     public selectedGoods = { name: 'car' };
     public goodsList = [
         {
@@ -46,6 +48,4 @@ export class RadioComplexSceneComponent {
     public radioChange(message: any) {
         console.log(`switch message is: ${message.name}`);
     }
-
-    constructor(public doc: RadioTextService) { }
 }

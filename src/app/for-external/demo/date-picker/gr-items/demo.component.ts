@@ -1,19 +1,18 @@
 import { Component } from "@angular/core";
 import { TimeGr, GrItem } from "jigsaw/public_api";
-import { DatePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'date-picker-gr-items',
     templateUrl: './demo.component.html'
 })
-export class DatePickerGrItemDemoComponent {
+export class DatePickerGrItemDemoComponent extends AsyncDescription {
+    public demoPath = "demo/date-picker/gr-items";
+
     public date;
     public grItems: GrItem[] = [
         { label: "Day", value: TimeGr.date },
         { label: "Week", value: TimeGr.week },
         { label: "Month", value: TimeGr.month }
     ];
-
-    constructor(public doc: DatePickerTextService) {
-    }
 }

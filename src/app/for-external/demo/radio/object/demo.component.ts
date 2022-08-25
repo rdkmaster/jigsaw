@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { RadioTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "radio-group-data",
     templateUrl: "./demo.component.html",
 })
 
-export class RadioDataIsObjectComponent {
+export class RadioDataIsObjectComponent extends AsyncDescription {
+    public demoPath = "demo/radio/object";
+
     public selectedCity = { name: "北京" };
     public cities = [
         { name: "北京", id: "1" },
@@ -29,6 +31,4 @@ export class RadioDataIsObjectComponent {
     public radioChange2(message: any) {
         console.log(`switch message is: ${message.pro_name}`);
     }
-
-    constructor(public doc: RadioTextService) { }
 }

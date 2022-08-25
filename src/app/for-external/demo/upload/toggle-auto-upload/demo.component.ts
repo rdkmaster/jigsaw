@@ -1,12 +1,15 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, QueryList, ViewChild, ViewChildren} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } from "jigsaw/public_api";
-import { UploadTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'upload-toggle-auto-upload',
     templateUrl: "./demo.component.html"
 })
-export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
+export class UploadAutoUploadDemoComponent extends AsyncDescription implements OnInit, AfterViewInit {
+    public demoPath = "demo/upload/toggle-auto-upload";
+
     @ViewChild("first", { read: JigsawUploadDirective })
     public uploader1: IUploader;
     @ViewChild("second", { read: JigsawUploadDirective })
@@ -41,5 +44,7 @@ export class UploadAutoUploadDemoComponent implements OnInit, AfterViewInit {
         this._changeDetectorRef.detectChanges();
     }
 
-    constructor(private _changeDetectorRef: ChangeDetectorRef, public doc: UploadTextService) { }
+    constructor(private _changeDetectorRef: ChangeDetectorRef, http: HttpClient, el: ElementRef) {
+        super(http, el);
+    }
 }

@@ -1,13 +1,15 @@
 import {Component} from '@angular/core';
-import {BadgeTextService} from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'badge-offset',
     templateUrl: './demo.component.html'
 })
 
-export class BadgeOffsetDemoComponent {
+export class BadgeOffsetDemoComponent extends AsyncDescription {
+    public demoPath = "demo/badge/offset";
+
     hOffset1 = 20;
     hOffset2 = -10;
     list = [
@@ -20,7 +22,4 @@ export class BadgeOffsetDemoComponent {
         {label: "中", size: "normal"},
         {label: "大", size: "large"}
     ]);
-
-    constructor(public doc: BadgeTextService) {
-    }
 }

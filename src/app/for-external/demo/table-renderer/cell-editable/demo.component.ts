@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ViewChild, ViewEncapsulation} from "@angular/core";
+import {AfterViewInit, Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     TableData, ColumnDefine, JigsawInput, TableCellRendererBase,
     TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer
 } from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 /*
  * 自定义单元格渲染组件
@@ -43,10 +43,13 @@ export class MyTableCellEditor extends TableCellRendererBase implements AfterVie
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TableSetCellEditableDemoComponent {
+export class TableSetCellEditableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/cell-editable";
+
     tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

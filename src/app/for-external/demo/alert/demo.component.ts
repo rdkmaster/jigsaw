@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { AlertTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class AlertDemoComponent {
-    constructor(public doc: AlertTextService) { }
+export class AlertDemoComponent extends AsyncDescription {
+    demoPath = 'demo/alert';
 }
 

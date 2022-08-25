@@ -1,12 +1,14 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { ToastTextService } from "../doc.service";
 import { JigsawToast, ToastMessage } from 'jigsaw/public_api';
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'toast-long-text',
     templateUrl: './demo.component.html'
 })
-export class ToastLongTextDemoComponent implements AfterViewInit {
+export class ToastLongTextDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/toast/long-text";
+
     public message: string;
     public icon = 'iconfont iconfont-e076';
     public timeout = 4;
@@ -24,8 +26,5 @@ export class ToastLongTextDemoComponent implements AfterViewInit {
 
     ngAfterViewInit(): void {
         this.makeLongMessage()
-    }
-
-    constructor(public doc: ToastTextService) {
     }
 }

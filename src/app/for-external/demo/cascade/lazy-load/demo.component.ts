@@ -1,15 +1,20 @@
-import { Component } from "@angular/core";
-import { CascadeTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient, HttpRequest } from "@angular/common/http";
 import { CascadeData } from "jigsaw/public_api";
 import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "cascade-lazy-load",
     templateUrl: "./demo.component.html"
 })
 
-export class CascadeLazyLoadComponent {
+export class CascadeLazyLoadComponent extends AsyncDescription {
+    public demoPath = "demo/cascade/lazy-load";
+
+    constructor(private http: HttpClient, el: ElementRef) {
+        super(http, el);
+    }
     public levelInfos = [
         { title: '省/直辖市', field: 'provinceId' },
         { title: '市', field: 'cityId' },
@@ -27,9 +32,6 @@ export class CascadeLazyLoadComponent {
             title: levelInfo.title, noMore: level >= 2,
             list: this.http.get<any[]>('/mock-data/cascade/lazy-load/area', { params: params }),
         }
-    }
-
-    constructor(public http: HttpClient, public doc: CascadeTextService) {
     }
 }
 

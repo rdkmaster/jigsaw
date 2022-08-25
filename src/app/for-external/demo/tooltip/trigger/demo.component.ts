@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { TooltipTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tooltip-trigger',
     templateUrl: './demo.component.html'
 })
-export class TooltipTriggerDemoComponent {
+export class TooltipTriggerDemoComponent extends AsyncDescription {
+    public demoPath = "demo/tooltip/trigger";
+
     public openTrigger = "mouseenter";
     public closeTrigger = "mouseleave";
     public open = false;
@@ -20,8 +22,5 @@ export class TooltipTriggerDemoComponent {
         e.preventDefault();
         e.stopPropagation();
         this.open = false;
-    }
-
-    constructor(public doc: TooltipTextService) {
     }
 }

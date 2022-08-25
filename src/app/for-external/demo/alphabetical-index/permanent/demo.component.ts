@@ -1,14 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { ArrayCollection, InternalUtils, PinyinDictionary } from 'jigsaw/public_api';
-import { AlphabeticalDocService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "alphabetical-index-permanent",
     templateUrl: "./demo.component.html"
 })
-export class AlphabeticalIndexPermanentDemoComponent implements OnInit {
-    constructor(public doc: AlphabeticalDocService) {
-    }
+export class AlphabeticalIndexPermanentDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/alphabetical-index/permanent";
+
     public pinyinDictionary: PinyinDictionary = {
         "乐": "Y", "乘": "S", "乾": "G", "仇": "Q", "会": "K", "传": "Z", "伺": "C", "佃": "D",
         "侗": "D", "侧": "Z", "便": "P", "冯": "P", "凹": "W", "刨": "B", "券": "X", "刹": "S",

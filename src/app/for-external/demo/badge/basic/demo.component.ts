@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { BadgeTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'badge-basic',
@@ -12,7 +12,9 @@ import { ArrayCollection } from "jigsaw/public_api";
         }
     `]
 })
-export class BadgeBasicDemoComponent {
+export class BadgeBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/badge/basic";
+
     public nice = "Nice";
     public dot = "dot";
 
@@ -31,6 +33,4 @@ export class BadgeBasicDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "normal" };
-    constructor(public doc: BadgeTextService) {
-    }
 }

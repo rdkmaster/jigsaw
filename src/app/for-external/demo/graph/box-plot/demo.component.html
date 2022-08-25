@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.boxPlot" [codes]="doc.codes.boxPlot">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-v">
         <span>BoxPlotGraphData静态数据</span>
         <jigsaw-graph [data]="boxPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>

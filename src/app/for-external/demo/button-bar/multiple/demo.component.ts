@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { ButtonBarTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "button-bar-multiple-choice",
     templateUrl: "./demo.component.html",
 })
 
-export class ButtonBarMultipleComponent {
+export class ButtonBarMultipleComponent extends AsyncDescription {
+    public demoPath = "demo/button-bar/multiple";
+
     public cities = new ArrayCollection([
         { label: "北京", id: 1 },
         { label: "上海-一个很长的地址", id: 2 },
@@ -24,6 +26,4 @@ export class ButtonBarMultipleComponent {
         { label: "大", size: "default" }
     ]);
     public selectedSize = { label: "大", size: "default" };
-    constructor(public doc: ButtonBarTextService) { }
-
 }

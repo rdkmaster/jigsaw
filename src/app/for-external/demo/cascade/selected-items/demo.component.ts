@@ -1,15 +1,17 @@
-import { Component, OnInit } from "@angular/core";
-import { CascadeTextService } from "../doc.service";
+import {Component, ElementRef, OnInit} from "@angular/core";
 import { HttpClient, HttpRequest } from "@angular/common/http";
-import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
 import { CascadeData, SimpleTreeData } from "jigsaw/public_api";
+import { AjaxInterceptor, MockData } from "../../../../libs/app.interceptor";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "cascade-selected-items",
     templateUrl: "./demo.component.html"
 })
 
-export class CascadeSelectedItemsComponent implements OnInit {
+export class CascadeSelectedItemsComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/cascade/selected-items";
+
     public areas: SimpleTreeData;
     public staticSelectedItems: any[];
     public multiSelectedItems: any[];
@@ -43,7 +45,8 @@ export class CascadeSelectedItemsComponent implements OnInit {
         this.lazyLoadSelectedItems = [item1, item2, item3];
     }
 
-    constructor(public http: HttpClient, public doc: CascadeTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
         http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => {
             // 设置静态数据

@@ -1,20 +1,30 @@
-import { Component, ViewChild } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { TableData, AdditionalColumnDefine, TableCellCheckboxRenderer, JigsawTable, TableHeadCheckboxRenderer, AdditionalTableData } from "jigsaw/public_api";
-import {TableColumnDefinesTextService} from "../doc.service";
+import {Component, ElementRef, ViewChild} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {
+    AdditionalColumnDefine,
+    AdditionalTableData,
+    JigsawTable,
+    TableCellCheckboxRenderer,
+    TableData,
+    TableHeadCheckboxRenderer
+} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-update-additional-column-defines',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class TableUpdateAdditionalColumnDefineDemoComponent {
+export class TableUpdateAdditionalColumnDefineDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-column-defines/update-additional-column-defines";
+
     tableData: TableData;
     inputValue: string = "单选框";
 
     @ViewChild('table') table: JigsawTable;
 
-    constructor(http: HttpClient, public doc: TableColumnDefinesTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

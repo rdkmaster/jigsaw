@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.cellEditable" [codes]="doc.codes.cellEditable">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <jigsaw-table [data]="tableData" [columnDefines]="columns" (edit)="onCellChange($event)"

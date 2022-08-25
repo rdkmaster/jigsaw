@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.stringArray" [codes]="doc.codes.stringArray">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <jigsaw-button-bar
             [(selectedItems)]="selectedCity"

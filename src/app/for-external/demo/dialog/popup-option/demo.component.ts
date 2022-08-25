@@ -1,16 +1,19 @@
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
-import { DialogTextService } from "../doc.service";
+import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'dialog-popup-option',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
+export class DialogPopupOptionDemoComponent extends AsyncDescription implements OnInit, AfterViewInit {
+    public demoPath = "demo/dialog/popup-option";
+
     @ViewChild("left") left: ElementRef;
     @ViewChild("middle") middle: ElementRef;
     @ViewChild("right") right: ElementRef;
@@ -106,6 +109,8 @@ export class DialogPopupOptionDemoComponent implements OnInit, AfterViewInit {
         this.generatePopPos();
     }
 
-    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef, public doc: DialogTextService) {
+    constructor(private popupService: PopupService, private _cdr: ChangeDetectorRef,
+                http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

@@ -1,12 +1,14 @@
 import {Component, ViewChild} from "@angular/core";
 import {JigsawInput} from "jigsaw/public_api";
-import {InputTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'input-icons',
     templateUrl: './demo.component.html'
 })
-export class InputIconDemoComponent {
+export class InputIconDemoComponent extends AsyncDescription {
+    public demoPath = "demo/input/icons";
+
 
     @ViewChild('myInput1') myInput: JigsawInput;
 
@@ -23,8 +25,5 @@ export class InputIconDemoComponent {
     public iconClick(event: string, position: string) {
         console.log(event, position);
         this.message = `${position} icon "${event}" is clicked.`;
-    }
-
-    constructor(public doc: InputTextService) {
     }
 }

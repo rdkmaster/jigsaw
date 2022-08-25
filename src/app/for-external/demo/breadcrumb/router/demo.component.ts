@@ -1,13 +1,16 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { BreadcrumbNode, BreadcrumbRouteConfig } from "jigsaw/public_api";
 import { ProductService } from "./product.service";
-import { BreadcrumbTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
     selector: 'breadcrumb-router',
     templateUrl: './demo.component.html'
 })
-export class BreadcrumbRouterDemoComponent {
+export class BreadcrumbRouterDemoComponent extends AsyncDescription {
+    public demoPath = "demo/breadcrumb/router";
+
     public routes: BreadcrumbRouteConfig[] = [
         { '/pc/breadcrumb': { label: 'Product List', icon: 'iconfont iconfont-e12e' } },
         { '/pc/breadcrumb/list/*': this.listBreadcrumbGenerator },
@@ -67,6 +70,7 @@ export class BreadcrumbRouterDemoComponent {
         { id: 1, name: 'Digital' }
     ];
 
-    constructor(public productService: ProductService, public doc: BreadcrumbTextService) {
+    constructor(public productService: ProductService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

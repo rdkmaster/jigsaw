@@ -1,12 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AbstractGraphData, EchartOptions, JigsawGraph } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-basic',
     templateUrl: './demo.component.html'
 })
-export class GraphBasicDemoComponent implements OnInit {
+export class GraphBasicDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/graph/basic";
+
     @ViewChild("graph") graph: JigsawGraph;
     public data: AbstractGraphData;
 
@@ -24,9 +26,6 @@ export class GraphBasicDemoComponent implements OnInit {
         let graphData = new GraphDataDemo();
         this.data = graphData;
         graphData.optionsPatch = this.patchOption;
-    }
-
-    constructor(public doc: GraphTextService) {
     }
 }
 

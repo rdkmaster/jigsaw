@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.scatter" [codes]="doc.codes.scatter">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-v">
         <span>ScatterGraphData静态数据</span>
         <jigsaw-graph [data]="scatterData" height="400" (click)="handleClick($event)"></jigsaw-graph>

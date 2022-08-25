@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { ArrayCollection, TimeGr, TimeService } from "jigsaw/public_api";
-import { BoxTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'box-form',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class FormDemoComponent {
+export class FormDemoComponent extends AsyncDescription {
+    public demoPath = "demo/box/form";
+
     public firstName: string = 'jigsaw';
     public remember: boolean = true;
     public rangeTime = {
@@ -36,7 +38,5 @@ export class FormDemoComponent {
         this.rangeTimeComboValue[0].label = this.rangeTime.beginDate;
         this.rangeTimeComboValue[1].label = this.rangeTime.endDate;
         this.rangeTimeComboValue.refresh();
-    }
-    constructor(public doc: BoxTextService) {
     }
 }

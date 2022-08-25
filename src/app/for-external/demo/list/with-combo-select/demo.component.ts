@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
-import { ListTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'list-with-combo-select',
     templateUrl: './demo.component.html',
     styleUrls:['./demo.component.css']
 })
-export class ListWithComboSelectDemoComponent {
+export class ListWithComboSelectDemoComponent extends AsyncDescription {
+    public demoPath = "demo/list/with-combo-select";
+
     public goodsList = [
         {
             logo: 'e187',
@@ -49,7 +51,4 @@ export class ListWithComboSelectDemoComponent {
             desc: 'A book is a set of sheets of paper, parchment, or similar materials that are fastened together to hinge at one side.'
         },
     ]);
-
-    constructor(public doc: ListTextService) {
-    }
 }

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { DataEncapsulationTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
-export class DataEncapsulationDemoComponent {
-    constructor(public doc: DataEncapsulationTextService) {
-    }
+export class DataEncapsulationDemoComponent extends AsyncDescription {
+    public demoPath = "demo/data-encapsulation";
+
 }

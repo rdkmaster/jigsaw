@@ -1,4 +1,4 @@
-import {Component, TemplateRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     TableData,
@@ -9,20 +9,24 @@ import {
     DefaultCellRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer
 } from "jigsaw/public_api";
 import {CellRendererOfficeHeaderRenderer} from "./renderers";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-cell-render',
     templateUrl: './demo.component.html'
 })
-export class TableSetCellRenderDemoComponent {
+export class TableSetCellRenderDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/cell-render";
 
-    @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
+
+    @ViewChild("jobCellRender")
+    jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
     tableData2: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

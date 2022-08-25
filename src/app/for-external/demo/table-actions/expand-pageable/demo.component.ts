@@ -1,14 +1,16 @@
-import { Component, ViewChild } from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 import { JigsawTable, PageableTableData } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
-import { TableActionsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-expand-pageable',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class TableExpandPageableDemoComponent {
+export class TableExpandPageableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/expand-pageable";
+
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
 
@@ -90,7 +92,8 @@ export class TableExpandPageableDemoComponent {
         });
     }
 
-    constructor(private http: HttpClient, public doc: TableActionsTextService) {
+    constructor(private http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.resetData();
     }
 }

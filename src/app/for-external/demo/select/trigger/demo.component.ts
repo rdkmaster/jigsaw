@@ -1,13 +1,14 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-trigger",
     templateUrl: "./demo.component.html"
 })
+export class SelectTriggerDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/trigger";
 
-export class SelectTriggerDemoComponent {
     public selectedCityForSelect: any;
     public cityListForSelect = new ArrayCollection([
         { label: "北京" },
@@ -27,6 +28,4 @@ export class SelectTriggerDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
-
 }

@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { IconTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'icon-customize-status',
     templateUrl: './demo.component.html'
 })
-export class IconCustomizeStatusDemoComponent {
-    public fontSize = 12;
+export class IconCustomizeStatusDemoComponent extends AsyncDescription {
+    public demoPath = "demo/icon/customize-status";
 
-    constructor(public doc: IconTextService) {
-    }
+    public fontSize = 12;
 }

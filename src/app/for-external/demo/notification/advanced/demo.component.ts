@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { JigsawNotification } from "jigsaw/public_api";
-import { NotificationTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'notification-advanced',
@@ -11,7 +11,9 @@ import { NotificationTextService } from "../doc.service";
         }
     `]
 })
-export class NotificationAdvancedDemoComponent {
+export class NotificationAdvancedDemoComponent extends AsyncDescription {
+    public demoPath = "demo/notification/advanced";
+
     public showNormal() {
         JigsawNotification.show('最简洁方便的使用方式：<code>JigsawNotification.show("message")</code>');
     }
@@ -55,8 +57,5 @@ export class NotificationAdvancedDemoComponent {
                 // 推荐将这些函数都定义在当前组件内，因此他的值一般设置为 this 即可
                 innerHtmlContext: this
             });
-    }
-    
-    constructor(public doc: NotificationTextService) {
     }
 }

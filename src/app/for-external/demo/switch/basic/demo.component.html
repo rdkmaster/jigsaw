@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>正常状态</span>
         <jigsaw-switch [(checked)]="checked" [size]="selectedSize.size"></jigsaw-switch>

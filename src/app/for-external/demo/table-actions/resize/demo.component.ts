@@ -1,14 +1,16 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, JigsawTable } from "jigsaw/public_api";
-import { TableActionsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-resize',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class TableResizeDemoComponent implements OnInit {
+export class TableResizeDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/table-actions/resize";
+
     @ViewChild('tableCmp') tableCmp: JigsawTable;
     public tableData: TableData;
     public tableWidth: any = '100%';
@@ -31,7 +33,8 @@ export class TableResizeDemoComponent implements OnInit {
         this.box = this.elementRef.nativeElement.querySelector('.box');
     }
 
-    constructor(http: HttpClient, public elementRef: ElementRef, public doc: TableActionsTextService) {
+    constructor(http: HttpClient, public elementRef: ElementRef) {
+        super(http, elementRef);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

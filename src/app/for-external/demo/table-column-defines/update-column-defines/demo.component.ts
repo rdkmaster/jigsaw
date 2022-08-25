@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { ColumnDefine, JigsawTheme, TableData } from "jigsaw/public_api";
-import { TableColumnDefinesTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-update-column-defines',
     templateUrl: './demo.component.html'
 })
-export class TableUpdateColumnDefinesDemoComponent {
+export class TableUpdateColumnDefinesDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-column-defines/update-column-defines";
+
     public tableData: TableData;
 
     // 这里为了能让demo同时适配深浅色系才做的这么复杂，如果应用没有深浅色系前的需求，则无需搞这么复杂
@@ -49,7 +52,8 @@ export class TableUpdateColumnDefinesDemoComponent {
         })
     }
 
-    constructor(public doc: TableColumnDefinesTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 [

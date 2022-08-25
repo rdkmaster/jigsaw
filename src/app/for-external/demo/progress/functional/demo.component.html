@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.functional" [codes]="doc.codes.functional">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>四种状态</span>
         <j-progress [value]="progressValue" status="processing" [preSize]="selectedSize.size"></j-progress>

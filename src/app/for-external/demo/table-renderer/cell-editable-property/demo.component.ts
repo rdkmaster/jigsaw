@@ -1,17 +1,21 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {
     TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellPasswordRenderer,
 } from "jigsaw/public_api";
-import { TableRendererTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-cell-editable-property',
     templateUrl: './demo.component.html',
 })
-export class TableCellEditablePropertyDemoComponent {
+export class TableCellEditablePropertyDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/cell-editable-property";
+
     public tableData: TableData;
 
-    constructor(public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 [

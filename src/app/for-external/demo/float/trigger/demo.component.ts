@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { FloatTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'float-trigger',
     templateUrl: './demo.component.html'
 })
-export class FloatTriggerDemoComponent {
+export class FloatTriggerDemoComponent extends AsyncDescription {
+    public demoPath = "demo/float/trigger";
+
     public closeTrigger = "mouseleave";
     public openTrigger: string = "mouseenter";
     public openTrigger1 = "click";
@@ -22,8 +24,5 @@ export class FloatTriggerDemoComponent {
     }
     public closeFloat() {
         this.open2 = false;
-    }
-
-    constructor(public doc: FloatTextService) {
     }
 }

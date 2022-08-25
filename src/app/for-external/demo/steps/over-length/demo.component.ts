@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { InternalUtils } from "jigsaw/public_api";
-import { StepsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'steps-over-length',
     templateUrl: "./demo.component.html"
 })
-export class JigsawStepOverLengthDemoComponent {
+export class JigsawStepOverLengthDemoComponent extends AsyncDescription {
+    public demoPath = "demo/steps/over-length";
+
     public data = [
         {
             title: "这是非常长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长长的title",
@@ -41,7 +44,8 @@ export class JigsawStepOverLengthDemoComponent {
         };
     }
 
-    constructor(public doc: StepsTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         for (let i = 2; i < 5; i++) {
             this.data.push(this._createStepData());
         }

@@ -1,10 +1,11 @@
 import { Component } from "@angular/core";
-import { TableBigDataTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TableBigDataAllComponent {
-    constructor(public doc: TableBigDataTextService) { }
+export class TableBigDataAllComponent extends AsyncDescription {
+    public demoPath = "demo/table-big-data";
+
 }
 

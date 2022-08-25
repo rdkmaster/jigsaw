@@ -1,7 +1,8 @@
 import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 import {TableSwimLaneCell} from "./table-renderer";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-swim-lane-diagram',
@@ -9,7 +10,9 @@ import {TableRendererTextService} from "../doc.service";
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class SwimLaneDiagramDemoComponent {
+export class SwimLaneDiagramDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/swim-lane-diagram";
+
     tableData: TableData;
     neHover: boolean = true;
     currentIndex: any;
@@ -23,7 +26,8 @@ export class SwimLaneDiagramDemoComponent {
         {name: 'PCRF', desc: 'XNSAEGW02', ip: '221.177.187.112'},
     ];
 
-    constructor(public elementRef: ElementRef, public doc: TableRendererTextService) {
+    constructor(public elementRef: ElementRef, http: HttpClient) {
+        super(http, elementRef);
         this.tableData = new TableData([], ['id', 'date'], ['id', 'date']);
         for (let i = 0; i < this.neList.length; i++) {
             this.tableData.field.push('swimLang' + i);

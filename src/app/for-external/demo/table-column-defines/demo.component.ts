@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { TableColumnDefinesTextService } from "./doc.service";
-import { TableColumnDefinesDemoModule } from "./demo.module";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TableColumnDefinesAllComponent {
-    constructor(public doc: TableColumnDefinesTextService) { }
+export class TableColumnDefinesAllComponent extends AsyncDescription {
+    public demoPath = "demo/table-column-defines";
+
 }
 

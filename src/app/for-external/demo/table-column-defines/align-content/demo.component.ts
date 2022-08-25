@@ -1,12 +1,22 @@
-import { Component } from "@angular/core";
-import { TableData, AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer, ColumnDefine, TableValueGenerators } from "jigsaw/public_api";
-import {TableColumnDefinesTextService} from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {
+    AdditionalColumnDefine,
+    ColumnDefine,
+    TableCellCheckboxRenderer,
+    TableData,
+    TableHeadCheckboxRenderer,
+    TableValueGenerators
+} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-align-content',
     templateUrl: './demo.component.html'
 })
-export class TableAlignContentDemoComponent {
+export class TableAlignContentDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-column-defines/align-content";
+
     tableData: TableData;
 
     additionalColumns: AdditionalColumnDefine[] = [{
@@ -59,7 +69,8 @@ export class TableAlignContentDemoComponent {
         }
     ];
 
-    constructor(public doc: TableColumnDefinesTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 [

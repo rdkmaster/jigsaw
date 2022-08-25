@@ -1,18 +1,17 @@
 import { Component } from "@angular/core";
-import { DatePickerTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'date-picker-gr-month',
     templateUrl: './demo.component.html'
 })
-export class DatePickerGrMonthComponent {
+export class DatePickerGrMonthComponent extends AsyncDescription {
+    public demoPath = "demo/date-picker/gr-month";
+
     public date = "now";
     public gr = ['date'];
 
     public dateChange($event) {
         console.log($event);
-    }
-
-    constructor(public doc: DatePickerTextService) {
     }
 }

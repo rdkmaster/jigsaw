@@ -1,23 +1,26 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
     ArrayCollection, LocalPageableArray, PageableArray, ComboSelectValue,
     TableData
 } from "jigsaw/public_api";
-import {ComboSelectTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-searchable',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectSearchableDemoComponent {
+export class ComboSelectSearchableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/searchable";
+
     lpaCountries: LocalPageableArray<ComboSelectValue>;
     spaCountries: PageableArray;
     selectedCountries: any;
     selectedCountries2: ArrayCollection<ComboSelectValue> = new ArrayCollection();
     selectedCountries3: any;
 
-    constructor(public http: HttpClient, public doc: ComboSelectTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.lpaCountries = new LocalPageableArray<ComboSelectValue>();
         this.lpaCountries.http = http;
         this.lpaCountries.pagingInfo.pageSize=1000;

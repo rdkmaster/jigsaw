@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
-import { NavigationMenuTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "nav-fold",
     templateUrl: "demo.component.html",
 })
-export class NavigationFoldDemoComponent {
+export class NavigationFoldDemoComponent extends AsyncDescription {
+    public demoPath = "demo/navigation-menu/fold";
+
     public data: SimpleTreeData = new SimpleTreeData();
     public collapsed: boolean = true;
 
@@ -18,7 +21,8 @@ export class NavigationFoldDemoComponent {
         console.log(event, this.collapsed);
     }
 
-    constructor(public doc: NavigationMenuTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         const xmlData = `
             <node>
                 <node label="标准图标1" icon="iconfont iconfont-e231" selected="true"></node>

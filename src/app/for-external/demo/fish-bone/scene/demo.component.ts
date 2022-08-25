@@ -1,18 +1,20 @@
-
-import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core";
+import {AfterViewInit, Component, ViewEncapsulation, NgZone, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {take} from 'rxjs/operators';
 import {ChartIconFactory, ChartType, SimpleTreeData} from "jigsaw/public_api";
-import {FishBoneTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'fish-bone-scene',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })
-export class FishBoneSceneComponent implements AfterViewInit {
+export class FishBoneSceneComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/fish-bone/scene";
 
-    constructor(public http: HttpClient, public _zone: NgZone, public doc: FishBoneTextService) {
+
+    constructor(public http: HttpClient, public _zone: NgZone, el: ElementRef) {
+        super(http, el);
         // 在ChartIcon注册Custom Pie
         ChartIconFactory.registerCustomPie();
 

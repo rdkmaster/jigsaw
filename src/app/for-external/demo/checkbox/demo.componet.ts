@@ -1,10 +1,8 @@
 import { Component } from "@angular/core";
-import { CheckboxTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class CheckBoxDemoComponent {
-    constructor(public doc: CheckboxTextService) {
-    }
+export class CheckBoxDemoComponent extends AsyncDescription {
 }

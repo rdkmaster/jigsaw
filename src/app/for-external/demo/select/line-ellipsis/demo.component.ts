@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-line-ellipsis",
     templateUrl: "./demo.component.html"
 })
 
-export class SelectLineEllipsisDemoComponent {
+export class SelectLineEllipsisDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/line-ellipsis";
+
     public selectedCityForSelect: any;
     public cityListForSelect = new ArrayCollection([
         { label: "北京" },
@@ -24,5 +26,4 @@ export class SelectLineEllipsisDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
 }

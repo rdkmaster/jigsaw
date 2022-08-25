@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { ButtonBarTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ButtonBarAllComponent {
-    constructor(public doc: ButtonBarTextService) { }
-}
+export class ButtonBarAllComponent extends AsyncDescription {
+    public demoPath = "demo/button-bar";
 
+}

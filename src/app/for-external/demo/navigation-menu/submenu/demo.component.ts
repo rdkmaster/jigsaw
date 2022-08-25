@@ -1,17 +1,21 @@
-import { Component, } from "@angular/core";
-import { NavigationMenuTextService } from "../doc.service";
+import {Component, ElementRef,} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 @Component({
     selector: "nav-submenu",
     templateUrl: "demo.component.html",
 })
-export class NavigationSubMenuDemoComponent {
+export class NavigationSubMenuDemoComponent extends AsyncDescription {
+    public demoPath = "demo/navigation-menu/submenu";
+
     public data: SimpleTreeData = new SimpleTreeData();
     public onMenuSelect(node: SimpleNode) {
         console.log(`${node.label} 被点击了!!!`);
     }
 
-    constructor(public doc: NavigationMenuTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data.fromXML(`
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">

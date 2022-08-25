@@ -1,16 +1,19 @@
-import {Component, Injector} from "@angular/core";
+import {Component, ElementRef, Injector} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-mixin-table',
     templateUrl: './demo.component.html'
 })
-export class TableMixinTableDemoComponent {
+export class TableMixinTableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/mixin-table";
+
     tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

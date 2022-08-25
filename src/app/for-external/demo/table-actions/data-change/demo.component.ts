@@ -1,13 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, ColumnDefine, DefaultCellRenderer } from "jigsaw/public_api";
-import { TableActionsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-data-change',
     templateUrl: './demo.component.html'
 })
-export class TableDataChangeDemoComponent {
+export class TableDataChangeDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/data-change";
+
     public tableData: TableData;
     columns: ColumnDefine[] = [
         {
@@ -29,7 +31,8 @@ export class TableDataChangeDemoComponent {
         this.tableData.refresh();
     }
 
-    constructor(http: HttpClient, public doc: TableActionsTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

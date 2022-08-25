@@ -1,14 +1,15 @@
 import { HttpClient } from "@angular/common/http";
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, LocalPageableTableData } from "jigsaw/public_api";
-import { TransferTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'transfer-table-local-pageable-transfer',
     templateUrl: './demo.component.html'
-
 })
-export class TransferTableLocalPageableDemoComponent {
+export class TransferTableLocalPageableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/transfer/transfer-table-local-pageable";
+
     public data: LocalPageableTableData;
     public sourceRenderer = TransferTableSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
@@ -22,7 +23,8 @@ export class TransferTableLocalPageableDemoComponent {
         console.log($event)
     }
 
-    constructor(http: HttpClient, public doc: TransferTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.data = new LocalPageableTableData();
         this.data.http = http;
         this.data.pagingInfo.pageSize = 10;

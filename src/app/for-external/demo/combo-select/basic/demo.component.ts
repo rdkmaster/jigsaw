@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import { ComboSelectTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-basic',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectBasicDemo {
+export class ComboSelectBasicDemo extends AsyncDescription {
+    public demoPath = "demo/combo-select/basic";
+
     public disabled = false;
 
     public selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
@@ -25,7 +27,4 @@ export class ComboSelectBasicDemo {
         { label: "连云港3" },
         { label: "哈尔滨" }
     ];
-
-    constructor(public doc: ComboSelectTextService) {
-    }
 }

@@ -1,16 +1,15 @@
 import { Component } from "@angular/core";
-import { CollapseTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
-    selector: "collapse-bsaic",
+    selector: "collapse-basic",
     templateUrl: "./demo.component.html",
 })
-export class CollapseBasicDemoComponent {
+export class CollapseBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/collapse/basic";
+
     public isActive = true;
     public _$isActiveChange(isActive: boolean) {
         console.log(isActive);
-    }
-
-    constructor(public doc: CollapseTextService) {
     }
 }

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { ToastTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class ToastDemoComponent {
-    constructor(public doc: ToastTextService) {
-    }
+export class ToastDemoComponent extends AsyncDescription {
+    public demoPath = "demo/toast";
+
 }

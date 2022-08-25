@@ -1,12 +1,15 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { LocalPageableTableData, ArrayCollection } from "jigsaw/public_api";
-import { PaginationTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'pagination-no-data',
     templateUrl: './demo.component.html'
 })
-export class PaginationNoDataDemoComponent {
+export class PaginationNoDataDemoComponent extends AsyncDescription {
+    public demoPath = "demo/pagination/no-data";
+
     public paginationData: LocalPageableTableData;
 
     public getCurrentPage(message: any) {
@@ -23,7 +26,8 @@ export class PaginationNoDataDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: PaginationTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.paginationData = new LocalPageableTableData();
         this.paginationData.fromObject({
             header: ['header0', 'header1', 'header2', 'header3'],

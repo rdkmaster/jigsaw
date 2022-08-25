@@ -1,11 +1,11 @@
 import { Component } from "@angular/core";
-import { ProgressTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'circle-progress',
     templateUrl: "./demo.component.html"
 })
-export class CircleProgressDemoComponent {
-    constructor(public doc: ProgressTextService) {
-    }
+export class CircleProgressDemoComponent extends AsyncDescription {
+    public demoPath = "demo/progress/circle-progress";
+
 }

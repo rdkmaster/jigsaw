@@ -1,13 +1,14 @@
-import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {TagTextService} from "../doc.service";
+import {Component, QueryList, ViewChildren} from "@angular/core";
 import {JigsawTag, ArrayCollection} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "tag-with-icon",
     templateUrl: "./demo.component.html"
 })
+export class TagWithIconComponent extends AsyncDescription {
+    public demoPath = "demo/tag/with-icon";
 
-export class TagWithIconComponent {
     public selectedSize = {label: "大", size: "medium"};
     public sizes: object[] = new ArrayCollection([
         {label: "小", size: "small"},
@@ -15,12 +16,4 @@ export class TagWithIconComponent {
     ]);
     @ViewChildren(JigsawTag)
     tags: QueryList<JigsawTag>;
-
-    resetAllTags() {
-        console.log(this.tags);
-        this.tags.forEach(tag => tag.show());
-    }
-
-    constructor(public doc: TagTextService) {}
-
 }

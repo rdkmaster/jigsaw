@@ -1,4 +1,5 @@
-<demo-template [data]="labelData" [(selectedSize)]="selectedSize" [text]="doc.text.basic" [codes]="doc.codes.basic">
+<demo-template [sizeController]="labelData" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <!-- start to learn the demo from here -->
     <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedSize.size">
     </jigsaw-tree-ext>

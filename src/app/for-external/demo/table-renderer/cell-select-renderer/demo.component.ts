@@ -1,20 +1,23 @@
-import {Component, TemplateRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-cell-select-renderer',
     templateUrl: './demo.component.html'
 })
-export class TableCellSelectRenderDemoComponent {
+export class TableCellSelectRenderDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/cell-select-renderer";
+
 
     @ViewChild("jobCellRender") jobCellRender: TemplateRef<any>;
 
     tableData: TableData;
 
-    constructor(private http: HttpClient, public doc: TableRendererTextService) {
+    constructor(private http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list-short');

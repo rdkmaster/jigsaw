@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
-import { RadioTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 @Component({
     templateUrl: "demo.component.html"
 })
-export class RadioGroupDemoComponent {
-    constructor(public doc: RadioTextService) {
-    }
+export class RadioGroupDemoComponent extends AsyncDescription {
+    public demoPath = "demo/radio";
+
 }

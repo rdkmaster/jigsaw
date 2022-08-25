@@ -1,4 +1,4 @@
-<demo-template [data]="''" [text]="doc.text.line" [codes]="doc.codes.line">
+<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-v">
         <span>LineGraphData静态数据</span>
         <jigsaw-graph id="test-graph1" [data]="lineBarData" height="400"></jigsaw-graph>
@@ -7,7 +7,7 @@
         <div class="live-demo">
             <jigsaw-header [level]="2"></jigsaw-header>
             <p class="comment">
-                
+
             </p>
         </div>
     </div>

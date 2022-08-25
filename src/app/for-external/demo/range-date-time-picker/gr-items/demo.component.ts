@@ -1,12 +1,15 @@
-import {AfterViewInit, ChangeDetectorRef, Component} from "@angular/core";
+import {AfterViewInit, ChangeDetectorRef, Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {TimeGr, GrItem, Shortcut, RangeTimeDataRanges} from "jigsaw/public_api";
-import {RangeDataTimePickerTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'range-date-time-picker-gr-items',
     templateUrl: './demo.component.html'
 })
-export class RangeDateTimeGrItemsComponent implements AfterViewInit {
+export class RangeDateTimeGrItemsComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/range-date-time-picker/gr-items";
+
 
     beginDate = "now-1d";
 
@@ -22,7 +25,8 @@ export class RangeDateTimeGrItemsComponent implements AfterViewInit {
             {label: "Month", value: TimeGr.month}
         ];
 
-    constructor(public changeDetectorRef: ChangeDetectorRef, public doc: RangeDataTimePickerTextService) {
+    constructor(public changeDetectorRef: ChangeDetectorRef, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 
     ngAfterViewInit() {

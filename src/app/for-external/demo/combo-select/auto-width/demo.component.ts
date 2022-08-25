@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { ArrayCollection } from "jigsaw/public_api";
-import { ComboSelectTextService } from "../doc.service";
+import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'combo-select-auto-width',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectAutoWidthDemo {
+export class ComboSelectAutoWidthDemo extends AsyncDescription {
+    public demoPath = "demo/combo-select/auto-width";
+
     public selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
     public cities = [
         { label: "北京", closable: false },
@@ -23,7 +25,4 @@ export class ComboSelectAutoWidthDemo {
         { label: "连云港3" },
         { label: "哈尔滨" }
     ];
-
-    constructor(public doc: ComboSelectTextService) {
-    }
 }

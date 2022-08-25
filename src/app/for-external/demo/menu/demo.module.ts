@@ -3,7 +3,7 @@ import {DemoTemplateModule} from '../../demo-template/demo-template';
 import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
 import {MenuAllComponent} from "./demo.component";
 import {CommonModule} from "@angular/common";
-import {MenuSoftmenuDemoComponent} from "./softmenu/demo.component";
+import {MenuSoftMenuDemoComponent} from "./softmenu/demo.component";
 import {MenuHorizontalNavigationDemoComponent} from "./horizontal-navigation/demo.component";
 import {MenuInDialogDemo} from "./in-dialog/demo.component";
 import {
@@ -19,7 +19,7 @@ import {NavigationInDrawerDemoComponent} from "./in-drawer/demo.component";
 @NgModule({
     declarations: [
         MenuAllComponent,
-        MenuSoftmenuDemoComponent,
+        MenuSoftMenuDemoComponent,
         MenuHorizontalNavigationDemoComponent,
         MenuInDialogDemo,
         MenuWithButtonDemoComponent,

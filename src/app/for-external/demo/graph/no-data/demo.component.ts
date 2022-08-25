@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import { AbstractGraphData } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-no-data',
     templateUrl: './demo.component.html'
 })
 
-export class GraphWithNoDataDemoComponent {
-    public data: AbstractGraphData;
+export class GraphWithNoDataDemoComponent extends AsyncDescription {
+    public demoPath = "demo/graph/no-data";
 
-    constructor(public doc: GraphTextService) {
-    }
+    public data: AbstractGraphData;
 }

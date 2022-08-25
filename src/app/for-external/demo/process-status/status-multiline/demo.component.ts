@@ -1,18 +1,16 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { InternalUtils } from "jigsaw/public_api";
-import { ProcessStatusTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'process-status-multiline',
     templateUrl: './demo.component.html',
 })
-export class ProcessStatusMultilineComponent {
-    public steps = [];
+export class ProcessStatusMultilineComponent extends AsyncDescription {
+    public demoPath = "demo/process-status/status-multiline";
 
-    public changeStatus(idx: number) {
-        this.steps = this.steps.concat([]);
-        this.steps[idx] = this._createStepData(idx);
-    }
+    public steps = [];
 
     private _createStepData(index: number) {
         const statuses = ["done", "error", "processing", "warning", "skipped", "waiting"];
@@ -56,7 +54,8 @@ export class ProcessStatusMultilineComponent {
         console.log($event);
     }
 
-    constructor(public doc: ProcessStatusTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         for (let i = 0; i < 50; i++) {
             this.steps.push(this._createStepData(i));
         }

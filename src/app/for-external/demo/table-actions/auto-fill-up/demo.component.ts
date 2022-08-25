@@ -1,13 +1,22 @@
-import { Component } from "@angular/core";
-import { TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellNumericEditorRenderer, ArrayCollection, TreeTableData, TreeTableCellRenderer, LocalPageableTableData } from "jigsaw/public_api";
-import { TableActionsTextService } from "../doc.service";
+import {Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
+import {
+    ColumnDefine,
+    TableCellAutoCompleteEditorRenderer,
+    TableCellNumericEditorRenderer,
+    TableCellTextEditorRenderer,
+    TableData
+} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-auto-fill-up',
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
-export class TableAutoFillUpDemoComponent {
+export class TableAutoFillUpDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/auto-fill-up";
+
     public checked: boolean = true;
 
     public tableData: TableData;
@@ -53,7 +62,8 @@ export class TableAutoFillUpDemoComponent {
         }
     ]
 
-    constructor(public doc: TableActionsTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [
                 ["Tiger Nixon1", "System Architect", "8000"],

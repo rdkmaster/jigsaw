@@ -1,10 +1,11 @@
 import {Component, OnInit} from "@angular/core";
-import {IconsTextService} from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class IconsDemoComponent implements OnInit {
+export class IconsDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/icons";
 
     ngOnInit() {
         const iframe = document.getElementById('iframe');
@@ -12,6 +13,4 @@ export class IconsDemoComponent implements OnInit {
         const source = require('!!raw-loader!@rdkmaster/icon-font/iconfont.html').default;
         iframeDoc.write(source);
     }
-
-    constructor(public doc: IconsTextService) { }
 }

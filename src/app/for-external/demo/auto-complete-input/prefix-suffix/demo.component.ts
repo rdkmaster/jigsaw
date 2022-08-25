@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { AutoCompleteInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'auto-complete-input-prefix-suffix',
     templateUrl: './demo.component.html'
 })
-export class AutoCompleteInputPrefixSuffixDemoComponent {
+export class AutoCompleteInputPrefixSuffixDemoComponent extends AsyncDescription {
+    public demoPath = "demo/auto-complete-input/prefix-suffix";
+
     public hosts = ['rdk.zte.com.cn', 'jigsaw-zte.gitee.io'];
     public pages = ['/jigsaw/index.html', '/awade/index.html', '/rdk/index.html'];
     public protocols = ['http://', 'https://'];
@@ -53,8 +55,5 @@ export class AutoCompleteInputPrefixSuffixDemoComponent {
 
     public onChange(event: any) {
         console.log('prefix-suffix selected: ', event);
-    }
-
-    constructor(public doc: AutoCompleteInputTextService) {
     }
 }

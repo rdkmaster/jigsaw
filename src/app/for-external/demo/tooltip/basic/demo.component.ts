@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { TooltipTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tooltip-basic',
     templateUrl: './demo.component.html'
 })
-export class TooltipBasicDemoComponent {
-    public tooltipMessage: string = '一个提示';
+export class TooltipBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/tooltip/basic";
 
-    constructor(public doc: TooltipTextService) {
-    }
+    public tooltipMessage: string = '一个提示';
 }

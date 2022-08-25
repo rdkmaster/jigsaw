@@ -1,13 +1,15 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "select-option-width",
     templateUrl: "./demo.component.html"
 })
 
-export class SelectOptionWidthDemoComponent {
+export class SelectOptionWidthDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/option-width";
+
     public optionWidth = 400;
 
     public sizes: object[] = new ArrayCollection([
@@ -16,6 +18,4 @@ export class SelectOptionWidthDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
-
 }

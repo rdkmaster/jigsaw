@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { DragDropTextService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: 'demo.component.html',
 })
-export class DragDropDemoComponent {
-    constructor(public doc: DragDropTextService) {
-    }
+export class DragDropDemoComponent extends AsyncDescription {
+    public demoPath = "demo/drag-drop";
+
 }

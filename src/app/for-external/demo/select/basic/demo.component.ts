@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { SelectTextService } from "../doc.service";
 import { ArrayCollection } from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 class ForeverBusyArrayCollection extends ArrayCollection<any>{
     _busy = true;
@@ -11,7 +11,9 @@ class ForeverBusyArrayCollection extends ArrayCollection<any>{
     templateUrl: "./demo.component.html"
 })
 
-export class SelectBasicDemoComponent {
+export class SelectBasicDemoComponent extends AsyncDescription {
+    public demoPath = "demo/select/basic";
+
     public foreverBusyArray = new ForeverBusyArrayCollection();
     public selectedCityForSelect: any;
     public disabled: boolean = false;
@@ -39,5 +41,4 @@ export class SelectBasicDemoComponent {
         { label: "大", size: "large" }
     ]);
     public selectedSize = { label: "中", size: "medium" };
-    constructor(public doc: SelectTextService) { }
 }

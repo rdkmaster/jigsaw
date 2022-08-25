@@ -1,13 +1,16 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
-import { LoadingService, PopupInfo, JigsawBubbleLoading } from "jigsaw/public_api";
-import { LoadingTextService } from "../doc.service";
+import {HttpClient} from "@angular/common/http";
+import {LoadingService, PopupInfo, JigsawBubbleLoading, ArrayCollection} from "jigsaw/public_api";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'loading-bubble',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class LoadingBubbleDemoComponent implements AfterViewInit {
+export class LoadingBubbleDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/loading/bubble";
+
     @ViewChild('block') block: ElementRef;
 
     public blockLoading: PopupInfo;
@@ -22,6 +25,7 @@ export class LoadingBubbleDemoComponent implements AfterViewInit {
         this.popupBlockLoading()
     }
 
-    constructor(public loadingService: LoadingService, public doc: LoadingTextService) {
+    constructor(public loadingService: LoadingService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

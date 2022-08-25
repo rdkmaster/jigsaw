@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import { BreadcrumbTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'breadcrumb-hints',
     templateUrl: "./demo.component.html"
 })
-export class BreadcrumbHintDemoComponent {
+export class BreadcrumbHintDemoComponent extends AsyncDescription {
+    public demoPath = "demo/breadcrumb/hints";
+
     public data: BreadcrumbNode[] = [
         {
             label: "主页",
@@ -32,7 +34,4 @@ export class BreadcrumbHintDemoComponent {
             hint: "业务样本就是除了业务管理和业务清单以外的内容。"
         }
     ];
-
-    constructor(public doc: BreadcrumbTextService) {
-    }
 }

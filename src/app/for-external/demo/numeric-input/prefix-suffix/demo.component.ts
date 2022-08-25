@@ -1,12 +1,14 @@
 import { Component } from "@angular/core";
 import { GroupOptionValue } from "jigsaw/public_api";
-import { NumericInputTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'numeric-input-prefix-suffix',
     templateUrl: './demo.component.html'
 })
-export class NumericInputPrefixSuffixDemoComponent {
+export class NumericInputPrefixSuffixDemoComponent extends AsyncDescription {
+    public demoPath = "demo/numeric-input/prefix-suffix";
+
     public selectedSize = { label: "中", size: "default" };
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public _$icons: GroupOptionValue[] = [
@@ -35,8 +37,4 @@ export class NumericInputPrefixSuffixDemoComponent {
     public _$unitChange(event: any) {
         console.log('prefix-suffix selected: ', event);
     }
-
-    constructor(public doc: NumericInputTextService) {
-    }
-
 }

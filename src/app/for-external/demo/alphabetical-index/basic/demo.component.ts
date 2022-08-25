@@ -1,11 +1,13 @@
 import { Component, OnInit } from "@angular/core";
-import { AlphabeticalDocService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "alphabetical-index-basic",
     templateUrl: "./demo.component.html",
 })
-export class AlphabeticalIndexBasicDemoComponent implements OnInit {
+export class AlphabeticalIndexBasicDemoComponent extends AsyncDescription implements OnInit {
+    public demoPath = "demo/alphabetical-index/basic";
+
     public mixCountries = [];
     public countries = [
         ["portugal", "葡萄牙", "prt"],
@@ -95,8 +97,5 @@ export class AlphabeticalIndexBasicDemoComponent implements OnInit {
             mixCountries.push(item[2]);
         })
         this.mixCountries = mixCountries;
-    }
-
-    constructor(public doc: AlphabeticalDocService) {
     }
 }

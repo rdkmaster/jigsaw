@@ -1,10 +1,11 @@
-import { Component, ViewEncapsulation } from "@angular/core";
+import {Component, ElementRef, ViewEncapsulation} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {
     PopupEffect, PopupInfo, PopupOptions,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
 import { UserDialog2Component } from "./user-dialog/user-dialog";
-import { DialogTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'dialog-point',
@@ -12,7 +13,9 @@ import { DialogTextService } from "../doc.service";
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None
 })
-export class DialogPointDemoComponent {
+export class DialogPointDemoComponent extends AsyncDescription {
+    public demoPath = "demo/dialog/point";
+
     public dialogInfo1: PopupInfo;
     public dialogInfo2: PopupInfo;
     public title: string = 'Title of the dialog';
@@ -44,6 +47,7 @@ export class DialogPointDemoComponent {
         };
     }
 
-    constructor(private _popupService: PopupService, public doc: DialogTextService) {
+    constructor(private _popupService: PopupService, http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }

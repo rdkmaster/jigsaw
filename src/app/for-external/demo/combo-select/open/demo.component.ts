@@ -1,12 +1,14 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
-import {ComboSelectTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-open',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectOpenDemoComponent {
+export class ComboSelectOpenDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/open";
+
     public open: boolean = false;
 
     public toggleOpen() {
@@ -29,8 +31,4 @@ export class ComboSelectOpenDemoComponent {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    constructor(public doc: ComboSelectTextService) {
-    }
-
 }

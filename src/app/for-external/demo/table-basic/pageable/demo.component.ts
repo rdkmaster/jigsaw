@@ -1,16 +1,18 @@
-import { Component } from "@angular/core";
+import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import {
     PageableTableData, ColumnDefine, DataSortInfo, SortAs,
     SortOrder
 } from "jigsaw/public_api";
-import { TableBasicTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-pageable',
     templateUrl: './demo.component.html'
 })
-export class TableBasicPageableDemoComponent {
+export class TableBasicPageableDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-basic/pageable";
+
     public pageable: PageableTableData;
 
     public columnDefines: ColumnDefine[] = [
@@ -43,7 +45,8 @@ export class TableBasicPageableDemoComponent {
         this.pageable.filter(filter, context);
     }
 
-    constructor(http: HttpClient, public doc: TableBasicTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.pageable = new PageableTableData(http, {
             url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'
         });

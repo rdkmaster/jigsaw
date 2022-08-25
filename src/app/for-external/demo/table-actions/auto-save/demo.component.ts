@@ -1,4 +1,5 @@
-import { Component, ViewEncapsulation, TemplateRef } from "@angular/core";
+import {Component, ViewEncapsulation, TemplateRef, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import {
     TableData,
     ColumnDefine,
@@ -8,17 +9,20 @@ import {
     PopupService,
     PopupInfo
 } from "jigsaw/public_api";
-import {TableActionsTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-auto-save',
     templateUrl: "./demo.component.html",
     encapsulation: ViewEncapsulation.None
 })
-export class TableAutoSaveDemoComponent {
+export class TableAutoSaveDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-actions/auto-save";
+
     tableData: TableData;
 
-    constructor(private popupService: PopupService, public doc: TableActionsTextService) {
+    constructor(private popupService: PopupService, http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData(
             [["Garrett Winters1", "Accountant", 8000, "Tokyo", "一些描述信息"]],
             ["name", "position", "salary", "office", "extn"],

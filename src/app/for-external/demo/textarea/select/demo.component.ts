@@ -1,14 +1,12 @@
 import { Component } from "@angular/core";
-import { TextareaTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'textarea-select',
     templateUrl: './demo.component.html'
 })
-export class TextareaSelectDemoComponent {
+export class TextareaSelectDemoComponent extends AsyncDescription {
+    public demoPath = "demo/textarea/select";
+
     public select: boolean = true;
-
-    constructor(public doc: TextareaTextService) {
-    }
-
 }

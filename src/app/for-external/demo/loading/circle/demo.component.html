@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.circle" [codes]="doc.codes.circle">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>正常</span>
         <jigsaw-circle-loading [size]="selectedSize.size" label="加载中..." [percent]="percent"></jigsaw-circle-loading>

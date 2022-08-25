@@ -1,11 +1,13 @@
 import { Component } from "@angular/core";
-import { TabTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'tab-type',
     templateUrl: "./demo.component.html"
 })
-export class TabsTypeDemoComponent {
+export class TabsTypeDemoComponent extends AsyncDescription {
+    public demoPath = "demo/tab/type";
+
     public editable: boolean = true;
 
     public show(msg) {
@@ -13,8 +15,5 @@ export class TabsTypeDemoComponent {
     }
     public add(tab, content) {
         tab.addTab("new tab", content);
-    }
-
-    constructor(public doc: TabTextService) {
     }
 }

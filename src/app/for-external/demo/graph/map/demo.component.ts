@@ -1,13 +1,15 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { AbstractGraphData, EchartOptions, JigsawGraph } from "jigsaw/public_api";
-import { GraphTextService } from "../demo.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'graph-map',
     templateUrl: './demo.component.html'
 })
-export class GraphMapDemoComponent implements AfterViewInit {
+export class GraphMapDemoComponent extends AsyncDescription implements AfterViewInit {
+    public demoPath = "demo/graph/map";
+
     @ViewChild('gisGraph')
     gisGraph: JigsawGraph;
 
@@ -21,7 +23,8 @@ export class GraphMapDemoComponent implements AfterViewInit {
         })
     }
 
-    constructor(public http: HttpClient, public doc: GraphTextService) {
+    constructor(public http: HttpClient, el: ElementRef) {
+        super(http, el);
     }
 }
 

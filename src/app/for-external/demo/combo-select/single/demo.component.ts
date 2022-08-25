@@ -1,12 +1,14 @@
 import {Component} from '@angular/core';
 import {ArrayCollection} from "jigsaw/public_api";
-import {ComboSelectTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'combo-select-single',
     templateUrl: './demo.component.html'
 })
-export class ComboSelectSingleDemoComponent {
+export class ComboSelectSingleDemoComponent extends AsyncDescription {
+    public demoPath = "demo/combo-select/single";
+
     valueChange(value) {
         console.log(value);
     }
@@ -27,8 +29,4 @@ export class ComboSelectSingleDemoComponent {
         {label: "连云港3"},
         {label: "哈尔滨"}
     ];
-
-    constructor(public doc: ComboSelectTextService) {
-    }
-
 }

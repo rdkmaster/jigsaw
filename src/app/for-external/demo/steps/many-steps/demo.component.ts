@@ -1,12 +1,15 @@
-import { ChangeDetectorRef, Component } from "@angular/core";
+import {ChangeDetectorRef, Component, ElementRef} from "@angular/core";
+import {HttpClient} from "@angular/common/http";
 import { InternalUtils } from "jigsaw/public_api";
-import { StepsTextService } from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: "many-steps",
     templateUrl: "./demo.component.html"
 })
-export class JigsawStepManyStepsDemoComponent {
+export class JigsawStepManyStepsDemoComponent extends AsyncDescription {
+    public demoPath = "demo/steps/many-steps";
+
     public data = [];
     public current = 0;
     public count = 30;
@@ -21,7 +24,8 @@ export class JigsawStepManyStepsDemoComponent {
         };
     }
 
-    constructor(private _cdr: ChangeDetectorRef, public doc: StepsTextService) {
+    constructor(private _cdr: ChangeDetectorRef, http: HttpClient, el: ElementRef) {
+        super(http, el);
         for (let i = 0; i < this.count; i++) {
             this.data.push(this._createStepData());
         }

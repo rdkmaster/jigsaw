@@ -1,11 +1,10 @@
 import { Component } from "@angular/core";
-import { NavigationMenuTextService } from "./doc.service";
-
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class NavigationMenuAllDemoComponent {
-    constructor(public doc: NavigationMenuTextService) {
-    }
+export class NavigationMenuAllDemoComponent extends AsyncDescription {
+    public demoPath = "demo/navigation-menu";
+
 }

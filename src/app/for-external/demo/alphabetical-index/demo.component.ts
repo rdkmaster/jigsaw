@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { AlphabeticalDocService } from "./doc.service";
+import {AsyncDescription} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html",
 })
-export class AlphabeticalIndexDemoComponent {
-    constructor(public doc: AlphabeticalDocService) {
-    }
+export class AlphabeticalIndexDemoComponent extends AsyncDescription {
+    public demoPath = "demo/alphabetical-index";
+
 }

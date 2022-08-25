@@ -1,19 +1,22 @@
-import {Component, TemplateRef, ViewChild} from "@angular/core";
+import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine} from "jigsaw/public_api";
-import {TableRendererTextService} from "../doc.service";
+import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
     selector: 'table-header-render',
     templateUrl: './demo.component.html'
 })
-export class TableSetHeaderRenderDemoComponent {
+export class TableSetHeaderRenderDemoComponent extends AsyncDescription {
+    public demoPath = "demo/table-renderer/header-render";
+
 
     @ViewChild("headerRender") headerRender: TemplateRef<any>;
 
     tableData: TableData;
 
-    constructor(http: HttpClient, public doc: TableRendererTextService) {
+    constructor(http: HttpClient, el: ElementRef) {
+        super(http, el);
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');

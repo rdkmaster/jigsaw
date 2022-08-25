@@ -1,4 +1,5 @@
-<demo-template [data]="sizes" [(selectedSize)]="selectedSize" [text]="doc.text.customColor" [codes]="doc.codes.customColor">
+<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <section class="demo-showcase">
         <span>定制颜色的标签</span>
         <jigsaw-tag color="#008fd4" [size]="selectedSize.size">中兴蓝</jigsaw-tag>
