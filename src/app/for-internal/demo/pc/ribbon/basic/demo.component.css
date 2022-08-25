@@ -1,3 +1,12 @@
-.demo-container p {
+*{
+    margin: 5px;
+}
+.demo-container  {
     margin-bottom: 5px;
+}
+.demo-container div {
+    width: 400px;
+    height: 100px;
+    border:1px solid #A5B6C8;
+    background-color: #EEF3F7
 }

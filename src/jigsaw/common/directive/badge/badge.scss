@@ -53,6 +53,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
 .#{$badge-prefix-cls}-normal {
     background: transparent;
     color: $primary-default;
+    transform: translateX(30%)translateY(0%)rotate(45deg);
 }
 
 .#{$badge-prefix-cls}-warn {
