@@ -1,26 +1,21 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {AbstractJigsawViewBase} from "../../common";
+import {JigsawBadgeBase} from "./jigsawBadgeBase";
+import {BaseStyle} from "./jigsawBadgeBase";
+import {BasePosition} from "./jigsawBadgeBase";
 
-type Style = {
-    left?: string | number,
-    right?: string | number,
-    top?: string | number,
-    bottom?: string | number,
-    width?: string,
-    height?: string,
-};
-type Position = { host: Style, badge?: Style };
+type Style = BaseStyle
+type Position = BasePosition & { badge?: Style }
 
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends AbstractJigsawViewBase implements AfterViewInit, OnDestroy {
-    private _badge: HTMLElement;
+export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewInit, OnDestroy {
+    constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
+        super(_elementRef, _render,_zone);
+    }
     private _removeBadgeClickHandler: Function;
-
     private _jigsawBadgeValue: string | number | 'dot';
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -105,11 +100,6 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
-
-    constructor(private _elementRef: ElementRef, protected _zone: NgZone, private _render: Renderer2) {
-        super();
-    }
-
     ngAfterViewInit(): void {
         this._addBadge();
     }
@@ -128,24 +118,14 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
             this._elementRef.nativeElement.removeChild(this._badge);
             this._badge = null;
         }
-        this._setHostStyle();
-
         this._badge = window.document.createElement('div');
         this._badge.classList.add("jigsaw-badge-host");
         const realBadge = this._getRealBadge();
         const classPre = this.jigsawBadgeValue == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
-
         const position: Position = this._calPosition();
-        // 设置徽标顶层元素的位置和尺寸
-        this._render.setStyle(this._badge, 'left', position.host.left);
-        this._render.setStyle(this._badge, 'right', position.host.right);
-        this._render.setStyle(this._badge, 'top', position.host.top);
-        this._render.setStyle(this._badge, 'bottom', position.host.bottom);
-        this._render.setStyle(this._badge, 'width', position.host.width);
-        this._render.setStyle(this._badge, 'height', position.host.height);
+        this._addPosition(position);
         // 徽标自身的位置
         const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
-
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
         this._badge.innerHTML = this.jigsawBadgeValue == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
@@ -199,17 +179,6 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
     }
 
-    // 设置宿主的样式，徽标本身采用absolute布局，所以需要考虑宿主的position和overflow
-    private _setHostStyle(): void {
-        const hostStyle = getComputedStyle(this._elementRef.nativeElement);
-        if (["absolute", "relative", "fixed", "sticky"].findIndex(item => item == hostStyle.position) == -1) {
-            this._elementRef.nativeElement.style.position = "relative";
-        }
-        if (hostStyle.overflow == 'hidden' || hostStyle.overflow == 'scroll') {
-            this._elementRef.nativeElement.style.overflow = "visible";
-        }
-    }
-
     // 判断是否需要限定mask的尺寸，最大不能超过当前宿主的宽高
     private _calibrateMaskSize(): number {
         const hostStyle = getComputedStyle(this._elementRef.nativeElement);
@@ -233,7 +202,7 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         }
     }
 
-    private _calPosition(): Position {
+     _calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }
@@ -380,3 +349,4 @@ export class JigsawBadgeDirective extends AbstractJigsawViewBase implements Afte
         return position;
     }
 }
+
