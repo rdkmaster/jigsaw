@@ -188,6 +188,8 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         height: `100px`,
                         transform: `translateX(-30%) translateY(0%) rotate(45deg)`,
                         transformOrigin: `bottom right`,
+                        left1: `${ribbonOffset}%`,
+                        bottom1: `${ribbonOffset}%`
                     }
                 };
             case "leftTop":
