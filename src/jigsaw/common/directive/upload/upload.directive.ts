@@ -208,6 +208,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         this._removeFileChangeEvent = this._removeFileChangeEvent ? this._removeFileChangeEvent :
             this._renderer.listen(this._fileInputElement, 'change', () => {
+                if (!this.multiple) {
+                    this.clear();
+                }
                 if (this.uploadImmediately) {
                     this.upload();
                 } else {
@@ -224,10 +227,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return false;
         }
         const files = this._checkFiles(Array.from(fileInput.files || []));
-        if (!this.multiple) {
-            this.files.splice(0, this.files.length);
-            files.splice(1, files.length);
-        }
         fileInput.value = null;
         this.files.push(...files);
         if (files.length > 0) {
@@ -370,6 +369,11 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
     private _afterCurFileUploaded(fileInfo: UploadFileInfo) {
         this.progress.emit(fileInfo);
+
+        if (!this.multiple) {
+            this.complete.emit(this.files);
+            return;
+        }
 
         const waitingFile = this.files.find(f => f.state == 'pause');
         if (waitingFile) {

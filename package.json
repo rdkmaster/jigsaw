@@ -11,7 +11,7 @@
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-app": "ng build --prod --aot --delete-output-path",
         "build-formly": "gulp build:formly:clean",
-        "test": "ts-node --project src/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
+        "test": "ts-node --project src/app/for-internal/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
