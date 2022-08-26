@@ -1,10 +1,10 @@
 import {Component, OnInit} from "@angular/core";
-import {AsyncDescription} from "../../demo-template/demo-template";
+import {DemoSetBase} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class IconsDemoComponent extends AsyncDescription implements OnInit {
+export class IconsDemoComponent extends DemoSetBase implements OnInit {
     public demoPath = "demo/icons";
 
     ngOnInit() {

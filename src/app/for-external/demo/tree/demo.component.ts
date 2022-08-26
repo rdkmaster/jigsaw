@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../demo-template/demo-template";
+import {DemoSetBase} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class ZtreeAllComponent extends AsyncDescription {
+export class ZtreeAllComponent extends DemoSetBase {
     public demoPath = "demo/tree";
 
 }

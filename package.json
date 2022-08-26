@@ -4,9 +4,9 @@
     "license": "MIT",
     "scripts": {
         "ng": "ng",
-        "start": "sh build/scripts/npm-start.sh jigsaw-app-internal",
-        "internal": "sh build/scripts/npm-start.sh jigsaw-app-internal",
-        "external": "sh build/scripts/npm-start.sh jigsaw-app-external",
+        "start": "node build/scripts/npm-start.js jigsaw-app-internal",
+        "internal": "node build/scripts/npm-start.js jigsaw-app-internal",
+        "external": "node build/scripts/npm-start.js jigsaw-app-external",
         "build": "gulp build:jigsaw:clean",
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-app": "ng build --prod --aot --delete-output-path",

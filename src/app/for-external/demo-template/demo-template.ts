@@ -13,7 +13,8 @@ import {
 } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {Observable} from "rxjs";
+import {ActivatedRoute} from "@angular/router";
+import {Observable, Subscription} from "rxjs";
 import {JigsawButtonBarModule, JigsawSelectModule, JigsawTabsModule,} from "jigsaw/public_api";
 import {JigsawMarkdownModule} from "../../libs/markdown/markdown";
 
@@ -92,6 +93,8 @@ export class DemoTemplate implements AfterViewInit {
     }
 }
 
+const descriptionLoadedEvent: EventEmitter<string> = new EventEmitter<string>();
+
 @Directive()
 export class AsyncDescription implements OnDestroy {
     constructor(private _http: HttpClient, private _element: ElementRef) {
@@ -120,7 +123,10 @@ export class AsyncDescription implements OnDestroy {
         fetch(`/app/for-external/${this.demoPath}/readme.md`)
             .then(resp => {
                 if (resp.ok) {
-                    resp.text().then(desc => this._description = desc);
+                    resp.text().then(desc => {
+                        this._description = desc;
+                        descriptionLoadedEvent.emit(this.demoPath);
+                    });
                 } else {
                     this._description = `无法下载描述信息 ${this.demoPath}`;
                 }
@@ -136,6 +142,38 @@ export class AsyncDescription implements OnDestroy {
 
     ngOnDestroy(): void {
         document.removeEventListener('scroll', this._onScroll);
+    }
+}
+
+@Directive()
+export class DemoSetBase extends AsyncDescription implements OnDestroy {
+    private readonly _subscription: Subscription;
+    private _demoSelector: string;
+
+    constructor(route: ActivatedRoute, http: HttpClient, el: ElementRef) {
+        super(http, el);
+        route.fragment.subscribe(fragment => {
+            this._demoSelector = fragment;
+            this._scrollIntoView();
+        });
+        this._subscription = descriptionLoadedEvent.subscribe(() => this._scrollIntoView());
+    }
+
+    private _scrollIntoView(): void {
+        if (!this._demoSelector) {
+            return;
+        }
+        const node = document.querySelector(this._demoSelector);
+        if (!node) {
+            console.warn('demo selector not found:', this._demoSelector);
+            return;
+        }
+        node.scrollIntoView();
+    }
+
+    ngOnDestroy(): void {
+        super.ngOnDestroy();
+        this._subscription.unsubscribe();
     }
 }
 

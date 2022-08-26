@@ -13,15 +13,15 @@ mkdir -p $output
 cd $output
 output=`pwd`
 
-compodoc -V >/dev/null
+cd $home
+./node_modules/.bin/compodoc -V >/dev/null
 if [ "$?" != "0" ]; then
-    npm install -g @compodoc/compodoc@1.0.9
+    npm install @compodoc/compodoc@1.0.9
 fi
 
-cd $home
 rm -fr $output/documentation.json $output/fragments
-compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode --disableGraph \
-    --disableCoverage --disablePrivate --disableInternal --disableLifeCycleHooks \
+./node_modules/.bin/compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode \
+    --disableGraph --disableCoverage --disablePrivate --disableInternal --disableLifeCycleHooks \
     --disableRoutesGraph --exportFormat json --output $output
 if [ "$?" != "0" ]; then
     echo "ERROR: cannot generate documentation(json)!"
@@ -35,8 +35,8 @@ if [ "$?" != "0" ]; then
     exit 1
 fi
 
-node comp-sizeController-relationship-svg-parser.js
+node comp-data-relationship-svg-parser.js
 if [ "$?" != "0" ]; then
-    echo "ERROR: component data relationiship error!"
+    echo "ERROR: component data relationship error!"
     exit 1
 fi

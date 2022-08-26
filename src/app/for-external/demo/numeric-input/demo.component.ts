@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../demo-template/demo-template";
+import {DemoSetBase} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class NumericInputAllComponent extends AsyncDescription {
+export class NumericInputAllComponent extends DemoSetBase {
     public demoPath = "demo/numeric-input";
 
 }

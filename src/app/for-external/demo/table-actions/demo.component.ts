@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../demo-template/demo-template";
+import {DemoSetBase} from "../../demo-template/demo-template";
 
 @Component({
     templateUrl: './demo.component.html',
 })
-export class TableActionsAllComponent extends AsyncDescription {
+export class TableActionsAllComponent extends DemoSetBase {
     public demoPath = "demo/table-actions";
 
 }
