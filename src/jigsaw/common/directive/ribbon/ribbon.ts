@@ -1,5 +1,4 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
-import { AbstractJigsawViewBase } from "../../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {BaseStyle, JigsawBadgeBase} from "../badge/jigsawBadgeBase";
 import {BasePosition} from "../badge/jigsawBadgeBase";
@@ -11,6 +10,7 @@ type Style = BaseStyle &{
     right1?: string | number,
     top1?: string | number,
     bottom1?: string | number,
+
 }
 type Position = BasePosition & {ribbon?: Style}
 @Directive({
@@ -103,7 +103,6 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public set jigsawRibbonColor(color:string){
         if (this._jigsawRibbonColor != color){
             this._jigsawRibbonColor = color;
-            this._$colorChange(this._jigsawRibbonColor);
             this._addRibbon();
         }
     }
@@ -191,8 +190,6 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         height: `100px`,
                         transform: `translateX(-30%) translateY(0%) rotate(45deg)`,
                         transformOrigin: `bottom right`,
-                        left1: `${ribbonOffset}%`,
-                        bottom1: `${ribbonOffset}%`
                     }
                 };
             case "leftTop":
@@ -207,6 +204,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         transformOrigin: `top right`,
                         left1: `${ribbonOffset}%`,
                         top1: `${ribbonOffset}%`
+
                     }
                 };
             case "rightBottom":
@@ -221,6 +219,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         transformOrigin: `bottom left`,
                         right1: `${ribbonOffset}%`,
                         bottom1: `${ribbonOffset}%`
+
                     }
                 };
             case "rightTop":
