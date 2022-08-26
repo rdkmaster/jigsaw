@@ -142,7 +142,6 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
             `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this._$fontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background-color: ${ribbonColor}" >${realRibbon}</div></div>`;
         this._badge.children[0].children[0].classList.add(`jigsaw-ribbon`);
         this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this._jigsawRibbonSize}`);
-
         if (this.jigsawRibbonPointerCursor) {
             this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-cursor`);
         } else {
@@ -189,8 +188,6 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         height: `100px`,
                         transform: `translateX(-30%) translateY(0%) rotate(45deg)`,
                         transformOrigin: `bottom right`,
-                        left1: `${ribbonOffset}%`,
-                        bottom1: `${ribbonOffset}%`
                     }
                 };
             case "leftTop":
