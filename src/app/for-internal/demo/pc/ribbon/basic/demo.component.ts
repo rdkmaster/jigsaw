@@ -14,6 +14,7 @@ export class JigsawRibbonBasicDemoComponent {
     public selectedPosition = ['rightTop'];
     public selectedSize = ['normal']
     public enablePointerCursor: boolean = true;
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

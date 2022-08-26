@@ -1,5 +1,4 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
-import { AbstractJigsawViewBase } from "../../common";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {BaseStyle, JigsawBadgeBase} from "../badge/jigsawBadgeBase";
 import {BasePosition} from "../badge/jigsawBadgeBase";
@@ -17,7 +16,6 @@ type Position = BasePosition & {ribbon?: Style}
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
 export class JigsawRibbonDirective extends JigsawBadgeBase {
-    private _ribbon: HTMLElement;
     private _removeRibbonClickHandler: Function;
     constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
         super(_elementRef, _render,_zone);
@@ -103,7 +101,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public set jigsawRibbonColor(color:string){
         if (this._jigsawRibbonColor != color){
             this._jigsawRibbonColor = color;
-            this._$colorChange(this._jigsawRibbonColor);
+            this._$colorChange(this._jigsawRibbonColor)
             this._addRibbon();
         }
     }
@@ -126,12 +124,12 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
         if (!this.initialized){
             return;
         }
-        if (this._ribbon){
-            this._elementRef.nativeElement.removeChild(this._ribbon);
-            this._ribbon = null;
+        if (this._badge){
+            this._elementRef.nativeElement.removeChild(this._badge);
+            this._badge = null;
         }
-        this._ribbon = window.document.createElement('div');
-        this._ribbon.classList.add("jigsaw-ribbon-host");
+        this._badge = window.document.createElement('div');
+        this._badge.classList.add("jigsaw-ribbon-host");
         const realRibbon = this._getRealRibbon();
         const ribbonColor = this.jigsawRibbonColor ? this.jigsawRibbonColor : 'red';
         const position: Position = this._calPosition();
@@ -140,26 +138,26 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
         const positionStr = `left:${position.ribbon.left}; top:${position.ribbon.top}; right:${position.ribbon.right}; bottom:${position.ribbon.bottom};width:${position.ribbon.width};height:${position.ribbon.height}`;
         // 勋带位置和旋转参数
         const positionStr1 = `left:${position.ribbon.left1}; top:${position.ribbon.top1}; right:${position.ribbon.right1}; bottom:${position.ribbon.bottom1};transform:${position.ribbon.transform}; transform-origin:${position.ribbon.transformOrigin}`;
-        this._ribbon.innerHTML =
+        this._badge.innerHTML =
             `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this._$fontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background-color: ${ribbonColor}" >${realRibbon}</div></div>`;
-        this._ribbon.children[0].children[0].classList.add(`jigsaw-ribbon`);
-        this._ribbon.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this._jigsawRibbonSize}`);
+        this._badge.children[0].children[0].classList.add(`jigsaw-ribbon`);
+        this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this._jigsawRibbonSize}`);
 
         if (this.jigsawRibbonPointerCursor) {
-            this._ribbon.children[0].children[0].classList.add(`jigsaw-ribbon-cursor`);
+            this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-cursor`);
         } else {
-            this._ribbon.children[0].children[0].classList.add(`jigsaw-ribbon-cursor-default`);
+            this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-cursor-default`);
         }
         if (this._removeRibbonClickHandler) {
             this._removeRibbonClickHandler();
         }
-        this._removeRibbonClickHandler = this._render.listen(this._ribbon.children[0].children[0], 'click', (event) => {
+        this._removeRibbonClickHandler = this._render.listen(this._badge.children[0].children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawRibbonClick.emit(this.jigsawRibbonValue);
             console.log(this.jigsawRibbonValue)
         });
-        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._ribbon);
+        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
     }
     public _$fontColor: string = "#FFFFFF";
     public _$colorChange(color: string) {
@@ -221,6 +219,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                         transformOrigin: `bottom left`,
                         right1: `${ribbonOffset}%`,
                         bottom1: `${ribbonOffset}%`
+
                     }
                 };
             case "rightTop":
