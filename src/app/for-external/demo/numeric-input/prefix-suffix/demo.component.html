@@ -1,4 +1,5 @@
-<demo-template [(selectedSize)]="selectedSize" [description]="description" [demoSources]="demoSources">
+<demo-template sizeController="small小,default中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>单位组合</span>
         <jigsaw-numeric-input placeholder="请输入" suffix="单位" [size]="selectedSize.size"></jigsaw-numeric-input>

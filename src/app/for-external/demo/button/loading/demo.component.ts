@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from '@angular/core';
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -8,6 +7,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class ButtonLoadingComponent extends AsyncDescription {
     public demoPath = "demo/button/loading";
+    public selectedSize = { label: "默认", size: "default" };
 
     public disabled: boolean = false;
     public label: string = '点击加载';
@@ -22,12 +22,4 @@ export class ButtonLoadingComponent extends AsyncDescription {
             this.label = this.isLoading ? '加载中...' : '点击加载';
         }, 3000);
     }
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" },
-        { label: "默认", size: "default" }
-    ]);
-    public selectedSize = { label: "默认", size: "default" };
 }

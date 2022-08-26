@@ -1,4 +1,4 @@
-<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
+<demo-template [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <jigsaw-process-status preSize="large" direction="horizontal">
             <jigsaw-process-status-item *ngFor="let step of steps; index as idx" [status]="step.status">

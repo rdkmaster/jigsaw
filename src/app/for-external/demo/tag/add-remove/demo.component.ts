@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import { ArrayCollection, JigsawInput} from "jigsaw/public_api";
+import {JigsawInput} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -10,12 +10,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class TagAddRemoveComponent extends AsyncDescription {
     public demoPath = "demo/tag/add-remove";
+    public selectedSize = {size: "medium"};
 
-    public selectedSize = {label: "大", size: "medium"};
-    public sizes: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "大", size: "medium"}
-    ]);
     @ViewChild('input')
     input: JigsawInput;
 

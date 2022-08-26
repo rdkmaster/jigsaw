@@ -1,6 +1,6 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ZTreeSettings, SimpleTreeData, JigsawTreeExt, ArrayCollection} from "jigsaw/public_api";
+import {JigsawTreeExt, SimpleTreeData, ZTreeSettings} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,16 +9,10 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class ZtreeDemoEditableComponent extends AsyncDescription {
     public demoPath = "demo/tree/editable";
+    public selectedSize = {size: "medium"};
 
     @ViewChild(JigsawTreeExt)
     public treeExt: JigsawTreeExt;
-
-    public selectedSize = {label: "中", size: "medium"};
-    public labelData: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
 
     data: SimpleTreeData;
 

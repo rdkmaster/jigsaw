@@ -76,7 +76,7 @@ export const componentGroup = {
     message: '消息与反馈',
     container: '容器',
     layout: '布局',
-    schema: '模式',
+    directive: '指令',
     other: '其他'
 }
 
@@ -97,7 +97,7 @@ export const routerConfigPC = [
         ],
         group: componentGroup.navigation
     },
-    { path: "demo/combo-select", component: ComboSelectComponent, group: componentGroup.schema },
+    { path: "demo/combo-select", component: ComboSelectComponent, group: componentGroup.container },
     { path: "demo/auto-complete-input", component: AutoCompleteInputDemoComponent, group: componentGroup.entry },
     { path: "demo/badge", component: BadgeAllComponent, group: componentGroup.message },
     { path: "demo/button-bar", component: ButtonBarAllComponent, group: componentGroup.general },
@@ -117,9 +117,9 @@ export const routerConfigPC = [
     { path: "demo/textarea", component: TextareaAllComponent, group: componentGroup.entry },
     { path: "demo/tree", component: ZtreeAllComponent, group: componentGroup.display },
     { path: "demo/upload", component: UploadAllComponent, group: componentGroup.general },
-    { path: "demo/adjust-font-color", component: AdjustFontColorAllDemoComponent, group: componentGroup.schema },
-    { path: "demo/theme-properties", component: ThemePropertiesAllComponent, group: componentGroup.schema },
-    { path: "demo/movable", component: MovableAllComponent, group: componentGroup.schema },
+    { path: "demo/adjust-font-color", component: AdjustFontColorAllDemoComponent, group: componentGroup.other },
+    { path: "demo/theme-properties", component: ThemePropertiesAllComponent, group: componentGroup.other },
+    { path: "demo/movable", component: MovableAllComponent, group: componentGroup.directive },
     { path: "demo/tab", component: TabAllComponent, group: componentGroup.container },
     { path: "demo/box", component: BoxAllComponent, group: componentGroup.layout },
     { path: "demo/tile", component: TileAllComponent, group: componentGroup.general },
@@ -136,7 +136,7 @@ export const routerConfigPC = [
     { path: "demo/color-select", component: ColorSelectDemoComponent, group: componentGroup.general },
     { path: "demo/collapse", component: CollapseDemoComponent, group: componentGroup.container },
     { path: "demo/dialog", component: DialogDemoComponent, group: componentGroup.message },
-    { path: "demo/icons", component: IconsDemoComponent, group: componentGroup.schema },
+    { path: "demo/icons", component: IconsDemoComponent, group: componentGroup.other },
     { path: "demo/loading", component: LoadingDemoComponent, group: componentGroup.other },
     { path: "demo/navigation-menu", component: NavigationMenuAllDemoComponent, group: componentGroup.navigation },
     { path: "demo/notification", component: NotificationDemoComponent, group: componentGroup.message },
@@ -146,22 +146,21 @@ export const routerConfigPC = [
     { path: "demo/progress", component: ProgressDemoComponent, group: componentGroup.other },
     { path: "demo/process-status", component: ProcessStatusDemoComponent, group: componentGroup.other },
     { path: "demo/slider", component: SliderDemoComponent, group: componentGroup.general },
-    { path: "demo/trusted-html", component: TrustedHtmlDemoComponent, group: componentGroup.schema },
+    { path: "demo/trusted-html", component: TrustedHtmlDemoComponent, group: componentGroup.directive },
     { path: "demo/transfer", component: TransferDemoComponent, group: componentGroup.general },
     { path: "demo/time-section", component: TimeSectionDemoComponent, group: componentGroup.general },
     { path: "demo/chart-icon", component: ChartIconDemoComponent, group: componentGroup.display },
     { path: "demo/time-picker", component: TimePickerDemoComponent, group: componentGroup.general },
     { path: "demo/select", component: SelectDemoComponent, group: componentGroup.entry },
-    { path: "demo/drag-drop", component: DragDropDemoComponent, group: componentGroup.other },
-    { path: "demo/popup", component: PopupDemoComponent, group: componentGroup.schema },
-    { path: "demo/data-encapsulation", component: DataEncapsulationDemoComponent, group: componentGroup.schema },
+    { path: "demo/drag-drop", component: DragDropDemoComponent, group: componentGroup.directive },
+    { path: "demo/popup", component: PopupDemoComponent, group: componentGroup.other },
+    { path: "demo/data-encapsulation", component: DataEncapsulationDemoComponent, group: componentGroup.other },
     { path: "demo/graph", component: GraphDemoComponent, group: componentGroup.display },
-    { path: "demo/float", component: FloatDemoComponent, group: componentGroup.schema },
+    { path: "demo/float", component: FloatDemoComponent, group: componentGroup.directive },
     { path: "demo/table-actions", component: TableActionsAllComponent, group: componentGroup.display },
     { path: "demo/table-column-defines", component: TableColumnDefinesAllComponent, group: componentGroup.display },
     { path: "demo/table-big-data", component: TableBigDataAllComponent, group: componentGroup.display },
     { path: "demo/table-renderer", component: TableRendererAllComponent, group: componentGroup.display }
 ];
-export const routerConfigMobile = [];
-export const routerConfig = [...routerConfigPC, ...routerConfigMobile];
+export const routerConfig = routerConfigPC;
 

@@ -1,5 +1,5 @@
-<demo-template [(selectedSize)]="selectedSize" [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
+<demo-template sizeController="small小,default中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase">
         <span>默认情况</span>
         <j-numeric-input

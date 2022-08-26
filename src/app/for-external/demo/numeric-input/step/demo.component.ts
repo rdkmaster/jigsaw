@@ -7,6 +7,5 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class NumericInputStepDemoComponent extends AsyncDescription {
     public demoPath = "demo/numeric-input/step";
-
-    public selectedSize = { label: "中", size: "default" };
+    public selectedSize = { size: "default" };
 }

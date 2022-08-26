@@ -1,4 +1,4 @@
-<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
+<demo-template [description]="description" [demoSources]="demoSources">
     <jigsaw-process-status direction="vertical" width="200px">
         <jigsaw-process-status-item *ngFor="let step of steps" [status]="step.status">
             <div jigsaw-title>{{step.title}}</div>

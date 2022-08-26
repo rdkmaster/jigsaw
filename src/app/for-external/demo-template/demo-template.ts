@@ -23,7 +23,6 @@ type DemoSource = {
     label: string, language: string, file?: string,
     content?: string | Observable<string>
 };
-type SizeController = { label: "小" | "中" | "大", size: "small" | "default" | "large" };
 
 @Component({
     selector: "demo-template",
@@ -44,14 +43,21 @@ export class DemoTemplate implements AfterViewInit {
     public description: string = "";
 
     @Input()
-    public sizeController: SizeController[] = [
-        {label: "小", size: "small"},
-        {label: "中", size: "default"},
-        {label: "大", size: "large"},
-    ];
+    // 类似 "small小,default中,large大" 这样的文本，多个备选项用逗号分隔
+    public sizeController: string = '';
+
+    public get _$sizeController(): {label: string, size: string}[] {
+        if (typeof this.sizeController != 'string') {
+            return [];
+        }
+        return this.sizeController?.split(/,/).map(s => {
+            const match = s.match(/([a-z]+)(.+)$/);
+            return {label: match[2], size: match[1]};
+        });
+    }
 
     @Input()
-    public selectedSize: SizeController = {label: "中", size: "default"};
+    public selectedSize: {size: string};
 
     @Input()
     public demoSources: DemoSource[] = [
@@ -94,6 +100,7 @@ export class AsyncDescription implements OnDestroy {
         setTimeout(onScroll, 100);
     }
 
+    public selectedSize: {size: string};
     protected demoPath: string;
 
     private _description: string;

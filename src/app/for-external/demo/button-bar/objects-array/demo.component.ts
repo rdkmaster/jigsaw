@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class ButtonBarObjectsArrayComponent extends AsyncDescription {
     public demoPath = "demo/button-bar/objects-array";
+    public selectedSize = { size: "default" };
 
     public cities = new ArrayCollection([
         { label: "北京", id: 1 },
@@ -20,10 +21,4 @@ export class ButtonBarObjectsArrayComponent extends AsyncDescription {
     ]);
     public selectedCity: any[] = [{ label: "南京", id: 3 }];
     public multiple: boolean = false;
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "大", size: "default" }
-    ]);
-    public selectedSize = { label: "大", size: "default" };
 }

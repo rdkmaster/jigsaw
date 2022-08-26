@@ -3,8 +3,9 @@
     <jigsaw-button-bar
         *ngIf="!!sizeController"
         class="demo-handler"
+        trackItemBy="size"
         [(selectedItems)]="selectedSize"
-        [data]="sizeController"
+        [data]="_$sizeController"
         [multipleSelect]="false"
         (selectedItemsChange)="selectedSizeChange.emit($event[0])"
         colorType="default"

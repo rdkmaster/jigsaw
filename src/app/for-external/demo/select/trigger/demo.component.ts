@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -8,6 +8,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class SelectTriggerDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/trigger";
+    public selectedSize = { size: "medium" };
 
     public selectedCityForSelect: any;
     public cityListForSelect = new ArrayCollection([
@@ -21,11 +22,4 @@ export class SelectTriggerDemoComponent extends AsyncDescription {
 
     public openTrigger = "mouseenter";
     public closeTrigger = "mouseleave";
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
 }

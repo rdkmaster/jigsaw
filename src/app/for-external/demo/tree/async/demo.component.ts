@@ -1,6 +1,6 @@
 import {Component, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import { ZTreeSettings, SimpleTreeData, ArrayCollection } from "jigsaw/public_api";
+import {SimpleTreeData, ZTreeSettings} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 declare const $: any;
@@ -13,6 +13,7 @@ const lazyLoadUrl = '/rdk/service/app/ztree-async/server/lazy';
 })
 export class ZTreeAsyncDemoComponent extends AsyncDescription {
     public demoPath = "demo/tree/async";
+    public selectedSize = { size: "medium" };
 
     public setting: ZTreeSettings = {
         async: {
@@ -33,12 +34,6 @@ export class ZTreeAsyncDemoComponent extends AsyncDescription {
 
     public data = new SimpleTreeData();
 
-    public labelData: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
     constructor(http: HttpClient, el: ElementRef) {
         super(http, el);
         this.data.fromObject([

@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection, InternalUtils } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection, InternalUtils} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -8,6 +8,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class SelectInteractionDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/interaction";
+    public selectedSize = { size: "medium" };
 
     public simpleDataList = new ArrayCollection([
         { label: "A" },
@@ -35,11 +36,4 @@ export class SelectInteractionDemoComponent extends AsyncDescription {
     public valueChange(selectedItem: any) {
         console.log("valueChange事件触发了", selectedItem);
     }
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
 }

@@ -1,5 +1,4 @@
-<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
+<demo-template [description]="description" [demoSources]="demoSources">
     <div class="demo-showcase-v">
         <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems" #listGroup>
             <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">

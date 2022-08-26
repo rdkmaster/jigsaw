@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import { SimpleTreeData, JigsawTreeExt, ZTreeIconSuit, ArrayCollection } from "jigsaw/public_api";
+import {JigsawTreeExt, SimpleTreeData, ZTreeIconSuit} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,15 +9,10 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class ZTreeIconDemoComponent extends AsyncDescription implements AfterViewInit {
     public demoPath = "demo/tree/icon";
+    public selectedSize = {size: "medium"};
 
-    @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
-
-    public selectedSize = {label: "中", size: "medium"};
-    public labelData: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "medium"},
-        {label: "大", size: "large"}
-    ]);
+    @ViewChild(JigsawTreeExt)
+    treeExt: JigsawTreeExt;
 
     public data: SimpleTreeData = new SimpleTreeData();
     public xml: SimpleTreeData = new SimpleTreeData();

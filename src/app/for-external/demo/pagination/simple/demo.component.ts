@@ -9,13 +9,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class PaginationSimpleDemoComponent extends AsyncDescription {
     public demoPath = "demo/pagination/simple";
+    public selectedSize = { size: "medium" };
 
-    public selectedSize = { label: "中", size: "medium" };
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
     public pageableForSimple: LocalPageableTableData;
     public pageSizeOptions = [5, 10, 12];
 

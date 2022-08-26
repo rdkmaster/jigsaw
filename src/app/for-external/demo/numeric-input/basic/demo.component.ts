@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -7,8 +7,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class NumericInputBasicDemoComponent extends AsyncDescription {
     public demoPath = "demo/numeric-input/basic";
+    public selectedSize = {size: "default"};
 
-    public selectedSize = { label: "中", size: "default" };
     public value: number;
 
     public valueChange($event) {

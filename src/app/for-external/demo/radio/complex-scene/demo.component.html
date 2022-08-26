@@ -1,4 +1,4 @@
-<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
+<demo-template [description]="description" [demoSources]="demoSources">
     <div class="live-demo live-demo-block">
         <j-radios [(value)]="selectedGoods" trackItemBy="name" (valueChange)="radioChange($event)">
             <j-radio-option *ngFor="let goods of goodsList" [value]="goods" [disabled]="!!goods.disabled">

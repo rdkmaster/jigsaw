@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class ButtonBarIconsComponent extends AsyncDescription {
     public demoPath = "demo/button-bar/icons";
+    public selectedSize = { size: "default" };
 
     public multiple: boolean = false;
 
@@ -20,10 +21,4 @@ export class ButtonBarIconsComponent extends AsyncDescription {
     ]);
     public unlabeledTypes = this.types.map(t => ({ id: t.id, icon: t.icon, label: '' }));
     public selectedTypes = [{ id: 4 }];
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "大", size: "default" }
-    ]);
-    public selectedSize = { label: "大", size: "default" };
 }

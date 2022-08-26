@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component} from "@angular/core";
 import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
@@ -8,6 +8,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class SelectSearchableDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/searchable";
+    public selectedSize = { size: "medium" };
 
     public selectedCityForSelect: any;
     public cityListForSelect = new ArrayCollection([
@@ -18,11 +19,4 @@ export class SelectSearchableDemoComponent extends AsyncDescription {
         { label: "长沙" },
         { label: "西安" }
     ]);
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
 }

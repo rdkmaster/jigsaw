@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class SelectClearableDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/clearable";
+    public selectedSize = { size: "medium" };
 
     public selectedCityForSelect: string;
     public cityList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
@@ -16,12 +17,4 @@ export class SelectClearableDemoComponent extends AsyncDescription {
     public selectChange(selectedItem: any) {
         console.log("select city is: " + selectedItem);
     }
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
-
 }

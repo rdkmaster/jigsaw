@@ -1,6 +1,6 @@
 import {Component, ElementRef} from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { LocalPageableTableData, ArrayCollection } from "jigsaw/public_api";
+import {HttpClient} from "@angular/common/http";
+import {LocalPageableTableData} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,13 +9,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class PaginationWithSearchBoxDemoComponent extends AsyncDescription {
     public demoPath = "demo/pagination/with-search-box";
+    public selectedSize = { size: "medium" };
 
-    public selectedSize = { label: "中", size: "medium" };
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
     public pageable: LocalPageableTableData;
     public pageSizeOptions = [5, 10, 12];
     public showQuickJumper = true;

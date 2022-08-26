@@ -23,7 +23,7 @@ export class DemoListManager {
             { groupName: componentGroup.message, routers: [] },
             { groupName: componentGroup.container, routers: [] },
             { groupName: componentGroup.layout, routers: [] },
-            { groupName: componentGroup.schema, routers: [] },
+            { groupName: componentGroup.directive, routers: [] },
             { groupName: componentGroup.other, routers: [] }
         ]
         routerConfigPC.forEach(router => {

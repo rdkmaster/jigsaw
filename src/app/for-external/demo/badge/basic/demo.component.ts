@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from '@angular/core';
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -14,6 +13,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class BadgeBasicDemoComponent extends AsyncDescription {
     public demoPath = "demo/badge/basic";
+    public selectedSize = { size: "normal" };
 
     public nice = "Nice";
     public dot = "dot";
@@ -26,11 +26,4 @@ export class BadgeBasicDemoComponent extends AsyncDescription {
         { label: "长沙", id: 5 },
         { label: "西安", id: 6 }
     ]
-
-    public labelData: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "normal" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "normal" };
 }

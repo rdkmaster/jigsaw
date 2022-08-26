@@ -1,6 +1,5 @@
-<demo-template [sizeController]="sizes" [(selectedSize)]="selectedSize"
+<demo-template sizeController="small小,medium中,large大,default默认" [(selectedSize)]="selectedSize"
                [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
     <div class="demo-showcase">
         <span>指令按钮</span>
         <a jigsaw-button colorType="primary" [preSize]="selectedSize.size">使用 a 标签</a>

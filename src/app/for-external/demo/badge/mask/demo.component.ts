@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import { ArrayCollection } from "jigsaw/public_api";
-import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
+import {Component} from '@angular/core';
+import {AsyncDescription} from 'app/for-external/demo-template/demo-template';
 
 @Component({
     selector: 'badge-mask',
@@ -14,6 +13,7 @@ import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
 
 export class BadgeMaskDemoComponent extends AsyncDescription {
     public demoPath = "demo/badge/mask";
+    public selectedSize = { size: "normal" };
 
     public select($event) {
         console.log('badge click: ', $event);
@@ -22,11 +22,4 @@ export class BadgeMaskDemoComponent extends AsyncDescription {
     public _$btn() {
         console.log('host click');
     }
-
-    public labelData: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "normal" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "normal" };
 }

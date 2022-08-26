@@ -1,5 +1,4 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,12 +8,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class TagSelectableComponent extends AsyncDescription {
     public demoPath = "demo/tag/selectable";
+    public selectedSize = { size: "medium" };
 
-    public selectedSize = { label: "大", size: "medium" };
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "大", size: "medium" }
-    ]);
     public tags = ['Tag1', 'Tag2', 'Tag3', 'Tag4', 'Tag5', 'Disabled1', 'Disabled2'];
     public tags1 = [
         { label: 'Tag1', selected: true }, { label: 'Tag2' }, { label: 'Tag3' },

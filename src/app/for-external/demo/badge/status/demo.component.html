@@ -1,6 +1,5 @@
-<demo-template [sizeController]="labelData" [(selectedSize)]="selectedSize"
+<demo-template sizeController="small小,normal中,large大" [(selectedSize)]="selectedSize"
                [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
     <div class="live-demo-wrap">
         <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'normal'" jigsawBadgeStatus="normal"
                      [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">

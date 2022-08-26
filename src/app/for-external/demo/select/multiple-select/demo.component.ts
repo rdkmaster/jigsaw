@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class SelectMultipleSelectDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/multiple-select";
+    public selectedSize = { size: "medium" };
 
     public dataList = new ArrayCollection([
         { label: "文本选项1" },
@@ -80,11 +81,4 @@ export class SelectMultipleSelectDemoComponent extends AsyncDescription {
     public valueChange($event) {
         console.log($event);
     }
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
 }

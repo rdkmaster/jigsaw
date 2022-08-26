@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 class ForeverBusyArrayCollection extends ArrayCollection<any>{
@@ -13,6 +13,7 @@ class ForeverBusyArrayCollection extends ArrayCollection<any>{
 
 export class SelectBasicDemoComponent extends AsyncDescription {
     public demoPath = "demo/select/basic";
+    public selectedSize = { size: "medium" };
 
     public foreverBusyArray = new ForeverBusyArrayCollection();
     public selectedCityForSelect: any;
@@ -34,11 +35,4 @@ export class SelectBasicDemoComponent extends AsyncDescription {
     public valueChange($event) {
         console.log($event);
     }
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
 }

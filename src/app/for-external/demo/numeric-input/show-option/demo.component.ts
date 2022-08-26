@@ -7,8 +7,8 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class NumericInputShowOptionDemoComponent extends AsyncDescription {
     public demoPath = "demo/numeric-input/show-option";
+    public selectedSize = { size: "default" };
 
-    public selectedSize = { label: "中", size: "default" };
     public showOption: boolean = true;
     public value: number;
     public value2: number;

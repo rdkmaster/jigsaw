@@ -1,5 +1,4 @@
-<demo-template [sizeController]="null" [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
+<demo-template [description]="description" [demoSources]="demoSources">
     <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
 
     <j-drawer [(open)]="isOpen" (openChange)="touched = true" position="right" [width]="width" [height]="height">

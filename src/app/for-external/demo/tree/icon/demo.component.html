@@ -1,6 +1,5 @@
-<demo-template [sizeController]="labelData" [(selectedSize)]="selectedSize"
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
                [description]="description" [demoSources]="demoSources">
-    <!-- start to learn the demo from here -->
     <div class="demo-showcase-v">
         <span>使用XML作为数据源（推荐）</span>
         <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedSize.size">

@@ -1,6 +1,6 @@
 import {Component, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import { SimpleTreeData, ArrayCollection } from "jigsaw/public_api";
+import {SimpleTreeData} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 })
 export class ZtreeXMLDataDemoComponent extends AsyncDescription {
     public demoPath = "demo/tree/xml-data";
+    public selectedSize = { size: "medium" };
 
     public data: SimpleTreeData;
 
@@ -17,12 +18,6 @@ export class ZtreeXMLDataDemoComponent extends AsyncDescription {
         console.log(msg);
     }
 
-    public labelData: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "中", size: "medium" },
-        { label: "大", size: "large" }
-    ]);
-    public selectedSize = { label: "中", size: "medium" };
     constructor(http: HttpClient, el: ElementRef) {
         super(http, el);
         this.data = new SimpleTreeData();

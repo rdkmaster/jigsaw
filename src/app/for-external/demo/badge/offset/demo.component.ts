@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import { ArrayCollection } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,17 +8,11 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class BadgeOffsetDemoComponent extends AsyncDescription {
     public demoPath = "demo/badge/offset";
+    public selectedSize = {size: "normal"};
 
     hOffset1 = 20;
     hOffset2 = -10;
     list = [
         'bicycle', 'camera', 'car', 'football', 'book', 'puzzle-piece',
     ];
-
-    public selectedSize = {label: "中", size: "normal"};
-    public labelData: object[] = new ArrayCollection([
-        {label: "小", size: "small"},
-        {label: "中", size: "normal"},
-        {label: "大", size: "large"}
-    ]);
 }

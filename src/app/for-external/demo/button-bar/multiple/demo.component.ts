@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { ArrayCollection } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../demo-template/demo-template";
 
 @Component({
@@ -9,6 +9,7 @@ import {AsyncDescription} from "../../../demo-template/demo-template";
 
 export class ButtonBarMultipleComponent extends AsyncDescription {
     public demoPath = "demo/button-bar/multiple";
+    public selectedSize = { size: "default" };
 
     public cities = new ArrayCollection([
         { label: "北京", id: 1 },
@@ -20,10 +21,4 @@ export class ButtonBarMultipleComponent extends AsyncDescription {
     ]);
     public selectedCity: any[] = [{ label: "南京", id: 3 }];
     public multiple: boolean = true;
-
-    public sizes: object[] = new ArrayCollection([
-        { label: "小", size: "small" },
-        { label: "大", size: "default" }
-    ]);
-    public selectedSize = { label: "大", size: "default" };
 }
