@@ -11,9 +11,10 @@ type Position = BasePosition & { badge?: Style }
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
 export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewInit, OnDestroy {
-    constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render,_zone);
+    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
+        super(_elementRef, _render, _zone);
     }
+
     private _removeBadgeClickHandler: Function;
     private _jigsawBadgeValue: string | number | 'dot';
     /**
@@ -100,6 +101,7 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
+
     ngAfterViewInit(): void {
         this._addBadge();
     }
@@ -202,7 +204,7 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
         }
     }
 
-     _calPosition(): Position {
+    protected _calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }

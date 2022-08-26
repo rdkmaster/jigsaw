@@ -3,7 +3,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import {BaseStyle, JigsawBadgeBase} from "../badge/jigsawBadgeBase";
 import {BasePosition} from "../badge/jigsawBadgeBase";
 
-type Style = BaseStyle &{
+type Style = BaseStyle & {
     transform?: string,
     transformOrigin?: string,
     left1?: string | number,
@@ -11,15 +11,18 @@ type Style = BaseStyle &{
     top1?: string | number,
     bottom1?: string | number,
 }
-type Position = BasePosition & {ribbon?: Style}
+type Position = BasePosition & { ribbon?: Style }
+
 @Directive({
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
 export class JigsawRibbonDirective extends JigsawBadgeBase {
     private _removeRibbonClickHandler: Function;
-    constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render,_zone);
+
+    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
+        super(_elementRef, _render, _zone);
     }
+
     /**
      勋带内容
      */
@@ -28,12 +31,14 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawRibbonValue(): string {
         return this._jigsawRibbonValue
     }
-    public set jigsawRibbonValue(value:string){
-        if (this._jigsawRibbonValue != value){
+
+    public set jigsawRibbonValue(value: string) {
+        if (this._jigsawRibbonValue != value) {
             this._jigsawRibbonValue = value;
             this._addRibbon();
         }
     }
+
     /**
      *  勋带大小
      * */
@@ -42,26 +47,30 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawRibbonSize() {
         return this._jigsawRibbonSize;
     }
-    public set jigsawRibbonSize(size){
-        if(this._jigsawRibbonSize != size){
+
+    public set jigsawRibbonSize(size) {
+        if (this._jigsawRibbonSize != size) {
             this._jigsawRibbonSize = size
             this._addRibbon();
         }
     }
+
     /**
      * 鼠标悬浮鼠标样式改变
      * */
     private _jigsawRibbonPointerCursor: boolean;
     @Input()
-    public get jigsawRibbonPointerCursor(): boolean{
+    public get jigsawRibbonPointerCursor(): boolean {
         return this._jigsawRibbonPointerCursor
     }
-    public set jigsawRibbonPointerCursor(pointer:boolean){
-        if(this._jigsawRibbonPointerCursor != pointer){
+
+    public set jigsawRibbonPointerCursor(pointer: boolean) {
+        if (this._jigsawRibbonPointerCursor != pointer) {
             this._jigsawRibbonPointerCursor = pointer;
             this._addRibbon();
         }
     }
+
     /**
      * 勋带位置定位
      * */
@@ -70,12 +79,14 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawRibbonPosition() {
         return this._jigsawRibbonPosition;
     }
-    public set jigsawRibbonPosition(pos)    {
-        if (this._jigsawRibbonPosition != pos){
+
+    public set jigsawRibbonPosition(pos) {
+        if (this._jigsawRibbonPosition != pos) {
             this._jigsawRibbonPosition = pos
             this._addRibbon();
         }
     }
+
     private _jigsawPositionOffset: number = 11;
     /**
      * 勋带偏移量
@@ -84,12 +95,14 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawPositionOffset(): number {
         return this._jigsawPositionOffset ? this._jigsawPositionOffset : 0;
     }
-    public set jigsawPositionOffset(offset:number){
-        if (this._jigsawPositionOffset != offset){
+
+    public set jigsawPositionOffset(offset: number) {
+        if (this._jigsawPositionOffset != offset) {
             this._jigsawPositionOffset = offset
             this._addRibbon();
         }
     }
+
     /**
      * 勋带颜色
      * 、*/
@@ -98,13 +111,15 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawRibbonColor(): string {
         return this._jigsawRibbonColor;
     }
-    public set jigsawRibbonColor(color:string){
-        if (this._jigsawRibbonColor != color){
+
+    public set jigsawRibbonColor(color: string) {
+        if (this._jigsawRibbonColor != color) {
             this._jigsawRibbonColor = color;
             this._$colorChange(this._jigsawRibbonColor)
             this._addRibbon();
         }
     }
+
     /**
      *  勋带点击事件
      * */
@@ -115,16 +130,18 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     ngAfterViewInit(): void {
         this._addRibbon();
     }
+
     ngOnDestroy(): void {
         if (this._removeRibbonClickHandler) {
             this._removeRibbonClickHandler();
         }
     }
+
     private _addRibbon(): void {
-        if (!this.initialized){
+        if (!this.initialized) {
             return;
         }
-        if (this._badge){
+        if (this._badge) {
             this._elementRef.nativeElement.removeChild(this._badge);
             this._badge = null;
         }
@@ -158,22 +175,27 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
         });
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
     }
-    public _$fontColor: string = "#FFFFFF";
-    public _$colorChange(color: string) {
+
+    private _$fontColor: string = "#FFFFFF";
+
+    private _$colorChange(color: string) {
         if (CommonUtils.adjustFontColor(color) === "light") {
             this._$fontColor = "#000000";
         } else {
             this._$fontColor = "#FFFFFF";
         }
     }
+
     private _getRealRibbon(): string {
         return this.jigsawRibbonValue;
     }
-    private _getPositionOffset(): number{
+
+    private _getPositionOffset(): number {
         return this.jigsawPositionOffset;
     }
-    _calPosition(): Position {
-        const ribbonOffset = this._getPositionOffset()-25;
+
+    protected _calPosition(): Position {
+        const ribbonOffset = this._getPositionOffset() - 25;
         switch (this._jigsawRibbonPosition) {
             case "leftBottom":
                 return {
@@ -256,7 +278,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                     },
                     ribbon: {
                         bottom: 0,
-                        bottom1:0,
+                        bottom1: 0,
                         width: `100%`,
                         height: `30%`
                     }
