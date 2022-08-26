@@ -1,5 +1,5 @@
-import { NgModule } from "@angular/core";
-import { JigsawRibbonDirective } from "./ribbon";
+import {NgModule} from "@angular/core";
+import {JigsawRibbonDirective} from "./ribbon";
 
 @NgModule({
     declarations: [JigsawRibbonDirective],

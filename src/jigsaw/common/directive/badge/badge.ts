@@ -1,32 +1,31 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {JigsawBadgeBase} from "./jigsawBadgeBase";
-import {BaseStyle} from "./jigsawBadgeBase";
-import {BasePosition} from "./jigsawBadgeBase";
+import {BadgeBsae} from "./badge-bsae";
+import {BaseStyle} from "./badge-bsae";
+import {BasePosition} from "./badge-bsae";
 
-type Style = BaseStyle
-type Position = BasePosition & { badge?: Style }
+type Position = BasePosition & { badge?: BaseStyle }
 
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewInit, OnDestroy {
-    constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render,_zone);
+export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, OnDestroy {
+    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
+        super(_elementRef, _render, _zone);
     }
     private _removeBadgeClickHandler: Function;
-    private _jigsawBadgeValue: string | number | 'dot';
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
-    public get jigsawBadgeValue(): string | number | "dot" {
-        return this._jigsawBadgeValue;
+    @Input('jigsawBadgeValue')
+    public value: string | number | 'dot';
+    get jigsawBadgeValue(): string | number | "dot" {
+        return this.value;
     }
 
-    public set jigsawBadgeValue(value: string | number | "dot") {
-        if (this._jigsawBadgeValue != value) {
-            this._jigsawBadgeValue = value;
+    set jigsawBadgeValue(_value: string | number | "dot") {
+        if (this.value != _value) {
+            this.value = _value;
             this._addBadge();
         }
     }
@@ -34,8 +33,8 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
-    public jigsawBadgeSize: 'large' | 'normal' | 'small' = 'normal';
+    @Input('jigsawBadgeSize')
+    public size: 'large' | 'normal' | 'small' = 'normal';
 
     /**
      * @NoMarkForCheckRequired
@@ -61,22 +60,22 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
     @Input()
     public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
 
-    private _hOffset: number = 0;
+    public offset: number = 0;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
-    public get jigsawBadgeHorizontalOffset(): number {
-        return this._hOffset;
+    @Input('jigsawBadgeHorizontalOffset')
+    get jigsawBadgeHorizontalOffset(): number {
+        return this.offset;
     }
 
-    public set jigsawBadgeHorizontalOffset(value: number) {
+    set jigsawBadgeHorizontalOffset(value: number) {
         value = Number(value);
-        if (this._hOffset == value) {
+        if (this.offset == value) {
             return;
         }
-        this._hOffset = value;
+        this.offset = value;
         this._addBadge();
     }
 
@@ -89,22 +88,25 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
-    public jigsawBadgePointerCursor: boolean;
+    @Input('jigsawBadgePointerCursor')
+    public pointerCursor: boolean;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input()
-    public jigsawBadgePosition: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'left' | 'right' = 'rightTop';
+    @Input('jigsawBadgePosition')
+    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'left' | 'right' = 'rightTop';
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
+
     ngAfterViewInit(): void {
+        super.ngOnInit();
         this._addBadge();
     }
 
     ngOnDestroy(): void {
+        super.ngOnDestroy();
         if (this._removeBadgeClickHandler) {
             this._removeBadgeClickHandler();
         }
@@ -114,24 +116,24 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
         if (!this.initialized) {
             return;
         }
-        if (this._badge) {
-            this._elementRef.nativeElement.removeChild(this._badge);
-            this._badge = null;
+        if (this._accessory) {
+            this._elementRef.nativeElement.removeChild(this._accessory);
+            this._accessory = null;
         }
-        this._badge = window.document.createElement('div');
-        this._badge.classList.add("jigsaw-badge-host");
+        this._accessory = window.document.createElement('div');
+        this._accessory.classList.add("jigsaw-badge-host");
         const realBadge = this._getRealBadge();
         const classPre = this.jigsawBadgeValue == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
         const position: Position = this._calPosition();
-        this._addPosition(position);
+        this._updatePosition(position);
         // 徽标自身的位置
         const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
-        this._badge.innerHTML = this.jigsawBadgeValue == 'dot' ?
+        this._accessory.innerHTML = this.jigsawBadgeValue == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
             `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
-        this._badge.children[0].classList.add(classPre);
-        this._badge.children[0].classList.add(`${classPre}-size-${this.jigsawBadgeSize}`);
+        this._accessory.children[0].classList.add(classPre);
+        this._accessory.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
         if (this.jigsawBadgeValue != 'dot') {
             badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
@@ -139,44 +141,44 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
         if (this.jigsawBadgeMask != "none") {
             const calibrateSize = this._calibrateMaskSize();
             const maskStyle = calibrateSize != 0 ? `border-width: ${calibrateSize}px` : '';
-            this._badge.innerHTML += `<div style="${maskStyle}"></div>`;
+            this._accessory.innerHTML += `<div style="${maskStyle}"></div>`;
             const classMaskPre = "jigsaw-badge-mask";
             const backgroundClass = `${classMaskPre}-${this.jigsawBadgeMask}`;
-            let maskPos = <string>this.jigsawBadgePosition;
-            if ((/(right.+)|(left.+)/).test(this.jigsawBadgePosition)) {
-                maskPos = this.jigsawBadgePosition.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
+            let maskPos = <string>this.position;
+            if ((/(right.+)|(left.+)/).test(this.position)) {
+                maskPos = this.position.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
             }
             const positionClass = `${classMaskPre}-${maskPos}`;
-            const maskSizeClass = `${classMaskPre}-${this.jigsawBadgeSize}`;
-            this._badge.children[1].classList.add(classMaskPre);
-            this._badge.children[1].classList.add(backgroundClass);
-            this._badge.children[1].classList.add(positionClass);
-            this._badge.children[1].classList.add(maskSizeClass);
+            const maskSizeClass = `${classMaskPre}-${this.size}`;
+            this._accessory.children[1].classList.add(classMaskPre);
+            this._accessory.children[1].classList.add(backgroundClass);
+            this._accessory.children[1].classList.add(positionClass);
+            this._accessory.children[1].classList.add(maskSizeClass);
 
-            if (this.jigsawBadgePosition == "right" || this.jigsawBadgePosition == "left") {
-                this._badge.children[1].classList.add(`${classMaskPre}-background-${this.jigsawBadgeMask}`);
+            if (this.position == "right" || this.position == "left") {
+                this._accessory.children[1].classList.add(`${classMaskPre}-background-${this.jigsawBadgeMask}`);
             }
             if (this.jigsawBadgeValue == "dot") {
-                this._badge.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
+                this._accessory.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
             }
             badgeStyle = this.jigsawBadgeValue == 'dot' ? badgeStyle : '';
         }
-        this._badge.children[0].classList.add(`jigsaw-badge${badgeStyle}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
+        this._accessory.children[0].classList.add(`jigsaw-badge${badgeStyle}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
 
-        if (this.jigsawBadgePointerCursor) {
-            this._badge.children[0].classList.add(`jigsaw-badge-cursor`);
+        if (this.pointerCursor) {
+            this._accessory.children[0].classList.add(`jigsaw-badge-cursor`);
         } else {
-            this._badge.children[0].classList.add(`jigsaw-badge-cursor-default`);
+            this._accessory.children[0].classList.add(`jigsaw-badge-cursor-default`);
         }
         if (this._removeBadgeClickHandler) {
             this._removeBadgeClickHandler();
         }
-        this._removeBadgeClickHandler = this._render.listen(this._badge.children[0], 'click', (event) => {
+        this._removeBadgeClickHandler = this._render.listen(this._accessory.children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawBadgeClick.emit(this.jigsawBadgeValue);
         });
-        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
+        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._accessory);
     }
 
     // 判断是否需要限定mask的尺寸，最大不能超过当前宿主的宽高
@@ -185,41 +187,41 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
         const width = parseInt(hostStyle.width);
         const height = parseInt(hostStyle.height);
         const compareSize = Math.floor(Math.min(width, height) / 2);
-        const maskSize = this.jigsawBadgeSize == 'small' ? 20 : (this.jigsawBadgeSize == 'large' ? 28 : 24);
+        const maskSize = this.size == 'small' ? 20 : (this.size == 'large' ? 28 : 24);
         return compareSize != 0 && maskSize > compareSize ? compareSize : 0;
     }
 
     private _getRealBadge(): string {
-        if (this._jigsawBadgeValue == 'dot' || CommonUtils.isUndefined(this._jigsawBadgeValue)) {
+        if (this.value == 'dot' || CommonUtils.isUndefined(this.value)) {
             return '';
         }
-        const badgeStr = this._jigsawBadgeValue.toString();
+        const badgeStr = this.value.toString();
         const num = parseInt(badgeStr);
         if (isNaN(num)) {
-            return (/(^fa\s+fa-.+$)|(^iconfont\s+iconfont-.+$)/).test(badgeStr) ? `<span class="${badgeStr}"></span>` : this._jigsawBadgeValue.toString();
+            return (/(^fa\s+fa-.+$)|(^iconfont\s+iconfont-.+$)/).test(badgeStr) ? `<span class="${badgeStr}"></span>` : this.value.toString();
         } else {
             return CommonUtils.isDefined(this.jigsawBadgeMaxValue) && num > this.jigsawBadgeMaxValue ? `${this.jigsawBadgeMaxValue}+` : num.toString();
         }
     }
 
-     _calPosition(): Position {
+    protected _calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }
         const differ = this._getDiffer();
-        switch (this.jigsawBadgePosition) {
+        switch (this.position) {
             case "left":
                 const left: Position = {
                     host: {left: 0, top: `50%`}
                 };
                 if (this.jigsawBadgeValue == 'dot') {
                     left.badge = {
-                        left: `${-(differ + this._hOffset)}px`,
+                        left: `${-(differ + this.offset)}px`,
                         top: `calc(50% - ${differ}px)`
                     }
                 } else {
                     left.badge = {
-                        right: `calc( 100% - ${differ + 2 + this._hOffset}px )`,
+                        right: `calc( 100% - ${differ + 2 + this.offset}px )`,
                         top: `calc( 50% - ${differ}px )`
                     }
                 }
@@ -227,12 +229,12 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
             case "leftBottom":
                 return {
                     host: {left: 0, top: '100%'},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {left: `${-(differ + this.offset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this.offset)}px`, top: `${-differ}px`}
                 };
             case "right":
                 const right: Position = {
@@ -240,12 +242,12 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
                 };
                 if (this.jigsawBadgeValue == 'dot') {
                     right.badge = {
-                        right: `${-(differ + this._hOffset)}px`,
+                        right: `${-(differ + this.offset)}px`,
                         top: `calc(50% - ${differ}px)`
                     };
                 } else {
                     right.badge = {
-                        left: `calc( 100% - ${differ + 2 + this._hOffset}px)`,
+                        left: `calc( 100% - ${differ + 2 + this.offset}px)`,
                         top: `calc(50% - ${differ}px)`
                     };
                 }
@@ -253,12 +255,12 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this.offset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this.offset)}px`, top: `${-differ}px`}
                 };
         }
     }
@@ -266,7 +268,7 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
     private _calMaskPosition(): Position {
         const calibrateSize = this._calibrateMaskSize() / 2;
         const differ = this._getDiffer();
-        switch (this.jigsawBadgePosition) {
+        switch (this.position) {
             case "left":
                 return {
                     host: {left: 0, top: 0, width: '30%', height: '100%'},
@@ -291,17 +293,17 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
     private _getDiffer(): number {
         let differ = 0;
         if (this.jigsawBadgeValue == 'dot') {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 differ = 8;
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 differ = 6;
             } else {
                 differ = 4;
             }
         } else {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 differ = 12;
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 differ = 10;
             } else {
                 differ = 8;
@@ -316,7 +318,7 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
             host: {top: 0}
         };
         position.host[pos] = 0;
-        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.jigsawBadgeSize == "large" ? 6 : 4);
+        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.size == "large" ? 6 : 4);
         differ = calibrateSize == 0 ? offset : calibrateSize - (differ - 1);
         position.badge = {top: `${differ}px`};
         position.badge[pos] = `${differ}px`;
@@ -332,9 +334,9 @@ export class JigsawBadgeDirective extends JigsawBadgeBase implements AfterViewIn
 
         let left = 0, right = 0;
         if (this.jigsawBadgeValue == 'dot') {
-            if (this.jigsawBadgeSize == "large") {
+            if (this.size == "large") {
                 left = calibrateSize == 0 ? 24 : calibrateSize + (differ + 2);
-            } else if (this.jigsawBadgeSize == "normal") {
+            } else if (this.size == "normal") {
                 left = calibrateSize == 0 ? 20 : calibrateSize + (differ + 2);
             } else {
                 left = calibrateSize == 0 ? 18 : calibrateSize + (differ + 2);

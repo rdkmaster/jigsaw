@@ -1,9 +1,9 @@
 import {Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {BaseStyle, JigsawBadgeBase} from "../badge/jigsawBadgeBase";
-import {BasePosition} from "../badge/jigsawBadgeBase";
+import {BaseStyle, BadgeBsae} from "../badge/badge-bsae";
+import {BasePosition} from "../badge/badge-bsae";
 
-type Style = BaseStyle &{
+type Style = BaseStyle & {
     transform?: string,
     transformOrigin?: string,
     left1?: string | number,
@@ -11,85 +11,104 @@ type Style = BaseStyle &{
     top1?: string | number,
     bottom1?: string | number,
 }
-type Position = BasePosition & {ribbon?: Style}
+type Position = BasePosition & { ribbon?: Style }
+
 @Directive({
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
-export class JigsawRibbonDirective extends JigsawBadgeBase {
-    private _removeRibbonClickHandler: Function;
-    constructor(public _elementRef: ElementRef, public _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render,_zone);
+export class JigsawRibbonDirective extends BadgeBsae {
+    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
+        super(_elementRef, _render, _zone);
     }
+
+    private _removeRibbonClickHandler: Function;
     /**
      勋带内容
      */
-    private _jigsawRibbonValue: string;
-    @Input()
-    public get jigsawRibbonValue(): string {
-        return this._jigsawRibbonValue
+
+    public value: string;
+
+    @Input('jigsawRibbonValue')
+    get jigsawRibbonValue(): string {
+        return this.value
     }
-    public set jigsawRibbonValue(value:string){
-        if (this._jigsawRibbonValue != value){
-            this._jigsawRibbonValue = value;
+
+    set jigsawRibbonValue(_value: string) {
+        if (this.value != _value) {
+            this.value = _value;
             this._addRibbon();
         }
     }
+
     /**
      *  勋带大小
      * */
-    private _jigsawRibbonSize: 'large' | 'normal' | 'small' = 'normal';
-    @Input()
-    public get jigsawRibbonSize() {
-        return this._jigsawRibbonSize;
+    public size: 'large' | 'normal' | 'small' = 'normal';
+
+    @Input('jigsawRibbonSize')
+    get jigsawRibbonSize() {
+        return this.size;
     }
-    public set jigsawRibbonSize(size){
-        if(this._jigsawRibbonSize != size){
-            this._jigsawRibbonSize = size
+
+    set jigsawRibbonSize(_size) {
+        if (this.size != _size) {
+            this.size = _size
             this._addRibbon();
         }
     }
+
     /**
      * 鼠标悬浮鼠标样式改变
      * */
-    private _jigsawRibbonPointerCursor: boolean;
-    @Input()
-    public get jigsawRibbonPointerCursor(): boolean{
-        return this._jigsawRibbonPointerCursor
+    public pointerCursor: boolean;
+
+    @Input('jigsawRibbonPointerCursor')
+    get jigsawRibbonPointerCursor(): boolean {
+        return this.pointerCursor
     }
-    public set jigsawRibbonPointerCursor(pointer:boolean){
-        if(this._jigsawRibbonPointerCursor != pointer){
-            this._jigsawRibbonPointerCursor = pointer;
+
+    set jigsawRibbonPointerCursor(pointer: boolean) {
+        if (this.pointerCursor != pointer) {
+            this.pointerCursor = pointer;
             this._addRibbon();
         }
     }
+
     /**
      * 勋带位置定位
      * */
-    private _jigsawRibbonPosition: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center';
-    @Input()
+    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center';
+
+    @Input('jigsawRibbonPosition')
     public get jigsawRibbonPosition() {
-        return this._jigsawRibbonPosition;
+        return this.position;
     }
-    public set jigsawRibbonPosition(pos)    {
-        if (this._jigsawRibbonPosition != pos){
-            this._jigsawRibbonPosition = pos
+
+    public set jigsawRibbonPosition(pos) {
+        if (this.position != pos) {
+            this.position = pos
             this._addRibbon();
         }
     }
-    private _jigsawPositionOffset: number = 11;
+
+    public offset: number = 11;
+
     /**
      * 勋带偏移量
      * */
-    @Input()
-    public get jigsawPositionOffset(): number {
-        return this._jigsawPositionOffset ? this._jigsawPositionOffset : 0;
+    @Input('jigsawPositionOffset')
+    get jigsawPositionOffset(): number {
+        return this.offset ? this.offset : 0;
     }
-    public set jigsawPositionOffset(offset:number){
-        if (this._jigsawPositionOffset != offset){
-            this._jigsawPositionOffset = offset
+
+    set jigsawPositionOffset(_offset: number) {
+        _offset = Number(_offset);
+        if (this.offset != _offset) {
+            this.offset = _offset
             this._addRibbon();
         }
     }
+
     /**
      * 勋带颜色
      * 、*/
@@ -98,13 +117,15 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     public get jigsawRibbonColor(): string {
         return this._jigsawRibbonColor;
     }
-    public set jigsawRibbonColor(color:string){
-        if (this._jigsawRibbonColor != color){
+
+    public set jigsawRibbonColor(color: string) {
+        if (this._jigsawRibbonColor != color) {
             this._jigsawRibbonColor = color;
-            this._$colorChange(this._jigsawRibbonColor)
+            this.colorChange(this._jigsawRibbonColor)
             this._addRibbon();
         }
     }
+
     /**
      *  勋带点击事件
      * */
@@ -115,66 +136,65 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
     ngAfterViewInit(): void {
         this._addRibbon();
     }
+
     ngOnDestroy(): void {
         if (this._removeRibbonClickHandler) {
             this._removeRibbonClickHandler();
         }
     }
+
     private _addRibbon(): void {
-        if (!this.initialized){
+        if (!this.initialized) {
             return;
         }
-        if (this._badge){
-            this._elementRef.nativeElement.removeChild(this._badge);
-            this._badge = null;
+        if (this._accessory) {
+            this._elementRef.nativeElement.removeChild(this._accessory);
+            this._accessory = null;
         }
-        this._badge = window.document.createElement('div');
-        this._badge.classList.add("jigsaw-ribbon-host");
-        const realRibbon = this._getRealRibbon();
+        this._accessory = window.document.createElement('div');
+        this._accessory.classList.add("jigsaw-ribbon-host");
+        const realRibbon = this.jigsawRibbonValue;
         const ribbonColor = this.jigsawRibbonColor ? this.jigsawRibbonColor : 'red';
         const position: Position = this._calPosition();
         // 设置勋带顶层元素的位置和尺寸
-        this._addPosition(position);
+        this._updatePosition(position);
         const positionStr = `left:${position.ribbon.left}; top:${position.ribbon.top}; right:${position.ribbon.right}; bottom:${position.ribbon.bottom};width:${position.ribbon.width};height:${position.ribbon.height}`;
         // 勋带位置和旋转参数
         const positionStr1 = `left:${position.ribbon.left1}; top:${position.ribbon.top1}; right:${position.ribbon.right1}; bottom:${position.ribbon.bottom1};transform:${position.ribbon.transform}; transform-origin:${position.ribbon.transformOrigin}`;
-        this._badge.innerHTML =
-            `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this._$fontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background-color: ${ribbonColor}" >${realRibbon}</div></div>`;
-        this._badge.children[0].children[0].classList.add(`jigsaw-ribbon`);
-        this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this._jigsawRibbonSize}`);
+        this._accessory.innerHTML =
+            `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this.fontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background-color: ${ribbonColor}" >${realRibbon}</div></div>`;
+        this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon`);
+        this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this.size}`);
         if (this.jigsawRibbonPointerCursor) {
-            this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-cursor`);
+            this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-cursor`);
         } else {
-            this._badge.children[0].children[0].classList.add(`jigsaw-ribbon-cursor-default`);
+            this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-cursor-default`);
         }
         if (this._removeRibbonClickHandler) {
             this._removeRibbonClickHandler();
         }
-        this._removeRibbonClickHandler = this._render.listen(this._badge.children[0].children[0], 'click', (event) => {
+        this._removeRibbonClickHandler = this._render.listen(this._accessory.children[0].children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawRibbonClick.emit(this.jigsawRibbonValue);
             console.log(this.jigsawRibbonValue)
         });
-        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._badge);
+        this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._accessory);
     }
-    public _$fontColor: string = "#FFFFFF";
-    public _$colorChange(color: string) {
+
+    private fontColor: string = "#FFFFFF";
+
+    private colorChange(color: string) {
         if (CommonUtils.adjustFontColor(color) === "light") {
-            this._$fontColor = "#000000";
+            this.fontColor = "#000000";
         } else {
-            this._$fontColor = "#FFFFFF";
+            this.fontColor = "#FFFFFF";
         }
     }
-    private _getRealRibbon(): string {
-        return this.jigsawRibbonValue;
-    }
-    private _getPositionOffset(): number{
-        return this.jigsawPositionOffset;
-    }
-    _calPosition(): Position {
-        const ribbonOffset = this._getPositionOffset()-25;
-        switch (this._jigsawRibbonPosition) {
+
+    protected _calPosition(): Position {
+        const ribbonOffset = this.jigsawPositionOffset - 25;
+        switch (this.position) {
             case "leftBottom":
                 return {
                     host: {
@@ -256,7 +276,7 @@ export class JigsawRibbonDirective extends JigsawBadgeBase {
                     },
                     ribbon: {
                         bottom: 0,
-                        bottom1:0,
+                        bottom1: 0,
                         width: `100%`,
                         height: `30%`
                     }
