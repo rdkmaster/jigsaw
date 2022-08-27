@@ -1,5 +1,5 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { JigsawTheme } from "jigsaw/mobile_public_api";
+import { JigsawTheme } from "jigsaw/public_api";
 
 @Component({
     selector: "app-root",
