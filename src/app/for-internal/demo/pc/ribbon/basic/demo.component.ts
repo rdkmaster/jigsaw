@@ -15,6 +15,13 @@ export class JigsawRibbonBasicDemoComponent {
     public selectedSize = ['normal']
     public enablePointerCursor: boolean = true;
 
+    public echo(event, msg) {
+        event.stopPropagation();
+        alert(msg)
+    }
+
+    public links = new Array(48);
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
