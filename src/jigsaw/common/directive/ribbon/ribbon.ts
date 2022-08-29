@@ -17,11 +17,13 @@ type Position = BasePosition & { ribbon?: Style }
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
 export class JigsawRibbonDirective extends BadgeBsae {
+
     constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
         super(_elementRef, _render, _zone);
     }
 
     private _removeRibbonClickHandler: Function;
+
     /**
      勋带内容
      */
@@ -49,7 +51,6 @@ export class JigsawRibbonDirective extends BadgeBsae {
     get jigsawRibbonSize() {
         return this.size;
     }
-
     set jigsawRibbonSize(_size) {
         if (this.size != _size) {
             this.size = _size

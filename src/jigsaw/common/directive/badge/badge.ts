@@ -10,9 +10,11 @@ type Position = BasePosition & { badge?: BaseStyle }
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
 export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, OnDestroy {
+
     constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
         super(_elementRef, _render, _zone);
     }
+
     private _removeBadgeClickHandler: Function;
     /**
      * @NoMarkForCheckRequired
