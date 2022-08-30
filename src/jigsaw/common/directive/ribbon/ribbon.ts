@@ -90,15 +90,6 @@ export class JigsawRibbonDirective extends AccessoryBase {
     @Output()
     public jigsawRibbonClick: EventEmitter<string> = new EventEmitter<string>();
 
-    private _removeRibbonClickHandler: Function;
-
-    ngOnDestroy(): void {
-        super.ngOnInit();
-        if (this._removeRibbonClickHandler) {
-            this._removeRibbonClickHandler();
-        }
-    }
-
     protected addAccessory() {
         if (!this.initialized) {
             return;
@@ -126,10 +117,10 @@ export class JigsawRibbonDirective extends AccessoryBase {
         } else {
             this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-cursor-default`);
         }
-        if (this._removeRibbonClickHandler) {
-            this._removeRibbonClickHandler();
+        if (this._removeClickHandler) {
+            this._removeClickHandler();
         }
-        this._removeRibbonClickHandler = this._render.listen(this._accessory.children[0].children[0], 'click', (event) => {
+        this._removeClickHandler = this._render.listen(this._accessory.children[0].children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawRibbonClick.emit(this.value);

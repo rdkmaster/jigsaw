@@ -18,19 +18,34 @@ export type AccessoryPosition = 'leftTop' | 'rightTop' | 'leftBottom' |
 
 @Directive()
 export abstract class AccessoryBase extends AbstractJigsawViewBase implements OnInit, AfterViewInit, OnDestroy {
+    protected abstract calPosition(): BasePosition
+    protected abstract addAccessory(): void;
+
     protected _accessory: HTMLElement;
     protected _elementRef: ElementRef;
+    protected _removeClickHandler: Function;
 
+    protected constructor(protected _render: Renderer2, elementRef: ElementRef, zone?: NgZone) {
+        super(zone);
+        this._elementRef = elementRef;
+    }
+
+    // 给子类备用
     ngOnInit() {
         super.ngOnInit();
     }
 
+    // 给子类备用
     ngAfterViewInit() {
         this.addAccessory();
     }
 
+    // 给子类备用
     ngOnDestroy() {
         super.ngOnDestroy();
+        if (this._removeClickHandler) {
+            this._removeClickHandler();
+        }
     }
 
     private _value: string | number | "dot";
@@ -85,11 +100,6 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase implements On
         }
     }
 
-    protected constructor(protected _render: Renderer2, elementRef: ElementRef, zone?: NgZone) {
-        super(zone);
-        this._elementRef = elementRef;
-    }
-
     protected _updatePosition(position: BasePosition): void {
         this._setHostStyle();
         this._render.setStyle(this._accessory, 'left', position.host.left);
@@ -110,8 +120,4 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase implements On
             this._elementRef.nativeElement.style.overflow = "visible";
         }
     }
-
-    protected abstract calPosition(): BasePosition
-
-    protected abstract addAccessory(): void;
 }

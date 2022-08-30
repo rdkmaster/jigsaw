@@ -9,13 +9,11 @@ type Position = BasePosition & { badge?: BaseStyle }
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit, OnDestroy {
-
+export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit {
     constructor(protected _render: Renderer2, protected _elementRef: ElementRef, zone?: NgZone) {
         super(_render, _elementRef, zone);
     }
 
-    private _removeBadgeClickHandler: Function;
     /**
      * @NoMarkForCheckRequired
      */
@@ -92,13 +90,6 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
 
-    ngOnDestroy(): void {
-        super.ngOnInit();
-        if (this._removeBadgeClickHandler) {
-            this._removeBadgeClickHandler();
-        }
-    }
-
     protected addAccessory() {
         if (!this.initialized) {
             return;
@@ -157,10 +148,10 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         } else {
             this._accessory.children[0].classList.add(`jigsaw-badge-cursor-default`);
         }
-        if (this._removeBadgeClickHandler) {
-            this._removeBadgeClickHandler();
+        if (this._removeClickHandler) {
+            this._removeClickHandler();
         }
-        this._removeBadgeClickHandler = this._render.listen(this._accessory.children[0], 'click', (event) => {
+        this._removeClickHandler = this._render.listen(this._accessory.children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
             this.jigsawBadgeClick.emit(this.value);
@@ -278,7 +269,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     }
 
     private _getDiffer(): number {
-        let differ = 0;
+        let differ: number;
         if (this.value == 'dot') {
             if (this.size == "large") {
                 differ = 8;
@@ -319,7 +310,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         };
         position.host[pos] = 0;
 
-        let left = 0, right = 0;
+        let left: number, right: number;
         if (this.value == 'dot') {
             if (this.size == "large") {
                 left = calibrateSize == 0 ? 24 : calibrateSize + (differ + 2);
@@ -337,6 +328,5 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         position.badge[pos] = `${right}px`;
         return position;
     }
-
 }
 
