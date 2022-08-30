@@ -14,7 +14,7 @@ export type BasePosition = {
 }
 
 @Directive()
-export abstract class BadgeBsae extends AbstractJigsawViewBase {
+export abstract class AccessoryBase extends AbstractJigsawViewBase {
     protected _accessory: HTMLElement;
     protected _elementRef: ElementRef;
 
@@ -22,16 +22,62 @@ export abstract class BadgeBsae extends AbstractJigsawViewBase {
         super.ngOnInit();
     }
 
+    ngAfterViewInit() {
+        this.addAccessory();
+    }
+
     ngOnDestroy() {
         super.ngOnDestroy();
     }
 
     protected _render: Renderer2;
-    public value: string | number | "dot";
-    public size: 'large' | 'normal' | 'small' = 'normal';
-    public pointerCursor: boolean;
-    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
-    public offset: number;
+    private _value: string | number | "dot";
+    get value(): string | number | "dot" {
+        return this._value
+    }
+
+    set value(value: string | number | "dot") {
+        if (this._value != value) {
+            this._value = value;
+            this.addAccessory();
+        }
+    }
+
+    private _size: 'large' | 'normal' | 'small';
+    get size(): 'large' | 'normal' | 'small' {
+        return this._size
+    }
+
+    set size(size: 'large' | 'normal' | 'small') {
+        if (this._size != size) {
+            this._size = size;
+            this.addAccessory();
+        }
+    }
+
+    private _pointerCursor: boolean;
+    get pointerCursor(): boolean {
+        return this._pointerCursor
+    }
+
+    set pointerCursor(pointerCursor: boolean) {
+        if (this._pointerCursor != pointerCursor) {
+            this._pointerCursor = pointerCursor;
+            this.addAccessory();
+        }
+    }
+
+    public _position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
+    get position(): 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right' {
+        return this._position
+    }
+
+    set position(position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right') {
+        if (this._position != position) {
+            this._position = position;
+            this.addAccessory();
+        }
+    }
 
     protected constructor(
         protected elementRef: ElementRef,
@@ -64,5 +110,7 @@ export abstract class BadgeBsae extends AbstractJigsawViewBase {
         }
     }
 
-    protected abstract _calPosition(): any;
+    protected abstract calPosition(): BasePosition
+
+    protected abstract addAccessory(): void;
 }

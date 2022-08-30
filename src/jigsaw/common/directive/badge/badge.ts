@@ -1,15 +1,15 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {BadgeBsae} from "./badge-bsae";
-import {BaseStyle} from "./badge-bsae";
-import {BasePosition} from "./badge-bsae";
+import {AccessoryBase} from "./accessory-base";
+import {BaseStyle} from "./accessory-base";
+import {BasePosition} from "./accessory-base";
 
 type Position = BasePosition & { badge?: BaseStyle }
 
 @Directive({
     selector: '[jigsawBadge], [jigsaw-badge]'
 })
-export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, OnDestroy {
+export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit, OnDestroy {
 
     constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
         super(_elementRef, _render, _zone);
@@ -21,16 +21,6 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
      */
     @Input('jigsawBadgeValue')
     public value: string | number | 'dot';
-    get jigsawBadgeValue(): string | number | "dot" {
-        return this.value;
-    }
-
-    set jigsawBadgeValue(_value: string | number | "dot") {
-        if (this.value != _value) {
-            this.value = _value;
-            this._addBadge();
-        }
-    }
 
     /**
      * @NoMarkForCheckRequired
@@ -61,24 +51,23 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
      */
     @Input()
     public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
-
-    public offset: number = 0;
+    private _hOffset: number = 0;
 
     /**
      * @NoMarkForCheckRequired
      */
-    @Input('jigsawBadgeHorizontalOffset')
-    get jigsawBadgeHorizontalOffset(): number {
-        return this.offset;
+    @Input()
+    public get jigsawBadgeHorizontalOffset(): number {
+        return this._hOffset;
     }
 
-    set jigsawBadgeHorizontalOffset(value: number) {
+    public set jigsawBadgeHorizontalOffset(value: number) {
         value = Number(value);
-        if (this.offset == value) {
+        if (this._hOffset == value) {
             return;
         }
-        this.offset = value;
-        this._addBadge();
+        this._hOffset = value;
+        this.addAccessory();
     }
 
     /**
@@ -104,17 +93,17 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
 
     ngAfterViewInit(): void {
         super.ngOnInit();
-        this._addBadge();
+        this.addAccessory();
     }
 
     ngOnDestroy(): void {
-        super.ngOnDestroy();
+        super.ngOnInit();
         if (this._removeBadgeClickHandler) {
             this._removeBadgeClickHandler();
         }
     }
 
-    private _addBadge(): void {
+    protected addAccessory() {
         if (!this.initialized) {
             return;
         }
@@ -125,19 +114,19 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
         this._accessory = window.document.createElement('div');
         this._accessory.classList.add("jigsaw-badge-host");
         const realBadge = this._getRealBadge();
-        const classPre = this.jigsawBadgeValue == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
-        const position: Position = this._calPosition();
+        const classPre = this.value == 'dot' ? "jigsaw-badge-dot" : "jigsaw-badge";
+        const position: Position = this.calPosition();
         this._updatePosition(position);
         // 徽标自身的位置
         const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
-        this._accessory.innerHTML = this.jigsawBadgeValue == 'dot' ?
+        this._accessory.innerHTML = this.value == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
             `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
         this._accessory.children[0].classList.add(classPre);
         this._accessory.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
-        if (this.jigsawBadgeValue != 'dot') {
+        if (this.value != 'dot') {
             badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
         }
         if (this.jigsawBadgeMask != "none") {
@@ -160,10 +149,10 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
             if (this.position == "right" || this.position == "left") {
                 this._accessory.children[1].classList.add(`${classMaskPre}-background-${this.jigsawBadgeMask}`);
             }
-            if (this.jigsawBadgeValue == "dot") {
+            if (this.value == "dot") {
                 this._accessory.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
             }
-            badgeStyle = this.jigsawBadgeValue == 'dot' ? badgeStyle : '';
+            badgeStyle = this.value == 'dot' ? badgeStyle : '';
         }
         this._accessory.children[0].classList.add(`jigsaw-badge${badgeStyle}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
 
@@ -178,7 +167,7 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
         this._removeBadgeClickHandler = this._render.listen(this._accessory.children[0], 'click', (event) => {
             event.preventDefault();
             event.stopPropagation();
-            this.jigsawBadgeClick.emit(this.jigsawBadgeValue);
+            this.jigsawBadgeClick.emit(this.value);
         });
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._accessory);
     }
@@ -206,7 +195,7 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
         }
     }
 
-    protected _calPosition(): Position {
+    protected calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
         }
@@ -216,14 +205,14 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
                 const left: Position = {
                     host: {left: 0, top: `50%`}
                 };
-                if (this.jigsawBadgeValue == 'dot') {
+                if (this.value == 'dot') {
                     left.badge = {
-                        left: `${-(differ + this.offset)}px`,
+                        left: `${-(differ + this._hOffset)}px`,
                         top: `calc(50% - ${differ}px)`
                     }
                 } else {
                     left.badge = {
-                        right: `calc( 100% - ${differ + 2 + this.offset}px )`,
+                        right: `calc( 100% - ${differ + 2 + this._hOffset}px )`,
                         top: `calc( 50% - ${differ}px )`
                     }
                 }
@@ -231,25 +220,25 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
             case "leftBottom":
                 return {
                     host: {left: 0, top: '100%'},
-                    badge: {left: `${-(differ + this.offset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-(differ + this.offset)}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
                 };
             case "right":
                 const right: Position = {
                     host: {right: 0, top: `50%`}
                 };
-                if (this.jigsawBadgeValue == 'dot') {
+                if (this.value == 'dot') {
                     right.badge = {
-                        right: `${-(differ + this.offset)}px`,
+                        right: `${-(differ + this._hOffset)}px`,
                         top: `calc(50% - ${differ}px)`
                     };
                 } else {
                     right.badge = {
-                        left: `calc( 100% - ${differ + 2 + this.offset}px)`,
+                        left: `calc( 100% - ${differ + 2 + this._hOffset}px)`,
                         top: `calc(50% - ${differ}px)`
                     };
                 }
@@ -257,12 +246,12 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-(differ + this.offset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-(differ + this.offset)}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
                 };
         }
     }
@@ -294,7 +283,7 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
 
     private _getDiffer(): number {
         let differ = 0;
-        if (this.jigsawBadgeValue == 'dot') {
+        if (this.value == 'dot') {
             if (this.size == "large") {
                 differ = 8;
             } else if (this.size == "normal") {
@@ -320,7 +309,7 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
             host: {top: 0}
         };
         position.host[pos] = 0;
-        const offset = this.jigsawBadgeValue == 'dot' ? 10 : (this.size == "large" ? 6 : 4);
+        const offset = this.value == 'dot' ? 10 : (this.size == "large" ? 6 : 4);
         differ = calibrateSize == 0 ? offset : calibrateSize - (differ - 1);
         position.badge = {top: `${differ}px`};
         position.badge[pos] = `${differ}px`;
@@ -335,7 +324,7 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
         position.host[pos] = 0;
 
         let left = 0, right = 0;
-        if (this.jigsawBadgeValue == 'dot') {
+        if (this.value == 'dot') {
             if (this.size == "large") {
                 left = calibrateSize == 0 ? 24 : calibrateSize + (differ + 2);
             } else if (this.size == "normal") {
@@ -352,5 +341,6 @@ export class JigsawBadgeDirective extends BadgeBsae implements AfterViewInit, On
         position.badge[pos] = `${right}px`;
         return position;
     }
+
 }
 
