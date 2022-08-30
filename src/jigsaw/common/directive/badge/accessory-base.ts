@@ -67,7 +67,7 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase {
         }
     }
 
-    public _position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
+    private _position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
     get position(): 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right' {
         return this._position
     }
