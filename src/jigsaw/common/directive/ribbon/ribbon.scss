@@ -1,0 +1,57 @@
+$ribbon-prefix-cls: #{$jigsaw-prefix}-ribbon;
+
+.#{$ribbon-prefix-cls} {
+    position: absolute;
+    width: inherit;
+    margin: 0;
+    color: white;
+    padding: 10px 6px;
+    text-align: center;
+    line-height: normal;
+}
+
+.#{$ribbon-prefix-cls}::before {
+    content: "";
+    position: absolute;
+    right: 95%;
+    margin: 0 -1px;
+    height: 100%;
+    background: inherit;
+    min-width: 40px;
+}
+
+.#{$ribbon-prefix-cls}::after {
+    content: "";
+    position: absolute;
+    left: 95%;
+    margin: 0 -1px;
+    height: 100%;
+    background: inherit;
+    min-width: 40px;
+}
+
+.#{$ribbon-prefix-cls}-size-large {
+    height: 30px;
+    min-width: 24px;
+    font-size: $font-title-lg;
+}
+
+.#{$ribbon-prefix-cls}-size-normal {
+    height: 24px;
+    min-width: 20px;
+    font-size: $font-title-med;
+}
+
+.#{$ribbon-prefix-cls}-size-small {
+    height: 21px;
+    min-width: 16px;
+    font-size: $font-title-sm;
+}
+
+.#{$ribbon-prefix-cls}-cursor {
+    cursor: pointer;
+}
+
+.#{$ribbon-prefix-cls}-cursor-default {
+    cursor: default;
+}

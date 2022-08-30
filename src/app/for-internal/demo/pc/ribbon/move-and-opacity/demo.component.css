@@ -1,0 +1,21 @@
+.movable {
+    position: fixed;
+    cursor: move;
+    left: 20px;
+    top: 100px;
+}
+
+.ribbon-content {
+    width: 387px;
+    height: 109px;
+    border:1px solid var(--border-color-default);
+    background-color: var(--bg-container);
+    border-radius: 4px;
+    margin: auto;
+    text-align: center;
+    line-height: 109px;
+}
+
+.label {
+    padding: 6px 12px;
+}

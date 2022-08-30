@@ -30,7 +30,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 24px;
     border-width: 2px !important;
-    font-size: 16px;
+    font-size: $font-title-lg;
 }
 
 .#{$badge-prefix-cls}-size-normal {
@@ -39,7 +39,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 20px;
     border-width: 2px !important;
-    font-size: 14px;
+    font-size: $font-title-med;
 }
 
 .#{$badge-prefix-cls}-size-small {
@@ -48,6 +48,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     align-items: center;
     border-radius: 16px;
     border-width: 1px !important;
+    font-size: $font-title-sm;
 }
 
 .#{$badge-prefix-cls}-normal {
