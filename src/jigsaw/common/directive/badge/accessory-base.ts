@@ -1,4 +1,4 @@
-import {Directive, ElementRef, NgZone, Renderer2} from "@angular/core";
+import {AfterViewInit, Directive, ElementRef, NgZone, OnDestroy, OnInit, Renderer2} from "@angular/core";
 import {AbstractJigsawViewBase} from "../../common";
 
 export type BaseStyle = {
@@ -13,8 +13,11 @@ export type BasePosition = {
     host: BaseStyle,
 }
 
+export type AccessoryPosition = 'leftTop' | 'rightTop' | 'leftBottom' |
+    'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
+
 @Directive()
-export abstract class AccessoryBase extends AbstractJigsawViewBase {
+export abstract class AccessoryBase extends AbstractJigsawViewBase implements OnInit, AfterViewInit, OnDestroy {
     protected _accessory: HTMLElement;
     protected _elementRef: ElementRef;
 
@@ -30,8 +33,8 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase {
         super.ngOnDestroy();
     }
 
-    protected _render: Renderer2;
     private _value: string | number | "dot";
+
     get value(): string | number | "dot" {
         return this._value
     }
@@ -44,6 +47,7 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase {
     }
 
     private _size: 'large' | 'normal' | 'small';
+
     get size(): 'large' | 'normal' | 'small' {
         return this._size
     }
@@ -56,6 +60,7 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase {
     }
 
     private _pointerCursor: boolean;
+
     get pointerCursor(): boolean {
         return this._pointerCursor
     }
@@ -67,26 +72,22 @@ export abstract class AccessoryBase extends AbstractJigsawViewBase {
         }
     }
 
-    private _position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right';
-    get position(): 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right' {
+    private _position: AccessoryPosition;
+
+    get position(): AccessoryPosition {
         return this._position
     }
 
-    set position(position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' | 'left' | 'right') {
+    set position(position: AccessoryPosition) {
         if (this._position != position) {
             this._position = position;
             this.addAccessory();
         }
     }
 
-    protected constructor(
-        protected elementRef: ElementRef,
-        protected render: Renderer2,
-        protected _zone?: NgZone,
-    ) {
-        super(_zone);
+    protected constructor(protected _render: Renderer2, elementRef: ElementRef, zone?: NgZone) {
+        super(zone);
         this._elementRef = elementRef;
-        this._render = render;
     }
 
     protected _updatePosition(position: BasePosition): void {

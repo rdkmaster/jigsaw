@@ -11,8 +11,8 @@ type Position = BasePosition & { badge?: BaseStyle }
 })
 export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit, OnDestroy {
 
-    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render, _zone);
+    constructor(protected _render: Renderer2, protected _elementRef: ElementRef, zone?: NgZone) {
+        super(_render, _elementRef, zone);
     }
 
     private _removeBadgeClickHandler: Function;
@@ -50,7 +50,8 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid"
+    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid";
+
     private _hOffset: number = 0;
 
     /**
@@ -90,11 +91,6 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
-
-    ngAfterViewInit(): void {
-        super.ngOnInit();
-        this.addAccessory();
-    }
 
     ngOnDestroy(): void {
         super.ngOnInit();

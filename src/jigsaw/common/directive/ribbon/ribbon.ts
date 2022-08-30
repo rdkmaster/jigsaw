@@ -17,19 +17,17 @@ type Position = BasePosition & { ribbon?: Style }
     selector: '[jigsawRibbon], [jigsaw-ribbon]'
 })
 export class JigsawRibbonDirective extends AccessoryBase {
-
-    constructor(protected _elementRef: ElementRef, protected _render: Renderer2, protected _zone?: NgZone,) {
-        super(_elementRef, _render, _zone);
+    constructor(protected _render: Renderer2, protected _elementRef: ElementRef, zone?: NgZone) {
+        super(_render, _elementRef, zone);
     }
-
-    private _removeRibbonClickHandler: Function;
 
     /**
      勋带内容
      */
 
     @Input('jigsawRibbonValue')
-    public value: string;
+    public value: string = 'A ribbon';
+
     /**
      *  勋带大小
      * */
@@ -49,9 +47,10 @@ export class JigsawRibbonDirective extends AccessoryBase {
      * */
 
     @Input('jigsawRibbonPosition')
-    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center';
+    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' = 'rightTop';
 
-    private _jigsawPositionOffset: number = 11;
+    private _jigsawPositionOffset: number = 0;
+
     /**
      * 勋带偏移量
      * */
@@ -70,7 +69,8 @@ export class JigsawRibbonDirective extends AccessoryBase {
     /**
      * 勋带颜色
      * 、*/
-    private _jigsawRibbonColor: string;
+    private _jigsawRibbonColor: string = '#32e4ba';
+
     @Input()
     public get jigsawRibbonColor(): string {
         return this._jigsawRibbonColor;
@@ -90,11 +90,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
     @Output()
     public jigsawRibbonClick: EventEmitter<string> = new EventEmitter<string>();
 
-
-    ngAfterViewInit(): void {
-        super.ngOnInit()
-        this.addAccessory();
-    }
+    private _removeRibbonClickHandler: Function;
 
     ngOnDestroy(): void {
         super.ngOnInit();
