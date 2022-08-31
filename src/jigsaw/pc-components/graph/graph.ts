@@ -54,6 +54,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this._$dataValid) {
             this.resize();
         }
+        this._changeDetectorRef.markForCheck();
     }
 
     // 通过 echarts.init 创建的实例
