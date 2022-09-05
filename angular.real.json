@@ -186,6 +186,8 @@
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/@rdkmaster/icon-font/iconfont.css",
+              "node_modules/prismjs/themes/prism.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "src/app/styles.scss",
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
@@ -225,6 +227,8 @@
               "node_modules/ztree/js/jquery.ztree.exhide.js",
               "node_modules/peity/jquery.peity.min.js",
               "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
               "src/app/for-external/demo-template/description-and-sources.js"
             ]
           },
