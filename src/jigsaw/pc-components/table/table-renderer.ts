@@ -651,6 +651,11 @@ export class TableCellProgressRenderer extends TableCellRendererBase implements 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
+export type SelectRendererInitData = {
+    disabled?: Function | boolean;
+    initData: InitDataGenerator | ArrayCollection<any> | any[]
+}
+
 /**
  * @internal
  * Select renderer
@@ -684,7 +689,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
     public selected: any;
-    public initData: InitDataGenerator | ArrayCollection<any> | any[];
+    public initData: InitDataGenerator | ArrayCollection<any> | any[] | SelectRendererInitData;
     public data: ArrayCollection<any> | any[];
 
     constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
@@ -789,6 +794,12 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     private _hasDestroyed: boolean;
+
+    // todo
+    public get _$disabled() {
+        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof this.initData.disabled == 'function' ?
+            !!this.initData.disabled(this.tableData, this.row, this.column) : !!this.initData.disabled : false;
+    }
 
     ngOnInit() {
         super.ngOnInit();
