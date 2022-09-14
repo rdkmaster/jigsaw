@@ -667,7 +667,8 @@ export type SelectRendererInitData = {
                        (valueChange)="_$handleValueChange($event)"
                        [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
-                       closeTrigger="mouseleave">
+                       closeTrigger="mouseleave"
+                       [disabled]="_$disabled">
         </jigsaw-select>
     `,
     styles: [
@@ -740,8 +741,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     protected onDataRefresh() {
-        if (this.initData instanceof Function) {
-            const data = this.initData(this.tableData, this.row, this.column);
+        const initData = this.initData instanceof Object ? (this.initData as SelectRendererInitData).initData : this.initData;
+        if (initData instanceof Function) {
+            const data = initData(this.tableData, this.row, this.column);
             if (data instanceof Observable) {
                 this.data = [];
                 const subscription = data.subscribe(
@@ -764,7 +766,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 this.data = this._formatData(data);
             }
         } else {
-            this.data = this._formatData(this.initData);
+            this.data = this._formatData(initData);
         }
         this._changeDetector.markForCheck();
     }
@@ -795,10 +797,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _hasDestroyed: boolean;
 
-    // todo
     public get _$disabled() {
-        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof this.initData.disabled == 'function' ?
-            !!this.initData.disabled(this.tableData, this.row, this.column) : !!this.initData.disabled : false;
+        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof (this.initData as SelectRendererInitData).disabled == 'function' ?
+            !!(this.initData as any).disabled(this.tableData, this.row, this.column) : !!(this.initData as SelectRendererInitData).disabled : false;
     }
 
     ngOnInit() {
