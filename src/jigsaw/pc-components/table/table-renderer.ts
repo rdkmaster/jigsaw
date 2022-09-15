@@ -651,6 +651,11 @@ export class TableCellProgressRenderer extends TableCellRendererBase implements 
 export type InitDataGenerator = (td: TableData, row: number, column: number) =>
     ArrayCollection<any> | any[] | Observable<ArrayCollection<any> | any[]>;
 
+export type SelectRendererInitData = {
+    disabled?: Function | boolean;
+    initData: InitDataGenerator | ArrayCollection<any> | any[]
+}
+
 /**
  * @internal
  * Select renderer
@@ -662,7 +667,8 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
                        (valueChange)="_$handleValueChange($event)"
                        [optionCount]="5" width="100%"
                        openTrigger="mouseenter"
-                       closeTrigger="mouseleave">
+                       closeTrigger="mouseleave"
+                       [disabled]="_$disabled">
         </jigsaw-select>
     `,
     styles: [
@@ -684,7 +690,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
     public selected: any;
-    public initData: InitDataGenerator | ArrayCollection<any> | any[];
+    public initData: InitDataGenerator | ArrayCollection<any> | any[] | SelectRendererInitData;
     public data: ArrayCollection<any> | any[];
 
     constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
@@ -735,8 +741,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     protected onDataRefresh() {
-        if (this.initData instanceof Function) {
-            const data = this.initData(this.tableData, this.row, this.column);
+        const initData = this.initData?.hasOwnProperty('initData') ? (this.initData as SelectRendererInitData).initData : this.initData;
+        if (initData instanceof Function) {
+            const data = initData(this.tableData, this.row, this.column);
             if (data instanceof Observable) {
                 this.data = [];
                 const subscription = data.subscribe(
@@ -759,7 +766,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 this.data = this._formatData(data);
             }
         } else {
-            this.data = this._formatData(this.initData);
+            this.data = this._formatData(initData);
         }
         this._changeDetector.markForCheck();
     }
@@ -789,6 +796,16 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     private _hasDestroyed: boolean;
+
+    public get _$disabled() {
+        if (!this.initData || !this.initData.hasOwnProperty('disabled')) {
+            return false;
+        }
+        if (typeof (this.initData as SelectRendererInitData).disabled == 'function') {
+            return !!(this.initData as any).disabled(this.tableData, this.row, this.column);
+        }
+        return !!(this.initData as SelectRendererInitData).disabled;
+    }
 
     ngOnInit() {
         super.ngOnInit();
