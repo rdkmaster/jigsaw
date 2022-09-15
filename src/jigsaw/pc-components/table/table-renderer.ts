@@ -741,7 +741,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     protected onDataRefresh() {
-        const initData = this.initData instanceof Object ? (this.initData as SelectRendererInitData).initData : this.initData;
+        const initData = this.initData && this.initData.hasOwnProperty('initData') ? (this.initData as SelectRendererInitData).initData : this.initData;
         if (initData instanceof Function) {
             const data = initData(this.tableData, this.row, this.column);
             if (data instanceof Observable) {
