@@ -798,8 +798,13 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     private _hasDestroyed: boolean;
 
     public get _$disabled() {
-        return this.initData && this.initData.hasOwnProperty('disabled') ? typeof (this.initData as SelectRendererInitData).disabled == 'function' ?
-            !!(this.initData as any).disabled(this.tableData, this.row, this.column) : !!(this.initData as SelectRendererInitData).disabled : false;
+        if (this.initData && this.initData.hasOwnProperty('disabled')) {
+            if (typeof (this.initData as SelectRendererInitData).disabled == 'function') {
+                return !!(this.initData as any).disabled(this.tableData, this.row, this.column);
+            }
+            return !!(this.initData as SelectRendererInitData).disabled
+        }
+        return false;
     }
 
     ngOnInit() {
