@@ -741,7 +741,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     protected onDataRefresh() {
-        const initData = this.initData && this.initData.hasOwnProperty('initData') ? (this.initData as SelectRendererInitData).initData : this.initData;
+        const initData = this.initData?.hasOwnProperty('initData') ? (this.initData as SelectRendererInitData).initData : this.initData;
         if (initData instanceof Function) {
             const data = initData(this.tableData, this.row, this.column);
             if (data instanceof Observable) {
@@ -798,13 +798,13 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     private _hasDestroyed: boolean;
 
     public get _$disabled() {
-        if (this.initData && this.initData.hasOwnProperty('disabled')) {
-            if (typeof (this.initData as SelectRendererInitData).disabled == 'function') {
-                return !!(this.initData as any).disabled(this.tableData, this.row, this.column);
-            }
-            return !!(this.initData as SelectRendererInitData).disabled
+        if (!this.initData || !this.initData.hasOwnProperty('disabled')) {
+            return false;
         }
-        return false;
+        if (typeof (this.initData as SelectRendererInitData).disabled == 'function') {
+            return !!(this.initData as any).disabled(this.tableData, this.row, this.column);
+        }
+        return !!(this.initData as SelectRendererInitData).disabled;
     }
 
     ngOnInit() {
