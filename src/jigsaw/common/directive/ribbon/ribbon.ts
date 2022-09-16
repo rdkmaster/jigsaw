@@ -83,6 +83,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
      * 勋带内容颜色
      */
     private _fontColor: string = "";
+    
     @Input()
     public get jigsawRibbonFontColor(): string {
         return this._fontColor ? this._fontColor : this._getFontColor();
@@ -97,7 +98,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
     }
 
     private _getFontColor(): string {
-        return CommonUtils.adjustFontColor(this._jigsawRibbonColor) === "light" ? "#000000" : "#FFFFFF";
+        return CommonUtils.adjustFontColor(this._jigsawRibbonColor) === "light" ? "#4d4d4d" : "#d9d9d9";
     }
 
     /**
@@ -121,11 +122,30 @@ export class JigsawRibbonDirective extends AccessoryBase {
         const position: Position = this.calPosition();
         // 设置勋带顶层元素的位置和尺寸
         this._updatePosition(position);
-        const positionStr = `left:${position.ribbon.left}; top:${position.ribbon.top}; right:${position.ribbon.right}; bottom:${position.ribbon.bottom};width:${position.ribbon.width};height:${position.ribbon.height}`;
+        const outerStyles = `
+            left:${position.ribbon.left};
+            top:${position.ribbon.top};
+            right:${position.ribbon.right};
+            bottom:${position.ribbon.bottom};
+            width:${position.ribbon.width};
+            height:${position.ribbon.height};
+        `;
         // 勋带位置和旋转参数
-        const positionStr1 = `left:${position.ribbon.left1}; top:${position.ribbon.top1}; right:${position.ribbon.right1}; bottom:${position.ribbon.bottom1};transform:${position.ribbon.transform}; transform-origin:${position.ribbon.transformOrigin}`;
-        this._accessory.innerHTML =
-            `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this.jigsawRibbonFontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background: ${ribbonColor}" >${realRibbon}</div></div>`;
+        const innerStyles = `
+            left:${position.ribbon.left1};
+            top:${position.ribbon.top1};
+            right:${position.ribbon.right1};
+            bottom:${position.ribbon.bottom1};
+            transform:${position.ribbon.transform};
+            transform-origin:${position.ribbon.transformOrigin};
+        `;
+        this._accessory.innerHTML = `
+            <div style="position: absolute; ${outerStyles}; overflow:hidden;">
+                <div style="color:${this.jigsawRibbonFontColor}; display: ${!!realRibbon ? 'flex' : 'none'}; background: ${ribbonColor};
+                            z-index:1002; ${innerStyles}; white-space: nowrap; align-items: center; justify-content: center;">
+                    ${realRibbon}
+                </div>
+            </div>`;
         this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon`);
         this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this.size}`);
         if (this.pointerCursor) {
