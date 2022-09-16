@@ -89,10 +89,11 @@ export class JigsawRibbonDirective extends AccessoryBase {
     }
 
     public set jigsawRibbonFontColor(color: string) {
-        if (this._fontColor != color) {
-            this._fontColor = color;
-            this.addAccessory();
+        if (this._fontColor === color) {
+            return;
         }
+        this._fontColor = color;
+        this.addAccessory();
     }
 
     private _getFontColor(): string {
