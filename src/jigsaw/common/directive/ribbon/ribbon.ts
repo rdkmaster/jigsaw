@@ -96,11 +96,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
     }
 
     private _getFontColor(): string {
-        if (CommonUtils.adjustFontColor(this._jigsawRibbonColor) === "light") {
-            return "#000000";
-        } else {
-            return "#FFFFFF";
-        }
+        return CommonUtils.adjustFontColor(this._jigsawRibbonColor) === "light" ? "#000000" : "#FFFFFF";
     }
 
     /**
