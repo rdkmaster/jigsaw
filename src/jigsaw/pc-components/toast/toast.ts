@@ -136,7 +136,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
 
         const popupOptions = {
             size: { width: opt.width, height: opt.height },
-            disposeOnRouterChanged: true,
+            disposeOnRouterChanged: false,
             showEffect: PopupEffect.bubbleIn,
             hideEffect: PopupEffect.bubbleOut,
             borderRadius: '3px',
