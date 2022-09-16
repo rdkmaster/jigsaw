@@ -8,7 +8,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     top: 0;
     padding-left: 4px;
     padding-right: 4px;
-    z-index: $zindex-badge-level-0;
+    z-index: $zindex-badge-level-2;
 }
 
 .#{$badge-prefix-cls}-host {
@@ -132,7 +132,7 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     position: absolute;
     width: auto;
     display: inline-block;
-    z-index: $zindex-badge-level-0;
+    z-index: $zindex-badge-level-2;
 }
 
 .#{$badge-prefix-cls}-dot-size-large {
