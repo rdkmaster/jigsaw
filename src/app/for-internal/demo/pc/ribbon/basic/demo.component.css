@@ -1,12 +1,17 @@
+.demo-container>ul>li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
 
-.demo-container .demo-container >* {
-    margin-bottom: 5px;
+.demo-container>ul>li>* {
+    margin-right: 8px;
 }
 
 .demo-container .ribbon-content {
     width: 387px;
     height: 109px;
-    border:1px solid var(--border-color-default);
+    border: 1px solid var(--border-color-default);
     background-color: var(--bg-container);
     border-radius: 4px;
     margin: auto;
@@ -18,7 +23,7 @@
     width: 450px;
     height: 160px;
     background-color: var(--bg-component-darken);
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

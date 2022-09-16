@@ -22,30 +22,26 @@ export class JigsawRibbonDirective extends AccessoryBase {
     }
 
     /**
-     勋带内容
+     * 勋带内容
      */
-
     @Input('jigsawRibbonValue')
     public value: string = 'A ribbon';
 
     /**
-     *  勋带大小
-     * */
-
+     * 勋带大小
+     */
     @Input('jigsawRibbonSize')
     public size: 'large' | 'normal' | 'small' = 'normal';
 
     /**
      * 鼠标悬浮鼠标样式改变
-     * */
-
+     */
     @Input('jigsawRibbonPointerCursor')
     public pointerCursor: boolean;
 
     /**
      * 勋带位置定位
-     * */
-
+     */
     @Input('jigsawRibbonPosition')
     public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'top' | 'bottom' | 'center' = 'rightTop';
 
@@ -53,7 +49,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
 
     /**
      * 勋带偏移量
-     * */
+     */
     @Input()
     public get jigsawPositionOffset(): number {
         return this._jigsawPositionOffset ? this._jigsawPositionOffset : 0;
@@ -67,8 +63,8 @@ export class JigsawRibbonDirective extends AccessoryBase {
     }
 
     /**
-     * 勋带颜色
-     * 、*/
+     * 勋带背景
+     */
     private _jigsawRibbonColor: string = '#32e4ba';
 
     @Input()
@@ -79,14 +75,35 @@ export class JigsawRibbonDirective extends AccessoryBase {
     public set jigsawRibbonColor(color: string) {
         if (this._jigsawRibbonColor != color) {
             this._jigsawRibbonColor = color;
-            this._colorChange(this._jigsawRibbonColor)
             this.addAccessory();
         }
     }
 
     /**
-     *  勋带点击事件
-     * */
+     * 勋带内容颜色
+     */
+    private _fontColor: string = "";
+    
+    @Input()
+    public get jigsawRibbonFontColor(): string {
+        return this._fontColor ? this._fontColor : this._getFontColor();
+    }
+
+    public set jigsawRibbonFontColor(color: string) {
+        if (this._fontColor === color) {
+            return;
+        }
+        this._fontColor = color;
+        this.addAccessory();
+    }
+
+    private _getFontColor(): string {
+        return CommonUtils.adjustFontColor(this._jigsawRibbonColor) === "light" ? "#4d4d4d" : "#d9d9d9";
+    }
+
+    /**
+     * 勋带点击事件
+     */
     @Output()
     public jigsawRibbonClick: EventEmitter<string> = new EventEmitter<string>();
 
@@ -105,11 +122,30 @@ export class JigsawRibbonDirective extends AccessoryBase {
         const position: Position = this.calPosition();
         // 设置勋带顶层元素的位置和尺寸
         this._updatePosition(position);
-        const positionStr = `left:${position.ribbon.left}; top:${position.ribbon.top}; right:${position.ribbon.right}; bottom:${position.ribbon.bottom};width:${position.ribbon.width};height:${position.ribbon.height}`;
+        const outerStyles = `
+            left:${position.ribbon.left};
+            top:${position.ribbon.top};
+            right:${position.ribbon.right};
+            bottom:${position.ribbon.bottom};
+            width:${position.ribbon.width};
+            height:${position.ribbon.height};
+        `;
         // 勋带位置和旋转参数
-        const positionStr1 = `left:${position.ribbon.left1}; top:${position.ribbon.top1}; right:${position.ribbon.right1}; bottom:${position.ribbon.bottom1};transform:${position.ribbon.transform}; transform-origin:${position.ribbon.transformOrigin}`;
-        this._accessory.innerHTML =
-            `<div style="position: absolute;${positionStr}; overflow:hidden; "><div style=" color:${this._fontColor};display: ${!!realRibbon ? 'flex' : 'none'}; z-index:1002;${positionStr1};white-space: nowrap; align-items: center; justify-content: center; background-color: ${ribbonColor}" >${realRibbon}</div></div>`;
+        const innerStyles = `
+            left:${position.ribbon.left1};
+            top:${position.ribbon.top1};
+            right:${position.ribbon.right1};
+            bottom:${position.ribbon.bottom1};
+            transform:${position.ribbon.transform};
+            transform-origin:${position.ribbon.transformOrigin};
+        `;
+        this._accessory.innerHTML = `
+            <div style="position: absolute; ${outerStyles}; overflow:hidden;">
+                <div style="color:${this.jigsawRibbonFontColor}; display: ${!!realRibbon ? 'flex' : 'none'}; background: ${ribbonColor};
+                            z-index:1002; ${innerStyles}; white-space: nowrap; align-items: center; justify-content: center;">
+                    ${realRibbon}
+                </div>
+            </div>`;
         this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon`);
         this._accessory.children[0].children[0].classList.add(`jigsaw-ribbon-size-${this.size}`);
         if (this.pointerCursor) {
@@ -129,15 +165,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
         this._elementRef.nativeElement.insertAdjacentElement("afterbegin", this._accessory);
     }
 
-    private _fontColor: string = "#FFFFFF";
 
-    private _colorChange(color: string) {
-        if (CommonUtils.adjustFontColor(color) === "light") {
-            this._fontColor = "#000000";
-        } else {
-            this._fontColor = "#FFFFFF";
-        }
-    }
 
     protected calPosition(): Position {
         const ribbonOffset = this.jigsawPositionOffset - 25;

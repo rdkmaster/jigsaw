@@ -11,6 +11,7 @@ export class JigsawRibbonBasicDemoComponent {
     }
     public offset: number = 1;
     public color: string = `#32e4ba`;
+    public fontColor: string = '';
     public selectedPosition = ['rightTop'];
     public selectedSize = ['normal']
     public enablePointerCursor: boolean = true;
@@ -18,6 +19,10 @@ export class JigsawRibbonBasicDemoComponent {
     public echo(event, msg) {
         event.stopPropagation();
         alert(msg)
+    }
+
+    public setGradient() {
+        this.color = 'linear-gradient(#e66465, #9198e5)';
     }
 
     public links = new Array(48);
