@@ -79,6 +79,9 @@ export class JigsawRibbonDirective extends AccessoryBase {
         }
     }
 
+    /**
+     * 勋带内容颜色
+     */
     private _fontColor: string = "";
     @Input()
     public get jigsawRibbonFontColor(): string {
