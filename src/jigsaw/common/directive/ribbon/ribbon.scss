@@ -8,6 +8,7 @@ $ribbon-prefix-cls: #{$jigsaw-prefix}-ribbon;
     padding: 10px 6px;
     text-align: center;
     line-height: normal;
+    z-index: $zindex-badge-level-0;
 }
 
 .#{$ribbon-prefix-cls}::before {

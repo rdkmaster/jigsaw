@@ -142,7 +142,7 @@ export class JigsawRibbonDirective extends AccessoryBase {
         this._accessory.innerHTML = `
             <div style="position: absolute; ${outerStyles}; overflow:hidden;">
                 <div style="color:${this.jigsawRibbonFontColor}; display: ${!!realRibbon ? 'flex' : 'none'}; background: ${ribbonColor};
-                            z-index:800; ${innerStyles}; white-space: nowrap; align-items: center; justify-content: center;">
+                            ${innerStyles}; white-space: nowrap; align-items: center; justify-content: center;">
                     ${realRibbon}
                 </div>
             </div>`;
