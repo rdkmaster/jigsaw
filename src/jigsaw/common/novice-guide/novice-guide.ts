@@ -71,7 +71,7 @@ function show(guide: NoviceGuide, force: boolean = false): ShowResult {
     if (guide.type === NoviceGuideType.stepped) {
         // 分步指引中，若存在页面无法找到的元素则退出
         if (notices.find(notice => !queryNode(notice))) {
-            return 'invalid-steps-selector'
+            return 'not-all-steps-ready';
         }
         createNoviceGuideNotice(guide, notices, notices[0]);
     }
