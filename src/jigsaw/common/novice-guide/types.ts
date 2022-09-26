@@ -103,6 +103,6 @@ export type ShowingNotice = {
     noticeKey: string, guideElement?: HTMLElement, cloneElement?: HTMLElement, mutation?: MutationObserver
 }
 
-export type ShowResult = 'invalid-data' | 'conflict' | 'all-shown' | 'showing' | 'too-many-interruptions' | 'disabled';
+export type ShowResult = 'invalid-data' | 'conflict' | 'all-shown' | 'showing' | 'too-many-interruptions' | 'disabled' | 'not-all-steps-ready';
 
 export type ShownGuideInfo = { guideKey: string, timestamp: number, notices: string[] };

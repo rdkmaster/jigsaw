@@ -78,6 +78,10 @@
     margin-right: 8px;
 }
 
+#setting span {
+    margin-right: 8px;
+}
+
 #setting a:hover {
     text-decoration: underline;
 }

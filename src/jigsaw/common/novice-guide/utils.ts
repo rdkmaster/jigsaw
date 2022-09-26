@@ -34,7 +34,7 @@ try {
 export const showingNotices: ShowingNotice[] = [];
 
 export function onGoing(): boolean {
-    return showingNotices.length > 0 ? !!showingNotices.find(sn => !!sn.mutation) : false;
+    return showingNotices.length > 0;
 }
 
 export function clearExpiredGuides() {
