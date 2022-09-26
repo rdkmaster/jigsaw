@@ -248,3 +248,27 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     border-right-color: transparent;
     border-bottom-left-radius: inherit;
 }
+
+.#{$badge-prefix-cls}-rect-solid-normal {
+    color: $font-color-white;
+    background-color: $primary-default;
+    border-radius: initial;
+}
+
+.#{$badge-prefix-cls}-rect-solid-warn {
+    color: $font-color-white;
+    background-color: $warning-default;
+    border-radius: initial;
+}
+
+.#{$badge-prefix-cls}-rect-solid-error {
+    color: $font-color-white;
+    background-color: $error-default;
+    border-radius: initial;
+}
+
+.#{$badge-prefix-cls}-rect-solid-success {
+    color: $font-color-white;
+    background-color: $success-default;
+    border-radius: initial;
+}

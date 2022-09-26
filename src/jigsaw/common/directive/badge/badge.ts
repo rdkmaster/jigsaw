@@ -48,7 +48,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid";
+    public jigsawBadgeStyle: "solid" | "border" | "rect-solid" | "none" = "solid";
 
     private _hOffset: number = 0;
 
@@ -66,6 +66,25 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             return;
         }
         this._hOffset = value;
+        this.addAccessory();
+    }
+    
+    private _vOffset: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get jigsawBadgeVerticalOffset(): number {
+        return this._vOffset;
+    }
+
+    public set jigsawBadgeVerticalOffset(value: number) {
+        value = Number(value);
+        if (this._vOffset == value) {
+            return;
+        }
+        this._vOffset = value;
         this.addAccessory();
     }
 
@@ -195,24 +214,24 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
                 if (this.value == 'dot') {
                     left.badge = {
                         left: `${-(differ + this._hOffset)}px`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${differ + this._vOffset}px)`
                     }
                 } else {
                     left.badge = {
                         right: `calc( 100% - ${differ + 2 + this._hOffset}px )`,
-                        top: `calc( 50% - ${differ}px )`
+                        top: `calc( 50% - ${differ + this._vOffset}px )`
                     }
                 }
                 return left;
             case "leftBottom":
                 return {
                     host: {left: 0, top: '100%'},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ + this._vOffset}px)`}
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ  + this._vOffset}px`}
                 };
             case "right":
                 const right: Position = {
@@ -221,24 +240,24 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
                 if (this.value == 'dot') {
                     right.badge = {
                         right: `${-(differ + this._hOffset)}px`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${differ  + this._vOffset}px)`
                     };
                 } else {
                     right.badge = {
                         left: `calc( 100% - ${differ + 2 + this._hOffset}px)`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${differ  + this._vOffset}px)`
                     };
                 }
                 return right;
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ  + this._vOffset}px)`}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ  + this._vOffset}px`}
                 };
         }
     }
