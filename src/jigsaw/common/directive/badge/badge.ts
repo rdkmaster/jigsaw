@@ -50,6 +50,24 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     @Input()
     public jigsawBadgeStyle: "solid" | "border" | "none" = "solid";
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public jigsawBadgeCircle: "none" | "default" = "none";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public jigsawBadgeColor: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public jigsawBadgeFontColor: string;
+
     private _hOffset: number = 0;
 
     /**
