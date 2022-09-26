@@ -179,11 +179,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         }
     }
 
-    &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range {
-        border-left: 1px solid $border-color-default;
-        border-right: 1px solid $border-color-default;
-    }
-
     .#{$jigsaw-table}-auto-width {
         .#{$jigsaw-table}-cell-content,
         jigsaw-table-header {
