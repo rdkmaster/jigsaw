@@ -248,3 +248,11 @@ $badge-prefix-cls: #{$jigsaw-prefix}-badge;
     border-right-color: transparent;
     border-bottom-left-radius: inherit;
 }
+
+.#{$badge-prefix-cls}-host {
+    .#{$badge-prefix-cls}-circle {
+        background: cyan;
+
+        &.jigsaw-badge-circle-left-top {}
+    }
+}

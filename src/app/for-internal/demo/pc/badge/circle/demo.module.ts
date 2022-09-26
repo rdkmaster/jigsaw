@@ -1,14 +1,14 @@
 import {NgModule} from "@angular/core";
 import {JigsawBadgeModule, JigsawButtonModule, JigsawIconModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
-import {BadgeMaskDemoComponent} from "./demo.component";
+import {BadgeCircleDemoComponent} from "./demo.component";
 
 @NgModule({
-    declarations: [BadgeMaskDemoComponent],
+    declarations: [BadgeCircleDemoComponent],
     imports: [
         JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule, JigsawButtonModule
     ],
-    exports: [BadgeMaskDemoComponent]
+    exports: [BadgeCircleDemoComponent]
 })
-export class BadgeMaskDemoModule {
+export class BadgeCircleDemoModule {
 }

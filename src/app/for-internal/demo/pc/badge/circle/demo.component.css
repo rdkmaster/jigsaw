@@ -1,0 +1,19 @@
+.demo-showcase-sudoku {
+    display: grid;
+    padding-left: 100px;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 10px 10px;
+
+}
+
+.demo-showcase-sudoku>.jigsaw-icon-host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    background-color: #695f5f;
+    border-radius: 10px;
+    color: #ffffff;
+}

@@ -1,6 +1,6 @@
 import {AfterViewInit, Directive, ElementRef, EventEmitter, Input, NgZone, Output, Renderer2, OnDestroy} from "@angular/core";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {AccessoryBase} from "./accessory-base";
+import {AccessoryBase, AccessoryPosition} from "./accessory-base";
 import {BaseStyle} from "./accessory-base";
 import {BasePosition} from "./accessory-base";
 
@@ -57,16 +57,43 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     public jigsawBadgeCircle: "none" | "default" = "none";
 
     /**
-     * @NoMarkForCheckRequired
+     * badge 背景色（目前只在circle中生效）
      */
+    private _jigsawBadgeColor: string = '';
+
     @Input()
-    public jigsawBadgeColor: string;
+    public get jigsawBadgeColor(): string {
+        return this._jigsawBadgeColor;
+    }
+
+    public set jigsawBadgeColor(color: string) {
+        if (this._jigsawBadgeColor != color) {
+            this._jigsawBadgeColor = color;
+            this.addAccessory();
+        }
+    }
 
     /**
-     * @NoMarkForCheckRequired
+     * badge 字体色（目前只在circle中生效）
      */
+    private _jigsawBadgeFontColor: string = "";
+    
     @Input()
-    public jigsawBadgeFontColor: string;
+    public get jigsawBadgeFontColor(): string {
+        return this._jigsawBadgeFontColor ? this._jigsawBadgeFontColor : this._getFontColor();
+    }
+
+    public set jigsawBadgeFontColor(color: string) {
+        if (this._jigsawBadgeFontColor === color) {
+            return;
+        }
+        this._jigsawBadgeFontColor = color;
+        this.addAccessory();
+    }
+
+    private _getFontColor(): string {
+        return CommonUtils.adjustFontColor(this._jigsawBadgeColor) === "light" ? "#4d4d4d" : "#d9d9d9";
+    }
 
     private _hOffset: number = 0;
 
@@ -103,7 +130,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
      * @NoMarkForCheckRequired
      */
     @Input('jigsawBadgePosition')
-    public position: 'leftTop' | 'rightTop' | 'leftBottom' | 'rightBottom' | 'left' | 'right' = 'rightTop';
+    public position: AccessoryPosition = 'rightTop';
 
     @Output()
     public jigsawBadgeClick: EventEmitter<string | number | "dot"> = new EventEmitter<string | number | "dot">();
@@ -123,11 +150,14 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         const position: Position = this.calPosition();
         this._updatePosition(position);
         // 徽标自身的位置
-        const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+        const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom};`;
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
+        const badgeColor = this.jigsawBadgeColor ? `background:"${this.jigsawBadgeColor}";` : '';
+        console.log(this.jigsawBadgeColor)
         this._accessory.innerHTML = this.value == 'dot' ?
             `<div style="${positionStr}" title="${title}"></div>` :
-            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
+            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; 
+            align-items: center; justify-content: center;" title="${title}" ${badgeColor}>${realBadge}</div>`;
         this._accessory.children[0].classList.add(classPre);
         this._accessory.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
@@ -140,10 +170,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             this._accessory.innerHTML += `<div style="${maskStyle}"></div>`;
             const classMaskPre = "jigsaw-badge-mask";
             const backgroundClass = `${classMaskPre}-${this.jigsawBadgeMask}`;
-            let maskPos = <string>this.position;
-            if ((/(right.+)|(left.+)/).test(this.position)) {
-                maskPos = this.position.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
-            }
+            const maskPos = this._getPositionName();
             const positionClass = `${classMaskPre}-${maskPos}`;
             const maskSizeClass = `${classMaskPre}-${this.size}`;
             this._accessory.children[1].classList.add(classMaskPre);
@@ -158,6 +185,16 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
                 this._accessory.children[0].classList.add(`jigsaw-badge-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
             }
             badgeStyle = this.value == 'dot' ? badgeStyle : '';
+        }
+        if (this.jigsawBadgeCircle != "none") {
+            this._accessory.innerHTML += `<div style="background:${this.jigsawBadgeColor}; font-color:${this.jigsawBadgeFontColor}">xxxx</div>`;
+            const classMaskPre = "jigsaw-badge-circle";
+            const maskPos = this._getPositionName();
+            const positionClass = `${classMaskPre}-${maskPos}`;
+            const maskSizeClass = `${classMaskPre}-${this.size}`;
+            this._accessory.children[1].classList.add(classMaskPre);
+            this._accessory.children[1].classList.add(positionClass);
+            this._accessory.children[1].classList.add(maskSizeClass);
         }
         this._accessory.children[0].classList.add(`jigsaw-badge${badgeStyle}-${this.jigsawBadgeStatus == 'critical' ? 'error' : this.jigsawBadgeStatus}`);
 
@@ -203,6 +240,10 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     protected calPosition(): Position {
         if (this.jigsawBadgeMask != "none") {
             return this._calMaskPosition();
+        }
+
+        if (this.jigsawBadgeCircle != "none"){
+            return this._calCirclePostion();
         }
         const differ = this._getDiffer();
         switch (this.position) {
@@ -286,6 +327,57 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         }
     }
 
+    private _calCirclePostion(): Position {
+        const circleSize = this.size == 'small' ? 20 : (this.size == 'large' ? 28 : 24);
+        switch (this.position) {
+            case "leftTop":
+                return {
+                    host: { top: 0, left: 0, width: `${circleSize}px`, height: `${circleSize}px` },
+                    badge: { top: 0, left: 0 },
+                };
+            case "top":
+                return {
+                    host: { top: 0, left: "50%" },
+                    badge: { top: 0, left: 0 },
+                };
+            case "rightTop":
+                return {
+                    host: { top: 0, right: 0 },
+                    badge: { top: 0, left: 0 },
+                };
+            case "left":
+                return {
+                    host: { top: "50%", left: 0 },
+                    badge: { top: 0, left: 0 },
+                };
+            case "center":
+                return {
+                    host: { top: "50%", left: "50%" },
+                    badge: { top: 0, left: 0 },
+                };
+            case "right":
+                return {
+                    host: { top: "50%", right: 0 },
+                    badge: { top: 0, left: 0 },
+                };
+            case "leftBottom":
+                return {
+                    host: { bottom: 0, left: 0 },
+                    badge: { top: 0, left: 0 },
+                };
+            case "bottom":
+                return {
+                    host: { bottom: 0, left: "50%" },
+                    badge: { top: 0, left: 0 },
+                };
+            case "rightBottom":
+                return {
+                    host: { bottom: 0, right: 0 },
+                    badge: { top: 0, left: 0 },
+                };
+        }
+    }
+
     private _getDiffer(): number {
         let differ: number;
         if (this.value == 'dot') {
@@ -345,6 +437,14 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         position.badge = {top: `${-left}px`};
         position.badge[pos] = `${right}px`;
         return position;
+    }
+
+    private _getPositionName(): string {
+        let res = <string>this.position;
+        if ((/(right.+)|(left.+)/).test(this.position)) {
+            return res = this.position.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
+        }
+        return res;
     }
 }
 

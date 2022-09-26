@@ -1,15 +1,11 @@
-import {Component} from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .live-demo-wrap jigsaw-icon {
-            line-height: 1;
-        }
-    `]
+    styleUrls: ['./demo.component.css']
 })
 
-export class BadgeMaskDemoComponent {
+export class BadgeCircleDemoComponent {
     public select($event) {
         console.log('badge click: ', $event);
     }
