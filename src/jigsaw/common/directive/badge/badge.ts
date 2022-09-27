@@ -45,10 +45,11 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     public jigsawBadgeMask: "none" | "dark" | "light" | "default" = "none";
 
     /**
+     * solid值已废弃，采用solid-circle替代
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStyle: "solid" | "border" | "rect-solid" | "none" = "solid";
+    public jigsawBadgeStyle: "solid-circle" | "solid-rectangular" | "border" | "solid" | "none" = "solid-circle";
 
     private _hOffset: number = 0;
 
@@ -68,7 +69,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         this._hOffset = value;
         this.addAccessory();
     }
-    
+
     private _vOffset: number = 0;
 
     /**
