@@ -29,6 +29,10 @@ export class BadgeBasicDemoComponent {
         {label: "长沙", id: 5},
         {label: "西安", id: 6}
     ]
+
+    public innerHtml = `<div style='display:flex; align-items:center; color:orange; height:40px;'>这里用的innerHtml</div>`;
+    public innerHtml2 = `<div style='display:flex; align-items:center; justify-content:center; color:white; font-size:20px;
+    width:40px; height:40px; cursor:pointer'><i class="iconfont iconfont-e9d2"></i></div>`;
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
