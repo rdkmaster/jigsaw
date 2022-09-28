@@ -8,7 +8,6 @@ import {
     JigsawInputModule,
     JigsawRadioLiteModule,
     JigsawSwitchModule,
-    JigsawTileLiteModule,
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
 import {BadgeBasicDemoComponent} from "./demo.component";
@@ -16,8 +15,9 @@ import {BadgeBasicDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [BadgeBasicDemoComponent],
     imports: [
-        JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule, JigsawButtonModule, JigsawSwitchModule, JigsawCheckBoxModule,
-        JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule, JigsawTileLiteModule,
+        JigsawDemoDescriptionModule, JigsawIconModule, JigsawBadgeModule,
+        JigsawButtonModule, JigsawSwitchModule, JigsawCheckBoxModule,
+        JigsawInputModule, JigsawRadioLiteModule, JigsawButtonBarModule,
     ],
     exports: [BadgeBasicDemoComponent]
 })

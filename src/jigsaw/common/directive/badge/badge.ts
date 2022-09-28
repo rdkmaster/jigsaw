@@ -30,7 +30,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStatus: 'normal' | 'success' | 'warn' | 'error' | 'critical' = 'critical';
+    public jigsawBadgeStatus: 'normal' | 'success' | 'warn' | 'error' | 'critical' | 'none' = 'critical';
 
     /**
      * @NoMarkForCheckRequired
@@ -45,10 +45,11 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
     public jigsawBadgeMask: "none" | "dark" | "light" | "default" = "none";
 
     /**
+     * solid值已废弃，采用solid-circle替代
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStyle: "solid" | "border" | "none" = "solid";
+    public jigsawBadgeStyle: "solid-circle" | "solid-rectangular" | "border" | "solid" | "none" = "solid-circle";
 
     private _hOffset: number = 0;
 
@@ -66,6 +67,25 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             return;
         }
         this._hOffset = value;
+        this.addAccessory();
+    }
+
+    private _vOffset: number = 0;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get jigsawBadgeVerticalOffset(): number {
+        return this._vOffset;
+    }
+
+    public set jigsawBadgeVerticalOffset(value: number) {
+        value = Number(value);
+        if (this._vOffset == value) {
+            return;
+        }
+        this._vOffset = value;
         this.addAccessory();
     }
 
@@ -105,28 +125,28 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         const position: Position = this.calPosition();
         this._updatePosition(position);
         // 徽标自身的位置
-        const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+        const positionStyle = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+        const extraStyle = this.value == 'dot' ? '' :
+            `display:${!!realBadge ? 'flex' : 'none'}; white-space:nowrap; align-items:center; justify-content:center; height: fit-content`;
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
         this._accessory.innerHTML = this.value == 'dot' ?
-            `<div style="${positionStr}" title="${title}"></div>` :
-            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center;" title="${title}">${realBadge}</div>`;
+            `<div style="${positionStyle}" title="${title}"></div>` :
+            `<div style="${positionStyle}; ${extraStyle}" title="${title}">${realBadge}</div>`;
         this._accessory.children[0].classList.add(classPre);
         this._accessory.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
         if (this.value != 'dot') {
             badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
         }
+        const badgePos: string = this.position.toLowerCase().replace(/^(right|left)(.+)/, "$1-$2");
+        this._accessory.children[0].classList.add(`jigsaw-badge-${badgePos}`);
         if (this.jigsawBadgeMask != "none") {
             const calibrateSize = this._calibrateMaskSize();
             const maskStyle = calibrateSize != 0 ? `border-width: ${calibrateSize}px` : '';
             this._accessory.innerHTML += `<div style="${maskStyle}"></div>`;
             const classMaskPre = "jigsaw-badge-mask";
             const backgroundClass = `${classMaskPre}-${this.jigsawBadgeMask}`;
-            let maskPos = <string>this.position;
-            if ((/(right.+)|(left.+)/).test(this.position)) {
-                maskPos = this.position.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
-            }
-            const positionClass = `${classMaskPre}-${maskPos}`;
+            const positionClass = `${classMaskPre}-${badgePos}`;
             const maskSizeClass = `${classMaskPre}-${this.size}`;
             this._accessory.children[1].classList.add(classMaskPre);
             this._accessory.children[1].classList.add(backgroundClass);
@@ -187,6 +207,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             return this._calMaskPosition();
         }
         const differ = this._getDiffer();
+
         switch (this.position) {
             case "left":
                 const left: Position = {
@@ -195,24 +216,24 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
                 if (this.value == 'dot') {
                     left.badge = {
                         left: `${-(differ + this._hOffset)}px`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${this._vOffset}px)`
                     }
                 } else {
                     left.badge = {
                         right: `calc( 100% - ${differ + 2 + this._hOffset}px )`,
-                        top: `calc( 50% - ${differ}px )`
+                        top: `calc( 50% - ${this._vOffset}px )`
                     }
                 }
                 return left;
             case "leftBottom":
                 return {
-                    host: {left: 0, top: '100%'},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    host: { left: 0, top: '100%' },
+                    badge: { left: `${-(differ + this._hOffset)}px`, bottom: `${-(differ + this._vOffset)}px`, top: 'initial' }
                 };
             case "leftTop":
                 return {
                     host: {left: 0, top: 0},
-                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {left: `${-(differ + this._hOffset)}px`, top: `${-(differ  + this._vOffset)}px`}
                 };
             case "right":
                 const right: Position = {
@@ -221,24 +242,24 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
                 if (this.value == 'dot') {
                     right.badge = {
                         right: `${-(differ + this._hOffset)}px`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${this._vOffset}px)`
                     };
                 } else {
                     right.badge = {
                         left: `calc( 100% - ${differ + 2 + this._hOffset}px)`,
-                        top: `calc(50% - ${differ}px)`
+                        top: `calc(50% - ${ this._vOffset}px)`
                     };
                 }
                 return right;
             case "rightBottom":
                 return {
                     host: {right: 0, top: '100%'},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `calc( 100% - ${differ}px)`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, bottom: `${-(differ + this._vOffset)}px`, top: 'initial'}
                 };
             case "rightTop":
                 return {
                     host: {right: 0, top: 0},
-                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-differ}px`}
+                    badge: {right: `${-(differ + this._hOffset)}px`, top: `${-(differ  + this._vOffset)}px`}
                 };
         }
     }
@@ -250,7 +271,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             case "left":
                 return {
                     host: {left: 0, top: 0, width: '30%', height: '100%'},
-                    badge: {left: `calc(50% - ${differ}px)`, top: `calc(50% - ${differ}px)`}
+                    badge: {left: `calc(50% - ${differ}px)`, top: `50%`}
                 };
             case "leftBottom":
                 return this._getBottomPosition('left', differ, calibrateSize);
@@ -259,7 +280,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             case "right":
                 return {
                     host: {right: 0, top: 0, width: '30%', height: '100%'},
-                    badge: {top: `calc(50% - ${differ}px)`, right: `calc(50% - ${differ}px)`}
+                    badge: {top: `50%`, right: `calc(50% - ${differ}px)`}
                 };
             case "rightBottom":
                 return this._getBottomPosition('right', differ, calibrateSize);
