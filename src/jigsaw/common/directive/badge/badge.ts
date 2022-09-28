@@ -30,7 +30,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
      * @NoMarkForCheckRequired
      */
     @Input()
-    public jigsawBadgeStatus: 'normal' | 'success' | 'warn' | 'error' | 'critical' = 'critical';
+    public jigsawBadgeStatus: 'normal' | 'success' | 'warn' | 'error' | 'critical' | 'none' = 'critical';
 
     /**
      * @NoMarkForCheckRequired
@@ -125,22 +125,20 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
         const position: Position = this.calPosition();
         this._updatePosition(position);
         // 徽标自身的位置
-        const positionStr = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+        const positionStyle = `left:${position.badge.left}; top:${position.badge.top}; right:${position.badge.right}; bottom:${position.badge.bottom}`;
+        const extraStyle = this.value == 'dot' ? '' :
+            `display:${!!realBadge ? 'flex' : 'none'}; white-space:nowrap; align-items:center; justify-content:center; height: fit-content`;
         const title = this.jigsawBadgeTitle ? this.jigsawBadgeTitle : '';
         this._accessory.innerHTML = this.value == 'dot' ?
-            `<div style="${positionStr}" title="${title}"></div>` :
-            `<div style="display: ${!!realBadge ? 'flex' : 'none'};${positionStr}; white-space: nowrap; align-items: center; justify-content: center; ` +
-            `height: fit-content" title="${title}">${realBadge}</div>`;
+            `<div style="${positionStyle}" title="${title}"></div>` :
+            `<div style="${positionStyle}; ${extraStyle}" title="${title}">${realBadge}</div>`;
         this._accessory.children[0].classList.add(classPre);
         this._accessory.children[0].classList.add(`${classPre}-size-${this.size}`);
         let badgeStyle = '-dot';
         if (this.value != 'dot') {
             badgeStyle = this.jigsawBadgeStyle == 'none' ? '' : `-${this.jigsawBadgeStyle}`;
         }
-        let badgePos = <string>this.position;
-        if ((/(right.+)|(left.+)/).test(this.position)) {
-            badgePos = this.position.toLowerCase().replace(/(right)/, "$1-").replace(/(left)/, "$1-");
-        }
+        const badgePos: string = this.position.toLowerCase().replace(/^(right|left)(.+)/, "$1-$2");
         this._accessory.children[0].classList.add(`jigsaw-badge-${badgePos}`);
         if (this.jigsawBadgeMask != "none") {
             const calibrateSize = this._calibrateMaskSize();
@@ -209,7 +207,7 @@ export class JigsawBadgeDirective extends AccessoryBase implements AfterViewInit
             return this._calMaskPosition();
         }
         const differ = this._getDiffer();
-        
+
         switch (this.position) {
             case "left":
                 const left: Position = {

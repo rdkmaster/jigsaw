@@ -4,7 +4,7 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <div style="margin: 0 10px 40px 10px; ">
+    <div style="margin: 0 10px 20px 10px; ">
         <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'dot'" jigsawBadgePosition="rightTop"
                      jigsawBadgeSize="normal" jigsawBadgeStatus="critical" jigsawBadgeTitle="this is a title"
                      [icon]="'iconfont iconfont-e64b'" [iconSize]="100">
@@ -27,7 +27,7 @@
         </jigsaw-icon>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; display: flex; align-items: center">
+    <div style="margin: 0 10px 20px 10px; display: flex; align-items: center">
         <jigsaw-icon [icon]="'iconfont iconfont-e2d6'" [iconSize]="24"
                      jigsaw-badge jigsawBadgeValue="5" jigsawBadgeSize="small">
         </jigsaw-icon>
@@ -52,85 +52,75 @@
         </jigsaw-icon>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; ">
-        是否显示徽标：<jigsaw-switch [checked]="true" (checkedChange)="nice = $event ? 'Nice' : ''; dot = $event ? 'dot' : '';"></jigsaw-switch>
+    <div style="margin: 0 10px 20px 10px; display: flex; align-items: center">
+        <div style="margin: 0 10px 20px 10px; ">
+            是否显示徽标：<jigsaw-switch [checked]="true" (checkedChange)="nice = $event ? 'Nice' : ''; dot = $event ? 'dot' : '';"></jigsaw-switch>
+        </div>
+        <div style="margin: 0 10px 20px 10px; ">
+            <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-switch>
+            <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
+        </div>
+        <div style="margin: 0 10px 20px 10px; ">
+            <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-input>
+            <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
+        </div>
+        <div style="margin: 0 10px 20px 10px; ">
+            <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
+            <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
+        </div>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; ">
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-switch>
-        <jigsaw-switch jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-switch>
-    </div>
-
-    <div style="margin: 0 10px 40px 10px; ">
-        <jigsaw-input [(value)]="nice" jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"></jigsaw-input>
-        <jigsaw-input jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"></jigsaw-input>
-    </div>
-
-    <div style="margin: 0 10px 40px 10px; ">
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop">checkbox</jigsaw-checkbox>
-        <jigsaw-checkbox jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small">checkbox</jigsaw-checkbox>
-    </div>
-
-    <div style="margin: 0 10px 40px 10px; ">
+    <div style="margin: 0 10px 20px 10px;">
         <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop"
                            [data]="cities"></jigsaw-button-bar>
         <jigsaw-button-bar jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                            [data]="cities"></jigsaw-button-bar>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; ">
+    <div style="margin: 0 10px 20px 10px; ">
         <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="dot" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                             [data]="cities"></jigsaw-radios-lite>
         <jigsaw-radios-lite jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgePosition="rightTop" jigsawBadgeSize="small"
                             [data]="cities"></jigsaw-radios-lite>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; ">
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="dot"
-                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
-        <jigsaw-tile-lite [data]="cities" jigsaw-badge [jigsawBadgeValue]="nice" jigsawBadgeSize="small"
-                          jigsawBadgePosition="rightTop"></jigsaw-tile-lite>
-    </div>
-
-    <div style="margin: 0 10px 40px 10px; display: flex">
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+    <div style="margin: 0 10px 20px 10px; display: flex">
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right:8px;" jigsaw-badge
             [jigsawBadgeValue]="nice" jigsawBadgeSize="small" jigsawBadgePosition="leftTop" jigsawBadgeStyle="solid-rectangular"
             jigsawBadgeStatus="normal" [jigsawBadgeHorizontalOffset]="-8" [jigsawBadgeVerticalOffset]="-8">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right:8px;" jigsaw-badge
             [jigsawBadgeValue]="nice" jigsawBadgeSize="normal" jigsawBadgePosition="leftBottom"
             jigsawBadgeStyle="solid-rectangular" jigsawBadgeStatus="success" [jigsawBadgeHorizontalOffset]="-10"
             [jigsawBadgeVerticalOffset]="-10">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right:8px;" jigsaw-badge
             [jigsawBadgeValue]="'iconfont iconfont-e8f5'" jigsawBadgeSize="large" jigsawBadgePosition="rightTop"
             jigsawBadgeStyle="solid-rectangular" jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]="-11"
             [jigsawBadgeVerticalOffset]="-11">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd" jigsaw-badge [jigsawBadgeValue]="nice"
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right:8px;" jigsaw-badge [jigsawBadgeValue]="nice"
             jigsawBadgeSize="small" jigsawBadgePosition="rightBottom" jigsawBadgeStyle="solid-rectangular"
              jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]="-8" [jigsawBadgeVerticalOffset]="-8">
         </div>
     </div>
 
-    <div style="margin: 0 10px 40px 10px; display: flex">
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
-            [jigsawBadgeValue]="innerHtml" jigsawBadgeSize="small" jigsawBadgePosition="leftTop" jigsawBadgeStyle="solid-rectangular"
+    <div style="margin: 0 10px 20px 10px; display: flex">
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+            [jigsawBadgeValue]="textualHtml" jigsawBadgePosition="leftTop" jigsawBadgeStyle="solid-rectangular"
             jigsawBadgeStatus="normal" [jigsawBadgeHorizontalOffset]="-8" [jigsawBadgeVerticalOffset]="-8">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
-            [jigsawBadgeValue]="innerHtml" jigsawBadgeSize="normal" jigsawBadgePosition="leftBottom"
-            jigsawBadgeStyle="solid-rectangular" jigsawBadgeStatus="success" [jigsawBadgeHorizontalOffset]="-10"
-            [jigsawBadgeVerticalOffset]="-10">
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+            [jigsawBadgeValue]="textualHtml" jigsawBadgePosition="leftBottom" jigsawBadgeStyle="solid-rectangular"
+             jigsawBadgeStatus="success" [jigsawBadgeHorizontalOffset]="-10" [jigsawBadgeVerticalOffset]="-10">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
-            [jigsawBadgeValue]="innerHtml2" jigsawBadgeSize="large" jigsawBadgePosition="rightTop"
-            jigsawBadgeStyle="solid-rectangular" jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]="-11"
-            [jigsawBadgeVerticalOffset]="-11">
+        <div style="width:250px;height:130px;border:1px solid #ddd; margin-right: 8px;" jigsaw-badge
+             [jigsawBadgeValue]="iconicHtml" jigsawBadgePosition="rightTop" jigsawBadgeStyle="solid-rectangular"
+             jigsawBadgeStatus="error" [jigsawBadgeHorizontalOffset]="-11" [jigsawBadgeVerticalOffset]="-11">
         </div>
-        <div style="width: 250px;height:130px;border:1px solid #ddd" jigsaw-badge [jigsawBadgeValue]="innerHtml2"
-            jigsawBadgeSize="small" jigsawBadgePosition="rightBottom" jigsawBadgeStyle="solid-rectangular"
-             jigsawBadgeStatus="warn" [jigsawBadgeHorizontalOffset]="-8" [jigsawBadgeVerticalOffset]="-8">
+        <div style="width:250px;height:130px;border:1px solid #ddd" jigsaw-badge [jigsawBadgeValue]="imageHtml"
+            jigsawBadgePosition="rightTop" jigsawBadgeStyle="solid-rectangular"
+             jigsawBadgeStatus="none" [jigsawBadgeHorizontalOffset]="-8" [jigsawBadgeVerticalOffset]="-10">
         </div>
     </div>
 </div>
