@@ -62,7 +62,7 @@ export class TableContentWidthDemoComponent {
                 "duration"
             ],
             [
-                "时间",
+                "时间带超长长长长长长长长表格头文本",
                 "接口",
                 "接入网",
                 "小区ID",
@@ -75,7 +75,10 @@ export class TableContentWidthDemoComponent {
     columnDefines: ColumnDefine[] = [
         {
             target: 'time',
-            width: 150
+            width: 150,
+            header: {
+                sortable: true
+            }
         },
         {
             target: 'apn',

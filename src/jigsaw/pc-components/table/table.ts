@@ -732,6 +732,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 设置表头随内容撑开
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'font-size', '14px');
 
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
@@ -772,6 +773,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
+        this._renderer.removeStyle(host.querySelector('.jigsaw-table-header'), 'font-size');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
     }
