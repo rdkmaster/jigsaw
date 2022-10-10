@@ -73,7 +73,7 @@ export class DemoTemplate implements AfterViewInit {
     public selectedIndex: number = 0;
 
     rerunPrism() {
-        setTimeout(Prism.highlightAll, 0);
+        setTimeout(Prism.highlightAll, 100);
     }
 
     ngAfterViewInit() {

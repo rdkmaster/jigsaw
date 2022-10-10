@@ -24,6 +24,7 @@ export class DemoListManager {
             { groupName: componentGroup.container, routers: [] },
             { groupName: componentGroup.layout, routers: [] },
             { groupName: componentGroup.directive, routers: [] },
+            { groupName: componentGroup.service, routers: [] },
             { groupName: componentGroup.other, routers: [] }
         ]
         routerConfigPC.forEach(router => {

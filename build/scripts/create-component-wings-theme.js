@@ -109,10 +109,14 @@ if (fs.existsSync(wingsThemeOutput)) {
 
 const styleFiles = styleFilesParser();
 const angularJson = require(`../../angular.real.json`);
-const options = angularJson.projects["jigsaw-app-internal"].architect.build.options;
-options.styles = options.styles.filter(style => typeof style === 'string' ||
+const externalOptions = angularJson.projects["jigsaw-app-external"].architect.build.options;
+const internalOptions = angularJson.projects["jigsaw-app-internal"].architect.build.options;
+externalOptions.styles = externalOptions.styles.filter(style => typeof style === 'string' ||
     (style.input && style.input.indexOf('/wings-theme/')) === -1);
-angularJson.projects["jigsaw-app-external"].architect.build.options.styles = options.styles;
+internalOptions.styles = internalOptions.styles.filter(style => typeof style === 'string' ||
+    (style.input && style.input.indexOf('/wings-theme/')) === -1);
+angularJson.projects["jigsaw-app-external"].architect.build.options.styles = externalOptions.styles;
+angularJson.projects["jigsaw-app-internal"].architect.build.options.styles = internalOptions.styles;
 
 const commonImport = `
         @import "../settings/paletx-pro-base.scss";
@@ -136,11 +140,19 @@ styleFiles.forEach(filePath => {
     fs.writeFileSync(`common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
         scssCode.replace(/\$THEME/g, 'light'));
 
-    options.styles.push({
+    externalOptions.styles.push({
         "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
         "bundleName": `themes/wings-theme/${wingsThemeId}-dark`, "inject": false
     });
-    options.styles.push({
+    externalOptions.styles.push({
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
+        "bundleName": `themes/wings-theme/${wingsThemeId}-light`, "inject": false
+    });
+    internalOptions.styles.push({
+        "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-dark.scss`,
+        "bundleName": `themes/wings-theme/${wingsThemeId}-dark`, "inject": false
+    });
+    internalOptions.styles.push({
         "input": `src/jigsaw/common/core/theming/prebuilt/wings-theme/${wingsThemeId}-light.scss`,
         "bundleName": `themes/wings-theme/${wingsThemeId}-light`, "inject": false
     });

@@ -145,8 +145,8 @@ export class ZTreeIconDemoComponent extends AsyncDescription implements AfterVie
 
         this.xml2.fromXML(`
             <node>
-                <node label="Web代码" open="true" iconUnicode="/app/app-demo/demo/tree/icon/assets/pc.svg">
-                    <node label="页面1" open="false" iconUnicode="/app/app-demo/demo/tree/icon/assets/web.svg">
+                <node label="Web代码" open="true" iconUnicode="app/for-external/demo/tree/icon/assets/pc.svg">
+                    <node label="页面1" open="false" iconUnicode="app/for-external/demo/tree/icon/assets/web.svg">
                         <node label="src" open="true">
                             <node label="index.html" iconUnicode="e5a2"></node>
                             <node label="styles.css" iconUnicode="e5a1"></node>
@@ -158,7 +158,7 @@ export class ZTreeIconDemoComponent extends AsyncDescription implements AfterVie
                             <node label="build.sh" iconUnicode="e494"></node>
                         </node>
                     </node>
-                    <node label="页面2" open="true" iconUnicode="/app/app-demo/demo/tree/icon/assets/web.svg">
+                    <node label="页面2" open="true" iconUnicode="app/for-external/demo/tree/icon/assets/web.svg">
                         <node label="src" open="true">
                             <node label="index.html" iconUnicode="e5a2"></node>
                             <node label="styles1.css" iconUnicode="e5a1"></node>
@@ -175,10 +175,10 @@ export class ZTreeIconDemoComponent extends AsyncDescription implements AfterVie
                 </node>
                 <node label="服务端" open="true" iconUnicode="e3a0">
                     <node label="src" open="true">
-                        <node label="查询服务1.sql" iconUnicode="/app/app-demo/demo/tree/icon/assets/file.svg"></node>
-                        <node label="查询服务2.sql" iconUnicode="/app/app-demo/demo/tree/icon/assets/file.svg"></node>
-                        <node label="查询服务3.sql" iconUnicode="/app/app-demo/demo/tree/icon/assets/file.svg"></node>
-                        <node label="查询服务4.sql" iconUnicode="/app/app-demo/demo/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务1.sql" iconUnicode="app/for-external/demo/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务2.sql" iconUnicode="app/for-external/demo/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务3.sql" iconUnicode="app/for-external/demo/tree/icon/assets/file.svg"></node>
+                        <node label="查询服务4.sql" iconUnicode="app/for-external/demo/tree/icon/assets/file.svg"></node>
                     </node>
                 </node>
             </node>
@@ -198,10 +198,4 @@ export class ZTreeIconDemoComponent extends AsyncDescription implements AfterVie
             }
         }
     }
-
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = "";
-    description: string = "";
 }
