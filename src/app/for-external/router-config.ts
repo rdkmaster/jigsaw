@@ -7,6 +7,7 @@ import { BreadcrumbRouterDetail } from "./demo/breadcrumb/router/detail/detail";
 import { BreadcrumbRouterBuy } from "./demo/breadcrumb/router/buy/buy";
 import { MenuAllComponent } from "./demo/menu/demo.component";
 import { BadgeAllComponent } from "./demo/badge/demo.component";
+import { RibbonAllComponent } from "./demo/ribbon/demo.component";
 import { ButtonAllComponent } from "./demo/button/demo.component";
 import { CheckBoxDemoComponent } from "./demo/checkbox/demo.componet";
 import { ButtonBarAllComponent } from "./demo/button-bar/demo.component";
@@ -101,6 +102,7 @@ export const routerConfigPC = [
     { path: "demo/combo-select", component: ComboSelectComponent, group: componentGroup.container },
     { path: "demo/auto-complete-input", component: AutoCompleteInputDemoComponent, group: componentGroup.entry },
     { path: "demo/badge", component: BadgeAllComponent, group: componentGroup.directive },
+    { path: "demo/ribbon", component: RibbonAllComponent, group: componentGroup.directive },
     { path: "demo/button-bar", component: ButtonBarAllComponent, group: componentGroup.general },
     { path: "demo/button", component: ButtonAllComponent, group: componentGroup.general },
     { path: "demo/cascade", component: CascadeAllComponent, group: componentGroup.container },

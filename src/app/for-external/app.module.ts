@@ -29,6 +29,7 @@ import { ButtonDemoModule } from "./demo/button/demo.module";
 import { CheckBoxDemoModule } from "./demo/checkbox/demo.module";
 import { ButtonBarDemoModule } from "./demo/button-bar/demo.module";
 import { BadgeDemoModule } from "./demo/badge/demo.module";
+import { RibbonDemoModule } from "./demo/ribbon/demo.module";
 import { RadioGroupDemoModule } from "./demo/radio/demo.module";
 import { CascadeAllModule } from "./demo/cascade/demo.module";
 import { IconDemoModule } from "./demo/icon/demo.module";
@@ -145,6 +146,7 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
         ColorSelectDemoModule,
         CollapseDemoModule,
         BadgeDemoModule,
+        RibbonDemoModule,
         DialogDemoModule,
         ComboSelectDemoModule,
         IconsDemoModule,
