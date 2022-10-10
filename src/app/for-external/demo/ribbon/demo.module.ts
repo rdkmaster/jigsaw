@@ -4,11 +4,13 @@ import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { JigsawRibbonModule } from "jigsaw/public_api";
 import { RibbonAllComponent } from "./demo.component";
 import { RibbonBasicDemoComponent } from './basic/demo.component';
+import { RibbonColorDemoComponent } from './color/demo.component';
 
 @NgModule({
     declarations: [
         RibbonAllComponent,
-        RibbonBasicDemoComponent
+        RibbonBasicDemoComponent,
+        RibbonColorDemoComponent
     ],
     imports: [
         DemoTemplateModule,
