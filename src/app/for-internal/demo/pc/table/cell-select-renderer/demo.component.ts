@@ -40,8 +40,13 @@ export class TableCellSelectRenderDemoComponent {
             target: 'office', width: '180',
             cell: {
                 editorRenderer: TableCellSelectRenderer,
-                editorRendererInitData: (td, row, col) => {
-                    return [{label: 'item1'}, {label: 'item2'}, {label: 'item3'}];
+                editorRendererInitData: {
+                    disabled: (td, row, col) => {
+                        return row > 3
+                    },
+                    initData: (td, row, col) => {
+                        return [{ label: 'item1' }, { label: 'item2' }, { label: 'item3' }];
+                    }
                 },
                 editable: true
             }

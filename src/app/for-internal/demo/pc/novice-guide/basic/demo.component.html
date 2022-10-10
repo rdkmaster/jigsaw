@@ -7,9 +7,13 @@
         <a (click)="reset()">重置</a>
         <a (click)="clear()">清理</a>
         <a (click)="options()">选项</a>
+        <span>|</span>
+        <a (click)="showAll()">显示所有</a>
+        <span>|</span>
         <a (click)="show(bubbleGuideData)">气泡指引</a>
         <a (click)="show(dialogGuideData)">对话框指引</a>
-        <a (click)="show(steppedGuideData)">分步指引</a>
+        <a (click)="show(steppedGuideData)">分步指引（正常）</a>
+        <a (click)="show(steppedGuideData1)">分步指引（测试无效）</a>
         <a (click)="show(wizardGuideData)">程序向导</a>
     </div>
 

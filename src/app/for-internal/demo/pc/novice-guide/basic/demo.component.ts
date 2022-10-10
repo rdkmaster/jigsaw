@@ -58,7 +58,17 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             JigsawToast.showInfo('新手指正常显示中。。。');
         } else if (r == 'too-many-interruptions') {
             JigsawToast.showInfo('短时间内已经打扰过多次啦，稍等再来。');
+        } else if (r == 'not-all-steps-ready') {
+            JigsawToast.showInfo('分步指引只要有一个notice找不到，就不显示所有notice。');
         }
+    }
+
+    showAll() {
+        JigsawToast.showInfo('测试同时显示多个指引，在正常情况下只会有一个显示出来，且指引完成后，再次显示所有指引时，应该显示下一个指引。');
+        console.log('show bubbleGuideData result:', noviceGuide.show(this.bubbleGuideData));
+        console.log('show dialogGuideData result:', noviceGuide.show(this.dialogGuideData));
+        console.log('show steppedGuideData result:', noviceGuide.show(this.steppedGuideData));
+        console.log('show wizardGuideData result:', noviceGuide.show(this.wizardGuideData));
     }
 
     reset() {
@@ -72,6 +82,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
 
     options() {
         noviceGuide.updateOptions({expire: 120 * 1000, duration: 60 * 1000, maxShowTimes: 2});
+        JigsawToast.showInfo('已经设置了1分钟最大打扰2次，一个指引超出2分钟后会再次显示。');
     }
 
     bubbleGuideData: BubbleNoviceGuide = {
@@ -145,6 +156,18 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             },
             {notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', position: 'left'},
             {notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top'}
+        ],
+        version: 'v0.0.1'
+    };
+
+    steppedGuideData1: SteppedNoviceGuide = {
+        type: NoviceGuideType.stepped,
+        notices: [
+            {
+                notice: '这是一条不会显示的对话框新手指引', title: '自定义标题', button: '自定义按钮文本',
+                tagName: 'ul', id: 'header-menu', position: 'bottom', delay: 1000
+            },
+            {notice: '这条对话框指引的selector无效，导致整个分步指引无法显示', button: '--', classes: 'a invalid class list', position: 'top'}
         ],
         version: 'v0.0.1'
     };

@@ -1,0 +1,52 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"></jigsaw-demo-description>
+
+<div class="demo-container">
+    <ul>
+        <li><label>勋带内容:</label>
+            <jigsaw-input id="test-input" [(value)]="inputValue" placeholder="勋带内容">
+            </jigsaw-input>
+        </li>
+        <li>
+            <label>勋带偏移量:</label>
+            <j-numeric-input [(value)]="offset" max="15" placeholder="勋带长度"></j-numeric-input>
+        </li>
+        <li>
+            <label>勋带背景：</label>
+            <jigsaw-color-select [enableOpacity]="false" [(color)]="color" width="40"></jigsaw-color-select>
+            <jigsaw-input [(value)]="color"></jigsaw-input>
+            <a (click)="setGradient()">设置渐进色</a>
+        </li>
+        <li>
+            <label>勋带内容颜色：</label>
+            <jigsaw-color-select [enableOpacity]="false" [(color)]="fontColor" width="40"></jigsaw-color-select>
+            <jigsaw-input [(value)]="fontColor"></jigsaw-input>
+            <a (click)="fontColor = ''">清空(未设置内容颜色时，将根据背景色自适应文本颜色)</a>
+        </li>
+        <li>
+            <label>勋带位置:</label>
+            <jigsaw-button-bar [data]="['rightTop','rightBottom','leftTop','leftBottom','top', 'bottom', 'center']"
+                [(selectedItems)]="selectedPosition">
+            </jigsaw-button-bar>
+        </li>
+        <li>
+            <label>勋带大小：</label>
+            <jigsaw-button-bar [data]="['small','normal','large']" [(selectedItems)]="selectedSize">
+            </jigsaw-button-bar>
+        </li>
+        <li>
+            <label>悬浮手指：</label>
+            <jigsaw-switch id="set-middle-state" [(checked)]="enablePointerCursor"></jigsaw-switch>
+        </li>
+    </ul>
+    <div class="ribbon-wrapper" (click)="echo($event, '外面的box被点击了')"
+        [ngStyle]="{cursor: enablePointerCursor ? 'unset' : 'pointer'}">
+        <div class="ribbon-content" jigsaw-ribbon [ngStyle]="{cursor: enablePointerCursor ? 'unset' : 'pointer'}"
+            [jigsawRibbonValue]="inputValue" [jigsawPositionOffset]="offset"
+            [jigsawRibbonPosition]="selectedPosition[0]" [jigsawRibbonSize]="selectedSize[0]"
+            [jigsawRibbonPointerCursor]="enablePointerCursor" [jigsawRibbonColor]="color" [jigsawRibbonFontColor]="fontColor"
+            (click)="echo($event,'里面的box被点击了')">
+            点击任何区域来测试ribbon的影响范围。
+        </div>
+    </div>
+</div>

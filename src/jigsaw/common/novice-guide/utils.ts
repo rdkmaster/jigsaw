@@ -11,7 +11,7 @@ import {
 
 export const options: NoviceGuideOptions = {
     // 7 days
-    expire: 7 * 24 * 3600 * 1000,
+    expire: 30 * 24 * 3600 * 1000,
     // 2 hours
     duration: 2 * 3600 * 1000,
     maxShowTimes: 3,
@@ -34,7 +34,7 @@ try {
 export const showingNotices: ShowingNotice[] = [];
 
 export function onGoing(): boolean {
-    return showingNotices.length > 0 ? !!showingNotices.find(sn => !!sn.mutation) : false;
+    return showingNotices.length > 0;
 }
 
 export function clearExpiredGuides() {
