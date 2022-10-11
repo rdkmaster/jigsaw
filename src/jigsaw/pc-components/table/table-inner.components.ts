@@ -206,7 +206,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 @Component({
     selector: 'jigsaw-table-header',
     template: `
-        <div class="jigsaw-table-header-cell">
+        <div class="jigsaw-table-header-cell" [ngClass]="{'jigsaw-table-header-cell-sortable': sortable}">
             <ng-template jigsaw-renderer-host></ng-template>
             <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
                  [trustedHtmlContext]="headerTrustedHtmlContext"></div>
