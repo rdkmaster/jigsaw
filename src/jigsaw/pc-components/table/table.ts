@@ -732,6 +732,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 设置表头随内容撑开
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
+        // 有的皮肤是14px字体默认，避免在使用这样皮肤的时候计算出来的尺寸不够，这里暂时加上字体，后续会去掉
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'font-size', '14px');
 
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
