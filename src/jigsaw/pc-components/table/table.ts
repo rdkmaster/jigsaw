@@ -50,8 +50,9 @@ import {TableUtils} from "./table-utils";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-table-host]': 'true',
         '[attr.data-theme]': 'theme',
+        '[class.jigsaw-table-host]': 'true',
+        '[class.jigsaw-table-ff]': '_$isFFBrowser'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -62,8 +63,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
+        if (CommonUtils.getBrowserType() == 'Firefox') {
+            this._$isFFBrowser = true;
+        }
         TrustedHtmlHelper.init(_zone);
     }
+
+    /**
+     * @internal
+     */
+    public _$isFFBrowser;
 
     /**
      * @NoMarkForCheckRequired
@@ -743,6 +752,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 清空col的width
         tHeadColGroup.forEach(col => col.setAttribute('width', ''));
         tBodyColGroup.forEach(col => col.setAttribute('width', ''));
+        if (this._$isFFBrowser) {
+            tHeadTds.forEach(col => col.setAttribute('width', ''));
+            tBodyTds.forEach(col => col.setAttribute('width', ''));
+        }
 
         host.querySelectorAll('.jigsaw-table-body > tbody tr:first-child td')
             .forEach(td => widthStorage.push(td.offsetWidth));
@@ -766,6 +779,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 !!headerSetting.width ? headerSetting.width : '0*';
             tHeadColGroup[index] && tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index] && tBodyColGroup[index].setAttribute('width', colWidth);
+            if (this._$isFFBrowser) {
+                tHeadTds[index] && tHeadTds[index].setAttribute('width', colWidth);
+                tBodyTds[index] && tBodyTds[index].setAttribute('width', colWidth);
+            }
         });
 
         // 还原
