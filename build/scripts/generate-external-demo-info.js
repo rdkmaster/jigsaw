@@ -26,6 +26,7 @@ glob('**/*.{ts,html,css,scss,md}', {cwd: `.`})
         const language = m1 ? m1[1] : 'txt';
         const label = name === 'demo.component.html' ? "HTML" :
             name === 'demo.component.ts' ? "Typescript" :
+            name === 'demo.component.scss' ? "Style" :
             name === 'demo.component.css' ? "Style" : name;
         files.push({label, language, file});
     });
