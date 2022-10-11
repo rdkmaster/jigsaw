@@ -5,7 +5,6 @@ import {Component} from '@angular/core';
     styles: [`
         .live-demo-wrap jigsaw-icon {
             margin-right: 50px;
-            line-height: 1;
         }
         .live-demo-wrap jigsaw-switch,
         .live-demo-wrap jigsaw-input,
