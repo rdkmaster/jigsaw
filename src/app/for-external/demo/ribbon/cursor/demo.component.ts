@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { AsyncDescription } from "../../../demo-template/demo-template";
 
 @Component({
-    selector: 'ribbon-color',
+    selector: 'ribbon-cursor',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class RibbonColorDemoComponent extends AsyncDescription {
-    public demoPath = "demo/ribbon/color";
+export class RibbonCursorDemoComponent extends AsyncDescription {
+    public demoPath = "demo/ribbon/cursor";
     public selectedSize = { size: "normal" };
 }

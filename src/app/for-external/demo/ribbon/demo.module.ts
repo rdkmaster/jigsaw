@@ -6,13 +6,15 @@ import { RibbonAllComponent } from "./demo.component";
 import { RibbonBasicDemoComponent } from './basic/demo.component';
 import { RibbonColorDemoComponent } from './color/demo.component';
 import { RibbonPositionDemoComponent } from './position/demo.component';
+import { RibbonCursorDemoComponent } from './cursor/demo.component';
 
 @NgModule({
     declarations: [
         RibbonAllComponent,
         RibbonBasicDemoComponent,
         RibbonColorDemoComponent,
-        RibbonPositionDemoComponent
+        RibbonPositionDemoComponent,
+        RibbonCursorDemoComponent
     ],
     imports: [
         DemoTemplateModule,

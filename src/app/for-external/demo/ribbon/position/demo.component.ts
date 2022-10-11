@@ -7,7 +7,6 @@ import { AsyncDescription } from "../../../demo-template/demo-template";
     styleUrls: ['./demo.component.css']
 })
 export class RibbonPositionDemoComponent extends AsyncDescription {
-    public demoPath = "demo/ribbon/color";
+    public demoPath = "demo/ribbon/position";
     public selectedSize = { size: "normal" };
-
 }

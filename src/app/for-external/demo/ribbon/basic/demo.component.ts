@@ -9,5 +9,4 @@ import { AsyncDescription } from "../../../demo-template/demo-template";
 export class RibbonBasicDemoComponent extends AsyncDescription {
     public demoPath = "demo/ribbon/basic";
     public selectedSize = { size: "normal" };
-
 }
