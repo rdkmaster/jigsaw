@@ -8,6 +8,11 @@ export class SearchInputBasicDemoComponent {
     value1: string;
     value2: string;
 
+    clear() {
+        this.value1 = '';
+        this.value2 = '';
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
