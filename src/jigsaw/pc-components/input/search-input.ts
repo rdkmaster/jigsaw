@@ -97,6 +97,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
             return;
         }
         this._value = newValue.trim();
+        this.valueChange.emit(this._value);
         // 表单友好接口
         this._propagateChange(this._value);
     }
