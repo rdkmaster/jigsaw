@@ -7,18 +7,20 @@ import {
     TableCellCheckboxRenderer,
     TableHeadCheckboxRenderer,
     TreeTableCellRenderer,
-    TreeTableData
+    TreeTableData,
+    TableData
 } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
 })
 export class TreeTableDemoComponent {
-
     public treeTableData: TreeTableData;
+    public tableData: TableData;
     public localPageableTreeTableData: PageableTreeTableData;
     private _removeTreeNodeOpenSubscription1: Subscription;
     private _removeTreeNodeOpenSubscription2: Subscription;
+    public columnDefines: ColumnDefine[];
 
     getRow(level: number) {
         return Array.from(new Array(4).keys()).map(num => `cell${level}-${num}`)
@@ -107,6 +109,30 @@ export class TreeTableDemoComponent {
                 {isParent: true, data: this.getRow(3)}
             ]
         });
+
+        this.tableData = new TableData();
+        this.tableData.fromObject({
+            header: ["Column1", "Column2", "Column3"],
+            field: ["field1", "field2", "field3"],
+            data: [
+                ["cell11", "cell12", "cell13"], //row1
+                ["cell21", "cell22", "cell23"], //row2
+                ["cell31", "cell32", "cell33"]  //row3
+            ]
+        })
+        this.columnDefines = [{
+            "target": [1],
+            "visible": true,
+            "header": {
+                "text": "",
+                "alignment": "left",
+                "noPadding": false
+            },
+            "cell": {
+                "renderer": TreeTableCellRenderer,
+                "noPadding": false
+            }
+        }];
 
         this._removeTreeNodeOpenSubscription1 = this.treeTableData.nodeOpenChange.subscribe(param => {
             console.log('tree node open change: ', param);

@@ -855,6 +855,9 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     public tableData: PageableTreeTableData;
 
     public get indent(): string {
+        if (typeof this.cellData.id !== 'string') {
+            return '0px';
+        }
         return (this.cellData.id.split("-").length - 2) * 20 + 'px';
     }
 
