@@ -125,6 +125,9 @@ export class JigsawUpload extends JigsawUploadBase {
             this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
             return;
         }
+        if (!this.multiple) {
+            this._$uploader.files.splice(0, this.files.length);
+        }
         this._$uploader.appendFiles(fileList);
         this._renderer.removeClass(this._elementRef.nativeElement, "jigsaw-upload-drag-over");
         if (this.uploadImmediately) {
