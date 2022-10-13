@@ -366,10 +366,6 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                     color: $brand-default;
                 }
             }
-
-            .#{$jigsaw-list}-option-hidden {
-                display: none;
-            }
         }
     }
 }
