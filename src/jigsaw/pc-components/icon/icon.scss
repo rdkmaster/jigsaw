@@ -4,6 +4,7 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
 .#{$icon-prefix-cls}-host {
     @include inline-block();
     color: $font-color-default;
+    line-height: 1;
     overflow: hidden;
     a:link,
     a:visited,
