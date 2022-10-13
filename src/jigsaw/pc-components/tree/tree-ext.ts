@@ -711,12 +711,12 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
 
         this.ztree.hideNodes(nodes);
-        nodes.filter(node => CommonUtils.isDefined(node[field]) && node[field].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
+        nodes.filter(node => CommonUtils.isDefined(node[field]) && new String(node[field]).toLowerCase().indexOf(keyword.toLowerCase()) != -1)
             .forEach(node => {
                 const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
                 node.oldname = node[field];
                 const rexGlobal = new RegExp(regKeywords, 'gi');
-                node[field] = node.oldname.replace(rexGlobal, originalText =>
+                node[field] = new String(node.oldname).replace(rexGlobal, originalText =>
                     `<span class="jigsaw-tree-funzzy-search-identification" style="background-color: var(--primary-disabled);">${originalText}</span>`);
                 this.ztree.updateNode(node);
                 this.ztree.showNode(node);
