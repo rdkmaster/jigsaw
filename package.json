@@ -86,7 +86,7 @@
         "jasmine-core": "~2.6.2",
         "jasmine-spec-reporter": "~4.1.0",
         "minimist": "~1.2.5",
-        "ng-packagr": "~9.1.5",
+        "ng-packagr": "~14.2.1",
         "nyc": "~13.3.0",
         "prismjs": "~1.28.0",
         "protractor": "~5.1.2",
