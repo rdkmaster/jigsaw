@@ -1,0 +1,15 @@
+.drawer-content {
+    height: 100px;
+    margin: 36px;
+    white-space: nowrap;
+}
+
+.custom-container {
+    width: 50%;
+    height: 300px;
+    background: #ddd;
+    border: 1px solid #000;
+}
+
+
+

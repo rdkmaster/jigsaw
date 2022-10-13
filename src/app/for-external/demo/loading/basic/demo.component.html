@@ -1,0 +1,42 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="wrap">
+        <div class="block">
+            <div #block class="content-box">
+                <h3 class="content-title">一个简单的表单</h3>
+                <div class="content-line">
+                    <label>邮箱: </label>
+                    <jigsaw-input></jigsaw-input>
+                </div>
+                <div class="content-line">
+                    <label>电话: </label>
+                    <jigsaw-input></jigsaw-input>
+                </div>
+                <div class="content-line">
+                    <label>地址: </label>
+                    <jigsaw-input></jigsaw-input>
+                </div>
+                <jigsaw-button (click)="popupBlockLoading()" colorType="primary">提交</jigsaw-button>
+            </div>
+            <div class="content-box">
+                <h3 class="content-title">另一个简单表单</h3>
+                <div class="content-line">
+                    <label>邮箱: </label>
+                    <jigsaw-input [disabled]="isLoading"></jigsaw-input>
+                </div>
+                <div class="content-line">
+                    <label>电话: </label>
+                    <jigsaw-input [disabled]="isLoading"></jigsaw-input>
+                </div>
+                <div class="content-line">
+                    <label>地址: </label>
+                    <jigsaw-input [disabled]="isLoading"></jigsaw-input>
+                </div>
+
+                <jigsaw-button (click)="startToLoad()" height="32px" colorType="primary">
+                    <jigsaw-circle-loading *ngIf="isLoading" [size]="'small'"></jigsaw-circle-loading>
+                    <span>{{ label }} </span>
+                </jigsaw-button>
+            </div>
+        </div>
+    </div>
+</demo-template>

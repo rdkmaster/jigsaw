@@ -1,0 +1,13 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <j-combo-select [(value)]="selectedItems6" [clearable]="true" maxWidth="500" labelField="name" [autoWidth]="true">
+        <ng-template>
+            <j-list-lite
+                [data]="goodsList"
+                labelField="name"
+                [(selectedItems)]="selectedItems6"
+                [multipleSelect]="true"
+                [searchable]="true"
+            ></j-list-lite>
+        </ng-template>
+    </j-combo-select>
+</demo-template>

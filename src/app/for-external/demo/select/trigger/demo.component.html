@@ -1,0 +1,15 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-select
+            id="test-select"
+            [(value)]="selectedCityForSelect"
+            [data]="cityListForSelect"
+            placeholder="请选择城市"
+            openTrigger="mouseenter"
+            closeTrigger="mouseleave"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-select>
+    </div>
+</demo-template>

@@ -1,0 +1,29 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>日期和时间选择</span>
+        <jigsaw-date-time-picker [(date)]="date1" [gr]="'second'" [showConfirmButton]="showConfirmButton">
+        </jigsaw-date-time-picker>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>日期和时间范围选择</span>
+        <jigsaw-range-date-time-picker
+            [(beginDate)]="beginDate"
+            [(endDate)]="endDate"
+            [gr]="'second'"
+            [showConfirmButton]="showConfirmButton"
+        ></jigsaw-range-date-time-picker>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>日期和时间选择的下拉框模式</span>
+        <jigsaw-date-time-select [(date)]="date2" [gr]="'second'" [showConfirmButton]="showConfirmButton">
+        </jigsaw-date-time-select>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>日期和时间范围选择的下拉框模式</span>
+        <jigsaw-range-date-time-select [(date)]="date3" [gr]="'second'" [showConfirmButton]="showConfirmButton">
+        </jigsaw-range-date-time-select>
+    </div>
+</demo-template>

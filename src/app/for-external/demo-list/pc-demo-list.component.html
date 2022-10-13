@@ -1,0 +1,10 @@
+<div class="demo-title">Jigsaw Demo</div>
+<div *ngFor="let routers of routerGroup; index as i" class="demo-list-cntr">
+    <div class="demo-list-title">{{routers.groupName}}({{routers.routers.length}})</div>
+    <ul class="demo-list">
+        <li *ngFor="let router of routers.routers; index as i" routerLink="{{getUrl(router)}}">
+            <span class="index">{{i+1}}</span>
+            <span class="title">{{router.path.replace('demo/', '')}}</span>
+        </li>
+    </ul>
+</div>

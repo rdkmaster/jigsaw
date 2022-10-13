@@ -1,0 +1,13 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-auto-complete-input
+            width="20%"
+            [data]="_$dropdownData"
+            [(value)]="inputValue"
+            placeholder="预设数据列表例子"
+            [filterOnFocus]="filterOnFocus"
+            [closeDropDownOnSelect]="closeDropDownOnSelect"
+        >
+        </jigsaw-auto-complete-input>
+    </div>
+</demo-template>

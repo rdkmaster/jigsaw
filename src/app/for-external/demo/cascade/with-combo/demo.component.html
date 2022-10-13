@@ -1,0 +1,36 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>单选</span>
+        <j-combo-select [value]="comboValue1">
+            <ng-template>
+                <j-cascade
+                    width="418"
+                    labelField="name"
+                    [(selectedItems)]="selectedItems1"
+                    [dataGenerator]="generator"
+                    [generatorContext]="this"
+                    style="min-height: 335px"
+                >
+                </j-cascade>
+            </ng-template>
+        </j-combo-select>
+    </div>
+
+    <div class="demo-showcase">
+        <span>多选</span>
+        <j-combo-select [value]="comboValue2">
+            <ng-template>
+                <j-cascade
+                    width="418"
+                    labelField="name"
+                    [(selectedItems)]="selectedItems2"
+                    [dataGenerator]="generator"
+                    [generatorContext]="this"
+                    [multipleSelect]="true"
+                    style="min-height: 335px"
+                >
+                </j-cascade>
+            </ng-template>
+        </j-combo-select>
+    </div>
+</demo-template>

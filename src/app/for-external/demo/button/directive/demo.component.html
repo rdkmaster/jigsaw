@@ -1,0 +1,16 @@
+<demo-template sizeController="small小,medium中,large大,default默认" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>指令按钮</span>
+        <a jigsaw-button colorType="primary" [preSize]="selectedSize.size">使用 a 标签</a>
+        <button jigsaw-button colorType="primary" [preSize]="selectedSize.size">使用 button 标签</button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>预设颜色</span>
+        <a jigsaw-button>默认</a>
+        <a jigsaw-button colorType="primary" [preSize]="selectedSize.size">重要</a>
+        <a jigsaw-button colorType="warning" [preSize]="selectedSize.size">警告</a>
+        <a jigsaw-button colorType="error" [preSize]="selectedSize.size">错误</a>
+    </div>
+</demo-template>

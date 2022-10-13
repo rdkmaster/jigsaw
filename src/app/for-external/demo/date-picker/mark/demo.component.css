@@ -1,0 +1,27 @@
+.mark .label {
+    position: relative;
+    display: inline-flex;
+    margin-right: 10px;
+    margin-bottom: 12px;
+    padding-left: 10px;
+}
+
+.mark .label::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background: hsl(30, 88%, 51%);
+}
+
+.mark .label:first-of-type::after {
+    background: hsl(128, 59%, 44%);
+}
+
+.mark .label:last-of-type::after {
+    background: hsl(0, 85%, 61%);
+}

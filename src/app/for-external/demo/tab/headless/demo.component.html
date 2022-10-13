@@ -1,0 +1,34 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="container">
+        <div class="demo-showcase">
+            <jigsaw-button-bar
+                style="display: block"
+                [data]="tabs"
+                [selectedItems]="tabs[selectedIndex]"
+                (selectedItemsChange)="selectedIndex = $event[0].idx"
+            >
+            </jigsaw-button-bar>
+        </div>
+        <div style="border: 1px solid #eee; width: 600px">
+            <jigsaw-tabs height="200px" headless="true" [selectedIndex]="selectedIndex">
+                <jigsaw-tab-pane title="Tab 1">
+                    <ng-template>This is the body of the first tab</ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane title="Tab 2">
+                    <ng-template>This is the body of the second tab</ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane>
+                    <div jigsaw-title><span class="iconfont iconfont-e187"></span>Tab 3</div>
+                    <ng-template>
+                        <jigsaw-table [data]="fruitList"></jigsaw-table>
+                    </ng-template>
+                </jigsaw-tab-pane>
+                <jigsaw-tab-pane title="Tab 4">
+                    <ng-template>
+                        <jigsaw-graph [data]="lineBarGraphData"></jigsaw-graph>
+                    </ng-template>
+                </jigsaw-tab-pane>
+            </jigsaw-tabs>
+        </div>
+    </div>
+</demo-template>

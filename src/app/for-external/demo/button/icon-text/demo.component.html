@@ -1,0 +1,41 @@
+<demo-template sizeController="small小,medium中,large大,default默认" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>简约</span>
+        <jigsaw-button
+            (click)="onClick()"
+            icon="iconfont iconfont-e0a1"
+            colorType="none"
+            [preSize]="selectedSize.size"
+        >
+            新增参数
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>属性</span>
+        <j-button icon="iconfont iconfont-e247" [preSize]="selectedSize.size">通过icon属性</j-button>
+        <j-button icon="iconfont iconfont-e247" iconPosition="left" [preSize]="selectedSize.size">图标在左侧</j-button>
+        <j-button icon="iconfont iconfont-e247" iconPosition="right" [preSize]="selectedSize.size"
+            >图标在右侧</j-button
+        >
+    </div>
+
+    <div class="demo-showcase">
+        <span>内嵌</span>
+        <j-button [preSize]="selectedSize.size">
+            <span class="iconfont iconfont-e9ff"></span>
+            <span>内嵌图标</span>
+        </j-button>
+
+        <j-button [preSize]="selectedSize.size">
+            <span class="iconfont iconfont-e9ff"></span>
+            <span>图标在左侧</span>
+        </j-button>
+
+        <j-button [preSize]="selectedSize.size">
+            <span>图标在右侧</span>
+            <span class="iconfont iconfont-e9ff"></span>
+        </j-button>
+    </div>
+</demo-template>

@@ -1,0 +1,10 @@
+<demo-template sizeController="small小,normal中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <jigsaw-color-select
+        color="#e57409"
+        [enableConfirm]="false"
+        [preSize]="selectedSize.size"
+        (colorChange)="_$colorChange($event)"
+    >
+    </jigsaw-color-select>
+</demo-template>

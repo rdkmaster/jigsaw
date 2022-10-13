@@ -1,0 +1,7 @@
+.upload-auto-upload-demo-cntr .hints {
+    margin-bottom: 12px;
+}
+
+.upload-auto-upload-demo-cntr .hints > span {
+    display: flex;
+}

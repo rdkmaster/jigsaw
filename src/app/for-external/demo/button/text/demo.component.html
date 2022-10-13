@@ -1,0 +1,4 @@
+<demo-template sizeController="small小,medium中,large大,default默认" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <jigsaw-button (click)="onClick()" colorType="none" [preSize]="selectedSize.size"> 文字 </jigsaw-button>
+</demo-template>

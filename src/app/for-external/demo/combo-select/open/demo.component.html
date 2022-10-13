@@ -1,0 +1,14 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div style="margin-bottom: 20px">
+        <jigsaw-button (click)="toggleOpen()">打开/关闭下拉框</jigsaw-button>
+    </div>
+    <jigsaw-combo-select [(value)]="selectedCity" [(open)]="open" maxWidth="500" [clearable]="true">
+        <ng-template>
+            <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
+                <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
+                    {{ city.label }}
+                </jigsaw-tile-option>
+            </jigsaw-tile>
+        </ng-template>
+    </jigsaw-combo-select>
+</demo-template>

@@ -1,0 +1,10 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <jigsaw-range-date-time-select
+            [(date)]="date"
+            [gr]="gr[0]"
+            width="205"
+            (dateChange)="dateChange($event)"
+        ></jigsaw-range-date-time-select>
+    </div>
+</demo-template>

@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div style="height: 500px">
+        <j-button
+            j-movable
+            jigsawMovableAffixType="fixed"
+            (mousedown)="recordMouseStartPosition($event)"
+            (mouseup)="handleMouseUp($event)"
+        >
+            一个可移动的按钮
+        </j-button>
+    </div>
+</demo-template>

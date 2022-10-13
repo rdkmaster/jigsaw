@@ -1,0 +1,73 @@
+<div>
+    <div id="setting">
+        <a (click)="reset()">重置</a>
+        <a (click)="clear()">清理</a>
+        <a (click)="options()">选项</a>
+        <a (click)="show(bubbleGuideData)">气泡指引</a>
+        <a (click)="show(dialogGuideData)">对话框指引</a>
+        <a (click)="show(steppedGuideData)">分步指引</a>
+        <a (click)="show(wizardGuideData)">程序向导</a>
+    </div>
+
+    <p class="content-hidden-notice" *ngIf="!showContent">
+        demo的内容被隐藏了，可以先打开需要提示的内容，再点击这里
+        <a (click)="showContent = true;">显示demo内容</a>
+    </p>
+
+    <div class="demo-cntr" *ngIf="showContent">
+        <header>
+            <div>JIGSAW DEMO</div>
+            <ul id="header-menu">
+                <li>菜单1</li>
+                <li>菜单2</li>
+                <li>菜单3</li>
+                <li>菜单4</li>
+                <li>菜单5</li>
+                <li>菜单6</li>
+                <li>菜单7</li>
+                <li id="dialog-btn" (click)="popupDialog(dialog)">对话框</li>
+            </ul>
+        </header>
+        <div class="menu">
+            <jigsaw-navigation-menu height="100%" width="180" [data]="navData">
+            </jigsaw-navigation-menu>
+        </div>
+        <div class="main">
+            <div class="content">
+                <jigsaw-header>单选框</jigsaw-header>
+                <jigsaw-select [data]="cityList" placeholder="请选择城市">
+                </jigsaw-select>
+                <jigsaw-header>数据表</jigsaw-header>
+                <jigsaw-table height="450" [data]="tableData"></jigsaw-table>
+            </div>
+            <div id="ad">
+                <i class="iconfont iconfont-ea04"></i>
+            </div>
+        </div>
+        <footer>
+            <div class="footer copyright">
+                <span>Copyright 1999-2022 by Jigsaw Demo. All Rights Reserved.</span>
+            </div>
+        </footer>
+    </div>
+
+    <ng-template #dialog>
+        <jigsaw-dialog class="dialog-container" width="40%" caption="dialog title" icon="iconfont iconfont-e3f0"
+            (close)="dialogInfo?.dispose()">
+            <ul class="dialog-content">
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+                <li>Dialog content...</li>
+            </ul>
+
+            <jigsaw-button-bar [selectedItems]="buttonbar[0]" [data]="buttonbar">
+            </jigsaw-button-bar>
+
+            <div jigsaw-button-bar>
+                <jigsaw-button colorType="primary" (click)="dialogInfo?.dispose()">OK</jigsaw-button>
+                <jigsaw-button (click)="dialogInfo?.dispose()">Cancel</jigsaw-button>
+                <a class="button-bar-link">需要帮助？</a>
+            </div>
+        </jigsaw-dialog>
+    </ng-template>
+</div>

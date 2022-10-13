@@ -1,0 +1,11 @@
+<demo-template sizeController="small小,normal中,large大" [(selectedSize)]="selectedSize" [description]="description"
+    [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <div class="ribbon-div" jigsaw-ribbon jigsawRibbonValue="红" [jigsawRibbonSize]="selectedSize.size"
+            jigsawRibbonColor="red" jigsawRibbonFontColor="white"></div>
+        <div class="ribbon-div" jigsaw-ribbon jigsawRibbonValue="红" [jigsawRibbonSize]="selectedSize.size"
+            jigsawRibbonColor="cyan" jigsawRibbonFontColor="red"></div>
+        <div class="ribbon-div" jigsaw-ribbon jigsawRibbonValue="渐进色" [jigsawRibbonSize]="selectedSize.size"
+            jigsawRibbonColor="linear-gradient(#e66465, #9198e5)" jigsawRibbonFontColor="white"></div>
+    </div>
+</demo-template>

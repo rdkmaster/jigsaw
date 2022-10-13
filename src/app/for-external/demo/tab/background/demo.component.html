@@ -1,0 +1,48 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-container">
+        <span>标签式</span>
+        <jigsaw-tabs backgroundColor="var(--bg-body)">
+            <jigsaw-tab-pane title="tab1">
+                <ng-template
+                    ><p class="tab-content">tab content 1</p>
+                    <p></p
+                ></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2" [disabled]="true">
+                <ng-template
+                    ><p class="tab-content">tab content 2</p>
+                    <p></p
+                ></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template
+                    ><p class="tab-content">tab content 3</p>
+                    <p></p
+                ></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template
+                    ><p class="tab-content">tab content 4</p>
+                    <p></p
+                ></ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+    <div class="demo-container">
+        <span>页签式</span>
+        <jigsaw-tabs [tabType]="'page'" backgroundColor="var(--bg-body)">
+            <jigsaw-tab-pane title="标签名称">
+                <ng-template><p class="tab-content">tab content 1</p></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2" [disabled]="true">
+                <ng-template><p class="tab-content">tab content 2</p></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template><p class="tab-content">tab content 3</p></ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template><p class="tab-content">tab content 4</p></ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+</demo-template>

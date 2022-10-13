@@ -121,7 +121,7 @@ export class PCDemoListComponent implements OnInit {
         this.routes.forEach(item => {
             item.hidden = !selectedItems.find(component => component === item.path)
         })
-        if(!selectedItems.length){
+        if (!selectedItems.length) {
             this.routes.forEach(item => {
                 item.hidden = false
             })

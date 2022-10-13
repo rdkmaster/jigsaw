@@ -1,0 +1,10 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="live-demo-wrap">
+        <div class="clearfix">
+            <div class="live-demo live-demo-block">
+                <jigsaw-header [level]="2">FunnelPlotGraphData静态数据</jigsaw-header>
+                <jigsaw-graph [data]="funnelPlotData" height="400" (click)="handleClick($event)"></jigsaw-graph>
+            </div>
+        </div>
+    </div>
+</demo-template>

@@ -1,0 +1,16 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>正常</span>
+        <jigsaw-date-time-picker [(date)]="date" gr="second"></jigsaw-date-time-picker>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>禁用</span>
+        <jigsaw-date-time-picker [disabled]="true"></jigsaw-date-time-picker>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>校验</span>
+        <jigsaw-date-time-picker [(date)]="date" gr="second" [valid]="false"></jigsaw-date-time-picker>
+    </div>
+</demo-template>

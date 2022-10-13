@@ -1,0 +1,34 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>普通按钮</span>
+        <jigsaw-button colorType="default" [(disabled)]="disabled">
+            <jigsaw-pie-chart-icon [fill]="colors" [data]="shortData" radius="8" style="margin: 4px 4px 0 0">
+            </jigsaw-pie-chart-icon>
+            普通按钮
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>文字按钮</span>
+        <jigsaw-button colorType="none" [(disabled)]="disabled">
+            <jigsaw-pie-chart-icon [fill]="colors" [data]="shortData" radius="8" style="margin: 4px 4px 0 0">
+            </jigsaw-pie-chart-icon>
+            文字
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>大型按钮</span>
+        <jigsaw-button colorType="primary" width="280px" height="36px" style="font-size: 16px" [(disabled)]="disabled">
+            <jigsaw-line-chart-icon
+                [data]="longData"
+                width="240"
+                height="24"
+                style="margin-top: 4px"
+                [fill]="fill"
+                [stroke]="stroke"
+            >
+            </jigsaw-line-chart-icon>
+        </jigsaw-button>
+    </div>
+</demo-template>

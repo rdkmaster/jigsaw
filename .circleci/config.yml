@@ -34,17 +34,17 @@ jobs:
                     node build/scripts/check-public-variables.js
                     node build/scripts/check-scss-in-demo.js
                     node build/scripts/check-tagname-selector.js
-                    # ./node_modules/.bin/gulp ensure-url-matches-path
                     node build/scripts/extract-theme-variables.js
                     node build/scripts/check-extraction.js
                     node build/scripts/create-component-wings-theme.js
+                    # ./node_modules/.bin/gulp ensure-url-matches-path
                     ./node_modules/.bin/gulp build:novice-guide
 #            - run:
 #                name: Generate demo info
 #                command: ./node_modules/.bin/gulp generate-demo-info
-#            - run:
-#                name: Generate doc
-#                command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+            - run:
+                name: Generate doc
+                command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
 # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
 #            - run:
 #                name: Building jigsaw lib
@@ -56,13 +56,6 @@ jobs:
             - run:
                   name: Unit test
                   command: npm test
-#            - run:
-#                  name: Testing patch demo
-#                  command: |
-#                        sh build/scripts/clone-seed.sh
-#                        sed -i "s/^\s*checkBranch/\/\/checkBranch/g" build/scripts/patch-demos.js
-#                        node build/scripts/patch-demos.js
-#                        # git checkout src
 
             - run:
                   name: Checking PR title

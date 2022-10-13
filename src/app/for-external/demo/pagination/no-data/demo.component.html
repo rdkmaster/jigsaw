@@ -1,0 +1,29 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>空数据（默认模式）</span>
+        <jigsaw-pagination
+            [data]="paginationData"
+            [pageSizeOptions]="[5, 10, 20]"
+            [searchable]="false"
+            [showQuickJumper]="true"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-pagination>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>空数据（简约模式）</span>
+        <jigsaw-pagination
+            mode="simple"
+            [data]="paginationData"
+            (currentChange)="getCurrentPage($event)"
+            [searchable]="false"
+            [pageSizeOptions]="[5, 10, 20]"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-pagination>
+    </div>
+</demo-template>

@@ -1,0 +1,7 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-button (click)="toggle()" colorType="primary">开关抽屉</jigsaw-button>
+
+    <j-drawer [(open)]="isOpen" (openChange)="touched = true" position="right" [width]="width" [height]="height">
+        <div class="drawer-content">这是一个展示内容的box</div>
+    </j-drawer>
+</demo-template>

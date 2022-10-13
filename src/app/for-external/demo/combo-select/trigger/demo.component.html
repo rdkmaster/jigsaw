@@ -1,0 +1,29 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>鼠标单击触发打开/关闭</span>
+        <jigsaw-combo-select
+            openTrigger="click"
+            closeTrigger="click"
+            [open]="false"
+            placeholder="根据选择的触发器测试效果"
+        >
+            <ng-template>
+                <div class="drop-down">这里是下拉视图的内容</div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>鼠标滑入触发打开，鼠标滑出触发关闭</span>
+        <jigsaw-combo-select
+            openTrigger="mouseenter"
+            closeTrigger="mouseleave"
+            [open]="false"
+            placeholder="根据选择的触发器测试效果"
+        >
+            <ng-template>
+                <div class="drop-down">这里是下拉视图的内容</div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</demo-template>

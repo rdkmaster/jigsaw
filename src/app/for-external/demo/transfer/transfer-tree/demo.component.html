@@ -1,0 +1,11 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <j-transfer
+        width="100%"
+        height="500"
+        [data]="data"
+        [selectedItems]="selectedData"
+        [sourceRenderer]="sourceRenderer"
+        [destRenderer]="targetRenderer"
+        (selectedItemsChange)="selectedItemsChange($event)"
+    ></j-transfer>
+</demo-template>

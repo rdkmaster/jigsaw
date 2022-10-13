@@ -1,0 +1,7 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <jigsaw-tree-ext [(data)]="data" (onClick)="onClick($event)" [size]="selectedSize.size">
+    </jigsaw-tree-ext>
+
+    <p>建议使用xml作为数据源，<a href="#/pc/tree/xml-data">详见这里</a>。</p>
+</demo-template>

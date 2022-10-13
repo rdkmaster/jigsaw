@@ -1,0 +1,14 @@
+<demo-template sizeController="small小,medium中,large大"  [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-select
+            [value]="'南京'"
+            placeholder="请选择城市"
+            [optionWidth]="optionWidth"
+            [data]="['北京', '上海', '南京', '深圳', '长沙', '西安']"
+            style="margin-top: 12px"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-select>
+    </div>
+</demo-template>

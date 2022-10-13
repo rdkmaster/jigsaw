@@ -1,0 +1,37 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-combo-select placeholder="鼠标移过来...">
+            <ng-template>
+                <jigsaw-collapse mode="accordion">
+                    <jigsaw-collapse-pane [isActive]="true">
+                        <div jigsaw-title>
+                            <i class="iconfont iconfont-e1bb"></i>
+                            <span style="color: blue;">姓名</span>
+                            <i class="iconfont iconfont-e1bc"></i>
+                        </div>
+                        <div jigsaw-body>
+                            <input [(ngModel)]="name" type="text" placeholder="请输入姓名~" style="
+                                  background: none;
+                                  border-radius: 4px;
+                                  border: 1px solid #9194a7;
+                                  text-indent: 8px;
+                                  line-height: 24px;
+                                  font-size: 12px;">
+                        </div>
+                    </jigsaw-collapse-pane>
+
+                    <jigsaw-collapse-pane header="密码">
+                        密码: <input type="text" placeholder="请输入密码~" style="
+                                  margin-bottom: 12px;
+                                  background: none;
+                                  border-radius: 4px;
+                                  border: 1px solid #9194a7;
+                                  text-indent: 8px;
+                                  line-height: 24px;
+                                  font-size: 12px;">
+                    </jigsaw-collapse-pane>
+                </jigsaw-collapse>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</demo-template>

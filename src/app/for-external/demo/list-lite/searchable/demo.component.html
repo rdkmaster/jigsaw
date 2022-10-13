@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <j-list-lite
+            width="200"
+            [(data)]="goodsList"
+            labelField="name"
+            placeholder="输入关键字对列表进行过滤"
+            [multipleSelect]="true"
+            [searchable]="true"
+        ></j-list-lite>
+    </div>
+</demo-template>

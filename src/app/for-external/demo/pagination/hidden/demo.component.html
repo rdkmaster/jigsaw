@@ -1,0 +1,50 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>隐藏单页数</span>
+        <jigsaw-pagination
+            [data]="pageable"
+            [pageSizeOptions]="null"
+            [searchable]="false"
+            [showQuickJumper]="true"
+            mode="complex"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            widh="710px"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-pagination>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>隐藏跳转框</span>
+        <jigsaw-pagination
+            [data]="pageable"
+            [pageSizeOptions]="pageSizeOptions"
+            [searchable]="false"
+            [showQuickJumper]="false"
+            mode="complex"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            widh="710px"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-pagination>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>全隐藏</span>
+        <jigsaw-pagination
+            [data]="pageable"
+            [pageSizeOptions]="null"
+            [searchable]="false"
+            [showQuickJumper]="false"
+            mode="complex"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+            widh="710px"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-pagination>
+    </div>
+</demo-template>

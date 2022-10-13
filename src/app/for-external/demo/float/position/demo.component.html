@@ -1,0 +1,95 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-sudoku">
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="topLeft"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            上方靠左
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="topRight"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            上方靠右
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="leftTop"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            左侧靠上
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="rightTop"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            右侧靠上
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="leftBottom"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            左测靠下
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="rightBottom"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            右侧靠下
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="bottomLeft"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            下方靠左
+        </j-button>
+        <j-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            jigsawFloatOpenTrigger="click"
+            jigsawFloatCloseTrigger="click"
+            jigsawFloatPosition="bottomRight"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            下方靠右
+        </j-button>
+    </div>
+    <ng-template #jigsawFloatArea>
+        <div class="jigsawFloatArea">下拉区域占位符</div>
+    </ng-template>
+</demo-template>

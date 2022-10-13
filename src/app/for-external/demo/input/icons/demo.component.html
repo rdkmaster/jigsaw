@@ -1,0 +1,9 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-input
+        width="200"
+        [preIcon]="preIcons"
+        [icon]="backIcon"
+        (preIconSelect)="iconClick($event, 'pre')"
+        (iconSelect)="iconClick($event, 'back')"
+    ></jigsaw-input>
+</demo-template>

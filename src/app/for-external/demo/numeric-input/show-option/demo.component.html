@@ -1,0 +1,40 @@
+<demo-template sizeController="small小,default中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>默认情况</span>
+        <j-numeric-input
+            [(value)]="value"
+            [showOption]="showOption"
+            min="1"
+            max="110"
+            placeholder="请输入数字"
+            [size]="selectedSize.size"
+        ></j-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>带单位的</span>
+        <j-numeric-input
+            [(value)]="value3"
+            [showOption]="showOption"
+            min="1"
+            max="110"
+            placeholder="请输入数字"
+            [suffix]="'单位'"
+            [size]="selectedSize.size"
+        ></j-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>带可选单位的</span>
+        <j-numeric-input
+            [(value)]="value2"
+            [showOption]="showOption"
+            min="1"
+            max="110"
+            placeholder="请输入数字"
+            [suffix]="_$units"
+            [size]="selectedSize.size"
+        ></j-numeric-input>
+    </div>
+</demo-template>

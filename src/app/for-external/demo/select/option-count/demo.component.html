@@ -1,0 +1,14 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>设置选项数量</span>
+        <jigsaw-select
+            [(value)]="selectedCityForSelect"
+            placeholder="请选择城市"
+            [optionCount]="3"
+            [data]="cityListForSelect"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-select>
+    </div>
+</demo-template>

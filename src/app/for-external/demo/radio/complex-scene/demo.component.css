@@ -1,0 +1,57 @@
+.live-demo-block {
+    width: 48%;
+    min-width: 400px;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    padding: 8px;
+    margin-right: 2%;
+}
+.live-demo {
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+.live-demo.live-demo-block {
+    margin-bottom: 20px;
+    padding: 10px 20px;
+}
+/*demo文字消息*/
+.live-demo p.message {
+    margin-top: 10px;
+    color: #999;
+    font-size: 14px;
+}
+
+.live-demo p.message.up {
+    margin: 0 0 10px;
+}
+/*文字消息高量*/
+.live-demo p.message span {
+    margin: 0 4px;
+    color: #666;
+    /*color: #ccc;*/
+}
+.goods-box {
+    height: 40px;
+    cursor: pointer;
+}
+
+.goods-box .logo {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin: 0 4px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 26px;
+}
+
+.goods-box p {
+    display: inline-block;
+    vertical-align: middle;
+    width: 200px;
+    height: 40px;
+    overflow: hidden;
+    line-height: 1.5;
+    padding: 3px 0 4px;
+}

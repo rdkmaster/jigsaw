@@ -1,0 +1,24 @@
+<demo-template sizeController="small小,normal中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="live-demo-wrap">
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'normal'" jigsawBadgeStatus="normal"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'critical'" jigsawBadgeStatus="critical"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'success'" jigsawBadgeStatus="success"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'warn'" jigsawBadgeStatus="warn"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="'error'" jigsawBadgeStatus="error"
+                     [icon]="'iconfont iconfont-e8fa'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+    </div>
+</demo-template>

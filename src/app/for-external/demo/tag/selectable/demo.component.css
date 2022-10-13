@@ -1,0 +1,11 @@
+.div-container div {
+    margin-bottom: 20px;
+}
+
+.div-container span {
+    display: inline-block;
+}
+
+.div-container jigsaw-tag {
+    margin-right: 5px;
+}

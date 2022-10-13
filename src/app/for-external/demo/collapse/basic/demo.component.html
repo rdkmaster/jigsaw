@@ -1,0 +1,25 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-collapse id="test-collapse1" width="50%">
+        <jigsaw-collapse-pane header="分组A" [(isActive)]="isActive" (isActiveChange)="_$isActiveChange($event)">
+            <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+        </jigsaw-collapse-pane>
+
+        <jigsaw-collapse-pane header="分组B">
+            姓名:
+            <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+        </jigsaw-collapse-pane>
+
+        <jigsaw-collapse-pane header="分组C(含嵌套)">
+            <jigsaw-collapse mode="accordion">
+                <jigsaw-collapse-pane header="分组C-1">
+                    <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+                </jigsaw-collapse-pane>
+
+                <jigsaw-collapse-pane header="分组C-2" [isActive]="true">
+                    姓名:
+                    <jigsaw-input placeholder="请输入姓名~"></jigsaw-input>
+                </jigsaw-collapse-pane>
+            </jigsaw-collapse>
+        </jigsaw-collapse-pane>
+    </jigsaw-collapse>
+</demo-template>

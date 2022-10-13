@@ -1,0 +1,23 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>设置静态数据默认选中条目</span>
+        <j-cascade width="400" [data]="areas" [selectedItems]="staticSelectedItems"> </j-cascade>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>设置多个默认选中条目</span>
+        <j-cascade width="400" [data]="areas" [selectedItems]="multiSelectedItems" [multipleSelect]="true"> </j-cascade>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>设置懒加载数据默认选中条目</span>
+        <j-cascade
+            width="400"
+            labelField="name"
+            [data]="generator"
+            [selectedItems]="lazyLoadSelectedItems"
+            [generatorContext]="this"
+        >
+        </j-cascade>
+    </div>
+</demo-template>

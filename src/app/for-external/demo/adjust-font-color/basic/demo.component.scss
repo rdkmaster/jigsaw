@@ -1,0 +1,14 @@
+.adjust-color-demo-cntr {
+    display: flex;
+    align-items: center;
+
+    >* {
+        margin-right: 8px;
+    }
+}
+
+.color-options {
+    .jigsaw-input-host {
+        margin-right: 8px;
+    }
+}

@@ -1,0 +1,44 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>标签式</span>
+        <jigsaw-tabs [editable]="editable" (remove)="show('about to remove tab ' + $event)" (add)="add($event, newTab)">
+            <jigsaw-tab-pane title="tab1">
+                <ng-template>tab content 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2" [disabled]="true">
+                <ng-template>tab content 2</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template>tab content 3</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template>tab content 4</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+
+        <ng-template #newTab> new tab content</ng-template>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>页签式</span>
+        <jigsaw-tabs
+            [tabType]="'page'"
+            [editable]="editable"
+            (remove)="show('about to remove tab ' + $event)"
+            (add)="add($event, newTab)"
+        >
+            <jigsaw-tab-pane title="标签名称">
+                <ng-template>tab content 1</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2" [disabled]="true">
+                <ng-template>tab content 2</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template>tab content 3</ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template>tab content 4</ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+</demo-template>

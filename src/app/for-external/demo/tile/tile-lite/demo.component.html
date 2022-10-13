@@ -1,0 +1,23 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>对象数组</span>
+        <jigsaw-tile-lite
+            [(selectedItems)]="selectedCity"
+            trackItemBy="id"
+            [multipleSelect]="true"
+            (selectedItemsChange)="basicSelectChange($event)"
+            [data]="cities"
+        >
+        </jigsaw-tile-lite>
+    </div>
+    <div class="demo-showcase-v">
+        <span>字符串数组</span>
+        <jigsaw-tile-lite
+            [(selectedItems)]="selectedCity2"
+            [multipleSelect]="false"
+            (selectedItemsChange)="basicSelectChange2($event)"
+            [data]="cities2"
+        >
+        </jigsaw-tile-lite>
+    </div>
+</demo-template>

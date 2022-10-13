@@ -1,0 +1,19 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>组合框自定义宽度</span>
+        <jigsaw-combo-select [width]="200">
+            <ng-template>
+                <div>This is a small drop down</div>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+
+    <div class="demo-showcase">
+        <span>下拉区域自定义宽度</span>
+        <jigsaw-combo-select>
+            <ng-template>
+                <jigsaw-input [width]="400" value="drop down input" id="input3"></jigsaw-input>
+            </ng-template>
+        </jigsaw-combo-select>
+    </div>
+</demo-template>

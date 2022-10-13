@@ -1,0 +1,17 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>自动获得下拉列表</span>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnsWithDefaultGenerator"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>自定义下拉列表</span>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnsWithUserDefinedGenerator"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>异步获取下拉列表</span>
+        <jigsaw-table [data]="tableData" [columnDefines]="columnsWithAsyncGenerator"></jigsaw-table>
+    </div>
+</demo-template>
+

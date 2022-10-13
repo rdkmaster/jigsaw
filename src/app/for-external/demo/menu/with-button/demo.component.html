@@ -1,0 +1,31 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>风格1</span>
+        <jigsaw-button
+            jigsawCascadingMenu
+            [jigsawCascadingMenuData]="dropdownData"
+            jigsawCascadingMenuWidth="230"
+            jigsawCascadingMenuTheme="dark"
+            (jigsawCascadingMenuSelect)="menuSelect($event)"
+        >
+            操作 <span class="iconfont iconfont-e24c"></span>
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>风格2</span>
+        <jigsaw-button>
+            <span>新建工程</span>
+            <span
+                style="margin-left: 8px"
+                class="iconfont iconfont-e24c"
+                jigsawCascadingMenu
+                [jigsawCascadingMenuData]="dropdownData"
+                jigsawCascadingMenuWidth="230"
+                jigsawCascadingMenuTheme="dark"
+                (jigsawCascadingMenuSelect)="menuSelect($event)"
+            >
+            </span>
+        </jigsaw-button>
+    </div>
+</demo-template>

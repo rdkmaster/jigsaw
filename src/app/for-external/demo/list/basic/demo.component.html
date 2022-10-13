@@ -1,0 +1,19 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>正常</span>
+        <j-list width="200" trackItemBy="name">
+            <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                {{ goods.name }}
+            </j-list-option>
+        </j-list>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>禁用</span>
+        <j-list width="200" trackItemBy="name" [disabled]="true">
+            <j-list-option *ngFor="let goods of goodsList" [value]="goods">
+                {{ goods.name }}
+            </j-list-option>
+        </j-list>
+    </div>
+</demo-template>

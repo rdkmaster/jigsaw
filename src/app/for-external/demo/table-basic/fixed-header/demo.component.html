@@ -1,0 +1,17 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>滚动条</span>
+        <p>
+            用<code>height</code>控制垂直滚动条<br>
+            用<code>contentWidth</code>控制水平滚动条
+        </p>
+        <jigsaw-table height="400px" width="400px" [contentWidth]="600" [data]="tableData"></jigsaw-table>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>全局浮动表头</span>
+        <p>用<code>floatingHeader</code>设置全局浮动表头</p>
+        <jigsaw-table width="600px" [data]="tableData" [floatingHeader]="true"></jigsaw-table>
+    </div>
+</demo-template>
+

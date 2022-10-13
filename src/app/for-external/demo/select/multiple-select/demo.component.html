@@ -1,0 +1,67 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>多选下拉</span>
+        <jigsaw-select
+            [data]="dataList"
+            [(value)]="selectedArrayData"
+            [multipleSelect]="true"
+            placeholder="请选择"
+            width="160px"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-select>
+    </div>
+    <div class="demo-showcase">
+        <span>结果展开</span>
+        <jigsaw-select
+            [data]="dataList"
+            [(value)]="selectedArrayData1"
+            [multipleSelect]="true"
+            placeholder="请选择"
+            width="160px"
+            [useStatistics]="false"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        ></jigsaw-select>
+    </div>
+    <div class="demo-showcase">
+        <span>初始全选</span>
+        <jigsaw-select
+            [data]="dataListWithoutDisabled"
+            [(value)]="fullSelectedOption"
+            [multipleSelect]="true"
+            placeholder="请选择"
+            width="160px"
+            [useStatistics]="true"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        ></jigsaw-select>
+    </div>
+    <div class="demo-showcase">
+        <span>初始半选</span>
+        <jigsaw-select
+            [data]="dataListWithoutDisabled"
+            [(value)]="selectedOption"
+            [multipleSelect]="true"
+            placeholder="请选择"
+            width="160px"
+            [useStatistics]="true"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        ></jigsaw-select>
+    </div>
+    <div class="demo-showcase">
+        <span>普通数组</span>
+        <jigsaw-select
+            [data]="arrayDataList"
+            [(value)]="selectedArrayData2"
+            (valueChange)="valueChange($event)"
+            [multipleSelect]="true"
+            placeholder="请选择"
+            width="160px"
+            [useStatistics]="false"
+            [size]="selectedSize.size"
+        ></jigsaw-select>
+    </div>
+</demo-template>

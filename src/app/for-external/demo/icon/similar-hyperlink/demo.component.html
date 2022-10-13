@@ -1,0 +1,16 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" text="这是超链"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'" title="这是超链">
+        </jigsaw-icon>
+    </div>
+
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-icon [isLinkButton]="true" [icon]="'iconfont iconfont-e1a0'" [iconSize]="16" text="这是超链"
+                     [disabled]="true"
+                     [href]="'http://rdk.zte.com.cn/home'" [target]="'_blank'" title="这是超链">
+        </jigsaw-icon>
+    </div>
+</demo-template>

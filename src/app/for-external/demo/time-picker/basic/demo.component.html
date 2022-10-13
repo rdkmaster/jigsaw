@@ -1,0 +1,6 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>时间选择器</span>
+        <j-time-picker [(value)]="time" (valueChange)="valueChange($event)"></j-time-picker>
+    </div>
+</demo-template>

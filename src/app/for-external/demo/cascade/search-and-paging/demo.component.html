@@ -1,0 +1,15 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <j-cascade
+            width="400"
+            [data]="generator"
+            [generatorContext]="this"
+            [selectedItems]="lazyLoadSelectedItems"
+            labelField="name"
+            [multipleSelect]="true"
+            [searchable]="true"
+            [pageSize]="5"
+        >
+        </j-cascade>
+    </div>
+</demo-template>

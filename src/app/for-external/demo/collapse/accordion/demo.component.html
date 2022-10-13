@@ -1,0 +1,7 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <j-collapse width="50%" mode="accordion">
+        <j-collapse-pane *ngFor="let goods of goodsList" [header]="goods.name" [isActive]="goods.active">
+            {{ goods.desc }}
+        </j-collapse-pane>
+    </j-collapse>
+</demo-template>

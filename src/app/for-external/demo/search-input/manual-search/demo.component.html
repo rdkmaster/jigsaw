@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>手动搜索</span>
+        <jigsaw-search-input width="200px" [autoSearch]="false" (search)="value = $event"></jigsaw-search-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>手动搜索</span>
+        <jigsaw-search-input width="200px" [autoSearch]="false" (search)="value = $event" [disabled]="true">
+        </jigsaw-search-input>
+    </div>
+</demo-template>

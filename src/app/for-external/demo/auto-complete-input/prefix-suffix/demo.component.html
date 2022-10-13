@@ -1,0 +1,91 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>前后额外信息组合</span>
+
+        <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="hosts" prefix="https://" width="350">
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input [filterOnFocus]="false" [data]="hosts" suffix="/jigsaw/index.html" width="350">
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input
+            width="350"
+            suffix="/jigsaw/index.html"
+            prefix="https://"
+            [data]="hosts"
+            [filterOnFocus]="false"
+        >
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input
+            width="350"
+            suffix="/jigsaw/index.html"
+            prefix="https://"
+            [data]="hosts"
+            [disabled]="true"
+            [filterOnFocus]="false"
+        >
+        </jigsaw-auto-complete-input>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>额外信息可选</span>
+        <jigsaw-auto-complete-input
+            width="400"
+            suffixWidth="140"
+            [data]="hosts"
+            [filterOnFocus]="false"
+            [suffix]="pages"
+            (suffixChange)="onChange($event)"
+        >
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input
+            width="400"
+            suffixWidth="140"
+            [data]="hosts"
+            [suffix]="pages"
+            [filterOnFocus]="false"
+            [disabled]="true"
+        >
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input
+            width="400"
+            prefixWidth="80"
+            [data]="hosts"
+            [prefix]="protocols"
+            [filterOnFocus]="false"
+            (prefixChange)="onChange($event)"
+        >
+        </jigsaw-auto-complete-input>
+
+        <jigsaw-auto-complete-input
+            width="400"
+            prefixWidth="80"
+            [data]="hosts"
+            [prefix]="protocols"
+            [filterOnFocus]="false"
+            [disabled]="true"
+        >
+        </jigsaw-auto-complete-input>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>更多内容</span>
+        <jigsaw-auto-complete-input
+            width="400"
+            suffixWidth="120"
+            prefixWidth="100"
+            [data]="hosts"
+            [suffix]="_$icons"
+            [suffixLabelField]="'name'"
+            [prefix]="_$prefixIcons"
+            [prefixLabelField]="'name'"
+            [filterOnFocus]="false"
+            (prefixChange)="onChange($event)"
+            (suffixChange)="onChange($event)"
+        >
+        </jigsaw-auto-complete-input>
+    </div>
+</demo-template>

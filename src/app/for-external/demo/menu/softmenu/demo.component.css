@@ -1,0 +1,11 @@
+.menu-item {
+    font-weight: normal;
+    padding: 2px;
+    margin-right: 8px;
+    border-radius: 4px;
+}
+
+.menu-item:hover {
+    background-color: #eee;
+    box-shadow: 0 0 1px 1px #aaa;
+}

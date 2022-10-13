@@ -1,0 +1,8 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <jigsaw-table [data]="tableData" [columnDefines]="columns" (edit)="onCellChange($event)"
+                      height="500px"></jigsaw-table>
+
+        <p>更改数据的信息： {{changeMsg}}</p>
+    </div>
+</demo-template>

@@ -1,0 +1,9 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-process-status>
+            <jigsaw-process-status-item *ngFor="let step of steps" [status]="step.status">
+                {{ step.title }}
+            </jigsaw-process-status-item>
+        </jigsaw-process-status>
+    </div>
+</demo-template>

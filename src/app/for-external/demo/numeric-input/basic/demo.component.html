@@ -1,0 +1,41 @@
+<demo-template sizeController="small小,default中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <j-numeric-input
+            [(value)]="value"
+            min="10"
+            max="110"
+            placeholder="请输入数字"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        ></j-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <j-numeric-input
+            [(value)]="value"
+            [disabled]="true"
+            min="10"
+            max="110"
+            placeholder="请输入数字"
+            [size]="selectedSize.size"
+            (valueChange)="valueChange($event)"
+        ></j-numeric-input>
+    </div>
+
+    <div class="demo-showcase">
+        <span>校验</span>
+        <j-numeric-input
+            [(value)]="value"
+            [valid]="false"
+            [disabled]="true"
+            min="10"
+            max="110"
+            placeholder="请输入数字"
+            [size]="selectedSize.size"
+            (valueChange)="valueChange($event)"
+        ></j-numeric-input>
+    </div>
+</demo-template>

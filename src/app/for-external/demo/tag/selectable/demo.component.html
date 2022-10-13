@@ -1,0 +1,36 @@
+<demo-template sizeController="small小,medium大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="div-container">
+        <div class="demo-showcase">
+            <span>多选效果</span>
+            <jigsaw-tag
+                *ngFor="let item of tags; let idx = index"
+                color="preset-blue"
+                selectedColor="preset-magenta"
+                disabledColor="preset-gray"
+                [disabled]="idx > 4"
+                (selectChange)="onSelect(item, $event)"
+                [size]="selectedSize.size"
+            >
+                {{ item }}
+            </jigsaw-tag>
+        </div>
+
+        <div class="demo-showcase">
+            <span>单选效果</span>
+            <jigsaw-tag
+                *ngFor="let item of tags1; let idx = index"
+                color="preset-blue"
+                selectedColor="preset-magenta"
+                disabledColor="preset-gray"
+                toggleSelect="true"
+                [select]="item.selected"
+                [disabled]="idx > 4"
+                (selectChange)="onSelect1(item)"
+                [size]="selectedSize.size"
+            >
+                {{ item.label }}
+            </jigsaw-tag>
+        </div>
+    </div>
+</demo-template>

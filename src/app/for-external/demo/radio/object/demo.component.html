@@ -1,0 +1,17 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <j-radios [(value)]="selectedCity" trackItemBy="name" (valueChange)="radioChange($event)">
+            <j-radio-option *ngFor="let item of cities" [value]="item">
+                {{ item.name }}
+            </j-radio-option>
+        </j-radios>
+    </div>
+
+    <div class="demo-showcase">
+        <jigsaw-radios [(value)]="selectedProduct" (valueChange)="radioChange2($event)" trackItemBy="pro_name,pro_type">
+            <jigsaw-radio-option *ngFor="let item of products" [value]="item">
+                {{ item.pro_name }}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+</demo-template>

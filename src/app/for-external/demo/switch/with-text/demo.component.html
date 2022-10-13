@@ -1,0 +1,28 @@
+<demo-template sizeController="small小,medium中,default大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常状态带文字</span>
+        <jigsaw-switch
+            onLabel="Jigsaw is great!"
+            offLabel="Jigsaw is perfect!"
+            [size]="selectedSize.size"
+        ></jigsaw-switch>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用状态带文字</span>
+        <jigsaw-switch
+            [checked]="true"
+            [disabled]="true"
+            [size]="selectedSize.size"
+            onLabel="Jigsaw is great!"
+            offLabel="Jigsaw is perfect!"
+        ></jigsaw-switch>
+        <jigsaw-switch
+            [checked]="false"
+            [disabled]="true"
+            [size]="selectedSize.size"
+            onLabel="Jigsaw is great!"
+            offLabel="Jigsaw is perfect!"
+        ></jigsaw-switch>
+    </div>
+</demo-template>

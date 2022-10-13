@@ -1,0 +1,17 @@
+.demo-showcase-sudoku {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: repeat(3, 100px);
+    grid-gap: 10px 10px;
+}
+
+.ribbon-div {
+    width: 200px;
+    height: 100px;
+    border: 1px solid var(--border-color-default);
+    border-radius: 3px;
+}
+
+.ribbon-div:nth-child(4) {
+    grid-column: 2 / 4;
+}

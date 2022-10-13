@@ -1,0 +1,40 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger"
+            [jigsawFloatCloseTrigger]="closeTrigger"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            滑入滑出
+        </jigsaw-button>
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger1"
+            [jigsawFloatCloseTrigger]="closeTrigger1"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open1"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            单击
+        </jigsaw-button>
+        <jigsaw-button
+            class="iconfont iconfont-e9d8"
+            jigsaw-float
+            [jigsawFloatOpenTrigger]="openTrigger2"
+            [jigsawFloatCloseTrigger]="closeTrigger2"
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [(jigsawFloatOpen)]="open2"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            不响应鼠标事件
+        </jigsaw-button>
+    </div>
+    <ng-template #jigsawFloatArea>
+        <div class="jigsawFloatArea">下拉区域占位符</div>
+    </ng-template>
+</demo-template>

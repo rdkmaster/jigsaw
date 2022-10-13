@@ -1,0 +1,94 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>单位组合</span>
+        <jigsaw-input placeholder="请输入" prefix="上行流量"></jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" suffix="Gb"></jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" suffix="Gb" prefix="上行流量"></jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" suffix="Gb" prefix="上行流量" [disabled]="true"></jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" suffix="Gb" prefix="上行流量" width="300"></jigsaw-input>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>单位可选</span>
+        <jigsaw-input
+            placeholder="请输入"
+            [suffix]="_$units"
+            suffixWidth="120"
+            (suffixChange)="_$unitChange($event)"
+            width="300"
+        >
+        </jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" [suffix]="_$units" suffixWidth="120" [disabled]="true" width="300">
+        </jigsaw-input>
+
+        <jigsaw-input
+            placeholder="请输入"
+            [prefix]="_$prefix"
+            prefixWidth="100"
+            (prefixChange)="_$unitChange($event)"
+            width="300"
+        >
+        </jigsaw-input>
+
+        <jigsaw-input placeholder="请输入" [prefix]="_$prefix" prefixWidth="100" [disabled]="true" width="300">
+        </jigsaw-input>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>更多内容</span>
+        <jigsaw-input
+            placeholder="请输入"
+            width="400"
+            [prefix]="_$prefixIcons"
+            prefixWidth="100"
+            (prefixChange)="_$unitChange($event)"
+            [prefixLabelField]="'name'"
+            [suffix]="_$icons"
+            suffixWidth="120"
+            (suffixChange)="_$unitChange($event)"
+            [suffixLabelField]="'name'"
+        >
+        </jigsaw-input>
+
+        <jigsaw-input #input1 placeholder="请输入" width="400" [valid]="input1.value.length >= 3"></jigsaw-input>
+
+        <jigsaw-input
+            #input2
+            placeholder="请输入"
+            width="400"
+            [valid]="input2.value.length >= 3"
+            (prefixChange)="_$unitChange($event)"
+            [prefix]="_$prefix"
+            prefixWidth="100"
+        ></jigsaw-input>
+
+        <jigsaw-input
+            #input3
+            placeholder="请输入"
+            width="400"
+            [valid]="input3.value.length >= 3"
+            (suffixChange)="_$unitChange($event)"
+            [suffix]="_$units"
+            suffixWidth="120"
+        ></jigsaw-input>
+
+        <jigsaw-input
+            #input4
+            placeholder="请输入"
+            width="400"
+            [valid]="input4.value.length >= 3"
+            (suffixChange)="_$unitChange($event)"
+            (prefixChange)="_$unitChange($event)"
+            [prefix]="_$prefix"
+            prefixWidth="100"
+            [suffix]="_$units"
+            suffixWidth="120"
+        >
+        </jigsaw-input>
+    </div>
+</demo-template>

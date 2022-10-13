@@ -1,0 +1,21 @@
+<demo-template sizeController="small小,default大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>文字在顶部</span>
+        <j-progress
+            [value]="progressValue"
+            width="400"
+            labelPosition="top"
+            [showMarker]="true"
+            [preSize]="selectedSize.size"
+        ></j-progress>
+        <j-progress
+            [value]="progressValue"
+            width="400"
+            labelPosition="top"
+            [showMarker]="true"
+            status="block"
+            [preSize]="selectedSize.size"
+        ></j-progress>
+    </div>
+</demo-template>

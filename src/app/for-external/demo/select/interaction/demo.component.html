@@ -1,0 +1,28 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <jigsaw-select
+        [data]="simpleDataList"
+        [multipleSelect]="false"
+        placeholder="请选择"
+        width="160px"
+        (valueChange)="relateSelectChange($event)"
+        [size]="selectedSize.size"
+    ></jigsaw-select>
+    <div style="height: 8px"></div>
+    <jigsaw-select
+        [data]="relatedDataList"
+        [multipleSelect]="true"
+        [value]="relatedValue"
+        placeholder="根据前置选项改变"
+        (valueChange)="valueChange($event)"
+        [size]="selectedSize.size"
+    ></jigsaw-select>
+    <jigsaw-select
+        [data]="relatedDataList"
+        [multipleSelect]="false"
+        [value]="relatedSingleValue"
+        placeholder="根据前置选项改变"
+        (valueChange)="valueChange($event)"
+        [size]="selectedSize.size"
+    ></jigsaw-select>
+</demo-template>

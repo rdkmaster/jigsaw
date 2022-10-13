@@ -1,0 +1,13 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-button
+            [(jigsawTooltipOpen)]="open"
+            jigsawTooltipRenderAs="html"
+            jigsawTooltipOpenTrigger="mouseenter"
+            jigsawTooltipCloseTrigger="mouseleave"
+            jigsawTooltip="一个<span style='color:red'>支持富文本</span>的提示"
+        >
+            鼠标挪到这里显示tooltip
+        </jigsaw-button>
+    </div>
+</demo-template>

@@ -30,6 +30,7 @@ npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
 src/jigsaw/common/core/theming/prebuilt/wings-theme/*
+src/app/for-external/demo-template/description-and-sources.js
 
 # e2e
 /e2e/*.js

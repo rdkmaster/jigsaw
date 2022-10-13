@@ -1,0 +1,16 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <j-time-section
+        #dateTime
+        [(value)]="timeSectionValue"
+        [layout]="layout"
+        [showLastDay]="true"
+        [multipleHour]="multipleHour"
+        [multipleDate]="multipleDate"
+        [currentTime]="curTime"
+        [showDate]="showDate"
+        [showWeek]="showWeek"
+        [showEveryday]="showEveryday"
+        (valueChange)="sectionValueChange($event)"
+    >
+    </j-time-section>
+</demo-template>

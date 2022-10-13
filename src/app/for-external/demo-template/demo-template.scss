@@ -1,0 +1,49 @@
+.demo-cntr {
+    position: relative;
+    border: 1px solid var(--border-color-default);
+    border-radius: 4px;
+    margin-top: 34px;
+    padding: 12px 32px 0 32px;
+
+    &.no-handler {
+        margin-top: 15px;
+        padding-top: 32px;
+    }
+
+    .demo-handler {
+        position: relative;
+        top: -26px;
+        left: 24px;
+        background: var(--bg-body);
+    }
+
+    .demo-content {
+        padding-bottom: 16px;
+        border-bottom: 1px dashed var(--border-color-default);
+    }
+
+    .demo-code {
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .demo-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+
+        i {
+            cursor: pointer;
+
+            &:hover {
+                color: var(--brand-hover);
+            }
+        }
+    }
+}
+
+:host ::ng-deep .jigsaw-button-bar-host .jigsaw-tile-host .jigsaw-tile-option {
+    min-width: 36px;
+}

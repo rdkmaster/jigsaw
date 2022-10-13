@@ -1,0 +1,20 @@
+<demo-template sizeController="small小,normal中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="live-demo-wrap">
+        无样式（none）：
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'none'" jigsawBadgeSize="small"
+                     [icon]="'iconfont iconfont-e64b'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+        边框（border）：
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'border'" jigsawBadgeSize="small"
+                     [icon]="'iconfont iconfont-e64b'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+        底色（solid）：
+        <jigsaw-icon jigsaw-badge [jigsawBadgeValue]="999" jigsawBadgePosition="right" jigsawBadgeMaxValue="50"
+                     [jigsawBadgeStyle]="'solid'" jigsawBadgeSize="small"
+                     [icon]="'iconfont iconfont-e64b'" [iconSize]="100" [jigsawBadgeSize]="selectedSize.size">
+        </jigsaw-icon>
+    </div>
+</demo-template>

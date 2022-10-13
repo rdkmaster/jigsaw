@@ -1,0 +1,7 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-tile trackItemBy="label">
+        <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="150px">
+            {{city.label}}
+        </jigsaw-tile-option>
+    </jigsaw-tile>
+</demo-template>

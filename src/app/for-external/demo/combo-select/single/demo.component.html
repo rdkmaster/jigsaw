@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-combo-select [(value)]="selectedCity" (valueChange)="valueChange($event)" [autoClose]="false"
+        [clearable]="true" maxWidth="500">
+        <ng-template>
+            <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" [multipleSelect]="false" width="400px">
+                <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
+                    {{city.label}}
+                </jigsaw-tile-option>
+            </jigsaw-tile>
+        </ng-template>
+    </jigsaw-combo-select>
+</demo-template>

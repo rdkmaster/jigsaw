@@ -1,0 +1,26 @@
+<demo-template sizeController="small小,medium中,large大,default默认" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <jigsaw-button
+            icon="iconfont iconfont-e0a1"
+            colorType="primary"
+            [disabled]="false"
+            [preSize]="selectedSize.size"
+        >
+            关键按钮
+        </jigsaw-button>
+    </div>
+
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-button
+            icon="iconfont iconfont-e0a1"
+            colorType="primary"
+            [disabled]="true"
+            [preSize]="selectedSize.size"
+        >
+            关键按钮
+        </jigsaw-button>
+    </div>
+</demo-template>

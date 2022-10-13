@@ -1,0 +1,25 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [floatingHeader]="true"
+                  [additionalColumnDefines]="additionalColumnDefines"
+                  [(additionalData)]="additionalData"
+                  (edit)="onCellChange($event)" height="400">
+    </jigsaw-table>
+    <br><br>
+    <jigsaw-pagination
+        [data]="tableData"
+        [pageSizeOptions]="[5, 10, 50, 100, 200]"
+        [searchable]="true"
+        [showQuickJumper]="true"
+        (search)="onSearch($event)"
+    ></jigsaw-pagination>
+
+
+    <!--
+        let-ctx="context" 声明了模板内部的ctx变量，它可以在模板内部自由使用，模板外部则访问不到它
+        context的结构是 {cellData: string|number, row:number, column:number}
+    -->
+    <ng-template #operation let-context="context">
+        <span><a (click)="payRaise(context.row)">加薪</a> <a (click)="fire(context.row)">辞退</a></span>
+    </ng-template>
+
+</demo-template>

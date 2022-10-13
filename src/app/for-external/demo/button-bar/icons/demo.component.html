@@ -1,0 +1,16 @@
+<demo-template sizeController="small小,default大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>带图标</span>
+        <jigsaw-button-bar [data]="types" [(selectedItems)]="selectedTypes" [multipleSelect]="multiple" trackItemBy="id"
+                           [preSize]="selectedSize.size">
+        </jigsaw-button-bar>
+    </div>
+
+    <div class="demo-showcase">
+        <span>仅图标</span>
+        <jigsaw-button-bar [data]="unlabeledTypes" [multipleSelect]="multiple" trackItemBy="id"
+                           [preSize]="selectedSize.size">
+        </jigsaw-button-bar>
+    </div>
+</demo-template>

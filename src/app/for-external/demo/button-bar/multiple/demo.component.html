@@ -1,0 +1,14 @@
+<demo-template sizeController="small小,default大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-button-bar
+            optionWidth="80"
+            colorType="default"
+            [data]="cities"
+            [(selectedItems)]="selectedCity"
+            [multipleSelect]="multiple"
+            [preSize]="selectedSize.size"
+        >
+        </jigsaw-button-bar>
+    </div>
+</demo-template>

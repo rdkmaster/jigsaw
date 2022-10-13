@@ -1,0 +1,6 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <jigsaw-upload width="300px" #demo [uploadImmediately]="false"></jigsaw-upload>
+        <jigsaw-button (click)="uploader.clear()">点击清空</jigsaw-button>
+    </div>
+</demo-template>

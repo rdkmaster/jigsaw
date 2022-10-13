@@ -525,16 +525,16 @@ function fixDescription(metaInfo) {
         metaInfo.description = '';
     }
     metaInfo.description = metaInfo.description
-        .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
-            const demoPath = comp[0] === '?' ? demoName : `pc/${comp}/${demoName}`;
-            if (!fs.existsSync(`${__dirname}/../../../src/app/demo/${demoPath}/demo.component.ts`)) {
-                console.error("Error: demo not found:", demoPath);
-                process.exit(1);
-            }
-            extra = extra || '';
-            const script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
-            return `<a onclick="${script}"`;
-        })
+        // .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
+        //     const demoPath = comp[0] === '?' ? demoName : `pc/${comp}/${demoName}`;
+        //     if (!fs.existsSync(`${__dirname}/../../../src/app/demo/${demoPath}/demo.component.ts`)) {
+        //         console.error("Error: demo not found:", demoPath);
+        //         process.exit(1);
+        //     }
+        //     extra = extra || '';
+        //     const script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
+        //     return `<a onclick="${script}"`;
+        // })
         .replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g, function (found, prop, value, suffix) {
             let values = metaInfo[prop];
             if (!metaInfo[prop]) {
@@ -830,15 +830,16 @@ function getDemoList(metaInfo) {
 }
 
 function getDemoSummary(comp, demoName) {
-    const demoPath = `${__dirname}/../../../src/app/for-internal/demo/pc/${comp}/${demoName}/demo.component.ts`;
-    const code = fs.readFileSync(demoPath).toString();
-    const summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
-    if (!summaryMatch) {
-        console.log(`ERROR: can not summary info for demo: ${comp}/${demoName}`);
-        console.log('hint: the value of summary should write in a single line!');
-        process.exit(1);
-    }
-    return (summaryMatch[2] || '') + '\n单击立即运行示例';
+    return '';
+    // const demoPath = `${__dirname}/../../../src/app/for-internal/demo/pc/${comp}/${demoName}/demo.component.ts`;
+    // const code = fs.readFileSync(demoPath).toString();
+    // const summaryMatch = code.match(/\bsummary\s*(:.*?)?\s*=\s*['"](.*)['"]/);
+    // if (!summaryMatch) {
+    //     console.log(`ERROR: can not summary info for demo: ${comp}/${demoName}`);
+    //     console.log('hint: the value of summary should write in a single line!');
+    //     process.exit(1);
+    // }
+    // return (summaryMatch[2] || '') + '\n单击立即运行示例';
 }
 
 function getDemoListWithHeader(metaInfo) {

@@ -1,0 +1,17 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <jigsaw-pagination
+            widh="710px"
+            mode="folding"
+            [data]="pageable"
+            [pageSizeOptions]="pageSizeOptions"
+            [searchable]="false"
+            [showQuickJumper]="true"
+            [size]="selectedSize.size"
+            (currentChange)="getCurrentPage($event)"
+            (pageSizeChange)="getPageSize($event)"
+        >
+        </jigsaw-pagination>
+    </div>
+</demo-template>

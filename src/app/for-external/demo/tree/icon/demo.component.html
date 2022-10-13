@@ -1,0 +1,14 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>使用XML作为数据源（推荐）</span>
+        <jigsaw-tree-ext [(data)]="xml" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedSize.size">
+        </jigsaw-tree-ext>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>在数据源中配置svg图片</span>
+        <jigsaw-tree-ext [(data)]="xml2" (onClick)="onClick($event)" [iconSuit]="iconSuit2" [size]="selectedSize.size">
+        </jigsaw-tree-ext>
+    </div>
+</demo-template>

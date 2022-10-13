@@ -1,0 +1,16 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <jigsaw-slider
+            [(value)]="value"
+            [disabled]="disabled"
+            (change)="sliderChange($event)"
+            min="10"
+            width="600"
+        ></jigsaw-slider>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-slider [(value)]="value1" [disabled]="!disabled" min="10" width="600"></jigsaw-slider>
+    </div>
+</demo-template>

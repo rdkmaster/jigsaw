@@ -1,0 +1,38 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <j-progress
+            [value]="progressValue"
+            width="100%"
+            preSize="large"
+            [animate]="false"
+            labelPosition="followRight"
+            [showMarker]="true"
+        ></j-progress>
+        <j-progress
+            [value]="progressValue"
+            width="100%"
+            preSize="large"
+            [animate]="false"
+            status="block"
+            labelPosition="followRight"
+            [showMarker]="true"
+        ></j-progress>
+        <j-progress
+            [value]="progressValue"
+            width="100%"
+            preSize="large"
+            [animate]="false"
+            labelPosition="followLeft"
+            [showMarker]="true"
+        ></j-progress>
+        <j-progress
+            [value]="progressValue"
+            width="100%"
+            preSize="large"
+            [animate]="false"
+            status="error"
+            labelPosition="followLeft"
+            [showMarker]="true"
+        ></j-progress>
+    </div>
+</demo-template>

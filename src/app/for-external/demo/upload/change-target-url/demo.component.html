@@ -1,0 +1,54 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <span>手动上传时，修改URL</span>
+        <div>
+            <span>当前url地址为:</span>
+            <span class="urlAdd">{{ toBeChangedUrl1 }}</span>
+        </div>
+        <div>
+            <jigsaw-button j-upload #first [uploadImmediately]="false" [uploadTargetUrl]="toBeChangedUrl1">
+                选择文件
+            </jigsaw-button>
+            <jigsaw-button style="margin-left: 8px" (click)="uploadConfirm()">
+                开始上传（开始上传时改变url）
+            </jigsaw-button>
+        </div>
+        <jigsaw-upload-result
+            [uploader]="uploader1"
+            (change)="onChange('change', $event)"
+            (progress)="onChange('progress', $event)"
+            (remove)="onChange('remove', $event)"
+        >
+        </jigsaw-upload-result>
+    </div>
+
+    <div class="demo-showcase-v">
+        <span>自动上传前，修改URL</span>
+
+        <div>
+            <span>当前url地址为:</span>
+            <span class="urlAdd">{{ toBeChangedUrl2 }}</span>
+        </div>
+
+        <div>
+            <jigsaw-button (click)="editTargetUrl()"> 修改url </jigsaw-button>
+            <jigsaw-button
+                j-upload
+                #second
+                [uploadImmediately]="true"
+                [uploadTargetUrl]="toBeChangedUrl2"
+                style="margin-left: 8px"
+            >
+                选择文件
+            </jigsaw-button>
+        </div>
+
+        <jigsaw-upload-result
+            [uploader]="uploader2"
+            (change)="onChange('change', $event)"
+            (progress)="onChange('progress', $event)"
+            (remove)="onChange('remove', $event)"
+        >
+        </jigsaw-upload-result>
+    </div>
+</demo-template>

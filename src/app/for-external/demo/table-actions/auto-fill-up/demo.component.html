@@ -1,0 +1,25 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="viewport">
+        <div class="demo-showcase-v">
+            <span>高度设置为百分比</span>
+            <jigsaw-table
+                [data]="tableData"
+                [columnDefines]="columnsCommonRender"
+                height="100%"
+                [autoFillUp]="checked"
+            ></jigsaw-table>
+        </div>
+        <div class="demo-showcase-v">
+            <span>高度设置为固定值</span>
+            <jigsaw-table [data]="tableData" height="400px" [autoFillUp]="checked"></jigsaw-table>
+        </div>
+        <div class="demo-showcase-v">
+            <span>高度设置为计算值</span>
+            <jigsaw-table [data]="tableData" height="calc(100% - 100px)" [autoFillUp]="checked"></jigsaw-table>
+        </div>
+        <div class="demo-showcase-v">
+            <span>不设置高度</span>
+            <jigsaw-table [data]="tableData" [autoFillUp]="checked"></jigsaw-table>
+        </div>
+    </div>
+</demo-template>

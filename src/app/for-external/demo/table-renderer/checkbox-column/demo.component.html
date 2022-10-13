@@ -1,0 +1,6 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-table #tableComponent maxHeight="400" [data]="tableData" [additionalColumnDefines]="additionalColumns"
+                  [(additionalData)]="additionalData" (additionalDataChange)="additionalDataChange()">
+    </jigsaw-table>
+    <p>selectedRowsIndex: <span>{{selectedRows}}</span></p>
+</demo-template>

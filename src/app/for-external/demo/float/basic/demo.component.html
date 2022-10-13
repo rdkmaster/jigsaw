@@ -1,0 +1,14 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-button
+            jigsaw-float
+            [jigsawFloatTarget]="jigsawFloatArea"
+            [jigsawFloatOptions]="{ useCustomizedBackground: true }"
+        >
+            鼠标悬浮试试
+        </jigsaw-button>
+    </div>
+    <ng-template #jigsawFloatArea>
+        <div class="jigsawFloatArea">下拉区域占位符</div>
+    </ng-template>
+</demo-template>

@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <j-list width="200" trackItemBy="title">
+            <j-list-option *ngFor="let title of titles" [value]="title">
+                <span j-title>{{ title.title }}</span>
+                <div j-sub-title>
+                    {{ title.subTitle }} <span *ngIf="title.subMenu" class="iconfont iconfont-e144"></span>
+                </div>
+            </j-list-option>
+        </j-list>
+    </div>
+</demo-template>

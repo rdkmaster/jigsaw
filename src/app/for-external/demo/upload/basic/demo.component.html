@@ -1,0 +1,12 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <jigsaw-upload
+        width="300px"
+        (start)="uploadStart($event)"
+        (dataSendProgress)="uploadDataSendProgress($event)"
+        (progress)="uploadProgress($event)"
+        (complete)="uploadComplete($event)"
+        (change)="uploadChange($event)"
+        (remove)="uploadRemove($event)"
+    >
+    </jigsaw-upload>
+</demo-template>

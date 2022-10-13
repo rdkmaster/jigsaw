@@ -1,0 +1,45 @@
+<demo-template sizeController="small小,medium中,large大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <span>正常</span>
+        <jigsaw-group-select
+            [disabled]="disabled"
+            [valid]="valid"
+            [data]="dataList"
+            placeholder="请选择"
+            width="160px"
+            optionCount="8"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-group-select>
+    </div>
+    <div class="demo-showcase">
+        <span>禁用</span>
+        <jigsaw-group-select
+            [disabled]="!disabled"
+            [valid]="valid"
+            [data]="dataList"
+            placeholder="请选择"
+            width="160px"
+            optionCount="8"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-group-select>
+    </div>
+    <div class="demo-showcase">
+        <span>校验</span>
+        <jigsaw-group-select
+            [disabled]="disabled"
+            [valid]="!valid"
+            [data]="dataList"
+            placeholder="请选择"
+            width="160px"
+            optionCount="8"
+            (valueChange)="valueChange($event)"
+            [size]="selectedSize.size"
+        >
+        </jigsaw-group-select>
+    </div>
+</demo-template>

@@ -1,0 +1,12 @@
+.viewport {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: calc(100vh - 134px);
+}
+
+.viewport .demo-showcase-v {
+    position: relative;
+    width: 23%;
+    height: 100%;
+}

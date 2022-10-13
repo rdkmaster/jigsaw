@@ -1,0 +1,14 @@
+<demo-template sizeController="small小,medium大" [(selectedSize)]="selectedSize"
+               [description]="description" [demoSources]="demoSources">
+    <section class="demo-showcase-v">
+        <span>内置颜色的标签</span>
+        <jigsaw-tag color="preset-blue" [size]="selectedSize.size">蓝色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-cyan" [size]="selectedSize.size">青色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-green" [size]="selectedSize.size">绿色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-magenta" [size]="selectedSize.size">洋红标签</jigsaw-tag>
+        <jigsaw-tag color="preset-orange" [size]="selectedSize.size">橘色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-red" [size]="selectedSize.size">红色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-purple" [size]="selectedSize.size">紫色标签</jigsaw-tag>
+        <jigsaw-tag color="preset-gray" [size]="selectedSize.size">灰色标签</jigsaw-tag>
+    </section>
+</demo-template>

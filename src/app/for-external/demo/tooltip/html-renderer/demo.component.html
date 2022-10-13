@@ -1,0 +1,16 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <jigsaw-button width="105px" jigsawTooltipRenderAs="html" [jigsawTooltip]="simpleHtml">
+            显示Tooltip
+        </jigsaw-button>
+        <jigsaw-button
+            width="105px"
+            jigsawTooltipCloseDelay="200"
+            jigsawTooltipRenderAs="html"
+            [jigsawTooltipContext]="this"
+            [jigsawTooltip]="actionHtml"
+        >
+            显示Tooltip
+        </jigsaw-button>
+    </div>
+</demo-template>

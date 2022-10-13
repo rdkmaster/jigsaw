@@ -29,6 +29,11 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+        if (req.url.startsWith('/app/for-external/demo/')) {
+            console.log('forwarding the request to the server:', req.url);
+            return next.handle(req);
+        }
+
         console.log('the ajax request is intercepted, here is the original request:');
         console.log(req);
 

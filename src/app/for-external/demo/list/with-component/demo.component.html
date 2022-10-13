@@ -1,0 +1,17 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase-v">
+        <j-list [multipleSelect]="true" trackItemBy="name" [selectedItems]="selectedItems" #listGroup>
+            <j-list-option *ngFor="let goods of goodsList" #listItem [value]="goods" [disabled]="goods.disabled">
+                <div class="goods-box">
+                    <j-checkbox
+                        mode="minimalist"
+                        [(checked)]="listItem.selected"
+                        [disabled]="goods.disabled"
+                    ></j-checkbox>
+                    <span class="logo iconfont iconfont-{{ goods.logo }}"></span>
+                    <p>{{ goods.desc }}</p>
+                </div>
+            </j-list-option>
+        </j-list>
+    </div>
+</demo-template>

@@ -1,0 +1,9 @@
+<demo-template [description]="description" [demoSources]="demoSources">
+    <div class="demo-showcase">
+        <jigsaw-radios [(value)]="selectedProduct" (valueChange)="radioChange($event)" trackItemBy="pro_name,pro_type">
+            <jigsaw-radio-option *ngFor="let item of products" [value]="item">
+                {{ item.pro_name }}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
+    </div>
+</demo-template>
