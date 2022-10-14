@@ -23,63 +23,63 @@ export class ZtreeFuzzySearchComponent {
         this.data2 = new SimpleTreeData();
         this.data2.fromObject([
             {
-                label: "父节点1 - 展开",
+                label: "父节点a - 展开",
                 open: true,
                 nodes: [
                     {
-                        label: "父节点11 - 折叠",
+                        label: "父节点aa - 折叠",
                         nodes: [
-                            { label: "叶子节点111", id: 111 },
-                            { label: "叶子节点112", id: 112 },
-                            { label: "叶子节点113", id: 113 },
-                            { label: "叶子节点114", id: 114 }
+                            { label: "叶子节点aaa", id: 111 },
+                            { label: "叶子节点aab", id: 112 },
+                            { label: "叶子节点aac", id: 113 },
+                            { label: "叶子节点aad", id: 114 }
                         ]
                     },
                     {
-                        label: "父节点12 - 折叠",
+                        label: "父节点ab - 折叠",
                         nodes: [
-                            { label: "叶子节点121", id: 121 },
-                            { label: "叶子节点122", id: 122 },
-                            { label: "叶子节点123", id: 123 },
-                            { label: "叶子节点124", id: 124 }
+                            { label: "叶子节点aba", id: 121 },
+                            { label: "叶子节点abb", id: 122 },
+                            { label: "叶子节点abc", id: 123 },
+                            { label: "叶子节点abd", id: 124 }
                         ]
                     },
-                    { label: "父节点13 - 没有子节点", isParent: true }
+                    { label: "父节点ac - 没有子节点", isParent: true }
                 ]
             },
             {
-                label: "父节点2 - 折叠",
+                label: "父节点b - 折叠",
                 nodes: [
                     {
-                        label: "父节点21 - 展开", open: true,
+                        label: "父节点ba - 展开", open: true,
                         nodes: [
-                            { label: "叶子节点211", id: 211 },
-                            { label: "叶子节点212", id: 212 },
-                            { label: "叶子节点213", id: 213 },
-                            { label: "叶子节点214", id: 214 }
+                            { label: "叶子节点baa", id: 211 },
+                            { label: "叶子节点bab", id: 212 },
+                            { label: "叶子节点bac", id: 213 },
+                            { label: "叶子节点bad", id: 214 }
                         ]
                     },
                     {
-                        label: "父节点22 - 折叠",
+                        label: "父节点bb - 折叠",
                         nodes: [
-                            { label: "叶子节点221", id: 221 },
-                            { label: "叶子节点222", id: 222 },
-                            { label: "叶子节点223", id: 223 },
-                            { label: "叶子节点224", id: 224 }
+                            { label: "叶子节点bba", id: 221 },
+                            { label: "叶子节点bbb", id: 222 },
+                            { label: "叶子节点bbc", id: 223 },
+                            { label: "叶子节点bbd", id: 224 }
                         ]
                     },
                     {
-                        label: "父节点23 - 折叠",
+                        label: "父节点bc - 折叠",
                         nodes: [
-                            { label: "叶子节点231", id: 231 },
-                            { label: "叶子节点232", id: 232 },
-                            { label: "叶子节点233", id: 233 },
-                            { label: "叶子节点234", id: 234 }
+                            { label: "叶子节点bca", id: 231 },
+                            { label: "叶子节点bcb", id: 232 },
+                            { label: "叶子节点bcc", id: 233 },
+                            { label: "叶子节点bcd", id: 234 }
                         ]
                     }
                 ]
             },
-            { label: "父节点3 - 没有子节点", isParent: true }
+            { label: "父节点c - 没有子节点", isParent: true }
 
         ])
     }

@@ -6,13 +6,13 @@
 <div class="demo-cntr">
     <div>
         <div>
-            <jigsaw-input (valueChange)="treeExt.fuzzySearch($event)" placeholder="输入搜索内容"></jigsaw-input>
+            <jigsaw-input (valueChange)="treeExt.fuzzySearch($event)" placeholder="搜索label"></jigsaw-input>
         </div>
         <jigsaw-tree-ext #ztree1 [(data)]="data"></jigsaw-tree-ext>
     </div>
     <div>
         <div>
-            <jigsaw-input (valueChange)="treeExt2.fuzzySearch($event, 'id')" placeholder="输入搜索内容"></jigsaw-input>
+            <jigsaw-input (valueChange)="treeExt2.fuzzySearch($event, ['id', 'label'])" placeholder="搜索label或id"></jigsaw-input>
         </div>
         <jigsaw-tree-ext #ztree2 [(data)]="data2"></jigsaw-tree-ext>
     </div>
