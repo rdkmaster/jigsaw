@@ -689,47 +689,55 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         this[type].emit(treeEventData);
     }
 
-    public fuzzySearch(keyword: string, field: string = 'label') {
+    public fuzzySearch(keyword: string, field?: string);
+    public fuzzySearch(keyword: string, fields?: string[]);
+    public fuzzySearch(keyword: string, fields: string | string[] = 'label') {
         const rexMeta = /[\[\]\\^$.|?*+()]/g;
         this.ztree.setting.view.nameIsHTML = true;
         const nodes = this.ztree.transformToArray(this.ztree.getNodes());
 
+        const fieldArray: string[] = typeof fields == 'string' ? [fields] : fields;
         // reset node label
-        nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node[field])
-            .forEach(node => {
-                if (!node[field].includes('jigsaw-tree-funzzy-search-identification')) {
-                    return;
-                }
-                node[field] = node.oldname;
-                this.ztree.updateNode(node);
-            });
+        const hasLabel = fieldArray.find(f => f == 'label');
+        if (hasLabel) {
+            nodes.filter(node => CommonUtils.isDefined(node?.oldname) && node?.oldname != node.label)
+                .filter(node => node.label.includes('jigsaw-tree-fuzzy-search-identification'))
+                .forEach(node => {
+                    node.label = node.oldname;
+                    this.ztree.updateNode(node);
+                });
+        }
 
-        keyword = (keyword || '').trim();
+        keyword = (keyword || '').trim().toLowerCase();
         if (keyword.length === 0) {
             this.ztree.showNodes(nodes);
             return;
         }
 
         this.ztree.hideNodes(nodes);
-        nodes.filter(node => CommonUtils.isDefined(node[field]) && node[field].toLowerCase().indexOf(keyword.toLowerCase()) != -1)
-            .forEach(node => {
-                const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
-                node.oldname = node[field];
-                const rexGlobal = new RegExp(regKeywords, 'gi');
-                node[field] = node.oldname.replace(rexGlobal, originalText =>
-                    `<span class="jigsaw-tree-funzzy-search-identification" style="background-color: var(--primary-disabled);">${originalText}</span>`);
-                this.ztree.updateNode(node);
-                this.ztree.showNode(node);
+        fieldArray.forEach(field => {
+            nodes.filter(node => CommonUtils.isDefined(node[field]) && String(node[field]).toLowerCase().indexOf(keyword) != -1)
+                .forEach(node => {
+                    if (field == 'label') {
+                        const regKeywords = keyword.replace(rexMeta, matchStr => `\\${matchStr}`);
+                        node.oldname = node[field];
+                        const rexGlobal = new RegExp(regKeywords, 'gi');
+                        node[field] = String(node.oldname).replace(rexGlobal, originalText =>
+                            `<span class="jigsaw-tree-fuzzy-search-identification" style="background-color: var(--primary-disabled);">${originalText}</span>`);
+                        this.ztree.updateNode(node);
+                    }
+                    this.ztree.showNode(node);
 
-                const path = node.getPath();
-                if (!path || path.length == 0) {
-                    return;
-                }
-                for (let i = 0; i < path.length - 1; i++) {
-                    this.ztree.showNode(path[i]);
-                    this.ztree.expandNode(path[i], true);
-                }
-            });
+                    const path = node.getPath();
+                    if (!path || path.length == 0) {
+                        return;
+                    }
+                    for (let i = 0; i < path.length - 1; i++) {
+                        this.ztree.showNode(path[i]);
+                        this.ztree.expandNode(path[i], true);
+                    }
+                });
+        });
     }
 }
 
