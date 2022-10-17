@@ -768,6 +768,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this._formatData(initData);
         }
+        this.data = this.data.filter(item => item.label !== "");
+        if (this.selected && this.selected.label == "") {
+            this.selected = "";
+        }
         this._changeDetector.markForCheck();
     }
 
