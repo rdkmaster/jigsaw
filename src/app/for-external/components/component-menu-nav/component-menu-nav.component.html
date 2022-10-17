@@ -1,0 +1,22 @@
+<div class="m-component-menu-nav">
+  <div class="g-menu-nav" perfectScrollbar>
+    <ul class="menu-nav-group" [@fade]="'fadeIn'">
+      <li *ngFor="let menuNavItem of componentMenuConfig">
+        <span>{{menuNavItem.category}}</span>
+        <ul class="menu-nav-group-child">
+          <li uedRipple *ngFor="let menuNavChildItem of menuNavItem.nodes">
+            <a class="text-overflow" (click)="showComponentDetail(menuNavChildItem)"
+               [class.active]="isSelected(menuNavChildItem)">
+              {{menuNavChildItem.label}}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="g-component-detail">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+

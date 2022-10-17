@@ -16,6 +16,7 @@ import {
     JigsawNumericInputModule,
     JigsawSelectModule,
     MajorStyle,
+    JigsawButtonModule,
 } from "jigsaw/public_api";
 import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
@@ -90,16 +91,19 @@ import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.m
 import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
 import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 import { HomeComponent } from "./home/home.component";
+import { TopMenuComponent } from "./home/top-menu/top-menu.component";
+import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
 
 @NgModule({
-    declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent],
+    declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent],
     imports: [
         RouterModule.forRoot(
             [
                 ...routerConfig,
                 { path: "home", component: HomeComponent },
                 { path: "demo", component: PCDemoListComponent },
-                { path: "**", redirectTo: "/home" },
+                // { path: "**", redirectTo: "/home" },
+                { path: "**", component: PageNotFoundComponent }
             ],
             { useHash: true }
         ),
@@ -183,6 +187,7 @@ import { HomeComponent } from "./home/home.component";
         TableBigTableDemoModule,
         TableRendererDemoModule,
         JigsawSelectModule,
+        JigsawButtonModule
     ],
     providers: [
         {

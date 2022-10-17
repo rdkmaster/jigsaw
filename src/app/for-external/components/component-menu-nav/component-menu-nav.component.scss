@@ -1,0 +1,66 @@
+@import "../../../ued-theming.scss";
+
+/* 布局 */
+.m-component-menu-nav {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #eee;
+  .g-menu-nav {
+    background-color: $menu-left-bg-color;
+    width: 215px;
+    position: absolute !important;
+    top: 0;
+    bottom: 0;
+    /* 菜单 */
+    ul.menu-nav-group {
+      //box-shadow: 5px 5px 5px rgba(204, 204, 204, 0.349019607843137);
+      padding: 8px 0 8px 4px;
+      li {
+        width: 200px;
+        line-height: 30px;
+        height: 30px;
+        color: #a9a9a9;
+      }
+      & > li {
+        height: auto;
+        & > span {
+          padding-left: 15px;
+        }
+      }
+      li a {
+        color: $menu-left-color;
+        &:hover {
+          color: $active-menu-color;
+          font-size: 14px;
+          background-color: rgba(0, 171, 255, 0.2);
+          transition: font-size .35s;
+        }
+        &.active {
+          border: none;
+          border-left: 2px solid $active-menu-color;
+          background-color: rgba(0, 171, 255, 0.2);
+          color: $active-menu-color;
+          font-size: 14px;
+        }
+      }
+      ul.menu-nav-group-child li a {
+        display: block;
+        padding-left: 40px;
+      }
+    }
+  }
+}
+
+.g-component-detail {
+  position: absolute;
+  left: 215px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  transition: left .25s ease;
+}
+
+
+
+

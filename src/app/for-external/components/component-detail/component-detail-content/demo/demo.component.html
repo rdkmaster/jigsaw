@@ -1,0 +1,20 @@
+
+<div class="m-demo-component" *ngIf="demoList.length > 0">
+
+  <div class="demo-wrap" id="test">
+    <iframe [src]="currentDemo.url | sanitizeResourceUrL" frameborder="0"></iframe>
+  </div>
+  <div class="demo-nav-wrap">
+    <h6 [hidden]="demoList.length == 0">所有示例</h6>
+    <hr>
+    <ul>
+      <li *ngFor="let demoItem of demoList" (click)="setSelect(demoItem)"
+          [class.active]="isActive(demoItem.desc)">
+        <a [href]="getHref(demoItem.desc)">{{demoItem.desc}}</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<div *ngIf="demoList.length == 0">
+  <div><img src="doc/ued-design/img/UED-developing.png" alt=""></div>
+</div>

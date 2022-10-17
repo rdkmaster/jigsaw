@@ -1,0 +1,67 @@
+
+.m-demo-component{
+  display: flex;
+}
+.demo-wrap{
+  flex: 1;
+  border-right: 1px solid #dbdbdb;
+  padding-right: 8px;
+  margin-right: 180px;
+}
+.demo-item{
+  margin-bottom: 25px;
+}
+.demo-item h2{
+  height: 50px;
+  line-height: 50px;
+  padding: 0 8px;
+  background-color: #ccc;
+}
+.demo-item h2 a{
+  font-size: 14px;
+  display: inline-block;
+  margin-left: 12px;
+  color: #108ee9;
+}
+
+.demo-nav-wrap{
+  width: 200px;
+  position: fixed;
+  top: 112px;
+  bottom: 12px;
+  right: 8px;
+  padding: 12px;
+}
+.demo-nav-wrap h6{
+  margin: 3px 0 11px 0;
+}
+.demo-nav-wrap ul{
+  max-height: 95%;
+  overflow-y: auto;
+}
+.demo-nav-wrap ul li a{
+  display: inline-block;
+  line-height: 30px;
+  padding: 0 8px;
+  box-sizing: border-box;
+  font-size: 12px;
+  position: relative;
+}
+a{  color:#333  }
+.demo-nav-wrap ul li.active a{
+  color: #008fd4;
+}
+.demo-nav-wrap ul li.active a:before {
+  content: "";
+  border-radius: 50%;
+  left: -3px;
+  top: 12px;
+  background: #1976d2;
+  position: absolute;
+  width: 6px;
+  height: 6px;
+}
+iframe {
+  width:100%;
+  height:calc(100vh - 140px);
+}
