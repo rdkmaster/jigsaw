@@ -89,6 +89,7 @@ import { TableActionsDemoModule } from "./demo/table-actions/demo.module";
 import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.module";
 import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
 import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
+import { HomeComponent } from "./home/home.component";
 
 @NgModule({
     declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent],
@@ -96,9 +97,9 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
         RouterModule.forRoot(
             [
                 ...routerConfig,
-                { path: "", component: SwitchDemoComponent },
+                { path: "home", component: HomeComponent },
                 { path: "demo", component: PCDemoListComponent },
-                { path: "**", redirectTo: "/" },
+                { path: "**", redirectTo: "/home" },
             ],
             { useHash: true }
         ),
