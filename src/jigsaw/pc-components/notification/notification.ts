@@ -255,14 +255,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 
     private _popupInfoValue: PopupInfo;
 
-    /**
-     * @internal
-     */
-    get _popupInfo(): PopupInfo {
-        return this._popupInfoValue;
-    }
-
-    set _popupInfo(value: PopupInfo) {
+    private _setPopupInfo(value: PopupInfo): void {
         if (!value) {
             return;
         }
@@ -515,7 +508,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             disposeOnRouterChanged: !!opt.disposeOnRouterChanged,
         };
         const popupInfo = PopupService.instance.popup(JigsawNotification, popupOptions, initData);
-        (<JigsawNotification>popupInfo.instance)._popupInfo = popupInfo;
+        (<JigsawNotification>popupInfo.instance)._setPopupInfo(popupInfo);
         notificationInstances[NotificationPosition[opt.position]].push(popupInfo);
 
         const onStableSubscription = InternalUtils.zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
