@@ -253,19 +253,19 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         this._position = NotificationPosition[v];
     }
 
-    private _popupInfoValue: PopupInfo;
+    private _popupInfo: PopupInfo;
 
     private _setPopupInfo(value: PopupInfo): void {
         if (!value) {
             return;
         }
         // 如果有存在，则先取消旧的订阅
-        if (this._popupInfoValue?.answer) {
-            this._popupInfoValue.answer.complete();
+        if (this._popupInfo?.answer) {
+            this._popupInfo.answer.complete();
         }
 
-        this._popupInfoValue = value;
-        this._popupInfoValue.answer.subscribe(answer => this._$close(answer));
+        this._popupInfo = value;
+        this._popupInfo.answer.subscribe(answer => this._$close(answer));
         this._$onLeave();
     }
 
@@ -290,9 +290,9 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
      * @internal
      */
     public _$close(answer?: ButtonInfo) {
-        if (this._popupInfoValue) {
-            this._popupInfoValue.answer.unsubscribe();
-            this._popupInfoValue.dispose();
+        if (this._popupInfo) {
+            this._popupInfo.answer.unsubscribe();
+            this._popupInfo.dispose();
         }
 
         if (this._timeout) {
@@ -306,13 +306,13 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         const removeListener = this.renderer.listen(this.elementRef.nativeElement, 'animationend',
             () => {
                 removeListener();
-                if (!this._popupInfoValue) {
+                if (!this._popupInfo) {
                     return;
                 }
 
                 JigsawNotification.reposition(this._position);
                 const instances = notificationInstances[NotificationPosition[this._position]];
-                const idx = instances.indexOf(this._popupInfoValue);
+                const idx = instances.indexOf(this._popupInfo);
                 if (idx != -1) {
                     instances.splice(idx, 1);
                 } else {
@@ -329,7 +329,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
                     JigsawNotification._removeResizeListener = null;
                 }
 
-                this._popupInfoValue = null;
+                this._popupInfo = null;
                 this._timeout = null;
                 this._callbackContext = null;
                 this._callback = null;
