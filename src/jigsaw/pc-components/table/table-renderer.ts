@@ -137,6 +137,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.onDataRefresh();
+        this.cellData = this.cellData ? this.cellData : " ";
     }
 }
 
