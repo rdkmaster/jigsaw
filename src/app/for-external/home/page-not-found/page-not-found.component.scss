@@ -1,7 +1,7 @@
 .notFoundPage {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 60px);
   color: #333;
 
   .notFoundPageContainer {

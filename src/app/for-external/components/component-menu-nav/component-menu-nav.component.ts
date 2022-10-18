@@ -1,92 +1,75 @@
-import {Component, Inject, OnDestroy, OnInit, PLATFORM_ID} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
-import {ComponentMenuService} from "../service/component.service";
-import {ComponentMenuItem, ComponentMenuNav} from "../model/menu-nav-model"
-import 'rxjs/add/operator/filter';
-import {fade} from "../../animations/fade";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
 
-// enableProdMode();
+class ComponentMenuNav {
+  category: string;
+  nodes: ComponentMenuItem[];
+}
 
+class ComponentMenuItem {
+  label: string;
+  router: string;
+  subRouter: string;
+  docOnly?: boolean;
+  api?: string;
+  href?: string;
+  target?: string;
+}
 
 @Component({
   templateUrl: './component-menu-nav.component.html',
-  styleUrls: ['./component-menu-nav.component.scss'],
-  animations: [fade]
+  styleUrls: ['./component-menu-nav.component.scss']
 })
 export class ComponentMenuNavComponent implements OnInit, OnDestroy {
+
+  public routerGroup: any[] = DemoListManager.fullRouterConfig;
+
+  getUrl(router): string {
+      return `/components/${router.path}`;
+  }
 
   componentMenuConfig: ComponentMenuNav[];
   subscription: any;
   selectedMenuLabel: string;
 
-  constructor(private componentService: ComponentMenuService,
-              private route: ActivatedRoute,
-              private router: Router,
-              @Inject(PLATFORM_ID) private platformId: Object) {
+  constructor() {
   }
+
+  showComponentDetail(menuNavChildItem) { }
+
+  isSelected(menuNavChildItem) { }
 
   ngOnInit() {
-    this.loadMenuNav();
+    console.log(this.routerGroup)
+  }
 
+  ngOnDestroy(): void { }
+}
 
-    this.subscription = this.router.events.subscribe(e => {
-      if (!(e instanceof NavigationEnd)) {
-        return;
+export class DemoListManager {
+  public static get fullRouterConfig() {
+    const routerGroup = [
+      { groupName: componentGroup.general, routers: [] },
+      { groupName: componentGroup.entry, routers: [] },
+      { groupName: componentGroup.display, routers: [] },
+      { groupName: componentGroup.navigation, routers: [] },
+      { groupName: componentGroup.message, routers: [] },
+      { groupName: componentGroup.container, routers: [] },
+      { groupName: componentGroup.layout, routers: [] },
+      { groupName: componentGroup.directive, routers: [] },
+      { groupName: componentGroup.service, routers: [] },
+      { groupName: componentGroup.other, routers: [] }
+    ]
+    routerConfigPC.forEach(router => {
+      if (router.group === undefined) {
+        routerGroup.find(item => item.groupName === componentGroup.other).routers.push(router);
+      } else {
+        routerGroup.find(item => item.groupName === router.group).routers.push(router);
       }
-      this.updateSelectMenuFromUrl()
-    });
-
-    this.subscription = this.route.url.subscribe(() => this.updateSelectMenuFromUrl());
-  }
-
-  updateSelectMenuFromUrl() {
-    if (this.router.url.match(/^\/components(\/introduce)?$/)) {
-      this.router.navigate(['/components/introduce']);
-      this.selectedMenuLabel = null;
-      return;
-    }
-
-    if (this.selectedMenuLabel) {
-      return;
-    }
-    const match = this.router.url.match(/^\/components(\/api)?\/([_A-z0-9-]+)\/([_A-z0-9-]+)(#.*)?$/);
-    if (!match) {
-      return;
-    }
-    const router = match[1] ? 'api' : match[2];
-    const sub = match[1] ? '' : match[3];
-    const menu = this.componentService.getComponentMenuNav(router, sub);
-    if (!menu) {
-      return;
-    }
-    this.selectedMenuLabel = menu.label;
-  }
-
-  loadMenuNav() {
-    //resolver守卫中获取菜单:
-    this.route.data
-      .subscribe((data: { menuNavList: ComponentMenuNav[] }) => {
-        this.componentMenuConfig = data.menuNavList;
-        this.componentService.menuNavList = data.menuNavList;
-      });
-  }
-
-  isSelected(componentMenuNav: ComponentMenuItem): boolean {
-    return componentMenuNav.label === this.selectedMenuLabel;
-  }
-
-  showComponentDetail(componentMenuNav: ComponentMenuItem) {
-    if (componentMenuNav.href) {
-      window.open(componentMenuNav.href, componentMenuNav.target || '_self');
-      return;
-    }
-
-    const router = [componentMenuNav.router, componentMenuNav.subRouter || 'api'];
-    this.selectedMenuLabel = componentMenuNav.label;
-    this.router.navigate(router, {relativeTo: this.route});
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    })
+    routerGroup.forEach(group => {
+      group.routers.sort((item1, item2) => item1.path.localeCompare(item2.path))
+    })
+    return routerGroup;
   }
 }

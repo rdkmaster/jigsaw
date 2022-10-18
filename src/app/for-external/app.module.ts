@@ -22,7 +22,6 @@ import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
 import { routerConfig } from "./router-config";
 import { PCDemoListComponent } from "./demo-list/pc-demo-list.component";
-import { SwitchDemoComponent } from "./demo-list/switch-demo.component";
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";
@@ -93,16 +92,20 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 import { HomeComponent } from "./home/home.component";
 import { TopMenuComponent } from "./home/top-menu/top-menu.component";
 import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
+import { ComponentMenuNavComponent } from "./components/component-menu-nav/component-menu-nav.component";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
 @NgModule({
-    declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent],
+    declarations: [AppComponent, PCDemoListComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
     imports: [
         RouterModule.forRoot(
             [
-                ...routerConfig,
                 { path: "home", component: HomeComponent },
                 { path: "demo", component: PCDemoListComponent },
-                // { path: "**", redirectTo: "/home" },
+                {
+                    path: 'components', component: ComponentMenuNavComponent,
+                    children: routerConfig
+                },
                 { path: "**", component: PageNotFoundComponent }
             ],
             { useHash: true }
@@ -187,7 +190,8 @@ import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.comp
         TableBigTableDemoModule,
         TableRendererDemoModule,
         JigsawSelectModule,
-        JigsawButtonModule
+        JigsawButtonModule,
+        PerfectScrollbarModule
     ],
     providers: [
         {

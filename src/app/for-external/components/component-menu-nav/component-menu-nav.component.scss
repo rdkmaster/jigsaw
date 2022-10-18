@@ -1,4 +1,8 @@
-@import "../../../ued-theming.scss";
+$menu-left-bg-color:#fff;
+$menu-left-color:#6f7f8e;
+$background-color:#fff;
+$active-menu-color:#288bf0;
+$active-menu-2-color:#58b0e8;
 
 /* 布局 */
 .m-component-menu-nav {
@@ -6,36 +10,41 @@
   width: 100%;
   height: 100%;
   background-color: #eee;
+
   .g-menu-nav {
     background-color: $menu-left-bg-color;
     width: 215px;
     position: absolute !important;
     top: 0;
     bottom: 0;
+
     /* 菜单 */
     ul.menu-nav-group {
-      //box-shadow: 5px 5px 5px rgba(204, 204, 204, 0.349019607843137);
-      padding: 8px 0 8px 4px;
       li {
         width: 200px;
         line-height: 30px;
         height: 30px;
         color: #a9a9a9;
       }
-      & > li {
+
+      &>li {
         height: auto;
-        & > span {
+
+        &>span {
           padding-left: 15px;
         }
       }
+
       li a {
         color: $menu-left-color;
+
         &:hover {
           color: $active-menu-color;
           font-size: 14px;
           background-color: rgba(0, 171, 255, 0.2);
           transition: font-size .35s;
         }
+
         &.active {
           border: none;
           border-left: 2px solid $active-menu-color;
@@ -44,6 +53,7 @@
           font-size: 14px;
         }
       }
+
       ul.menu-nav-group-child li a {
         display: block;
         padding-left: 40px;
@@ -60,7 +70,3 @@
   bottom: 0;
   transition: left .25s ease;
 }
-
-
-
-

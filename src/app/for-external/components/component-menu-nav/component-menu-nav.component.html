@@ -1,13 +1,12 @@
 <div class="m-component-menu-nav">
-  <div class="g-menu-nav" perfectScrollbar>
-    <ul class="menu-nav-group" [@fade]="'fadeIn'">
-      <li *ngFor="let menuNavItem of componentMenuConfig">
-        <span>{{menuNavItem.category}}</span>
+  <div class="g-menu-nav">
+    <ul class="menu-nav-group" [perfectScrollbar]="{ suppressScrollY: true, wheelPropagation: true }">
+      <li *ngFor="let group of routerGroup">
+        <span>{{group.groupName}}</span>
         <ul class="menu-nav-group-child">
-          <li uedRipple *ngFor="let menuNavChildItem of menuNavItem.nodes">
-            <a class="text-overflow" (click)="showComponentDetail(menuNavChildItem)"
-               [class.active]="isSelected(menuNavChildItem)">
-              {{menuNavChildItem.label}}
+          <li *ngFor="let router of group.routers">
+            <a class="text-overflow" routerLink="{{getUrl(router)}}" [class.active]="isSelected(menuNavChildItem)">
+              {{router.path}}
             </a>
           </li>
         </ul>
@@ -18,5 +17,3 @@
     <router-outlet></router-outlet>
   </div>
 </div>
-
-

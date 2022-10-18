@@ -1,5 +1,0 @@
-
-<div>
-  <jigsaw-markdown *ngIf="isMarkdown" mdSource="{{mdUrl}}"></jigsaw-markdown>
-  <div class="jigsaw-markdown" *ngIf="!isMarkdown" [innerHtml]="apiContent | sanitizeHtml"></div>
-</div>
