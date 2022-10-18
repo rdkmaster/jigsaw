@@ -93,6 +93,8 @@ import { TopMenuComponent } from "./home/top-menu/top-menu.component";
 import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
 import { ComponentMenuNavComponent } from "./components/component-menu-nav/component-menu-nav.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
+import { DesignComponent } from "./home/design/design";
 
 @NgModule({
     declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
@@ -100,6 +102,7 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
         RouterModule.forRoot(
             [
                 { path: "home", component: HomeComponent },
+                { path: "designs", component: DesignComponent },
                 {
                     path: 'components', component: ComponentMenuNavComponent,
                     children: routerConfig
@@ -189,7 +192,8 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
         TableRendererDemoModule,
         JigsawSelectModule,
         JigsawButtonModule,
-        PerfectScrollbarModule
+        PerfectScrollbarModule,
+        QuickStartDemoModule
     ],
     providers: [
         {
