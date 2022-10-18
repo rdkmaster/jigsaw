@@ -165,7 +165,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         };
 
         this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ? this._translateService.instant(iconType2Caption[value.iconType]) : undefined)
-        this.message = value.message || 'the "message" property in the initData goes here.';
+        this.message = value.message;
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
         this.position = value.position;
@@ -480,9 +480,6 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
      * @internal
      */
     public static show(message: string, options?: string | NotificationMessage): PopupInfo {
-        if (CommonUtils.isUndefined(message)) {
-            return;
-        }
         const opt = <NotificationMessage>(typeof options == 'string' ? { caption: options } : options || {});
 
         opt.width = opt.hasOwnProperty('width') ? opt.width : 350;
@@ -501,7 +498,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             borderRadius: '3px'
         };
         const initData = {
-            message: message, caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
+            message: message || "", caption: opt.caption, icon: opt.icon, timeout: opt.timeout,
             buttons: opt.buttons instanceof ButtonInfo ? [opt.buttons] : opt.buttons,
             callbackContext: opt.callbackContext, callback: opt.callback, position: opt.position,
             innerHtmlContext: opt.innerHtmlContext, iconType: opt.iconType,
