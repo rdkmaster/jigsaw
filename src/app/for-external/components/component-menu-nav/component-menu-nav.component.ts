@@ -49,6 +49,7 @@ export class ComponentMenuNavComponent implements OnInit, OnDestroy {
 export class DemoListManager {
   public static get fullRouterConfig() {
     const routerGroup = [
+      { groupName: componentGroup.start, routers: [] },
       { groupName: componentGroup.general, routers: [] },
       { groupName: componentGroup.entry, routers: [] },
       { groupName: componentGroup.display, routers: [] },

@@ -68,8 +68,10 @@ import { TableActionsAllComponent } from "./demo/table-actions/demo.component";
 import { TableColumnDefinesAllComponent } from "./demo/table-column-defines/demo.component";
 import { TableBigDataAllComponent } from "./demo/table-big-data/demo.component";
 import { TableRendererAllComponent } from "./demo/table-renderer/demo.component";
+import { IntroduceComponent } from "./components/introduce/introduce";
 
 export const componentGroup = {
+    start: '开始',
     general: '通用',
     entry: '数据输入',
     display: '数据呈现',
@@ -83,6 +85,7 @@ export const componentGroup = {
 }
 
 export const routerConfigPC = [
+    { path: "", component: IntroduceComponent },
     {
         path: "breadcrumb", component: BreadcrumbAllComponent,
         children: [

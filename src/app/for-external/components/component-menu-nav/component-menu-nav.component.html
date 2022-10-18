@@ -1,6 +1,6 @@
 <div class="m-component-menu-nav">
   <div class="g-menu-nav">
-    <ul class="menu-nav-group" [perfectScrollbar]="{ suppressScrollY: true, wheelPropagation: true }">
+    <ul class="menu-nav-group" [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20}">
       <li *ngFor="let group of routerGroup">
         <span>{{group.groupName}}</span>
         <ul class="menu-nav-group-child">

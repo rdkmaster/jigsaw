@@ -20,10 +20,10 @@ $active-menu-2-color:#58b0e8;
 
     /* 菜单 */
     ul.menu-nav-group {
+      height: calc(100vh - 60px);
       li {
         width: 200px;
         line-height: 30px;
-        height: 30px;
         color: #a9a9a9;
       }
 

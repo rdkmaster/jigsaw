@@ -21,7 +21,6 @@ import {
 import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
 import { routerConfig } from "./router-config";
-import { PCDemoListComponent } from "./demo-list/pc-demo-list.component";
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";
@@ -96,12 +95,11 @@ import { ComponentMenuNavComponent } from "./components/component-menu-nav/compo
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 
 @NgModule({
-    declarations: [AppComponent, PCDemoListComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
+    declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
     imports: [
         RouterModule.forRoot(
             [
                 { path: "home", component: HomeComponent },
-                { path: "demo", component: PCDemoListComponent },
                 {
                     path: 'components', component: ComponentMenuNavComponent,
                     children: routerConfig
