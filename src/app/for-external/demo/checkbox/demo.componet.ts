@@ -5,4 +5,5 @@ import {AsyncDescription} from "../../demo-template/demo-template";
     templateUrl: "demo.component.html"
 })
 export class CheckBoxDemoComponent extends AsyncDescription {
+    demoPath = 'demo/checkbox';
 }

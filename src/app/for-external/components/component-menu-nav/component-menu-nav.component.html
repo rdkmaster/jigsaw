@@ -5,7 +5,7 @@
         <span>{{group.groupName}}</span>
         <ul class="menu-nav-group-child">
           <li *ngFor="let router of group.routers">
-            <a class="text-overflow" routerLink="{{getUrl(router)}}" [class.active]="isSelected(menuNavChildItem)">
+            <a class="text-overflow" routerLink="{{getUrl(router)}}" [class.active]="isSelected(router)">
               {{router.path}}
             </a>
           </li>

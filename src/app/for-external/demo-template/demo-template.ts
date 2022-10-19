@@ -150,8 +150,8 @@ export class AsyncDescription implements OnDestroy {
 export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
-    public apiContent: string = '';
-    protected docPath: string;
+    public apiDoc: string = '';
+    protected docPath: string = '';
 
     constructor(public route: ActivatedRoute, public http: HttpClient, el: ElementRef) {
         super(http, el);
@@ -175,9 +175,12 @@ export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        if (!this.docPath) {
+            return;
+        }
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         this.http.get(`app/for-external/docs/fragments/${this.docPath}`, { headers, responseType: 'text' }).subscribe((data) => {
-            this.apiContent = data;
+            this.apiDoc = data;
         })
     }
 

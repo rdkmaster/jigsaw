@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
+import { ActivatedRoute, Router } from '@angular/router';
 
 class ComponentMenuNav {
   category: string;
@@ -20,30 +21,23 @@ class ComponentMenuItem {
   templateUrl: './component-menu-nav.component.html',
   styleUrls: ['./component-menu-nav.component.scss']
 })
-export class ComponentMenuNavComponent implements OnInit, OnDestroy {
+export class ComponentMenuNavComponent {
 
   public routerGroup: any[] = DemoListManager.fullRouterConfig;
 
-  getUrl(router): string {
-      return `/components/${router.path}`;
+  public getUrl(router): string {
+    return `/components/${router.path}`;
   }
 
   componentMenuConfig: ComponentMenuNav[];
-  subscription: any;
   selectedMenuLabel: string;
 
-  constructor() {
+  constructor(private _router: Router) {
   }
 
-  showComponentDetail(menuNavChildItem) { }
-
-  isSelected(menuNavChildItem) { }
-
-  ngOnInit() {
-    console.log(this.routerGroup)
+  public isSelected(url): boolean {
+    return this._router.url.split('/').pop() === url.path;
   }
-
-  ngOnDestroy(): void { }
 }
 
 export class DemoListManager {
