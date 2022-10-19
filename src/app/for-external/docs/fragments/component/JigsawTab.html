@@ -1,0 +1,209 @@
+
+<h2>JigsawTab</h2>
+
+<p>起始版本：v1.0.0</p>
+<p>使用<a href="#/components/api/component/JigsawTab" target="_self"><code>JigsawTab</code></a>来将一组视图叠加在同一个区域使用，并以页签的方式来切换这些视图。
+<a href="#/components/api/component/JigsawTab" target="_self"><code>JigsawTab</code></a>提供了多个api用于动态创建、销毁、隐藏tab页，
+这些是利用<a href="#/components/api/component/JigsawTab" target="_self"><code>JigsawTab</code></a>实现复杂、交互密集的视图的有力工具。</p>
+<p>如果需要动态增减的视图内容形式比较单一，也可以通过<code>ng-for</code>来实现tab动态化，
+参考<a href="">这个demo</a>。</p>
+<p>
+
+</p>
+
+
+<a name="selectors"></a>
+<h3>选择器 / Selectors</h3>
+<p><ul><li>jigsaw-tab-bar</li><li>j-tab-bar</li><li>jigsaw-tabs-bar</li><li>j-tabs-bar</li></ul></p>
+
+<a name="inputs"></a>
+<h3>输入属性 / Inputs</h3>
+<p>无</p>
+
+<a name="outputs"></a>
+<h3>输出属性 / Outputs</h3>
+<p>无</p>
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<table id="dynamicProperties" style="width:100%; display:table">
+                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="tabLabels">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>tabLabels</td><td><a href="https://angular.io/api/core/QueryList" target="_blank">QueryList</a><JigsawTabLabel></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="tabsInkBar">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>tabsInkBar</td><td><a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="tabsNav">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>tabsNav</td><td><a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="tabsNavWrap">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>tabsNavWrap</td><td><a href="https://angular.io/api/core/ElementRef" target="_blank">ElementRef</a></td>
+            <td></td><td></td><td></td></tr></tbody>
+            </table>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<table id="dynamicMethods" style="width:100%; display:table">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleString: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>以一个简单的字符串作为标题</p>
+</li><li><span style="white-space: nowrap;">contentTemplate: <a href="https://angular.io/api/core/TemplateRef" target="_blank">TemplateRef</a><<a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>></span><p>以一个<code>ng-template</code>标签包围起来的模板作为tab页的内容，
+当tab页的内容比较简单时，建议采用此方式。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleTemplate: <a href="https://angular.io/api/core/TemplateRef" target="_blank">TemplateRef</a><<a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>></span><p>以一个<code>ng-template</code>标签包围起来的模板作为标题，
+这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。</p>
+</li><li><span style="white-space: nowrap;">contentTemplate: <a href="https://angular.io/api/core/TemplateRef" target="_blank">TemplateRef</a><<a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>></span><p>以一个<code>ng-template</code>标签包围起来的模板作为tab页的内容，
+当tab页的内容比较简单时，建议采用此方式。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleComponent: <a href="https://angular.io/api/core/Type" target="_blank">Type</a><<a href="#/components/api/interface/IJigsawTabTitleRenderer" target="_self">IJigsawTabTitleRenderer</a>></span><p>以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
+例如加图标，甚至添加按钮、进度条等复杂视图。</p>
+</li><li><span style="white-space: nowrap;">contentTemplate: <a href="https://angular.io/api/core/TemplateRef" target="_blank">TemplateRef</a><<a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>></span><p>以一个<code>ng-template</code>标签包围起来的模板作为tab页的内容，
+当tab页的内容比较简单时，建议采用此方式。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleString: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>以一个简单的字符串作为标题</p>
+</li><li><span style="white-space: nowrap;">contentComponent: <a href="https://angular.io/api/core/Type" target="_blank">Type</a><<a href="#/components/api/interface/IDynamicInstantiatable" target="_self">IDynamicInstantiatable</a>></span><p>以一个组件作为tab页的内容，
+如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleTemplate: <a href="https://angular.io/api/core/TemplateRef" target="_blank">TemplateRef</a><<a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>></span><p>以一个<code>ng-template</code>标签包围起来的模板作为标题，
+这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。</p>
+</li><li><span style="white-space: nowrap;">contentComponent: <a href="https://angular.io/api/core/Type" target="_blank">Type</a><<a href="#/components/api/interface/IDynamicInstantiatable" target="_self">IDynamicInstantiatable</a>></span><p>以一个组件作为tab页的内容，
+如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="addTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>addTab</td><td><p>通过编程的方式添加一个新的tab页</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">titleComponent: <a href="https://angular.io/api/core/Type" target="_blank">Type</a><<a href="#/components/api/interface/IJigsawTabTitleRenderer" target="_self">IJigsawTabTitleRenderer</a>></span><p>以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
+例如加图标，甚至添加按钮、进度条等复杂视图。</p>
+</li><li><span style="white-space: nowrap;">contentComponent: <a href="https://angular.io/api/core/Type" target="_blank">Type</a><<a href="#/components/api/interface/IDynamicInstantiatable" target="_self">IDynamicInstantiatable</a>></span><p>以一个组件作为tab页的内容，
+如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。</p>
+</li><li><span style="white-space: nowrap;">initData<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span><p>提供给<code>contentTemplate</code>的初始化数据</p>
+</li><li><span style="white-space: nowrap;">activateImmediately<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></span><p>是否立即激活新增的Tab页，默认值是<code>true</code></p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="hideTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>hideTab</td><td><p>隐藏对应的Tab页，使用户在界面上看不到它，页无法对它做操作。
+注意这个方法不会销毁tab页内的组件，如果需要销毁tab页，请使用<a href="#/components/api/component/JigsawTab#removeTab" target="_self"><code>removeTab</code></a>。
+被隐藏的tab页可以通过<a href="#/components/api/component/JigsawTab#showTab" target="_self"><code>showTab</code></a>方法让他们再次显示出来。</p>
+<p>
+</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">index: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>tab页的编号，从0开始</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/hide-tab') evalator.src = 'jigsaw-demo/#/pc/tab/hide-tab';">hide-tab</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="removeTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>removeTab</td><td><p>销毁指定的Tab页，注意此操作不可恢复，可以使用<a href="#/components/api/component/JigsawTab#hideTab" target="_self"><code>hideTab</code></a>来隐藏一个tab页，而非销毁它。</p>
+<p>
+</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">index</span><p>目标tab页的编号，从0开始计数。</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/destroy-tab') evalator.src = 'jigsaw-demo/#/pc/tab/destroy-tab';">destroy-tab</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="showTab">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>showTab</td><td><p>将对应的Tab页切换为激活状态，当指定的tab页是隐藏状态时，它将被设置为正常状态并被激活。</p>
+<p>
+</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">index: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>tab页的编号，从0开始</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/api') evalator.src = 'jigsaw-demo/#/pc/tab/api';">api</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/show-tab') evalator.src = 'jigsaw-demo/#/pc/tab/show-tab';">show-tab</a></li></li></ul></td></tr></tbody>
+            </table>
+
+<a name="demos"></a><h3>相关示例</h3><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/with-ngfor') evalator.src = 'jigsaw-demo/#/pc/tab/with-ngfor';">with-ngfor</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/basic') evalator.src = 'jigsaw-demo/#/pc/tab/basic';">basic</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/update-title') evalator.src = 'jigsaw-demo/#/pc/tab/update-title';">update-title</a></li><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tab/with-input') evalator.src = 'jigsaw-demo/#/pc/tab/with-input';">with-input</a></li></li></ul>
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 JigsawTab -&gt; JigsawTabBase</li><li>实现接口 --</li><li>已知子类 --</li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/pc-components/tabs/tab.ts#L518" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

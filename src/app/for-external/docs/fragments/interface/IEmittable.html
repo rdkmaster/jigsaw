@@ -1,0 +1,107 @@
+
+<h2>IEmittable</h2>
+
+<p>起始版本：v1.0.0</p>
+<p>实现了此接口的类都具备事件发送和监听的能力，<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>有类型繁多的组件数据封装类，他们大多都实现了此接口。
+可以利用这些数据类的事件交互能力传递事件，这样可以避免应用自己定义和维护事件发射器，
+从而大大减少你的视图交互逻辑。</p>
+
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<p>无</p>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<table id="dynamicMethods" style="width:100%; display:table">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="emit">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>emit</td><td><p>通过这个方法来发出一个事件。注意，你需要在此之前先调用<a href="#/components/api/interface/IEmittable#subscribe" target="_self"><code>subscribe</code></a>方法注册监听器，
+否则此事件可能无法被正确捕获和处理。示例：</p>
+<pre class="line-numbers"><code class="language-none">const td = new TableData();
+td.subscribe(data =&gt; console.log(data));
+...
+td.emit(&#39;hello event emitter!&#39;);</code></pre></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">value<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>此事件所携带的数据</p>
+</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="subscribe">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>subscribe</td><td><p>添加事件处理函数，在执行此函数之后，<a href="#/components/api/interface/IEmittable#emit" target="_self"><code>emit</code></a>函数发出事件时，参数<code>callback</code>就会被调用。
+注意请及时清理掉不必要的订阅以提升页面性能。示例：</p>
+<pre class="line-numbers"><code class="language-none">const td = new TableData();
+const subscriber = td.subscribe(data =&gt; console.log(data));
+...
+// 注销本次订阅。其他的订阅不受影响
+subscriber.unsubscribe();
+...
+// 取消所有订阅
+td.unsubscribe();</code></pre></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html" target="_blank">Subscription</a></p><p>返回当前订阅的回执，利用它可以取消本次订阅</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>事件回调函数</p>
+</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="unsubscribe">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>unsubscribe</td><td><p>取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td>--</td><td></td></tr></tbody>
+            </table>
+
+
+
+
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 --</li><li>实现接口 --</li><li>已知子类 --</li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/common/core/data/component-data.ts#L892" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

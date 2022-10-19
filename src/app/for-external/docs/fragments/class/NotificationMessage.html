@@ -1,0 +1,121 @@
+
+<h2>NotificationMessage</h2>
+
+<p>起始版本：v1.0.0</p>
+<p>一个提示消息的额外信息，用于详细配置一个弹出的消息的各种属性，所有属性都是可选的。</p>
+
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<table id="dynamicProperties" style="width:100%; display:table">
+                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="buttons">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>buttons</td><td><a href="#/components/api/class/ButtonInfo" target="_self">ButtonInfo</a> | <a href="#/components/api/class/ButtonInfo" target="_self">ButtonInfo</a>[]</td>
+            <td><p>给提示框快速设置交互按钮，默认无按钮</p>
+<p></p>
+</td><td></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/notification/full') evalator.src = 'jigsaw-demo/#/pc/notification/full';">full</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="callback">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>callback</td><td><a href="#/components/api/typealias/DialogCallback" target="_self">DialogCallback</a></td>
+            <td><p><a href="#/components/api/class/NotificationMessage#buttons" target="_self"><code>buttons</code></a>被单击了后的回调函数</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="callbackContext">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>callbackContext</td><td><a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></td>
+            <td><p><a href="#/components/api/class/NotificationMessage#callback" target="_self"><code>callback</code></a>执行的上下文</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="caption">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>caption</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></td>
+            <td><p>提示框的标题，默认不显示标题</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="disposeOnRouterChanged">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>disposeOnRouterChanged</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></td>
+            <td><p>控制是否在路由变化时提示框是否关闭，默认不关</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="height">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>height</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a> | <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></td>
+            <td><p>提示框的高度，单位是px，默认由内容自动撑开</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="icon">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>icon</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></td>
+            <td><p>提示框的图标，目前支持<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>自研的@rdkmaster/icon-font符号图标。默认无图标。</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="iconType">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>iconType</td><td><a href="#/components/api/typealias/NoticeLevel" target="_self">NoticeLevel</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="innerHtmlContext">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>innerHtmlContext</td><td><a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></td>
+            <td><p>当消息的内容是html片段，并且包含了交互动作时，以此属性值作为这些函数的上下文对象。</p>
+<p>例如使用下面的代码弹出一个提示</p>
+<pre class="line-numbers"><code class="language-none">JigsawNotification.show(&#39;执行xxxx成功啦，单击&lt;a onclick=&quot;showDetail()&quot;&gt;这里&lt;/a&gt;查看详情。&#39;);</code></pre><p>注意到提示内容带了一个超链，并且配置了<code>showDetail()</code>作为回调函数，在这个情况下，
+<a href="#/components/api/class/NotificationMessage#innerHtmlContext" target="_self"><code>innerHtmlContext</code></a>这个对象上必须已经定义了<code>showDetail()</code>函数，否则在用户单击了链接之后，控制台将报错。</p>
+<p>此外，<a href="#/components/api/class/NotificationMessage#innerHtmlContext" target="_self"><code>innerHtmlContext</code></a>还作为回调函数中<code>this</code>的上下文，再如<code>showDetail()</code>函数有如下代码：</p>
+<pre class="line-numbers"><code class="language-none">showDetail() {
+     ...
+     alert(this.detail)
+}</code></pre><p>在这个情况下，<a href="#/components/api/class/NotificationMessage#innerHtmlContext" target="_self"><code>innerHtmlContext</code></a>这个对象上必须已经定义了<code>detail</code>属性，否则一样报错。</p>
+<p></p>
+</td><td></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/notification/full') evalator.src = 'jigsaw-demo/#/pc/notification/full';">full</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="position">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>position</td><td><a href="#/components/api/enum/NotificationPosition" target="_self">NotificationPosition</a> | <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></td>
+            <td><p>提示框所处的位置，目前支持左上、左下、右上、右下4个方向，默认右上角</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="timeout">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>timeout</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></td>
+            <td><p>提示信息超时自动关闭的毫秒数，为0则表示不关闭，默认8000ms</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="width">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>width</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a> | <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></td>
+            <td><p>提示框的默认宽度，单位是px，默认350px</p>
+</td><td></td><td></td></tr></tbody>
+            </table>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<p>无</p>
+
+
+
+
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 --</li><li>实现接口 --</li><li>已知子类 --</li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/pc-components/notification/notification.ts#L44" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

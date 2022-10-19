@@ -1,0 +1,365 @@
+
+<h2>DoughnutScoreGraphData</h2>
+
+<p>起始版本：v1.0.0</p>
+<p>环形得分图</p>
+
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<table id="dynamicProperties" style="width:100%; display:none">
+                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="_busy">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#_busy">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>_busy</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></td>
+            <td><p>与<a href="#/components/api/class/AbstractGeneralCollection#busy" target="_self"><code>busy</code></a>具有相同功能</p>
+</td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="busy">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#busy">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>busy</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></td>
+            <td><p>当前数据对象是否正在进行网络请求，请求过程中值为true，否则为false。
+通常可以使用这个值与组件的disabled属性绑定使用，这样可以方便的实现网络请求过程中组件不可交互的目的。</p>
+<p><strong>注意</strong>：当它的值为true时，此数据对象无法再次发起网络查询，控制台将出现错误打印。</p>
+<p></p>
+</td><td></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ssp') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ssp';">array-ssp</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="componentDataHelper">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#componentDataHelper">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>componentDataHelper</td><td><a href="#/components/api/class/ComponentDataHelper" target="_self">ComponentDataHelper</a></td>
+            <td></td><td>new ComponentDataHelper()</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="data">&nbsp;</a><a href="#/components/api/class/AbstractNormalGraphData#data">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>data</td><td><a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></td>
+            <td><p>图形的数据，二维数组。</p>
+</td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="dataReviser">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#dataReviser">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>dataReviser</td><td><a href="#/components/api/typealias/DataReviser" target="_self">DataReviser</a></td>
+            <td><p>这是一个函数，作用是在数据从服务端请求回来之后，对服务端返回的数据做修正，并返回修正后的数据。
+一般用于数据结构的转换或者数据的微调。</p>
+<p></p>
+</td><td></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ajax') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ajax';">array-ajax</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="echartOptions">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#echartOptions">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>echartOptions</td><td><a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="field">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#field">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>field</td><td><a href="#/components/api/typealias/GraphDataField" target="_self">GraphDataField</a></td>
+            <td><p>表格数据的字段序列，这个序列决定了<a href="#/components/api/component/JigsawTable" target="_self"><code>JigsawTable</code></a>实际渲染出来哪些列。无效、重复的字段将被抛弃。</p>
+</td><td>[]</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="header">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#header">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>header</td><td><a href="#/components/api/typealias/GraphDataHeader" target="_self">GraphDataHeader</a></td>
+            <td><p>表格的列头，这里的文本将会直接显示在界面上，请确保他们已经被正确国际化过。</p>
+</td><td>[]</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="http">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#http">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>http</td><td><a href="https://angular.io/api/common/http/HttpClient" target="_blank">HttpClient</a></td>
+            <td><p>用于发起网络请求，在调用<a href="#/components/api/class/TableDataBase#fromAjax" target="_self"><code>fromAjax()</code></a>之前必须设置好此值。</p>
+</td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="legend">&nbsp;</a><a href="#/components/api/class/AbstractNormalGraphData#legend">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>legend</td><td><a href="#/components/api/class/EchartLegend" target="_self">EchartLegend</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="options">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#options">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span><span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>options</td><td><a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="optionsPatch">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#optionsPatch">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>optionsPatch</td><td><a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="optionsTemplate">&nbsp;</a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>optionsTemplate</td><td><a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></td>
+            <td></td><td>{
+        series: [
+            {
+                type: 'pie',
+                radius: ['45', '50'],
+                itemStyle: {},
+                minAngle: 0,
+                data: [
+                    {
+                        name: null,
+                        value: 100,
+                        itemStyle: {}
+                    },
+                    {
+                        name: null,
+                        value: 0,
+                        itemStyle: {}
+                    }
+                ]
+            },
+            //点击
+            {
+                name: '点击环',
+                clickable: false,
+                type: 'pie',
+                hoverAnimation: false,
+                radius: ['0', '45'],
+                minAngle: 0,
+                data: [{
+                    name: "",
+                    value: 100,
+                    itemStyle: {}
+                }]
+            }
+        ]
+    }</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="rowDescriptor">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#rowDescriptor">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>rowDescriptor</td><td><a href="#/components/api/typealias/GraphDataRowDescriptor" target="_self">GraphDataRowDescriptor</a></td>
+            <td></td><td>[]</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="template">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#template">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>template</td><td><a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="title">&nbsp;</a><a href="#/components/api/class/AbstractNormalGraphData#title">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>title</td><td><a href="#/components/api/class/EchartTitle" target="_self">EchartTitle</a> | <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="tooltip">&nbsp;</a><a href="#/components/api/class/AbstractNormalGraphData#tooltip">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>tooltip</td><td><a href="#/components/api/class/EchartTooltip" target="_self">EchartTooltip</a></td>
+            <td></td><td></td><td></td></tr></tbody>
+            </table><a style="margin-left: 10px" title="单击列出如下属性：
+1. 所有从父类继承过来的属性;
+2. 当前类中受保护的属性;"
+            onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+            });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
+            列出所有可用属性</a>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<table id="dynamicMethods" style="width:100%; display:none">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="_extendOption">&nbsp;</a><a href="#/components/api/class/AbstractNormalGraphData#_extendOption">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>_extendOption</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">option: <a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="_fromObject">&nbsp;</a><a href="#/components/api/class/TableDataBase#_fromObject">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>_fromObject</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/class/TableDataBase" target="_self">TableDataBase</a></p></td><td><ul><li><span style="white-space: nowrap;">data: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="ajaxCompleteHandler">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#ajaxCompleteHandler">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>ajaxCompleteHandler</td><td><p>调用在<a href="#/components/api/class/TableDataBase#onAjaxComplete" target="_self"><code>onAjaxComplete</code></a>里注册的所有回调函数。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="ajaxErrorHandler">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#ajaxErrorHandler">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>ajaxErrorHandler</td><td><p>调用在<a href="#/components/api/class/TableDataBase#onAjaxError" target="_self"><a href="#/components/api/class/TableDataBase#onAjaxError" target="_self"><code>onAjaxError</code></a></a>里注册的所有回调函数。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">error</span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="ajaxStartHandler">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#ajaxStartHandler">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>ajaxStartHandler</td><td><p>调用在<a href="#/components/api/class/TableDataBase#onAjaxStart" target="_self"><code>onAjaxStart</code></a>里注册的所有回调函数。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="ajaxSuccessHandler">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#ajaxSuccessHandler">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>ajaxSuccessHandler</td><td><p>调用在<a href="#/components/api/class/TableDataBase#onAjaxSuccess" target="_self"><a href="#/components/api/class/TableDataBase#onAjaxSuccess" target="_self"><code>onAjaxSuccess</code></a></a>里注册的所有回调函数。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">data</span><p>服务端返回的数据</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="arrayAppend">&nbsp;</a><a href="#/components/api/class/TableDataBase#arrayAppend">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-cube" style="color: #0575b9; margin-right: 4px" title="Static"></span>arrayAppend</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">dest: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>[]</span></li><li><span style="white-space: nowrap;">source: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="clear">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#clear">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>clear</td><td><p>清空此对象上的所有数据，避免潜在的内存泄露风险</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="createChartOptions">&nbsp;</a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>createChartOptions</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="destroy">&nbsp;</a><a href="#/components/api/class/TableDataBase#destroy">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>destroy</td><td><p>数据销毁时要做的事情，往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="emit">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#emit">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>emit</td><td><p>通过这个方法来发出一个事件。注意，你需要在此之前先调用<a href="#/components/api/class/AbstractGeneralCollection#subscribe" target="_self"><a href="#/components/api/class/TableDataBase#subscribe" target="_self"><code>subscribe</code></a></a>方法注册监听器，
+否则此事件可能无法被正确捕获和处理。示例：</p>
+<pre class="line-numbers"><code class="language-none">const td = new TableData();
+td.subscribe(data =&gt; console.log(data));
+...
+td.emit(&#39;hello event emitter!&#39;);</code></pre></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">value<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>此事件所携带的数据</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="fromAjax">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#fromAjax">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>fromAjax</td><td><p>通知组件数据向服务端发起一次获取数据的请求，在收到服务端返回的数据之后，绑定这个数据对象的组件会自动使用新收到的数据更新视图。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">options<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="#/components/api/class/HttpClientOptions" target="_self">HttpClientOptions</a></span><p>指定了本次网络请求的各种参数，如果省略，则采用上一次请求所设置的参数。</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ajax') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ajax';">array-ajax</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="fromAjax">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#fromAjax">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>fromAjax</td><td><p>通知组件数据向服务端发起一次获取数据的请求，在收到服务端返回的数据之后，绑定这个数据对象的组件会自动使用新收到的数据更新视图。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">url<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>采用GET方法请求这个服务，如果省略，则请求上一次指定的服务。
+提示：可以将参数放到url中带给服务端；如果需要采用POST等其他方法，请提供一个<a href="#/components/api/class/HttpClientOptions" target="_self"><code>HttpClientOptions</code></a>类型的参数。</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ajax') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ajax';">array-ajax</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="fromObject">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#fromObject">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>fromObject</td><td><p>将一个任意类型的数据转为一个当前类型的数据对象。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/class/AbstractGraphData" target="_self">AbstractGraphData</a></p><p>AbstractGeneralCollection<T> 返回持有输入的原始数据的当前数据对象</p>
+</td><td><ul><li><span style="white-space: nowrap;">data: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>原始数据</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/tree/basic') evalator.src = 'jigsaw-demo/#/pc/tree/basic';">basic</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="insertColumn">&nbsp;</a><a href="#/components/api/class/TableDataBase#insertColumn">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>insertColumn</td><td><p>在当前表格数据的<code>column</code>位置处插入一个新列。常常用于表格数据的<a href="#/components/api/class/TableDataBase#dataReviser" target="_self"><code>dataReviser</code></a>函数内，对服务端返回的数据做调整时用到。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">column: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>新列所在的位置</p>
+</li><li><span style="white-space: nowrap;">cellDatas: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>[]</span><p>新列的单元格的值，每个单元格的值与此数组的元素一一对应</p>
+</li><li><span style="white-space: nowrap;">field: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>新插入列的字段，不允许与已有字段相同。</p>
+</li><li><span style="white-space: nowrap;">header: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>新插入列的列头信息。</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="insertColumn">&nbsp;</a><a href="#/components/api/class/TableDataBase#insertColumn">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>insertColumn</td><td><p>在当前表格数据的<code>column</code>位置处插入一个新列。常常用于表格数据的<a href="#/components/api/class/TableDataBase#dataReviser" target="_self"><code>dataReviser</code></a>函数内，对服务端返回的数据做调整时用到。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">column: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>新列所在的位置</p>
+</li><li><span style="white-space: nowrap;">cellData: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>新列的单元格的值，新插入列的每个单元格的值都相同。</p>
+</li><li><span style="white-space: nowrap;">field: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>新插入列的字段，不允许与已有字段相同。</p>
+</li><li><span style="white-space: nowrap;">header: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></span><p>新插入列的列头信息。</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="invokeChangeCallback">&nbsp;</a><a href="#/components/api/class/TableDataBase#invokeChangeCallback">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>invokeChangeCallback</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="isDataValid">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#isDataValid">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>isDataValid</td><td><p>参考 <a href="#/components/api/class/TableData#isTableData" target="_self"><a href="#/components/api/class/TableData#isTableData" target="_self"><code>TableData.isTableData</code></a></a></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></p></td><td><ul><li><span style="white-space: nowrap;">data</span></li><li><span style="white-space: nowrap;">checkProperty: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>[]</span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="isDataValid">&nbsp;</a><a href="#/components/api/class/TableDataBase#isDataValid">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>isDataValid</td><td><p>参考 <a href="#/components/api/class/TableData#isTableData" target="_self"><code>TableData.isTableData</code></a></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></p></td><td><ul><li><span style="white-space: nowrap;">data</span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="isGraphData">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#isGraphData">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-cube" style="color: #0575b9; margin-right: 4px" title="Static"></span>isGraphData</td><td><p>从数据的特征上判断当前对象是否是一个图形数据</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></p></td><td><ul><li><span style="white-space: nowrap;">data: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="isTableData">&nbsp;</a><a href="#/components/api/class/TableDataBase#isTableData">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-cube" style="color: #0575b9; margin-right: 4px" title="Static"></span>isTableData</td><td><p>给出<a href="#/components/api/class/DoughnutScoreGraphData#data" target="_self"><code>data</code></a>的数据结构是否和<a href="#/components/api/class/RawTableData" target="_self"><code>RawTableData</code></a>一致，即<a href="#/components/api/class/DoughnutScoreGraphData#data" target="_self"><code>data</code></a>是否是一个合法的表格数据。
+注意此方法并非使用类的血缘关系来判断，而是通过数据结构的特征来判断。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></p></td><td><ul><li><span style="white-space: nowrap;">data: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onAjaxComplete">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onAjaxComplete">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onAjaxComplete</td><td><p>Ajax请求结束的时候，执行<code>callback</code>函数。由于<a href="https://angular.io/api/common/http/HttpClient" target="_blank"><a href="https://angular.io/api/common/http/HttpClient" target="_blank"><code>HttpClient</code></a></a>在调用了无效的url的时候不会触发对应事件导致注册在这个事件上的回调没有被执行，
+因此为了稳妥起见，请在<a href="#/components/api/class/AbstractGeneralCollection#onAjaxSuccess" target="_self"><a href="#/components/api/class/TableDataBase#onAjaxSuccess" target="_self"><code>onAjaxSuccess</code></a></a>和<a href="#/components/api/class/AbstractGeneralCollection#onAjaxError" target="_self"><a href="#/components/api/class/TableDataBase#onAjaxError" target="_self"><code>onAjaxError</code></a></a>里同时注册ajax请求的结果处理逻辑。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p><p>返回一个函数，调用它后，<code>callback</code>则不会再次被触发。
+如果你注册了这个回调，则请在组件的<code>ngOnDestroy()</code>方法中调用一下这个函数，避免内存泄露。</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>回调函数</p>
+</li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>回调函数<code>callback</code>执行的上下文</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/ajax-events') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/ajax-events';">ajax-events</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onAjaxError">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onAjaxError">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onAjaxError</td><td><p>Ajax请求失败的时候，执行<code>callback</code>函数，一般需要在这个函数里停止loading效果。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p><p>返回一个函数，调用它后，<code>callback</code>则不会再次被触发。
+如果你注册了这个回调，则请在组件的<code>ngOnDestroy()</code>方法中调用一下这个函数，避免内存泄露。</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>回调函数</p>
+</li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>回调函数<code>callback</code>执行的上下文</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/ajax-events') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/ajax-events';">ajax-events</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onAjaxStart">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onAjaxStart">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onAjaxStart</td><td><p>Ajax请求开始的时候，执行<code>callback</code>函数，一般可以在这个函数里触发loading效果。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p><p>返回一个函数，调用它后，<code>callback</code>则不会再次被触发。
+如果你注册了这个回调，则请在组件的<code>ngOnDestroy()</code>方法中调用一下这个函数，避免内存泄露。</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>回调函数，必选</p>
+</li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>回调函数<code>callback</code>执行的上下文，可选</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/ajax-events') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/ajax-events';">ajax-events</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onAjaxSuccess">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onAjaxSuccess">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onAjaxSuccess</td><td><p>Ajax请求成功的时候，执行<code>callback</code>函数，一般需要在这个函数里停止loading效果。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p><p>返回一个函数，调用它后，<code>callback</code>则不会再次被触发。
+如果你注册了这个回调，则请在组件的<code>ngOnDestroy()</code>方法中调用一下这个函数，避免内存泄露。</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>回调函数</p>
+</li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>回调函数<code>callback</code>执行的上下文</p>
+</li></ul></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/ajax-events') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/ajax-events';">ajax-events</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onChange">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onChange">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onChange</td><td><p>注册数据有变化时的处理逻辑，仅在外部更新数据时触发回调，排序、过滤、分页等动作不会触发回调
+往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p></td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span></li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onRefresh">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#onRefresh">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onRefresh</td><td><p>注册数据有更新时的处理逻辑，在外部更新数据、排序、过滤、分页等动作，都会触发回调。
+往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p></td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span></li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="patchOptions">&nbsp;</a><a href="#/components/api/class/AbstractGraphData#patchOptions">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>patchOptions</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">patchOpt: <a href="#/components/api/class/EchartOptions" target="_self">EchartOptions</a></span></li><li><span style="white-space: nowrap;">suppressWarning: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a> = false</span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="refresh">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#refresh">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>refresh</td><td><p>Angular的变化检测机制无法检测到我们对一个对象的某个属性所做的修改，例如我们将一个数组通过输入属性的方式绑定给了一个组件之后，
+直接在这个数组中插入一个元素，组件内部是难以获知这个变化的。<a href="#/components/api/class/AbstractGeneralCollection#refresh" target="_self"><a href="#/components/api/class/TableDataBase#refresh" target="_self"><code>refresh()</code></a></a>这个方法就是为了解决这个问题而存在的，
+当你更新了数据之后，请务必调用一下这个方法以通知组件及时更新。</p>
+<p><strong>这是<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>向性能妥协后的产物。</strong></p>
+<p>我们都知道，Angular里没有了脏检查了，性能提升了没错，但是Angular开发团队却把问题留给了我们，组件内部只能感知到对象引用的变化，
+而无法感知到对象内部结构的变化。换句话说，应用直接修改复杂对象的内部结构的行为是没有高效的方式可以感知到的。
+因此他们也就无法采用最低廉的方式给<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>发出通知，而<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>在这个情况下也就无法及时更新视图了。</p>
+<p>那为啥说这是向性能妥协的产物呢？前面我说了，angular是难以感知到对象的内部结构的变化，但是这不意味着angular做不到，
+实际上是能够做到的，通过<a href="https://angular.io/api/core/DoCheck" target="_blank"><a href="https://angular.io/api/core/DoCheck" target="_blank"><code>DoCheck</code></a></a>这个钩子，可以检测到任何变化，在这个钩子里，通过一些复杂的代码，是可以精确的筛选出这个变化的。
+但是这个事情的性能代价是非常昂贵，在IE11这个搓货上，体验会很差。经过相当长的纠结之后，我们决定放弃自动检测，
+和Angular团队一样，把问题丢给应用，<strong>由应用在修改了对象内部结构后，通过<a href="#/components/api/class/AbstractGeneralCollection#refresh" target="_self"><a href="#/components/api/class/TableDataBase#refresh" target="_self"><code>refresh()</code></a></a>方法来通知<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>更新视图</strong>。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/refresh') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/refresh';">refresh</a></li></li></ul></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="refreshData">&nbsp;</a><a href="#/components/api/class/TableDataBase#refreshData">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>refreshData</td><td></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="removeColumn">&nbsp;</a><a href="#/components/api/class/TableDataBase#removeColumn">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>removeColumn</td><td><p>删除当前表格数据<code>column</code>位置处的列。常常用于表格数据的<a href="#/components/api/class/TableDataBase#dataReviser" target="_self"><code>dataReviser</code></a>函数内，对服务端返回的数据做调整时用到。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/class/TableData" target="_self">TableData</a></p><p>返回删除后的<a href="#/components/api/class/TableData" target="_self"><code>TableData</code></a>对象，当前对象不变</p>
+</td><td><ul><li><span style="white-space: nowrap;">column: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>待删除的列索引</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="reviseData">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#reviseData">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-lock" style="color: orange; margin-right: 4px" title="Protected"></span>reviseData</td><td><p>安全地调用<a href="#/components/api/class/TableDataBase#dataReviser" target="_self"><code>dataReviser</code></a>函数。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td><ul><li><span style="white-space: nowrap;">originData: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="subscribe">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#subscribe">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>subscribe</td><td><p>添加事件处理函数，在执行此函数之后，<a href="#/components/api/class/AbstractGeneralCollection#emit" target="_self"><a href="#/components/api/class/TableDataBase#emit" target="_self"><code>emit</code></a></a>函数发出事件时，参数<code>callback</code>就会被调用。
+注意请及时清理掉不必要的订阅以提升页面性能。示例：</p>
+<pre class="line-numbers"><code class="language-none">const td = new TableData();
+const subscriber = td.subscribe(data =&gt; console.log(data));
+...
+// 注销本次订阅。其他的订阅不受影响
+subscriber.unsubscribe();
+...
+// 取消所有订阅
+td.unsubscribe();</code></pre></td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html" target="_blank">Subscription</a></p><p>返回当前订阅的回执，利用它可以取消本次订阅</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>事件回调函数</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="toArray">&nbsp;</a><a href="#/components/api/class/TableDataBase#toArray">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>toArray</td><td><p>参考 <a href="#/components/api/class/TableData#toArray" target="_self"><code>TableData.toArray</code></a></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a>[]</p></td><td>--</td><td></td></tr><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="unsubscribe">&nbsp;</a><a href="#/components/api/class/AbstractGeneralCollection#unsubscribe">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>unsubscribe</td><td><p>取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr></tbody>
+            </table><a style="margin-left: 10px" title="单击列出如下方法：
+1. 所有从父类继承过来的方法;
+2. 当前类中受保护的方法;"
+            onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+            });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
+            列出所有可用方法</a>
+
+
+
+
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 DoughnutScoreGraphData -&gt; <a href="#/components/api/class/AbstractNormalGraphData" target="_self">AbstractNormalGraphData</a> -&gt; <a href="#/components/api/class/AbstractGraphData" target="_self">AbstractGraphData</a> -&gt; <a href="#/components/api/class/TableDataBase" target="_self">TableDataBase</a> -&gt; <a href="#/components/api/class/AbstractGeneralCollection" target="_self">AbstractGeneralCollection</a></li><li>实现接口 <a href="#/components/api/interface/IAjaxComponentData" target="_self">IAjaxComponentData</a> / <a href="#/components/api/interface/IEmittable" target="_self">IEmittable</a></li><li>已知子类 --</li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/common/core/data/graph-data.ts#L610" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

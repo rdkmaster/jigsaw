@@ -1,0 +1,83 @@
+
+<h2>TimeUnit</h2>
+<p>起始版本：v1.0.0</p>
+
+<p>关于时间宏：</p>
+<p>它通过一些数字，以及语义化的单词作为单位来表示一个时刻，时间宏是一个普通的字符串。
+例如<code>&quot;now&quot;</code>这个宏表示当前时刻，<a href="#/components/api/component/JigsawDateTimePicker" target="_self"><code>JigsawDateTimePicker</code></a>将会将其换算为其被初始化的时刻。</p>
+<p>此外，时间宏还支持加减运算。例如<code>&quot;now-1d&quot;</code>的意思是昨天的这个时候，相应的，明天则是<code>&quot;now+1d&quot;</code>，上个月是<code>&quot;now-1M&quot;</code>等。
+时间宏目前可以支持的时刻是<code>&quot;now&quot;</code>，支持的所有单位在这个枚举类型中全部列出了。（注意大小写）</p>
+<p>时间宏的换算是由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>自动完成的，如果你需要获得一个时间宏的值，请调用<a href="#/components/api/class/TimeService#getFormatDate" target="_self"><code>TimeService.getFormatDate()</code></a>方法。</p>
+<p><a href="#/components/api/class/TimeService" target="_self"><code>TimeService</code></a>提供了许多有用的时间换算、格式化工具，当你有需要对时间进行运算时，可以参考它的api说。</p>
+
+
+<a name="items"></a>
+<h3>枚举项</h3>
+<ul>
+    <li>s</li>
+<li>m</li>
+<li>h</li>
+<li>d</li>
+<li>w</li>
+<li>M</li>
+<li>y</li>
+</ul>
+
+
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/common/service/time.service.ts#L33" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

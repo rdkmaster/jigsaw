@@ -1,0 +1,111 @@
+
+<h2>HttpClientOptions</h2>
+
+<p>起始版本：v1.0.0</p>
+<p><a href="https://angular.io/api/common/http/HttpClient" target="_blank"><code>HttpClient</code></a>类的参数结构化信息类，与官方的参数结构完全兼容，这是对Angular的一些补充。</p>
+<p></p>
+
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<table id="dynamicProperties" style="width:100%; display:table">
+                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="body">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>body</td><td><a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></td>
+            <td><p>当使用POST/PUT/DELETE请求时，参数必须放在这个属性里，这个属性的值（一个json对象）会被当做参数整体传输给服务端。</p>
+</td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="headers">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>headers</td><td><a href="https://angular.io/api/common/http/HttpHeaders" target="_blank">HttpHeaders</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="method">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>method</td><td>"get" | "post" | "put" | "delete"</td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="observe">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>observe</td><td>"body" | "events" | "response"</td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="params">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>params</td><td>literal type | <a href="https://angular.io/api/common/http/HttpParams" target="_blank">HttpParams</a></td>
+            <td><p>当使用GET请求时，参数必须放在这个属性里，会被当做url的一部分传输给服务端。
+这个属性的值（一个json对象）会被当做参数整体传输给服务端。</p>
+<p></p>
+</td><td></td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ssp') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ssp';">array-ssp</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="reportProgress">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>reportProgress</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="responseType">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>responseType</td><td>"arraybuffer" | "blob" | "json" | "text"</td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="url">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>url</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a></td>
+            <td></td><td></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="withCredentials">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>withCredentials</td><td><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank">boolean</a></td>
+            <td></td><td></td><td></td></tr></tbody>
+            </table>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<table id="dynamicMethods" style="width:100%; display:table">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="prepare">&nbsp;</a><span class="fa fa-cube" style="color: #0575b9; margin-right: 4px" title="Static"></span>prepare</td><td><p>Angular官方的<a href="https://angular.io/api/common/http/HttpClient" target="_blank"><code>HttpClient</code></a>的<a href="#/components/api/class/HttpClientOptions#params" target="_self"><code>params</code></a>属性对象的键值对的值类型只支持字符串，而不支持数字，例如</p>
+<pre class="line-numbers"><code class="language-none">const http: HttpClient = ...;
+http.get({param: {num: 1}}); // compile error!</code></pre><p>这给我们传输数字给服务端的时候造成了一些麻烦，为了绕开这个麻烦，
+并且兼容官方，我们增加了一个<a href="#/components/api/class/PreparedHttpClientOptions" target="_self"><code>PreparedHttpClientOptions</code></a>类型的参数用于自动将数字转为字符串。
+通过这个静态方法就可以实现一键式的转换。一般<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a>内部使用，应用无需关注。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/class/PreparedHttpClientOptions" target="_self">PreparedHttpClientOptions</a></p></td><td><ul><li><span style="white-space: nowrap;">options: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a> | <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object" target="_blank">Object</a></span></li></ul></td><td></td></tr></tbody>
+            </table>
+
+
+
+<a name="demos"></a><h3>相关示例</h3><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/array-ssp') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/array-ssp';">array-ssp</a></li></li></ul>
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 --</li><li>实现接口 --</li><li>已知子类 <a href="#/components/api/class/PreparedHttpClientOptions" target="_self">PreparedHttpClientOptions</a></li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/common/core/data/component-data.ts#L17" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

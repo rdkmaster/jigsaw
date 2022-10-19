@@ -1,0 +1,132 @@
+
+<h2>ISlicedData</h2>
+
+<p>起始版本：v1.0.0</p>
+<p>具备切片能力的数据，这种数据对象往往数据量非常巨大，并且需要非常高的渲染性能，已知的实现类有<a href="#/components/api/class/BigTableData" target="_self"><code>BigTableData</code></a>。</p>
+
+
+<a name="properties"></a>
+<h3>普通属性 / Properties</h3>
+
+<table id="dynamicProperties" style="width:100%; display:table">
+                 <thead><tr><th>名称</th><th>类型</th><th>说明</th><th>默认值</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="viewport">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>viewport</td><td><a href="#/components/api/class/ViewportData" target="_self">ViewportData</a></td>
+            <td><p>视口数据</p>
+</td><td></td><td></td></tr></tbody>
+            </table>
+
+<a name="methods"></a>
+<h3>方法 / Methods</h3>
+
+<table id="dynamicMethods" style="width:100%; display:table">
+                <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
+                <tbody><tr style="display:none; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="destroy">&nbsp;</a><a href="#/components/api/interface/IComponentData#destroy">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>destroy</td><td><p>数据销毁时要做的事情，往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="hScroll">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>hScroll</td><td><p>将视口中的视图在水平方向上滚动到参数指定的位置</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">scrollTo: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>水平位置</p>
+</li></ul></td><td></td></tr><tr style="display:none; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onChange">&nbsp;</a><a href="#/components/api/interface/IComponentData#onChange">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onChange</td><td><p>注册数据有变化时的处理逻辑，仅在外部更新数据时触发回调，排序、过滤、分页等动作不会触发回调
+往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p></td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span></li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="onRefresh">&nbsp;</a><a href="#/components/api/interface/IComponentData#onRefresh">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>onRefresh</td><td><p>注册数据有更新时的处理逻辑，在外部更新数据、排序、过滤、分页等动作，都会触发回调。
+往往由<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>的各个组件使用，应用一般无需调用此方法。</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="#/components/api/typealias/CallbackRemoval" target="_self">CallbackRemoval</a></p></td><td><ul><li><span style="white-space: nowrap;">callback: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span></li><li><span style="white-space: nowrap;">context<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span></li></ul></td><td></td></tr><tr style="display:none; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="refresh">&nbsp;</a><a href="#/components/api/interface/IComponentData#refresh">
+        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>refresh</td><td><p>Angular的变化检测机制无法检测到我们对一个对象的某个属性所做的修改，例如我们将一个数组通过输入属性的方式绑定给了一个组件之后，
+直接在这个数组中插入一个元素，组件内部是难以获知这个变化的。<a href="#/components/api/interface/IComponentData#refresh" target="_self"><a href="#/components/api/interface/IComponentData#refresh" target="_self"><code>refresh()</code></a></a>这个方法就是为了解决这个问题而存在的，
+当你更新了数据之后，请务必调用一下这个方法以通知组件及时更新。</p>
+<p><strong>这是<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>向性能妥协后的产物。</strong></p>
+<p>我们都知道，Angular里没有了脏检查了，性能提升了没错，但是Angular开发团队却把问题留给了我们，组件内部只能感知到对象引用的变化，
+而无法感知到对象内部结构的变化。换句话说，应用直接修改复杂对象的内部结构的行为是没有高效的方式可以感知到的。
+因此他们也就无法采用最低廉的方式给<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>发出通知，而<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>在这个情况下也就无法及时更新视图了。</p>
+<p>那为啥说这是向性能妥协的产物呢？前面我说了，angular是难以感知到对象的内部结构的变化，但是这不意味着angular做不到，
+实际上是能够做到的，通过<a href="https://angular.io/api/core/DoCheck" target="_blank"><a href="https://angular.io/api/core/DoCheck" target="_blank"><code>DoCheck</code></a></a>这个钩子，可以检测到任何变化，在这个钩子里，通过一些复杂的代码，是可以精确的筛选出这个变化的。
+但是这个事情的性能代价是非常昂贵，在IE11这个搓货上，体验会很差。经过相当长的纠结之后，我们决定放弃自动检测，
+和Angular团队一样，把问题丢给应用，<strong>由应用在修改了对象内部结构后，通过<a href="#/components/api/interface/IComponentData#refresh" target="_self"><a href="#/components/api/interface/IComponentData#refresh" target="_self"><code>refresh()</code></a></a>方法来通知<a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。"><a href="https://github.com/rdkmaster/jigsaw" title="请帮忙到GitHub上点个星星，更多的星星可以吸引越多的人加入我们。">Jigsaw</a></a>更新视图</strong>。</p>
+<p></p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td>--</td><td><ul><li title=""><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/data-encapsulation/refresh') evalator.src = 'jigsaw-demo/#/pc/data-encapsulation/refresh';">refresh</a></li></li></ul></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="scroll">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>scroll</td><td><p>将视口中的视图滚动到参数指定的位置</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">verticalTo: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>水平位置</p>
+</li><li><span style="white-space: nowrap;">horizontalTo: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>垂直位置</p>
+</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="vScroll">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>vScroll</td><td><p>将视口中的视图在垂直方向上滚动到参数指定的位置</p>
+</td>
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">scrollTo: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a></span><p>垂直位置</p>
+</li></ul></td><td></td></tr></tbody>
+            </table><a style="margin-left: 10px" title="单击列出如下方法：
+1. 所有从父类继承过来的方法;
+2. 当前类中受保护的方法;"
+            onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+            });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
+            列出所有可用方法</a>
+
+
+
+
+
+<a name="object-oriented"></a>
+<h3>面向对象 / Object Oriented</h3>
+<ul><li>继承关系 ISlicedData -&gt; <a href="#/components/api/interface/IComponentData" target="_self">IComponentData</a></li><li>实现接口 --</li><li>已知子类 --</li></ul>
+
+<div id="panel" class="api-panel">
+    <div class="box">
+        <span class="close" title="返回"
+              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
+        <iframe id="evalator"></iframe>
+    </div>
+</div>
+
+<a name="footer"></a>
+<div class="api-footer-wrapper">
+    <div class="col">
+        <h3>资源</h3>
+        <ul>
+            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
+            <li><a href="https://github.com/rdkmaster/j-lunker"
+                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
+                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
+                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
+
+            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-public-subscription.html';" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
+
+            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
+            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
+            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>社区</h3>
+        <ul>
+            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
+                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
+            <li><a href="https://github.com/rdkmaster/jigsaw/blob/master/src/jigsaw/common/core/data/component-data.ts#L474" target="_blank"
+                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
+            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
+            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
+                title="仅限中兴内部访问">Web GIS</a></li>
+        </ul>
+    </div>
+    <div class="col">
+        <h3>帮助</h3>
+        <ul>
+            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
+            <li><a onclick="document.getElementById('panel').style.display = 'block';
+            const evalator = document.getElementById('evalator');
+            if (evalator.src != location.host + 'jigsaw-demo/#/pc/doc/wechat-group.html') evalator.src = 'jigsaw-demo/#/pc/doc/wechat-group.html';" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
+            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
+            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
+        </ul>
+    </div>
+</div>

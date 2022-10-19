@@ -10,8 +10,9 @@ import {
     Output,
     Renderer2,
     ViewChild,
+    OnInit,
 } from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
@@ -146,11 +147,13 @@ export class AsyncDescription implements OnDestroy {
 }
 
 @Directive()
-export class DemoSetBase extends AsyncDescription implements OnDestroy {
+export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
+    public apiContent: string = '';
+    protected docPath: string;
 
-    constructor(route: ActivatedRoute, http: HttpClient, el: ElementRef) {
+    constructor(public route: ActivatedRoute, public http: HttpClient, el: ElementRef) {
         super(http, el);
         route.fragment.subscribe(fragment => {
             this._demoSelector = fragment;
@@ -169,6 +172,13 @@ export class DemoSetBase extends AsyncDescription implements OnDestroy {
             return;
         }
         node.scrollIntoView();
+    }
+
+    ngOnInit(): void {
+        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+        this.http.get(`app/for-external/docs/fragments/${this.docPath}`, { headers, responseType: 'text' }).subscribe((data) => {
+            this.apiContent = data;
+        })
     }
 
     ngOnDestroy(): void {
