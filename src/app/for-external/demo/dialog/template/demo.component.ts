@@ -4,7 +4,7 @@ import {
     PopupEffect, PopupInfo, PopupOptions,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'dialog-template',

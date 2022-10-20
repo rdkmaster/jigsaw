@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CascadeAllComponent } from "./demo.component";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { CommonModule } from "@angular/common";
 import { CascadeBasicComponent } from "./basic/demo.component";
 import { CascadeLazyLoadComponent } from "./lazy-load/demo.component";

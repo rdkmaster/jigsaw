@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: "radio-group-data",

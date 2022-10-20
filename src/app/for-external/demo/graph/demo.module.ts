@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { GraphDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { JigsawGraphModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { GraphBoxPlotDemoComponent } from "./box-plot/demo.component";

@@ -1,7 +1,7 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
 import { JigsawTable, PageableTableData } from "jigsaw/public_api";
 import { HttpClient } from '@angular/common/http';
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'table-expand-pageable',

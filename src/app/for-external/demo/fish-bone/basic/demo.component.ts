@@ -1,7 +1,7 @@
 import {Component, ViewEncapsulation, NgZone, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
-import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
+import { AsyncDescription } from '../../../template/demo-template/demo-template';
 
 @Component({
     selector: 'fish-bone-basic',

@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {
     TableData, ColumnDefine, TableCellTextEditorRenderer, TableCellPasswordRenderer,
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'table-cell-editable-property',

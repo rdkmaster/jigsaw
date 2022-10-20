@@ -1,7 +1,7 @@
 import {Component, ElementRef} from "@angular/core";
 import { BreadcrumbNode, BreadcrumbRouteConfig } from "jigsaw/public_api";
 import { ProductService } from "./product.service";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

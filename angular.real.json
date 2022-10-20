@@ -230,7 +230,7 @@
               "node_modules/prismjs/components/prism-typescript.js",
               "node_modules/prismjs/plugins/normalize-whitespace/prism-normalize-whitespace.min.js",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.min.js",
-              "src/app/for-external/demo-template/description-and-sources.js"
+              "src/app/for-external/template/demo-template/description-and-sources.js"
             ]
           },
           "configurations": {

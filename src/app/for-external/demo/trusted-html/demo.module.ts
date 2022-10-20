@@ -5,8 +5,8 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { JigsawTrustedHtmlModule, JigsawHeaderModule, JigsawTextareaModule } from "jigsaw/public_api";
 import { TrustedHtmlBasicComponent } from "./basic/demo.component";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 
 @NgModule({
     declarations: [

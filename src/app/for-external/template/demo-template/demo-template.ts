@@ -17,7 +17,7 @@ import {CommonModule} from "@angular/common";
 import {ActivatedRoute} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {JigsawButtonBarModule, JigsawSelectModule, JigsawTabsModule,} from "jigsaw/public_api";
-import {JigsawMarkdownModule} from "../../libs/markdown/markdown";
+import {JigsawMarkdownModule} from "../../../libs/markdown/markdown";
 
 declare const Prism: any;
 
@@ -147,7 +147,7 @@ export class AsyncDescription implements OnDestroy {
 }
 
 @Directive()
-export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
+export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
     public docContent: string = '';
@@ -184,6 +184,14 @@ export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
                 this.docContent += data; 
             })
         })
+    }
+
+    ngAfterViewInit(): void {
+        console.log(document.getElementsByClassName('markdown-wrap'))
+        const allMarkdown = document.getElementsByClassName('markdown-wrap');
+        for (let i = 0; i < allMarkdown.length; i++) {
+            console.log(allMarkdown[i].children)
+        }
     }
 
     ngOnDestroy(): void {

@@ -100,9 +100,10 @@ export const routerConfigPC = [
                 path: 'buy/:id', component: BreadcrumbRouterBuy
             }
         ],
-        group: componentGroup.navigation
+        group: componentGroup.navigation,
+        label: 'Breadcrumb 面包屑'
     },
-    { path: "alert", component: AlertDemoComponent, group: componentGroup.message },
+    { path: "alert", component: AlertDemoComponent, group: componentGroup.message, label: 'Alert 警示框' },
     { path: "combo-select", component: ComboSelectComponent, group: componentGroup.container },
     { path: "auto-complete-input", component: AutoCompleteInputDemoComponent, group: componentGroup.entry },
     { path: "badge", component: BadgeAllComponent, group: componentGroup.directive },
@@ -168,7 +169,7 @@ export const routerConfigPC = [
     { path: "table-column-defines", component: TableColumnDefinesAllComponent, group: componentGroup.display },
     { path: "table-big-data", component: TableBigDataAllComponent, group: componentGroup.display },
     { path: "table-renderer", component: TableRendererAllComponent, group: componentGroup.display },
-    { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start },
+    { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start, label: '新手入门' },
 ];
 export const routerConfig = routerConfigPC;
 

@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { RateDemoComponent } from "./demo.component";
 import { RateBasicDemoComponent } from "./basic/demo.component";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { JigsawRateModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { RateHalfDemoComponent } from "./half/demo.component";

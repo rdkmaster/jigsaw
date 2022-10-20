@@ -1,7 +1,7 @@
 import {Component, ElementRef, TemplateRef, ViewChild, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, AdditionalColumnDefine, ColumnDefine} from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'template-ref-renderer-table',

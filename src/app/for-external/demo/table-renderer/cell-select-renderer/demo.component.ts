@@ -2,7 +2,7 @@ import {Component, ElementRef, TemplateRef, ViewChild} from "@angular/core";
 import {HttpClient, HttpRequest} from "@angular/common/http";
 import {TableData, ColumnDefine, TableCellSelectRenderer} from "jigsaw/public_api";
 import {AjaxInterceptor} from "../../../../libs/app.interceptor";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'table-cell-select-renderer',

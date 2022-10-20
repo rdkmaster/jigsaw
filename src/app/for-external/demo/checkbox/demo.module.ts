@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CheckboxBasicComponent } from "./basic/demo.component";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { JigsawCheckBoxModule } from "jigsaw/public_api";
 import { CheckBoxDemoComponent } from "./demo.componet";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";

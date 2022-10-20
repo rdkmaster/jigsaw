@@ -1,8 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { JigsawButtonBarModule, JigsawButtonModule, JigsawCollapseModule, JigsawInputModule, JigsawTableModule, JigsawGraphModule } from "jigsaw/public_api";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { CollapseDemoComponent } from "./demo.component";
 import { CollapseBasicDemoComponent } from "./basic/demo.component";

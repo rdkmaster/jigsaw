@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { ProgressDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from '../../demo-template/demo-template';
-import { DocTemplateModule } from '../../doc-template/doc-template';
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawProgressModule, JigsawNumericInputModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { CommonModule } from "@angular/common";
