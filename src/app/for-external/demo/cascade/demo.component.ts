@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class CascadeAllComponent extends DemoSetBase {
     public demoPath = "demo/cascade";
-
+    public docPath = ['component/JigsawCascade'];
 }
 

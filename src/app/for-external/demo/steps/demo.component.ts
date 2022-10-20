@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class StepsAllComponent extends DemoSetBase {
     public demoPath = "demo/steps";
-
+    public docPath = ['component/JigsawSteps'];
 }
 

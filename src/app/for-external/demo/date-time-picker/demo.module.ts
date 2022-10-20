@@ -1,9 +1,10 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
-import {DateTimePickerAllComponent} from "./demo.component";
-import {DateTimePickerBasicDemoComponent} from "./basic/demo.component";
-import {CommonModule} from "@angular/common";
+import { DateTimePickerAllComponent } from "./demo.component";
+import { DateTimePickerBasicDemoComponent } from "./basic/demo.component";
+import { CommonModule } from "@angular/common";
 import {
     JigsawButtonBarModule,
     JigsawDateTimePickerModule,
@@ -12,12 +13,12 @@ import {
     JigsawRangeDateTimeSelectModule,
     JigsawSwitchModule
 } from "jigsaw/public_api";
-import {DateTimePickerConfirmButtonDemoComponent} from "./confirm-button/demo.component";
-import {DateTimePickerGrMinuteComponent} from "./gr-minute/demo.component";
-import {DateTimePickerGrSecondComponent} from "./gr-second/demo.component";
-import {DateTimePickerGrItemDemoComponent} from "./gr-items/demo.component";
-import {DateTimePickerLimitComponent} from "./limit/demo.component";
-import {DateTimeSelectDemoComponent} from "./date-time-select/demo.component";
+import { DateTimePickerConfirmButtonDemoComponent } from "./confirm-button/demo.component";
+import { DateTimePickerGrMinuteComponent } from "./gr-minute/demo.component";
+import { DateTimePickerGrSecondComponent } from "./gr-second/demo.component";
+import { DateTimePickerGrItemDemoComponent } from "./gr-items/demo.component";
+import { DateTimePickerLimitComponent } from "./limit/demo.component";
+import { DateTimeSelectDemoComponent } from "./date-time-select/demo.component";
 
 @NgModule({
     declarations: [
@@ -32,6 +33,7 @@ import {DateTimeSelectDemoComponent} from "./date-time-select/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         CommonModule,
         JigsawButtonBarModule,

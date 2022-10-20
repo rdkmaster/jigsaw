@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { JigsawButtonModule, JigsawButtonBarModule, JigsawSwitchModule, JigsawRadioLiteModule } from "jigsaw/public_api";
 import { ButtonBarAllComponent } from "./demo.component";
@@ -23,6 +24,7 @@ import { ButtonBarSetHeightComponent } from "./set-height/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawButtonBarModule,

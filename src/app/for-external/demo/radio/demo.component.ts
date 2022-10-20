@@ -5,5 +5,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class RadioGroupDemoComponent extends DemoSetBase {
     public demoPath = "demo/radio";
-
+    public docPath = ['component/JigsawRadioGroup'];
 }

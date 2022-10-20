@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class GraphDemoComponent extends DemoSetBase {
     public demoPath = "demo/graph";
-
+    public docPath = ['component/JigsawGraph'];
 }

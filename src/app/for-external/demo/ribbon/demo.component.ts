@@ -6,5 +6,6 @@ import { DemoSetBase } from "../../demo-template/demo-template";
 })
 export class RibbonAllComponent extends DemoSetBase {
     public demoPath = "demo/ribbon";
+    public docPath = ['directive/JigsawRibbonDirective'];
 }
 

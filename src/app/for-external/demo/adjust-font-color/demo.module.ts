@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { AdjustFontColorAllDemoComponent } from "./demo.component";
 import {
@@ -19,6 +20,7 @@ import { AdjustFontColorDemoComponent } from "./basic/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawHeaderModule,

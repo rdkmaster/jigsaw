@@ -6,4 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class AlphabeticalIndexDemoComponent extends DemoSetBase {
     public demoPath = "demo/alphabetical-index";
+    public docPath = ['component/JigsawAlphabeticalIndex', 'component/JigsawAlphabeticalIndexSelect'];
 }

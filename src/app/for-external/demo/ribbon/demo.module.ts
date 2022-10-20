@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { JigsawRibbonModule } from "jigsaw/public_api";
 import { RibbonAllComponent } from "./demo.component";
@@ -18,6 +19,7 @@ import { RibbonCursorDemoComponent } from './cursor/demo.component';
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawRibbonModule
     ]

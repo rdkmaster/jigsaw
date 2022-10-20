@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { TileAllComponent } from "./demo.component";
 import { JigsawSwitchModule, JigsawTileSelectModule, JigsawTileLiteModule } from "jigsaw/public_api";
@@ -28,6 +29,7 @@ import { TileLiteBasicDemoComponent } from "./tile-lite/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawSwitchModule,
         JigsawTileSelectModule,

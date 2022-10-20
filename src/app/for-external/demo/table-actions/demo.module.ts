@@ -1,7 +1,8 @@
-import {NgModule} from "@angular/core";
-import {TableActionsAllComponent} from "./demo.component";
-import {DemoTemplateModule} from "../../demo-template/demo-template";
-import {JigsawMarkdownModule} from "../../../libs/markdown/markdown";
+import { NgModule } from "@angular/core";
+import { TableActionsAllComponent } from "./demo.component";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
+import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import {
     JigsawButtonModule,
     JigsawTableModule,
@@ -19,17 +20,17 @@ import {
     PopupService,
     JigsawInputModule
 } from "jigsaw/public_api";
-import {TableAutoFillUpDemoComponent} from "./auto-fill-up/demo.component";
-import {TableAutoPageableDemoComponent} from "./auto-page-sizing/demo.component";
-import {MyTableCellOption, MyTableHeadOption, TableAddColumnDemoComponent} from "./add-column/demo.component";
-import {TableDataChangeDemoComponent} from "./data-change/demo.component";
-import {CommonModule} from "@angular/common";
-import {TableDraggableDemoComponent} from "./draggable-table/demo.component";
-import {TableSelectRowDemoComponent} from "./select-row/demo.component";
-import {TableResizeDemoComponent} from "./resize/demo.component";
-import {TableExpandPageableDemoComponent} from "./expand-pageable/demo.component";
-import {TableDataWithPopupDemoComponent} from "./with-popup/demo.component";
-import {TableAutoSaveDemoComponent} from "./auto-save/demo.component";
+import { TableAutoFillUpDemoComponent } from "./auto-fill-up/demo.component";
+import { TableAutoPageableDemoComponent } from "./auto-page-sizing/demo.component";
+import { MyTableCellOption, MyTableHeadOption, TableAddColumnDemoComponent } from "./add-column/demo.component";
+import { TableDataChangeDemoComponent } from "./data-change/demo.component";
+import { CommonModule } from "@angular/common";
+import { TableDraggableDemoComponent } from "./draggable-table/demo.component";
+import { TableSelectRowDemoComponent } from "./select-row/demo.component";
+import { TableResizeDemoComponent } from "./resize/demo.component";
+import { TableExpandPageableDemoComponent } from "./expand-pageable/demo.component";
+import { TableDataWithPopupDemoComponent } from "./with-popup/demo.component";
+import { TableAutoSaveDemoComponent } from "./auto-save/demo.component";
 @NgModule({
     declarations: [
         TableActionsAllComponent,
@@ -48,6 +49,7 @@ import {TableAutoSaveDemoComponent} from "./auto-save/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawTableModule,

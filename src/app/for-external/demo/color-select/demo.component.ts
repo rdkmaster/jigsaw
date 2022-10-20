@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class ColorSelectDemoComponent extends DemoSetBase {
     public demoPath = "demo/color-select";
-
+    public docPath = ['component/JigsawColorSelect'];
 }

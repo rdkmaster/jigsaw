@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class BreadcrumbAllComponent extends DemoSetBase {
     public demoPath = "demo/breadcrumb";
-
+    public docPath = ['component/JigsawBreadcrumb'];
 }
 

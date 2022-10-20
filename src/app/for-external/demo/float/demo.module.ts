@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { FloatDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { CommonModule } from "@angular/common";
 import { FloatBasicDemoComponent } from "./basic/demo.component";
@@ -17,11 +18,33 @@ import { User1Component } from "./target/user-component/user-component";
 import { FloatOptionDemoComponent } from "./option/demo.component";
 
 @NgModule({
-    declarations: [FloatDemoComponent, FloatBasicDemoComponent, FloatInitDataDemoComponent, UserComponent, FloatMultiLevelDemoComponent,
-        FloatPositionDemoComponent, FloatTargetDemoComponent, FloatTriggerDemoComponent, User1Component, FloatOptionDemoComponent],
-    imports: [DemoTemplateModule, JigsawMarkdownModule, CommonModule, JigsawFloatModule, JigsawMenuModule,
-        JigsawRadioModule, JigsawButtonModule, JigsawButtonBarModule, JigsawTrustedHtmlModule, JigsawNumericInputModule, JigsawSelectModule,
-        JigsawSwitchModule]
+    declarations: [
+        FloatDemoComponent,
+        FloatBasicDemoComponent,
+        FloatInitDataDemoComponent,
+        UserComponent,
+        FloatMultiLevelDemoComponent,
+        FloatPositionDemoComponent,
+        FloatTargetDemoComponent,
+        FloatTriggerDemoComponent,
+        User1Component,
+        FloatOptionDemoComponent
+    ],
+    imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        JigsawMarkdownModule,
+        CommonModule,
+        JigsawFloatModule,
+        JigsawMenuModule,
+        JigsawRadioModule,
+        JigsawButtonModule,
+        JigsawButtonBarModule,
+        JigsawTrustedHtmlModule,
+        JigsawNumericInputModule,
+        JigsawSelectModule,
+        JigsawSwitchModule
+    ]
 })
 export class FloatDemoModule {
 }

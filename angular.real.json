@@ -180,8 +180,7 @@
               "src/app/libs/favicon.ico",
               "src/app/for-external/demo/tree/icon/assets",
               "src/app/for-external/assets",
-              "src/app/for-external/demo",
-              "src/app/for-external/docs"
+              "src/app/for-external/demo"
             ],
             "styles": [
               "node_modules/prismjs/themes/prism.css",

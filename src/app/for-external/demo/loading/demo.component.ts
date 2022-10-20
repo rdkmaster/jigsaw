@@ -5,5 +5,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class LoadingDemoComponent extends DemoSetBase {
     public demoPath = "demo/loading";
-
+    public docPath = ['component/JigsawLoading'];
 }

@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { JigsawButtonModule, JigsawNumericInputModule, JigsawDialogModule, JigsawSwitchModule, JigsawRadioModule, JigsawInputModule } from "jigsaw/public_api";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DialogBasicDemoComponent } from "./basic/demo.component";
 import { DialogModalDemoComponent } from "./modal/demo.component";
@@ -17,11 +18,33 @@ import { UserDialogComponent } from "./component/user-dialog/user-dialog";
 import { DialogDemoComponent } from "./demo.component";
 
 @NgModule({
-    declarations: [DialogDemoComponent, DialogBasicDemoComponent, DialogModalDemoComponent, DialogInDomDemoComponent, UserDialogComponent,
-        DialogComponentDemoComponent, UserDialog2Component, DialogPointDemoComponent, DialogTemplateDemoComponent,
-        DialogCustomizeDemoComponent, DialogTopOffSetDemoComponent, DialogPopupOptionDemoComponent],
-    imports: [JigsawDialogModule, JigsawButtonModule, JigsawNumericInputModule, JigsawSwitchModule,
-        JigsawRadioModule, CommonModule, DemoTemplateModule, JigsawMarkdownModule, JigsawDialogModule, JigsawInputModule]
+    declarations: [
+        DialogDemoComponent,
+        DialogBasicDemoComponent,
+        DialogModalDemoComponent,
+        DialogInDomDemoComponent,
+        UserDialogComponent,
+        DialogComponentDemoComponent,
+        UserDialog2Component,
+        DialogPointDemoComponent,
+        DialogTemplateDemoComponent,
+        DialogCustomizeDemoComponent,
+        DialogTopOffSetDemoComponent,
+        DialogPopupOptionDemoComponent
+    ],
+    imports: [
+        JigsawDialogModule,
+        JigsawButtonModule,
+        JigsawNumericInputModule,
+        JigsawSwitchModule,
+        JigsawRadioModule,
+        CommonModule,
+        DemoTemplateModule,
+        DocTemplateModule,
+        JigsawMarkdownModule,
+        JigsawDialogModule,
+        JigsawInputModule
+    ]
 })
 export class DialogDemoModule {
 }

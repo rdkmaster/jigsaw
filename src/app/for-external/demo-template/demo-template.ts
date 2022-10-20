@@ -151,7 +151,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
     public docContent: string = '';
-    protected docPath: string = '';
+    protected docPath: string[] = [];
 
     constructor(public route: ActivatedRoute, public http: HttpClient, el: ElementRef) {
         super(http, el);
@@ -175,12 +175,14 @@ export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        if (!this.docPath) {
+        if (this.docPath.length === 0) {
             return;
         }
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-        this.http.get(`app/for-external/assets/docs/fragments/${this.docPath}`, { headers, responseType: 'text' }).subscribe((data) => {
-            this.docContent = data;
+        this.docPath.forEach((doc, i) => {
+            this.http.get(`app/for-external/assets/docs/fragments/${doc}.html`, { headers, responseType: 'text' }).subscribe((data) => {
+                this.docContent += data; 
+            })
         })
     }
 

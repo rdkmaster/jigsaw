@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class IconAllComponent extends DemoSetBase {
     public demoPath = "demo/icon";
-
+    public docPath = ['component/JigsawIcon'];
 }
 

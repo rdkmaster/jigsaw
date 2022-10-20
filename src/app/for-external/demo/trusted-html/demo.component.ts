@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class TrustedHtmlDemoComponent extends DemoSetBase {
     public demoPath = "demo/trusted-html";
-
+    public docPath = ['class/TrustedHtmlHelper'];
 }

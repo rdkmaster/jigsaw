@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class ButtonBarAllComponent extends DemoSetBase {
     public demoPath = "demo/button-bar";
-
+    public docPath = ['component/JigsawButtonBar'];
 }

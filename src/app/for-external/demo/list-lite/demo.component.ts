@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class ListLiteAllComponent extends DemoSetBase {
     public demoPath = "demo/list-lite";
-
+    public docPath = ['component/JigsawListLite'];
 }
 

@@ -1,13 +1,14 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
-import {InputAllComponent} from "./demo.component";
-import {JigsawInputModule} from "jigsaw/public_api";
-import {InputBasicComponent} from "./basic/demo.component";
-import {InputClearableDemoComponent} from "./clearable/demo.component";
-import {InputIconDemoComponent} from "./icons/demo.component";
-import {InputPasswordComponent} from "./password/demo.component";
-import {InputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
+import { InputAllComponent } from "./demo.component";
+import { JigsawInputModule } from "jigsaw/public_api";
+import { InputBasicComponent } from "./basic/demo.component";
+import { InputClearableDemoComponent } from "./clearable/demo.component";
+import { InputIconDemoComponent } from "./icons/demo.component";
+import { InputPasswordComponent } from "./password/demo.component";
+import { InputPrefixSuffixDemoComponent } from "./prefix-suffix/demo.component";
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import {InputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawInputModule
 

@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class AutoCompleteInputDemoComponent extends DemoSetBase {
     public demoPath = "demo/auto-complete-input";
-
+    public docPath = ['component/JigsawAutoCompleteInput'];
 }
 

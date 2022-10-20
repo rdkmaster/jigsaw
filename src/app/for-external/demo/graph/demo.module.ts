@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { GraphDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { JigsawGraphModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { GraphBoxPlotDemoComponent } from "./box-plot/demo.component";
@@ -22,12 +23,31 @@ import { GraphStackAreaDemoComponent } from "./stack-area/demo.component";
 import { GraphStripDemoComponent } from "./strip/demo.component";
 
 @NgModule({
-    declarations: [GraphDemoComponent, GraphBasicDemoComponent, GraphBarChartDemoComponent, GraphBoxPlotDemoComponent,
-        GraphDoughnutDemoComponent, GraphFunnelPlotDemoComponent, GraphGaugeDemoComponent, GraphHeatDemoComponent,
-        GraphKLineDemoComponent, GraphLineDemoComponent, GraphMapDemoComponent, GraphWithNoDataDemoComponent,
-        GraphPieDemoComponent, GraphProvinceMapDemoComponent, GraphRadarDemoComponent, GraphScatterDemoComponent,
-        GraphStackAreaDemoComponent, GraphStripDemoComponent],
-    imports: [DemoTemplateModule, JigsawGraphModule, JigsawMarkdownModule, JigsawHeaderModule]
+    declarations: [GraphDemoComponent,
+        GraphBasicDemoComponent,
+        GraphBarChartDemoComponent,
+        GraphBoxPlotDemoComponent,
+        GraphDoughnutDemoComponent,
+        GraphFunnelPlotDemoComponent,
+        GraphGaugeDemoComponent,
+        GraphHeatDemoComponent,
+        GraphKLineDemoComponent,
+        GraphLineDemoComponent,
+        GraphMapDemoComponent,
+        GraphWithNoDataDemoComponent,
+        GraphPieDemoComponent,
+        GraphProvinceMapDemoComponent,
+        GraphRadarDemoComponent,
+        GraphScatterDemoComponent,
+        GraphStackAreaDemoComponent,
+        GraphStripDemoComponent],
+    imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        JigsawGraphModule,
+        JigsawMarkdownModule,
+        JigsawHeaderModule
+    ]
 })
 export class GraphDemoModule {
 }

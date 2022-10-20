@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class BadgeAllComponent extends DemoSetBase {
     public demoPath = "demo/badge";
-
+    public docPath = ['directive/JigsawBadgeDirective'];
 }
 

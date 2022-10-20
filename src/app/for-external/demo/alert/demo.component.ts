@@ -6,5 +6,5 @@ import { DemoSetBase } from "../../demo-template/demo-template";
 })
 export class AlertDemoComponent extends DemoSetBase {
     demoPath = 'demo/alert';
-    docPath = 'component/JigsawAlert.html';
+    docPath = ['component/JigsawAlert'];
 }

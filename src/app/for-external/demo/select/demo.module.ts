@@ -1,7 +1,8 @@
 import { NgModule } from "@angular/core";
 import { SelectDemoComponent } from "./demo.component";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { SelectBasicDemoComponent } from "./basic/demo.component";
 import { SelectClearableDemoComponent } from "./clearable/demo.component";
 import { SelectOptionCountDemoComponent } from "./option-count/demo.component";
@@ -15,11 +16,28 @@ import { SelectStringDemoComponent } from "./string/demo.component";
 import { SelectInteractionDemoComponent } from "./interaction/demo.component";
 
 @NgModule({
-    declarations: [SelectDemoComponent, SelectBasicDemoComponent, SelectClearableDemoComponent, SelectOptionCountDemoComponent,
-        SelectSearchableDemoComponent, SelectLineEllipsisDemoComponent, SelectOptionWidthDemoComponent, SelectTriggerDemoComponent,
-        SelectMultipleSelectDemoComponent, SelectStringDemoComponent, SelectInteractionDemoComponent],
-    imports: [JigsawMarkdownModule, DemoTemplateModule, JigsawSelectModule, JigsawButtonModule, JigsawNumericInputModule,
-        JigsawRadioModule]
+    declarations: [
+        SelectDemoComponent,
+        SelectBasicDemoComponent,
+        SelectClearableDemoComponent,
+        SelectOptionCountDemoComponent,
+        SelectSearchableDemoComponent,
+        SelectLineEllipsisDemoComponent,
+        SelectOptionWidthDemoComponent,
+        SelectTriggerDemoComponent,
+        SelectMultipleSelectDemoComponent,
+        SelectStringDemoComponent,
+        SelectInteractionDemoComponent
+    ],
+    imports: [
+        JigsawMarkdownModule,
+        DemoTemplateModule,
+        DocTemplateModule,
+        JigsawSelectModule,
+        JigsawButtonModule,
+        JigsawNumericInputModule,
+        JigsawRadioModule
+    ]
 })
 export class SelectDemoModule {
 }

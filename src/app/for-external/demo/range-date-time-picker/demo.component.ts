@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class RangeDataTimePickerAllComponent extends DemoSetBase {
     public demoPath = "demo/range-date-time-picker";
-
+    public docPath = ['component/JigsawRangeDateTimePicker'];
 }
 

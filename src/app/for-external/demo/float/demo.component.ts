@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class FloatDemoComponent extends DemoSetBase {
     public demoPath = "demo/float";
-
+    public docPath = ['directive/JigsawFloat'];
 }

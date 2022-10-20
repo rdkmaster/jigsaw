@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class InputAllComponent extends DemoSetBase {
     public demoPath = "demo/input";
-
+    public docPath = ['component/JigsawInput'];
 }
 

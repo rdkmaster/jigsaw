@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class DateTimePickerAllComponent extends DemoSetBase {
     public demoPath = "demo/date-time-picker";
-
+    public docPath = ['component/JigsawDateTimePicker'];
 }
 

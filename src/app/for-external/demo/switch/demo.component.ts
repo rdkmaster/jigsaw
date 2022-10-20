@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class SwitchDemoComponent extends DemoSetBase {
     public demoPath = "demo/switch";
-
+    public docPath = ['component/JigsawSwitch'];
 }

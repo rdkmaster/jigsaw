@@ -1,6 +1,7 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import {
     JigsawBadgeModule,
     JigsawButtonBarModule,
@@ -14,13 +15,13 @@ import {
     JigsawNumericInputModule,
     JigsawListModule
 } from "jigsaw/public_api";
-import {BadgeAllComponent} from "./demo.component";
-import {BadgeBasicDemoComponent} from "./basic/demo.component";
-import {BadgeMaxValueDemoComponent} from "./max-value/demo.component";
-import {BadgeOffsetDemoComponent} from "./offset/demo.component";
-import {BadgeStatusDemoComponent} from "./status/demo.component";
-import {BadgeMaskDemoComponent} from "./mask/demo.component";
-import {BadgeStyleDemoComponent} from "./style/demo.component";
+import { BadgeAllComponent } from "./demo.component";
+import { BadgeBasicDemoComponent } from "./basic/demo.component";
+import { BadgeMaxValueDemoComponent } from "./max-value/demo.component";
+import { BadgeOffsetDemoComponent } from "./offset/demo.component";
+import { BadgeStatusDemoComponent } from "./status/demo.component";
+import { BadgeMaskDemoComponent } from "./mask/demo.component";
+import { BadgeStyleDemoComponent } from "./style/demo.component";
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import {BadgeStyleDemoComponent} from "./style/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawBadgeModule,
         JigsawButtonBarModule,

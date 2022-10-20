@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class ProcessStatusDemoComponent extends DemoSetBase {
     public demoPath = "demo/process-status";
-
+    public docPath = ['component/JigsawProcessStatus'];
 }

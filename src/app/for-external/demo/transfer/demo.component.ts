@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class TransferDemoComponent extends DemoSetBase {
     public demoPath = "demo/transfer";
-
+    public docPath = ['component/JigsawTransfer'];
 }

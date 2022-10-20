@@ -1,10 +1,11 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
-import {JigsawButtonModule} from "jigsaw/public_api";
-import {CommonModule} from '@angular/common';
-import {ThemePropertiesAllComponent} from "./demo.component";
-import {ThemePropertiesBasicDemoComponent} from "./basic/demo.component";
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
+import { JigsawButtonModule } from "jigsaw/public_api";
+import { CommonModule } from '@angular/common';
+import { ThemePropertiesAllComponent } from "./demo.component";
+import { ThemePropertiesBasicDemoComponent } from "./basic/demo.component";
 
 @NgModule({
     declarations: [
@@ -13,6 +14,7 @@ import {ThemePropertiesBasicDemoComponent} from "./basic/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         CommonModule

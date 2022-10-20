@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class SliderDemoComponent extends DemoSetBase {
     public demoPath = "demo/slider";
-
+    public docPath = ['component/JigsawSlider'];
 }
 

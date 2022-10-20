@@ -6,5 +6,5 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class ComboSelectComponent extends DemoSetBase {
     public demoPath = "demo/combo-select";
-
+    public docPath = ['component/JigsawComboSelect'];
 }

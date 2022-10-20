@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class UploadAllComponent extends DemoSetBase {
     public demoPath = "demo/upload";
-
+    public docPath = ['component/JigsawUpload'];
 }
 

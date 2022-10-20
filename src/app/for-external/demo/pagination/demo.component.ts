@@ -6,6 +6,6 @@ import {DemoSetBase} from "../../demo-template/demo-template";
 })
 export class PaginationAllComponent extends DemoSetBase {
     public demoPath = "demo/pagination";
-
+    public docPath = ['component/JigsawPagination'];
 }
 
