@@ -1,38 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
-import { ActivatedRoute, Router } from '@angular/router';
-
-class ComponentMenuNav {
-  category: string;
-  nodes: ComponentMenuItem[];
-}
-
-class ComponentMenuItem {
-  label: string;
-  router: string;
-  subRouter: string;
-  docOnly?: boolean;
-  api?: string;
-  href?: string;
-  target?: string;
-}
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './component-menu-nav.component.html',
   styleUrls: ['./component-menu-nav.component.scss']
 })
 export class ComponentMenuNavComponent {
-
+  constructor(private _router: Router) {
+  }
   public routerGroup: any[] = DemoListManager.fullRouterConfig;
 
   public getUrl(router): string {
     return `/components/${router.path}`;
-  }
-
-  componentMenuConfig: ComponentMenuNav[];
-  selectedMenuLabel: string;
-
-  constructor(private _router: Router) {
   }
 
   public isSelected(url): boolean {

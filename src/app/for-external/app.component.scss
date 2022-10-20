@@ -2,6 +2,17 @@
     position: relative;
     font-family: "Helevetica Neue", "PingFang SC", "Tahoma", "Microsoft Yahei";
 
+    >ued-top-menu {
+        position: fixed;
+        width: 100%;
+        z-index: 99999;
+    }
+
+    .menu-placeholder {
+        width: 100%;
+        height: 60px;
+    }
+
     .demo-showcase {
         display: flex;
         align-items: center;

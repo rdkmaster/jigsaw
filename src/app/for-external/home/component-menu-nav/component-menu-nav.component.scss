@@ -1,8 +1,7 @@
-$menu-left-bg-color:#fff;
-$menu-left-color:#6f7f8e;
-$background-color:#fff;
-$active-menu-color:#288bf0;
-$active-menu-2-color:#58b0e8;
+$menu-left-color: #6f7f8e;
+$background-color: #fff;
+$active-menu-color: #288bf0;
+$active-menu-2-color: #58b0e8;
 
 /* 布局 */
 .m-component-menu-nav {
@@ -12,15 +11,17 @@ $active-menu-2-color:#58b0e8;
   background-color: #eee;
 
   .g-menu-nav {
-    background-color: $menu-left-bg-color;
-    width: 215px;
     position: absolute !important;
+    width: 215px;
+    background-color: #fff;
     top: 0;
     bottom: 0;
 
     /* 菜单 */
     ul.menu-nav-group {
+      position: fixed;
       height: calc(100vh - 60px);
+
       li {
         width: 200px;
         line-height: 30px;
@@ -68,5 +69,6 @@ $active-menu-2-color:#58b0e8;
   right: 0;
   top: 0;
   bottom: 0;
+  padding: 0 16px;
   transition: left .25s ease;
 }

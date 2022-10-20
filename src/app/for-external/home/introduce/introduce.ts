@@ -9,6 +9,6 @@ export class IntroduceComponent {
   constructor(private router: Router) { }
 
   public showQuickStart() {
-    this.router.navigate(['/components/guide/quick-start']);
+    this.router.navigate(['/components/quick-start']);
   }
 }
