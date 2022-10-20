@@ -1,9 +1,10 @@
-import { Component, NgModule, Input, } from "@angular/core";
+import { Component, NgModule, Input, ViewEncapsulation, } from "@angular/core";
 
 @Component({
     selector: "doc-template",
     templateUrl: "./doc-template.html",
     styleUrls: ["./doc-template.scss"],
+    encapsulation: ViewEncapsulation.None
 })
 export class DocTemplate {
     @Input()
