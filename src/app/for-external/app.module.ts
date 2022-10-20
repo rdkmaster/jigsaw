@@ -91,7 +91,7 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
 import { HomeComponent } from "./home/home.component";
 import { TopMenuComponent } from "./home/top-menu/top-menu.component";
 import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
-import { ComponentMenuNavComponent } from "./components/component-menu-nav/component-menu-nav.component";
+import { ComponentMenuNavComponent } from "./home/component-menu-nav/component-menu-nav.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
 import { DesignComponent } from "./home/design/design";

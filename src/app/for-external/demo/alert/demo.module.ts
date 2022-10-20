@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../demo-template/demo-template';
+import { DocTemplateModule } from '../../doc-template/doc-template';
 import { AlertDemoComponent } from './demo.component';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { JigsawAlertModule, JigsawButtonModule, JigsawHeaderModule, JigsawCheckBoxModule } from "jigsaw/public_api";
@@ -18,6 +19,7 @@ import { CustomizedAlert } from "./customized/customized-alert";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
         JigsawMarkdownModule,
         JigsawAlertModule,
         JigsawButtonModule,

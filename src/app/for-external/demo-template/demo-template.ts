@@ -150,7 +150,7 @@ export class AsyncDescription implements OnDestroy {
 export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
-    public apiDoc: string = '';
+    public docContent: string = '';
     protected docPath: string = '';
 
     constructor(public route: ActivatedRoute, public http: HttpClient, el: ElementRef) {
@@ -179,8 +179,8 @@ export class DemoSetBase extends AsyncDescription implements OnInit, OnDestroy {
             return;
         }
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
-        this.http.get(`app/for-external/docs/fragments/${this.docPath}`, { headers, responseType: 'text' }).subscribe((data) => {
-            this.apiDoc = data;
+        this.http.get(`app/for-external/assets/docs/fragments/${this.docPath}`, { headers, responseType: 'text' }).subscribe((data) => {
+            this.docContent = data;
         })
     }
 
