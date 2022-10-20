@@ -697,7 +697,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         const nodes = this.ztree.transformToArray(this.ztree.getNodes());
 
         let fieldArray: string[] = typeof fields == 'string' ? [fields] : fields;
-        fieldArray = fieldArray.filter((filed,index) => index === fieldArray.indexOf(filed));
+        fieldArray = fieldArray.filter((field, index) => !!field && index === fieldArray.indexOf(field));
         // reset node label
         const hasLabel = fieldArray.find(f => f == 'label');
         if (hasLabel) {
