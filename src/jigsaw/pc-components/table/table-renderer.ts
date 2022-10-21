@@ -726,17 +726,16 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         if (!(data instanceof Array) && !(data instanceof ArrayCollection)) {
             return data;
         }
-        return data.map(item => {
-            if (!item || item.hasOwnProperty('label')) {
+        return data.filter(item => {
+            if (!item || item.hasOwnProperty('label') && item.label == "") {
                 // !item 表示下拉选项转成横线的情况
-                return item;
+                return false;
             }
             if (item && typeof item == 'object') {
                 // item是非法对象
                 console.error('the data of table select renderer must be type of Array<{label: string} | string>');
-                return item;
+                return true;
             }
-            return {label: item};
         })
     }
 
@@ -768,8 +767,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         } else {
             this.data = this._formatData(initData);
         }
-        this.data = this.data.filter(item => item.hasOwnProperty('label') && item.label !== "");
-        this.selected = this.selected && this.selected.hasOwnProperty('label') ? this.selected.label : this.selected;
+        this.selected = this.selected.label;
         this._changeDetector.markForCheck();
     }
 

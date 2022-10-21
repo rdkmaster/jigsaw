@@ -464,7 +464,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
-                if (!value[i] || (value[i].hasOwnProperty('label') && value[i].label == "")) {
+                if (CommonUtils.isUndefined(value[i])) {
                     value.splice(i, 1);
                 }
             }
