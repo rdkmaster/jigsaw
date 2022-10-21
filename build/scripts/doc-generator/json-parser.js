@@ -769,41 +769,9 @@ function saveFile(type, fileName, html) {
         fs.mkdirSync(path, 755);
     }
     html += getPanelTemplate();
-    html += getFooter(fileName);
     fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({type: fileName, category: type});
-}
-
-function getFooter(name) {
-    const info = findTypeMetaInfo(name);
-    let type = '';
-    switch (info.subtype || info.type) {
-        case 'component':
-        case 'directive':
-        case 'injectable':
-        case 'class':
-            type = 'class';
-            break;
-        case 'interface':
-            type = 'interface';
-            break;
-        case 'typealias':
-            type = 'type';
-            break;
-        case 'enum':
-            type = 'enum';
-            break;
-    }
-    const reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
-    const source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
-    const idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
-    const hash = idx !== -1 ? '#L' + (idx + 1) : '';
-    const url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
-    return getFooterTemplate()
-        .replace('$editThisDoc', url)
-        .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
-        .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
 }
 
 function checkUnknownTypes() {
@@ -984,55 +952,6 @@ function getPanelTemplate() {
         <span class="close" title="返回"
               onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
         <iframe id="evalator"></iframe>
-    </div>
-</div>
-`
-}
-
-function getFooterTemplate() {
-    return `
-<a name="footer"></a>
-<div class="api-footer-wrapper">
-    <div class="col">
-        <h3>资源</h3>
-        <ul>
-            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
-            <li><a href="https://github.com/rdkmaster/j-lunker"
-                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
-                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
-                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
-
-            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
-            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
-
-            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
-            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
-            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
-        </ul>
-    </div>
-    <div class="col">
-        <h3>社区</h3>
-        <ul>
-            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
-                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
-            <li><a href="$editThisDoc" target="_blank"
-                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
-            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
-            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
-                title="仅限中兴内部访问">Web GIS</a></li>
-        </ul>
-    </div>
-    <div class="col">
-        <h3>帮助</h3>
-        <ul>
-            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
-            <li><a onclick="$wechatGroup" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
-            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
-            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
-        </ul>
     </div>
 </div>
 `

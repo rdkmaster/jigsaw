@@ -1,0 +1,32 @@
+.doc-footer-wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 40px 0;
+    background: var(--bg-container);
+
+    >div {
+        padding-left: 28px;
+
+        >p {
+            display: flex;
+            align-items: flex-start;
+            height: 56px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        >ul li {
+            height: 24px;
+
+            a {
+                color: var(--brand-default);
+            }
+
+            &:hover {
+                a {
+                    color: var(--brand-active);
+                }
+            }
+        }
+    }
+}

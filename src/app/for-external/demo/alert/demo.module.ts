@@ -8,6 +8,7 @@ import { AlertPopupDemoComponent } from "./popup/demo.component";
 import { AlertInDomDemoComponent } from "./in-dom/demo.component";
 import { CustomizeAlertDemoComponent } from "./customized/demo.component";
 import { CustomizedAlert } from "./customized/customized-alert";
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 
 @NgModule({
     declarations: [
@@ -20,6 +21,7 @@ import { CustomizedAlert } from "./customized/customized-alert";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawAlertModule,
         JigsawButtonModule,
