@@ -153,7 +153,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
     public docContent: string = '';
     protected docPath: string[] = [];
 
-    constructor(public route: ActivatedRoute, public http: HttpClient, el: ElementRef) {
+    constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2) {
         super(http, el);
         route.fragment.subscribe(fragment => {
             this._demoSelector = fragment;
@@ -187,10 +187,12 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
     }
 
     ngAfterViewInit(): void {
-        console.log(document.getElementsByClassName('markdown-wrap'))
+        // console.log(document.getElementsByClassName('markdown-wrap'))
+        console.log(this.el.nativeElement.children[0].children)
+        // this.renderer.addClass(this.el.nativeElement,'test');
         const allMarkdown = document.getElementsByClassName('markdown-wrap');
         for (let i = 0; i < allMarkdown.length; i++) {
-            console.log(allMarkdown[i].children)
+            // console.log(allMarkdown[i].children)
         }
     }
 

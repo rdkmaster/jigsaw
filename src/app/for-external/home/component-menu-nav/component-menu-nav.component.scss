@@ -26,6 +26,9 @@ $active-menu-2-color: #58b0e8;
         width: 200px;
         line-height: 30px;
         color: #a9a9a9;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       &>li {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,10 @@ export class ComponentMenuNavComponent {
 
   public getUrl(router): string {
     return `/components/${router.path}`;
+  }
+
+  public getRouterLabel(router):string{
+    return window['demoNavigationInfo']?.[router.path]?.label || '';
   }
 
   public isSelected(url): boolean {
