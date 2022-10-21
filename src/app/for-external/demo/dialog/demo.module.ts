@@ -4,6 +4,7 @@ import { JigsawButtonModule, JigsawNumericInputModule, JigsawDialogModule, Jigsa
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DialogBasicDemoComponent } from "./basic/demo.component";
 import { DialogModalDemoComponent } from "./modal/demo.component";
@@ -43,6 +44,7 @@ import { DialogDemoComponent } from "./demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawDialogModule,
         JigsawInputModule

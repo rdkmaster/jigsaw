@@ -5,6 +5,7 @@ import { JigsawButtonModule, JigsawHeaderModule, JigsawTransferModule } from "ji
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { TransferBasicDemoComponent } from "./basic/demo.component";
 import { TransferItemDisabledDemoComponent } from "./item-disabled/demo.component";
 import { TransferListDemoComponent } from "./transfer-list/demo.component";
@@ -28,6 +29,7 @@ import { TransferTreeDemoComponent } from "./transfer-tree/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawTransferModule,
         JigsawHeaderModule,

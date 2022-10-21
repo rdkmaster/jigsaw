@@ -152,6 +152,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
     private _demoSelector: string;
     public docContent: string = '';
     protected docPath: string[] = [];
+    public navigationData = [1,2,3];
 
     constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2) {
         super(http, el);
@@ -193,17 +194,18 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
             return;
         }
         const demoComponent = demoWrapper.children;
+        this.navigationData= demoComponent;
         // demoComponent.forEach(selector=>{
         //     html += `<li>${selector.localName}</li>`
         // })
-        const ul = window.document.createElement('ul');
-        ul.classList.add("demo-navigation");
-        let html = ''
-        for (let i = 0; i < demoComponent.length; i++) {
-            html += `<li>${demoComponent[i].localName}</li>`
-        }
-        ul.innerHTML = html;
-        demoWrapper.appendChild(ul);
+        // const ul = window.document.createElement('ul');
+        // ul.classList.add("demo-navigation");
+        // let html = ''
+        // for (let i = 0; i < demoComponent.length; i++) {
+        //     html += `<li>${demoComponent[i].localName}</li>`
+        // }
+        // ul.innerHTML = html;
+        // demoWrapper.appendChild(ul);
         
         // this.renderer.addClass(this.el.nativeElement,'test');
         const allMarkdown = document.getElementsByClassName('markdown-wrap');

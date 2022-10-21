@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { CommonModule } from "@angular/common";
 import { CascadeBasicComponent } from "./basic/demo.component";
 import { CascadeLazyLoadComponent } from "./lazy-load/demo.component";
@@ -21,6 +22,7 @@ import { JigsawCascadeModule, JigsawComboSelectModule } from "jigsaw/public_api"
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         CommonModule,
         JigsawCascadeModule,
         JigsawComboSelectModule

@@ -6,6 +6,7 @@ import { TooltipBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { TooltipHtmlDemoComponent } from "./html-renderer/demo.component";
 import { TooltipScenesDemoComponent } from "./scenes/demo.component";
 import { TooltipTriggerDemoComponent } from "./trigger/demo.component";
@@ -27,6 +28,7 @@ import { CommonModule } from "@angular/common";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawRadioModule,
         CommonModule
     ]

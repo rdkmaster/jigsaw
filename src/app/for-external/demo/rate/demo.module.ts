@@ -4,6 +4,7 @@ import { RateBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { JigsawRateModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { RateHalfDemoComponent } from "./half/demo.component";
@@ -18,6 +19,7 @@ import { RateHalfDemoComponent } from "./half/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawRateModule,
         JigsawMarkdownModule,
         JigsawHeaderModule

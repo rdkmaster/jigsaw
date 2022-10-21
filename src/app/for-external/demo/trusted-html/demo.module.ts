@@ -8,6 +8,7 @@ import { TrustedHtmlBasicComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         CommonModule,
         FormsModule,

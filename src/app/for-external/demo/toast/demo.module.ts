@@ -5,6 +5,7 @@ import { JigsawButtonModule, JigsawToastModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { ToastBasicDemoComponent } from "./basic/demo.component";
 import { ToastFunctionalDemoComponent } from "./functional/demo.component";
 import { ToastLongTextDemoComponent } from "./long-text/demo.component";
@@ -20,6 +21,7 @@ import { ToastLongTextDemoComponent } from "./long-text/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawToastModule,
         JigsawButtonModule,

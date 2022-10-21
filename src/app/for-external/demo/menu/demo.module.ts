@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { MenuAllComponent } from "./demo.component";
 import { CommonModule } from "@angular/common";
@@ -34,6 +35,7 @@ import { NavigationInDrawerDemoComponent } from "./in-drawer/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         CommonModule,
         JigsawCollapseModule,

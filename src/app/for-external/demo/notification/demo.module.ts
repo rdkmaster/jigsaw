@@ -5,6 +5,7 @@ import { JigsawButtonModule, JigsawNotificationModule, JigsawInputModule, Jigsaw
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { NotificationBasicDemoComponent } from "./basic/demo.component";
 import { NotificationFunctionalDemoComponent } from "./functional/demo.component";
 import { NotificationAdvancedDemoComponent } from "./advanced/demo.component";
@@ -23,6 +24,7 @@ import { NotificationAdvancedDemoComponent } from "./advanced/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawInputModule,
         JigsawSliderModule,
         JigsawRadioModule

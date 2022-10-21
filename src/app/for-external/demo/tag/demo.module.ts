@@ -5,6 +5,7 @@ import { JigsawButtonModule, JigsawTagModule, JigsawHeaderModule, JigsawInputMod
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { TagBasicComponent } from "./basic/demo.component";
 import { TagPresetColorComponent } from "./preset-color/demo.component";
 import { TagCustomColorComponent } from "./custom-color/demo.component";
@@ -30,6 +31,7 @@ import { TagAddRemoveComponent } from "./add-remove/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         CommonModule,
         JigsawHeaderModule,
         JigsawInputModule

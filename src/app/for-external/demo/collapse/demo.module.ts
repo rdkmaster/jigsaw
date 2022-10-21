@@ -4,6 +4,7 @@ import { JigsawButtonBarModule, JigsawButtonModule, JigsawCollapseModule, Jigsaw
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { CollapseDemoComponent } from "./demo.component";
 import { CollapseBasicDemoComponent } from "./basic/demo.component";
@@ -23,6 +24,7 @@ import { CollapseTitleAndContentDemoComponent } from "./title-and-content/demo.c
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawButtonBarModule,
         JigsawButtonModule,

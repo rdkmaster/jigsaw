@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
 import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { SelectBasicDemoComponent } from "./basic/demo.component";
 import { SelectClearableDemoComponent } from "./clearable/demo.component";
 import { SelectOptionCountDemoComponent } from "./option-count/demo.component";
@@ -35,6 +36,7 @@ import { SelectInteractionDemoComponent } from "./interaction/demo.component";
         DemoTemplateModule,
         DocTemplateModule,
         DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawSelectModule,
         JigsawButtonModule,
         JigsawNumericInputModule,
