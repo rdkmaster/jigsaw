@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 import { LoadingBasicDemoComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { LoadingBallDemoComponent } from "./ball/demo.component";
 import { LoadingBubbleDemoComponent } from "./bubble/demo.component";
@@ -31,6 +32,7 @@ import { LoadingCustomizeDemoComponent } from "./customize/demo.component";
         CommonModule,
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawHeaderModule
     ],

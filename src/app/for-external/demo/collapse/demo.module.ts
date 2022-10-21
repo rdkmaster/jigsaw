@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { JigsawButtonBarModule, JigsawButtonModule, JigsawCollapseModule, JigsawInputModule, JigsawTableModule, JigsawGraphModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { CollapseDemoComponent } from "./demo.component";
 import { CollapseBasicDemoComponent } from "./basic/demo.component";
@@ -21,6 +22,7 @@ import { CollapseTitleAndContentDemoComponent } from "./title-and-content/demo.c
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonBarModule,
         JigsawButtonModule,

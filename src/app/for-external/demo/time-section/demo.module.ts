@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawButtonBarModule, JigsawTimeSectionModule, JigsawCheckBoxModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { TimeSectionBasicDemoComponent } from "./basic/demo.component";
 import { TimeSectionPickerDemoComponent } from "./time-section-picker/demo.component";
 import { WeekSectionPickerDemoComponent } from "./week-section-picker/demo.component";
@@ -20,14 +21,15 @@ import { TimeSectionHorizontalDemoComponent } from "./horizontal/demo.component"
         TimeSectionHorizontalDemoComponent
     ],
     imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawTimeSectionModule,
         JigsawButtonBarModule,
         JigsawCheckBoxModule,
         JigsawCheckBoxModule,
         JigsawHeaderModule,
-        DemoTemplateModule,
-        DocTemplateModule
     ]
 })
 export class TimeSectionDemoModule {

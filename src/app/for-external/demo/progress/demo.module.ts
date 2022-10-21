@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { ProgressDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawProgressModule, JigsawNumericInputModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { CommonModule } from "@angular/common";
@@ -23,6 +24,7 @@ import { CircleProgressDemoComponent } from "./circle-progress/demo.component";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawProgressModule,
         CommonModule,

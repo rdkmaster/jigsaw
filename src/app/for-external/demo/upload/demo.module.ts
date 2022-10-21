@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { UploadAllComponent } from "./demo.component";
 import { JigsawUploadModule, JigsawRadioLiteModule, JigsawButtonModule, JigsawButtonBarModule, JigsawLoadingModule, JigsawInputModule } from "jigsaw/public_api";
@@ -39,6 +40,7 @@ import { UploadResultDemoComponent } from "./upload-result/demo.component";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawUploadModule,
         JigsawRadioLiteModule,

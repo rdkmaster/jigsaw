@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawButtonModule, JigsawHeaderModule, JigsawTransferModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { TransferBasicDemoComponent } from "./basic/demo.component";
 import { TransferItemDisabledDemoComponent } from "./item-disabled/demo.component";
 import { TransferListDemoComponent } from "./transfer-list/demo.component";
@@ -24,12 +25,13 @@ import { TransferTreeDemoComponent } from "./transfer-tree/demo.component";
         TransferTableLocalPageableDemoComponent
     ],
     imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawTransferModule,
         JigsawHeaderModule,
         JigsawButtonModule,
-        DemoTemplateModule,
-        DocTemplateModule
     ]
 })
 export class TransferDemoModule {

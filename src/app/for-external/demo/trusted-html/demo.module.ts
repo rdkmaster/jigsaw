@@ -7,6 +7,7 @@ import { JigsawTrustedHtmlModule, JigsawHeaderModule, JigsawTextareaModule } fro
 import { TrustedHtmlBasicComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 
 @NgModule({
     declarations: [
@@ -14,14 +15,15 @@ import { DocTemplateModule } from '../../template/doc-template/doc-template';
         TrustedHtmlBasicComponent
     ],
     imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         CommonModule,
         FormsModule,
         JigsawTrustedHtmlModule,
         JigsawHeaderModule,
         JigsawTextareaModule,
-        DemoTemplateModule,
-        DocTemplateModule
     ]
 })
 export class TrustedHtmlDemoModule {

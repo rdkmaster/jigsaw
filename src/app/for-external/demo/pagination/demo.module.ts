@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { PaginationAllComponent } from "./demo.component";
 import { JigsawPaginationModule } from "jigsaw/public_api";
@@ -26,6 +27,7 @@ import { PaginationHiddenDemoComponent } from "./hidden/demo.component";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawPaginationModule
     ]

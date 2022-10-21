@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { CommonModule } from "@angular/common";
 import { JigsawButtonModule, JigsawSwitchModule, JigsawSliderModule } from "jigsaw/public_api";
 import { SliderStepDemoComponent } from "./step/demo.component";
@@ -18,6 +19,7 @@ import { SliderVerticalDemoComponent } from "./vertical/demo.component";
         JigsawMarkdownModule,
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         CommonModule,
         JigsawSwitchModule,
         JigsawSliderModule,

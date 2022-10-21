@@ -5,6 +5,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { ProcessStatusBasicComponent } from "./basic/demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { ProcessStatusCustomIconsComponent } from "./custom-icons/demo.component";
 import { ProcessStatusInteractiveComponent } from "./status-interactive/demo.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
@@ -21,11 +22,13 @@ import { ProcessStatusVerticalFullComponent } from "./vertical/demo.component";
         ProcessStatusMultilineComponent,
         ProcessStatusVerticalFullComponent
     ],
-    imports: [CommonModule,
+    imports: [
+        CommonModule,
         JigsawProcessStatusModule,
         JigsawMarkdownModule,
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawTrustedHtmlModule,
         PerfectScrollbarModule,
         JigsawButtonModule

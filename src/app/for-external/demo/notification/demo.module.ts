@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawButtonModule, JigsawNotificationModule, JigsawInputModule, JigsawSliderModule, JigsawRadioModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { NotificationBasicDemoComponent } from "./basic/demo.component";
 import { NotificationFunctionalDemoComponent } from "./functional/demo.component";
 import { NotificationAdvancedDemoComponent } from "./advanced/demo.component";
@@ -21,6 +22,7 @@ import { NotificationAdvancedDemoComponent } from "./advanced/demo.component";
         JigsawButtonModule,
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawInputModule,
         JigsawSliderModule,
         JigsawRadioModule

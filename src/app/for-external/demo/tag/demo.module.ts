@@ -4,6 +4,7 @@ import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawButtonModule, JigsawTagModule, JigsawHeaderModule, JigsawInputModule } from "jigsaw/public_api";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { TagBasicComponent } from "./basic/demo.component";
 import { TagPresetColorComponent } from "./preset-color/demo.component";
 import { TagCustomColorComponent } from "./custom-color/demo.component";
@@ -28,6 +29,7 @@ import { TagAddRemoveComponent } from "./add-remove/demo.component";
         JigsawButtonModule,
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         CommonModule,
         JigsawHeaderModule,
         JigsawInputModule

@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { IconAllComponent } from "./demo.component";
 import { JigsawIconModule } from "jigsaw/public_api";
@@ -25,6 +26,7 @@ import { IconCustomizeStatusDemoComponent } from "./customize-status/demo.compon
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawIconModule,
         CommonModule

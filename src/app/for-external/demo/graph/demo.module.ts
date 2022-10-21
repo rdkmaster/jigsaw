@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { GraphDemoComponent } from "./demo.component";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawGraphModule, JigsawHeaderModule } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { GraphBoxPlotDemoComponent } from "./box-plot/demo.component";
@@ -23,7 +24,8 @@ import { GraphStackAreaDemoComponent } from "./stack-area/demo.component";
 import { GraphStripDemoComponent } from "./strip/demo.component";
 
 @NgModule({
-    declarations: [GraphDemoComponent,
+    declarations: [
+        GraphDemoComponent,
         GraphBasicDemoComponent,
         GraphBarChartDemoComponent,
         GraphBoxPlotDemoComponent,
@@ -44,6 +46,7 @@ import { GraphStripDemoComponent } from "./strip/demo.component";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawGraphModule,
         JigsawMarkdownModule,
         JigsawHeaderModule

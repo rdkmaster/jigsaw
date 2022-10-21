@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { AlphabeticalIndexDemoComponent } from "./demo.component";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { JigsawButtonModule, JigsawInputModule, JigsawAlphabeticalIndexModule, JigsawAlphabeticalIndexSelectModule } from "jigsaw/public_api";
@@ -20,6 +21,7 @@ import { AlphabeticalIndexPermanentDemoComponent } from "./permanent/demo.compon
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawInputModule,

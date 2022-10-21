@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { DemoTemplateModule } from '../../template/demo-template/demo-template';
 import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
 import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import { JigsawDatePickerModule } from "jigsaw/public_api";
 import { DatePickerAllComponent } from "./demo.component";
@@ -27,10 +28,10 @@ import { DatePickerWeekStartComponent } from "./week-start/demo.component";
     imports: [
         DemoTemplateModule,
         DocTemplateModule,
+        DocFooterTemplateModule,
         JigsawMarkdownModule,
         JigsawDatePickerModule,
         CommonModule
-
     ]
 })
 export class DatePickerDemoModule {
