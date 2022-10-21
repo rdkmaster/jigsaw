@@ -45,6 +45,18 @@
         }
     }
 
+    .demo-wrapper {
+        padding: 0 200px 0 20px;
+
+        .demo-navigation {
+            position: fixed;
+            top: 60px;
+            right: 0;
+            width: 200px;
+            background: cyan;
+        }
+    }
+
     .theme-select {
         position: absolute;
         top: 20px;

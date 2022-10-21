@@ -187,13 +187,30 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
     }
 
     ngAfterViewInit(): void {
-        // console.log(document.getElementsByClassName('markdown-wrap'))
-        console.log(this.el.nativeElement.children[0].children)
+        
+        const demoWrapper = this.el.nativeElement.getElementsByClassName('demo-wrapper')[0];
+        if (demoWrapper.length === 0) {
+            return;
+        }
+        const demoComponent = demoWrapper.children;
+        // demoComponent.forEach(selector=>{
+        //     html += `<li>${selector.localName}</li>`
+        // })
+        const ul = window.document.createElement('ul');
+        ul.classList.add("demo-navigation");
+        let html = ''
+        for (let i = 0; i < demoComponent.length; i++) {
+            html += `<li>${demoComponent[i].localName}</li>`
+        }
+        ul.innerHTML = html;
+        demoWrapper.appendChild(ul);
+        
         // this.renderer.addClass(this.el.nativeElement,'test');
         const allMarkdown = document.getElementsByClassName('markdown-wrap');
         for (let i = 0; i < allMarkdown.length; i++) {
             // console.log(allMarkdown[i].children)
         }
+        window['aaa']=allMarkdown[allMarkdown.length-1];
     }
 
     ngOnDestroy(): void {
