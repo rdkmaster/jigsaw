@@ -619,7 +619,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
         this._$listValue = new ArrayCollection([]);
         value.forEach(groupData => {
-            this._$listValue.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
+            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
         });
         this._$selectedItems = [];
     }
