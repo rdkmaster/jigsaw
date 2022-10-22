@@ -2,7 +2,7 @@
     position: relative;
     font-family: "Helevetica Neue", "PingFang SC", "Tahoma", "Microsoft Yahei";
 
-    >ued-top-menu {
+    > ued-top-menu {
         position: fixed;
         width: 100%;
         z-index: 99999;
@@ -18,11 +18,11 @@
         align-items: center;
         margin-bottom: 16px;
 
-        >* {
+        > * {
             margin-right: 8px;
         }
 
-        >span {
+        > span {
             margin-right: 24px;
             font-weight: bold;
             text-align-last: justify;
@@ -35,18 +35,22 @@
         align-items: flex-start;
         margin-bottom: 16px;
 
-        >* {
+        > * {
             margin-bottom: 8px;
         }
 
-        >span {
+        > span {
             margin-bottom: 8px;
             font-weight: bold;
         }
     }
 
     .demo-wrapper {
-        padding: 0 200px 0 20px;
+        padding: 0 20px 0 20px;
+
+        &.nav {
+            padding: 0 200px 0 20px;
+        }
     }
 
     .theme-select {

@@ -1,17 +1,23 @@
 import { Component, NgModule, Input } from "@angular/core";
-import { CommonModule } from '@angular/common';
+import { CommonModule } from "@angular/common";
 
 @Component({
     selector: "demo-navigation",
     templateUrl: "./demo-navigation.html",
-    styleUrls: ["./demo-navigation.scss"]
+    styleUrls: ["./demo-navigation.scss"],
 })
 export class DemoNavigation {
     @Input()
     public navigationData = [];
 
-    public scroll(el){
-        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    public scroll(el) {
+        el.scrollIntoView();
+        // now account for fixed header
+        var scrolledY = window.scrollY;
+
+        if (scrolledY) {
+            window.scroll(0, scrolledY - 60);
+        }
     }
 }
 
@@ -20,6 +26,4 @@ export class DemoNavigation {
     declarations: [DemoNavigation],
     exports: [DemoNavigation],
 })
-export class DemoNavigationModule {
-
-}
+export class DemoNavigationModule {}
