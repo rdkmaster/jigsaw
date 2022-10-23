@@ -4,7 +4,7 @@ import { TableData, JigsawTable } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-resize',
+    selector: 'table-actions-resize',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })

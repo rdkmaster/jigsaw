@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'day-section-picker',
+    selector: 'time-section-day-section-picker',
     templateUrl: './demo.component.html'
 })
 export class DaySectionPickerDemoComponent extends AsyncDescription {

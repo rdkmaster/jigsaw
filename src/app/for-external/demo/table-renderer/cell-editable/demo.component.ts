@@ -39,7 +39,7 @@ export class MyTableCellEditor extends TableCellRendererBase implements AfterVie
 }
 
 @Component({
-    selector: 'table-cell-editable',
+    selector: 'table-renderer-cell-editable',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })

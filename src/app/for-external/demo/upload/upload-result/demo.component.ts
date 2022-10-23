@@ -4,7 +4,7 @@ import { JigsawUploadDirective, UploadFileInfo, JigsawUploadResult, IUploader } 
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'upload-result-upload',
+    selector: 'upload-upload-result',
     templateUrl: "./demo.component.html"
 })
 export class UploadResultDemoComponent extends AsyncDescription implements OnInit, AfterViewInit {

@@ -14,7 +14,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-renderer',
+    selector: 'table-renderer-renderer',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })

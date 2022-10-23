@@ -4,7 +4,7 @@ import { InternalUtils } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'process-status-multiline',
+    selector: 'process-status-status-multiline',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusMultilineComponent extends AsyncDescription {

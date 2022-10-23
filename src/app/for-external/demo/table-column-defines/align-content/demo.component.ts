@@ -11,7 +11,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-align-content',
+    selector: 'table-column-defines-align-content',
     templateUrl: './demo.component.html'
 })
 export class TableAlignContentDemoComponent extends AsyncDescription {

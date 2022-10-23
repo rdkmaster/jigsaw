@@ -4,7 +4,7 @@ import { InternalUtils } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "many-steps",
+    selector: "steps-many-steps",
     templateUrl: "./demo.component.html"
 })
 export class JigsawStepManyStepsDemoComponent extends AsyncDescription {

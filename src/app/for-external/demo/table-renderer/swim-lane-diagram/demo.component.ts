@@ -5,7 +5,7 @@ import {TableSwimLaneCell} from "./table-renderer";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-swim-lane-diagram',
+    selector: 'table-renderer-swim-lane-diagram',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None

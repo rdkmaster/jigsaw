@@ -12,7 +12,7 @@ import {CellRendererOfficeHeaderRenderer} from "./renderers";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-cell-render',
+    selector: 'table-renderer-cell-render',
     templateUrl: './demo.component.html'
 })
 export class TableSetCellRenderDemoComponent extends AsyncDescription {

@@ -4,7 +4,7 @@ import {TableData, ColumnDefine} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-header-class',
+    selector: 'table-column-defines-header-class',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None

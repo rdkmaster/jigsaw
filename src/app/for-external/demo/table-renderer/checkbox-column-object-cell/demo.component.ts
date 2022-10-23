@@ -7,7 +7,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'checkbox-column-object-cell-table',
+    selector: 'table-renderer-checkbox-column-object-cell',
     templateUrl: './demo.component.html'
 })
 export class TableCheckboxColumnObjectCellDemoComponent extends AsyncDescription {

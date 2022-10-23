@@ -6,7 +6,7 @@ import { CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED } 
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-sudoku',
+    selector: 'table-renderer-sudoku',
     templateUrl: './demo.component.html'
 })
 export class SudokuGameComponent extends AsyncDescription {

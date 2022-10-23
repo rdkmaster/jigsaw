@@ -6,7 +6,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-cell-editable-property',
+    selector: 'table-renderer-cell-editable-property',
     templateUrl: './demo.component.html',
 })
 export class TableCellEditablePropertyDemoComponent extends AsyncDescription {

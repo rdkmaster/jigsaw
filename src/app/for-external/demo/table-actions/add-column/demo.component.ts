@@ -39,7 +39,7 @@ export class MyTableCellOption extends TableCellRendererBase {
 }
 
 @Component({
-    selector: 'table-add-column',
+    selector: 'table-actions-add-column',
     templateUrl: './demo.component.html'
 })
 export class TableAddColumnDemoComponent extends AsyncDescription {

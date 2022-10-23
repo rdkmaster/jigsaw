@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'transfer-tree-transfer',
+    selector: 'transfer-transfer-tree',
     templateUrl: './demo.component.html'
 })
 export class TransferTreeDemoComponent extends AsyncDescription {

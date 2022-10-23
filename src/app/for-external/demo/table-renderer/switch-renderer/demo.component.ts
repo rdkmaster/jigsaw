@@ -4,7 +4,7 @@ import { TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRend
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-switch-renderer',
+    selector: 'table-renderer-switch-renderer',
     templateUrl: './demo.component.html'
 })
 export class TableSwitchRendererDemoComponent extends AsyncDescription {

@@ -8,7 +8,7 @@ import { OfficeCellRenderer, OfficeHeaderRenderer, PositionHeaderRenderer } from
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-big-table',
+    selector: 'table-big-data-big-table',
     templateUrl: './demo.component.html'
 })
 export class BigTableDataDemoComponent extends AsyncDescription {

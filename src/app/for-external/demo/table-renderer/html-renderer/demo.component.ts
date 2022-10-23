@@ -7,7 +7,7 @@ import {
 import { AsyncDescription } from '../../../template/demo-template/demo-template';
 
 @Component({
-    selector: 'table-html-renderer',
+    selector: 'table-renderer-html-renderer',
     templateUrl: './demo.component.html'
 })
 export class TableHtmlRendererDemoComponent extends AsyncDescription {

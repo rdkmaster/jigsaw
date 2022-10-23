@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'process-status-interactive',
+    selector: 'process-status-status-interactive',
     templateUrl: './demo.component.html',
 })
 export class ProcessStatusInteractiveComponent extends AsyncDescription {

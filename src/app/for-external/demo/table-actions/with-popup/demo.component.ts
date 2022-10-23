@@ -4,7 +4,7 @@ import { TableData, PopupDisposer, PopupInfo, PopupService } from "jigsaw/public
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-with-popup',
+    selector: 'table-actions-with-popup',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })

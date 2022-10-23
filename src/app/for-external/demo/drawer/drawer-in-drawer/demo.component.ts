@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'drawer-in-drawer',
+    selector: 'drawer-drawer-in-drawer',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })

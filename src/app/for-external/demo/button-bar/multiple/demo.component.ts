@@ -3,7 +3,7 @@ import {ArrayCollection} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "button-bar-multiple-choice",
+    selector: "button-bar-multiple",
     templateUrl: "./demo.component.html",
 })
 

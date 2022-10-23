@@ -9,7 +9,7 @@ export class CalendarTableData extends TableData {
 }
 
 @Component({
-    selector: 'table-calendar',
+    selector: 'table-renderer-calendar',
     templateUrl: './demo.component.html'
 })
 export class TableCalendarDemoComponent extends AsyncDescription {

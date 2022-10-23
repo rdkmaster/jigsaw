@@ -4,7 +4,7 @@ import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/p
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-draggable-table',
+    selector: 'table-actions-draggable-table',
     templateUrl: "demo.component.html",
     encapsulation: ViewEncapsulation.None
 })

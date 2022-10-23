@@ -4,7 +4,7 @@ import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "nav-fold",
+    selector: "navigation-menu-fold",
     templateUrl: "demo.component.html",
 })
 export class NavigationFoldDemoComponent extends AsyncDescription {

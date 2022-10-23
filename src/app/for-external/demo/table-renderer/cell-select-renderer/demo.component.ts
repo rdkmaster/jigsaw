@@ -5,7 +5,7 @@ import {AjaxInterceptor} from "../../../../libs/app.interceptor";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-cell-select-renderer',
+    selector: 'table-renderer-cell-select-renderer',
     templateUrl: './demo.component.html'
 })
 export class TableCellSelectRenderDemoComponent extends AsyncDescription {

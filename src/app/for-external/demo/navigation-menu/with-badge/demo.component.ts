@@ -4,7 +4,7 @@ import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "nav-with-badge",
+    selector: "navigation-menu-with-badge",
     templateUrl: "demo.component.html",
 })
 export class NavigationWithBadgeDemoComponent extends AsyncDescription {

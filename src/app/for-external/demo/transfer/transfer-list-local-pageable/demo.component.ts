@@ -4,7 +4,7 @@ import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRende
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'transfer-list-local-pageable-transfer',
+    selector: 'transfer-transfer-list-local-pageable',
     templateUrl: './demo.component.html'
 })
 export class TransferListLocalPageableDemoComponent extends AsyncDescription {

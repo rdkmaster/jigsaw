@@ -4,7 +4,7 @@ import { SimpleNode, SimpleTreeData, JigsawNavigationMenu } from "jigsaw/public_
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "nav-menu",
+    selector: "navigation-menu-menu",
     templateUrl: "demo.component.html",
 })
 export class NavigationMenuDemoComponent extends AsyncDescription {

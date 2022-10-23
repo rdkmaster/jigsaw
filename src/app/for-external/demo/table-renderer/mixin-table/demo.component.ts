@@ -4,7 +4,7 @@ import {TableData, ColumnDefine, TableCellRendererBase} from "jigsaw/public_api"
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-mixin-table',
+    selector: 'table-renderer-mixin-table',
     templateUrl: './demo.component.html'
 })
 export class TableMixinTableDemoComponent extends AsyncDescription {

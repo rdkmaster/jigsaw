@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'time-picker-limit-date',
+    selector: 'date-time-picker-limit',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap p {

@@ -13,7 +13,7 @@
       justify-content: flex-start;
       border-bottom: none;
 
-      &>li {
+      & > li {
         position: relative;
 
         a {
@@ -36,5 +36,15 @@
         }
       }
     }
+  }
+
+  .theme-select {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 33px;
   }
 }

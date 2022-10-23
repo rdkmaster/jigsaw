@@ -3,7 +3,7 @@ import { ArrayCollection } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "radio-group-data",
+    selector: "radio-object",
     templateUrl: "./demo.component.html",
 })
 

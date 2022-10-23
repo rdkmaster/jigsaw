@@ -3,7 +3,7 @@ import { JigsawInfoAlert } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'move-and-click-basic',
+    selector: 'movable-basic',
     templateUrl: 'demo.component.html'
 })
 export class MoveAndClickBasicDemoComponent extends AsyncDescription {

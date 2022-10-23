@@ -3,7 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'range-data-time-picker-basic',
+    selector: 'range-date-time-picker-basic',
     templateUrl: './demo.component.html'
 })
 export class RangeDateTimeBasicDemoComponent extends AsyncDescription implements AfterViewInit {

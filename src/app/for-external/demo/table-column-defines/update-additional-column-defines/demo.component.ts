@@ -11,7 +11,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-update-additional-column-defines',
+    selector: 'table-column-defines-update-additional-column-defines',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })

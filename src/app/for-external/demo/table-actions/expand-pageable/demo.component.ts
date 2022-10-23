@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-expand-pageable',
+    selector: 'table-actions-expand-pageable',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })

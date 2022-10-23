@@ -4,7 +4,7 @@ import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-update-column-define',
+    selector: 'table-column-defines-update-column-define',
     templateUrl: './demo.component.html'
 })
 export class TableColumnSetWidthDemoComponent extends AsyncDescription {

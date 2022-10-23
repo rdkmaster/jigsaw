@@ -1,5 +1,5 @@
 <ul class="demo-navigation">
-    <li *ngFor="let data of navigationData" (click)="scroll(data)" [title]="data.localName">
-        <span>{{data.localName}}</span>
+    <li *ngFor="let data of _$navData" (click)="scroll(data.el)" [title]="data.label">
+        <span>{{data.label}}</span>
     </li>
 </ul>

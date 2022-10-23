@@ -4,7 +4,7 @@ import {JigsawTreeExt, SimpleTreeData} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'fuzzy-search-tree',
+    selector: 'tree-fuzzy-search',
     templateUrl: './demo.component.html'
 })
 export class ZtreeFuzzySearchComponent extends AsyncDescription {

@@ -5,7 +5,7 @@ import {AsyncDescription} from "../../../template/demo-template/demo-template";
 import { TableDragDeleteRow, TableDragReplaceRow } from "./table-renderer";
 
 @Component({
-    selector: 'dragdrop-simple-table',
+    selector: 'drag-drop-simple-table-drag-drop',
     templateUrl: 'demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None

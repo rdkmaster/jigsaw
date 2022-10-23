@@ -9,4 +9,8 @@
       <li><a href="https://rdk.zte.com.cn/vmax-studio/awade/" target="_blank">Awade</a></li>
     </ul>
   </nav>
+  <div class="theme-select">
+    <jigsaw-group-select [data]="themeData" placeholder="选择皮肤" width="140px" (valueChange)="themeChange($event)">
+    </jigsaw-group-select>
+  </div>
 </div>

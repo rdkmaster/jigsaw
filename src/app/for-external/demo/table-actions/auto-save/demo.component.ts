@@ -12,7 +12,7 @@ import {
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-auto-save',
+    selector: 'table-actions-auto-save',
     templateUrl: "./demo.component.html",
     encapsulation: ViewEncapsulation.None
 })

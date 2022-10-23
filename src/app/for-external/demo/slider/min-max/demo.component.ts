@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "slider-set-min-max",
+    selector: "slider-min-max",
     templateUrl: "./demo.component.html"
 })
 export class SliderSetMinMaxDemoComponent extends AsyncDescription {

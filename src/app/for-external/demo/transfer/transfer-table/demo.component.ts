@@ -4,7 +4,7 @@ import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, Array
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'transfer-table-transfer',
+    selector: 'transfer-transfer-table',
     templateUrl: './demo.component.html'
 })
 export class TransferTableDemoComponent extends AsyncDescription {

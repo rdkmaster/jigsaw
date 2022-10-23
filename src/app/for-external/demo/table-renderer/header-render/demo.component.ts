@@ -4,7 +4,7 @@ import {TableData, ColumnDefine} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-header-render',
+    selector: 'table-renderer-header-render',
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderRenderDemoComponent extends AsyncDescription {

@@ -3,7 +3,7 @@ import { SimpleTreeData } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'menu-soft-menu',
+    selector: 'menu-softmenu',
     templateUrl: './demo.component.html',
     styleUrls: [`./demo.component.css`]
 })
