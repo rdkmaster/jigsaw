@@ -1,5 +1,13 @@
-<ul>
-    <li *ngFor="let api of apiList">
-        <span>{{ api.type }}</span>
-    </li>
-</ul>
+<div class="demo-wrapper">
+    <jigsaw-markdown [markdown]="description"></jigsaw-markdown>
+    <div class="api-list-cntr">
+        <ul class="api-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }">
+            <li *ngFor="let api of apiList; let index = index">
+                <p class="api-category" *ngIf="!apiList[index-1] || api.category !== apiList[index-1].category">
+                    {{api.category}}</p>
+                <span class="api-link" (click)="showApiDetail(api)">{{ api.type }}</span>
+            </li>
+        </ul>
+        <doc-template [docContent]="apiDetail"></doc-template>
+    </div>
+</div>

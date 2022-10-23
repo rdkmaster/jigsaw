@@ -196,24 +196,8 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterConten
         }
         const demoComponent = demoWrapper.children;
         this.navigationData= demoComponent;
-        // demoComponent.forEach(selector=>{
-        //     html += `<li>${selector.localName}</li>`
-        // })
-        // const ul = window.document.createElement('ul');
-        // ul.classList.add("demo-navigation");
-        // let html = ''
-        // for (let i = 0; i < demoComponent.length; i++) {
-        //     html += `<li>${demoComponent[i].localName}</li>`
-        // }
-        // ul.innerHTML = html;
-        // demoWrapper.appendChild(ul);
+
         
-        // this.renderer.addClass(this.el.nativeElement,'test');
-        const allMarkdown = document.getElementsByClassName('markdown-wrap');
-        for (let i = 0; i < allMarkdown.length; i++) {
-            // console.log(allMarkdown[i].children)
-        }
-        window['aaa']=allMarkdown[allMarkdown.length-1];
     }
 
     ngOnDestroy(): void {

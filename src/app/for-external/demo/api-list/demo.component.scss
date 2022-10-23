@@ -1,0 +1,25 @@
+.api-list-cntr {
+    display: flex;
+
+    .api-list {
+        flex-shrink: 0;
+        width: 200px;
+        height: calc(100vh - 60px - 33px);
+
+        .api-link {
+            display: inline-flex;
+            height: 20px;
+            color: var(--brand-default);
+
+            &:hover {
+                color: var(--brand-hover);
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+
+        .api-category {
+            font-size: 24px;
+        }
+    }
+}
