@@ -11,6 +11,7 @@ import {
     Renderer2,
     ViewChild,
     OnInit,
+    AfterContentInit,
 } from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
@@ -147,12 +148,12 @@ export class AsyncDescription implements OnDestroy {
 }
 
 @Directive()
-export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewInit, OnDestroy {
+export class DemoSetBase extends AsyncDescription implements OnInit, AfterContentInit, OnDestroy {
     private readonly _subscription: Subscription;
     private _demoSelector: string;
     public docContent: string = '';
     protected docPath: string[] = [];
-    public navigationData = [1,2,3];
+    public navigationData = [];
 
     constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2) {
         super(http, el);
@@ -187,7 +188,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterViewIn
         })
     }
 
-    ngAfterViewInit(): void {
+    ngAfterContentInit(): void {
         
         const demoWrapper = this.el.nativeElement.getElementsByClassName('demo-wrapper')[0];
         if (demoWrapper.length === 0) {

@@ -92,7 +92,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     saveFile(ci.subtype, ci.name, html);
 });
 
-fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
+fs.writeFileSync(`${output}/list.js`, `window.demoApiList=`+JSON.stringify(apiList));
 fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
 fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {

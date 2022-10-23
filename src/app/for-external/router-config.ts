@@ -70,6 +70,7 @@ import { TableBigDataAllComponent } from "./demo/table-big-data/demo.component";
 import { TableRendererAllComponent } from "./demo/table-renderer/demo.component";
 import { IntroduceComponent } from "./home/introduce/introduce";
 import { QuickStartDemoComponent } from "./demo/quick-start/demo.component";
+import { ApiListComponent } from "./demo/api-list/demo.component";
 
 export const componentGroup = {
     start: '开始',
@@ -169,7 +170,8 @@ export const routerConfigPC = [
     { path: "table-column-defines", component: TableColumnDefinesAllComponent, group: componentGroup.display },
     { path: "table-big-data", component: TableBigDataAllComponent, group: componentGroup.display },
     { path: "table-renderer", component: TableRendererAllComponent, group: componentGroup.display },
-    { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start, label: '新手入门' },
+    { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start },
+    { path: "api-list", component: ApiListComponent, group: componentGroup.other },
 ];
 export const routerConfig = routerConfigPC;
 

@@ -95,6 +95,7 @@ import { ComponentMenuNavComponent } from "./home/component-menu-nav/component-m
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
 import { DesignComponent } from "./home/design/design";
+import { ApiListDemoModule } from "./demo/api-list/demo.module";
 
 @NgModule({
     declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
@@ -193,7 +194,8 @@ import { DesignComponent } from "./home/design/design";
         JigsawSelectModule,
         JigsawButtonModule,
         PerfectScrollbarModule,
-        QuickStartDemoModule
+        QuickStartDemoModule,
+        ApiListDemoModule
     ],
     providers: [
         {
