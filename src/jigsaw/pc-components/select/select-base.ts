@@ -467,6 +467,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 if (CommonUtils.isUndefined(value[i])) {
                     value.splice(i, 1);
                 }
+                if (value[i].hasOwnProperty('label')) {
+                    value.splice(i, 1, value[i].label)
+                }
             }
         } else {
             value = (value || []).filter(el => el != null);
