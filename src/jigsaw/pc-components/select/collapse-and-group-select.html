@@ -1,7 +1,7 @@
 <jigsaw-combo-select #comboSelect width="100%" [theme]="theme" [autoWidth]="!optionWidth" [maxHeight]="maxHeight" [(value)]="_$selectedItems"
                      [clearable]="clearable" [labelField]="labelField" [valid]="valid" [disabled]="disabled"
                      [placeholder]="placeholder" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
-                     [autoClose]="!multipleSelect" (openChange)="_$onComboOpenChange($event)"
+                     [autoClose]="!multipleSelect" [positionType]="selectListPositionType" (openChange)="_$onComboOpenChange($event)"
                      (clear)="_$handleClearable()" (remove)="_$onTagRemove($event)">
     <ng-template>
         <div [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}"

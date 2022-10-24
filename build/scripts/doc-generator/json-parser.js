@@ -179,7 +179,7 @@ function processInputs(ci, html) {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         const dualBinding = ci.outputsClass.find(i => i.name === input.name + 'Change') ?
-            '<span class="fa fa-retweet" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
+            '<span class="iconfont iconfont-e122" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
         const description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         const inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`;
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
@@ -314,7 +314,7 @@ function processProperties(ci, html) {
 
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         const readOnly = property.readOnly ?
-            '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
+            '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="iconfont iconfont-e4e8"></span>' : '';
         const modifier = getModifierInfo(property.modifierKind);
         description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         const inheritance = getInheritanceInfo(property);
@@ -447,7 +447,7 @@ function processMethods(ci, html) {
             comment = addDescLink(comment);
             const name = argument.name.text || argument.name;
             const optional = argument.optional ? '<span style="margin:0 2px 0 2px; color:#009688" ' +
-                'title="Optional" class="fa fa-question"></span>' : '';
+                'title="Optional" class="iconfont iconfont-e9ef"></span>' : '';
             const arg = `<span style="white-space: nowrap;">${name}${optional}${type}</span>${comment}`;
             args.push(arg);
         });
@@ -554,25 +554,25 @@ function getInheritanceInfo(metaInfo) {
     const inherited = metaInfo.inheritInfo;
     return !inherited ? '' :
         `<a href="#/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
-        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
+        <span class="iconfont iconfont-e9aa" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
 }
 
 function getModifierInfo(modifier) {
     let clazz, title, color;
     if (modifier && modifier.indexOf(STATIC) !== -1) {
-        clazz = 'cube';
+        clazz = 'e5d1';
         title = 'Static';
         color = '#0575b9';
     } else if (modifier && modifier.indexOf(PROTECTED) !== -1) {
-        clazz = 'lock';
+        clazz = 'ea01';
         title = 'Protected';
         color = 'orange';
     } else {
-        clazz = 'unlock';
+        clazz = 'ea49';
         title = 'Public';
         color = 'green';
     }
-    return `<span class="fa fa-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
+    return `<span class="iconfont iconfont-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
 }
 
 function addTypeLink(type) {
@@ -941,7 +941,7 @@ function getRichName(metaInfo) {
 function getDeprecatedTemplate() {
     return `<span title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"
                 style="color: #888;text-decoration: line-through">$name</span>
-            <span class="fa fa-exclamation-triangle" style="color:#ffa500"
+            <span class="iconfont iconfont-e437" style="color:#ffa500"
                 title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"></span>`;
 }
 

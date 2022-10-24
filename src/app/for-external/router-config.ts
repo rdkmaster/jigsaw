@@ -153,7 +153,7 @@ export const routerConfigPC = [
     { path: "tooltip", component: TooltipDemoComponent, group: componentGroup.directive },
     { path: "tag", component: TagDemoComponent, group: componentGroup.general },
     { path: "progress", component: ProgressDemoComponent, group: componentGroup.display },
-    { path: "process-status", component: ProcessStatusDemoComponent, group: componentGroup.other },
+    { path: "process-status", component: ProcessStatusDemoComponent, group: componentGroup.general },
     { path: "slider", component: SliderDemoComponent, group: componentGroup.general },
     { path: "trusted-html", component: TrustedHtmlDemoComponent, group: componentGroup.directive },
     { path: "transfer", component: TransferDemoComponent, group: componentGroup.general },

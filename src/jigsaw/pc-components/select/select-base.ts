@@ -7,6 +7,7 @@ import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-uti
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { CheckBoxStatus } from "../checkbox/typings";
 import { JigsawComboSelect } from '../combo-select/index';
+import { PopupPositionType } from 'jigsaw/common/service/popup.service';
 
 export type SelectOption = {
     disabled?: boolean;
@@ -210,6 +211,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     @Input()
     public useStatistics: boolean = true;
+
+    /**
+     * 设置多选框下拉框位置
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public selectListPositionType: PopupPositionType = PopupPositionType.absolute;
 
     /**
      * 搜索开关

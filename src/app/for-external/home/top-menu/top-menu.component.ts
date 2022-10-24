@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { JigsawTheme } from "jigsaw/public_api";
+import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
 
 @Component({
     selector: "ued-top-menu",
@@ -7,7 +7,8 @@ import { JigsawTheme } from "jigsaw/public_api";
     styleUrls: ["./top-menu.component.scss"],
 })
 export class TopMenuComponent {
-    themeData = [
+    public positionType = PopupPositionType.fixed;
+    public themeData = [
         {
             groupName: "亮色主题",
             data: [
@@ -24,7 +25,7 @@ export class TopMenuComponent {
         },
     ];
 
-    themeChange(theme) {
+    public themeChange(theme) {
         const themeData = theme[0].data[0];
         const themeName = themeData.name,
             majorStyle = themeData.style;

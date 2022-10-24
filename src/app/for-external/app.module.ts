@@ -102,6 +102,7 @@ import { ApiListDemoModule } from "./demo/api-list/demo.module";
     imports: [
         RouterModule.forRoot(
             [
+                { path: "", component: HomeComponent },
                 { path: "home", component: HomeComponent },
                 { path: "designs", component: DesignComponent },
                 {
