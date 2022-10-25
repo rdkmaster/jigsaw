@@ -3,6 +3,10 @@
   width: 100%;
   background: var(--bg-body);
 
+  >a {
+    margin-left: 36px;
+  }
+
   nav {
     flex: 1;
     margin-left: 50px;

@@ -8,6 +8,7 @@ import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
     encapsulation: ViewEncapsulation.None,
 })
 export class TopMenuComponent {
+    public logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
     public positionType = PopupPositionType.fixed;
     public themeData = [
         {
@@ -33,6 +34,7 @@ export class TopMenuComponent {
         const themeName = themeData.name,
             majorStyle = themeData.style;
         JigsawTheme.changeTheme(themeName, majorStyle);
+        this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
     }
 
     public changeVersion(version) {
