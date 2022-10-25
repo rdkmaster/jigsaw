@@ -232,11 +232,6 @@
     /* LISTS
       =============================================================================*/
 
-    ul,
-    ol {
-        padding-left: 30px;
-    }
-
     ul li> :first-child,
     ol li> :first-child,
     ul li ul:first-of-type,
@@ -392,17 +387,17 @@
 
     table th,
     table td {
-        border: 1px solid #ccc;
+        border: 1px solid var(--border-color-default);
         padding: 6px 13px;
     }
 
     table tr {
-        border-top: 1px solid #ccc;
-        background-color: #fff;
+        border-top: 1px solid var(--border-color-default);
+        background-color: var(--bg-body);
     }
 
     table tr:nth-child(2n) {
-        background-color: #f8f8f8;
+        background-color: var(--bg-container);
     }
 
     /* IMAGES

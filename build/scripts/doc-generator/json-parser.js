@@ -322,7 +322,7 @@ function processProperties(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? 'var(--bg-body)' : 'var(--bg-container)';
         properties.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
 
@@ -337,7 +337,7 @@ function processProperties(ci, html) {
         propertiesTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下属性：\n1. 所有从父类继承过来的属性;\n2. 当前类中受保护的属性;"
             onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? 'var(--bg-body)' : 'var(--bg-container)';
             });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
             列出所有可用属性</a>` : '';
     } else {
@@ -464,7 +464,7 @@ function processMethods(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
             <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? 'var(--bg-body)' : 'var(--bg-container)';
 
         methods.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
@@ -480,7 +480,7 @@ function processMethods(ci, html) {
         methodsTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下方法：\n1. 所有从父类继承过来的方法;\n2. 当前类中受保护的方法;"
             onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? 'var(--bg-body)' : 'var(--bg-container)';
             });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
             列出所有可用方法</a>` : '';
     } else {
@@ -768,7 +768,6 @@ function saveFile(type, fileName, html) {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
-    html += getPanelTemplate();
     fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({type: fileName, category: type});
@@ -943,16 +942,4 @@ function getDeprecatedTemplate() {
                 style="color: #888;text-decoration: line-through">$name</span>
             <span class="iconfont iconfont-e437" style="color:#ffa500"
                 title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"></span>`;
-}
-
-function getPanelTemplate() {
-    return `
-<div id="panel" class="api-panel">
-    <div class="box">
-        <span class="close" title="返回"
-              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
-        <iframe id="evalator"></iframe>
-    </div>
-</div>
-`
 }

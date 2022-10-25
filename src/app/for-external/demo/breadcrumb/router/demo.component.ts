@@ -12,10 +12,10 @@ export class BreadcrumbRouterDemoComponent extends AsyncDescription {
     public demoPath = "demo/breadcrumb/router";
 
     public routes: BreadcrumbRouteConfig[] = [
-        { '/pc/breadcrumb': { label: 'Product List', icon: 'iconfont iconfont-e12e' } },
-        { '/pc/breadcrumb/list/*': this.listBreadcrumbGenerator },
-        { '/pc/breadcrumb/detail/*': this.detailBreadcrumbGenerator },
-        { '/pc/breadcrumb/buy/*': this.buyBreadcrumbGenerator },
+        { '/components/breadcrumb': { label: 'Product List', icon: 'iconfont iconfont-e12e' } },
+        { '/components/breadcrumb/list/*': this.listBreadcrumbGenerator },
+        { '/components/breadcrumb/detail/*': this.detailBreadcrumbGenerator },
+        { '/components/breadcrumb/buy/*': this.buyBreadcrumbGenerator },
     ];
 
     public listBreadcrumbGenerator(routeNode: string): BreadcrumbNode | BreadcrumbNode[] {
@@ -46,7 +46,7 @@ export class BreadcrumbRouterDemoComponent extends AsyncDescription {
     }
 
     public getDetailNode(detail) {
-        return { label: detail.name, routeLink: '/pc/breadcrumb/detail/' + detail.id } // 请尽量使用绝对路径
+        return { label: detail.name, routeLink: '/components/breadcrumb/detail/' + detail.id } // 请尽量使用绝对路径
     }
 
     public getListNode(typeId) {
@@ -61,7 +61,7 @@ export class BreadcrumbRouterDemoComponent extends AsyncDescription {
             default:
                 listNode = { label: 'Fruits', icon: 'iconfont iconfont-e135' };
         }
-        listNode.routeLink = '/pc/breadcrumb/list/' + typeId; // 请尽量使用绝对路径
+        listNode.routeLink = '/components/breadcrumb/list/' + typeId; // 请尽量使用绝对路径
         return listNode;
     }
 

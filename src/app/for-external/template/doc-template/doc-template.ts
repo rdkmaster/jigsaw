@@ -1,4 +1,5 @@
 import { Component, NgModule, Input, ViewEncapsulation, } from "@angular/core";
+import { JigsawTrustedHtmlModule } from 'jigsaw/public_api';
 
 @Component({
     selector: "doc-template",
@@ -12,7 +13,7 @@ export class DocTemplate {
 }
 
 @NgModule({
-    imports: [],
+    imports: [JigsawTrustedHtmlModule],
     declarations: [DocTemplate],
     exports: [DocTemplate],
 })
