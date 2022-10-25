@@ -1,10 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, ViewEncapsulation } from "@angular/core";
 import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
 
 @Component({
     selector: "ued-top-menu",
     templateUrl: "./top-menu.component.html",
     styleUrls: ["./top-menu.component.scss"],
+    encapsulation: ViewEncapsulation.None,
 })
 export class TopMenuComponent {
     public positionType = PopupPositionType.fixed;

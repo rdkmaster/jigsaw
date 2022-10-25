@@ -31,5 +31,4 @@ import { AlphabeticalIndexPermanentDemoComponent } from "./permanent/demo.compon
         JigsawAlphabeticalIndexSelectModule
     ]
 })
-export class AlphabeticalIndexDemoModule {
-}
+export class AlphabeticalIndexDemoModule { }

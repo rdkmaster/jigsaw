@@ -1,5 +1,4 @@
 import { Component, ViewEncapsulation } from "@angular/core";
-import { JigsawTheme } from "jigsaw/public_api";
 
 @Component({
     selector: "app-root",
@@ -7,4 +6,4 @@ import { JigsawTheme } from "jigsaw/public_api";
     styleUrls: ["./app.component.scss"],
     encapsulation: ViewEncapsulation.None,
 })
-export class AppComponent {}
+export class AppComponent { }

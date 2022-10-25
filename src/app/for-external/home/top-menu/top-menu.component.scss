@@ -13,7 +13,7 @@
       justify-content: flex-start;
       border-bottom: none;
 
-      & > li {
+      &>li {
         position: relative;
 
         a {
@@ -46,5 +46,15 @@
     justify-content: flex-end;
     align-items: center;
     height: 33px;
+
+    .jigsaw-group-select-host {
+      .jigsaw-combo-select-host {
+        .jigsaw-combo-select-selection {
+          border-radius: 0;
+          border-width: 0;
+          border-bottom-width: 1px;
+        }
+      }
+    }
   }
 }

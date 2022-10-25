@@ -1,25 +1,17 @@
-.api-list-cntr {
+.demo-wrapper {
     display: flex;
+    justify-content: space-between;
 
-    .api-list {
+    .doc-cntr {
+        width: calc(100vw - 620px);
+    }
+
+    .index-cntr {
         flex-shrink: 0;
-        width: 200px;
-        height: calc(100vh - 60px - 33px);
+        width: 300px;
+    }
 
-        .api-link {
-            display: inline-flex;
-            height: 20px;
-            color: var(--brand-default);
-
-            &:hover {
-                color: var(--brand-hover);
-                text-decoration: underline;
-                cursor: pointer;
-            }
-        }
-
-        .api-category {
-            font-size: 24px;
-        }
+    jigsaw-alphabetical-index {
+        height: calc(100vh - 100px);
     }
 }

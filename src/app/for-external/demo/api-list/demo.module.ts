@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { DocTemplateModule } from "../../template/doc-template/doc-template";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { JigsawAlphabeticalIndexModule, JigsawSearchInputModule } from 'jigsaw/public_api';
 
 @NgModule({
     declarations: [ApiListComponent],
@@ -12,6 +13,8 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
         JigsawMarkdownModule,
         DocTemplateModule,
         PerfectScrollbarModule,
+        JigsawAlphabeticalIndexModule,
+        JigsawSearchInputModule
     ],
 })
-export class ApiListDemoModule {}
+export class ApiListDemoModule { }
