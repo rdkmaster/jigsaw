@@ -25,6 +25,8 @@ export class TopMenuComponent {
         },
     ];
 
+    public versionData = []
+
     public themeChange(theme) {
         const themeData = theme[0].data[0];
         const themeName = themeData.name,

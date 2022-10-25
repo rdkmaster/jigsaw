@@ -12,7 +12,7 @@ $active-menu-2-color: #58b0e8;
 
   .g-menu-nav {
     position: absolute !important;
-    width: 215px;
+    width: 280px;
     background-color: #fff;
     top: 0;
     bottom: 0;
@@ -23,7 +23,7 @@ $active-menu-2-color: #58b0e8;
       height: calc(100vh - 60px);
 
       li {
-        width: 200px;
+        width: 280px;
         line-height: 30px;
         color: #a9a9a9;
         overflow: hidden;
@@ -68,7 +68,7 @@ $active-menu-2-color: #58b0e8;
 
 .g-component-detail {
   position: absolute;
-  left: 215px;
+  left: 280px;
   right: 0;
   top: 0;
   bottom: 0;

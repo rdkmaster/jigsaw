@@ -6,6 +6,6 @@ import { DemoSetBase } from "../../template/demo-template/demo-template";
 })
 export class MovableAllComponent extends DemoSetBase {
     public demoPath = "demo/movable";
-    public docPath = ['component/JigsawMovable'];
+    public docPath = ['directive/JigsawMovable'];
 }
 

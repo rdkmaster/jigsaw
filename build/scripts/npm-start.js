@@ -8,6 +8,7 @@ execSync(`node build/scripts/extract-theme-variables.js`, {stdio: 'inherit'});
 execSync(`node build/scripts/create-component-wings-theme.js`, {stdio: 'inherit'});
 execSync(`node build/scripts/generate-external-demo-info.js`, {stdio: 'inherit'});
 execSync(`node build/scripts/generate-external-navigation-info.js`, {stdio: 'inherit'});
+// execSync(`sh build/scripts/doc-generator/generate.sh src/app/for-external/assets/docs`, {stdio: 'inherit'});
 
 execSync(`node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve ${env} ` +
     `--poll 500 --disable-host-check --host 0.0.0.0 --port ${port}`, {stdio: 'inherit'});

@@ -17,14 +17,14 @@
 
 <table id="dynamicMethods" style="width:100%; display:table">
                 <thead><tr><th>名称</th><th>说明</th><th>返回值</th><th>参数说明</th><th>示例</th></tr></thead>
-                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="emit">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>emit</td><td><p>通过这个方法来发出一个事件。注意，你需要在此之前先调用<a href="#/components/api/interface/IEmittable#subscribe" target="_self"><code>subscribe</code></a>方法注册监听器，
+                <tbody><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="emit">&nbsp;</a><span class="iconfont iconfont-ea49" style="color: green; margin-right: 4px" title="Public"></span>emit</td><td><p>通过这个方法来发出一个事件。注意，你需要在此之前先调用<a href="#/components/api/interface/IEmittable#subscribe" target="_self"><code>subscribe</code></a>方法注册监听器，
 否则此事件可能无法被正确捕获和处理。示例：</p>
 <pre class="line-numbers"><code class="language-none">const td = new TableData();
 td.subscribe(data =&gt; console.log(data));
 ...
 td.emit(&#39;hello event emitter!&#39;);</code></pre></td>
-            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">value<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>此事件所携带的数据</p>
-</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="subscribe">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>subscribe</td><td><p>添加事件处理函数，在执行此函数之后，<a href="#/components/api/interface/IEmittable#emit" target="_self"><code>emit</code></a>函数发出事件时，参数<code>callback</code>就会被调用。
+            <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">void</a></p></td><td><ul><li><span style="white-space: nowrap;">value<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="iconfont iconfont-e9ef"></span>: <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></span><p>此事件所携带的数据</p>
+</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#f8f8f8"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="subscribe">&nbsp;</a><span class="iconfont iconfont-ea49" style="color: green; margin-right: 4px" title="Public"></span>subscribe</td><td><p>添加事件处理函数，在执行此函数之后，<a href="#/components/api/interface/IEmittable#emit" target="_self"><code>emit</code></a>函数发出事件时，参数<code>callback</code>就会被调用。
 注意请及时清理掉不必要的订阅以提升页面性能。示例：</p>
 <pre class="line-numbers"><code class="language-none">const td = new TableData();
 const subscriber = td.subscribe(data =&gt; console.log(data));
@@ -35,8 +35,8 @@ subscriber.unsubscribe();
 // 取消所有订阅
 td.unsubscribe();</code></pre></td>
             <td><p style="white-space: nowrap;">返回类型 <a href="http://cn.rx.js.org/class/es6/Subscription.js~Subscription.html" target="_blank">Subscription</a></p><p>返回当前订阅的回执，利用它可以取消本次订阅</p>
-</td><td><ul><li><span style="white-space: nowrap;">callback<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="fa fa-question"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>事件回调函数</p>
-</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="unsubscribe">&nbsp;</a><span class="fa fa-unlock" style="color: green; margin-right: 4px" title="Public"></span>unsubscribe</td><td><p>取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。</p>
+</td><td><ul><li><span style="white-space: nowrap;">callback<span style="margin:0 2px 0 2px; color:#009688" title="Optional" class="iconfont iconfont-e9ef"></span>: <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/function" target="_blank">function</a></span><p>事件回调函数</p>
+</li></ul></td><td></td></tr><tr style="display:table-row; background-color:#fff"><td style="white-space: nowrap;"><a style="position:relative;top:-10px;left:-16px;text-decoration:none;cursor:default;" name="unsubscribe">&nbsp;</a><span class="iconfont iconfont-ea49" style="color: green; margin-right: 4px" title="Public"></span>unsubscribe</td><td><p>取消当前对象上的所有订阅，执行它之后，任何事件监听器都将会失效。</p>
 </td>
             <td><p style="white-space: nowrap;">返回类型 <a href="https://www.tslang.cn/docs/handbook/basic-types.html" target="_blank">any</a></p></td><td>--</td><td></td></tr></tbody>
             </table>
