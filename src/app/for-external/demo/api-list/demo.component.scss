@@ -4,9 +4,42 @@
 
     .doc-cntr {
         width: calc(100vw - 620px);
+        min-height: calc(100vh - 60px);
+        background: var(--bg-container);
+
+        .api-count-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            height: calc(100vh - 130px);
+
+            >li {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 200px;
+                height: 100px;
+
+                .number {
+                    font-size: 24px;
+                    font-weight: bold;
+                }
+
+                .category {
+                    font-size: 20px;
+                }
+
+                .label {
+                    font-size: 20px;
+                }
+            }
+        }
     }
 
     .index-cntr {
+        position: fixed;
+        right: 0;
         flex-shrink: 0;
         width: 300px;
     }

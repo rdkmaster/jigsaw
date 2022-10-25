@@ -47,7 +47,12 @@
     align-items: center;
     height: 33px;
 
-    .jigsaw-group-select-host {
+    >* {
+      margin-left: 8px;
+    }
+
+    .jigsaw-group-select-host,
+    .jigsaw-select-host {
       .jigsaw-combo-select-host {
         .jigsaw-combo-select-selection {
           border-radius: 0;

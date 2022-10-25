@@ -26,12 +26,16 @@ export class TopMenuComponent {
         },
     ];
 
-    public versionData = []
+    public versionData = ['v10.0', 'v9.3', 'v8.0', 'v5.0', 'v1.1'];
 
     public themeChange(theme) {
         const themeData = theme[0].data[0];
         const themeName = themeData.name,
             majorStyle = themeData.style;
         JigsawTheme.changeTheme(themeName, majorStyle);
+    }
+
+    public changeVersion(version) {
+        window.location.href = `https://rdk.zte.com.cn/${version}/#/`
     }
 }

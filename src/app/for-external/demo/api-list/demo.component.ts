@@ -9,9 +9,20 @@ import { DemoSetBase } from "../../template/demo-template/demo-template";
 export class ApiListComponent extends DemoSetBase implements OnInit {
     public demoPath = "demo/api-list";
 
-    public apiList = window["demoApiList"];
     public apiData: string[] = [];
-    public apiDetail = '';
+    private _apiData: string[] = [];
+
+    public apiList = window["demoApiList"];
+    public apiDetail = "";
+    public apiCategory = [
+        { label: "组件", category: "component" },
+        { label: "类型别名", category: "typealias" },
+        { label: "指令", category: "directive" },
+        { label: "类", category: "class" },
+        { label: "可注入", category: "injectable" },
+        { label: "接口", category: "interface" },
+        { label: "枚举", category: "enum" }
+    ];
 
     public showApiDetail(api) {
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
@@ -23,9 +34,18 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
         })
     }
 
+    public getLengthByCategory(category: string): Number {
+        return this.apiList.filter(api => api.category === category).length;
+    }
+
+    public searchApi(keyword) {
+        this.apiData = this._apiData.filter(api => api.toLowerCase().includes(keyword.trim().toLowerCase()));
+    }
+
     ngOnInit() {
         this.apiList.forEach(api => {
-            this.apiData.push(`${api.type} [${api.category}]`);
+            this._apiData.push(`${api.type} [${api.category}]`);
+            this.apiData = this._apiData;
         })
     }
 }
