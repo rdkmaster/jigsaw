@@ -44,3 +44,4 @@ Thumbs.db
 prettier.config.js
 src/app/for-external/template/demo-template/navigation-info.js
 src/app/for-external/demo-template/description-and-sources.js
+src/app/for-external/assets/docs
