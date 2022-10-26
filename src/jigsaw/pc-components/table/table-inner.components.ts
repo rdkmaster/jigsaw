@@ -216,7 +216,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                     <i (click)="_$sortAsc()" class="iconfont iconfont-e8b5 jigsaw-table-sort-up"></i>
                     <i (click)="_$sortDes()" class="iconfont iconfont-e8b6 jigsaw-table-sort-down"></i>
                 </div>
-                <div *ngIf="filterable" class="jigsaw-table-filter-box">
+                <div *ngIf="filterable" class="jigsaw-table-filter-box" jigsaw-float>
+                
                     <i class="iconfont iconfont-e013"></i>
                 </div>
             </div>
