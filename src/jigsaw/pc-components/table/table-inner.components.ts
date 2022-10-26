@@ -209,10 +209,16 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         <div class="jigsaw-table-header-cell" [ngClass]="{'jigsaw-table-header-cell-sortable': sortable}">
             <ng-template jigsaw-renderer-host></ng-template>
             <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
-                 [trustedHtmlContext]="headerTrustedHtmlContext"></div>
-            <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
-                <span (click)="_$sortAsc()" class="jigsaw-table-sort-btn jigsaw-table-sort-up"></span>
-                <span (click)="_$sortDes()" class="jigsaw-table-sort-btn jigsaw-table-sort-down"></span>
+                [trustedHtmlContext]="headerTrustedHtmlContext">
+            </div>
+            <div class="jigsaw-table-header-option-box">
+                <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
+                    <i (click)="_$sortAsc()" class="iconfont iconfont-e8b5 jigsaw-table-sort-up"></i>
+                    <i (click)="_$sortDes()" class="iconfont iconfont-e8b6 jigsaw-table-sort-down"></i>
+                </div>
+                <div *ngIf="filterable" class="jigsaw-table-filter-box">
+                    <i class="iconfont iconfont-e013"></i>
+                </div>
             </div>
         </div>`
 })
@@ -226,6 +232,12 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      */
     @Input()
     public sortable: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public filterable: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
