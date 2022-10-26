@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import { Component, ElementRef, ViewChild } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { LoadingService, PopupInfo } from "jigsaw/public_api";
 import { DefinedLoading } from "./defined-loading/defined-loading";
-import {AsyncDescription} from "../../../template/demo-template/demo-template";
+import { AsyncDescription } from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'loading-customize',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class LoadingCustomizeDemoComponent extends AsyncDescription implements AfterViewInit {
+export class LoadingCustomizeDemoComponent extends AsyncDescription {
     public demoPath = "demo/loading/customize";
 
     @ViewChild('block')
@@ -21,10 +21,6 @@ export class LoadingCustomizeDemoComponent extends AsyncDescription implements A
         if (!this.blockLoading) {
             this.blockLoading = this.loadingService.show(this.block, DefinedLoading);
         }
-    }
-
-    ngAfterViewInit(): void {
-        this.popupBlockLoading()
     }
 
     constructor(public loadingService: LoadingService, http: HttpClient, el: ElementRef) {
