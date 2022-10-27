@@ -600,9 +600,10 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         //     const officeMatch = this.selectedItems.length > 0 ? this.selectedItems.find(office => office === officeString) : true;
         //     return officeMatch;
         // });
-        this.tableData.filter((value: any, index: number, array: any[]) => {
-            console.log(value,index,array)
-        });
+       const filterFunc = function (value: any, index: number, array: any[]) {
+           return true;
+       };
+       this.tableData.filter(filterFunc);
     }
 
     public filterCancel() {

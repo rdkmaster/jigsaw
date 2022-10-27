@@ -804,24 +804,28 @@ export class PagingInfo implements IEmittable {
  * $demo = combo-select/searchable
  */
 export class DataFilterInfo {
-    constructor(/**
-                 * 过滤关键字
-                 */
-                public key: string = '',
-                /**
-                 * 在这些字段中过滤
-                 */
-                public field?: string[] | number[],
-                /**
-                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
-                 */
-                public rawFunction?: string,
-                /**
-                 * `rawFunction`执行时的上下文
-                 */
-                public context?: any
-                ) {
-    }
+    constructor(
+        /**
+         * 过滤关键字
+         */
+        public key: string = "",
+        /**
+         * 在这些字段中过滤
+         */
+        public field?: string[] | number[],
+        /**
+         * 过滤函数源码，主要是传给服务端做自定义过滤用的
+         */
+        public rawFunction?: string,
+        /**
+         * `rawFunction`执行时的上下文
+         */
+        public context?: any,
+        /**
+         * 表头过滤
+         */
+        public headerFilter?: { keys: string[], field: string | number }[]
+    ) {}
 }
 
 
