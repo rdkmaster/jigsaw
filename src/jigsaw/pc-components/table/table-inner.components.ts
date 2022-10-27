@@ -216,12 +216,17 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                     <i (click)="_$sortAsc()" class="iconfont iconfont-e8b5 jigsaw-table-sort-up"></i>
                     <i (click)="_$sortDes()" class="iconfont iconfont-e8b6 jigsaw-table-sort-down"></i>
                 </div>
-                <div *ngIf="filterable" class="jigsaw-table-filter-box" jigsaw-float>
-
+                <div *ngIf="filterable" class="jigsaw-table-filter-box" (click)="getFilterBoxContent()" jigsaw-float [jigsawFloatTarget]='tableHeaderFilterBox'
+                [jigsawFloatOptions]="{borderType: 'pointer'}" jigsawFloatOpenTrigger="click" jigsawFloatCloseTrigger="click">
                     <i class="iconfont iconfont-e013"></i>
                 </div>
             </div>
-        </div>`
+        </div>
+        <ng-template #tableHeaderFilterBox>
+            <jigsaw-table-header-filter-box [tableData]="tableData" [field]="field">
+            </jigsaw-table-header-filter-box>
+        </ng-template>
+        `
 })
 export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
     constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
@@ -313,6 +318,12 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this.updateSortOrderClass(order);
         this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
         this.tableData.sort(this.sortAs, order, this.field);
+    }
+
+    public getFilterBoxContent(){
+        // console.log(this.tableData);
+        // console.log(this.field);
+        // console.log(this.tableData.getDeduplicatedColumnData(this.field));
     }
 
     ngOnInit() {
@@ -540,8 +551,66 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
  */
 @Component({
     selector:'jigsaw-table-header-filter-box',
-    template:'<div class="test">test</div>'
+    template:`
+    <div>
+        <div>
+            <j-checkbox></j-checkbox>
+            <jigsaw-search-input [searchDebounce]="1000">
+            </jigsaw-search-input>
+        </div>
+        <j-list [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" class="jigsaw-table-header-filter-list" [multipleSelect]="true">
+            <j-list-option #listItem *ngFor="let item of data" [value]="item">
+                <div class="item-box">
+                    <j-checkbox [(checked)]="listItem.selected" mode="minimalist"></j-checkbox>
+                    <span>{{item}}</span>
+                </div>
+            </j-list-option>
+        </j-list>
+        <div>
+            <jigsaw-button preSize="small" colorType="primary" (click)="filterConfirm(field)">确定</jigsaw-button>
+            <jigsaw-button preSize="small">取消</jigsaw-button>
+        </div>
+    </div>`
 })
-export class JigsawTableHeaderFilterBox {
 
+export class JigsawTableHeaderFilterBox implements OnInit {
+    public data: any[];
+
+    public selectedItems
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public tableData: TableData;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public field: string;
+
+    public filterConfirm(field) {
+        const colIndex = this.tableData.field.findIndex(item => item === field);
+        if (colIndex === -1) {
+            return true;
+        }
+        // this.tableData.filter(row => {
+        //     const officeString = row[colIndex];
+        //     const officeMatch = this.selectedItems.length > 0 ? this.selectedItems.find(office => office === officeString) : true;
+        //     return officeMatch;
+        // });
+        this.tableData.filter((value: any, index: number, array: any[]) => {
+            console.log(value,index,array)
+        });
+    }
+
+    public filterCancel() {
+
+    }
+
+    ngOnInit(): void {
+        this.data = this.tableData.getDeduplicatedColumnData(this.field)
+        console.log(this.data)
+    }
 }

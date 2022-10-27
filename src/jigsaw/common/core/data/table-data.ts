@@ -356,6 +356,24 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         throw new Error("Method not implemented.");
     }
 
+    protected _getDeduplicatedColumnData(field: string, originalData) {
+        const colIndex = this.field.findIndex(item => item === field);
+        if (colIndex === -1) {
+            return [];
+        }
+        const data = [];
+        originalData.forEach(row => {
+            if (!data.includes(row[colIndex])) {
+                data.push(row[colIndex]);
+            }
+        });
+        return data;
+    }
+
+    public getDeduplicatedColumnData(field: string) {
+        return this._getDeduplicatedColumnData(field, this.data);
+    }
+
     public destroy() {
         super.destroy();
         this.sortInfo = null;
@@ -1285,6 +1303,10 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
 
     public lastPage(): void {
         this.changePage(this.pagingInfo.totalPage);
+    }
+
+    public getDeduplicatedColumnData(field: string) {
+        return this._getDeduplicatedColumnData(field, this.originalData);
     }
 
     public destroy(): void {

@@ -42,6 +42,11 @@ import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {TableUtils} from "./table-utils";
+import { JigsawFloatModule } from "../../common/directive/float/float";
+import { JigsawButtonModule } from "../button/button";
+import { JigsawListModule } from "../list-and-tile/list";
+import { JigsawCheckBoxModule } from "../checkbox";
+import { JigsawSearchInputModule } from "../input/search-input";
 
 @WingsTheme('table.scss')
 @Component({
@@ -1048,7 +1053,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule, TranslateModule.forChild()],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule,
+        TranslateModule.forChild(), JigsawFloatModule, JigsawButtonModule, JigsawListModule, JigsawCheckBoxModule, JigsawSearchInputModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {
