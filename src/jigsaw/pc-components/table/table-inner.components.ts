@@ -217,7 +217,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                     <i (click)="_$sortDes()" class="iconfont iconfont-e8b6 jigsaw-table-sort-down"></i>
                 </div>
                 <div *ngIf="filterable" class="jigsaw-table-filter-box" jigsaw-float>
-                
+
                     <i class="iconfont iconfont-e013"></i>
                 </div>
             </div>
@@ -530,4 +530,18 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this.editorRendererRef.instance.cellDataChange.unsubscribe();
         }
     }
+}
+
+
+/**
+ * 表头过滤弹框
+ * 
+ * @internal
+ */
+@Component({
+    selector:'jigsaw-table-header-filter-box',
+    template:'<div class="test">test</div>'
+})
+export class JigsawTableHeaderFilterBox {
+
 }

@@ -22,7 +22,7 @@ import {Subscription} from "rxjs";
 import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
-import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
+import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
 import {
@@ -1047,7 +1047,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 }
 
 @NgModule({
-    declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
+    declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule, TranslateModule.forChild()],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
