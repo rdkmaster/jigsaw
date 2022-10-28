@@ -303,7 +303,8 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 @NgModule({
     imports: [CommonModule, JigsawAutoCompleteInputModule, JigsawFloatModule, JigsawListModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawSearchInput],
-    exports: [JigsawSearchInput]
+    exports: [JigsawSearchInput],
+    providers: [TranslateService]
 })
 export class JigsawSearchInputModule {
     constructor() {

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {ColorPickerModule} from "ngx-color-picker";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import {JigsawButtonModule} from "../button/button";

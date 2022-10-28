@@ -1,6 +1,6 @@
 import { Component, ContentChildren, ElementRef, EventEmitter, Input, NgModule, Output, QueryList, Renderer2, Type, ViewChild, Directive } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {
     AbstractMobileDialogComponentBase,
     DialogBase,
@@ -300,12 +300,11 @@ export class JigsawMobileConfirmAlert extends JigsawMobileCommonAlert {
     exports: [
         JigsawMobileDialogModule, JigsawMovableModule, JigsawMobileAlert, JigsawMobileInfoAlert, JigsawMobileWarningAlert,
         JigsawMobileErrorAlert, JigsawMobileConfirmAlert
-    ],
-    providers: [TranslateService]
+    ]
 })
 export class JigsawMobileAlertModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'alert', {
+    constructor() {
+        TranslateHelper.initI18n('alert', {
             zh: {
                 button: {
                     ok: "确定",
@@ -340,10 +339,6 @@ export class JigsawMobileAlertModule {
                     confirm: "Confirm"
                 }
             }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
         });
     }
 }

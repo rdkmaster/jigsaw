@@ -13,7 +13,7 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AbstractDialogComponentBase, DialogCallback, NoticeLevel } from "../dialog/dialog";
 import {
@@ -552,9 +552,10 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawNotification],
-    exports: [JigsawNotification]
+    exports: [JigsawNotification],
+    providers: [TranslateService]
 })
 export class JigsawNotificationModule {
     constructor() {

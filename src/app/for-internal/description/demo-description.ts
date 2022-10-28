@@ -73,7 +73,7 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
                 </jigsaw-button-bar>
                 <p>切换语言</p>
                 <jigsaw-button-bar [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
-                                   [selectedItems]="[{label: '中文', value: 'zh'}]"
+                                   [(selectedItems)]="selectedLanguage"
                                    (selectedItemsChange)="changeLanguage($event[0])">
                 </jigsaw-button-bar>
             </div>
@@ -97,6 +97,8 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     ngAfterContentInit() {
         this.themeInit();
     }
+
+    selectedLanguage = [{label: '中文', value: 'zh'}];
 
     changeLanguage(lang: { value: 'zh' | 'en' }) {
         TranslateHelper.changeLanguage(this._translateService, lang.value);

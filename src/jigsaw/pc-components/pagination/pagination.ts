@@ -611,7 +611,8 @@ export class JigsawPagingItem extends AbstractJigsawComponent {
         TranslateModule.forChild()
     ],
     declarations: [JigsawPagination, JigsawPagingItem],
-    exports: [JigsawPagination]
+    exports: [JigsawPagination],
+    providers: [TranslateService]
 })
 export class JigsawPaginationModule {
     constructor() {

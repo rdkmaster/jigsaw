@@ -292,8 +292,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         protected changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector,
-        protected componentFactoryResolver: ComponentFactoryResolver,
-        public translateService: TranslateService) {
+        private _componentFactoryResolver: ComponentFactoryResolver,
+        private _translateService: TranslateService) {
         super();
     }
 
@@ -394,8 +394,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         let sourceComponentFactory: ComponentFactory<any>;
         let destComponentFactory: ComponentFactory<any>;
 
-        sourceComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
-        destComponentFactory = this.componentFactoryResolver.resolveComponentFactory(this.destRenderer);
+        sourceComponentFactory = this._componentFactoryResolver.resolveComponentFactory(this.sourceRenderer);
+        destComponentFactory = this._componentFactoryResolver.resolveComponentFactory(this.destRenderer);
 
         this.sourceRendererHost.clear();
         this.destRendererHost.clear();
@@ -697,10 +697,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
         if (this.isPageable) {
             const selectedItemsCount = this.sourceComponent.currentSelectedItems ? this.sourceComponent.currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this.translateService.instant('transfer.items')}`
+            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
         } else {
             const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this.translateService.instant('transfer.items')}`
+            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
         }
     }
 
@@ -709,7 +709,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return
         }
         const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this.translateService.instant('transfer.items')}`
+        return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this._translateService.instant('transfer.items')}`
     }
 
     public get getDestTitle(): string {
@@ -717,7 +717,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return
         }
         const selectedItemsCount = this.destComponent.selectedItems ? this.destComponent.selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this.translateService.instant('transfer.items')}`
+        return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this._translateService.instant('transfer.items')}`
     }
 
     private _checkSourceSelectAll(): void {
@@ -890,7 +890,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         TransferTableSourceRenderer, TransferTableDestRenderer
     ],
     exports: [JigsawTransfer],
-    providers: [LoadingService]
+    providers: [TranslateService, LoadingService]
 })
 export class JigsawTransferModule {
     constructor() {

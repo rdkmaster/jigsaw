@@ -7,9 +7,9 @@ import {
     Renderer2,
     ViewContainerRef
 } from "@angular/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PopupService} from "../../common/service/popup.service";
 import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateService} from "@ngx-translate/core";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 @Component({
@@ -31,8 +31,8 @@ export class JigsawRoot {
 @NgModule({
     declarations: [JigsawRoot],
     exports: [JigsawRoot],
-    imports: [],
-    providers: [PopupService]
+    imports: [TranslateModule.forChild()],
+    providers: [PopupService, TranslateService]
 })
 export class JigsawRootModule {
 }

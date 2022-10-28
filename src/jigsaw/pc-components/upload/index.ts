@@ -1,4 +1,4 @@
-import {TranslateService, TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {CommonModule} from "@angular/common";
 import {NgModule} from "@angular/core";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
@@ -24,7 +24,7 @@ import { JigsawDroppableModule, JigsawDraggableModule } from '../../common/direc
     providers: [PopupService],
 })
 export class JigsawUploadModule {
-    constructor(translateService: TranslateService) {
+    constructor() {
         TranslateHelper.initI18n('upload', {
             zh: {
                 "waiting": "等待中",
@@ -154,10 +154,6 @@ export class JigsawUploadModule {
                 "acceptAllTypes": "Accept all types of files",
                 "acceptSpecificTypes": "Accept {{ file }} files only"
             }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
         });
     }
 }
