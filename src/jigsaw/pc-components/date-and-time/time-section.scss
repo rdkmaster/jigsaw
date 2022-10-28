@@ -34,9 +34,19 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
         margin-bottom: 6px;
 
         &.#{$jigsaw-time-section-picker}-multiple {
+            position: relative;
+
+            j-checkbox {
+                position: absolute;
+                top: 50%;
+                left: 0;
+                transform: translate(0, -50%);
+            }
+
             ul {
                 margin-left: 24px;
             }
+
             .#{$jigsaw-time-section-picker}-hour {
                 margin-left: 26px;
             }
@@ -83,6 +93,12 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     @include inline-block();
     min-width: 208px;
     color: $font-color-default;
+    height: 100%;
+
+    j-checkbox {
+        vertical-align: sub;
+        display: inline-block;
+    }
 }
 
 .#{$jigsaw-day-section-picker}-host {
@@ -96,8 +112,11 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     }
 
     .#{$jigsaw-day-section-picker}-checkbox {
-        width: 60px;
-        padding-top: 12px;
+        display: flex;
+
+        j-checkbox {
+            align-items: center;
+        }
     }
 
     .#{$jigsaw-day-section-picker}-tile {
