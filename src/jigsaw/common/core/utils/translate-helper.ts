@@ -18,10 +18,11 @@ export class TranslateHelper {
     static set translateService(value: TranslateService) {
         this._translateService = value;
         this._translateService.setDefaultLang(this._translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => this._translateService.use(langInfo.curLang));
+        this.languageChangEvent.subscribe(langInfo => this._translateService.use(langInfo.curLang));
         this.translateService.setTranslation('en', this._tempCache.en, true);
         this.translateService.setTranslation('zh', this._tempCache.zh, true);
         this._tempCache = null;
+        console.log('22222222222222222');
     }
 
     public static changeLanguage(translateService: TranslateService, lang: string): void {
@@ -43,6 +44,7 @@ export class TranslateHelper {
         }
         this._initializedComponents[lang][compName] = true;
 
+        console.log('xxxxxxxxxxxxxxxxx', compName);
         if (!this.translateService) {
             this._tempCache[lang][compName] = translations;
             return;

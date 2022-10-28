@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -247,7 +247,7 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, TranslateModule.forChild()],
     declarations: [JigsawIcon],
     exports: [JigsawIcon]
 })

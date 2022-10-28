@@ -622,8 +622,8 @@ export class JigsawPaginationModule {
                 goto: "前往"
             },
             en: {
-                page: "Page",
-                goto: "Goto"
+                page: "",
+                goto: "Goto page"
             }
         });
     }

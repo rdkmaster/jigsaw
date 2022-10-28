@@ -736,7 +736,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
 }
 
-
 @WingsTheme('time-pop.scss')
 @Component({
     selector: 'jigsaw-time-popup, j-time-popup',
@@ -819,9 +818,9 @@ export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupab
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawFloatModule, TranslateModule.forRoot()],
+    imports: [CommonModule, FormsModule, JigsawFloatModule, TranslateModule.forChild()],
     declarations: [JigsawTimePicker, JigsawTimePopup],
-    exports: [JigsawTimePicker]
+    exports: [JigsawTimePicker],
 })
 export class JigsawTimePickerModule {
     constructor() {

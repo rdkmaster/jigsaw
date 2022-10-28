@@ -164,7 +164,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             info: 'notification.info'
         };
 
-        this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ? this._translateService.instant(iconType2Caption[value.iconType]) : undefined)
+        this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ?
+            this._translateService.instant(iconType2Caption[value.iconType]) : undefined);
         this.message = value.message;
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;

@@ -525,7 +525,7 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
 })
 export class JigsawDateTimePickerModule {
     constructor() {
-        TranslateHelper.initI18n('date-time-picker', {
+        TranslateHelper.initI18n('dateTimePicker', {
             zh: {
                 confirm: "确认",
             },

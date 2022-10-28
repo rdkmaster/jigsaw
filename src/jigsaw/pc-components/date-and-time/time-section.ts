@@ -279,7 +279,7 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
             this._$weekList = this._createWeekList();
         });
         let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
+        // _translateService.setDefaultLang(browserLang);
         TimeService.setLocale(browserLang);
         this._$weekList = this._createWeekList();
     }
@@ -414,8 +414,8 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._$dayList = this._createDayList();
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
+        // let browserLang = _translateService.getBrowserLang();
+        // _translateService.setDefaultLang(browserLang);
     }
 
     private _langChangeSubscriber: Subscription;
@@ -573,10 +573,10 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(() => {
             this._updateSwitchList();
         });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
+        // _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     private _langChangeSubscriber: Subscription;
