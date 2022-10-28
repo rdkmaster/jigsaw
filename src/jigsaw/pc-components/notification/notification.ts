@@ -13,7 +13,7 @@ import { CommonModule } from "@angular/common";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { filter, map, take } from 'rxjs/operators';
 import { Subscription } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { AbstractDialogComponentBase, DialogCallback, NoticeLevel } from "../dialog/dialog";
 import {
@@ -164,7 +164,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             info: 'notification.info'
         };
 
-        this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ? this._translateService.instant(iconType2Caption[value.iconType]) : undefined)
+        this.caption = value.caption ? value.caption : (iconType2Caption.hasOwnProperty(value.iconType) ?
+            this._translateService.instant(iconType2Caption[value.iconType]) : undefined);
         this.message = value.message;
         this.icon = value.icon == undefined ? 'iconfont iconfont-e23e' : value.icon;
         this.buttons = value.buttons;
@@ -552,30 +553,27 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule],
+    imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawNotification],
     exports: [JigsawNotification],
     providers: [TranslateService]
 })
 export class JigsawNotificationModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'notification', {
-            zh: {
-                success: '成功',
-                error: '错误',
-                warning: '警告',
-                info: '消息'
-            },
-            en: {
-                success: 'Success',
-                error: 'Error',
-                warning: 'Warning',
-                info: 'Information'
-            }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
-    }
 }
+
+// 这个组件以弹出用法为主，国际化必须在这里初始化
+TranslateHelper.initI18n('notification', {
+    zh: {
+        success: '成功',
+        error: '错误',
+        warning: '警告',
+        info: '消息'
+    },
+    en: {
+        success: 'Success',
+        error: 'Error',
+        warning: 'Warning',
+        info: 'Information'
+    }
+});
+

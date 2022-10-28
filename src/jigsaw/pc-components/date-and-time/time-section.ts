@@ -21,7 +21,6 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {Subscription} from 'rxjs';
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
@@ -280,7 +279,6 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
             this._$weekList = this._createWeekList();
         });
         let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
         TimeService.setLocale(browserLang);
         this._$weekList = this._createWeekList();
     }
@@ -415,8 +413,6 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._$dayList = this._createDayList();
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
     }
 
     private _langChangeSubscriber: Subscription;
@@ -574,10 +570,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(() => {
             this._updateSwitchList();
         });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     private _langChangeSubscriber: Subscription;
@@ -828,10 +823,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
 export class JigsawTimeSectionModule {
-
-    constructor(translateService: TranslateService) {
+    constructor() {
         TimeService.deFineZhLocale();
-        InternalUtils.initI18n(translateService, 'timeSection', {
+        TranslateHelper.initI18n('timeSection', {
             zh: {
                 selectAll: "全选",
                 lastDay: "最后一天",
@@ -851,7 +845,6 @@ export class JigsawTimeSectionModule {
                 switchEveryday: 'Everyday'
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 
 }

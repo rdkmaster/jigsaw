@@ -1,37 +1,30 @@
 import {
+    ChangeDetectionStrategy,
     Component,
     ContentChildren,
+    Directive,
     ElementRef,
     EventEmitter,
+    Injector,
     Input,
     NgModule,
+    NgZone,
     Output,
     QueryList,
     Renderer2,
     Type,
-    ViewChild,
-    Directive,
-    NgZone,
-    ChangeDetectionStrategy,
-    Injector
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {
-    AbstractDialogComponentBase,
-    DialogBase,
-    DialogCallback,
-    JigsawDialog,
-    JigsawDialogModule
-} from "../dialog/dialog";
+import {TranslateModule} from "@ngx-translate/core";
+import {AbstractDialogComponentBase, DialogBase, DialogCallback, JigsawDialog, JigsawDialogModule} from "../dialog/dialog";
 import {JigsawButton, JigsawButtonModule} from "../button/button";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {ButtonInfo, PopupEffect, PopupInfo, PopupOptions, PopupService} from "../../common/service/popup.service";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {WingsTheme} from "../../common/common";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 export enum AlertLevel {
     info, warning, error, confirm
@@ -443,50 +436,45 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
     exports: [
         JigsawDialogModule, JigsawMovableModule, JigsawAlert, JigsawInfoAlert, JigsawWarningAlert,
         JigsawErrorAlert, JigsawConfirmAlert
-    ],
-    providers: [TranslateService]
+    ]
 })
 export class JigsawAlertModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'alert', {
-            zh: {
-                button: {
-                    ok: "确定",
-                    cancel: "取消",
-                    yes: "是",
-                    no: "否",
-                    abort: "终止",
-                    ignore: "忽略",
-                    retry: "重试"
-                },
-                title: {
-                    info: "提示",
-                    warning: "警告",
-                    error: "错误",
-                    confirm: "确认"
-                }
-            },
-            en: {
-                button: {
-                    ok: "OK",
-                    cancel: "Cancel",
-                    yes: "Yes",
-                    no: "No",
-                    abort: "Abort",
-                    ignore: "Ignore",
-                    retry: "Retry"
-                },
-                title: {
-                    info: "Information",
-                    warning: "Warning",
-                    error: "Error",
-                    confirm: "Confirm"
-                }
-            }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
-        });
-    }
 }
+
+// 这个组件以弹出用法为主，国际化必须在这里初始化
+TranslateHelper.initI18n('alert', {
+        zh: {
+            button: {
+                ok: "确定",
+                cancel: "取消",
+                yes: "是",
+                no: "否",
+                abort: "终止",
+                ignore: "忽略",
+                retry: "重试"
+            },
+            title: {
+                info: "提示",
+                warning: "警告",
+                error: "错误",
+                confirm: "确认"
+            }
+        },
+        en: {
+            button: {
+                ok: "OK",
+                cancel: "Cancel",
+                yes: "Yes",
+                no: "No",
+                abort: "Abort",
+                ignore: "Ignore",
+                retry: "Retry"
+            },
+            title: {
+                info: "Information",
+                warning: "Warning",
+                error: "Error",
+                confirm: "Confirm"
+            }
+        }
+    });

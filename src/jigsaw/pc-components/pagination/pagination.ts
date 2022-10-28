@@ -17,11 +17,9 @@ import {
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
-
 import { JigsawSelectModule } from "../select/index";
 import { JigsawInputModule } from "../input/input";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
-import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { IPageable, PagingInfo } from "../../common/core/data/component-data";
 import { CommonUtils } from "../../common/core/utils/common-utils";
@@ -617,17 +615,16 @@ export class JigsawPagingItem extends AbstractJigsawComponent {
     providers: [TranslateService]
 })
 export class JigsawPaginationModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "pagination", {
+    constructor() {
+        TranslateHelper.initI18n("pagination", {
             zh: {
                 page: "页",
                 goto: "前往"
             },
             en: {
-                page: "Page",
-                goto: "Goto"
+                page: "",
+                goto: "Goto page"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }

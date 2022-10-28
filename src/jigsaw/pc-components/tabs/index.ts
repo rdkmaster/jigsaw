@@ -14,19 +14,20 @@ import {JigsawEditableTabTitleRenderer} from "./tab-renderer";
 import {JigsawInputModule} from "../input/input";
 import {JigsawFloatModule} from "../../common/directive/float/float";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 @NgModule({
-    imports: [CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule, JigsawTrustedHtmlModule,
-        TranslateModule.forChild()],
+    imports: [
+        CommonModule, PerfectScrollbarModule, JigsawListModule, JigsawInputModule, JigsawFloatModule, JigsawTrustedHtmlModule,
+        TranslateModule.forChild()
+    ],
     exports: [JigsawTab, JigsawTabPane, JigsawEditableTabTitleRenderer, JigsawTabBar],
-    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer, JigsawTabBar],
-    providers: [TranslateService]
+    declarations: [JigsawTab, JigsawTabPane, JigsawTabLabel, JigsawTabContent, JigsawEditableTabTitleRenderer, JigsawTabBar]
 })
 export class JigsawTabsModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "tabs", {
+    constructor() {
+        TranslateHelper.initI18n("tabs", {
             zh: {
                 add: "添加新页"
             },
@@ -34,7 +35,6 @@ export class JigsawTabsModule {
                 add: "New Tab"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }
 
