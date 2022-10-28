@@ -344,6 +344,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
+    public headerFilter = [];
+
     public filterInfo: DataFilterInfo;
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;

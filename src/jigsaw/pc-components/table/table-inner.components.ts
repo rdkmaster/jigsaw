@@ -5,6 +5,9 @@ import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { CheckBoxStatus } from '../checkbox/typings';
+import { JigsawFloat} from "../../common/directive/float/float";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -223,7 +226,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             </div>
         </div>
         <ng-template #tableHeaderFilterBox>
-            <jigsaw-table-header-filter-box [tableData]="tableData" [field]="field">
+            <jigsaw-table-header-filter-box [tableData]="tableData" [field]="field" [float]="_$jigsawFloat">
             </jigsaw-table-header-filter-box>
         </ng-template>
         `
@@ -262,6 +265,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      */
     @Input()
     public headerTrustedHtmlContext: any;
+
+    @ViewChild(JigsawFloat)
+    public _$jigsawFloat: JigsawFloat;
 
     /**
      * @internal
@@ -554,29 +560,32 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     template:`
     <div>
         <div>
-            <j-checkbox></j-checkbox>
-            <jigsaw-search-input [searchDebounce]="1000">
+            <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
+            <jigsaw-search-input [searchDebounce]="1000" (search)="_$handleSearching($event)">
             </jigsaw-search-input>
         </div>
-        <j-list [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" class="jigsaw-table-header-filter-list" [multipleSelect]="true">
-            <j-list-option #listItem *ngFor="let item of data" [value]="item">
+        <j-list [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" class="jigsaw-table-header-filter-list" [multipleSelect]="true"
+            [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
+            <j-list-option #listItem *ngFor="let item of filteredData" [value]="item">
                 <div class="item-box">
-                    <j-checkbox [(checked)]="listItem.selected" mode="minimalist"></j-checkbox>
+                    <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist"></j-checkbox>
                     <span>{{item}}</span>
                 </div>
             </j-list-option>
         </j-list>
+        <div *ngIf="filteredData.length === 0">暂无数据</div>
         <div>
             <jigsaw-button preSize="small" colorType="primary" (click)="filterConfirm(field)">确定</jigsaw-button>
-            <jigsaw-button preSize="small">取消</jigsaw-button>
+            <jigsaw-button preSize="small" (click)="filterCancel()">取消</jigsaw-button>
         </div>
     </div>`
 })
 
 export class JigsawTableHeaderFilterBox implements OnInit {
-    public data: any[];
-
-    public selectedItems
+    public filteredData: string[];
+    public data: string[];
+    public selectedItems: string[];
+    public _$selectAllChecked;
 
     /**
      * @NoMarkForCheckRequired
@@ -590,28 +599,110 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     @Input()
     public field: string;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public float: JigsawFloat;
+
+    @ViewChild(PerfectScrollbarDirective)
+    private _listScrollbar: PerfectScrollbarDirective;
+
+    /**
+     * @internal
+     */
+    public _$handleSearching(filterKey?: string) {
+        this._filterData(filterKey);
+        this._checkSelectAll();
+    }
+
+    /**
+     * @internal
+     */
+    public _$handleSelectChange($event) {
+        this._checkSelectAll();
+    }
+
+    private _filterData(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        if (filterKey.length === 0) {
+            this.filteredData = this.data;
+        }
+        this.filteredData = this.data.filter(item=>item.includes(filterKey));
+        this._listScrollbar && this._listScrollbar.scrollToTop();
+    }
+
+    private _checkSelectAll() {
+        if (this.filteredData.length === 0 || !this.selectedItems || this.selectedItems.length === 0) {
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+
+        if (this.filteredData.every(data => this.selectedItems.includes(data))) {
+            this._$selectAllChecked = CheckBoxStatus.checked;
+            return;
+        }
+
+        if (this.filteredData.some(data => this.selectedItems.includes(data))) {
+            this._$selectAllChecked = CheckBoxStatus.indeterminate;
+            return;
+        }
+
+        this._$selectAllChecked = CheckBoxStatus.unchecked;
+    }
+
+    public _$selectAll() {
+        console.log(this._$selectAllChecked);
+    }
+
+    public _$checkItemChecked(item: string) {
+        if (!this.selectedItems || this.selectedItems.length === 0 ){
+            return CheckBoxStatus.unchecked;
+        }
+        return this.selectedItems.includes(item) ? CheckBoxStatus.checked : CheckBoxStatus.unchecked;
+    }
+
     public filterConfirm(field) {
+        if (!this.selectedItems || this.selectedItems.length === 0) {
+            this.filterCancel();
+            return
+        }
         const colIndex = this.tableData.field.findIndex(item => item === field);
         if (colIndex === -1) {
-            return true;
+            this.filterCancel();
+            return
+        }
+        const filter = { field: field, selectKeys: this.selectedItems };
+        if (this.tableData.headerFilter.length === 0) {
+            this.tableData.headerFilter.push(filter);
+            this.filterCancel();
+            return
         }
         // this.tableData.filter(row => {
         //     const officeString = row[colIndex];
         //     const officeMatch = this.selectedItems.length > 0 ? this.selectedItems.find(office => office === officeString) : true;
         //     return officeMatch;
         // });
-       const filterFunc = function (value: any, index: number, array: any[]) {
-           return true;
-       };
-       this.tableData.filter(filterFunc);
+        // const filterFunc = function (value: any, index: number, array: any[]) {
+        //     return true;
+        // };
+        // this.tableData.filter(filterFunc);
+
+        console.log(this.tableData.headerFilter);
+        console.log(this.selectedItems);
+        
     }
 
     public filterCancel() {
-
+        if (!this.float) {
+            return;
+        }
+        this.float.closeFloat();
     }
 
     ngOnInit(): void {
-        this.data = this.tableData.getDeduplicatedColumnData(this.field)
+        this.data = this.tableData.getDeduplicatedColumnData(this.field);
+        this._$handleSearching('');
         console.log(this.data)
     }
 }
