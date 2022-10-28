@@ -8,6 +8,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawFloat} from "../../common/directive/float/float";
+import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -582,6 +583,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 })
 
 export class JigsawTableHeaderFilterBox implements OnInit {
+    constructor(protected _changeDetector: ChangeDetectorRef) { }
+
     public filteredData: string[];
     public data: string[];
     public selectedItems: string[];
@@ -652,6 +655,26 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     public _$selectAll() {
+        if (this.filteredData.length === 0) {
+            return
+        }
+
+        if (this._$selectAllChecked === CheckBoxStatus.checked) {
+            if (this.selectedItems?.length > 0) {
+                this.filteredData.forEach(data => {
+                    if (!this.selectedItems.includes(data)) {
+                        this.selectedItems.push(data);
+                    }
+                })
+            } else {
+                this.selectedItems = new ArrayCollection(this.filteredData);
+            }
+        } else if (this._$selectAllChecked === CheckBoxStatus.unchecked) {
+            if (this.selectedItems?.length > 0) {
+                this.selectedItems = this.selectedItems.filter(data => this.filteredData.includes(data));
+            }
+        }
+        this._changeDetector.markForCheck();
         console.log(this._$selectAllChecked);
     }
 
@@ -667,17 +690,33 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             this.filterCancel();
             return
         }
+
         const colIndex = this.tableData.field.findIndex(item => item === field);
         if (colIndex === -1) {
             this.filterCancel();
             return
         }
-        const filter = { field: field, selectKeys: this.selectedItems };
+
+        const filter = { field: field, selectKeys: this.selectedItems.concat([]) };
         if (this.tableData.headerFilter.length === 0) {
             this.tableData.headerFilter.push(filter);
             this.filterCancel();
             return
         }
+
+        const found = this.tableData.headerFilter.find(item=> item.field === field);
+        if (!found){
+            this.tableData.headerFilter.push(filter);
+            this.filterCancel();
+            return
+        }
+
+        found.selectKeys = this.selectedItems.concat([]);
+        this.filterCancel();
+        
+        console.log(this.tableData.headerFilter);
+        console.log(this.selectedItems);
+        
         // this.tableData.filter(row => {
         //     const officeString = row[colIndex];
         //     const officeMatch = this.selectedItems.length > 0 ? this.selectedItems.find(office => office === officeString) : true;
@@ -687,10 +726,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         //     return true;
         // };
         // this.tableData.filter(filterFunc);
-
-        console.log(this.tableData.headerFilter);
-        console.log(this.selectedItems);
-        
     }
 
     public filterCancel() {
@@ -702,6 +737,12 @@ export class JigsawTableHeaderFilterBox implements OnInit {
 
     ngOnInit(): void {
         this.data = this.tableData.getDeduplicatedColumnData(this.field);
+        if (this.tableData.headerFilter.length > 0) {
+            const found = this.tableData.headerFilter.find(item => item.field === this.field);
+            if (found) {
+                this.selectedItems = found.selectKeys;
+            }
+        }
         this._$handleSearching('');
         console.log(this.data)
     }
