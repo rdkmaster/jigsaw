@@ -38,9 +38,9 @@ export class InternalUtils {
         return prefix + this._uniqueIdIndex;
     };
 
-    // public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {
-    //     TranslateHelper.initI18n(compName, translations as LanguageTranslations);
-    // }
+    public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {
+        TranslateHelper.initI18n(compName, translations as LanguageTranslations);
+    }
 
     /**
      * 驼峰转短横线分隔命名

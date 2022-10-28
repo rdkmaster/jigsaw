@@ -5,11 +5,12 @@ export type I18nKeyTranslations = { [i18nKey: string]: I18nKeyTranslations | str
 export type ComponentTranslations = { [compName: string]: I18nKeyTranslations };
 export type LanguageTranslations = { en: ComponentTranslations, zh: ComponentTranslations };
 
+// @dynamic
 export class TranslateHelper {
     public static languageChangEvent = new EventEmitter<{ oldLang: string, curLang: string }>();
 
     private static _tempCache: LanguageTranslations = {en: {}, zh: {}};
-    private static _translateService: TranslateService;
+    private static _translateService: TranslateService = null;
 
     static get translateService(): TranslateService {
         return this._translateService;
@@ -22,7 +23,6 @@ export class TranslateHelper {
         this.translateService.setTranslation('en', this._tempCache.en, true);
         this.translateService.setTranslation('zh', this._tempCache.zh, true);
         this._tempCache = null;
-        console.log('22222222222222222');
     }
 
     public static changeLanguage(translateService: TranslateService, lang: string): void {
@@ -44,7 +44,6 @@ export class TranslateHelper {
         }
         this._initializedComponents[lang][compName] = true;
 
-        console.log('xxxxxxxxxxxxxxxxx', compName);
         if (!this.translateService) {
             this._tempCache[lang][compName] = translations;
             return;

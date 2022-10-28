@@ -441,6 +441,7 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
 export class JigsawAlertModule {
 }
 
+// 这个组件以弹出用法为主，国际化必须在这里初始化
 TranslateHelper.initI18n('alert', {
         zh: {
             button: {

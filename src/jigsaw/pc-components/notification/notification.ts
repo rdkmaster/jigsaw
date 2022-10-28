@@ -559,20 +559,21 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     providers: [TranslateService]
 })
 export class JigsawNotificationModule {
-    constructor() {
-        TranslateHelper.initI18n('notification', {
-            zh: {
-                success: '成功',
-                error: '错误',
-                warning: '警告',
-                info: '消息'
-            },
-            en: {
-                success: 'Success',
-                error: 'Error',
-                warning: 'Warning',
-                info: 'Information'
-            }
-        });
-    }
 }
+
+// 这个组件以弹出用法为主，国际化必须在这里初始化
+TranslateHelper.initI18n('notification', {
+    zh: {
+        success: '成功',
+        error: '错误',
+        warning: '警告',
+        info: '消息'
+    },
+    en: {
+        success: 'Success',
+        error: 'Error',
+        warning: 'Warning',
+        info: 'Information'
+    }
+});
+
