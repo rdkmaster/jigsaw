@@ -21,7 +21,6 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {Subscription} from 'rxjs';
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
@@ -828,10 +827,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
 export class JigsawTimeSectionModule {
-
-    constructor(translateService: TranslateService) {
+    constructor() {
         TimeService.deFineZhLocale();
-        InternalUtils.initI18n(translateService, 'timeSection', {
+        TranslateHelper.initI18n('timeSection', {
             zh: {
                 selectAll: "全选",
                 lastDay: "最后一天",
@@ -851,7 +849,6 @@ export class JigsawTimeSectionModule {
                 switchEveryday: 'Everyday'
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 
 }

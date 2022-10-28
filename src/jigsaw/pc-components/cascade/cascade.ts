@@ -3,7 +3,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
     Component,
-    EventEmitter, Injector,
+    EventEmitter,
+    Injector,
     Input,
     NgModule,
     OnDestroy,
@@ -13,14 +14,13 @@ import {
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {Observable, Subscription} from "rxjs";
 import {JigsawTab, JigsawTabsModule} from "../tabs/index";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
 import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawInputModule} from "../input/input";
@@ -688,14 +688,13 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
 }
 
 @NgModule({
-    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule, CommonModule, JigsawInputModule, JigsawPaginationModule],
+    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule.forChild(), CommonModule, JigsawInputModule, JigsawPaginationModule],
     declarations: [JigsawCascade, InternalTabContent],
-    exports: [JigsawCascade],
-    providers: [TranslateService]
+    exports: [JigsawCascade]
 })
 export class JigsawCascadeModule {
-    constructor(ts: TranslateService) {
-        InternalUtils.initI18n(ts, 'cascade', {
+    constructor() {
+        TranslateHelper.initI18n('cascade', {
             zh: {
                 all: "全部"
             },
@@ -703,7 +702,5 @@ export class JigsawCascadeModule {
                 all: "All"
             }
         });
-        ts.setDefaultLang(ts.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => ts.use(langInfo.curLang));
     }
 }

@@ -279,7 +279,6 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule],
     declarations: [JigsawToast],
-    exports: [JigsawToast],
-    providers: [TranslateService]
+    exports: [JigsawToast]
 })
 export class JigsawToastModule { }

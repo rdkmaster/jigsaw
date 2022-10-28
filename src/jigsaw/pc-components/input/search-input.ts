@@ -18,7 +18,6 @@ import {Subscription} from "rxjs";
 import {debounceTime} from "rxjs/operators";
 import {PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {TranslateHelper} from '../../common/core/utils/translate-helper';
 import {RequireMarkForCheck} from '../../common/decorator/mark-for-check';
@@ -304,12 +303,11 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 @NgModule({
     imports: [CommonModule, JigsawAutoCompleteInputModule, JigsawFloatModule, JigsawListModule, PerfectScrollbarModule, TranslateModule.forChild()],
     declarations: [JigsawSearchInput],
-    exports: [JigsawSearchInput],
-    providers: [TranslateService]
+    exports: [JigsawSearchInput]
 })
 export class JigsawSearchInputModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "search-input", {
+    constructor() {
+        TranslateHelper.initI18n("search-input", {
             zh: {
                 placeholder: "搜索"
             },
@@ -317,6 +315,5 @@ export class JigsawSearchInputModule {
                 placeholder: "Search"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }

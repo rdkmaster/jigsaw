@@ -554,12 +554,11 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 @NgModule({
     imports: [CommonModule, JigsawButtonModule, JigsawTrustedHtmlModule, PerfectScrollbarModule],
     declarations: [JigsawNotification],
-    exports: [JigsawNotification],
-    providers: [TranslateService]
+    exports: [JigsawNotification]
 })
 export class JigsawNotificationModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'notification', {
+    constructor() {
+        TranslateHelper.initI18n('notification', {
             zh: {
                 success: '成功',
                 error: '错误',
@@ -572,10 +571,6 @@ export class JigsawNotificationModule {
                 warning: 'Warning',
                 info: 'Information'
             }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
         });
     }
 }

@@ -17,16 +17,16 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 import {IPopupable} from "../../common/service/popup.service";
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {TimeGr, TimeService, TimeUnit} from "../../common/service/time.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 export type TimeSelectMode = 'hour' | 'minute' | 'second';
 export type TimeStep = 1 | 5 | 10 | 15 | 30;
@@ -821,14 +821,12 @@ export class JigsawTimePopup extends AbstractJigsawComponent implements IPopupab
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawFloatModule, TranslateModule.forRoot()],
     declarations: [JigsawTimePicker, JigsawTimePopup],
-    exports: [JigsawTimePicker],
-    providers: [TranslateService],
+    exports: [JigsawTimePicker]
 })
 export class JigsawTimePickerModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'timePicker', {
+    constructor() {
+        TranslateHelper.initI18n('timePicker', {
             zh: {now: "此刻"}, en: {now: 'Now'}
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }

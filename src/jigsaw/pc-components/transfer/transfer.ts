@@ -25,7 +25,6 @@ import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common
 import { JigsawInputModule } from "../input/input";
 import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
 import { JigsawPaginationModule } from "../pagination/pagination";
-import { InternalUtils } from "../../common/core/utils/internal-utils";
 import { LoadingService } from "../../common/service/loading.service";
 import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
@@ -296,7 +295,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         protected componentFactoryResolver: ComponentFactoryResolver,
         public translateService: TranslateService) {
         super();
-        translateService.use(translateService.getBrowserLang());
     }
 
     @ViewChild('transferSourceRendererHost', { read: ViewContainerRef })
@@ -884,7 +882,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 @NgModule({
     imports: [
         JigsawTreeExtModule, JigsawTableModule, JigsawListModule, JigsawCheckBoxModule, PerfectScrollbarModule,
-        JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule, JigsawCommonModule,
+        JigsawInputModule, JigsawPaginationModule, CommonModule, TranslateModule.forChild(), JigsawCommonModule,
         JigsawSearchInputModule, JigsawLoadingModule
     ],
     declarations: [
@@ -892,11 +890,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         TransferTableSourceRenderer, TransferTableDestRenderer
     ],
     exports: [JigsawTransfer],
-    providers: [TranslateService, LoadingService]
+    providers: [LoadingService]
 })
 export class JigsawTransferModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'transfer', {
+    constructor() {
+        TranslateHelper.initI18n('transfer', {
             zh: {
                 items: '项',
                 total: '共',
@@ -905,10 +903,6 @@ export class JigsawTransferModule {
                 items: 'Items',
                 total: 'Total',
             }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
         });
     }
 }

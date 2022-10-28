@@ -24,8 +24,8 @@ import {Time, WeekTime} from "../../common/service/time.types";
 import {Subscription} from 'rxjs';
 import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { TranslateService, TranslateModule } from '@ngx-translate/core';
-import { InternalUtils } from '../../common/core/utils/internal-utils';
+import { TranslateModule } from '@ngx-translate/core';
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
  * 用于在界面上提供一个时刻选择，支持多种时间粒度切换，支持年月日时分秒及其各种组合，
@@ -524,17 +524,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     exports: [JigsawDateTimePicker],
 })
 export class JigsawDateTimePickerModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, 'date-time-picker', {
+    constructor() {
+        TranslateHelper.initI18n('date-time-picker', {
             zh: {
                 confirm: "确认",
-
             },
             en: {
                 confirm: 'Confirm',
-
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }
