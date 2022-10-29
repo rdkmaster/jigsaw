@@ -467,9 +467,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 if (CommonUtils.isUndefined(value[i])) {
                     value.splice(i, 1);
                 }
-                if (value[i].hasOwnProperty('label')) {
-                    value.splice(i, 1, value[i].label)
-                }
             }
         } else {
             value = (value || []).filter(el => el != null);
@@ -500,7 +497,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$handleSelectChange(selectedItems: any[]) {
-        if (!selectedItems) return;
+        if (selectedItems == null) {
+            return;
+        }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);

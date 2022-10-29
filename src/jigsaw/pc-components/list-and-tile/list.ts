@@ -63,7 +63,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[class.jigsaw-list-option-host]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
         '[class.jigsaw-list-option-disabled]': 'disabled',
-        '[class.jigsaw-list-option-separator]': '!value',
+        '[class.jigsaw-list-option-separator]': 'value != null',
         '(click)': '_$handleClick()'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -96,7 +96,9 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      * @internal
      */
     public _$handleClick(): void {
-        if (this.disabled || !this.value) return;
+        if (this.disabled || this.value == null) {
+            return;
+        }
         this.change.emit(this);
     }
 }
