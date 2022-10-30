@@ -4,6 +4,7 @@ import { LocalPageableTableData, ColumnDefine } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"],
 })
 export class TableSetHeaderFilterDemoComponent {
     public localPageable: LocalPageableTableData;
@@ -28,6 +29,9 @@ export class TableSetHeaderFilterDemoComponent {
             },
         },
     ];
+
+    public autoFilter: boolean = true;
+
     constructor(http: HttpClient) {
         this.localPageable = new LocalPageableTableData();
         this.localPageable.http = http;
@@ -40,7 +44,15 @@ export class TableSetHeaderFilterDemoComponent {
     }
 
     public changeLocalPageable() {
-        this.localPageable.fromAjax("mock-data/hr-list-short");
+        if (this.localPageable.pagingInfo.totalRecord < 10) {
+            this.localPageable.fromAjax("mock-data/hr-list");
+        } else {
+            this.localPageable.fromAjax("mock-data/hr-list-short");
+        }
+    }
+
+    public onSearch(key: string) {
+        this.localPageable.filter(key)
     }
 
     // ====================================================================

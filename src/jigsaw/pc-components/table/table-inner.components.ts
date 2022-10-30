@@ -783,7 +783,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (!this.tableData.filteredData) {
             console.error("Failed to auto filter data: Wrong tabledata.");
         }
-        this.tableData._$autoFilterData();
+        this.tableData._$autoFilterData(this.tableData.originalData);
     }
 
     ngOnInit(): void {

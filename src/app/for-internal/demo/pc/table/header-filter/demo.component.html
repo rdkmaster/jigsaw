@@ -3,11 +3,15 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
+<span>自动过滤</span>
+<jigsaw-switch [(checked)]="autoFilter"></jigsaw-switch>
 <div>
-    <jigsaw-header [level]="2">LocalPageableTableData</jigsaw-header>
-    <j-button (click)="changeLocalPageable()" colorType="primary">改变数据</j-button>
+    <jigsaw-header [level]="2">LocalPageableTableData 无搜索</jigsaw-header>
+    <j-button width="120" (click)="changeLocalPageable()" colorType="primary">改变数据</j-button>
     <jigsaw-table [data]="localPageable" [columnDefines]="localPageableColumnDefines"
-        (headerFilterChange)="onHeaderFilterChange($event)" [autoFilter]="true"></jigsaw-table>
-    <jigsaw-pagination [data]="localPageable" [pageSizeOptions]="[5, 10, 20]" [showQuickJumper]="true">
+        (headerFilterChange)="onHeaderFilterChange($event)" [autoFilter]="autoFilter"></jigsaw-table>
+    <jigsaw-pagination [data]="localPageable" [searchable]="true" [pageSizeOptions]="[5, 10, 20]" [showQuickJumper]="true"
+        (search)="onSearch($event)">
     </jigsaw-pagination>
 </div>
+

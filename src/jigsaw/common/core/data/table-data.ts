@@ -1242,14 +1242,15 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 );
             }
         }
+        this._$autoFilterData(this.filteredData);
         this._sortAndPaging();
     }
 
-    public _$autoFilterData () {
+    public _$autoFilterData (data) {
         if (this.headerFilter.length === 0) {
             return;
         }
-        this.filteredData = this.originalData.filter(data => {
+        this.filteredData = data.filter(data => {
             let keep:boolean = true;
             for(let i = 0;i<  this.headerFilter.length;i++){
                 const colIndex = this.field.findIndex( item => item === this.headerFilter[i].field );
