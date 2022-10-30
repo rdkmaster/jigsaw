@@ -21,6 +21,7 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
+import { HeaderFilter } from 'jigsaw/public_api';
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -344,7 +345,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
-    public headerFilter = [];
+    public headerFilter: HeaderFilter = [];
 
     public filterInfo: DataFilterInfo;
 
@@ -1241,6 +1242,25 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 );
             }
         }
+        this._sortAndPaging();
+    }
+
+    public _$autoFilterData () {
+        if (this.headerFilter.length === 0) {
+            return;
+        }
+        this.filteredData = this.originalData.filter(data => {
+            let keep:boolean = true;
+            for(let i = 0;i<  this.headerFilter.length;i++){
+                const colIndex = this.field.findIndex( item => item === this.headerFilter[i].field );
+                const selectKeys = this.headerFilter[i].selectKeys;
+                keep = !!selectKeys.find(key => new String(data[colIndex]) == key );
+                if (!keep) {
+                    break;
+                }
+            }
+            return keep;
+        });
         this._sortAndPaging();
     }
 

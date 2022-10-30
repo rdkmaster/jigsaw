@@ -34,7 +34,7 @@ import {
     SortChangeEvent,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions
+    TableHeadSetting, TableRowExpandOptions, HeaderFilter
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -94,6 +94,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
+
+    @Output()
+    public headerFilterChange = new EventEmitter<HeaderFilter>();
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+     @Input()
+     public autoFilter: boolean = false;
 
     private _contentWidth: string = 'auto';
 

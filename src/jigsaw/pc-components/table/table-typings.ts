@@ -78,6 +78,7 @@ export class TableHeader {
     sortable?: boolean;
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
+    filterable?: boolean;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
     alignment?: 'left' | 'center' | 'right';
@@ -107,6 +108,7 @@ export class TableHeadSetting {
     clazz: string;
     sortable: boolean;
     sortAs: SortAs;
+    filterable: boolean;
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;
@@ -138,6 +140,8 @@ export class SortChangeEvent {
     order: SortOrder;
     field: string;
 }
+
+export type HeaderFilter = { field: string; selectKeys: string[] }[];
 
 /**
  * @internal

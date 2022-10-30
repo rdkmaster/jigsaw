@@ -2,7 +2,7 @@ import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, 
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
-import {TableData} from "../../common/core/data/table-data";
+import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
@@ -208,32 +208,64 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
  * @internal
  */
 @Component({
-    selector: 'jigsaw-table-header',
+    selector: "jigsaw-table-header",
     template: `
-        <div class="jigsaw-table-header-cell" [ngClass]="{'jigsaw-table-header-cell-sortable': sortable}">
+        <div
+            class="jigsaw-table-header-cell"
+            [ngClass]="{ 'jigsaw-table-header-cell-sortable': sortable }"
+        >
             <ng-template jigsaw-renderer-host></ng-template>
-            <div *ngIf="renderer == 'html'" class="jigsaw-table-header-content" [trustedHtml]="headerTrustedHtml"
-                [trustedHtmlContext]="headerTrustedHtmlContext">
-            </div>
+            <div
+                *ngIf="renderer == 'html'"
+                class="jigsaw-table-header-content"
+                [trustedHtml]="headerTrustedHtml"
+                [trustedHtmlContext]="headerTrustedHtmlContext"
+            ></div>
             <div class="jigsaw-table-header-option-box">
                 <div *ngIf="sortable" [ngClass]="_$sortOrderClass">
-                    <i (click)="_$sortAsc()" class="iconfont iconfont-e8b5 jigsaw-table-sort-up"></i>
-                    <i (click)="_$sortDes()" class="iconfont iconfont-e8b6 jigsaw-table-sort-down"></i>
+                    <i
+                        (click)="_$sortAsc()"
+                        class="iconfont iconfont-e8b5 jigsaw-table-sort-up"
+                    ></i>
+                    <i
+                        (click)="_$sortDes()"
+                        class="iconfont iconfont-e8b6 jigsaw-table-sort-down"
+                    ></i>
                 </div>
-                <div *ngIf="filterable" class="jigsaw-table-filter-box" (click)="getFilterBoxContent()" jigsaw-float [jigsawFloatTarget]='tableHeaderFilterBox'
-                [jigsawFloatOptions]="{borderType: 'pointer'}" jigsawFloatOpenTrigger="click" jigsawFloatCloseTrigger="click">
+                <div
+                    *ngIf="filterable"
+                    class="jigsaw-table-filter-box"
+                    (click)="getFilterBoxContent()"
+                    jigsaw-float
+                    [jigsawFloatTarget]="tableHeaderFilterBox"
+                    [jigsawFloatOptions]="{ borderType: 'pointer' }"
+                    jigsawFloatOpenTrigger="click"
+                    jigsawFloatCloseTrigger="click"
+                >
                     <i class="iconfont iconfont-e013"></i>
                 </div>
             </div>
         </div>
         <ng-template #tableHeaderFilterBox>
-            <jigsaw-table-header-filter-box [tableData]="tableData" [field]="field" [float]="_$jigsawFloat">
+            <jigsaw-table-header-filter-box
+                [hostInstance]="hostInstance"
+                [tableData]="tableData"
+                [field]="field"
+                [float]="_$jigsawFloat"
+            >
             </jigsaw-table-header-filter-box>
         </ng-template>
-        `
+    `,
 })
-export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
-    constructor(resolver: ComponentFactoryResolver, changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
+export class JigsawTableHeaderInternalComponent
+    extends TableInternalCellBase
+    implements OnInit, OnDestroy
+{
+    constructor(
+        resolver: ComponentFactoryResolver,
+        changeDetector: ChangeDetectorRef,
+        protected _zone: NgZone
+    ) {
         super(resolver, changeDetector, _zone);
     }
 
@@ -247,13 +279,13 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      * @NoMarkForCheckRequired
      */
     @Input()
-    public filterable: boolean = true;
+    public sortAs: SortAs;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public sortAs: SortAs;
+    public filterable: boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -277,10 +309,10 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     public updateSortOrderClass(sortOrder: SortOrder): void {
         this._$sortOrderClass = {
-            'jigsaw-table-sort-box': true,
-            'jigsaw-table-asc': sortOrder == SortOrder.asc,
-            'jigsaw-table-des': sortOrder == SortOrder.desc
-        }
+            "jigsaw-table-sort-box": true,
+            "jigsaw-table-asc": sortOrder == SortOrder.asc,
+            "jigsaw-table-des": sortOrder == SortOrder.desc,
+        };
     }
 
     private _defaultSortOrder: SortOrder;
@@ -296,7 +328,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     public set defaultSortOrder(newValue: SortOrder) {
         this._defaultSortOrder = newValue;
         this.updateSortOrderClass(newValue);
-    };
+    }
 
     @Output()
     public sort: EventEmitter<SortChangeEvent> = new EventEmitter<SortChangeEvent>();
@@ -305,7 +337,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      * @internal
      */
     public _$sortAsc(): void {
-        if (this._$sortOrderClass['jigsaw-table-asc']) {
+        if (this._$sortOrderClass["jigsaw-table-asc"]) {
             return;
         }
         this._sort(SortOrder.asc);
@@ -315,7 +347,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      * @internal
      */
     public _$sortDes(): void {
-        if (this._$sortOrderClass['jigsaw-table-des']) {
+        if (this._$sortOrderClass["jigsaw-table-des"]) {
             return;
         }
         this._sort(SortOrder.desc);
@@ -323,11 +355,15 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _sort(order: SortOrder): void {
         this.updateSortOrderClass(order);
-        this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
+        this.sort.emit({
+            sortAs: this.sortAs,
+            order: order,
+            field: this.field,
+        });
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
-    public getFilterBoxContent(){
+    public getFilterBoxContent() {
         // console.log(this.tableData);
         // console.log(this.field);
         // console.log(this.tableData.getDeduplicatedColumnData(this.field));
@@ -594,7 +630,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public tableData: TableData;
+    public tableData: LocalPageableTableData;
 
     /**
      * @NoMarkForCheckRequired
@@ -607,6 +643,18 @@ export class JigsawTableHeaderFilterBox implements OnInit {
      */
     @Input()
     public float: JigsawFloat;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoFilter: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public hostInstance: any;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
@@ -671,11 +719,11 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             }
         } else if (this._$selectAllChecked === CheckBoxStatus.unchecked) {
             if (this.selectedItems?.length > 0) {
-                this.selectedItems = this.selectedItems.filter(data => this.filteredData.includes(data));
+                this.selectedItems = this.selectedItems.filter(data => !this.filteredData.includes(data));
+                console.log(this.selectedItems);
             }
         }
         this._changeDetector.markForCheck();
-        console.log(this._$selectAllChecked);
     }
 
     public _$checkItemChecked(item: string) {
@@ -700,6 +748,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         const filter = { field: field, selectKeys: this.selectedItems.concat([]) };
         if (this.tableData.headerFilter.length === 0) {
             this.tableData.headerFilter.push(filter);
+            this._autoFilterData();
             this.filterCancel();
             return
         }
@@ -708,31 +757,33 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (!found){
             this.tableData.headerFilter.push(filter);
             this.filterCancel();
+            this._autoFilterData();
             return
         }
 
         found.selectKeys = this.selectedItems.concat([]);
+        this._autoFilterData();
         this.filterCancel();
         
-        console.log(this.tableData.headerFilter);
-        console.log(this.selectedItems);
-        
-        // this.tableData.filter(row => {
-        //     const officeString = row[colIndex];
-        //     const officeMatch = this.selectedItems.length > 0 ? this.selectedItems.find(office => office === officeString) : true;
-        //     return officeMatch;
-        // });
-        // const filterFunc = function (value: any, index: number, array: any[]) {
-        //     return true;
-        // };
-        // this.tableData.filter(filterFunc);
     }
-
+    
     public filterCancel() {
         if (!this.float) {
             return;
         }
         this.float.closeFloat();
+    }
+    
+    private _autoFilterData(){
+        console.log(this.hostInstance);
+        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilter);
+        if (!this.autoFilter) {
+            return;
+        }
+        if (!this.tableData.filteredData) {
+            console.error("Failed to auto filter data: Wrong tabledata.");
+        }
+        this.tableData._$autoFilterData();
     }
 
     ngOnInit(): void {
@@ -744,6 +795,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             }
         }
         this._$handleSearching('');
-        console.log(this.data)
+
+        this.autoFilter = this.hostInstance.autoFilter;
     }
 }
