@@ -7,7 +7,7 @@
     <jigsaw-header [level]="2">LocalPageableTableData</jigsaw-header>
     <j-button (click)="changeLocalPageable()" colorType="primary">改变数据</j-button>
     <jigsaw-table [data]="localPageable" [columnDefines]="localPageableColumnDefines"
-        (headerFilterChange)="onHeaderFilterChange($event)"></jigsaw-table>
+        (headerFilterChange)="onHeaderFilterChange($event)" [autoFilter]="true"></jigsaw-table>
     <jigsaw-pagination [data]="localPageable" [pageSizeOptions]="[5, 10, 20]" [showQuickJumper]="true">
     </jigsaw-pagination>
 </div>

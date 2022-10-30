@@ -595,24 +595,24 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 @Component({
     selector:'jigsaw-table-header-filter-box',
     template:`
-    <div>
-        <div>
+    <div class="jigsaw-table-header-filter-host">
+        <div class="jigsaw-table-header-filter-search">
             <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
-            <jigsaw-search-input [searchDebounce]="1000" (search)="_$handleSearching($event)">
+            <jigsaw-search-input width="260" [searchDebounce]="1000" (search)="_$handleSearching($event)">
             </jigsaw-search-input>
         </div>
         <j-list [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" class="jigsaw-table-header-filter-list" [multipleSelect]="true"
             [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
             <j-list-option #listItem *ngFor="let item of filteredData" [value]="item">
                 <div class="item-box">
-                    <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist"></j-checkbox>
+                    <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist" style="margin-right: 8px;"></j-checkbox>
                     <span>{{item}}</span>
                 </div>
             </j-list-option>
         </j-list>
         <div *ngIf="filteredData.length === 0">暂无数据</div>
-        <div>
-            <jigsaw-button preSize="small" colorType="primary" (click)="filterConfirm(field)">确定</jigsaw-button>
+        <div class="jigsaw-table-header-filter-btn">
+            <jigsaw-button preSize="small" colorType="primary" style="margin-right: 8px;" (click)="filterConfirm(field)">确定</jigsaw-button>
             <jigsaw-button preSize="small" (click)="filterCancel()">取消</jigsaw-button>
         </div>
     </div>`
