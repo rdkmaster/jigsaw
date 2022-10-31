@@ -497,7 +497,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$handleSelectChange(selectedItems: any[]) {
-        if (!selectedItems) return;
+        if (selectedItems == null) {
+            return;
+        }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this.valueChange.emit(this.value);
@@ -619,7 +621,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
         this._$listValue = new ArrayCollection([]);
         value.forEach(groupData => {
-            this._$listValue.push({ [this.groupField]: groupData[this.groupField], data: new ArrayCollection([]) })
+            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
         });
         this._$selectedItems = [];
     }

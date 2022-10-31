@@ -259,6 +259,13 @@ export abstract class AbstractJigsawComponent extends AbstractJigsawViewBase imp
         style.href = `themes/wings-theme/${wingsThemeId}-${theme}.css`;
         head.appendChild(style);
     }
+
+    /**
+     * @internal
+     */
+    public _$getItemLabel(item: any, labelField: string = 'label'): string {
+        return String(CommonUtils.isDefined(item?.[labelField]) ? item[labelField] : item);
+    }
 }
 
 export interface IJigsawFormControl {

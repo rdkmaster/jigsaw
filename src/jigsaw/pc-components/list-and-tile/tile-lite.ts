@@ -16,8 +16,8 @@ import {WingsTheme} from "../../common/common";
                 [showBorder]="showBorder">
             <j-tile-option *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [width]="optionWidth" [height]="optionHeight" [disabled]="item?.disabled"
-                           title="{{item && item[labelField] ? item[labelField] : item}}">
-                {{item && item[labelField] ? item[labelField] : item}}
+                           [title]="_$getItemLabel(item, labelField)">
+                {{_$getItemLabel(item, labelField)}}
             </j-tile-option>
         </j-tile>`,
     host: {

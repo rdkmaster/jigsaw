@@ -18,7 +18,7 @@
                         [select]="textTag && tagItem.selectedColor"
                         (selectChange)="_$tagClick(tagItem)"
                         (close)="_$removeTag(tagItem)">
-                {{tagItem && tagItem[labelField] ? tagItem[labelField] : tagItem}}
+                {{_$getItemLabel(tagItem, labelField)}}
             </jigsaw-tag>
             <jigsaw-input #editor [theme]="theme" *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
                           width="100%" (valueChange)="_$handleSearchBoxChange()"
