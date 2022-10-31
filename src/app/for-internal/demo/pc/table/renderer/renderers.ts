@@ -105,7 +105,6 @@ export class OfficeCellEditorRenderer extends OfficeRendererBase implements OnIn
 
     ngOnInit() {
         super.ngOnInit();
-        this.selected = this._cellData ? this._cellData : "";
 
         // 使用此方法使其他单元格退出编辑状态
         this.tableData.emit(this);
