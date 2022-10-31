@@ -734,37 +734,34 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     public filterConfirm(field) {
-        if (!this.selectedItems || this.selectedItems.length === 0) {
-            this.filterCancel();
-            return
-        }
-
         const colIndex = this.tableData.field.findIndex(item => item === field);
         if (colIndex === -1) {
+            console.error(`This field: ${field} not support header filter.`)
             this.filterCancel();
             return
         }
 
-        const filter = { field: field, selectKeys: this.selectedItems.concat([]) };
-        if (this.tableData.headerFilter.length === 0) {
-            this.tableData.headerFilter.push(filter);
-            this._autoFilterData();
-            this.filterCancel();
-            return
+        const filterIndex = this.tableData.headerFilter.findIndex(item=> item.field === field);
+
+        if (this.selectedItems.length === 0) {
+            if (filterIndex !== -1) {
+                this.tableData.headerFilter.splice(filterIndex, 1);
+                this._autoFilterData();
+                this.filterCancel();
+                return;
+            } else {
+                this.filterCancel();
+                return;
+            }
         }
 
-        const found = this.tableData.headerFilter.find(item=> item.field === field);
-        if (!found){
-            this.tableData.headerFilter.push(filter);
-            this.filterCancel();
-            this._autoFilterData();
-            return
+        if (filterIndex !== -1) {
+            this.tableData.headerFilter[filterIndex].selectKeys = this.selectedItems.concat([]);
+        } else {
+            this.tableData.headerFilter.push({ field: field, selectKeys: this.selectedItems.concat([]) });
         }
-
-        found.selectKeys = this.selectedItems.concat([]);
         this._autoFilterData();
         this.filterCancel();
-        
     }
     
     public filterCancel() {
@@ -779,9 +776,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         this.hostInstance.headerFilterChange.emit(this.tableData.headerFilter);
         if (!this.autoFilter) {
             return;
-        }
-        if (!this.tableData.filteredData) {
-            console.error("Failed to auto filter data: Wrong tabledata.");
         }
         this.tableData._$autoFilterData(this.tableData.originalData);
     }

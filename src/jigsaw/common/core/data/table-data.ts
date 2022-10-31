@@ -1246,11 +1246,13 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this._sortAndPaging();
     }
 
-    public _$autoFilterData (data) {
+    public _$autoFilterData (targetData) {
         if (this.headerFilter.length === 0) {
+            this.filteredData = targetData;
+            this._sortAndPaging();
             return;
         }
-        this.filteredData = data.filter(data => {
+        this.filteredData = targetData.filter(data => {
             let keep:boolean = true;
             for(let i = 0;i<  this.headerFilter.length;i++){
                 const colIndex = this.field.findIndex( item => item === this.headerFilter[i].field );
