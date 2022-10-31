@@ -32,6 +32,8 @@ export class TableSetHeaderFilterDemoComponent {
 
     public autoFilter: boolean = true;
 
+    public searchValue;
+
     constructor(http: HttpClient) {
         this.localPageable = new LocalPageableTableData();
         this.localPageable.http = http;
@@ -49,9 +51,13 @@ export class TableSetHeaderFilterDemoComponent {
         } else {
             this.localPageable.fromAjax("mock-data/hr-list-short");
         }
+        this.localPageable.onRefresh(() => {
+            this.localPageable.filter(this.searchValue || '');
+        })
     }
 
     public onSearch(key: string) {
+        this.searchValue = key;
         this.localPageable.filter(key)
     }
 
