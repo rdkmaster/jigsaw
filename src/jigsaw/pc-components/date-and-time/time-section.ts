@@ -58,26 +58,29 @@ export type TimeSectionValue = TimeSection;
         <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
             <j-checkbox *ngIf="multipleSelect" [theme]="theme" [(checked)]="_$amTimeCheck"
                         (checkedChange)="_$changeAmPmState($event, 'am')"></j-checkbox>
-            <ul>
-                <li *ngFor="let section of _$amTimeSection" (click)="_$timeSelect(section)"
-                    [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
-            </ul>
             <div class="jigsaw-time-section-picker-hour">
-                <span *ngFor="let time of _$amTimeline">{{time}}</span>
+                <ul>
+                    <li *ngFor="let section of _$amTimeSection" (click)="_$timeSelect(section)"
+                        [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
+                </ul>
+                <div>
+                    <span *ngFor="let time of _$amTimeline">{{time}}</span>
+                </div>
             </div>
         </div>
         <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
             <j-checkbox *ngIf="multipleSelect" [theme]="theme" [(checked)]="_$pmTimeCheck"
                         (checkedChange)="_$changeAmPmState($event, 'pm')"></j-checkbox>
-            <ul [class.jigsaw-time-section-picker-multiple]="multipleSelect">
-                <li *ngFor="let section of _$pmTimeSection" (click)="_$timeSelect(section)"
-                    [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
-            </ul>
             <div class="jigsaw-time-section-picker-hour">
-                <span *ngFor="let time of _$pmTimeline">{{time}}</span>
+                <ul [class.jigsaw-time-section-picker-multiple]="multipleSelect">
+                    <li *ngFor="let section of _$pmTimeSection" (click)="_$timeSelect(section)"
+                        [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
+                </ul>
+                <div>
+                    <span *ngFor="let time of _$pmTimeline">{{time}}</span>
+                </div>
             </div>
         </div>
-
     `,
     host: {
         '[attr.data-theme]': 'theme',

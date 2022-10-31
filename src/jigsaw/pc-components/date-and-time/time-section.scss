@@ -5,7 +5,8 @@ $jigsaw-day-section-picker: #{$jigsaw-prefix}-day-section-picker;
 $jigsaw-tile: #{$jigsaw-prefix}-tile;
 
 .#{$jigsaw-time-section}-host {
-    @include inline-block();
+    display: inline-flex;
+    flex-direction: column;
     color: $font-color-default;
 
     .#{$jigsaw-time-section}-time {
@@ -21,24 +22,34 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     }
 
     .#{$jigsaw-time-section}-horizontal {
-        display: flex;
+        display: inline-flex;
         flex-direction: row;
     }
 }
 
 .#{$jigsaw-time-section-picker}-host {
-    @include inline-block();
     color: $font-color-default;
+    display: inline-flex;
+    flex-direction: column;
 
     .#{$jigsaw-time-section-picker}-line {
         margin-bottom: 6px;
 
         &.#{$jigsaw-time-section-picker}-multiple {
-            ul {
-                margin-left: 24px;
+            display: flex;
+
+            j-checkbox {
+                align-items: center;
             }
+
             .#{$jigsaw-time-section-picker}-hour {
-                margin-left: 26px;
+                ul {
+                    margin-left: 24px;
+                }
+
+                div {
+                    margin-left: 8px;
+                }
             }
         }
 
@@ -71,8 +82,6 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     }
 
     .#{$jigsaw-time-section-picker}-hour {
-        margin-top: -2px;
-
         span {
             margin-right: 8px;
         }
@@ -80,14 +89,15 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
 }
 
 .#{$jigsaw-week-section-picker}-host {
-    @include inline-block();
     min-width: 208px;
     color: $font-color-default;
+    display: inline-flex;
+    align-items: center;
 }
 
 .#{$jigsaw-day-section-picker}-host {
-    @include inline-block();
     color: $font-color-default;
+    display: inline-flex;
 
     .#{$jigsaw-day-section-picker}-wrapper {
         display: flex;
@@ -96,8 +106,8 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
     }
 
     .#{$jigsaw-day-section-picker}-checkbox {
-        width: 60px;
-        padding-top: 12px;
+        display: flex;
+        align-items: center;
     }
 
     .#{$jigsaw-day-section-picker}-tile {
