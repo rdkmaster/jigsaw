@@ -45,4 +45,15 @@
 
         <p class="message">选中的条目是: <span>{{selectedItemsStr3}}</span></p>
     </div>
+    <div class="demo-4 live-demo">
+        <jigsaw-header [level]="2">含有空字符串</jigsaw-header>
+        <j-tile [multipleSelect]="true" [showBorder]="showBorder" trackItemBy="label"
+                [selectedItems]="selectedItems4" (selectedItemsChange)="handleSelect4($event)">
+            <j-tile-option *ngFor="let city of citys1" [value]="city" [disabled]="city.disabled">
+                {{city.label}}
+            </j-tile-option>
+        </j-tile>
+
+        <p class="message">选中的条目是: <span>{{selectedItemsStr4}}</span></p>
+    </div>
 </div>
