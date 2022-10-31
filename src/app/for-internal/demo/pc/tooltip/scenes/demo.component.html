@@ -34,3 +34,19 @@
 <jigsaw-button jigsawTooltipPosition="top" [jigsawTooltip]="''" [jigsawTooltipTheme]="'light'">
     无文字Tooltip（鼠标Hover看效果）
 </jigsaw-button>
+
+<jigsaw-button width="300px" (click)="popupDialog(dialog)">弹框内</jigsaw-button>
+
+<ng-template #dialog>
+    <jigsaw-dialog width="400px" (close)="closeDialog()" icon="iconfont iconfont-e3f0" caption="一个对话框">
+        <div jigsaw-body>
+            <p class="dialog-content">
+                <span [jigsawTooltip]="'这是一个文字的ToolTip'">这是一段文本，悬浮可见tooltip</span>
+            </p>
+        </div>
+        <div jigsaw-button-bar>
+            <jigsaw-button colorType="primary" (click)="closeDialog()">OK</jigsaw-button>
+            <jigsaw-button (click)="closeDialog()">Cancel</jigsaw-button>
+        </div>
+    </jigsaw-dialog>
+</ng-template>
