@@ -7,7 +7,7 @@ import {ArrayCollection} from "jigsaw/public_api";
 export class SelectBasicDemoComponent {
     selectedCityForSelect: any;
     cityList = new ArrayCollection([
-        {label: ""},
+        {label: "北京"},
         {label: "上海"},
         {label: "南京"},
         {label: "深圳"},
@@ -16,7 +16,15 @@ export class SelectBasicDemoComponent {
     ]);
 
     selectedCityForSelect2: string;
-    cityArrayList = new ArrayCollection(["", "上海", "南京", "深圳", "长沙", "西安"]);
+    cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+
+    selectedCityForSelect4: string;
+    cityList1 = new ArrayCollection([
+        {label: "北京"},
+        {label: ""},
+        {label: "南京"},
+        {label: "深圳"},
+    ]);
 
     selectedCityName: string;
 
@@ -56,6 +64,11 @@ export class SelectBasicDemoComponent {
     public selectChange3(selectedItem: any) {
         console.log("select city is:", selectedItem);
         this.selectedCityName3 = selectedItem.name;
+    }
+
+    public selectChange4(selectedItem: any) {
+        console.log("select city is:", selectedItem);
+        this.selectedCityForSelect4 = selectedItem.label;
     }
 
     // ====================================================================
