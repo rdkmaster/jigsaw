@@ -43,6 +43,9 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onHeaderFilterChange($event) {
         console.log($event);
+        if (!this.autoFilter) {
+            this.localPageable.filter(this.searchValue || '');
+        }
     }
 
     public changeLocalPageable() {
