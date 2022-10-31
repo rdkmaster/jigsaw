@@ -71,7 +71,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
-    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.1'));
     html = html.replace('$description', ci.description);
     html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
@@ -83,7 +83,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixDescription(ci);
     let html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.1'));
     const items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
@@ -148,7 +148,7 @@ function findChildren(ci) {
 }
 
 function processCommon(ci, html) {
-    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.1'));
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', findExtends(ci));
