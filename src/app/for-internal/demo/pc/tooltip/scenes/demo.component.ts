@@ -10,7 +10,7 @@ export class TooltipScenesDemoComponent {
     }
     public dialogInfo: PopupInfo;
     public popupDialog(ele: TemplateRef<any>) {
-        this.dialogInfo = this.popupService.popup(ele);
+        this.dialogInfo = this.popupService.popup(ele, {modal:true});
     }
 
     public closeDialog(){
