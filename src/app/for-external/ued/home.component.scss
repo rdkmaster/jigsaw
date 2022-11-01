@@ -7,8 +7,10 @@
 
   img {
     position: fixed;
-    margin-top: -60px;
+    top: 60px;
     width: 100%;
+    height: calc(100vh - 60px);
+    object-fit: fill;
     z-index: -1;
   }
 
