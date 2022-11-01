@@ -3,7 +3,7 @@ const {execSync} = require("child_process");
 
 const app = process.argv[2];
 if (app !== 'jigsaw-app-external' && app !== 'jigsaw-app-internal') {
-    printUsage(`无效的app"${app}"，必须是 jigsaw-app-external/jigsaw-app-internal 之一`);
+    printUsage(`无效的app "${app}"，必须是 jigsaw-app-external/jigsaw-app-internal 之一`);
     process.exit(1);
 }
 const buildMode = process.argv[3];
@@ -35,12 +35,18 @@ if (buildMode === 'dev') {
         `--poll 500 --disable-host-check --host 0.0.0.0 --port ${port}`);
 } else {
     const appOutput = process.argv[4] || 'dist';
-    exec(`node --max_old_space_size=4096 ../node_modules/@angular/cli/bin/ng build ${app} ` +
+    const code = exec(`node --max_old_space_size=4096 ../node_modules/@angular/cli/bin/ng build ${app} ` +
         `--aot --prod --base-href="/latest/" --output-path=${appOutput} ${process.argv.slice(5).join(' ')}`);
+    process.exit(code);
 }
 
 function exec(cmd) {
-    execSync(cmd, {stdio: 'inherit'});
+    try {
+        execSync(cmd, {stdio: 'inherit'});
+        return 0;
+    } catch (e) {
+        return e.status;
+    }
 }
 
 function printUsage(extra) {

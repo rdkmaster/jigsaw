@@ -34,3 +34,4 @@ if [ "$?" != "0" ]; then
     echo "ERROR: parse documentation error!"
     exit 1
 fi
+chmod 755 -R $output
