@@ -29,7 +29,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (req.url.startsWith('/app/for-external/demo/')) {
+        if (req.url.includes('/app/for-external/demo/')) {
             console.log('forwarding the request to the server:', req.url);
             return next.handle(req);
         }

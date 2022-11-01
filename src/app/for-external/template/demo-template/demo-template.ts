@@ -124,7 +124,7 @@ export class AsyncDescription implements OnDestroy {
             return;
         }
         this._description = `正在下载描述信息...`;
-        fetch(`/app/for-external/${this.demoPath}/readme.md`)
+        fetch(`app/for-external/${this.demoPath}/readme.md`)
             .then(resp => {
                 if (resp.ok) {
                     resp.text().then(desc => {
@@ -140,7 +140,7 @@ export class AsyncDescription implements OnDestroy {
     public get demoSources(): DemoSource[] {
         const sources: DemoSource[] = demoSourceFileInfo[this.demoPath] || [];
         sources.filter(src => !src.content)
-            .forEach(src => src.content = this._http.get(`/app/for-external/demo/${src.file}`, {responseType: "text"}));
+            .forEach(src => src.content = this._http.get(`app/for-external/demo/${src.file}`, {responseType: "text"}));
         return sources;
     }
 
