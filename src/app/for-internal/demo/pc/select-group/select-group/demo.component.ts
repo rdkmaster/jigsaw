@@ -53,6 +53,12 @@ export class SelectGroupDemoComponent {
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
+    dataListWithEmptyString = new ArrayCollection([
+        { groupName: "分组标题1", data: [{ label: "" }, { label: "文本选项2" }, { label: "文本选项3" }] },
+        { groupName: "分组标题2", data: [{ label: "文本选项4" }, { label: "" }, { label: "文本选项6" }] },
+        { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "" }] }
+    ]);
+
     valueChange($event) {
         console.log($event);
     }

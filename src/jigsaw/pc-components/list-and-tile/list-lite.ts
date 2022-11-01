@@ -41,9 +41,9 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
                     [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
                 <j-list-option [theme]="theme" *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                                [disabled]="item?.disabled">
-                    <p j-title class="jigsaw-list-lite-text" title="{{item && item[labelField] ? item[labelField] : item}}">
+                    <p j-title class="jigsaw-list-lite-text" [title]="_$getItemLabel(item, labelField)">
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
-                        <span class="jigsaw-list-lite-text-content">{{item && item[labelField] ? item[labelField] : item}}</span>
+                        <span class="jigsaw-list-lite-text-content">{{_$getItemLabel(item, labelField)}}</span>
                     </p>
                     <p j-sub-title *ngIf="item?.suffixIcon">
                         <i class="{{item?.suffixIcon}}"></i>

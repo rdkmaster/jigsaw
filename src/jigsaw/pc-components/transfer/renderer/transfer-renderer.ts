@@ -107,6 +107,13 @@ export abstract class AbstractTransferRendererBase {
      * @internal
      */
     public theme: string;
+
+    /**
+     * @internal
+     */
+    public _$getItemLabel(item: any, labelField: string = 'label'): string {
+        return String(CommonUtils.isDefined(item?.[labelField]) ? item[labelField] : item);
+    }
 }
 
 @Directive()

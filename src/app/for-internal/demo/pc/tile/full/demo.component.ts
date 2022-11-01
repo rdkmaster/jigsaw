@@ -16,6 +16,15 @@ export class TileSelectFullDemoComponent {
         {label: "西安"}
     ]);
 
+    citys1 = new ArrayCollection([
+        {label: "北京"},
+        {label: "上海", disabled: true},
+        {label: "南京"},
+        {label: "深圳"},
+        {label: "长沙", disabled: true},
+        {label: ""}
+    ]);
+
     multipleSelect: boolean;
     selectedItems1 = new ArrayCollection();
     selectedItemsStr1: string;
@@ -47,6 +56,14 @@ export class TileSelectFullDemoComponent {
 
     handleSelect3(selectedItems) {
         this.selectedItemsStr3 = selectedItems.map(item => item.label).toString()
+    }
+
+    selectedItems4 = new ArrayCollection();
+
+    selectedItemsStr4: string;
+
+    handleSelect4(selectedItems) {
+        this.selectedItemsStr4 = selectedItems.map(item => item.label).toString()
     }
 
     // ====================================================================

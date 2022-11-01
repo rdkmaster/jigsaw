@@ -14,7 +14,12 @@
 
         <jigsaw-radios-lite [(value)]="selectedCity" (valueChange)="radioChange($event)" [data]="cities">
         </jigsaw-radios-lite>
-        <p class="message">{{selectedCity?.label}}</p>
+        <p class="message">{{selectedCity}}</p>
+
+
+        <jigsaw-header [level]="2">包含空白字符串的情况</jigsaw-header>
+        <jigsaw-radios-lite [data]="['', {label: ''}, {label: ''}]">
+        </jigsaw-radios-lite>
     </div>
 </div>
 
