@@ -21,7 +21,6 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
-import { HeaderFilter } from 'jigsaw/public_api';
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -345,9 +344,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
-    public headerFilter: HeaderFilter = [];
-
-    public filterInfo: DataFilterInfo;
+    public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: (string | number)[]): void;
@@ -516,6 +513,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             return;
         }
         const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        console.log(options);
         if (!options) {
             console.error('invalid source request options, use updateDataSource() to reset the option.');
             return;
@@ -596,13 +594,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo.headerFilter);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo.headerFilter);
         }
         this._filterSubject.next(pfi);
     }
@@ -1199,13 +1197,16 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this._sortAndPaging();
     }
 
+    public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
+
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
-    public filter(term: string, fields?: string[] | number[]): void;
+    public filter(term: string, fields?: string[] | number[], fuzzy?: boolean): void;
     public filter(term: DataFilterInfo): void;
     /**
      * @internal
      */
-    public filter(term, fields?: (string | number)[]): void {
+    public filter(term, fields?: (string | number)[], fuzzy?: boolean): void {
+        console.log(this.filterInfo);
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term.bind(fields));
         } else {
@@ -1221,8 +1222,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 if (typeof fields[0] === 'string') {
                     numberFields = [];
                     (<string[]>fields).forEach(field => {
-                            numberFields.push(this.field.findIndex(item => item == field))
-                        }
+                        numberFields.push(this.field.findIndex(item => item == field))
+                    }
                     )
                 } else {
                     numberFields = <number[]>fields;
@@ -1230,40 +1231,40 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 this.filteredData = this.originalData.filter(
                     row => row.filter(
                         (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-                    ).filter(
-                        item => (item + '').indexOf(key) != -1
-                    ).length != 0
+                    )
                 );
             } else {
-                this.filteredData = this.originalData.filter(
-                    row => row.filter(
-                        item => (item + '').indexOf(key) != -1
-                    ).length != 0
-                );
+                this.filteredData = this.originalData;
             }
-        }
-        this._$autoFilterData(this.filteredData);
-        this._sortAndPaging();
-    }
 
-    public _$autoFilterData (targetData) {
-        if (this.headerFilter.length === 0) {
-            this.filteredData = targetData;
-            this._sortAndPaging();
-            return;
-        }
-        this.filteredData = targetData.filter(data => {
-            let keep:boolean = true;
-            for(let i = 0;i<  this.headerFilter.length;i++){
-                const colIndex = this.field.findIndex( item => item === this.headerFilter[i].field );
-                const selectKeys = this.headerFilter[i].selectKeys;
-                keep = !!selectKeys.find(key => new String(data[colIndex]) == key );
-                if (!keep) {
-                    break;
+            fuzzy = CommonUtils.isUndefined(fuzzy) ? true : fuzzy;
+            if (fuzzy) {
+                this.filteredData = this.filteredData.filter(
+                    row => row.filter(item => String(item).indexOf(key) != -1).length != 0
+                );
+            } else {
+                if (key != '') {
+                    this.filteredData = this.filteredData.filter(
+                        row => row.filter(item => String(item) == key).length != 0
+                    );
                 }
             }
-            return keep;
-        });
+
+            if (this.filterInfo.headerFilter.length !== 0) {
+                this.filteredData = this.filteredData.filter(item => {
+                    let keep: boolean = true;
+                    for (let i = 0; i < this.filterInfo.headerFilter.length; i++) {
+                        const colIndex = this.field.findIndex(item => item === this.filterInfo.headerFilter[i].field);
+                        const selectKeys = this.filterInfo.headerFilter[i].selectKeys;
+                        keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+                        if (!keep) {
+                            break;
+                        }
+                    }
+                    return keep;
+                });
+            }
+        }
         this._sortAndPaging();
     }
 

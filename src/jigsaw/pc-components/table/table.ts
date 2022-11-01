@@ -102,8 +102,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @NoMarkForCheckRequired
      */
-     @Input()
-     public autoFilter: boolean = false;
+    @Input()
+    public autoFilter: boolean = false;
 
     private _contentWidth: string = 'auto';
 
@@ -1072,9 +1072,13 @@ export class JigsawTableModule {
         TranslateHelper.initI18n("table", {
             zh: {
                 noData: "暂无数据",
+                confirm: "确认",
+                cancel: "取消"
             },
             en: {
-                noData: "NO DATA"
+                noData: "NO DATA",
+                confirm: "Confirm",
+                cancel: "Cancel"
             }
         });
     }

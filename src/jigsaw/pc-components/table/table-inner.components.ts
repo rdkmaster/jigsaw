@@ -235,7 +235,6 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                 <div
                     *ngIf="filterable"
                     class="jigsaw-table-filter-box"
-                    (click)="getFilterBoxContent()"
                     jigsaw-float
                     [jigsawFloatTarget]="tableHeaderFilterBox"
                     [jigsawFloatOptions]="{ borderType: 'pointer' }"
@@ -257,18 +256,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         </ng-template>
     `,
 })
-export class JigsawTableHeaderInternalComponent
-    extends TableInternalCellBase
-    implements OnInit, OnDestroy
-{
-    constructor(
-        resolver: ComponentFactoryResolver,
-        changeDetector: ChangeDetectorRef,
-        protected _zone: NgZone
-    ) {
-        super(resolver, changeDetector, _zone);
-    }
-
+export class JigsawTableHeaderInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
     /**
      * @NoMarkForCheckRequired
      */
@@ -305,7 +293,7 @@ export class JigsawTableHeaderInternalComponent
     /**
      * @internal
      */
-    public _$sortOrderClass: Object;
+    public _$sortOrderClass: { "jigsaw-table-sort-box": boolean, "jigsaw-table-asc": boolean, "jigsaw-table-des": boolean };
 
     public updateSortOrderClass(sortOrder: SortOrder): void {
         this._$sortOrderClass = {
@@ -355,18 +343,8 @@ export class JigsawTableHeaderInternalComponent
 
     private _sort(order: SortOrder): void {
         this.updateSortOrderClass(order);
-        this.sort.emit({
-            sortAs: this.sortAs,
-            order: order,
-            field: this.field,
-        });
+        this.sort.emit({ sortAs: this.sortAs, order: order, field: this.field });
         this.tableData.sort(this.sortAs, order, this.field);
-    }
-
-    public getFilterBoxContent() {
-        // console.log(this.tableData);
-        // console.log(this.field);
-        // console.log(this.tableData.getDeduplicatedColumnData(this.field));
     }
 
     ngOnInit() {
@@ -593,31 +571,30 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
  * @internal
  */
 @Component({
-    selector:'jigsaw-table-header-filter-box',
-    template:`
-    <div class="jigsaw-table-header-filter-host">
-        <div class="jigsaw-table-header-filter-search">
-            <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
-            <jigsaw-search-input width="260" [searchDebounce]="1000" (search)="_$handleSearching($event)">
-            </jigsaw-search-input>
-        </div>
-        <j-list [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" class="jigsaw-table-header-filter-list" [multipleSelect]="true"
-            [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-            <j-list-option #listItem *ngFor="let item of filteredData" [value]="item">
-                <div class="item-box">
-                    <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist" style="margin-right: 8px;"></j-checkbox>
-                    <span>{{item}}</span>
-                </div>
-            </j-list-option>
-        </j-list>
-        <div *ngIf="filteredData.length === 0">暂无数据</div>
-        <div class="jigsaw-table-header-filter-btn">
-            <jigsaw-button preSize="small" colorType="primary" style="margin-right: 8px;" (click)="filterConfirm(field)">确定</jigsaw-button>
-            <jigsaw-button preSize="small" (click)="filterCancel()">取消</jigsaw-button>
-        </div>
-    </div>`
+    selector: 'jigsaw-table-header-filter-box',
+    template: `
+        <div class="jigsaw-table-header-filter-host">
+            <div class="jigsaw-table-header-filter-search">
+                <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
+                <jigsaw-search-input width="260" [searchDebounce]="1000" (search)="_$handleSearching($event)">
+                </jigsaw-search-input>
+            </div>
+            <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" [multipleSelect]="true"
+                [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
+                <j-list-option #listItem *ngFor="let item of filteredData" [value]="item">
+                    <div class="item-box">
+                        <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist" style="margin-right: 8px;"></j-checkbox>
+                        <span>{{item}}</span>
+                    </div>
+                </j-list-option>
+            </j-list>
+            <div *ngIf="filteredData.length === 0">{{'table.noData' | translate}}</div>
+            <div class="jigsaw-table-header-filter-btn">
+                <jigsaw-button preSize="small" colorType="primary" style="margin-right: 8px;" (click)="filterConfirm(field)">{{'table.confirm' | translate}}</jigsaw-button>
+                <jigsaw-button preSize="small" (click)="filterCancel()">{{'table.cancel' | translate}}</jigsaw-button>
+            </div>
+        </div>`
 })
-
 export class JigsawTableHeaderFilterBox implements OnInit {
     constructor(protected _changeDetector: ChangeDetectorRef) { }
 
@@ -720,7 +697,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         } else if (this._$selectAllChecked === CheckBoxStatus.unchecked) {
             if (this.selectedItems?.length > 0) {
                 this.selectedItems = this.selectedItems.filter(data => !this.filteredData.includes(data));
-                console.log(this.selectedItems);
             }
         }
         this._changeDetector.markForCheck();
@@ -741,24 +717,22 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             return
         }
 
-        const filterIndex = this.tableData.headerFilter.findIndex(item=> item.field === field);
-
+        const filterIndex = this.tableData.filterInfo.headerFilter.findIndex(item=> item.field === field);
         if (this.selectedItems.length === 0) {
             if (filterIndex !== -1) {
-                this.tableData.headerFilter.splice(filterIndex, 1);
+                this.tableData.filterInfo.headerFilter.splice(filterIndex, 1);
                 this._autoFilterData();
                 this.filterCancel();
-                return;
             } else {
                 this.filterCancel();
-                return;
             }
+            return;
         }
 
         if (filterIndex !== -1) {
-            this.tableData.headerFilter[filterIndex].selectKeys = this.selectedItems.concat([]);
+            this.tableData.filterInfo.headerFilter[filterIndex].selectKeys = this.selectedItems.concat([]);
         } else {
-            this.tableData.headerFilter.push({ field: field, selectKeys: this.selectedItems.concat([]) });
+            this.tableData.filterInfo.headerFilter.push({ field: field, selectKeys: this.selectedItems.concat([]) });
         }
         this._autoFilterData();
         this.filterCancel();
@@ -772,18 +746,17 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
     
     private _autoFilterData(){
-        console.log(this.hostInstance);
-        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilter);
+        this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilter);
         if (!this.autoFilter) {
             return;
         }
-        this.tableData._$autoFilterData(this.tableData.originalData);
+        this.tableData.filter(this.tableData.filterInfo);
     }
 
     ngOnInit(): void {
         this.data = this.tableData.getDeduplicatedColumnData(this.field);
-        if (this.tableData.headerFilter.length > 0) {
-            const found = this.tableData.headerFilter.find(item => item.field === this.field);
+        if (this.tableData.filterInfo.headerFilter.length > 0) {
+            const found = this.tableData.filterInfo.headerFilter.find(item => item.field === this.field);
             if (found) {
                 this.selectedItems = found.selectKeys;
             }

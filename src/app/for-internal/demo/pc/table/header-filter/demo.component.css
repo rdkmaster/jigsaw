@@ -1,12 +1,13 @@
 .demo-options li {
     display: flex;
     align-items: center;
+    height: 32px;
 }
 
 .demo-options li span {
     margin-right: 8px;
 }
 
-.demo-cntr>*{
+.demo-cntr>* {
     margin-bottom: 8px;
 }

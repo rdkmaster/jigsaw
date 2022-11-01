@@ -141,7 +141,7 @@ export class SortChangeEvent {
     field: string;
 }
 
-export type HeaderFilter = { field: string; selectKeys: string[] }[];
+export type HeaderFilter = { field: string; selectKeys: string[] };
 
 /**
  * @internal

@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
+import { HeaderFilter } from "jigsaw/public_api";
 
 /**
  * 参考 `IAjaxComponentData.dataReviser`的说明
@@ -416,8 +417,9 @@ export interface IFilterable extends IAjaxComponentData {
      *
      * @param term 过滤关键字
      * @param fields 对这些字段进行过滤
+     * @param fuzzy 模糊搜索
      */
-    filter(term: string, fields?: (string | number)[]): void;
+    filter(term: string, fields?: (string | number)[], fuzzy?: boolean): void;
 
     /**
      * $demo = combo-select/searchable
@@ -824,7 +826,7 @@ export class DataFilterInfo {
         /**
          * 表头过滤
          */
-        public headerFilter?: { keys: string[], field: string | number }[]
+        public headerFilter?: HeaderFilter[]
     ) {}
 }
 
