@@ -1,4 +1,5 @@
 import {
+    AfterContentInit,
     AfterViewInit,
     Component,
     Directive,
@@ -7,11 +8,10 @@ import {
     Input,
     NgModule,
     OnDestroy,
+    OnInit,
     Output,
     Renderer2,
     ViewChild,
-    OnInit,
-    AfterContentInit,
 } from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
@@ -26,6 +26,8 @@ type DemoSource = {
     label: string, language: string, file?: string,
     content?: string | Observable<string>
 };
+
+const demoSourceFileInfo = require('./description-and-sources.json');
 
 @Component({
     selector: "demo-template",
@@ -136,7 +138,7 @@ export class AsyncDescription implements OnDestroy {
     }
 
     public get demoSources(): DemoSource[] {
-        const sources: DemoSource[] = window['demoSourceFileInfo']?.[this.demoPath] || [];
+        const sources: DemoSource[] = demoSourceFileInfo[this.demoPath] || [];
         sources.filter(src => !src.content)
             .forEach(src => src.content = this._http.get(`/app/for-external/demo/${src.file}`, {responseType: "text"}));
         return sources;
@@ -183,21 +185,17 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterConten
         const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         this.docPath.forEach((doc, i) => {
             this.http.get(`app/for-external/assets/docs/fragments/${doc}.html`, { headers, responseType: 'text' }).subscribe((data) => {
-                this.docContent += data; 
+                this.docContent += data;
             })
         })
     }
 
     ngAfterContentInit(): void {
-        
         const demoWrapper = this.el.nativeElement.getElementsByClassName('demo-wrapper')[0];
         if (demoWrapper.length === 0) {
             return;
         }
-        const demoComponent = demoWrapper.children;
-        this.navigationData= demoComponent;
-
-        
+        this.navigationData= demoWrapper.children;
     }
 
     ngOnDestroy(): void {

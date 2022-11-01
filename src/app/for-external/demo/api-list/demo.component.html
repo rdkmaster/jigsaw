@@ -1,11 +1,14 @@
 <div class="demo-wrapper">
     <div class="doc-cntr">
         <jigsaw-markdown [markdown]="description"></jigsaw-markdown>
+
+        <p *ngIf="apiDetail.length === 0" class="welcome">
+            欢迎阅读组件API，请在右侧搜索/选择所需的API
+        </p>
         <ul *ngIf="apiDetail.length === 0" class="api-count-list">
             <li *ngFor="let data of apiCategory">
-                <span class="number">{{getLengthByCategory(data.category)}}</span>
-                <span class="category">{{data.category}}</span>
-                <span class="label">{{data.label}}</span>
+                <span class="label">共有{{data.label}}</span>
+                <span>{{getLengthByCategory(data.category)}} 个</span>
             </li>
         </ul>
         <doc-template *ngIf="apiDetail.length > 0" [docContent]="apiDetail"></doc-template>

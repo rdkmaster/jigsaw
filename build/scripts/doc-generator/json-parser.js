@@ -35,7 +35,7 @@ if (!docInfo) {
 let processingAPI;
 const unknownTypes = [];
 const apiList = [];
-fs.mkdirSync(`${output}`, 755);
+fs.mkdirSync(output, 755);
 
 console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
@@ -92,7 +92,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     saveFile(ci.subtype, ci.name, html);
 });
 
-fs.writeFileSync(`${output}/list.js`, `window.demoApiList=`+JSON.stringify(apiList));
+fs.writeFileSync(`${workDir}/list.json`, JSON.stringify(apiList));
 fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
 fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {

@@ -31,7 +31,6 @@ glob('**/*.{ts,html,css,scss,md}', {cwd: `.`})
         files.push({label, language, file});
     });
 
-fs.writeFileSync(`../template/demo-template/description-and-sources.js`,
-    `window.demoSourceFileInfo=${JSON.stringify(output)}`)
+fs.writeFileSync(`../template/demo-template/description-and-sources.json`, JSON.stringify(output));
 
 console.log('external demo info generated!');

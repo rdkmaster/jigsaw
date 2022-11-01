@@ -7,32 +7,23 @@
         min-height: calc(100vh - 60px);
         background: var(--bg-container);
 
+        .welcome {
+            font-size: 26px;
+            text-align: center;
+            margin: 240px 0 80px 0;
+        }
+
         .api-count-list {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            width: 100%;
-            height: calc(100vh - 130px);
+            left: 50%;
+            position: relative;
+            transform: translate(-50%);
+            display: inline-block;
+            font-size: 16px;
+            list-style: disc;
 
-            >li {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 200px;
-                height: 100px;
-
-                .number {
-                    font-size: 24px;
-                    font-weight: bold;
-                }
-
-                .category {
-                    font-size: 20px;
-                }
-
-                .label {
-                    font-size: 20px;
-                }
+            .label {
+                width: 100px;
+                display: inline-block;
             }
         }
     }

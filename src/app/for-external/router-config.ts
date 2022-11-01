@@ -68,7 +68,7 @@ import { TableActionsAllComponent } from "./demo/table-actions/demo.component";
 import { TableColumnDefinesAllComponent } from "./demo/table-column-defines/demo.component";
 import { TableBigDataAllComponent } from "./demo/table-big-data/demo.component";
 import { TableRendererAllComponent } from "./demo/table-renderer/demo.component";
-import { IntroduceComponent } from "./home/introduce/introduce";
+import { IntroduceComponent } from "./ued/introduce/introduce";
 import { QuickStartDemoComponent } from "./demo/quick-start/demo.component";
 import { ApiListComponent } from "./demo/api-list/demo.component";
 

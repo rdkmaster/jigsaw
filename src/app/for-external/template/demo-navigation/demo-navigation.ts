@@ -1,6 +1,8 @@
 import { Component, NgModule, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
+const demoNavigationInfo = require('../demo-navigation-info.json');
+
 @Component({
     selector: "demo-navigation",
     templateUrl: "./demo-navigation.html",
@@ -35,7 +37,7 @@ export class DemoNavigation implements OnInit {
                 this._$navData.push({ label: "API文档", el: data });
                 return;
             }
-            const label = window["demoNavigationInfo"]?.[data.localName].label;
+            const label = demoNavigationInfo[data.localName].label;
             this._$navData.push({ label: label, el: data });
         });
     }

@@ -1,4 +1,4 @@
-
+const fs = require('fs');
 const {execSync} = require("child_process");
 
 const env = process.argv[2], port = process.argv[3] || 4200;
@@ -9,8 +9,9 @@ execSync(`node build/scripts/create-component-wings-theme.js`, {stdio: 'inherit'
 execSync(`node build/scripts/generate-external-demo-info.js`, {stdio: 'inherit'});
 execSync(`node build/scripts/generate-external-navigation-info.js`, {stdio: 'inherit'});
 
-if (env === 'jigsaw-app-external') {
-    execSync(`sh build/scripts/doc-generator/generate.sh src/app/for-external/assets/docs`, {stdio: 'inherit'});
+const docOutput = 'src/app/for-external/assets/docs';
+if (env === 'jigsaw-app-external' && !fs.existsSync(docOutput)) {
+    execSync(`sh build/scripts/doc-generator/generate.sh ${docOutput}`, {stdio: 'inherit'});
 }
 
 execSync(`node --max_old_space_size=2048 node_modules/@angular/cli/bin/ng serve ${env} ` +

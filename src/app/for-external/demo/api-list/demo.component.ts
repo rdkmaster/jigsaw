@@ -1,6 +1,6 @@
-import { HttpHeaders } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
-import { DemoSetBase } from "../../template/demo-template/demo-template";
+import {HttpHeaders} from "@angular/common/http";
+import {Component, OnInit} from "@angular/core";
+import {DemoSetBase} from "../../template/demo-template/demo-template";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -12,7 +12,7 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
     public apiData: string[] = [];
     private _apiData: string[] = [];
 
-    public apiList = window["demoApiList"];
+    public apiList: { type: string, category: string }[] = require('../../assets/docs/list.json');
     public apiDetail = "";
     public apiCategory = [
         { label: "组件", category: "component" },
@@ -29,9 +29,11 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
         const type = api[0].split("[")[0].slice(0, -1);
         const category = api[0].split("[")[1].slice(0, -1);
 
-        this.http.get(`app/for-external/assets/docs/fragments/${category}/${type}.html`, { headers, responseType: 'text' }).subscribe((data) => {
-            this.apiDetail = data;
-        })
+        this.http
+            .get(`app/for-external/assets/docs/fragments/${category}/${type}.html`, {headers, responseType: 'text'})
+            .subscribe((data) => {
+                this.apiDetail = data;
+            });
     }
 
     public getLengthByCategory(category: string): Number {
@@ -43,9 +45,7 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
     }
 
     ngOnInit() {
-        this.apiList.forEach(api => {
-            this._apiData.push(`${api.type} [${api.category}]`);
-            this.apiData = this._apiData;
-        })
+        this._apiData = this.apiList.map(api => `${api.type} [${api.category}]`);
+        this.apiData = this._apiData;
     }
 }

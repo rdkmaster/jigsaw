@@ -88,13 +88,13 @@ import { TableActionsDemoModule } from "./demo/table-actions/demo.module";
 import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.module";
 import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
 import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
-import { HomeComponent } from "./home/home.component";
-import { TopMenuComponent } from "./home/top-menu/top-menu.component";
-import { PageNotFoundComponent } from "./home/page-not-found/page-not-found.component";
-import { ComponentMenuNavComponent } from "./home/component-menu-nav/component-menu-nav.component";
+import { HomeComponent } from "./ued/home.component";
+import { TopMenuComponent } from "./ued/top-menu/top-menu.component";
+import { PageNotFoundComponent } from "./ued/page-not-found/page-not-found.component";
+import { ComponentMenuNavComponent } from "./ued/component-menu-nav/component-menu-nav.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
-import { DesignComponent } from "./home/design/design";
+import { DesignComponent } from "./ued/design/design";
 import { ApiListDemoModule } from "./demo/api-list/demo.module";
 
 @NgModule({

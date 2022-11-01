@@ -14,13 +14,10 @@ glob("**/readme.md", { cwd: `.` }).forEach((file) => {
         .split("#")
         .pop()
         .trim();
-    const path = `${file.split("/readme.md")[0].replace("/", "-")}`;
+    const path = file.replace("/readme.md", '').replace("/", "-");
     output[path] = { label };
 });
 
-fs.writeFileSync(
-    `../template/demo-template/navigation-info.js`,
-    `window.demoNavigationInfo=${JSON.stringify(output)}`
-);
+fs.writeFileSync(`../template/demo-navigation-info.json`, JSON.stringify(output));
 
 console.log("external navigation info generated!");

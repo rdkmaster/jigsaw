@@ -150,9 +150,8 @@ export class PreparedHttpClientOptions extends HttpClientOptions {
  *
  * 提示：单击图上的类名可转到它的api说明页面。
  *
- * <object type="image/svg+xml" data="/jigsaw/source/docs/image/comp-data-relationship.svg">
+ * <object type="image/svg+xml" data="assets/comp-data-relationship.svg">
  * </object>
- *
  */
 export interface IComponentData {
     /**
