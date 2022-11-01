@@ -23,7 +23,6 @@ export class SelectBasicDemoComponent {
         {label: "北京"},
         {label: ""},
         {label: "南京"},
-        '',
         {label: "深圳"},
     ]);
 

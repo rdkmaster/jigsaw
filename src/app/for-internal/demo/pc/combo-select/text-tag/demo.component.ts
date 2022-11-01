@@ -39,8 +39,7 @@ export class ComboSelectTextTagDemoComponent {
         { label: "连云港1" },
         { label: "连云港2" },
         { label: "连云港3" },
-        { label: "哈尔滨" },
-        ""
+        { label: "哈尔滨" }
     ];
 
     selectedCity = new ArrayCollection([{ label: "北京", closable: false }]);
