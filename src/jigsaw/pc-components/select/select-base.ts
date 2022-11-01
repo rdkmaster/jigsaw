@@ -1,13 +1,13 @@
-import { ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild, Renderer2, ElementRef } from "@angular/core";
-import { ControlValueAccessor } from "@angular/forms";
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
-import { ArrayCollection, LocalPageableArray, PageableArray } from "../../common/core/data/array-collection";
-import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { CheckBoxStatus } from "../checkbox/typings";
-import { JigsawComboSelect } from '../combo-select/index';
-import { PopupPositionType } from 'jigsaw/common/service/popup.service';
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
+import {ControlValueAccessor} from "@angular/forms";
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
+import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
+import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {PopupPositionType} from "../../common/service/popup.service";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {CheckBoxStatus} from "../checkbox/typings";
+import {JigsawComboSelect} from '../combo-select/index';
 
 export type SelectOption = {
     disabled?: boolean;
