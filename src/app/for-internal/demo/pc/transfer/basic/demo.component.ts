@@ -10,10 +10,12 @@ export class TransferArrayDemoComponent {
     public targetRenderer = TransferListDestRenderer;
 
     data: ArrayCollection<any>;
+    data1: ArrayCollection<any>;
     selectedItems: ArrayCollection<any>;
 
     constructor() {
-        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.data = new ArrayCollection(["北京", "北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.data1 = new ArrayCollection(["北京", "上海", "", "深圳", "长沙", "西安"]);
         this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
 
