@@ -5,7 +5,7 @@ import {
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
 import { UserDialog2Component } from "./user-dialog/user-dialog";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'dialog-point',

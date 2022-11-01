@@ -1,8 +1,10 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../demo-template/demo-template";
+import { DemoSetBase } from "../../template/demo-template/demo-template";
 
 @Component({
     templateUrl: "demo.component.html"
 })
-export class CheckBoxDemoComponent extends AsyncDescription {
+export class CheckBoxDemoComponent extends DemoSetBase {
+    public demoPath = 'demo/checkbox';
+    public docPath = ['component/JigsawCheckBox'];
 }

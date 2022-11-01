@@ -27,7 +27,7 @@ import {JigsawInput} from "../input/input";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {JigsawTag, PresetColor} from "../tag/tag";
 import {DropDownTrigger, JigsawFloat} from "../../common/directive/float/float";
-import {PopupOptions, PopupService} from "../../common/service/popup.service";
+import {PopupOptions, PopupService, PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 export class ComboSelectValue {
@@ -233,6 +233,21 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     public get showBorder(): boolean {
         return this._showBorder;
+    }
+
+    private _positionType: PopupPositionType;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public set positionType(value: PopupPositionType) {
+        this._positionType = value;
+        this._$options.posType = PopupPositionType.fixed;
+    }
+
+    public get positionType(): PopupPositionType {
+        return this._positionType;
     }
 
     /**

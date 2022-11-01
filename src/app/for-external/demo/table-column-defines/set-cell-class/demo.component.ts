@@ -1,10 +1,10 @@
 import {Component, ElementRef, ViewEncapsulation} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine} from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-set-cell-class',
+    selector: 'table-column-defines-set-cell-class',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     //TO NOTE

@@ -1,6 +1,9 @@
 import { NgModule } from "@angular/core";
 import { FloatDemoComponent } from "./demo.component";
-import { DemoTemplateModule } from "../../demo-template/demo-template";
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
 import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 import { CommonModule } from "@angular/common";
 import { FloatBasicDemoComponent } from "./basic/demo.component";
@@ -17,11 +20,35 @@ import { User1Component } from "./target/user-component/user-component";
 import { FloatOptionDemoComponent } from "./option/demo.component";
 
 @NgModule({
-    declarations: [FloatDemoComponent, FloatBasicDemoComponent, FloatInitDataDemoComponent, UserComponent, FloatMultiLevelDemoComponent,
-        FloatPositionDemoComponent, FloatTargetDemoComponent, FloatTriggerDemoComponent, User1Component, FloatOptionDemoComponent],
-    imports: [DemoTemplateModule, JigsawMarkdownModule, CommonModule, JigsawFloatModule, JigsawMenuModule,
-        JigsawRadioModule, JigsawButtonModule, JigsawButtonBarModule, JigsawTrustedHtmlModule, JigsawNumericInputModule, JigsawSelectModule,
-        JigsawSwitchModule]
+    declarations: [
+        FloatDemoComponent,
+        FloatBasicDemoComponent,
+        FloatInitDataDemoComponent,
+        UserComponent,
+        FloatMultiLevelDemoComponent,
+        FloatPositionDemoComponent,
+        FloatTargetDemoComponent,
+        FloatTriggerDemoComponent,
+        User1Component,
+        FloatOptionDemoComponent
+    ],
+    imports: [
+        DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
+        DemoNavigationModule,
+        JigsawMarkdownModule,
+        CommonModule,
+        JigsawFloatModule,
+        JigsawMenuModule,
+        JigsawRadioModule,
+        JigsawButtonModule,
+        JigsawButtonBarModule,
+        JigsawTrustedHtmlModule,
+        JigsawNumericInputModule,
+        JigsawSelectModule,
+        JigsawSwitchModule
+    ]
 })
 export class FloatDemoModule {
 }

@@ -1,7 +1,7 @@
 import {Component, ElementRef} from '@angular/core';
 import { HttpClient } from "@angular/common/http";
 import { KLineGraphData } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 function random(min, max) {
     const range = max - min;

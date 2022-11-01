@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'list-lite-range-date-time-select',
+    selector: 'range-date-time-picker-range-date-time-select',
     templateUrl: './demo.component.html',
 })
 export class RangeDateTimeSelectComponent extends AsyncDescription {

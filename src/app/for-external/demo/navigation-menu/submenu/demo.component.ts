@@ -1,9 +1,9 @@
 import {Component, ElementRef,} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import { SimpleNode, SimpleTreeData } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 @Component({
-    selector: "nav-submenu",
+    selector: "navigation-menu-submenu",
     templateUrl: "demo.component.html",
 })
 export class NavigationSubMenuDemoComponent extends AsyncDescription {

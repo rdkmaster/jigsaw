@@ -1,10 +1,10 @@
 import { HttpClient } from "@angular/common/http";
 import {Component, ElementRef} from "@angular/core";
 import { TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, LocalPageableTableData } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'transfer-table-local-pageable-transfer',
+    selector: 'transfer-transfer-table-local-pageable',
     templateUrl: './demo.component.html'
 })
 export class TransferTableLocalPageableDemoComponent extends AsyncDescription {

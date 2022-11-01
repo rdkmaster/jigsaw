@@ -4,10 +4,10 @@ import {
     LocalPageableTableData, PageableTableData, AdditionalColumnDefine, AdditionalTableData,
     TableCellCheckboxRenderer, TableHeadCheckboxRenderer
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'checkbox-column-pageable-table',
+    selector: 'table-renderer-checkbox-column-pageable',
     templateUrl: './demo.component.html',
     styles: [`
         .live-demo-wrap j-tag {

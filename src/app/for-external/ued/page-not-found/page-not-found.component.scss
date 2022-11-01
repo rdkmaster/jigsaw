@@ -1,0 +1,47 @@
+.notFoundPage {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 60px);
+  color: #333;
+
+  .notFoundPageContainer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    display: flex;
+    transform: translate(-50%, -50%);
+
+    .notFoundPageVideoContainer {
+      .notFoundPageVideo {
+        width: 300px;
+      }
+    }
+
+    .notFoundHint {
+      margin-left: 20px;
+
+      .hintText {
+        span {
+          display: inline-block;
+          font-size: 14px;
+          font-weight: 700;
+          margin-left: -5px;
+        }
+
+        strong {
+          font-size: 130px;
+          color: #292929;
+        }
+
+        p {
+          font-size: 28px;
+        }
+      }
+
+      .hintSubText {
+        margin-top: 15px;
+      }
+    }
+  }
+}

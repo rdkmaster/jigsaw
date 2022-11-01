@@ -35,7 +35,7 @@ if (!docInfo) {
 let processingAPI;
 const unknownTypes = [];
 const apiList = [];
-fs.mkdirSync(`${output}`, 755);
+fs.mkdirSync(output, 755);
 
 console.log('processing components / directives...');
 docInfo.components.concat(docInfo.directives).forEach(ci => {
@@ -71,7 +71,7 @@ docInfo.miscellaneous.typealiases.forEach(ci => {
     html = html.replace('$title', ci.name);
     html = html.replace('$name', '类型别名：' + ci.name);
     html = html.replace('$rawtype', '原始类型：' + addTypeLink(ci.rawtype));
-    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.1'));
     html = html.replace('$description', ci.description);
     html = html.replace('$demos', getDemoListWithHeader(ci));
     saveFile(ci.subtype, ci.name, html);
@@ -83,7 +83,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     fixDescription(ci);
     let html = getTypeEnumTemplate();
     html = html.replace('$name', ci.name);
-    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', '起始版本：' + (ci.since ? ci.since : 'v1.0.1'));
     const items = [];
     ci.childs.forEach(i => items.push(`<li>${i.name}</li>`));
     html = html.replace('$enumItems', items.join('\n'));
@@ -92,7 +92,7 @@ docInfo.miscellaneous.enumerations.forEach(ci => {
     saveFile(ci.subtype, ci.name, html);
 });
 
-fs.writeFileSync(`${output}/list`, JSON.stringify(apiList));
+fs.writeFileSync(`${workDir}/list.json`, JSON.stringify(apiList));
 fs.writeFileSync(`${workDir}/wechat-group.html`, fs.readFileSync(`${__dirname}/wechat-group.html`));
 fs.writeFileSync(`${workDir}/wechat-public-subscription.html`, fs.readFileSync(`${__dirname}/wechat-public-subscription.html`));
 if (!checkUnknownTypes()) {
@@ -148,7 +148,7 @@ function findChildren(ci) {
 }
 
 function processCommon(ci, html) {
-    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.0'));
+    html = html.replace('$since', (ci.since ? ci.since : 'v1.0.1'));
     html = html.replace('$name', ci.name);
     html = html.replace('$description', ci.description);
     html = html.replace('$extends', findExtends(ci));
@@ -179,7 +179,7 @@ function processInputs(ci, html) {
         fixDescription(input);
         input.defaultValue = input.defaultValue ? input.defaultValue : '';
         const dualBinding = ci.outputsClass.find(i => i.name === input.name + 'Change') ?
-            '<span class="fa fa-retweet" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
+            '<span class="iconfont iconfont-e122" style="margin-right:4px" title="本属性支持双向绑定"></span>' : '';
         const description = input.description + (input.since ? `<p>起始版本：${input.since}</p>` : '');
         const inputName = `${anchor(input.name)}${dualBinding}${getRichName(input)}`;
         inputs.push(`<tr><td>${inputName}</td><td>${addTypeLink(input.type)}</td><td>${input.defaultValue}</td>
@@ -314,7 +314,7 @@ function processProperties(ci, html) {
 
         property.defaultValue = property.defaultValue ? property.defaultValue : '';
         const readOnly = property.readOnly ?
-            '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="fa fa-adjust"></span>' : '';
+            '<span style="margin-right:4px;color:#9a14a9;" title="Read Only" class="iconfont iconfont-e4e8"></span>' : '';
         const modifier = getModifierInfo(property.modifierKind);
         description = property.description + (property.since ? `<p>起始版本：${property.since}</p>` : '');
         const inheritance = getInheritanceInfo(property);
@@ -322,7 +322,7 @@ function processProperties(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${propertyName}</td><td>${addTypeLink(property.type)}</td>
             <td>${description}</td><td>${property.defaultValue}</td><td>${getDemoList(property)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? 'var(--bg-body)' : 'var(--bg-container)';
         properties.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
 
@@ -337,7 +337,7 @@ function processProperties(ci, html) {
         propertiesTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下属性：\n1. 所有从父类继承过来的属性;\n2. 当前类中受保护的属性;"
             onclick="document.getElementById('dynamicProperties').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? 'var(--bg-body)' : 'var(--bg-container)';
             });this.style.display='none';document.getElementById('dynamicProperties').style.display='table'">
             列出所有可用属性</a>` : '';
     } else {
@@ -447,7 +447,7 @@ function processMethods(ci, html) {
             comment = addDescLink(comment);
             const name = argument.name.text || argument.name;
             const optional = argument.optional ? '<span style="margin:0 2px 0 2px; color:#009688" ' +
-                'title="Optional" class="fa fa-question"></span>' : '';
+                'title="Optional" class="iconfont iconfont-e9ef"></span>' : '';
             const arg = `<span style="white-space: nowrap;">${name}${optional}${type}</span>${comment}`;
             args.push(arg);
         });
@@ -464,7 +464,7 @@ function processMethods(ci, html) {
         const trChildElements = `<td style="white-space: nowrap;">${methodName}</td><td>${description}</td>
             <td>${returns}</td><td>${args}</td><td>${getDemoList(method)}</td>`;
         const display = isHidden ? 'none' : 'table-row';
-        const bgColor = shownAttributeCount % 2 === 1 ? '#fff' : '#f8f8f8';
+        const bgColor = shownAttributeCount % 2 === 1 ? 'var(--bg-body)' : 'var(--bg-container)';
 
         methods.push(`<tr style="display:${display}; background-color:${bgColor}">${trChildElements}</tr>`);
     });
@@ -480,7 +480,7 @@ function processMethods(ci, html) {
         methodsTable += hiddenAttributeCount > 0 ?
             `<a style="margin-left: 10px" title="单击列出如下方法：\n1. 所有从父类继承过来的方法;\n2. 当前类中受保护的方法;"
             onclick="document.getElementById('dynamicMethods').lastChild.previousSibling.childNodes.forEach((tr,index)=> {
-                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? '#fff' : '#f8f8f8';
+                tr.style.display = 'table-row';tr.style['background-color'] = index % 2 === 0 ? 'var(--bg-body)' : 'var(--bg-container)';
             });this.style.display='none';document.getElementById('dynamicMethods').style.display='table'">
             列出所有可用方法</a>` : '';
     } else {
@@ -554,25 +554,25 @@ function getInheritanceInfo(metaInfo) {
     const inherited = metaInfo.inheritInfo;
     return !inherited ? '' :
         `<a href="#/components/api/${inherited.type}/${inherited.from}#${metaInfo.name}">
-        <span class="fa fa-long-arrow-up" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
+        <span class="iconfont iconfont-e9aa" style="color: #a94442; margin-right: 4px" title="Inherited"></span></a>`;
 }
 
 function getModifierInfo(modifier) {
     let clazz, title, color;
     if (modifier && modifier.indexOf(STATIC) !== -1) {
-        clazz = 'cube';
+        clazz = 'e5d1';
         title = 'Static';
         color = '#0575b9';
     } else if (modifier && modifier.indexOf(PROTECTED) !== -1) {
-        clazz = 'lock';
+        clazz = 'ea01';
         title = 'Protected';
         color = 'orange';
     } else {
-        clazz = 'unlock';
+        clazz = 'ea49';
         title = 'Public';
         color = 'green';
     }
-    return `<span class="fa fa-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
+    return `<span class="iconfont iconfont-${clazz}" style="color: ${color}; margin-right: 4px" title="${title}"></span>`;
 }
 
 function addTypeLink(type) {
@@ -768,42 +768,9 @@ function saveFile(type, fileName, html) {
     if (!fs.existsSync(path)) {
         fs.mkdirSync(path, 755);
     }
-    html += getPanelTemplate();
-    html += getFooter(fileName);
     fs.writeFileSync(`${path}/${fileName}.html`, html);
 
     apiList.push({type: fileName, category: type});
-}
-
-function getFooter(name) {
-    const info = findTypeMetaInfo(name);
-    let type = '';
-    switch (info.subtype || info.type) {
-        case 'component':
-        case 'directive':
-        case 'injectable':
-        case 'class':
-            type = 'class';
-            break;
-        case 'interface':
-            type = 'interface';
-            break;
-        case 'typealias':
-            type = 'type';
-            break;
-        case 'enum':
-            type = 'enum';
-            break;
-    }
-    const reg = new RegExp('^\\s*export\\s+(abstract\\s+)?' + type + '\\s+' + name + '\\b');
-    const source = info.sourceCode || fs.readFileSync(`${__dirname}/../../../${info.file}`).toString();
-    const idx = source.split(/\r?\n/g).findIndex(line => line.match(reg));
-    const hash = idx !== -1 ? '#L' + (idx + 1) : '';
-    const url = `https://github.com/rdkmaster/jigsaw/blob/master/${info.file}${hash}`;
-    return getFooterTemplate()
-        .replace('$editThisDoc', url)
-        .replace('$wechatSubscription', getOpenPopupScript('doc/wechat-public-subscription.html'))
-        .replace('$wechatGroup', getOpenPopupScript('doc/wechat-group.html'));
 }
 
 function checkUnknownTypes() {
@@ -973,67 +940,6 @@ function getRichName(metaInfo) {
 function getDeprecatedTemplate() {
     return `<span title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"
                 style="color: #888;text-decoration: line-through">$name</span>
-            <span class="fa fa-exclamation-triangle" style="color:#ffa500"
+            <span class="iconfont iconfont-e437" style="color:#ffa500"
                 title="此api从版本 $version 开始被废弃，替代的办法为：\n$replacement"></span>`;
-}
-
-function getPanelTemplate() {
-    return `
-<div id="panel" class="api-panel">
-    <div class="box">
-        <span class="close" title="返回"
-              onclick="document.getElementById('panel').style.display = 'none';">&times;</span>
-        <iframe id="evalator"></iframe>
-    </div>
-</div>
-`
-}
-
-function getFooterTemplate() {
-    return `
-<a name="footer"></a>
-<div class="api-footer-wrapper">
-    <div class="col">
-        <h3>资源</h3>
-        <ul>
-            <li><a href="https://zhuanlan.zhihu.com/jigsaw" target="_blank">知乎专栏</a></li>
-            <li><a href="https://github.com/rdkmaster/j-lunker"
-                    target="_blank" title="属于你自己的在线代码运行服务器">J-lunker</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw-seed" target="_blank"
-                    title="Jigsaw应用的种子工程，请让它到处生根发芽吧！">Jigsaw Seed</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw-tourist" target="_blank"
-                    title="一个简单示例工程，新手宝典">Jigsaw Tourist</a></li>
-
-            <li class="splitter"><a href="http://ngfans.net" target="_blank">Angular开发者</a></li>
-            <li><a onclick="$wechatSubscription" title="及时了解Jigsaw的动态、新特性、技术分享">Jigsaw微信公众号</a></li>
-
-            <li class="splitter"><a href="https://angular.cn" target="_blank">Angular中文</a></li>
-            <li><a href="https://angular.io" target="_blank">Angular官网</a></li>
-            <li><a href="https://blog.angular.io" target="_blank">Angular官博</a></li>
-        </ul>
-    </div>
-    <div class="col">
-        <h3>社区</h3>
-        <ul>
-            <li><a href="https://github.com/rdkmaster/jigsaw" target="_blank"
-                title="请跳过去随手帮忙点个星星，越多的星星可以吸引越多的人加入我们">代码托管 / Github</a></li>
-            <li><a href="https://github.com/rdkmaster/jigsaw/issues/new" target="_blank">报告BUG / 提需求</a></li>
-            <li><a href="$editThisDoc" target="_blank"
-                title="在GitHub上直接编辑这篇文档以帮助我们改进它">改进这篇文档</a></li>
-            <li class="splitter"><a href="https://github.com/rdkmaster/rdk" target="_blank">RDK服务端</a></li>
-            <li><a href="http://10.9.233.68:9953/webgis/default/index.html" target="_blank"
-                title="仅限中兴内部访问">Web GIS</a></li>
-        </ul>
-    </div>
-    <div class="col">
-        <h3>帮助</h3>
-        <ul>
-            <li><a href="http://ngfans.net" target="_blank">在线提问 / 寻求帮助</a></li>
-            <li><a onclick="$wechatGroup" title="和我们的开发者/使用者面对面交流">Jigsaw微信群提问</a></li>
-            <li><a href="mailto:chen.xu8@zte.com.cn" target="_blank">直接联系我们</a></li>
-            <li class="splitter"><a href="#/components/guide/quick-start" target="_self">零基础起航</a></li>
-        </ul>
-    </div>
-</div>
-`
 }

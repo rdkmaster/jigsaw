@@ -1,7 +1,7 @@
 import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from '@angular/common/http';
 import { LocalPageableTableData, ColumnDefine, SortAs, SortOrder, TableCellTextEditorRenderer } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-local-paging-data',

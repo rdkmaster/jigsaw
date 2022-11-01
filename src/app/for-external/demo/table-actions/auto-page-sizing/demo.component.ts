@@ -1,10 +1,10 @@
 import {Component, ViewChild, ChangeDetectorRef, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { LocalPageableTableData, JigsawTable } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-auto-page-sizing',
+    selector: 'table-actions-auto-page-sizing',
     templateUrl: './demo.component.html'
 })
 export class TableAutoPageableDemoComponent extends AsyncDescription {

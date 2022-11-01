@@ -4,7 +4,7 @@ import {
     PopupInfo, PopupOptions, PopupPoint, PopupPositionOffset,
     PopupPositionType, PopupService
 } from "jigsaw/public_api";
-import { AsyncDescription } from 'app/for-external/demo-template/demo-template';
+import { AsyncDescription } from '../../../template/demo-template/demo-template';
 
 @Component({
     selector: 'dialog-popup-option',

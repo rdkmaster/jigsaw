@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TabBarData } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: "tab-tab-bar",

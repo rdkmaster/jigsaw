@@ -1,0 +1,21 @@
+<div class="demo-wrapper">
+    <div class="doc-cntr">
+        <p *ngIf="apiDetail.length === 0" class="welcome">
+            欢迎阅读组件API，请在右侧搜索/选择所需的API
+        </p>
+        <ul *ngIf="apiDetail.length === 0" class="api-count-list">
+            <li *ngFor="let data of apiCategory">
+                <span class="label">共有{{data.label}}</span>
+                <span>{{getLengthByCategory(data.category)}} 个</span>
+            </li>
+        </ul>
+        <doc-template *ngIf="apiDetail.length > 0" [docContent]="apiDetail"></doc-template>
+    </div>
+    <div class="index-cntr">
+        <jigsaw-search-input width="280px" height="40px" placeholder="请输入API" (search)="searchApi($event)">
+        </jigsaw-search-input>
+        <jigsaw-alphabetical-index class="api-list" width="300px" [data]="apiData"
+            (valueChange)="showApiDetail($event)">
+        </jigsaw-alphabetical-index>
+    </div>
+</div>

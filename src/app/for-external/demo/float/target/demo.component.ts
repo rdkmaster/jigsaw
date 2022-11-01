@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, TemplateRef, ViewChild } from '@angular/core';
 import { User1Component } from "./user-component/user-component";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'float-target',

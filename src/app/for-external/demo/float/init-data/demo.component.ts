@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { UserComponent } from "./user-component/user-component";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'float-init-data',

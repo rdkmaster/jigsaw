@@ -1,10 +1,10 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-draggable-table',
+    selector: 'table-actions-draggable-table',
     templateUrl: "demo.component.html",
     encapsulation: ViewEncapsulation.None
 })

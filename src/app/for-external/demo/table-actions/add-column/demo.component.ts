@@ -1,7 +1,7 @@
 import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, AdditionalColumnDefine, TableCellRendererBase } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 /*
  * 操作列头
@@ -39,7 +39,7 @@ export class MyTableCellOption extends TableCellRendererBase {
 }
 
 @Component({
-    selector: 'table-add-column',
+    selector: 'table-actions-add-column',
     templateUrl: './demo.component.html'
 })
 export class TableAddColumnDemoComponent extends AsyncDescription {

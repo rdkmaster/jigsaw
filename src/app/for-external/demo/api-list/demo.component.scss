@@ -1,0 +1,41 @@
+.demo-wrapper {
+    display: flex;
+    justify-content: space-between;
+
+    .doc-cntr {
+        width: calc(100vw - 620px);
+        min-height: calc(100vh - 60px);
+        background: var(--bg-container);
+
+        .welcome {
+            font-size: 26px;
+            text-align: center;
+            margin: 20% 0 80px 0;
+        }
+
+        .api-count-list {
+            left: 50%;
+            position: relative;
+            transform: translate(-50%);
+            display: inline-block;
+            font-size: 16px;
+            list-style: disc;
+
+            .label {
+                width: 100px;
+                display: inline-block;
+            }
+        }
+    }
+
+    .index-cntr {
+        position: fixed;
+        right: 0;
+        flex-shrink: 0;
+        width: 300px;
+    }
+
+    jigsaw-alphabetical-index {
+        height: calc(100vh - 100px);
+    }
+}

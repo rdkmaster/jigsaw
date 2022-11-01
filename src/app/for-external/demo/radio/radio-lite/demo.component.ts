@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { RadiosGroupValue } from 'jigsaw/public_api';
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "radio-lite",
+    selector: "radio-radio-lite",
     templateUrl: "./demo.component.html"
 })
 export class RadioLiteComponent extends AsyncDescription {

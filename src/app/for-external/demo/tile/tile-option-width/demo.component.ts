@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'tile-option-width',
+    selector: 'tile-tile-option-width',
     templateUrl: './demo.component.html'
 })
 export class TileSelectOptionWidthComponent extends AsyncDescription {

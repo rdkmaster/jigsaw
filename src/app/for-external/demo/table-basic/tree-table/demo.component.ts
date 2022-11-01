@@ -10,7 +10,7 @@ import {
     TreeTableCellRenderer,
     TreeTableData
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'table-basic-tree-table',

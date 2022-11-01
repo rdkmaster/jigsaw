@@ -1,0 +1,69 @@
+.demo-top-menu {
+  display: flex;
+  width: 100%;
+  background: var(--bg-body);
+
+  >a {
+    margin-left: 36px;
+  }
+
+  nav {
+    flex: 1;
+    margin-left: 50px;
+
+    ul.nav-tabs {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      border-bottom: none;
+
+      &>li {
+        position: relative;
+
+        a {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 100px;
+          height: 60px;
+          font-size: 14px;
+          color: inherit;
+          margin-right: 0;
+          border: none;
+
+          &.active {
+            border: none;
+            border-bottom: 4px solid #288bf0;
+            font-size: 16px;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+
+  .theme-select {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 33px;
+
+    >* {
+      margin-left: 8px;
+    }
+
+    .jigsaw-group-select-host,
+    .jigsaw-select-host {
+      .jigsaw-combo-select-host {
+        .jigsaw-combo-select-selection {
+          border-radius: 0;
+          border-width: 0;
+          border-bottom-width: 1px;
+        }
+      }
+    }
+  }
+}

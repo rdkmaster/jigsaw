@@ -1,0 +1,5 @@
+<ul class="demo-navigation">
+    <li *ngFor="let data of _$navData" (click)="scroll(data.el)" [title]="data.label">
+        <span>{{data.label}}</span>
+    </li>
+</ul>

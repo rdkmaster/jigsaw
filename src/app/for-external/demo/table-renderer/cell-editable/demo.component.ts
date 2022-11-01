@@ -4,7 +4,7 @@ import {
     TableData, ColumnDefine, JigsawInput, TableCellRendererBase,
     TableCellNumericEditorRenderer, TableCellAutoCompleteEditorRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 /*
  * 自定义单元格渲染组件
@@ -39,7 +39,7 @@ export class MyTableCellEditor extends TableCellRendererBase implements AfterVie
 }
 
 @Component({
-    selector: 'table-cell-editable',
+    selector: 'table-renderer-cell-editable',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })

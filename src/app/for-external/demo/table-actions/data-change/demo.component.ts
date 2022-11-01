@@ -1,10 +1,10 @@
 import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, ColumnDefine, DefaultCellRenderer } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-data-change',
+    selector: 'table-actions-data-change',
     templateUrl: './demo.component.html'
 })
 export class TableDataChangeDemoComponent extends AsyncDescription {
