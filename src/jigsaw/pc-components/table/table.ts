@@ -19,12 +19,12 @@
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {TranslateModule} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
-import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
+import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -47,6 +47,7 @@ import { JigsawButtonModule } from "../button/button";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawCheckBoxModule } from "../checkbox";
 import { JigsawSearchInputModule } from "../input/search-input";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 @WingsTheme('table.scss')
 @Component({
@@ -1067,8 +1068,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "table", {
+    constructor() {
+        TranslateHelper.initI18n("table", {
             zh: {
                 noData: "暂无数据",
             },
@@ -1076,6 +1077,5 @@ export class JigsawTableModule {
                 noData: "NO DATA"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }

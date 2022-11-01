@@ -1,17 +1,13 @@
-import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from "@ngx-translate/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { JigsawButtonModule } from "../../button/button";
 import { JigsawDraggableModule, JigsawDroppableModule } from "../../../common/directive/dragdrop/index";
-import {
-    JigsawUploadFallbackDirective,
-    JigsawUploadFileInfoListFallback
-} from "../../../common/directive/fallback/upload/upload.directive";
+import { JigsawUploadFallbackDirective, JigsawUploadFileInfoListFallback } from "../../../common/directive/fallback/upload/upload.directive";
 import { JigsawUploadFallback } from "./upload";
 import { PopupService } from "../../../common/service/popup.service";
-import { InternalUtils } from "../../../common/core/utils/internal-utils";
 import { TranslateHelper } from "../../../common/core/utils/translate-helper";
 
 /**
@@ -29,11 +25,11 @@ import { TranslateHelper } from "../../../common/core/utils/translate-helper";
     ],
     declarations: [JigsawUploadFallback, JigsawUploadFallbackDirective, JigsawUploadFileInfoListFallback],
     exports: [JigsawUploadFallback, JigsawUploadFallbackDirective],
-    providers: [PopupService, TranslateService]
+    providers: [PopupService]
 })
 export class JigsawUploadFallbackModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "upload", {
+    constructor() {
+        TranslateHelper.initI18n("upload", {
             zh: {
                 waiting: "等待中",
                 uploading: "上传中",
@@ -152,10 +148,6 @@ export class JigsawUploadFallbackModule {
                 fileMinSizeError: "Error detail: Size of the file is less than the minSize",
                 fileMaxSizeError: "Error detail: Size of the file is more than the maxSize"
             }
-        });
-        translateService.setDefaultLang(translateService.getBrowserLang());
-        TranslateHelper.languageChangEvent.subscribe(langInfo => {
-            translateService.use(langInfo.curLang);
         });
     }
 }

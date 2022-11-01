@@ -20,15 +20,4 @@ import {I18nFullDemoComponent} from "./demo.component";
     providers: [PopupService, TranslateService]
 })
 export class I18nFullDemoModule {
-    constructor() {
-        /**
-         * 覆盖控件内部的国际化词条
-         */
-        TranslateHelper.alert.zh = {
-            button: {ok: '知道了'}
-        };
-        TranslateHelper.alert.en = {
-            button: {ok: 'Gotcha'}
-        };
-    }
 }

@@ -128,7 +128,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             }
         });
         const currentLang = _translateService.currentLang ? _translateService.currentLang : _translateService.getBrowserLang();
-        _translateService.setDefaultLang(currentLang);
         TimeService.setLocale(currentLang);
     }
 

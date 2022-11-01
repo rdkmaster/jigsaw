@@ -1,9 +1,8 @@
-import { Component, ChangeDetectionStrategy, OnDestroy, NgModule, Input, Optional, Injector, Renderer2, ElementRef, NgZone } from "@angular/core";
-import { PopupInfo, PopupEffect, PopupPositionType, PopupPositionValue, PopupService } from '../../common/service/popup.service';
-import { CommonUtils } from '../../common/core/utils/common-utils';
+import { Component, ChangeDetectionStrategy, OnDestroy, NgModule, Input, Injector, Renderer2, ElementRef, NgZone } from "@angular/core";
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { TranslateService } from '@ngx-translate/core';
+import { PopupInfo, PopupEffect, PopupPositionType, PopupPositionValue, PopupService } from '../../common/service/popup.service';
+import { CommonUtils } from '../../common/core/utils/common-utils';
 import { AbstractDialogComponentBase, NoticeLevel } from "../dialog/dialog";
 import {WingsTheme} from "../../common/common";
 
@@ -279,7 +278,6 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
 @NgModule({
     imports: [CommonModule, PerfectScrollbarModule],
     declarations: [JigsawToast],
-    exports: [JigsawToast],
-    providers: [TranslateService]
+    exports: [JigsawToast]
 })
 export class JigsawToastModule { }

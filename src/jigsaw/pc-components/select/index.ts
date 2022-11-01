@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { TranslateService, TranslateModule } from "@ngx-translate/core";
+import { TranslateModule } from "@ngx-translate/core";
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { JigsawComboSelectModule } from "../combo-select/index";
 import { JigsawSelect } from "./select";
@@ -7,9 +7,9 @@ import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup, JigsawSelectCollapse } from "./collapse-and-group-select";
 import { JigsawCollapseModule } from "../collapse/collapse";
-import { InternalUtils } from "../../common/core/utils/internal-utils";
 import {JigsawInputModule} from "../input/input";
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 @NgModule({
     imports: [
@@ -26,8 +26,8 @@ import { JigsawLoadingModule } from '../../common/components/loading/loading';
     exports: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse]
 })
 export class JigsawSelectModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "select", {
+    constructor() {
+        TranslateHelper.initI18n("select", {
             zh: {
                 selectAll: "全选",
                 checkSelected: "查看已选",
@@ -49,7 +49,6 @@ export class JigsawSelectModule {
                 groupNoData: "No Data"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }
 export * from "./select";

@@ -11,11 +11,11 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import { TranslateService } from '@ngx-translate/core';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { InternalUtils } from '../../common/core/utils/internal-utils';
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 const defaultHrefValue = 'javascript:void(0);';
 export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
@@ -247,13 +247,13 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
 }
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [CommonModule, TranslateModule.forChild()],
     declarations: [JigsawIcon],
     exports: [JigsawIcon]
 })
 export class JigsawIconModule {
-    constructor(translateService: TranslateService) {
-        InternalUtils.initI18n(translateService, "icon", {
+    constructor() {
+        TranslateHelper.initI18n("icon", {
             zh: {
                 success: "成功",
                 warning: "警告",
@@ -273,6 +273,5 @@ export class JigsawIconModule {
                 custom: "Custom"
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 }

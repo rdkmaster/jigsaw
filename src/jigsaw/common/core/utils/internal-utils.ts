@@ -1,7 +1,7 @@
 import {NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {CallbackRemoval, CommonUtils} from "./common-utils";
-import {TranslateHelper} from "./translate-helper";
+import {LanguageTranslations, TranslateHelper} from "./translate-helper";
 
 /**
  * @internal
@@ -38,26 +38,8 @@ export class InternalUtils {
         return prefix + this._uniqueIdIndex;
     };
 
-    private static _initI18nWithLang(translateService: TranslateService, compName: string, translations: Object, lang: string): void {
-        let curLangTransByApp: Object;
-        const compTrans = TranslateHelper[compName];
-        if (compTrans) {
-            curLangTransByApp = compTrans[lang];
-        }
-        if (!curLangTransByApp) {
-            curLangTransByApp = {};
-        }
-
-        let curLangTrans: Object = translations[lang];
-        CommonUtils.extendObject(curLangTrans, curLangTransByApp);
-        let resultTrans = {};
-        resultTrans[compName] = curLangTrans;
-        translateService.setTranslation(lang, resultTrans, true);
-    }
-
     public static initI18n(translateService: TranslateService, compName: string, translations: Object): void {
-        InternalUtils._initI18nWithLang(translateService, compName, translations, 'en');
-        InternalUtils._initI18nWithLang(translateService, compName, translations, 'zh');
+        TranslateHelper.initI18n(compName, translations as LanguageTranslations);
     }
 
     /**

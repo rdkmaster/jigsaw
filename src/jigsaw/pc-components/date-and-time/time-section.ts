@@ -21,7 +21,6 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {Subscription} from 'rxjs';
 import {TimeGr, TimeService} from "../../common/service/time.service";
 import {JigsawTileSelectModule} from "../list-and-tile/tile";
@@ -59,26 +58,29 @@ export type TimeSectionValue = TimeSection;
         <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
             <j-checkbox *ngIf="multipleSelect" [theme]="theme" [(checked)]="_$amTimeCheck"
                         (checkedChange)="_$changeAmPmState($event, 'am')"></j-checkbox>
-            <ul>
-                <li *ngFor="let section of _$amTimeSection" (click)="_$timeSelect(section)"
-                    [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
-            </ul>
             <div class="jigsaw-time-section-picker-hour">
-                <span *ngFor="let time of _$amTimeline">{{time}}</span>
+                <ul>
+                    <li *ngFor="let section of _$amTimeSection" (click)="_$timeSelect(section)"
+                        [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
+                </ul>
+                <div>
+                    <span *ngFor="let time of _$amTimeline">{{time}}</span>
+                </div>
             </div>
         </div>
         <div class="jigsaw-time-section-picker-line" [class.jigsaw-time-section-picker-multiple]="multipleSelect">
             <j-checkbox *ngIf="multipleSelect" [theme]="theme" [(checked)]="_$pmTimeCheck"
                         (checkedChange)="_$changeAmPmState($event, 'pm')"></j-checkbox>
-            <ul [class.jigsaw-time-section-picker-multiple]="multipleSelect">
-                <li *ngFor="let section of _$pmTimeSection" (click)="_$timeSelect(section)"
-                    [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
-            </ul>
             <div class="jigsaw-time-section-picker-hour">
-                <span *ngFor="let time of _$pmTimeline">{{time}}</span>
+                <ul [class.jigsaw-time-section-picker-multiple]="multipleSelect">
+                    <li *ngFor="let section of _$pmTimeSection" (click)="_$timeSelect(section)"
+                        [class.jigsaw-time-section-picker-selected]="section.isSelected"></li>
+                </ul>
+                <div>
+                    <span *ngFor="let time of _$pmTimeline">{{time}}</span>
+                </div>
             </div>
         </div>
-
     `,
     host: {
         '[attr.data-theme]': 'theme',
@@ -280,7 +282,6 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
             this._$weekList = this._createWeekList();
         });
         let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
         TimeService.setLocale(browserLang);
         this._$weekList = this._createWeekList();
     }
@@ -415,8 +416,6 @@ export class JigsawDaySectionPicker extends AbstractJigsawComponent implements O
         this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
             this._$dayList = this._createDayList();
         });
-        let browserLang = _translateService.getBrowserLang();
-        _translateService.setDefaultLang(browserLang);
     }
 
     private _langChangeSubscriber: Subscription;
@@ -574,10 +573,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(langInfo => {
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(() => {
             this._updateSwitchList();
         });
-        _translateService.setDefaultLang(_translateService.getBrowserLang());
     }
 
     private _langChangeSubscriber: Subscription;
@@ -828,10 +826,9 @@ export class JigsawTimeSection extends AbstractJigsawComponent implements OnDest
     exports: [JigsawTimeSection, JigsawTimeSectionPicker, JigsawWeekSectionPicker, JigsawDaySectionPicker]
 })
 export class JigsawTimeSectionModule {
-
-    constructor(translateService: TranslateService) {
+    constructor() {
         TimeService.deFineZhLocale();
-        InternalUtils.initI18n(translateService, 'timeSection', {
+        TranslateHelper.initI18n('timeSection', {
             zh: {
                 selectAll: "全选",
                 lastDay: "最后一天",
@@ -851,7 +848,6 @@ export class JigsawTimeSectionModule {
                 switchEveryday: 'Everyday'
             }
         });
-        translateService.setDefaultLang(translateService.getBrowserLang());
     }
 
 }
