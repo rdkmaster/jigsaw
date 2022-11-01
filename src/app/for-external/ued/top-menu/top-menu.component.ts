@@ -28,12 +28,12 @@ export class TopMenuComponent {
     ];
 
     public versionData = [
-        {label: 'latest', url: '/#/home'},
-        {label: 'v9.3', url: 'https://rdk.zte.com.cn/v9.3/#/'},
-        {label: 'v8.0', url: 'https://rdk.zte.com.cn/v8.0/#/'},
-        {label: 'v5.0', url: 'https://rdk.zte.com.cn/v5.0/#/'},
-        {label: 'v1.1', url: 'https://rdk.zte.com.cn/v1.1/#/'}
-    ]
+        {label: 'latest', url: '/latest/#/'},
+        {label: 'v9.3', url: '/v9.3/#/'},
+        {label: 'v8.0', url: '/v8.0/#/'},
+        {label: 'v5.0', url: '/v5.0/#/'},
+        {label: 'v1.1', url: '/v1.1/#/'}
+    ];
 
     public themeChange(theme) {
         const themeData = theme[0].data[0];
