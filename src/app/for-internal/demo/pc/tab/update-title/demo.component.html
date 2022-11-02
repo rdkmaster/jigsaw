@@ -4,16 +4,23 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-button (click)="changeTitle()">change title</jigsaw-button>
-<jigsaw-button (click)="changeLang()">
-    toggle change language
-</jigsaw-button>
-<jigsaw-tabs>
+<jigsaw-button (click)="changeTitle1()">修改标题</jigsaw-button>
+<jigsaw-button (click)="changeLang()">修改语言</jigsaw-button>
+<span>
+    <a (click)="changeTitle2(1)">修改</a>第二个页签的标题是正常的。
+    使用jigsaw-title时<a (click)="changeTitle2(2)">修改标题</a>，会使得两个标题同时生效。
+</span>
+
+<jigsaw-tabs #tabs>
     <jigsaw-tab-pane>
         <div jigsaw-title>{{title}}</div>
         <ng-template>tab content 1</ng-template>
     </jigsaw-tab-pane>
     <jigsaw-tab-pane title="{{'title2' | translate}}">
         <ng-template>tab content 2</ng-template>
+    </jigsaw-tab-pane>
+    <jigsaw-tab-pane title="Part 1">
+        <div jigsaw-title>&nbsp;&nbsp;&nbsp;Part 2</div>
+        <ng-template>tab content 3</ng-template>
     </jigsaw-tab-pane>
 </jigsaw-tabs>

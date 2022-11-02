@@ -58,6 +58,11 @@ export class DynamicTabDemoComponent {
         });
     }
 
+    public renameFirstTab(): void {
+        const ts = (new Date()).getMilliseconds();
+        this.tabs.renameTab(0, 'new title ' + ts);
+    }
+
     public addComponentTab() {
         this.addTab("component tab", TabContentDefine, "jigsaw");
     }

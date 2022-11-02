@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {TranslateService} from "@ngx-translate/core";
-import {TranslateHelper} from "jigsaw/public_api";
+import {JigsawTab, TranslateHelper} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -18,8 +18,15 @@ export class TabsUpdateTitleDemoComponent {
             this.translateService.currentLang == 'zh' ? 'en' : 'zh');
     }
 
-    changeTitle() {
+    changeTitle1() {
         this.title = this.title == 'a short title' ? 'a very very very very long title' : 'a short title';
+    }
+
+    @ViewChild('tabs')
+    private _tabs: JigsawTab;
+
+    changeTitle2(idx: number) {
+        this._tabs.renameTab(idx, 'new title ' + Date.now());
     }
 
     // ====================================================================
