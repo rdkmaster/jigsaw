@@ -231,6 +231,43 @@ export abstract class JigsawCommonAlert extends DialogBase {
     protected constructor(protected _renderer: Renderer2, protected _elementRef: ElementRef) {
         super();
         this._renderer.addClass(this._elementRef.nativeElement, 'jigsaw-common-alert');
+        // 这个组件以弹出用法为主，国际化必须在这里初始化，不能放在模块或者文件静态区里初始化，否则aot编译后不生效
+        TranslateHelper.initI18n('alert', {
+            zh: {
+                button: {
+                    ok: "确定",
+                    cancel: "取消",
+                    yes: "是",
+                    no: "否",
+                    abort: "终止",
+                    ignore: "忽略",
+                    retry: "重试"
+                },
+                title: {
+                    info: "提示",
+                    warning: "警告",
+                    error: "错误",
+                    confirm: "确认"
+                }
+            },
+            en: {
+                button: {
+                    ok: "OK",
+                    cancel: "Cancel",
+                    yes: "Yes",
+                    no: "No",
+                    abort: "Abort",
+                    ignore: "Ignore",
+                    retry: "Retry"
+                },
+                title: {
+                    info: "Information",
+                    warning: "Warning",
+                    error: "Error",
+                    confirm: "Confirm"
+                }
+            }
+        });
     }
 }
 
@@ -441,40 +478,3 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
 export class JigsawAlertModule {
 }
 
-// 这个组件以弹出用法为主，国际化必须在这里初始化
-TranslateHelper.initI18n('alert', {
-        zh: {
-            button: {
-                ok: "确定",
-                cancel: "取消",
-                yes: "是",
-                no: "否",
-                abort: "终止",
-                ignore: "忽略",
-                retry: "重试"
-            },
-            title: {
-                info: "提示",
-                warning: "警告",
-                error: "错误",
-                confirm: "确认"
-            }
-        },
-        en: {
-            button: {
-                ok: "OK",
-                cancel: "Cancel",
-                yes: "Yes",
-                no: "No",
-                abort: "Abort",
-                ignore: "Ignore",
-                retry: "Retry"
-            },
-            title: {
-                info: "Information",
-                warning: "Warning",
-                error: "Error",
-                confirm: "Confirm"
-            }
-        }
-    });

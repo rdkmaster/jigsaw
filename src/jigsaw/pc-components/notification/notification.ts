@@ -141,6 +141,21 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         @Optional() private _router: Router,
         @Optional() private _activatedRoute: ActivatedRoute) {
         super(renderer, elementRef, _zone, _injector);
+        // 这个组件以弹出用法为主，国际化必须在这里初始化，不能放在模块或者文件静态区里初始化，否则aot编译后不生效
+        TranslateHelper.initI18n('notification', {
+            zh: {
+                success: '成功',
+                error: '错误',
+                warning: '警告',
+                info: '消息'
+            },
+            en: {
+                success: 'Success',
+                error: 'Error',
+                warning: 'Warning',
+                info: 'Information'
+            }
+        });
     }
 
     protected getPopupElement(): HTMLElement {
@@ -560,20 +575,3 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 })
 export class JigsawNotificationModule {
 }
-
-// 这个组件以弹出用法为主，国际化必须在这里初始化
-TranslateHelper.initI18n('notification', {
-    zh: {
-        success: '成功',
-        error: '错误',
-        warning: '警告',
-        info: '消息'
-    },
-    en: {
-        success: 'Success',
-        error: 'Error',
-        warning: 'Warning',
-        info: 'Information'
-    }
-});
-
