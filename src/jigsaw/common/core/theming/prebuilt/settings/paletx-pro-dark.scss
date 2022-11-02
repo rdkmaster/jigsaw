@@ -299,15 +299,15 @@ $border-color-shadow-cntr: $gray-5;
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);
 
 /* 导航色 */
-/*@public*/ $nav-header: #08090e;
-$nav-navigation: #232734;
-$nav-navigation-darken: #1a1c27;
-$nav-hover: #08090e;
-$nav-active: #08090e;
+/*@public*/ $nav-header: $gray-2;
+$nav-navigation: $gray-2;
+$nav-navigation-darken: $gray-3;
+$nav-hover: $gray-5;
+$nav-active: $gray-4;
 $nav-color: $font-color-default;
 $nav-color-disabled: $font-color-disabled;
 $nav-color-active: $brand-default;
-$nav-border: #313645;
+$nav-border: $border-color-default;
 
 /* 蒙版色 */
 $mask-default: rgba(#fff, 0.6);
