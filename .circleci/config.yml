@@ -37,11 +37,9 @@ jobs:
                     node build/scripts/extract-theme-variables.js
                     node build/scripts/check-extraction.js
                     node build/scripts/create-component-wings-theme.js
-                    # ./node_modules/.bin/gulp ensure-url-matches-path
+                    node build/scripts/generate-external-demo-info.js
+                    node build/scripts/generate-external-navigation-info.js
                     ./node_modules/.bin/gulp build:novice-guide
-#            - run:
-#                name: Generate demo info
-#                command: ./node_modules/.bin/gulp generate-demo-info
             - run:
                 name: Generate doc
                 command: sh build/scripts/doc-generator/generate.sh ./temp/doc/

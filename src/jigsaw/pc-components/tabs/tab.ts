@@ -714,7 +714,7 @@ export class JigsawTab extends JigsawTabBase {
      *
      * @param index 目标tab页的编号，从0开始计数。
      */
-    public removeTab(index) {
+    public removeTab(index: number): void {
         if (this._$tabPanes.length - index < 1) {
             console.info("没有对应tab-pane 供删除");
             return;
@@ -732,6 +732,28 @@ export class JigsawTab extends JigsawTabBase {
         } else if (this.selectedIndex > index) {
             this.selectedIndex = this.selectedIndex - 1
         }
+    }
+
+    public getTabPaneByIndex(index: number): JigsawTabPane {
+        return this._$tabPanes?.find((_, idx) => idx == index);
+    }
+
+    public renameTab(index: number, newTitle: string): string;
+    public renameTab(tabPane: JigsawTabPane, newTitle: string): string;
+    public renameTab(indexOrPane: number | JigsawTabPane, newTitle: string): string {
+        const tabPane: JigsawTabPane = indexOrPane instanceof JigsawTabPane ? indexOrPane :
+            this.getTabPaneByIndex(indexOrPane);
+        if (!tabPane) {
+            console.error('no tab pane found by index or pane', indexOrPane);
+            return '';
+        }
+        if (!!tabPane.titleRenderer) {
+            console.warn('unable to modify the title of this tab pane, because it is using a title renderer');
+            return;
+        }
+        const oldTitle = tabPane.title;
+        tabPane.title = newTitle;
+        return oldTitle;
     }
 
     /**
