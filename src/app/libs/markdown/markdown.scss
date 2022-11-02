@@ -48,7 +48,7 @@
     }
 
     .md-h1 {
-        color: rgb(77, 77, 77);
+        color: var(--font-color-default);
         font-size: 30px;
         font-weight: bold;
     }
@@ -56,7 +56,7 @@
     .md-h2 {
         font-size: 24px;
         //border-bottom: 1px solid #ccc;
-        color: rgb(77, 77, 77);
+        color: var(--font-color-default);
     }
 
     .md-h3 {

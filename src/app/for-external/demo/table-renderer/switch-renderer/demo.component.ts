@@ -1,10 +1,10 @@
 import {Component, ElementRef} from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, ColumnDefine, TableCellSwitchRenderer, TableHeadCheckboxRenderer, AdditionalColumnDefine } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-switch-renderer',
+    selector: 'table-renderer-switch-renderer',
     templateUrl: './demo.component.html'
 })
 export class TableSwitchRendererDemoComponent extends AsyncDescription {

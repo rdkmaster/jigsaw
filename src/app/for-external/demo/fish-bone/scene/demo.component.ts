@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ViewEncapsulation, NgZone, ElementRef} from "@
 import {HttpClient} from "@angular/common/http";
 import {take} from 'rxjs/operators';
 import {ChartIconFactory, ChartType, SimpleTreeData} from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: 'fish-bone-scene',

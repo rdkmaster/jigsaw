@@ -16,6 +16,10 @@
                         placeholder="请选择" width="160px" optionWidth="320px" (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
+<jigsaw-header>含有空字符串的选项</jigsaw-header>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList1"
+                        placeholder="请选择" width="160px" optionCount="8" (valueChange)="valueChange($event)">
+</jigsaw-collapse-select>
 <jigsaw-header>折叠下拉（多选）</jigsaw-header>
 <jigsaw-collapse-select
     [disabled]="disabled"

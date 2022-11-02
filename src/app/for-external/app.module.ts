@@ -16,12 +16,11 @@ import {
     JigsawNumericInputModule,
     JigsawSelectModule,
     MajorStyle,
+    JigsawButtonModule,
 } from "jigsaw/public_api";
 import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
 import { routerConfig } from "./router-config";
-import { PCDemoListComponent } from "./demo-list/pc-demo-list.component";
-import { SwitchDemoComponent } from "./demo-list/switch-demo.component";
 import { AlertDemoModule } from "./demo/alert/demo.module";
 import { HeaderDemoModule } from "./demo/header/demo.module";
 import { BreadcrumbDemoModule } from "./demo/breadcrumb/demo.module";
@@ -89,16 +88,28 @@ import { TableActionsDemoModule } from "./demo/table-actions/demo.module";
 import { TableColumnDefinesDemoModule } from "./demo/table-column-defines/demo.module";
 import { TableBigTableDemoModule } from "./demo/table-big-data/demo.module";
 import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
+import { HomeComponent } from "./ued/home.component";
+import { TopMenuComponent } from "./ued/top-menu/top-menu.component";
+import { PageNotFoundComponent } from "./ued/page-not-found/page-not-found.component";
+import { ComponentMenuNavComponent } from "./ued/component-menu-nav/component-menu-nav.component";
+import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
+import { DesignComponent } from "./ued/design/design";
+import { ApiListDemoModule } from "./demo/api-list/demo.module";
 
 @NgModule({
-    declarations: [AppComponent, PCDemoListComponent, SwitchDemoComponent],
+    declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
     imports: [
         RouterModule.forRoot(
             [
-                ...routerConfig,
-                { path: "", component: SwitchDemoComponent },
-                { path: "demo", component: PCDemoListComponent },
-                { path: "**", redirectTo: "/" },
+                { path: "", redirectTo: 'home', pathMatch: 'full' },
+                { path: "home", component: HomeComponent },
+                { path: "designs", component: DesignComponent },
+                {
+                    path: 'components', component: ComponentMenuNavComponent,
+                    children: routerConfig
+                },
+                { path: "**", component: PageNotFoundComponent }
             ],
             { useHash: true }
         ),
@@ -182,6 +193,10 @@ import { TableRendererDemoModule } from "./demo/table-renderer/demo.module";
         TableBigTableDemoModule,
         TableRendererDemoModule,
         JigsawSelectModule,
+        JigsawButtonModule,
+        PerfectScrollbarModule,
+        QuickStartDemoModule,
+        ApiListDemoModule
     ],
     providers: [
         {

@@ -1,10 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { TableData, JigsawTable } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-resize',
+    selector: 'table-actions-resize',
     templateUrl: './demo.component.html',
     encapsulation: ViewEncapsulation.None
 })

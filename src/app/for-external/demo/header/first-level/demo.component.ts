@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: "header-level1",
+    selector: "header-first-level",
     templateUrl: './demo.component.html'
 })
 export class HeaderFirstLevelComponent extends AsyncDescription {

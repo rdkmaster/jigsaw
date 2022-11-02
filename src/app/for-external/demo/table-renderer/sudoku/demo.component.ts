@@ -3,10 +3,10 @@ import { HttpClient } from "@angular/common/http";
 import { TableData, JigsawInfoAlert } from "jigsaw/public_api";
 import { NumberRenderer } from "./number-renderer";
 import { CHECK_PUZZLE_STATUS, isTargetConflicted, PUZZLE_RESET, PUZZLE_SOLVED } from "./utils";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-sudoku',
+    selector: 'table-renderer-sudoku',
     templateUrl: './demo.component.html'
 })
 export class SudokuGameComponent extends AsyncDescription {

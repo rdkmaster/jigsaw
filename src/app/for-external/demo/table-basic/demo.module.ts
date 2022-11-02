@@ -1,7 +1,10 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
-import {TableBasicAllComponent} from "./demo.component";
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
+import { TableBasicAllComponent } from "./demo.component";
 import {
     JigsawPaginationModule,
     JigsawTableModule,
@@ -11,21 +14,21 @@ import {
     JigsawTableRendererModule,
     JigsawAutoCompleteInputModule
 } from "jigsaw/public_api";
-import {TableBasicBasicComponent} from "./basic/demo.component";
-import {TableBasicNoDataDemoComponent} from "./no-data/demo.component";
-import {TableBasicFixedHeadDemoComponent} from "./fixed-header/demo.component";
-import {TableBasicHideHeadDemoComponent} from "./hide-header/demo.component";
-import {TableBasicSetHeaderSortDemoComponent} from "./sortable/demo.component";
-import {TableBasicAddIDColumnDemoComponent} from "./index-column/demo.component";
-import {TableBasicAddIDWithPagingComponent} from "./index-column-with-paging/demo.component";
-import {TableBasicPageableDemoComponent} from "./pageable/demo.component";
-import {TableBasicPageableReadyDemoComponent} from "./pageable-ready/demo.component";
-import {LocalPagingDataDemoComponent} from "./local-paging-data/demo.component";
-import {ChartIconDemoModule} from "../chart-icon/demo.module";
-import {TableBasicChartIconDemoComponent} from "./chart-icon/demo.component";
-import {TableBasicProgressDemoComponent} from "./progress/demo.component";
-import {TableBasicTreeTableDemoComponent} from "./tree-table/demo.component";
-import {TableBasicContentWidthDemoComponent} from "./content-width/demo.component";
+import { TableBasicBasicComponent } from "./basic/demo.component";
+import { TableBasicNoDataDemoComponent } from "./no-data/demo.component";
+import { TableBasicFixedHeadDemoComponent } from "./fixed-header/demo.component";
+import { TableBasicHideHeadDemoComponent } from "./hide-header/demo.component";
+import { TableBasicSetHeaderSortDemoComponent } from "./sortable/demo.component";
+import { TableBasicAddIDColumnDemoComponent } from "./index-column/demo.component";
+import { TableBasicAddIDWithPagingComponent } from "./index-column-with-paging/demo.component";
+import { TableBasicPageableDemoComponent } from "./pageable/demo.component";
+import { TableBasicPageableReadyDemoComponent } from "./pageable-ready/demo.component";
+import { LocalPagingDataDemoComponent } from "./local-paging-data/demo.component";
+import { ChartIconDemoModule } from "../chart-icon/demo.module";
+import { TableBasicChartIconDemoComponent } from "./chart-icon/demo.component";
+import { TableBasicProgressDemoComponent } from "./progress/demo.component";
+import { TableBasicTreeTableDemoComponent } from "./tree-table/demo.component";
+import { TableBasicContentWidthDemoComponent } from "./content-width/demo.component";
 
 @NgModule({
     declarations: [
@@ -47,6 +50,9 @@ import {TableBasicContentWidthDemoComponent} from "./content-width/demo.componen
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawTableModule,
         JigsawPaginationModule,

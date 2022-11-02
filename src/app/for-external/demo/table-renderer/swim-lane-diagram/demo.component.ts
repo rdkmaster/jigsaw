@@ -2,10 +2,10 @@ import {Component, ElementRef, ViewChild, ViewEncapsulation} from "@angular/core
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
 import {TableSwimLaneCell} from "./table-renderer";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-swim-lane-diagram',
+    selector: 'table-renderer-swim-lane-diagram',
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css'],
     encapsulation: ViewEncapsulation.None

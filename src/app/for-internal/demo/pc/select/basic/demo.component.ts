@@ -18,6 +18,14 @@ export class SelectBasicDemoComponent {
     selectedCityForSelect2: string;
     cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
+    selectedCityForSelect4: string;
+    cityList1 = new ArrayCollection([
+        {label: "北京"},
+        {label: ""},
+        {label: "南京"},
+        {label: "深圳"},
+    ]);
+
     selectedCityName: string;
 
     cityList3 = new ArrayCollection([
@@ -56,6 +64,11 @@ export class SelectBasicDemoComponent {
     public selectChange3(selectedItem: any) {
         console.log("select city is:", selectedItem);
         this.selectedCityName3 = selectedItem.name;
+    }
+
+    public selectChange4(selectedItem: any) {
+        console.log("select city is:", selectedItem);
+        this.selectedCityForSelect4 = selectedItem.label;
     }
 
     // ====================================================================

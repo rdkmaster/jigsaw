@@ -1,10 +1,10 @@
 import {Component, ElementRef, ViewChild} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {TableData, ColumnDefine, JigsawTable} from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-update-column-define',
+    selector: 'table-column-defines-update-column-define',
     templateUrl: './demo.component.html'
 })
 export class TableColumnSetWidthDemoComponent extends AsyncDescription {

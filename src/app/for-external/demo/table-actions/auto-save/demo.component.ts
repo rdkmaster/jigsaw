@@ -9,10 +9,10 @@ import {
     PopupService,
     PopupInfo
 } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'table-auto-save',
+    selector: 'table-actions-auto-save',
     templateUrl: "./demo.component.html",
     encapsulation: ViewEncapsulation.None
 })

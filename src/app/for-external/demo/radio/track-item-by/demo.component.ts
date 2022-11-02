@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { ArrayCollection } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'radio-TrackItemBy',
+    selector: 'radio-track-item-by',
     templateUrl: './demo.component.html'
 })
 export class RadioTrackItemByDemoComponent extends AsyncDescription {

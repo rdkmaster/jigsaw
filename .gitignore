@@ -30,7 +30,6 @@ npm-debug.log
 testem.log
 src/jigsaw/common/core/theming/prebuilt/extraction/*
 src/jigsaw/common/core/theming/prebuilt/wings-theme/*
-src/app/for-external/demo-template/description-and-sources.js
 
 # e2e
 /e2e/*.js
@@ -43,4 +42,6 @@ Thumbs.db
 #vscode configs
 .eslintrc.js
 prettier.config.js
-src/app/for-external/assets/docs/
+**/template/demo-navigation-info.json
+**/demo-template/description-and-sources.json
+src/app/for-external/assets/docs

@@ -14,7 +14,7 @@ cd $output
 output=`pwd`
 
 cd $home
-./node_modules/.bin/compodoc -V >/dev/null
+./node_modules/.bin/compodoc -V 2>/dev/null
 if [ "$?" != "0" ]; then
     npm install @compodoc/compodoc@1.0.9
 fi
@@ -34,9 +34,4 @@ if [ "$?" != "0" ]; then
     echo "ERROR: parse documentation error!"
     exit 1
 fi
-
-node comp-data-relationship-svg-parser.js
-if [ "$?" != "0" ]; then
-    echo "ERROR: component data relationship error!"
-    exit 1
-fi
+chmod 755 -R $output

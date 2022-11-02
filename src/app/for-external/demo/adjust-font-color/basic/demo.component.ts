@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { CommonUtils } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
     selector: "adjust-font-color-basic",

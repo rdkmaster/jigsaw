@@ -114,7 +114,7 @@ export class CommonUtils {
     public static compareWithKeyProperty(item1: any, item2: any, trackItemBy: string[]): boolean {
         if (trackItemBy && trackItemBy.length > 0) {
             for (let i = 0; i < trackItemBy.length; i++) {
-                if (!item1 || !item2) {
+                if (this.isUndefined(item1) || this.isUndefined(item2)) {
                     // 过滤掉 typeof null == 'object'
                     return false;
                 } else if (typeof item1 === 'object' && typeof item2 === 'object') {

@@ -1,9 +1,9 @@
 import { Component } from "@angular/core";
 import { BreadcrumbNode } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'breadcrumb-multi-level',
+    selector: 'breadcrumb-fold',
     templateUrl: "./demo.component.html"
 })
 export class BreadcrumbFoldDemoComponent extends AsyncDescription {

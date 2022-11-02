@@ -1,0 +1,30 @@
+.demo-navigation {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    padding-left: 24px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 8px;
+        width: 1px;
+        height: 100%;
+        background: var(--border-color-default);
+    }
+
+    li {
+        height: 24px;
+        font-size: 14px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--brand-hover);
+        }
+    }
+}

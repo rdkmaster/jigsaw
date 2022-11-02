@@ -22,7 +22,8 @@ export class TableCellRenderFullComponent {
                 ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000"],
                 ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000"],
                 ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000"],
-                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000"]
+                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000"],
+                ["Garrett", "123456", "Edinburgh", "", "Developer", "5000"]
             ],
             ["name", "password", "office", "enroll-date", "position", "salary"],
             ["DefaultCell", "Password", "TextEditor", "Select", "AutoCompleteEditor", "NumericEditor"]

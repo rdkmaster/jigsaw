@@ -1,7 +1,7 @@
 <jigsaw-combo-select #comboSelect width="100%" [theme]="theme" [autoWidth]="!optionWidth" [maxHeight]="maxHeight" [(value)]="_$selectedItems"
                      [clearable]="clearable" [labelField]="labelField" [valid]="valid" [disabled]="disabled"
                      [placeholder]="placeholder" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
-                     [autoClose]="!multipleSelect" (openChange)="_$onComboOpenChange($event)"
+                     [autoClose]="!multipleSelect" [positionType]="selectListPositionType" (openChange)="_$onComboOpenChange($event)"
                      (clear)="_$handleClearable()" (remove)="_$onTagRemove($event)">
     <ng-template>
         <div [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}"
@@ -48,8 +48,8 @@
                                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
                                                  [(checked)]="listItem.selected" mode="minimalist">
                                 </jigsaw-checkbox>
-                                <span class="select-option-label" title="{{item && item[labelField] ? item[labelField] : item}}">
-                                    {{item && item[labelField] ? item[labelField] : item}}
+                                <span class="select-option-label" title="{{_$getItemLabel(item)}}">
+                                    {{_$getItemLabel(item)}}
                                 </span>
                             </jigsaw-list-option>
                         </jigsaw-list>
@@ -62,8 +62,7 @@
          [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.allSelected' | translate}}
     </div>
-    <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics"
-         [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
+    <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}
     </div>
 </jigsaw-combo-select>

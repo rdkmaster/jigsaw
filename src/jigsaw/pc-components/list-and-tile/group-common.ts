@@ -107,7 +107,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
     }
 
-    @Output() public selectedItemsChange = new EventEmitter<any[]>();
+    @Output()
+    public selectedItemsChange = new EventEmitter<any[]>();
 
     //获取映射的items
     protected _items: QueryList<AbstractJigsawOptionComponent>;
@@ -167,7 +168,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     }
 
     private _subscribeItemSelectedChange(items: QueryList<AbstractJigsawOptionComponent>) {
-        items.forEach(item => {
+        items.forEach((item: AbstractJigsawOptionComponent) => {
             // 取消可能重复的订阅事件
             item.change.observers.length = 0;
             item.change.subscribe(() => {
@@ -279,6 +280,4 @@ export class AbstractJigsawOptionComponent extends AbstractJigsawComponent {
 
     @Output()
     public change = new EventEmitter<AbstractJigsawOptionComponent>();
-
-    public changeDetector: ChangeDetectorRef
 }

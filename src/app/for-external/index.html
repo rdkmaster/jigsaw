@@ -26,20 +26,6 @@
         }
     </style>
     <link rel="icon" type="image/x-icon" href="app/libs/favicon.ico">
-    <!-- <link id="jigsaw-app-for-external-code-theme" rel="stylesheet" href="app/for-external/assets/prism-light.css"> -->
-    <script>
-        (function () {
-            // 兼容ie11
-            if (window.NodeList && !NodeList.prototype.forEach) {
-                NodeList.prototype.forEach = function (callback, thisArg) {
-                    thisArg = thisArg || window;
-                    for (var i = 0; i < this.length; i++) {
-                        callback.call(thisArg, this[i], i, this);
-                    }
-                };
-            }
-        })()
-    </script>
 </head>
 
 <body>

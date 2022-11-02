@@ -1,10 +1,10 @@
 import {Component, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption } from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'transfer-table-transfer',
+    selector: 'transfer-transfer-table',
     templateUrl: './demo.component.html'
 })
 export class TransferTableDemoComponent extends AsyncDescription {

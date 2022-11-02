@@ -1,13 +1,7 @@
 <jigsaw-root>
     <div class="app-wrap">
+        <ued-top-menu></ued-top-menu>
+        <div class="menu-placeholder"></div>
         <router-outlet></router-outlet>
-        <div class="theme-select">
-            <jigsaw-group-select
-                [data]="themeData"
-                placeholder="选择皮肤"
-                width="140px"
-                (valueChange)="themeChange($event)"
-            ></jigsaw-group-select>
-        </div>
     </div>
 </jigsaw-root>

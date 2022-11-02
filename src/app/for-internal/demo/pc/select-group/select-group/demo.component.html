@@ -173,3 +173,7 @@
     width="130px"
     [useStatistics]="true"
 ></jigsaw-group-select>
+<jigsaw-header>含有空字符串</jigsaw-header>
+<jigsaw-group-select [disabled]="disabled" [valid]="valid" [data]="dataListWithEmptyString"
+                     placeholder="请选择" width="160px" optionCount="8" (valueChange)="valueChange($event)">
+</jigsaw-group-select>

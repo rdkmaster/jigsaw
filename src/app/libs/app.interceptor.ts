@@ -29,7 +29,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        if (req.url.startsWith('/app/for-external/demo/')) {
+        if (req.url.includes('/app/for-external/demo/')) {
             console.log('forwarding the request to the server:', req.url);
             return next.handle(req);
         }
@@ -46,6 +46,8 @@ export class AjaxInterceptor implements HttpInterceptor {
             return this.createResult(body, req.url);
         } else if (req.url == '/rdk/service/common/upload') {
             return this.dealServerSideUploadRequest(req);
+        } else if (req.url.includes('app/for-external/assets/docs')) {
+            return next.handle(req);
         } else {
             console.error('no mock data processor found, forwarding the request to the server...');
             return next.handle(req);

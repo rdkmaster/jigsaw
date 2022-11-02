@@ -1,19 +1,22 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import {
     JigsawButtonModule, JigsawInputModule, JigsawRadioModule, JigsawComboSelectModule,
     JigsawTileSelectModule, JigsawCheckBoxModule, JigsawSliderModule,
     JigsawSwitchModule, JigsawBoxModule, JigsawDateTimePickerModule,
     JigsawRangeDateTimePickerModule
 } from "jigsaw/public_api";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {BoxAllComponent} from "./demo.component";
-import {FormDemoComponent} from "./form/demo.component";
-import {BoxJustifyDemoComponent} from "./justify/demo.component";
-import {BoxLayoutDemoComponent} from "./layout/demo.component";
-import {BoxMiddleResizeLineDemoComponent} from "./middle-resize-line/demo.component";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { CommonModule } from "@angular/common";
+import { BoxAllComponent } from "./demo.component";
+import { FormDemoComponent } from "./form/demo.component";
+import { BoxJustifyDemoComponent } from "./justify/demo.component";
+import { BoxLayoutDemoComponent } from "./layout/demo.component";
+import { BoxMiddleResizeLineDemoComponent } from "./middle-resize-line/demo.component";
 
 
 @NgModule({
@@ -26,6 +29,9 @@ import {BoxMiddleResizeLineDemoComponent} from "./middle-resize-line/demo.compon
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawButtonModule,
         JigsawInputModule,

@@ -1,6 +1,6 @@
 import {Component, ElementRef, Renderer2, ViewEncapsulation} from "@angular/core";
 import {ColumnDefine, TableCellProgressRenderer, TableData} from "jigsaw/public_api";
-import {AsyncDescription} from "../../../demo-template/demo-template";
+import {AsyncDescription} from "../../../template/demo-template/demo-template";
 import {HttpClient} from "@angular/common/http";
 
 @Component({

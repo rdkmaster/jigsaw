@@ -1,6 +1,9 @@
-import {NgModule} from "@angular/core";
-import {DemoTemplateModule} from '../../demo-template/demo-template';
-import {JigsawMarkdownModule} from '../../../libs/markdown/markdown';
+import { NgModule } from "@angular/core";
+import { DemoTemplateModule } from '../../template/demo-template/demo-template';
+import { DocTemplateModule } from '../../template/doc-template/doc-template';
+import { DocFooterTemplateModule } from '../../template/doc-footer-template/doc-footer-template';
+import { DemoNavigationModule } from '../../template/demo-navigation/demo-navigation';
+import { JigsawMarkdownModule } from '../../../libs/markdown/markdown';
 import {
     JigsawTileSelectModule,
     JigsawButtonModule,
@@ -9,19 +12,19 @@ import {
     JigsawSwitchModule,
     JigsawInputModule
 } from "jigsaw/public_api";
-import {ComboSelectComponent} from "./demo.component";
-import {ComboSelectBasicDemo} from "./basic/demo.component";
-import {CommonModule} from "@angular/common";
-import {ComboSelectAutoWidthDemo} from "./auto-width/demo.component";
-import {ComboDropDownStatusDemoComponent} from "./drop-down-status/demo.component";
-import {ComboSelectChangeEventsDemoComponent} from "./events/demo.component";
-import {ComboSelectMaxHeightDemoComponent} from "./max-height/demo.component";
-import {ComboSelectSingleDemoComponent} from "./single/demo.component";
-import {ComboSelectOpenDemoComponent} from "./open/demo.component";
-import {ComboSelectSearchableDemoComponent} from "./searchable/demo.component";
-import {ComboSelectSetWidthDemoComponent} from "./set-width/demo.component";
-import {ComboSelectTextTagDemoComponent} from "./text-tag/demo.component";
-import {ComboSelectTriggerDemoComponent} from "./trigger/demo.component";
+import { ComboSelectComponent } from "./demo.component";
+import { ComboSelectBasicDemo } from "./basic/demo.component";
+import { CommonModule } from "@angular/common";
+import { ComboSelectAutoWidthDemo } from "./auto-width/demo.component";
+import { ComboDropDownStatusDemoComponent } from "./drop-down-status/demo.component";
+import { ComboSelectChangeEventsDemoComponent } from "./events/demo.component";
+import { ComboSelectMaxHeightDemoComponent } from "./max-height/demo.component";
+import { ComboSelectSingleDemoComponent } from "./single/demo.component";
+import { ComboSelectOpenDemoComponent } from "./open/demo.component";
+import { ComboSelectSearchableDemoComponent } from "./searchable/demo.component";
+import { ComboSelectSetWidthDemoComponent } from "./set-width/demo.component";
+import { ComboSelectTextTagDemoComponent } from "./text-tag/demo.component";
+import { ComboSelectTriggerDemoComponent } from "./trigger/demo.component";
 
 
 @NgModule({
@@ -41,6 +44,9 @@ import {ComboSelectTriggerDemoComponent} from "./trigger/demo.component";
     ],
     imports: [
         DemoTemplateModule,
+        DocTemplateModule,
+        DocFooterTemplateModule,
+        DemoNavigationModule,
         JigsawMarkdownModule,
         JigsawTileSelectModule,
         JigsawButtonModule,
