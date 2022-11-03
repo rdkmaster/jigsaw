@@ -16,11 +16,11 @@ function checkRepo() {
     git status | grep -P "(您的分支领先|Your branch is ahead of) 'origin/.*'" > /dev/null
     if [ "$?" == "0" ]; then
         echo "Error: the repo $repo has unpushed commits!"
-#        exit 1
+        exit 1
     fi
     if [ "`git status --porcelain`" != "" ]; then
         echo "Error: the repo $repo is not clean!"
-#        exit 1
+        exit 1
     fi
     echo "Great! the repo $repo is ready to work!"
 }
