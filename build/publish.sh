@@ -220,6 +220,5 @@ if [ "$target" == "ued" ]; then
     server=$2
     publishUed
 elif [ "$target" == "npm" ]; then
-    allMd5sum=""
     publishNpm
 fi
