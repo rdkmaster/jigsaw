@@ -4,11 +4,9 @@ scriptDir=$(cd `dirname $0`; pwd);
 
 cd $scriptDir/..
 jigsawRepo=`pwd`
-cd $jigsawRepo/../ued-site-latest
-uedSiteRepo=`pwd`
 
-target=$1
-server=$2
+params=("$@")
+target=${params[0]}
 
 function checkRepo() {
     local repo=$1
@@ -41,6 +39,7 @@ function publishToGitee() {
         echo "Error: invalid gitee user or password, need this info to auto deploy ued site"
         exit 1
     fi
+    local uedSiteRepo=$jigsawRepo/../ued-site-latest
     checkRepo $uedSiteRepo
 
     cd $uedSiteRepo
@@ -81,13 +80,14 @@ function publishToRDK() {
 }
 
 function publishUed() {
+    local server=${params[1]}
     if [[ "$server" != "gitee" && "$server" != "rdk" ]]; then
         echo "Error: invalid target server, need gitee/rdk"
         exit 1
     fi
-    checkRepo $jigsawRepo
 
     cd $jigsawRepo
+    git pull
     node build/build.js jigsaw-app-external prod
     if [ "$?" != "0" ]; then
         echo "Error: failed to build jigsaw external app!"
@@ -118,10 +118,9 @@ function getNewVersion() {
 }
 
 function publishNpm() {
-    checkRepo $jigsawRepo
     npm whoami
     if [ "$?" != "0" ]; then
-        echo "Error: npm is not logged in, use npm login and tray again"
+        echo "Error: npm is not logged in, use npm login and try again"
         exit
     fi
 
@@ -142,6 +141,30 @@ function publishNpm() {
     fi
     echo "Success to publish jigsaw lib to npm registry!"
 }
+
+function checkNeedUpdate() {
+    checkRepo $jigsawRepo
+
+    local lastIndex=$((${#params[@]} - 1))
+    local forceBuild=${params[$lastIndex]}
+    if [ "$forceBuild" == "force" ]; then
+        echo "Will build forcibly"
+        return
+    fi
+
+    cd $jigsawRepo
+    local gitLog1=`git log -1 --no-merges`
+    git pull
+    local gitLog2=`git log -1 --no-merges`
+    if [ "$gitLog1" == "$gitLog2" ]; then
+        echo "There is no change since last build, doing nothing."
+        echo "Tip: use the following command to build forcibly"
+        echo "     sh publish.sh ${params[@]} force"
+        exit
+    fi
+}
+
+checkNeedUpdate
 
 if [ "$target" == "ued" ]; then
     publishUed
