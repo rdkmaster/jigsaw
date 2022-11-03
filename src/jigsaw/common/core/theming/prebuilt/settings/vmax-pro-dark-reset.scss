@@ -1,0 +1,12 @@
+.jigsaw-nav-menu-host {
+    outline: 1px solid $nav-border;
+}
+
+.jigsaw-button-host {
+
+    &.jigsaw-button-color-primary.jigsaw-button-disabled,
+    &.jigsaw-button-color-warning.jigsaw-button-disabled,
+    &.jigsaw-button-color-error.jigsaw-button-disabled {
+        color: #727584
+    }
+}

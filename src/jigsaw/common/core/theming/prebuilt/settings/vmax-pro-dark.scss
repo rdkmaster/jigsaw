@@ -1,4 +1,4 @@
-/* paletx-pro-dark */
+/* vmax-pro-dark */
 $blue-1: #00223b;
 $blue-2: #00395e;
 $blue-3: #005082;
@@ -236,8 +236,8 @@ $brand-active-lighten: $blue-2;
 /*@public*/ $bg-component: $gray-1;
 /*@public*/ $bg-component-darken: $gray-4;
 /*@public*/ $bg-disabled: $gray-6;
-/*@public*/ $bg-hover: $gray-4;
-/*@public*/ $bg-active: $gray-5;
+/*@public*/ $bg-hover: $blue-1;
+/*@public*/ $bg-active: $blue-2;
 $bg-transparent: transparent;
 $bg-popup: $gray-2;
 $bg-gray: $gray-3;

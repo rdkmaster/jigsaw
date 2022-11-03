@@ -200,7 +200,7 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
         &.#{$jigsaw-button}-disabled {
             background: $bg-disabled;
             border-color: $border-color-disabled;
-            color: $font-color-disabled;
+            color: $font-color-disabled-spec;
 
             &.#{$jigsaw-button}-color-none {
                 background: none;
