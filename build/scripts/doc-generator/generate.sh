@@ -19,10 +19,11 @@ if [ "$?" != "0" ]; then
     npm install @compodoc/compodoc@1.0.9
 fi
 
-rm -fr $output/documentation.json $output/fragments
+rm -fr $output/documentation.json $output/fragments src/jigsaw/mobile-components
 ./node_modules/.bin/compodoc src/jigsaw -p tsconfig.json --silent --disableSourceCode \
     --disableGraph --disableCoverage --disablePrivate --disableInternal --disableLifeCycleHooks \
     --disableRoutesGraph --exportFormat json --output $output
+git checkout src/jigsaw/mobile-components
 if [ "$?" != "0" ]; then
     echo "ERROR: cannot generate documentation(json)!"
     exit 1
