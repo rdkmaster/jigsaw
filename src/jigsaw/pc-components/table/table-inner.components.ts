@@ -238,6 +238,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                     jigsaw-float
                     [jigsawFloatTarget]="tableHeaderFilterBox"
                     [jigsawFloatOptions]="{ borderType: 'pointer' }"
+                    jigsawFloatPosition="bottomRight"
                     jigsawFloatOpenTrigger="click"
                     jigsawFloatCloseTrigger="click"
                 >
@@ -567,7 +568,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
 /**
  * 表头过滤弹框
- * 
+ *
  * @internal
  */
 @Component({
@@ -737,14 +738,14 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         this._autoFilterData();
         this.filterCancel();
     }
-    
+
     public filterCancel() {
         if (!this.float) {
             return;
         }
         this.float.closeFloat();
     }
-    
+
     private _autoFilterData(){
         this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilter);
         if (!this.autoFilter) {
@@ -754,7 +755,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     ngOnInit(): void {
-        this.data = this.tableData.getDeduplicatedColumnData(this.field);
+        this.data = this.tableData.getDistinctColumnData(this.field);
         if (this.tableData.filterInfo.headerFilter.length > 0) {
             const found = this.tableData.filterInfo.headerFilter.find(item => item.field === this.field);
             if (found) {

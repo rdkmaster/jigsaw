@@ -21,6 +21,7 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
+import {getColumn} from "../utils/data-collection-utils";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -356,22 +357,14 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         throw new Error("Method not implemented.");
     }
 
-    protected _getDeduplicatedColumnData(field: string, originalData) {
+    protected _getDistinctColumnData(field: string, originalData: TableDataMatrix): any[] {
         const colIndex = this.field.findIndex(item => item === field);
-        if (colIndex === -1) {
-            return [];
-        }
-        const data = [];
-        originalData.forEach(row => {
-            if (!data.includes(row[colIndex])) {
-                data.push(row[colIndex]);
-            }
-        });
-        return data;
+        const columnData = getColumn(originalData, colIndex) || [];
+        return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
     }
 
-    public getDeduplicatedColumnData(field: string) {
-        return this._getDeduplicatedColumnData(field, this.data);
+    public getDistinctColumnData(field: string): any[] {
+        return this._getDistinctColumnData(field, this.data);
     }
 
     public destroy() {
@@ -1330,8 +1323,8 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.changePage(this.pagingInfo.totalPage);
     }
 
-    public getDeduplicatedColumnData(field: string) {
-        return this._getDeduplicatedColumnData(field, this.originalData);
+    public getDistinctColumnData(field: string): any[] {
+        return this._getDistinctColumnData(field, this.originalData);
     }
 
     public destroy(): void {
