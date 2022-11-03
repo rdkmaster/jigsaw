@@ -20,7 +20,7 @@ function checkRepo() {
     fi
     if [ "`git status --porcelain`" != "" ]; then
         echo "Error: the repo $repo is not clean!"
-        exit 1
+#        exit 1
     fi
     echo "Great! the repo $repo is ready to work!"
 }
@@ -38,8 +38,11 @@ function publishToGitee() {
     git pull origin master
     rm -fr ./*
     cp -r $jigsawRepo/dist/* ./
-    echo -----------------------
-    exit
+    if [ "`git status --porcelain`" == "" ]; then
+        echo "Info: there is nothing updated to the ued site!"
+        return 1
+    fi
+
     git add .
     git commit -m 'auto updated'
     git push origin master
@@ -119,10 +122,23 @@ function md5Dir() {
         fi
         if [ -d $1/$file ]; then
             md5Dir $1/$file
-        else
+        elif [ "$file" != "package.json" ]; then
             allMd5sum="$allMd5sum | `md5sum $1/$file`"
         fi
     done
+}
+
+function downloadPublishedNpm() {
+    rm -fr /tmp/jigsaw-npm-package
+    mkdir /tmp/jigsaw-npm-package
+    cd /tmp/jigsaw-npm-package
+    npm install @rdkmaster/jigsaw --no-optional
+    if [ "$?" != "0" ]; then
+        echo "Warn: failed to download published npm package!"
+        return
+    fi
+    cd node_modules/@rdkmaster/jigsaw
+    allMd5sum="" && md5Dir .
 }
 
 function publishNpm() {
@@ -161,6 +177,16 @@ if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     echo "  sh publish.sh npm"
     exit 1
 fi
+
+downloadPublishedNpm
+echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+echo $allMd5sum | md5sum
+
+
+cd /home/10045812@zte.intra/Desktop/b/Codes/jigsaw-for-ued/dist/@rdkmaster/jigsaw/
+allMd5sum="" && md5Dir .
+echo $allMd5sum | md5sum
+exit
 
 jigsawRepo=$(cd `dirname $0`/..; pwd);
 checkRepo $jigsawRepo
