@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ~/.bashrc
+
 function checkRepo() {
     local repo=$1
     if [ ! -d $repo ]; then
@@ -11,7 +13,7 @@ function checkRepo() {
     git status | grep -P "(位于分支|On branch) master" > /dev/null
     if [ "$?" != "0" ]; then
         echo "Error: the repo $repo is not in branch master!"
-#        exit 1
+        exit 1
     fi
     git status | grep -P "(您的分支领先|Your branch is ahead of) 'origin/.*'" > /dev/null
     if [ "$?" == "0" ]; then
@@ -20,7 +22,7 @@ function checkRepo() {
     fi
     if [ "`git status --porcelain`" != "" ]; then
         echo "Error: the repo $repo is not clean!"
-#        exit 1
+        exit 1
     fi
     echo "Great! the repo $repo is ready to work!"
 }
@@ -84,7 +86,6 @@ function publishUed() {
     fi
 
     cd $jigsawRepo
-    git pull
     node build/build.js jigsaw-app-external prod
     if [ "$?" != "0" ]; then
         echo "Error: failed to build jigsaw external app!"
@@ -185,6 +186,19 @@ function publishNpm() {
     echo "Success to publish jigsaw lib to npm registry!"
 }
 
+function updateJigsawRepo() {
+    cd $jigsawRepo
+    git pull
+    npm install
+    cd build
+    npm install
+}
+
+function onExit() {
+    cd $jigsawRepo
+    git checkout .
+}
+
 #######################################################################
 
 target=$1
@@ -197,8 +211,10 @@ if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     exit 1
 fi
 
+trap onExit EXIT
 jigsawRepo=$(cd `dirname $0`/..; pwd);
 checkRepo $jigsawRepo
+updateJigsawRepo
 
 if [ "$target" == "ued" ]; then
     server=$2
