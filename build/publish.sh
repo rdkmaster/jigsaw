@@ -1,12 +1,18 @@
 #!/bin/bash
 
-scriptDir=$(cd `dirname $0`; pwd);
-
-cd $scriptDir/..
-jigsawRepo=`pwd`
-
-params=("$@")
-target=${params[0]}
+function md5Dir() {
+    for file in ` ls -a $1 `
+    do
+        if [ $file == . ] || [ $file == .. ]; then
+            continue
+        fi
+        if [ -d $1/$file ]; then
+            md5Dir $1/$file
+        else
+            allMd5sum="$allMd5sum | `md5sum $1/$file`"
+        fi
+    done
+}
 
 function checkRepo() {
     local repo=$1
@@ -26,8 +32,8 @@ function checkRepo() {
         echo "Error: the repo $repo is not clean"
         exit 1
     fi
-    git status | grep "与上游分支 'origin/master' 一致" > /dev/null
-    if [ "$?" != "0" ]; then
+    git status | grep "您的分支领先 'origin/master' 共" > /dev/null
+    if [ "$?" == "0" ]; then
         echo "Error: the repo $repo has unpushed commits"
         exit 1
     fi
@@ -35,6 +41,7 @@ function checkRepo() {
 }
 
 function publishToGitee() {
+    echo "publishing to gitee server...."
     if [[ "$GITEE_USER" == "" || "$GITEE_PWD" == "" ]]; then
         echo "Error: invalid gitee user or password, need this info to auto deploy ued site"
         exit 1
@@ -65,6 +72,7 @@ function publishToGitee() {
 }
 
 function publishToRDK() {
+    echo "publishing to rdk server...."
     if [ "$AWADE_ALL_WORK_DIR" == "" ]; then
         echo "Error: invalid AWADE_ALL_WORK_DIR environment variable!"
         exit 1
@@ -80,7 +88,6 @@ function publishToRDK() {
 }
 
 function publishUed() {
-    local server=${params[1]}
     if [[ "$server" != "gitee" && "$server" != "rdk" ]]; then
         echo "Error: invalid target server, need gitee/rdk"
         exit 1
@@ -142,36 +149,25 @@ function publishNpm() {
     echo "Success to publish jigsaw lib to npm registry!"
 }
 
-function checkNeedUpdate() {
-    checkRepo $jigsawRepo
+#######################################################################
 
-    local lastIndex=$((${#params[@]} - 1))
-    local forceBuild=${params[$lastIndex]}
-    if [ "$forceBuild" == "force" ]; then
-        echo "Will build forcibly"
-        return
-    fi
-
-    cd $jigsawRepo
-    local gitLog1=`git log -1 --no-merges`
-    git pull
-    local gitLog2=`git log -1 --no-merges`
-    if [ "$gitLog1" == "$gitLog2" ]; then
-        echo "There is no change since last build, doing nothing."
-        echo "Tip: use the following command to build forcibly"
-        echo "     sh publish.sh ${params[@]} force"
-        exit
-    fi
-}
-
-checkNeedUpdate
-
-if [ "$target" == "ued" ]; then
-    publishUed
-elif [ "$target" == "npm" ]; then
-    publishNpm
-else
+target=$1
+if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     echo "Error: invalid publish target, need ued/npm"
+    echo "Usage:"
+    echo "  sh publish.sh ued rdk"
+    echo "  sh publish.sh ued gitee"
+    echo "  sh publish.sh npm"
     exit 1
 fi
 
+jigsawRepo=$(cd `dirname $0`/..; pwd);
+checkRepo $jigsawRepo
+
+if [ "$target" == "ued" ]; then
+    server=$2
+    publishUed
+elif [ "$target" == "npm" ]; then
+    allMd5sum=""
+    publishNpm
+fi
