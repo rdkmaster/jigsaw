@@ -11,7 +11,7 @@ function checkRepo() {
     git status | grep -P "(位于分支|On branch) master" > /dev/null
     if [ "$?" != "0" ]; then
         echo "Error: the repo $repo is not in branch master!"
-#        exit 1
+        exit 1
     fi
     git status | grep -P "(您的分支领先|Your branch is ahead of) 'origin/.*'" > /dev/null
     if [ "$?" == "0" ]; then
@@ -20,7 +20,7 @@ function checkRepo() {
     fi
     if [ "`git status --porcelain`" != "" ]; then
         echo "Error: the repo $repo is not clean!"
-#        exit 1
+        exit 1
     fi
     echo "Great! the repo $repo is ready to work!"
 }
@@ -97,17 +97,11 @@ function publishUed() {
     fi
 }
 
+tmpNpmPackagePath=/tmp/jigsaw-npm-package
+
 function getNewVersion() {
-    local proxy=`git config --list --local | grep http.proxy | sed "s#http.proxy=##"`
-    local pkg=`curl -x "$proxy" -s -L https://cdn.jsdelivr.net/npm/@rdkmaster/jigsaw@latest/package.json`
-    if [ "$pkg" == "" ]; then
-        pkg=`curl -x "$proxy" -s -L https://unpkg.com/@rdkmaster/jigsaw@latest/package.json`
-    fi
-    if [ "$pkg" == "" ]; then
-        echo "Error: failed to read the latest version num of jigsaw!"
-        exit 1
-    fi
-    local curVersion=`echo $pkg | grep -Po '"version": ".+?"'`
+    local pkg=`cat $tmpNpmPackagePath/node_modules/@rdkmaster/jigsaw/package.json`
+    local curVersion=`echo $pkg | grep -Po '"version":\s*".+?"'`
     local version1=`echo $curVersion | grep -Po "\d+\.\d+\."`
     local version2=`echo $curVersion | grep -Po '\d+"' | grep -Po "\d+"`
     version2=$((version2+1))
@@ -128,17 +122,17 @@ function md5Dir() {
     done
 }
 
-function downloadPublishedNpm() {
-    rm -fr /tmp/jigsaw-npm-package
-    mkdir /tmp/jigsaw-npm-package
-    cd /tmp/jigsaw-npm-package
-    npm install @rdkmaster/jigsaw --no-optional
+function getPublishedNpmChecksum() {
+    rm -fr $tmpNpmPackagePath
+    mkdir $tmpNpmPackagePath
+    cd $tmpNpmPackagePath
+    npm install @rdkmaster/jigsaw --no-optional >/dev/null 2>&1
     if [ "$?" != "0" ]; then
-        echo "Warn: failed to download published npm package!"
-        return
+        return 1
     fi
     cd node_modules/@rdkmaster/jigsaw
     allMd5sum="" && md5Dir .
+    echo $allMd5sum | md5sum
 }
 
 function publishNpm() {
@@ -154,10 +148,35 @@ function publishNpm() {
         echo "Error: failed to build jigsaw lib!"
         exit 1
     fi
+
+    echo "downloading the published npm package from npm server...."
+    local publishedChecksum=`getPublishedNpmChecksum`
+    if [ "$?" != "0" ]; then
+        echo "Warn: failed to download published npm package!"
+        return
+    fi
+    cd dist/@rdkmaster/jigsaw/
+    allMd5sum="" && md5Dir .
+    local currentChecksum=`echo $allMd5sum | md5sum`
+    echo "The publishedChecksum: $publishedChecksum"
+    echo "The currentChecksum:   $currentChecksum"
+    if [ "$publishedChecksum" == "$currentChecksum" ]; then
+        echo "Info: there is nothing updated to the npm package!"
+        return
+    fi
+
+    cd $jigsawRepo
     local newVersion=`getNewVersion`
+    if [ "$?" != "0" ]; then
+        echo "Error: failed to read the latest version num of jigsaw!"
+        exit 1
+    fi
+
+    echo "The next version to be used: $newVersion"
     sed -i 's#"version":\s*".\+"#"version":"'$newVersion'"#' dist/@rdkmaster/jigsaw/package.json
 
     echo "publishing jigsaw lib to npm registry with new version $newVersion ..."
+#    npm publish --dry-run --tag latest --access public dist/@rdkmaster/jigsaw
     npm publish --tag latest --access public dist/@rdkmaster/jigsaw
     if [ "$?" != "0" ]; then
         echo "Error: failed to publish jigsaw lib to npm registry!"
@@ -177,16 +196,6 @@ if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     echo "  sh publish.sh npm"
     exit 1
 fi
-
-downloadPublishedNpm
-echo "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-echo $allMd5sum | md5sum
-
-
-cd /home/10045812@zte.intra/Desktop/b/Codes/jigsaw-for-ued/dist/@rdkmaster/jigsaw/
-allMd5sum="" && md5Dir .
-echo $allMd5sum | md5sum
-exit
 
 jigsawRepo=$(cd `dirname $0`/..; pwd);
 checkRepo $jigsawRepo
