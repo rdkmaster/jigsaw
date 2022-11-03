@@ -1,3 +1,4 @@
+// npm i puppeteer@18.1.0
 const puppeteer = require('puppeteer');
 
 const user = process.env.GITEE_USER, pwd = process.env.GITEE_PWD;
