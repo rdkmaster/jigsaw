@@ -34,4 +34,5 @@ if [ "$?" != "0" ]; then
     echo "ERROR: parse documentation error!"
     exit 1
 fi
+rm -fr $output/documentation.json
 chmod 755 -R $output
