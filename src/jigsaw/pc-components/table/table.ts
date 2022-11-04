@@ -415,7 +415,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return columnDefines;
     }
 
-    public update(): void {
+    public update(isAdditionalDataOnRefresh?: boolean): void {
         if (!this.initialized || !this._data) {
             return;
         }
@@ -442,6 +442,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
+            if (isAdditionalDataOnRefresh) {
+                return;
+            }
             this._clearExpansion();
         })
     }
@@ -503,18 +506,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(this.update, this);
+        this._removeTableDataRefresh = value.onRefresh(() => { this.update() });
 
         if (!this._removeAdditionalDataRefresh) {
-            // this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
-            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(()=>{     
-                this._initAdditionalData();
-                this._changeDetectorRef.detectChanges();
-
-                this.runMicrotask(() => {
-                    // 等待additionalTableData在renderer更新完成
-                    this.additionalDataChange.emit(this.additionalData);
-                })});
+            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(() => { this.update(true) });
         }
     }
 
