@@ -24,7 +24,7 @@ function checkRepo() {
         echo "Error: the repo $repo is not clean!"
         exit 1
     fi
-    echo "Great! the repo $repo is ready to work!"
+    echo "Great! the repo $repo is ready for work!"
 }
 
 function publishToGitee() {
