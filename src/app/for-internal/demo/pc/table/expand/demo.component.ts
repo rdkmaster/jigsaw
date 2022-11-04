@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { TableData, ColumnDefine, JigsawTable } from "jigsaw/public_api";
+import { TableData, ColumnDefine, JigsawTable, AdditionalColumnDefine, TableHeadCheckboxRenderer, TableCellCheckboxRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -9,6 +9,17 @@ export class TableExpandDemoComponent {
     action = ['toggle'];
     tableData: TableData;
     remainOpen: boolean = false;
+
+    additionalColumns: AdditionalColumnDefine[] = [{
+        pos: 0,
+        width: 30,
+        header: {
+            renderer: TableHeadCheckboxRenderer
+        },
+        cell: {
+            renderer: TableCellCheckboxRenderer
+        }
+    }];
 
     @ViewChild('tableCmp')
     tableCmp: JigsawTable;
