@@ -9,9 +9,9 @@ if (!user || !pwd) {
 deployVersion('latest').then();
 
 async function deployVersion(version) {
-    const headless = process.argv[2] !== '--no-headless';
-    if (headless) {
-        console.log('Tips: the script is running in headless mode, add --no-headless to run in full (non-headless) Chrome/Chromium');
+    const headless = process.argv[2] === '--headless';
+    if (!headless) {
+        console.log('Tips: the script is running in non-headless mode, add --headless to run in headless mode');
     }
     const browser = await puppeteer.launch({headless});
     const page = await browser.newPage();

@@ -55,7 +55,7 @@ function publishToGitee() {
     echo "Success to push files jigsaw external app to gitee.com!"
 
     cd $jigsawRepo
-    node build/tools/deploy-ued-sites.js
+    node build/tools/deploy-ued-sites.js --headless
     if [ "$?" != "0" ]; then
         echo "Error: failed to deploy jigsaw external web site!"
         exit 1
