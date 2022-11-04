@@ -24,7 +24,7 @@ function checkRepo() {
         echo "Error: the repo $repo is not clean!"
         exit 1
     fi
-    echo "Great! the repo $repo is ready to work!"
+    echo "Great! the repo $repo is ready for work!"
 }
 
 function publishToGitee() {
@@ -55,7 +55,7 @@ function publishToGitee() {
     echo "Success to push files jigsaw external app to gitee.com!"
 
     cd $jigsawRepo
-    node build/tools/deploy-ued-sites.js
+    node build/tools/deploy-ued-sites.js --headless
     if [ "$?" != "0" ]; then
         echo "Error: failed to deploy jigsaw external web site!"
         exit 1

@@ -9,7 +9,11 @@ if (!user || !pwd) {
 deployVersion('latest').then();
 
 async function deployVersion(version) {
-    const browser = await puppeteer.launch({headless: false});
+    const headless = process.argv[2] === '--headless';
+    if (!headless) {
+        console.log('Tips: the script is running in non-headless mode, add --headless to run in headless mode');
+    }
+    const browser = await puppeteer.launch({headless});
     const page = await browser.newPage();
     page.setViewport({width: 1200, height: 600});
     await login(user, pwd);
