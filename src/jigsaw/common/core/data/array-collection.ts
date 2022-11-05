@@ -361,7 +361,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 
         const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
         const paramProperty = method == 'get' ? 'params' : 'body';
-        let originParams = this.sourceRequestOptions[paramProperty];
+        const originParams = this.sourceRequestOptions[paramProperty];
 
         delete options.params;
         delete options.body;

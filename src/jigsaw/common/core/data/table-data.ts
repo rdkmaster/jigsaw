@@ -22,6 +22,8 @@ import {
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
 import {getColumn} from "../utils/data-collection-utils";
+import {Observable} from "rxjs/internal/Observable";
+import {PagingServerCacheKey} from "../../../pc-components/table/table-typings";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -357,13 +359,13 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         throw new Error("Method not implemented.");
     }
 
-    protected _getDistinctColumnData(field: string, originalData: TableDataMatrix): any[] {
+    protected _getDistinctColumnData(field: string, originalData: TableDataMatrix): any[] | Observable<any[]> | Promise<any[]> {
         const colIndex = this.field.findIndex(item => item === field);
         const columnData = getColumn(originalData, colIndex) || [];
         return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
     }
 
-    public getDistinctColumnData(field: string): any[] {
+    public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
         return this._getDistinctColumnData(field, this.data);
     }
 
@@ -516,7 +518,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
         const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
         const paramProperty = method == 'get' ? 'params' : 'body';
-        let originParams = this.sourceRequestOptions[paramProperty];
+        const originParams = this.sourceRequestOptions[paramProperty];
 
         delete options.params;
         delete options.body;
@@ -572,6 +574,25 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         }
         const paging = data.paging;
         this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
+    }
+
+    public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
+        if (!this.http) {
+            return [];
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return [];
+        }
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+        const paramProperty = options.method == 'get' ? 'params' : 'body';
+        const originParams = this.sourceRequestOptions[paramProperty];
+        // 服务端通过这样的结构去拿缓存数据 {service: url, peerParam: params.peerParam || {}}
+        const cacheKey: PagingServerCacheKey = {service: this.sourceRequestOptions.url, peerParam: originParams};
+        const req = this.http.request('get', pagingService,
+            {[paramProperty]: {key: cacheKey, field: field, requestFor: 'distinct-column-data'}});
+        return req as Observable<string[]>;
     }
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -701,6 +722,19 @@ export class DirectPageableTableData extends PageableTableData implements IServe
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
+    }
+
+    public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
+        if (!this.http) {
+            return [];
+        }
+        const url = this.sourceRequestOptions?.url;
+        if (!url) {
+            console.error('invalid source request url, use updateDataSource() to reset the option.');
+            return [];
+        }
+        const req = this.http.get(url, {params: {requestFor: 'distinct-column-data', field}});
+        return req as Observable<string[]>;
     }
 }
 
@@ -1215,8 +1249,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                     numberFields = [];
                     (<string[]>fields).forEach(field => {
                         numberFields.push(this.field.findIndex(item => item == field))
-                    }
-                    )
+                    });
                 } else {
                     numberFields = <number[]>fields;
                 }
@@ -1323,7 +1356,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this.changePage(this.pagingInfo.totalPage);
     }
 
-    public getDistinctColumnData(field: string): any[] {
+    public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
         return this._getDistinctColumnData(field, this.originalData);
     }
 

@@ -135,6 +135,18 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
+        if (req.params.get('requestFor') == 'distinct-column-data') {
+            return this._queryDistinctColumnData(req);
+        } else {
+            return this._queryPagingData(req);
+        }
+    }
+
+    private _queryDistinctColumnData(req: HttpRequest<any>): string[] {
+        // 在这里模拟统一分页的获取列数据的代码
+    }
+
+    private _queryPagingData(req: HttpRequest<any>): any {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
         let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
