@@ -23,7 +23,6 @@ import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
 import {getColumn} from "../utils/data-collection-utils";
 import {Observable} from "rxjs/internal/Observable";
-import {PagingServerCacheKey} from "../../../pc-components/table/table-typings";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行
@@ -64,6 +63,11 @@ export class RawTableData {
 
     [property: string]: any;
 }
+
+/**
+ * 服务端通过这样的结构去拿缓存数据
+ */
+export type PagingServerCacheKey = {service: string, peerParam: Object};
 
 /**
  * 表格数据的基类，应用一般无需直接使用这个类。

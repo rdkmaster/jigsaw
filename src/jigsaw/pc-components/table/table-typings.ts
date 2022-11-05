@@ -142,10 +142,6 @@ export class SortChangeEvent {
 }
 
 export type HeaderFilter = { field: string; selectKeys: string[] };
-/**
- * 服务端通过这样的结构去拿缓存数据
- */
-export type PagingServerCacheKey = {service: string, peerParam: Object};
 
 /**
  * @internal
