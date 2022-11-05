@@ -212,7 +212,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     template: `
         <div
             class="jigsaw-table-header-cell"
-            [ngClass]="{ 'jigsaw-table-header-cell-sortable': sortable }"
+            [ngClass]="{ 'jigsaw-table-header-cell-sortable': sortable,
+                'jigsaw-table-header-cell-filterable': filterable}"
         >
             <ng-template jigsaw-renderer-host></ng-template>
             <div
@@ -577,7 +578,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         <div class="jigsaw-table-header-filter-host">
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
-                <jigsaw-search-input width="260" [searchDebounce]="1000" (search)="_$handleSearching($event)">
+                <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }" [multipleSelect]="true"
@@ -657,7 +658,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (filterKey.length === 0) {
             this.filteredData = this.data;
         }
-        this.filteredData = this.data.filter(item=>item.includes(filterKey));
+        this.filteredData = this.data.filter(item=>String(item).includes(filterKey));
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
@@ -682,14 +683,14 @@ export class JigsawTableHeaderFilterBox implements OnInit {
 
     public _$selectAll() {
         if (this.filteredData.length === 0) {
-            return
+            return;
         }
 
         if (this._$selectAllChecked === CheckBoxStatus.checked) {
             if (this.selectedItems?.length > 0) {
                 this.filteredData.forEach(data => {
                     if (!this.selectedItems.includes(data)) {
-                        this.selectedItems.push(data);
+                        this.selectedItems = this.selectedItems.concat([data]);
                     }
                 })
             } else {

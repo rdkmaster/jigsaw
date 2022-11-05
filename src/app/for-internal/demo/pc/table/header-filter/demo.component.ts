@@ -31,6 +31,13 @@ export class TableSetHeaderFilterDemoComponent {
                 filterable: true,
             },
         },
+        {
+            target: "salary",
+            header: {
+                filterable: true,
+                sortable: true
+            },
+        },
     ];
     public onLocalPageableSearch(key: string) {
         this.localPageableSearchValue = key;
