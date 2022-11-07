@@ -416,9 +416,8 @@ export interface IFilterable extends IAjaxComponentData {
      *
      * @param term 过滤关键字
      * @param fields 对这些字段进行过滤
-     * @param fuzzy 模糊搜索
      */
-    filter(term: string, fields?: (string | number)[], fuzzy?: boolean): void;
+    filter(term: string, fields?: (string | number)[]): void;
 
     /**
      * $demo = combo-select/searchable

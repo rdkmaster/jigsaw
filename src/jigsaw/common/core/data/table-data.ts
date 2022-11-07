@@ -1230,12 +1230,12 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
 
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
-    public filter(term: string, fields?: string[] | number[], fuzzy?: boolean): void;
+    public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     /**
      * @internal
      */
-    public filter(term, fields?: (string | number)[], fuzzy?: boolean): void {
+    public filter(term, fields?: (string | number)[]): void {
         console.log(this.filterInfo);
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term.bind(fields));
@@ -1266,18 +1266,9 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 this.filteredData = this.originalData;
             }
 
-            fuzzy = CommonUtils.isUndefined(fuzzy) ? true : fuzzy;
-            if (fuzzy) {
-                this.filteredData = this.filteredData.filter(
-                    row => row.filter(item => String(item).indexOf(key) != -1).length != 0
-                );
-            } else {
-                if (key != '') {
-                    this.filteredData = this.filteredData.filter(
-                        row => row.filter(item => String(item) == key).length != 0
-                    );
-                }
-            }
+            this.filteredData = this.filteredData.filter(
+                row => row.filter(item => String(item).indexOf(key) != -1).length != 0
+            );
 
             if (this.filterInfo.headerFilter.length !== 0) {
                 this.filteredData = this.filteredData.filter(item => {

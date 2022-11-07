@@ -8,7 +8,6 @@ import { LocalPageableTableData, ColumnDefine, PageableTableData } from "jigsaw/
 })
 export class TableSetHeaderFilterDemoComponent {
     public autoFilter: boolean = true;
-    public fuzzySearch: boolean = true;
     
     public localPageableSearchValue: string;
     public localPageable: LocalPageableTableData;
@@ -41,13 +40,13 @@ export class TableSetHeaderFilterDemoComponent {
     ];
     public onLocalPageableSearch(key: string) {
         this.localPageableSearchValue = key;
-        this.localPageable.filter(key, null, this.fuzzySearch)
+        this.localPageable.filter(key, null)
     }
 
     public onLocalPageableHeaderFilterChange($event) {
         console.log($event);
         if (!this.autoFilter) {
-            this.localPageable.filter(this.localPageableSearchValue || '', null, this.fuzzySearch);
+            this.localPageable.filter(this.localPageableSearchValue || '', null);
         }
     }
 
@@ -58,7 +57,7 @@ export class TableSetHeaderFilterDemoComponent {
             this.localPageable.fromAjax("mock-data/hr-list-short");
         }
         this.localPageable.onRefresh(() => {
-            this.localPageable.filter(this.localPageableSearchValue || '', null, this.fuzzySearch);
+            this.localPageable.filter(this.localPageableSearchValue || '', null);
         })
     }
 
