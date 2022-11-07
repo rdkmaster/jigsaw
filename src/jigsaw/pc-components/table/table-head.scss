@@ -28,7 +28,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             }
         }
 
-        > i {
+        >i {
             &.jigsaw-table-sort-up {
                 margin-bottom: -5px;
             }
@@ -80,5 +80,14 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 align-items: center;
             }
         }
+    }
+
+    .#{$jigsaw-table}-header-filter-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+        padding-bottom: 20px;
     }
 }

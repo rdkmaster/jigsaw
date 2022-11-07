@@ -48,6 +48,8 @@ import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawCheckBoxModule } from "../checkbox";
 import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { JigsawLoadingModule } from "../../common/components/loading/loading";
+
 
 @WingsTheme('table.scss')
 @Component({
@@ -1064,7 +1066,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 @NgModule({
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule,
-        TranslateModule.forChild(), JigsawFloatModule, JigsawButtonModule, JigsawListModule, JigsawCheckBoxModule, JigsawSearchInputModule],
+        TranslateModule.forChild(), JigsawFloatModule, JigsawButtonModule, JigsawListModule, JigsawCheckBoxModule, JigsawSearchInputModule,
+        JigsawLoadingModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {

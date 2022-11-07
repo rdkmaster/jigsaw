@@ -11,7 +11,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { v4 as uuidv4 } from 'uuid';
-import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils } from "jigsaw/public_api"
+import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils, getColumn } from "jigsaw/public_api"
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -135,7 +135,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
-        if (req.params.get('requestFor') == 'distinct-column-data') {
+        if (req.body.requestFor == 'distinct-column-data') {
             return this._queryDistinctColumnData(req);
         } else {
             return this._queryPagingData(req);
@@ -144,7 +144,10 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     private _queryDistinctColumnData(req: HttpRequest<any>): string[] {
         // 在这里模拟统一分页的获取列数据的代码
-        return ['']
+        const field = req.body.field;
+        const peerParam = req.body.key.peerParam;
+        const service = req.body.key.service;
+        return PageableData.getDistinctColumnData({service,field,peerParam})
     }
 
     private _queryPagingData(req: HttpRequest<any>): any {
@@ -240,6 +243,19 @@ class PageableData {
         return result;
     }
 
+    static getDistinctColumnData(req: { service: string, field: string, peerParam: any }): string[] {
+        const result = [];
+        if (!req.service) {
+            console.error('bad argument, need a "service" property!');
+            return result;
+        }
+
+        const dataTable = MockData.get(req.service);
+        const colIndex = dataTable.field.findIndex(item => item === req.field);
+        const columnData = getColumn(dataTable.data, colIndex) || [];
+        return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
+    }
+
     private static _sort(data, index, sortAs, order) {
         if (index == -1) {
             console.warn('unknown which field to sort!');
@@ -282,45 +298,68 @@ class PageableData {
     private static _filter(dataTable, filter) {
         return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
             this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
-            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
+            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilter);
     }
 
-    private static _filterWithKeyword(data, key, field, allField) {
-        if (!key) {
-            console.warn('invalid filter key, need at least ONE char!');
-            return data.concat();
-        }
-        key = key.toLowerCase();
-        field = !!field ? field : allField;
-        field = field instanceof Array ? field : [field];
-        console.log('filter param: key = [', key, '] field = [', field.join(','),
-            '] allField = [', allField.join(','), ']');
+    private static _filterWithKeyword(data, key, field, allField, headerFilter) {
+        // if (!key) {
+        //     console.warn('invalid filter key, need at least ONE char!');
+        //     return data.concat();
+        // }
 
-        const indexes = [];
-        for (let i = 0; i < field.length; i++) {
-            let idx = allField.indexOf(field[i]);
-            if (idx == -1) {
-                console.warn('invalid filter field:', field[i]);
-                continue;
-            }
-            indexes.push(idx);
-        }
+        let filterData;
+        if (key === '') {
+            filterData = data.concat();
+        } else {
+            key = key.toLowerCase();
+            field = !!field ? field : allField;
+            field = field instanceof Array ? field : [field];
+            console.log('filter param: key = [', key, '] field = [', field.join(','),
+                '] allField = [', allField.join(','), ']');
 
-        return data.filter(item => {
-            for (let i = 0, len = indexes.length; i < len; i++) {
-                let cell = item[indexes[i]];
-                if (cell == null) {
+            const indexes = [];
+            for (let i = 0; i < field.length; i++) {
+                let idx = allField.indexOf(field[i]);
+                if (idx == -1) {
+                    console.warn('invalid filter field:', field[i]);
                     continue;
                 }
-                cell = String(cell);
-                //模糊搜索大小写不敏感
-                cell = cell.toLowerCase();
-                if (cell.indexOf(key) != -1) {
-                    return true;
-                }
+                indexes.push(idx);
             }
-            return false;
-        });
+
+            filterData = data.filter(item => {
+                for (let i = 0, len = indexes.length; i < len; i++) {
+                    let cell = item[indexes[i]];
+                    if (cell == null) {
+                        continue;
+                    }
+                    cell = String(cell);
+                    //模糊搜索大小写不敏感
+                    cell = cell.toLowerCase();
+                    if (cell.indexOf(key) != -1) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
+        if (headerFilter?.length !== 0) {
+            filterData = filterData.filter(item => {
+                let keep: boolean = true;
+                for (let i = 0; i < headerFilter.length; i++) {
+                    const colIndex = allField.findIndex(item => item === headerFilter[i].field);
+                    const selectKeys = headerFilter[i].selectKeys;
+                    keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+                    if (!keep) {
+                        break;
+                    }
+                }
+                return keep;
+            });
+        }
+
+        return filterData;
     }
 
     private static _filterWithFunction(data, rawFunction, context) {

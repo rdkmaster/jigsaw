@@ -10,6 +10,7 @@ import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawFloat} from "../../common/directive/float/float";
 import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
 import {Observable} from "rxjs/internal/Observable";
+import { isObservable } from "rxjs";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -594,10 +595,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             </j-list>
             <div *ngIf="_$filteredData?.length === 0">{{'table.noData' | translate}}</div>
 
-
-            <!-- 在这里弄个图标啥的，提示正在等待数据 -->
-            <div *ngIf="_$dataStatus =='loading'">loading....</div>
-
+            <div *ngIf="_$dataStatus == 'loading'" class="jigsaw-table-header-filter-loading">
+                <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>
+            </div>
 
             <div class="jigsaw-table-header-filter-btn">
                 <jigsaw-button preSize="small" colorType="primary" style="margin-right: 8px;" (click)="filterConfirm(field)">
@@ -774,19 +774,19 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (found) {
             this._$selectedItems = found.selectKeys;
         }
+        this._$handleSearching('');
+        this.autoFilter = this.hostInstance.autoFilter;
     }
 
     ngOnInit(): void {
         const data = this.tableData.getDistinctColumnData(this.field);
         if (data instanceof Array) {
             this._initData(data);
-        } else {
-            this._$dataStatus = 'loading';
-            const promise: Promise<any[]> = data instanceof Observable ? data.toPromise() : data;
-            promise.then((resolvedData: string[]) => this._initData(resolvedData));
+            return;
         }
-        // this._data = this.tableData.getDistinctColumnData(this.field);
-        this._$handleSearching('');
-        this.autoFilter = this.hostInstance.autoFilter;
+        
+        this._$dataStatus = 'loading';
+        const promise: Promise<any[]> = isObservable(data) ? data.toPromise() : data;
+        promise.then((resolvedData: string[]) => this._initData(resolvedData));
     }
 }
