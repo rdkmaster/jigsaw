@@ -144,6 +144,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     private _queryDistinctColumnData(req: HttpRequest<any>): string[] {
         // 在这里模拟统一分页的获取列数据的代码
+        return ['']
     }
 
     private _queryPagingData(req: HttpRequest<any>): any {

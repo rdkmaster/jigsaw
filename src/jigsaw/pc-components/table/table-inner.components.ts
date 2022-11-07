@@ -661,7 +661,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     /**
      * @internal
      */
-    public _$handleSelectChange() {
+    public _$handleSelectChange($event) {
         this._checkSelectAll();
     }
 
