@@ -68,9 +68,9 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
     }
 
-    private _calcInitProperty(property: string): boolean {
+    private _calcInitProperty(property: string, defaultValue: boolean): boolean {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
-            return false;
+            return defaultValue;
         }
         if (typeof this.initData[property] == 'function') {
             return !!this.initData[property](this.tableData, this.row, this.column);
@@ -79,13 +79,15 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 
     public get _$disabled(): boolean {
-        return this._calcInitProperty('disabled');
+        return this._calcInitProperty('disabled', false);
     }
 
     public get _$valid(): boolean {
-        return this._calcInitProperty('valid');
+        return this._calcInitProperty('valid', true);
     }
 
+
+    public alwaysShowEditor: boolean;
     protected targetData: TableData;
 
     private _removeTableDataRefresh: Function;
@@ -179,7 +181,7 @@ export class DefaultCellRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-        <jigsaw-input [theme]="theme" class="table-cell-password-renderer" #input [(value)]="cellData" width="100%" height="28px"
+        <jigsaw-input #input [theme]="theme" class="table-cell-password-renderer" [(value)]="cellData" width="100%" height="28px"
                       [password]="true" [clearable]="false" (blur)="dispatchChangeEvent(cellData)">
         </jigsaw-input>
     `,
@@ -256,6 +258,9 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     private _removeListener: Function;
 
     ngAfterViewInit() {
+        if (this.alwaysShowEditor) {
+            return;
+        }
         if (this._$disabled) {
             this._inputEl.nativeElement.focus();
             this._removeListener = this._renderer.listen(this._inputEl.nativeElement, 'blur', () => this.dispatchChangeEvent(this.cellData))
@@ -311,6 +316,9 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     ngAfterViewInit() {
+        if (this.alwaysShowEditor) {
+            return;
+        }
         this.autoCompleteInput.focus();
     }
 }
@@ -345,6 +353,9 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
     }
 
     ngAfterViewInit() {
+        if (this.alwaysShowEditor) {
+            return;
+        }
         this.input.focus();
     }
 }
@@ -654,8 +665,8 @@ export type SelectRendererInitData = {
 @Component({
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px" [disabled]="_$disabled"
-                       [valid]="_$valid" [optionCount]="5" width="100%" openTrigger="mouseenter" closeTrigger="mouseleave"
-                       (valueChange)="_$handleValueChange($event)">
+                       [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger"
+                       closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)">
         </jigsaw-select>
     `,
     styles: [
@@ -697,6 +708,13 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
             return;
         }
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
+    }
+
+    /**
+     * @internal
+     */
+    public get _$openTrigger(): "click" | "mouseenter" {
+        return this.alwaysShowEditor ? 'click' : 'mouseenter';
     }
 
     /**

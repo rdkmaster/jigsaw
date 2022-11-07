@@ -58,9 +58,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
             return;
         }
         this._customRenderer = value;
-        if (this.rendererHost) {
-            this.rendererHost.viewContainerRef.clear();
-        }
+        this.rendererHost?.viewContainerRef.clear();
     }
 
     private _rendererInitData: any;
@@ -162,8 +160,8 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                 }
             });
         } else {
-            let componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
-            let componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
+            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
+            const componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
             componentRef.instance.row = this.row;
             componentRef.instance.field = this.field;
             componentRef.instance.tableData = this.tableData;
@@ -176,11 +174,11 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         }
     }
 
-    /*
+    /**
      * 插入渲染器
-     * */
+     */
     protected insertRenderer() {
-        if(this.renderer != 'html') {
+        if (this.renderer != 'html') {
             this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
             this.changeDetector.detectChanges();
         }
@@ -325,6 +323,8 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     template: '<ng-template jigsaw-renderer-host></ng-template>'
 })
 export class JigsawTableCellInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
+    @Input()
+    public alwaysShowEditor: boolean = false;
 
     private _editable: boolean = false;
 
@@ -348,7 +348,12 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
         const cursor = this._editable ? 'pointer' : 'default';
         this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', cursor);
-        if (this._editable) {
+        if (!this._editable) {
+            return;
+        }
+        if (this.alwaysShowEditor) {
+            this._showEditor();
+        } else {
             this._setGoEditListener();
         }
     }
@@ -380,7 +385,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
-    public editorRendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
+    private _editorRendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _goEditCallback: () => void;
 
@@ -437,8 +442,11 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             if (this.cellData != cellData) {
                 this._emitDataChange(cellData);
             }
-            this.rendererHost.viewContainerRef.clear();
 
+            if (this.alwaysShowEditor) {
+                return;
+            }
+            this.rendererHost.viewContainerRef.clear();
             this.runMicrotask(() => {
                 this.insertRenderer();
                 this._setGoEditListener();
@@ -446,9 +454,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         });
     }
 
-    /*
+    /**
      * 插入渲染器
-     * */
+     */
     protected insertRenderer() {
         super.insertRenderer();
         if (this.rendererRef instanceof ComponentRef) {
@@ -456,34 +464,36 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
-    /*
+    /**
      * 插入编辑渲染器
-     * */
+     */
     protected insertEditorRenderer() {
-        this.editorRendererRef = this.rendererFactory(this.editorRenderer, this.editorRendererInitData);
-        if (this.editorRendererRef instanceof ComponentRef) {
-            this._editorRendererSubscribe(this.editorRendererRef.instance);
-        }
+        this._editorRendererRef = this.rendererFactory(this.editorRenderer, this.editorRendererInitData);
 
+        if (this._editorRendererRef instanceof ComponentRef) {
+            this._editorRendererRef.instance.alwaysShowEditor = this.alwaysShowEditor;
+            this._editorRendererSubscribe(this._editorRendererRef.instance);
+        }
         if (this._goEditCallback) {
             this._goEditCallback();
         }
-
         this.changeDetector.detectChanges();
     }
 
-    /*
+    /**
      * 如果可编辑，单元格绑定点击事件
-     * */
+     */
     private _setGoEditListener() {
         if (this._goEditCallback) {
             this._goEditCallback();
         }
         this._goEditCallback = this._editable ? this._renderer.listen(
-            this._elementRef.nativeElement.parentElement, 'click', () => {
-                this.rendererHost.viewContainerRef.clear();
-                this.insertEditorRenderer();
-            }) : null;
+            this._elementRef.nativeElement.parentElement, 'click', () => this._showEditor()) : null;
+    }
+
+    private _showEditor() {
+        this.rendererHost?.viewContainerRef.clear();
+        this.insertEditorRenderer();
     }
 
     ngOnInit() {
@@ -492,10 +502,20 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
 
-        if (this._editable) {
-            this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'pointer');
+        if (!this._editable) {
+            return;
+        }
+        this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'pointer');
+        if (!this.alwaysShowEditor) {
             //绑定点击事件
             this._setGoEditListener();
+        }
+    }
+
+    ngAfterViewInit() {
+        super.ngAfterViewInit();
+        if (this.alwaysShowEditor) {
+            this._showEditor();
         }
     }
 
@@ -513,8 +533,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this.rendererRef.instance.cellDataChange.unsubscribe();
         }
 
-        if (this.editorRendererRef instanceof ComponentRef) {
-            this.editorRendererRef.instance.cellDataChange.unsubscribe();
+        if (this._editorRendererRef instanceof ComponentRef) {
+            this._editorRendererRef.instance.cellDataChange.unsubscribe();
         }
     }
 }
