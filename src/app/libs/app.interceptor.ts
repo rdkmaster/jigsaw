@@ -302,11 +302,6 @@ class PageableData {
     }
 
     private static _filterWithKeyword(data, key, field, allField, headerFilter) {
-        // if (!key) {
-        //     console.warn('invalid filter key, need at least ONE char!');
-        //     return data.concat();
-        // }
-
         let filterData;
         if (key === '') {
             filterData = data.concat();
