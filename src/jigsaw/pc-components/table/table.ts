@@ -506,10 +506,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(() => { this.update() });
+        this._removeTableDataRefresh = value.onRefresh(() => this.update());
 
         if (!this._removeAdditionalDataRefresh) {
-            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(() => { this.update(true) });
+            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(() => this.update(true));
         }
     }
 
