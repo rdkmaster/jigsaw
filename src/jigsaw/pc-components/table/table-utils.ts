@@ -36,13 +36,14 @@ export class TableUtils {
         if (!settings) {
             settings = {
                 cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, rowSpan: 1,
-                editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null
+                editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null,
+                alwaysShowEditor: false
             }
         }
         settings.width = columnDefine.width;
         settings.group = columnDefine.group;
         settings.field = <string>columnDefine.target;
-        let cellDef = columnDefine.cell;
+        const cellDef = columnDefine.cell;
         if (cellDef) {
             settings.renderer = TableUtils.getRenderer(cellDef.renderer);
             settings.rendererInitData = cellDef.rendererInitData;
@@ -50,6 +51,7 @@ export class TableUtils {
             settings.alignment = cellDef.alignment ? cellDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableCellCheckboxRenderer" ? "center" : "left");
             settings.noPadding = !!cellDef.noPadding;
             settings.editable = cellDef.editable;
+            settings.alwaysShowEditor = cellDef.alwaysShowEditor;
             settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);
             settings.editorRendererInitData = cellDef.editorRendererInitData;
             settings.tooltip = cellDef.tooltip;

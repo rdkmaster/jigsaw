@@ -89,6 +89,7 @@ export class TableCell {
     rendererInitData?: any;
     clazz?: string;
     editable?: boolean;
+    alwaysShowEditor?: boolean;
     editorRenderer?: TableRenderer;
     editorRendererInitData?: any;
     data?: any | TableCellDataGenerator;
@@ -122,6 +123,7 @@ export class TableCellSetting {
     rendererInitData: any;
     clazz: string;
     editable: boolean;
+    alwaysShowEditor: boolean;
     editorRenderer: Type<TableCellRendererBase> | TemplateRef<any>;
     editorRendererInitData: any;
     group: boolean;
