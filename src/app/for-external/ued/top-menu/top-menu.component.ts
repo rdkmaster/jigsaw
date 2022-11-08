@@ -23,7 +23,10 @@ export class TopMenuComponent {
         },
         {
             groupName: "深色主题",
-            data: [{label: "OES Dark", name: "paletx-pro", style: "dark"}],
+            data: [
+                {label: "OES Dark", name: "paletx-pro", style: "dark"},
+                {label: "VMax Dark", name: "vmax-pro", style: "dark"}
+            ],
         },
     ];
 

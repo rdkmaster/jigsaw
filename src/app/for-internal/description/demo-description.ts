@@ -84,6 +84,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     public selectedTheme: any[];
     public themes = new ArrayCollection([
         { label: "VMax Light", name: 'vmax-pro', majorStyle: 'light' },
+        { label: "VMax Dark", name: 'vmax-pro', majorStyle: 'dark' },
         { label: "OES Light", name: 'paletx-pro', majorStyle: 'light' },
         { label: "OES Dark", name: 'paletx-pro', majorStyle: 'dark' },
         { label: "Ux2.0 Light", name: 'idea', majorStyle: 'light' },
