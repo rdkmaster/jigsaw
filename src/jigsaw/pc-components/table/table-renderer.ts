@@ -754,6 +754,8 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     public get _$valid(): boolean {
         const valid = this._calcInitProperty('valid', true);
+        // 渲染器里的select的边框默认是透明的，这导致valid==false时红色框框无法显示
+        // 修改border样式必须要及时，因此只得在这里修改border样式，_setBorderColor已充分考虑了性能问题
         this._setBorderColor(valid ? 'transparent' : '');
         return valid;
     }

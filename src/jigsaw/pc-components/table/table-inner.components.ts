@@ -323,6 +323,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     template: '<ng-template jigsaw-renderer-host></ng-template>'
 })
 export class JigsawTableCellInternalComponent extends TableInternalCellBase implements OnInit, OnDestroy {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public alwaysShowEditor: boolean = false;
 
