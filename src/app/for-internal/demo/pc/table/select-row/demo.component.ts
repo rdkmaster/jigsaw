@@ -6,8 +6,9 @@ import {TableData, JigsawTable} from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class TableSelectRowDemoComponent {
+    rowIndex: number = 3;
     tableData: TableData;
-    selectedRow: number = 5;
+    selectedRow: number = 25;
 
     constructor(http: HttpClient) {
         this.tableData = new TableData();
@@ -16,10 +17,14 @@ export class TableSelectRowDemoComponent {
     }
 
     @ViewChild('Table1')
-    private _table: JigsawTable;
+    public table: JigsawTable;
 
     getCurrentRow() {
-        console.log(`row number ${this._table.selectedRow} was selected`);
+        console.log(`row number ${this.table.selectedRow} was selected`);
+    }
+
+    changeData() {
+        this.tableData.fromAjax('mock-data/hr-list-short');
     }
 
     // ====================================================================

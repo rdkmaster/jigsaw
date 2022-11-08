@@ -572,6 +572,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
+    public scrollRowIntoView(rowIndex: number): void {
+        const row = this._rowElementRefs?.find((_, idx) => idx == rowIndex);
+        if (!row) {
+            console.warn('unable to find row element by index', rowIndex);
+            return;
+        }
+        row.nativeElement.scrollIntoView({block: "center", inline: "nearest"});
+    }
+
     /**
      * @internal
      */
@@ -581,10 +590,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._selectedRow = rowIndex;
-        this._selectRow(rowIndex);
+        this._selectRow(rowIndex, false, false);
     }
 
-    private _selectRow(rowIndex: number, suppressEvent: boolean = false) {
+    private _selectRow(rowIndex: number, suppressEvent: boolean = false, scrollIntoView: boolean = true) {
         if (!this._$cellSettings.length || rowIndex > this._$cellSettings.length) {
             return;
         }
@@ -598,7 +607,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
             }
-        })
+        });
+        if (scrollIntoView) {
+            this.scrollRowIntoView(rowIndex);
+        }
     }
 
     /**
