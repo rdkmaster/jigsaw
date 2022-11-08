@@ -474,7 +474,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         this._editorRendererRef = this.rendererFactory(this.editorRenderer, this.editorRendererInitData);
 
         if (this._editorRendererRef instanceof ComponentRef) {
-            this._editorRendererRef.instance.alwaysShowEditor = this.alwaysShowEditor;
+            this._editorRendererRef.instance.editorMode = this.alwaysShowEditor ? 'always-show' : 'when-activated';
             this._editorRendererSubscribe(this._editorRendererRef.instance);
         }
         if (this._goEditCallback) {

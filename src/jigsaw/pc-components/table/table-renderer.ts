@@ -86,7 +86,12 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         return this._calcInitProperty('valid', true);
     }
 
-    public alwaysShowEditor: boolean;
+    /**
+     * 这个属性指定了当渲染作为编辑器时，外部是如何使用它的
+     * - when-activated：需要用户激活（点击单元格）后，编辑器才显示出来；
+     * - always-show：无需用户激活，单元格默认使用编辑器来渲染单元格
+     */
+    public editorMode: 'when-activated' | 'always-show' = 'when-activated';
     protected targetData: TableData;
 
     private _removeTableDataRefresh: Function;
@@ -257,7 +262,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     private _removeListener: Function;
 
     ngAfterViewInit() {
-        if (this.alwaysShowEditor) {
+        if (this.editorMode == 'always-show') {
             return;
         }
         if (this._$disabled) {
@@ -327,7 +332,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     ngAfterViewInit() {
-        if (this.alwaysShowEditor) {
+        if (this.editorMode == 'always-show') {
             return;
         }
         this.autoCompleteInput.focus();
@@ -364,7 +369,7 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
     }
 
     ngAfterViewInit() {
-        if (this.alwaysShowEditor) {
+        if (this.editorMode == 'always-show') {
             return;
         }
         this.input.focus();
@@ -725,7 +730,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
      * @internal
      */
     public get _$openTrigger(): "click" | "mouseenter" {
-        return this.alwaysShowEditor ? 'click' : 'mouseenter';
+        return this.editorMode == 'always-show' ? 'click' : 'mouseenter';
     }
 
     /**
