@@ -294,6 +294,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this.value = this._toPrecisionAsStep((this._precisionFactor * this._value +
                 this._precisionFactor * this._step) / this._precisionFactor);
         }
+        this._inputElement.nativeElement.focus();
     }
 
     /**
@@ -315,6 +316,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
                 this.value = tempValue;
             }
         }
+        this._inputElement.nativeElement.focus();
     }
 
     private _toPrecisionAsStep(num) {

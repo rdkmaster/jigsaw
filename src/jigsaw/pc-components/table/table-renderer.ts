@@ -68,7 +68,7 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
         return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
     }
 
-    private _calcInitProperty(property: string, defaultValue: boolean): boolean {
+    protected _calcInitProperty(property: string, defaultValue: boolean): boolean {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
             return defaultValue;
         }
@@ -85,7 +85,6 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     public get _$valid(): boolean {
         return this._calcInitProperty('valid', true);
     }
-
 
     public alwaysShowEditor: boolean;
     protected targetData: TableData;
@@ -304,15 +303,27 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$dropDownData() {
-        return this._initDataJson?.data ? this._initDataJson.data : null;
+        return this._initDataJson?.hasOwnProperty('data') ? this._initDataJson.data : null;
     }
 
     public get _$maxDropDownHeight(): string {
-        return this._initDataJson?.maxDropDownHeight ? this._initDataJson.maxDropDownHeight : null;
+        return this._initDataJson?.hasOwnProperty('maxDropDownHeight') ? this._initDataJson.maxDropDownHeight : null;
     }
 
     public get _$clearable(): boolean {
-        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
+        return this._initDataJson?.hasOwnProperty('clearable') ? this._initDataJson.clearable : true;
+    }
+
+    public get _$placeholder(): string {
+        return this._initDataJson?.hasOwnProperty('placeholder') ? this._initDataJson.placeholder : '';
+    }
+
+    public get _$disabled(): boolean {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : true;
+    }
+
+    public get _$valid(): boolean {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
     }
 
     ngAfterViewInit() {
@@ -654,7 +665,9 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 
 export type SelectRendererInitData = {
     disabled?: Function | boolean;
-    initData: InitDataGenerator | ArrayCollection<any> | any[]
+    valid?: Function | boolean;
+    placeholder: string;
+    initData: InitDataGenerator | ArrayCollection<any> | any[];
 }
 
 /**
@@ -674,7 +687,6 @@ export type SelectRendererInitData = {
             .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection {
                 min-height: 28px;
                 height: 28px;
-                border-color: transparent;
             }
 
             .jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection .jigsaw-combo-select-selection-rendered {
@@ -687,7 +699,7 @@ export type SelectRendererInitData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellSelectRenderer extends TableCellRendererBase implements OnInit, OnDestroy {
-    public selected: any;
+    public selected: { label: string };
     public initData: InitDataGenerator | ArrayCollection<any> | any[] | SelectRendererInitData;
     public data: ArrayCollection<any> | any[];
 
@@ -698,8 +710,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
 
-    private readonly _removeKeyDownHandler;
-    private _removeClickHandler;
+    private readonly _removeKeyDownHandler: Function;
 
     private _hostCellEl: HTMLElement;
 
@@ -720,11 +731,31 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     /**
      * @internal
      */
-    public _$handleValueChange($event) {
-        if (!$event || $event.label == this.cellData) {
+    public _$handleValueChange(selectedValue: {label: string}) {
+        if (!selectedValue || selectedValue.label == this.cellData) {
             return;
         }
-        this.dispatchChangeEvent($event.label)
+        this.cellData = selectedValue.label;
+        this.dispatchChangeEvent(selectedValue.label);
+    }
+
+    private _selectionElement: HTMLElement;
+
+    private _setBorderColor(color: string): void {
+        if (!this._selectionElement) {
+            this._selectionElement = this._elementRef.nativeElement.querySelector(
+                '.jigsaw-table-cell-content .jigsaw-select-host .jigsaw-combo-select-host .jigsaw-combo-select-selection');
+        }
+        if (!this._selectionElement || this._selectionElement.style.borderColor == color) {
+            return;
+        }
+        this._selectionElement.style.borderColor = color;
+    }
+
+    public get _$valid(): boolean {
+        const valid = this._calcInitProperty('valid', true);
+        this._setBorderColor(valid ? 'transparent' : '');
+        return valid;
     }
 
     private _formatData(data: any): { label: string }[] {
@@ -742,7 +773,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 return item;
             }
             return {label: item};
-        })
+        });
     }
 
     protected onDataRefresh() {
@@ -801,6 +832,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     private _hasDestroyed: boolean;
+    private _removeClickHandler: Function;
 
     ngOnInit() {
         super.ngOnInit();

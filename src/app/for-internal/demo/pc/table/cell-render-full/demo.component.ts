@@ -7,7 +7,7 @@ import {
     TableCellPasswordRenderer,
     TableCellSelectRenderer, TableCellSwitchRenderer,
     TableCellTextEditorRenderer,
-    TableData
+    TableData, TableDataChangeEvent
 } from "jigsaw/public_api";
 
 @Component({
@@ -21,13 +21,20 @@ export class TableCellRenderFullComponent {
         this.tableData = new TableData(
             [
                 ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000", false],
-                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000", false],
+                ["Garrett", "123456", "Tokyo", "", "System Architect", "8000", false],
                 ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000", true],
                 ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000", true],
-                ["Garrett", "123456", "Edinburgh", "", "Developer", "5000", false]
+                ["Garrett", "123456", "Edinburgh", "", "Developer", "5000", false],
+                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000", true],
             ],
-            ["name", "password", "office", "enroll-date", "position", "salary", "senior"],
-            ["DefaultCell", "Password", "TextEditor", "Select", "AutoCompleteEditor", "NumericEditor", "CheckboxEditor"]
+            [
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ],
+            [
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ]
         );
     }
 
@@ -37,18 +44,22 @@ export class TableCellRenderFullComponent {
         setTimeout(() => location.reload(), 300);
     }
 
+    public onEdit(data: TableDataChangeEvent) {
+        console.log('on table cell edit, data:', data);
+    }
+
     dates: any[];
     columns: ColumnDefine[] = [
         {
-            target: "name",
+            target: "DefaultCell",
             width: "10%",
             cell: {
                 renderer: DefaultCellRenderer
             }
         },
         {
-            target: "password",
-            width: "10%",
+            target: "TableCellPasswordRenderer",
+            width: "200",
             cell: {
                 renderer: TableCellPasswordRenderer,
                 editable: true,
@@ -57,56 +68,65 @@ export class TableCellRenderFullComponent {
                 editorRendererInitData: {
                     placeholder: "Type to edit...",
                     password: true,
-                    disabled: (td, row, col) => row % 2,
+                    disabled: (td, row) => row % 2,
                     valid: (td, row, col) => td.data[row][col] != ''
                 }
             }
         },
         {
-            target: "office",
-            width: "10%",
+            target: "TableCellTextEditorRenderer",
+            width: "180",
             cell: {
                 editable: true,
                 alwaysShowEditor: this.alwaysShowEditor,
                 editorRenderer: TableCellTextEditorRenderer,
                 editorRendererInitData: {
-                    clearable: true
+                    clearable: true,
+                    disabled: (td, row) => row % 2,
+                    valid: (td, row, col) => td.data[row][col] != ''
                 }
             }
         },
         {
-            target: "enroll-date",
-            width: "10%",
+            target: "TableCellSelectRenderer",
+            width: "170",
             cell: {
                 editorRenderer: TableCellSelectRenderer,
-                editorRendererInitData: (td, row, col) => {
-                    if (!this.dates) {
-                        this.dates = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
-                    }
-                    return this.dates;
+                editorRendererInitData: {
+                    initData:(td, row, col) => {
+                        if (!this.dates) {
+                            this.dates = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
+                        }
+                        return this.dates;
+                    },
+                    disabled: (td, row) => row % 2,
+                    valid: (td, row, col) => td.data[row][col] != ''
                 },
                 editable: true,
                 alwaysShowEditor: this.alwaysShowEditor
             }
         },
         {
-            target: "position",
-            width: "10%",
+            target: "TableCellAutoCompleteEditorRenderer",
+            width: "250",
             cell: {
                 editable: true,
                 alwaysShowEditor: this.alwaysShowEditor,
                 editorRenderer: TableCellAutoCompleteEditorRenderer,
-                editorRendererInitData: () => {
+                editorRendererInitData: (td, row, col) => {
                     return {
+                        data: ["Developer", "System Architect", "Test Engineer"],
                         placeholder: "Try to edit...",
-                        data: ["Developer", "System Architect", "Test Engineer"]
+                        disabled: row % 2,
+                        valid: td.data[row][col] != '',
+                        clearable: row % 3,
                     };
                 }
             }
         },
         {
-            target: "salary",
-            width: "10%",
+            target: "TableCellNumericEditorRenderer",
+            width: "220",
             group: true,
             cell: {
                 editable: true,
@@ -115,20 +135,21 @@ export class TableCellRenderFullComponent {
                 editorRendererInitData: {
                     placeholder: "Type to edit...",
                     min: 0,
-                    step: 1000
+                    step: 1000,
+                    disabled: (td, row) => row % 2,
+                    valid: (td, row, col) => td.data[row][col] > 0
                 }
             }
         },
         {
-            target: 'senior',
-            width: "10%",
+            target: 'TableCellSwitchRenderer',
+            width: "170",
             cell: {
                 editable: false,
-                // alwaysShowEditor: this.alwaysShowEditor,
                 renderer: TableCellSwitchRenderer,
                 rendererInitData: {
-                    disabled: (td, row, col) => row % 2,
-                    valid: (td, row, col) => td.data[row][0] == 'Tiger' && !td.data[row][col]
+                    disabled: (td, row) => row % 2,
+                    valid: (td, row, col) => td.data[row][col]
                 }
             }
         }
