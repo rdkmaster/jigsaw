@@ -415,7 +415,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return columnDefines;
     }
 
-    public update(isAdditionalDataOnRefresh?: boolean): void {
+    public update(isFromAdditional?: boolean): void {
         if (!this.initialized || !this._data) {
             return;
         }
@@ -442,7 +442,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
-            if (isAdditionalDataOnRefresh) {
+            if (isFromAdditional) {
                 return;
             }
             this._clearExpansion();
