@@ -1,11 +1,11 @@
-import {Component} from "@angular/core";
-import {IDynamicInstantiatable} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { IDynamicInstantiatable } from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'tabContent.html',
     styleUrls: ['./tabContent.css']
 })
-export class TabContentComponent{
+export class TabContentComponent {
     initData: any;
 }
 
@@ -14,5 +14,5 @@ export class TabContentComponent{
     styleUrls: ['./tabContent.css']
 })
 export class TabContentDefine implements IDynamicInstantiatable {
-    initData: Object = 'zte'
+    public initData = { username: "zte" }
 }
