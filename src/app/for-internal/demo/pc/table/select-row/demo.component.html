@@ -4,7 +4,12 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-button (click)="selectedRow = 2">选择第三行</jigsaw-button>
+行号：<jigsaw-numeric-input [(value)]="rowIndex"></jigsaw-numeric-input>
+<jigsaw-button (click)="selectedRow = rowIndex">选择并跳转</jigsaw-button>
+<jigsaw-button (click)="table.scrollRowIntoView(rowIndex)">仅跳转</jigsaw-button>
+<jigsaw-button (click)="changeData()" style="margin-left: 24px">换数据</jigsaw-button>
+<br>
+<br>
 
 <jigsaw-table #Table1 height="400px" [data]="tableData"
               [(selectedRow)]= "selectedRow"
