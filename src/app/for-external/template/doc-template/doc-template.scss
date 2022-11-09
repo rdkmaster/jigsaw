@@ -164,10 +164,15 @@
     }
 
     h2 {
-        font-size: 24px;
+        position: sticky;
+        top: 0;
+        height: 60px;
+        padding: 20px 0 0 0;
+        margin: 0;
         border-bottom: 1px solid #ccc;
-        padding: 5px 0;
-        color: #000;
+        font-size: 24px;
+        color: var(--font-color-heading);
+        background: var(--bg-container);
     }
 
     h3 {
