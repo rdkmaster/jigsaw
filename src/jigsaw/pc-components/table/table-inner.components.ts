@@ -3,7 +3,7 @@ import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
-import {SortAs, SortOrder} from "../../common/core/data/component-data";
+import {DataFilterInfo, SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { CheckBoxStatus } from '../checkbox/typings';
@@ -721,10 +721,10 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             return;
         }
 
-        const filterIndex = this.tableData.filterInfo.headerFilter.findIndex(item=> item.field === field);
+        const filterIndex = this.tableData.headerFilter.findIndex(item=> item.field === field);
         if (this._$selectedItems.length === 0) {
             if (filterIndex !== -1) {
-                this.tableData.filterInfo.headerFilter.splice(filterIndex, 1);
+                this.tableData.headerFilter.splice(filterIndex, 1);
                 this._autoFilterData();
                 this.filterCancel();
             } else {
@@ -734,9 +734,9 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         }
 
         if (filterIndex !== -1) {
-            this.tableData.filterInfo.headerFilter[filterIndex].selectKeys = this._$selectedItems.concat([]);
+            this.tableData.headerFilter[filterIndex].selectKeys = this._$selectedItems.concat([]);
         } else {
-            this.tableData.filterInfo.headerFilter.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
+            this.tableData.headerFilter.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
         }
         this._autoFilterData();
         this.filterCancel();
@@ -750,17 +750,17 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     private _autoFilterData() {
-        this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilter);
+        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilter);
         if (!this.autoFilter) {
             return;
         }
-        this.tableData.filter(this.tableData.filterInfo);
+        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.headerFilter));
     }
 
     private _initData(data: string[]): void {
         this._$dataStatus = 'resolved';
         this._data = data;
-        const found = this.tableData.filterInfo.headerFilter?.find(item => item.field === this.field);
+        const found = this.tableData.headerFilter?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
         }

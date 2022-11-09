@@ -6,6 +6,7 @@ import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
     DataSortInfo,
+    HeaderFilter,
     HttpClientOptions,
     IFilterable,
     IPageable,
@@ -313,6 +314,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
+    public headerFilter: HeaderFilter[] = [];
+
     public sortInfo: DataSortInfo;
 
     public sort(compareFn?: (a: any[], b: any[]) => number): void;
@@ -350,7 +353,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
-    public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
+    public filterInfo: DataFilterInfo;
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: (string | number)[]): void;
@@ -610,13 +613,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo.headerFilter);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.headerFilter);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo.headerFilter);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.headerFilter);
         }
         this._filterSubject.next(pfi);
     }
@@ -1226,8 +1229,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this._sortAndPaging();
     }
 
-    public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
-
     public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
@@ -1235,7 +1236,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * @internal
      */
     public filter(term, fields?: (string | number)[]): void {
-        console.log(this.filterInfo);
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term.bind(fields));
         } else {
@@ -1269,12 +1269,12 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 row => row.filter(item => String(item).indexOf(key) != -1).length != 0
             );
 
-            if (this.filterInfo.headerFilter.length !== 0) {
+            if (this.headerFilter.length !== 0) {
                 this.filteredData = this.filteredData.filter(item => {
                     let keep: boolean = true;
-                    for (let i = 0; i < this.filterInfo.headerFilter.length; i++) {
-                        const colIndex = this.field.findIndex(item => item === this.filterInfo.headerFilter[i].field);
-                        const selectKeys = this.filterInfo.headerFilter[i].selectKeys;
+                    for (let i = 0; i < this.headerFilter.length; i++) {
+                        const colIndex = this.field.findIndex(item => item === this.headerFilter[i].field);
+                        const selectKeys = this.headerFilter[i].selectKeys;
                         keep = !!selectKeys.find(key => String(item[colIndex]) == key);
                         if (!keep) {
                             break;

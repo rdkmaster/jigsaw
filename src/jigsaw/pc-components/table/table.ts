@@ -34,10 +34,10 @@ import {
     SortChangeEvent,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions, HeaderFilter
+    TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
+import {HeaderFilter, IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
 import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
