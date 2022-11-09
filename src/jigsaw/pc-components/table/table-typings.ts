@@ -6,8 +6,8 @@ import {
     TableData
 } from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
-import {TableCellRendererBase} from "./table-renderer";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {TableCellRendererBase} from "./table-renderer";
 
 export type TableColumnTarget = number | string | (number | string)[];
 export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
@@ -140,8 +140,6 @@ export class SortChangeEvent {
     order: SortOrder;
     field: string;
 }
-
-export type HeaderFilter = { field: string; selectKeys: string[] };
 
 /**
  * @internal

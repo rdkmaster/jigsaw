@@ -9,7 +9,6 @@ import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawFloat} from "../../common/directive/float/float";
 import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
-import {Observable} from "rxjs/internal/Observable";
 import { isObservable } from "rxjs";
 
 @Directive()
@@ -584,7 +583,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
-                    [multipleSelect]="true" [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
+                    [multipleSelect]="true" [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange()">
                 <j-list-option #listItem *ngFor="let item of _$filteredData" [value]="item">
                     <div class="item-box">
                         <j-checkbox #checkbox [(checked)]="listItem.selected" mode="minimalist" style="margin-right: 8px;">
@@ -661,7 +660,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     /**
      * @internal
      */
-    public _$handleSelectChange($event) {
+    public _$handleSelectChange() {
         this._checkSelectAll();
     }
 
@@ -708,27 +707,18 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             } else {
                 this._$selectedItems = new ArrayCollection(this._$filteredData);
             }
-        } else if (this._$selectAllChecked === CheckBoxStatus.unchecked) {
-            if (this._$selectedItems?.length > 0) {
-                this._$selectedItems = this._$selectedItems.filter(data => !this._$filteredData.includes(data));
-            }
+        } else if (this._$selectAllChecked === CheckBoxStatus.unchecked && this._$selectedItems?.length > 0) {
+            this._$selectedItems = this._$selectedItems.filter(data => !this._$filteredData.includes(data));
         }
         this._changeDetector.markForCheck();
     }
 
-    public _$checkItemChecked(item: string) {
-        if (!this._$selectedItems || this._$selectedItems.length === 0 ){
-            return CheckBoxStatus.unchecked;
-        }
-        return this._$selectedItems.includes(item) ? CheckBoxStatus.checked : CheckBoxStatus.unchecked;
-    }
-
-    public filterConfirm(field) {
+    public filterConfirm(field: string) {
         const colIndex = this.tableData.field.findIndex(item => item === field);
         if (colIndex === -1) {
             console.error(`This field: ${field} not support header filter.`)
             this.filterCancel();
-            return
+            return;
         }
 
         const filterIndex = this.tableData.filterInfo.headerFilter.findIndex(item=> item.field === field);
@@ -759,7 +749,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         this.float.closeFloat();
     }
 
-    private _autoFilterData(){
+    private _autoFilterData() {
         this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilter);
         if (!this.autoFilter) {
             return;
@@ -784,7 +774,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             this._initData(data);
             return;
         }
-        
+
         this._$dataStatus = 'loading';
         const promise: Promise<any[]> = isObservable(data) ? data.toPromise() : data;
         promise.then((resolvedData: string[]) => this._initData(resolvedData));

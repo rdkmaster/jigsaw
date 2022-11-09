@@ -1,7 +1,7 @@
 import { EventEmitter } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {debounceTime, map} from "rxjs/operators";
-import {Subject} from "rxjs";
+import {Subject, Observable} from "rxjs";
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
@@ -22,7 +22,6 @@ import {
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
 import {getColumn} from "../utils/data-collection-utils";
-import {Observable} from "rxjs/internal/Observable";
 
 /**
  * 代表表格数据矩阵`TableDataMatrix`里的一行

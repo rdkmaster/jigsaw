@@ -3,7 +3,6 @@ import {Subscription} from "rxjs";
 import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
-import { HeaderFilter } from "jigsaw/public_api";
 
 /**
  * 参考 `IAjaxComponentData.dataReviser`的说明
@@ -797,6 +796,11 @@ export class PagingInfo implements IEmittable {
         }
     }
 }
+
+/**
+ * 用于描述表格的列头过滤时，选中的列和单元格的值的信息
+ */
+export type HeaderFilter = { field: string; selectKeys: string[] };
 
 /**
  * 数据过滤信息，是数据过滤参数的结构化信息类
