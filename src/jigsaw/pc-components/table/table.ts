@@ -45,7 +45,7 @@ import {TableUtils} from "./table-utils";
 import { JigsawFloatModule } from "../../common/directive/float/float";
 import { JigsawButtonModule } from "../button/button";
 import { JigsawListModule } from "../list-and-tile/list";
-import { JigsawCheckBoxModule } from "../checkbox";
+import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
