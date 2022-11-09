@@ -290,6 +290,9 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
     @Input()
     public headerTrustedHtmlContext: any;
 
+    /**
+     * @internal
+     */
     @ViewChild(JigsawFloat)
     public _$jigsawFloat: JigsawFloat;
 
@@ -611,9 +614,24 @@ export class JigsawTableHeaderFilterBox implements OnInit {
 
     private _data: string[];
 
+    /**
+     * @internal
+     */
     public _$dataStatus: 'unknown' | 'loading' | 'resolved' = 'unknown';
+
+    /**
+     * @internal
+     */
     public _$selectedItems: string[];
+
+    /**
+     * @internal
+     */
     public _$filteredData: string[];
+
+    /**
+     * @internal
+     */
     public _$selectAllChecked: CheckBoxStatus;
 
     /**
@@ -692,6 +710,10 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         this._$selectAllChecked = CheckBoxStatus.unchecked;
     }
 
+
+    /**
+     * @internal
+     */
     public _$selectAll() {
         if (this._$filteredData.length === 0) {
             return;
