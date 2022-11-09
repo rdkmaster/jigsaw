@@ -149,7 +149,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
     }
 
     public fromXML(xml: string | XMLDocument): SimpleTreeData {
-        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(xml) : xml;
+        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(this.checkEscape(xml)) : xml;
         if (xmlDoc && xmlDoc.childElementCount > 0) {
             this.nodes = [];
             this._parseXmlNode(xmlDoc.children[0], this);
@@ -157,6 +157,12 @@ export class SimpleTreeData extends GeneralCollection<any> {
 
         this.refresh();
         return this;
+    }
+
+    protected checkEscape(xml: string): string {
+        return xml.replace(/(?<=(="|=').*)[&](?=.*"|')/g, "&amp;")
+            .replace(/(?<=(="|=').*)[>](?=.*"|')/g, "&gt;")
+            .replace(/(?<=(="|=').*)[<](?=.*"|')/g, "&lt;")
     }
 
     protected invokeChangeCallback(): void {
