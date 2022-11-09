@@ -55,6 +55,11 @@
       margin-left: 8px;
     }
 
+    >.hide {
+      pointer-events: none;
+      visibility: hidden;
+    }
+
     .jigsaw-group-select-host,
     .jigsaw-select-host {
       .jigsaw-combo-select-host {
