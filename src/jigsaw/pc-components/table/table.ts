@@ -572,7 +572,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
-    public scrollRowIntoView(rowIndex: number, autoSelect: boolean = false): void {
+    public scrollRowIntoView(rowIndex: number, autoSelect: boolean = true): void {
         const row = this._rowElementRefs?.find((_, idx) => idx == rowIndex);
         if (!row) {
             console.warn('unable to find row element by index', rowIndex);
