@@ -1,11 +1,13 @@
 import { AfterContentInit, Component, ViewEncapsulation } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
+import { ThemeService } from "../service/theme-service";
 
 @Component({
     selector: "ued-top-menu",
     templateUrl: "./top-menu.component.html",
     styleUrls: ["./top-menu.component.scss"],
+    providers: [ThemeService],
     encapsulation: ViewEncapsulation.None,
 })
 export class TopMenuComponent implements AfterContentInit {
@@ -45,9 +47,10 @@ export class TopMenuComponent implements AfterContentInit {
         const themeData = theme[0].data[0];
         const themeName = themeData.name;
         const majorStyle = themeData.style;
-        JigsawTheme.changeTheme(themeName, majorStyle);
-        localStorage.setItem("jigsawExternalDemoTheme", JSON.stringify([{ groupName: majorStyle === 'light' ? '亮色主题' : '深色主题', data: [themeData] }]));
-        this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+        // JigsawTheme.changeTheme(themeName, majorStyle);
+        this._themeService.changeTheme(themeName, majorStyle);
+        // localStorage.setItem("jigsawExternalDemoTheme", JSON.stringify([{ groupName: majorStyle === 'light' ? '亮色主题' : '深色主题', data: [themeData] }]));
+
     }
 
     private _themeInit() {
@@ -62,7 +65,7 @@ export class TopMenuComponent implements AfterContentInit {
         window.location.href = version.url;
     }
 
-    constructor(private _router: Router) {
+    constructor(private _router: Router, private _themeService: ThemeService) {
         _router.events.subscribe((route) => {
             if (route instanceof NavigationEnd) {
                 this.showThemeSelect = route.url.startsWith('/components')
@@ -72,5 +75,9 @@ export class TopMenuComponent implements AfterContentInit {
 
     ngAfterContentInit(): void {
         this._themeInit();
+
+        this._themeService.themeChange.subscribe((JigsawTheme) => {
+            this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+        })
     }
 }
