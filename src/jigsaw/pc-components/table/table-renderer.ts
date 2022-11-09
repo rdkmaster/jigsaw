@@ -404,6 +404,14 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
             this.initData(this.tableData, this.row, this.column) : this.initData;
     }
 
+    public get _$disabled() {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
+
     public get _$title(): string {
         return this._initDataJson?.hasOwnProperty('title') ? this._initDataJson.title : '';
     }
@@ -487,6 +495,14 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
     }
 
     protected _initDataJson: any;
+
+    public get _$disabled() {
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
+    }
+
+    public get _$valid() {
+        return this._initDataJson?.hasOwnProperty('valid') ? this._initDataJson.valid : true;
+    }
 
     private _updateInitData() {
         this._initDataJson = this.initData instanceof Function ?
