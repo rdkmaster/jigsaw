@@ -8,7 +8,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
 import { CheckBoxStatus } from '../checkbox/typings';
 import { JigsawFloat} from "../../common/directive/float/float";
-import { ArrayCollection } from 'jigsaw/common/core/data/array-collection';
+import { ArrayCollection } from '../../common/core/data/array-collection';
 import { isObservable } from "rxjs";
 
 @Directive()
