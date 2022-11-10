@@ -1,6 +1,5 @@
 import {checkXmlString} from "./tree-data";
 
-
 describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
     it('test Normal', () => {
         const xml: string = `
