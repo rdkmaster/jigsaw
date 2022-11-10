@@ -101,6 +101,42 @@ declare const DOMParser;
 let domParser: any;
 type Position = {start: number, end: number};
 
+export function checkXmlString(xml: string): string {
+    let quote: string;
+    let pos: Position;
+    const positions: Position[] = [];
+    xml.replace(/(?<!\\)['"]/g, (found: string, index: number) => {
+        if (!quote) {
+            quote = found;
+            pos = {start: index, end: -1};
+            return;
+        }
+        if (quote == found) {
+            pos.end = index;
+            positions.push(pos);
+            quote = undefined;
+        }
+        return "";
+    });
+
+    if (!!quote) {
+        // 有未成对的引号，此时格式肯定有问题，要丢弃
+        console.error('bad xml format!');
+        return xml;
+    }
+
+    let newXml: string = '';
+    positions.forEach((position, idx) => {
+        const lastIndex = positions[idx - 1] ? positions[idx - 1].end : 0;
+        newXml += xml.slice(lastIndex, position.start);
+        newXml += xml.slice(position.start, position.end).replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    });
+    const lastPos = positions[positions.length - 1] ? positions[positions.length - 1] : {start: 0, end: 0};
+    newXml += xml.slice(lastPos.end);
+    return newXml;
+}
+
 /**
  * 对树形结构的json进行一个简单的包装，比如把ztree的数据包装成jigsaw认识的数据
  */
@@ -150,51 +186,14 @@ export class SimpleTreeData extends GeneralCollection<any> {
     }
 
     public fromXML(xml: string | XMLDocument): SimpleTreeData {
-        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(this.checkEscape(xml)) : xml;
-        if (xmlDoc && xmlDoc.childElementCount > 0) {
+        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(checkXmlString(xml)) : xml;
+        if (xmlDoc && !xmlDoc.querySelector('parsererror')) {
             this.nodes = [];
             this._parseXmlNode(xmlDoc.children[0], this);
         }
 
         this.refresh();
         return this;
-    }
-
-    public checkEscape(xml: string): string {
-        let quote: string;
-        let pos: Position;
-        const positions: Position[] = [];
-        xml.replace(/(?<!\\)['"]/g, (found: string, index: number) => {
-            if (!quote) {
-                quote = found;
-                pos = {start: index, end: -1};
-                return;
-            }
-            if (quote == found) {
-                pos.end = index;
-                positions.push(pos);
-                quote = undefined;
-            }
-            return "";
-        });
-
-        if (!!quote) {
-            // 有未成对的引号，此时格式肯定有问题，要丢弃
-            console.error('bad xml format!');
-            return;
-        }
-
-        let newXml: string = '';
-        positions.forEach((position, idx) => {
-            const lastIndex = positions[idx - 1] ? positions[idx - 1].end : 0;
-            newXml += xml.slice(lastIndex, position.start);
-            newXml += xml.slice(position.start, position.end).replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;');
-        });
-        const lastPos = positions[positions.length - 1] ? positions[positions.length - 1] : {start: 0, end: 0};
-        newXml += xml.slice(lastPos.end);
-        return newXml;
     }
 
     protected invokeChangeCallback(): void {
