@@ -1,6 +1,7 @@
 import {CustomModeledGraphTemplate, Dimension, Indicator, ModeledRectangularGraphData} from "./modeled-graph-data";
 import {EchartOptions} from "./echart-types";
 import {Grouped} from "../utils/data-collection-utils";
+import {SimpleTreeData} from "./tree-data";
 
 class ModeledRectangularGraphDataSpec extends ModeledRectangularGraphData {
     public getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean): Dimension[] {
@@ -441,4 +442,107 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(options.legend).toBeUndefined();
     });
 });
+
+describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
+    it('test normal', () => {
+        const xml: string = `
+            <node>
+                <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="转换" icon="iconfont iconfont-e4fb"></node>
+            </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+            <node>
+                <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="转换" icon="iconfont iconfont-e4fb"></node>
+            </node>`);
+    });
+    it('test Single quotation marks', () => {
+        const xml: string = `
+            <node>
+                <node label="'通用'" icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="'监控'" icon="iconfont iconfont-e67a"></node>
+            </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+            <node>
+                <node label="'通用'" icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="'监控'" icon="iconfont iconfont-e67a"></node>
+            </node>`);
+    });
+    it('test Double quotation marks', () => {
+        const xml: string = `
+            <node>
+                <node label='"通用"' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="'监控'" icon="iconfont iconfont-e67a"></node>
+            </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+            <node>
+                <node label='"通用"' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="'监控'" icon="iconfont iconfont-e67a"></node>
+            </node>`);
+    });
+    it('test Greater not in quotation marks', () => {
+        const xml: string = `
+            <node>
+                <node ---<&>---></node>
+            </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+            <node>
+                <node ---<&>---></node>
+            </node>`);
+    });
+    it('test Ampersand in quotation marks', () => {
+        const xml: string = `
+             <node>
+                <node label='通用&' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="监控&" icon="iconfont iconfont-e67a"></node>
+             </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+             <node>
+                <node label='通用&amp;' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="监控&amp;" icon="iconfont iconfont-e67a"></node>
+             </node>`);
+    });
+    it('test Greater in quotation marks', () => {
+        const xml: string = `
+             <node>
+                <node label='通用>' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="监控>" icon="iconfont iconfont-e67a"></node>
+             </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+             <node>
+                <node label='通用&gt;' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="监控&gt;" icon="iconfont iconfont-e67a"></node>
+             </node>`);
+    });
+    it('test Less then in quotation marks', () => {
+        const xml: string = `
+             <node>
+                <node label='<通用' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="<监控" icon="iconfont iconfont-e67a"></node>
+             </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`
+             <node>
+                <node label='&lt;通用' icon="iconfont iconfont-e4b8" selected="true"></node>
+                <node label="&lt;监控" icon="iconfont iconfont-e67a"></node>
+             </node>`);
+    });
+    it('test Double slashes before quotation marks', () => {
+        const xml: string = `==='hello&\\'\\", &is me'===`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`==='hello&amp;\\'\\", &amp;is me'===`);
+    });
+    it('test all', () => {
+        const xml: string = `---<->&---'1"1汉字&2"\\'11'aa<->&a"b<b&b字'b>b'b\\"bb"<->&'cc'`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`---<->&---'1"1汉字&amp;2"\\'11'aa<->&a"b&lt;b&amp;b字'b&gt;b'b\\"bb"<->&'cc'`);
+    });
+
+})
 
