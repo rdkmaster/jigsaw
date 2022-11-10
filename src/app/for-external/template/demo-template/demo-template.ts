@@ -15,7 +15,7 @@ import {
 } from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CommonModule} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 import {JigsawButtonBarModule, JigsawSelectModule, JigsawTabsModule,} from "jigsaw/public_api";
 import {JigsawMarkdownModule} from "../../../libs/markdown/markdown";
@@ -157,7 +157,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterConten
     protected docPath: string[] = [];
     public navigationData = [];
 
-    constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2) {
+    constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2, public router: Router) {
         super(http, el);
         route.fragment.subscribe(fragment => {
             this._demoSelector = fragment;
