@@ -551,5 +551,25 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
         const std = new SimpleTreeData();
         expect(std.checkEscape(xml)).toBe(`---<->&---'1"1汉字&amp;2"\\'11'aa<->&a"b&lt;b&amp;b字'b&gt;b'b\\"bb"<->&'cc'`);
     });
+    it('test quote position1', () => {
+        const xml: string = `'a>a'b<b"c&c"`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`'a&gt;a'b<b"c&amp;c"`);
+    });
+    it('test quote position2', () => {
+        const xml: string = `111'a>a'b<b"c&c"`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`111'a&gt;a'b<b"c&amp;c"`);
+    });
+    it('test quote position3', () => {
+        const xml: string = `'a>a'b<b"c&c"222`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`'a&gt;a'b<b"c&amp;c"222`);
+    });
+    it('test quote position4', () => {
+        const xml: string = `111'a>a'b<b"c&c"222`
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(`111'a&gt;a'b<b"c&amp;c"222`);
+    });
 })
 
