@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ViewEncapsulation } from "@angular/core";
+import { AfterContentInit, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
 import { ThemeService } from "../service/theme-service";
@@ -10,7 +10,7 @@ import { ThemeService } from "../service/theme-service";
     providers: [ThemeService],
     encapsulation: ViewEncapsulation.None,
 })
-export class TopMenuComponent implements AfterContentInit {
+export class TopMenuComponent implements OnInit, AfterContentInit {
     public logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
     public positionType = PopupPositionType.fixed;
     public showThemeSelect: boolean = false;
@@ -47,10 +47,8 @@ export class TopMenuComponent implements AfterContentInit {
         const themeData = theme[0].data[0];
         const themeName = themeData.name;
         const majorStyle = themeData.style;
-        // JigsawTheme.changeTheme(themeName, majorStyle);
         this._themeService.changeTheme(themeName, majorStyle);
-        // localStorage.setItem("jigsawExternalDemoTheme", JSON.stringify([{ groupName: majorStyle === 'light' ? '亮色主题' : '深色主题', data: [themeData] }]));
-
+        localStorage.setItem("jigsawExternalDemoTheme", JSON.stringify([{ groupName: majorStyle === 'light' ? '亮色主题' : '深色主题', data: [themeData] }]));
     }
 
     private _themeInit() {
@@ -73,11 +71,13 @@ export class TopMenuComponent implements AfterContentInit {
         });
     }
 
-    ngAfterContentInit(): void {
-        this._themeInit();
-
-        this._themeService.themeChange.subscribe((JigsawTheme) => {
+    ngOnInit(): void {
+        this._themeService.themeChange.subscribe(() => {
             this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
         })
+    }
+
+    ngAfterContentInit(): void {
+        this._themeInit();
     }
 }
