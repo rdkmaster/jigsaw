@@ -444,7 +444,7 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
 });
 
 describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
-    it('test normal', () => {
+    it('test Normal', () => {
         const xml: string = `
             <node>
                 <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
@@ -494,6 +494,14 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node ---<&>---></node>
             </node>`);
     });
+    it('test Quotation marks are not double.', () => {
+        const xml: string = `
+            <node>
+                <node label= """ </node>
+            </node>`;
+        const std = new SimpleTreeData();
+        expect(std.checkEscape(xml)).toBe(undefined);
+    });
     it('test Ampersand in quotation marks', () => {
         const xml: string = `
              <node>
@@ -538,11 +546,10 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
         const std = new SimpleTreeData();
         expect(std.checkEscape(xml)).toBe(`==='hello&amp;\\'\\", &amp;is me'===`);
     });
-    it('test all', () => {
+    it('test All', () => {
         const xml: string = `---<->&---'1"1汉字&2"\\'11'aa<->&a"b<b&b字'b>b'b\\"bb"<->&'cc'`
         const std = new SimpleTreeData();
         expect(std.checkEscape(xml)).toBe(`---<->&---'1"1汉字&amp;2"\\'11'aa<->&a"b&lt;b&amp;b字'b&gt;b'b\\"bb"<->&'cc'`);
     });
-
 })
 
