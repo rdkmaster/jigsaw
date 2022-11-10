@@ -160,9 +160,47 @@ export class SimpleTreeData extends GeneralCollection<any> {
     }
 
     protected checkEscape(xml: string): string {
-        return xml.replace(/(?<=(="|=').*)[&](?=.*"|')/g, "&amp;")
-            .replace(/(?<=(="|=').*)[>](?=.*"|')/g, "&gt;")
-            .replace(/(?<=(="|=').*)[<](?=.*"|')/g, "&lt;")
+        const regex = new RegExp(/(?<!\\)['"]/g);
+        let matches = [];
+        xml.replace(regex, function () {
+            const match = Array.prototype.slice.call(arguments, 0, -2);
+            match.index = arguments[arguments.length - 2];
+            matches.push(match);
+            return "";
+        });
+
+        const positions: { start: number, end: number }[] = [];
+        let quote: string;
+        let pos: { start: number, end: number };
+        for (let match of matches) {
+            if (!quote) {
+                quote = match[0];
+                pos = {start: match.index, end: -1};
+                continue;
+            }
+            if (quote == match[0]) {
+                pos.end = match.index;
+                positions.push(pos);
+                quote = undefined;
+            }
+        }
+        if (!!quote) {
+            // 有未成对的引号，此时格式肯定有问题，要丢弃
+            console.error('bad xml format!');
+            return;
+        }
+
+        let newXml: string = '';
+        positions.forEach((position, idx) => {
+            const lastIndex = positions[idx - 1] ? positions[idx - 1].end : 0;
+            newXml += xml.slice(lastIndex, position.start);
+            newXml += xml.slice(position.start, position.end).replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        })
+        const lastPos = positions[positions.length - 1];
+        newXml += xml.slice(lastPos.end);
+        return newXml;
     }
 
     protected invokeChangeCallback(): void {
