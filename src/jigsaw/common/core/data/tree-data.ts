@@ -197,7 +197,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
             newXml += xml.slice(position.start, position.end).replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
-        })
+        });
         const lastPos = positions[positions.length - 1];
         newXml += xml.slice(lastPos.end);
         return newXml;
