@@ -255,4 +255,3 @@ function _toSimpleNode(obj: Object): SimpleNode {
 function _isTruthy(value: any): boolean {
     return value == undefined ? false : value !== 'false';
 }
-
