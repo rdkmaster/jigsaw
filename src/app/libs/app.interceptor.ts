@@ -46,7 +46,7 @@ export class AjaxInterceptor implements HttpInterceptor {
             return this.createResult(body, req.url);
         } else if (req.url == '/rdk/service/common/upload') {
             return this.dealServerSideUploadRequest(req);
-        } else if (req.url.includes('app/for-external/assets/docs')) {
+        } else if (req.url.includes('app/for-external/')) {
             return next.handle(req);
         } else {
             console.error('no mock data processor found, forwarding the request to the server...');
