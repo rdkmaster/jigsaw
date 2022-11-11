@@ -1,5 +1,27 @@
 <div class="demo-wrapper">
     <jigsaw-markdown [markdown]="description"></jigsaw-markdown>
-    <iframe style="width:100%; height: calc(100vh - 60px); border: none" id="iframe">
-    </iframe>    
+    <!-- <iframe style="width:100%; height: calc(100vh - 60px); border: none" id="iframe">
+    </iframe>     -->
+    <div>
+        <jigsaw-search-input></jigsaw-search-input>
+    </div>
+    <ul class="icon-group">
+        <li (click)="_$currentGroupIndex = -1;" [ngClass]="{'group-active': _$currentGroupIndex === -1}">
+            <span>全部</span>
+        </li>
+        <ng-container *ngFor="let group of iconGroup; index as i">
+            <li (click)="_$clickGroupTag(i)" [ngClass]="{'group-active': i === _$currentGroupIndex}">
+                <span>{{group.groupName}}</span>
+            </li>
+        </ng-container>
+    </ul>
+    <ul class="icon-data">
+        <ng-container *ngFor="let icon of iconData">
+            <li>
+                <i class="iconfont" [ngClass]="'iconfont-' + icon.iconCode.toLowerCase()"></i>
+            </li>
+        </ng-container>
+    </ul>
+
+
 </div>

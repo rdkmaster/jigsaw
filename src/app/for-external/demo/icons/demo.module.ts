@@ -1,12 +1,12 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { JigsawIconModule } from "jigsaw/public_api";
+import { JigsawIconModule, JigsawSearchInputModule } from "jigsaw/public_api";
 import { IconsDemoComponent } from "./demo.component";
 import {JigsawMarkdownModule} from "../../../libs/markdown/markdown";
 
 @NgModule({
     imports: [
-        JigsawIconModule, CommonModule, JigsawMarkdownModule
+        JigsawIconModule, CommonModule, JigsawMarkdownModule, JigsawSearchInputModule
     ],
     declarations: [IconsDemoComponent],
     exports: [IconsDemoComponent]
