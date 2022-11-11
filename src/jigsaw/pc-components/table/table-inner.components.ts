@@ -656,12 +656,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public autoFilter: boolean;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
     public hostInstance: any;
 
     @ViewChild(PerfectScrollbarDirective)
@@ -743,10 +737,10 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             return;
         }
 
-        const filterIndex = this.tableData.headerFilter.findIndex(item=> item.field === field);
+        const filterIndex = this.tableData.headerFilters.findIndex(item=> item.field === field);
         if (this._$selectedItems.length === 0) {
             if (filterIndex !== -1) {
-                this.tableData.headerFilter.splice(filterIndex, 1);
+                this.tableData.headerFilters.splice(filterIndex, 1);
                 this._autoFilterData();
                 this.filterCancel();
             } else {
@@ -756,9 +750,9 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         }
 
         if (filterIndex !== -1) {
-            this.tableData.headerFilter[filterIndex].selectKeys = this._$selectedItems.concat([]);
+            this.tableData.headerFilters[filterIndex].selectKeys = this._$selectedItems.concat([]);
         } else {
-            this.tableData.headerFilter.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
+            this.tableData.headerFilters.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
         }
         this._autoFilterData();
         this.filterCancel();
@@ -772,17 +766,17 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     private _autoFilterData() {
-        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilter);
+        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilters);
         if (!this.autoFilter) {
             return;
         }
-        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.headerFilter));
+        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.headerFilters));
     }
 
     private _initData(data: string[]): void {
         this._$dataStatus = 'resolved';
         this._data = data;
-        const found = this.tableData.headerFilter?.find(item => item.field === this.field);
+        const found = this.tableData.headerFilters?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
         }

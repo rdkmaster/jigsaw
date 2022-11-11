@@ -7,8 +7,6 @@ import { LocalPageableTableData, ColumnDefine, PageableTableData } from "jigsaw/
     styleUrls: ["./demo.component.css"],
 })
 export class TableSetHeaderFilterDemoComponent {
-    public autoFilter: boolean = true;
-    
     public localPageableSearchValue: string;
     public localPageable: LocalPageableTableData;
     public localPageableColumnDefines: ColumnDefine[] = [

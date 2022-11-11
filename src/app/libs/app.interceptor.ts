@@ -298,10 +298,10 @@ class PageableData {
     private static _filter(dataTable, filter) {
         return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
             this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
-            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilter);
+            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
-    private static _filterWithKeyword(data, key, field, allField, headerFilter) {
+    private static _filterWithKeyword(data, key, field, allField, headerFilters) {
         let filterData;
         if (key === '') {
             filterData = data.concat();
@@ -339,12 +339,12 @@ class PageableData {
             });
         }
 
-        if (headerFilter?.length !== 0) {
+        if (headerFilters?.length !== 0) {
             filterData = filterData.filter(item => {
                 let keep: boolean = true;
-                for (let i = 0; i < headerFilter.length; i++) {
-                    const colIndex = allField.findIndex(item => item === headerFilter[i].field);
-                    const selectKeys = headerFilter[i].selectKeys;
+                for (let i = 0; i < headerFilters.length; i++) {
+                    const colIndex = allField.findIndex(item => item === headerFilters[i].field);
+                    const selectKeys = headerFilters[i].selectKeys;
                     keep = !!selectKeys.find(key => String(item[colIndex]) == key);
                     if (!keep) {
                         break;

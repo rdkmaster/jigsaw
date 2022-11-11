@@ -242,6 +242,12 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 }
 
+function _getStaticDistinctColumnData(field: string, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
+    const colIndex = this.field.findIndex(item => item === field);
+    const columnData = getColumn(rawTableData, colIndex) || [];
+    return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
+}
+
 /**
  * 这是最基础的表格数据对象，只具备最基本的表格数据展示能力，无法分页，
  * 一般用于以下类型的表格数据无法满足需求时，实现自定义表格数据的基础数据。
@@ -314,8 +320,6 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
-    public headerFilter: HeaderFilter[] = [];
-
     public sortInfo: DataSortInfo;
 
     public sort(compareFn?: (a: any[], b: any[]) => number): void;
@@ -353,6 +357,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
+    public headerFilters: HeaderFilter[] = [];
     public filterInfo: DataFilterInfo;
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
@@ -365,14 +370,8 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         throw new Error("Method not implemented.");
     }
 
-    protected _getDistinctColumnData(field: string, originalData: TableDataMatrix): any[] | Observable<any[]> | Promise<any[]> {
-        const colIndex = this.field.findIndex(item => item === field);
-        const columnData = getColumn(originalData, colIndex) || [];
-        return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
-    }
-
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return this._getDistinctColumnData(field, this.data);
+        return _getStaticDistinctColumnData(field, this.data);
     }
 
     public destroy() {
@@ -596,8 +595,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         const originParams = this.sourceRequestOptions[paramProperty];
         // 服务端通过这样的结构去拿缓存数据 {service: url, peerParam: params.peerParam || {}}
         const cacheKey: PagingServerCacheKey = {service: this.sourceRequestOptions.url, peerParam: originParams};
-        const req = this.http.request('get', pagingService,
-            {[paramProperty]: {key: cacheKey, field: field, requestFor: 'distinct-column-data'}});
+        const filterInfo = options.method == 'get' ? JSON.stringify(this.filterInfo) : this.filterInfo;
+        const req = this.http.request(options.method, pagingService,
+            {
+                [paramProperty]: {
+                    key: cacheKey, field: field, filterInfo, requestFor: 'distinct-column-data'
+                }
+            });
         return req as Observable<string[]>;
     }
 
@@ -613,13 +617,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.headerFilter);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.headerFilters);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.headerFilter);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.headerFilters);
         }
         this._filterSubject.next(pfi);
     }
@@ -739,7 +743,8 @@ export class DirectPageableTableData extends PageableTableData implements IServe
             console.error('invalid source request url, use updateDataSource() to reset the option.');
             return [];
         }
-        const req = this.http.get(url, {params: {requestFor: 'distinct-column-data', field}});
+        const filterInfo = JSON.stringify(this.filterInfo);
+        const req = this.http.get(url, {params: {requestFor: 'distinct-column-data', field, filterInfo}});
         return req as Observable<string[]>;
     }
 }
@@ -1269,12 +1274,12 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
                 row => row.filter(item => String(item).indexOf(key) != -1).length != 0
             );
 
-            if (this.headerFilter.length !== 0) {
+            if (this.headerFilters.length !== 0) {
                 this.filteredData = this.filteredData.filter(item => {
                     let keep: boolean = true;
-                    for (let i = 0; i < this.headerFilter.length; i++) {
-                        const colIndex = this.field.findIndex(item => item === this.headerFilter[i].field);
-                        const selectKeys = this.headerFilter[i].selectKeys;
+                    for (let i = 0; i < this.headerFilters.length; i++) {
+                        const colIndex = this.field.findIndex(item => item === this.headerFilters[i].field);
+                        const selectKeys = this.headerFilters[i].selectKeys;
                         keep = !!selectKeys.find(key => String(item[colIndex]) == key);
                         if (!keep) {
                             break;
@@ -1351,7 +1356,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return this._getDistinctColumnData(field, this.originalData);
+        return _getStaticDistinctColumnData(field, this.originalData);
     }
 
     public destroy(): void {

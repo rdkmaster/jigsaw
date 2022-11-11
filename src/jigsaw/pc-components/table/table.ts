@@ -101,12 +101,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Output()
     public headerFilterChange = new EventEmitter<HeaderFilter>();
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public autoFilter: boolean = false;
-
     private _contentWidth: string = 'auto';
 
     /**

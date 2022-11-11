@@ -828,11 +828,13 @@ export class DataFilterInfo {
         /**
          * 表头过滤
          */
-        public headerFilter?: HeaderFilter[]
+        public headerFilters?: HeaderFilter[]
     ) {}
+
+    public toJSON() {
+        return {key: this.key, field: this.field, headerFilters: this.headerFilters};
+    }
 }
-
-
 
 /**
  * 自定义url参数编解码器，因为angular的这个bug
