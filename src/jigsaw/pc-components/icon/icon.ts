@@ -16,6 +16,7 @@ import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import {Subscription} from "rxjs/internal/Subscription";
 
 const defaultHrefValue = 'javascript:void(0);';
 export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
@@ -45,7 +46,35 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
                 @Optional() private _translateService: TranslateService) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
+        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(() => {
+            switch (this.status) {
+                case 'success':
+                    this.text = this._translateService.instant(`icon.success`);
+                    break;
+                case 'warning':
+                    this.text = this._translateService.instant(`icon.warning`);
+                    break;
+                case 'error':
+                    this.text = this._translateService.instant(`icon.error`);
+                    break;
+                case 'finish':
+                    this.text = this._translateService.instant(`icon.finish`);
+                    break;
+                case 'disabled':
+                    this.text = this._translateService.instant(`icon.disabled`);
+                    break;
+                case 'process':
+                    this.text = this._translateService.instant(`icon.process`);
+                    break;
+                case 'custom':
+                default:
+                    this.text = this._translateService.instant(`icon.custom`);
+                    break;
+            }
+        });
     }
+
+    private _langChangeSubscriber: Subscription;
 
     /**
      * @internal
