@@ -12,6 +12,11 @@ export class ProcessStatusMultilineComponent extends AsyncDescription {
 
     public steps = [];
 
+    public changeStatus(idx: number) {
+        this.steps = this.steps.concat([]);
+        this.steps[idx] = this._createStepData(idx);
+    }
+
     private _createStepData(index: number) {
         const statuses = ["done", "error", "processing", "warning", "skipped", "waiting"];
         const status = statuses[InternalUtils.randomNumber(0, statuses.length - 1)];
