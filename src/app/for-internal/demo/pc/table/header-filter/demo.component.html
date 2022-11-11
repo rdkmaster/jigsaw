@@ -3,18 +3,11 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<ul class="demo-options">
-    <li>
-        <span>自动过滤</span>
-        <jigsaw-switch [(checked)]="autoFilter"></jigsaw-switch>
-    </li>
-</ul>
-
 <div class="demo-cntr">
     <jigsaw-header [level]="2">LocalPageableTableData</jigsaw-header>
     <j-button width="120" (click)="changeLocalPageable()">改变数据</j-button>
     <jigsaw-table [data]="localPageable" [columnDefines]="localPageableColumnDefines"
-        (headerFilterChange)="onLocalPageableHeaderFilterChange($event)" [autoFilter]="autoFilter"></jigsaw-table>
+        (headerFilterChange)="onLocalPageableHeaderFilterChange($event)"></jigsaw-table>
     <jigsaw-pagination [data]="localPageable" [searchable]="true" [pageSizeOptions]="[5, 10, 20]"
         [showQuickJumper]="true" (search)="onLocalPageableSearch($event)">
     </jigsaw-pagination>
@@ -23,7 +16,7 @@
 <div class="demo-cntr">
     <jigsaw-header [level]="2">PageableTableData</jigsaw-header>
     <!-- <j-button width="120">改变数据</j-button> -->
-    <jigsaw-table maxHeight="400px" [data]="pageable" [columnDefines]="pageableColumnDefines" [autoFilter]="autoFilter"
+    <jigsaw-table maxHeight="400px" [data]="pageable" [columnDefines]="pageableColumnDefines"
         (headerFilterChange)="onPageableHeaderFilterChange($event)">
     </jigsaw-table>
     <jigsaw-pagination [data]="pageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true" [showQuickJumper]="true"

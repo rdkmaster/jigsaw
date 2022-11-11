@@ -11,7 +11,7 @@ import {
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { v4 as uuidv4 } from 'uuid';
-import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils, getColumn } from "jigsaw/public_api"
+import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils, getColumn, DataFilterInfo, TableDataMatrix, TableDataField, HeaderFilter } from "jigsaw/public_api"
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -147,7 +147,8 @@ export class AjaxInterceptor implements HttpInterceptor {
         const field = req.body.field;
         const peerParam = req.body.key.peerParam;
         const service = req.body.key.service;
-        return PageableData.getDistinctColumnData({service,field,peerParam})
+        const filterInfo = req.body.filterInfo;
+        return PageableData.getDistinctColumnData({ service, field, peerParam, filterInfo })
     }
 
     private _queryPagingData(req: HttpRequest<any>): any {
@@ -243,16 +244,66 @@ class PageableData {
         return result;
     }
 
-    static getDistinctColumnData(req: { service: string, field: string, peerParam: any }): string[] {
+    static getDistinctColumnData(req: { service: string, field: string, peerParam: any, filterInfo: DataFilterInfo }): string[] {
         const result = [];
         if (!req.service) {
             console.error('bad argument, need a "service" property!');
             return result;
         }
 
+        function _filterByFields(data: TableDataMatrix, fields: string[] | number[], tableDataField: TableDataField): TableDataMatrix {
+            if (fields && fields.length != 0) {
+                let numberFields: number[];
+                if (typeof fields[0] === 'string') {
+                    numberFields = [];
+                    (<string[]>fields).forEach(field => {
+                        numberFields.push(tableDataField.findIndex(item => item == field))
+                    });
+                } else {
+                    numberFields = <number[]>fields;
+                }
+                return data.filter(
+                    row => row.filter(
+                        (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
+                    )
+                );
+            } else {
+                return data;
+            }
+        }
+        
+        function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+            return data.filter(
+                row => row.filter(item => String(item).indexOf(key) != -1).length != 0
+            );
+        }
+        
+        function _filterByHeaderFilter(data: TableDataMatrix, tableDataField: TableDataField, headerFilters: HeaderFilter[]) {
+            if (headerFilters.length !== 0) {
+                return data.filter(item => {
+                    let keep: boolean = true;
+                    for (let i = 0; i < headerFilters.length; i++) {
+                        const colIndex = tableDataField.findIndex(item => item === headerFilters[i].field);
+                        const selectKeys = headerFilters[i].selectKeys;
+                        keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+                        if (!keep) {
+                            break;
+                        }
+                    }
+                    return keep;
+                });
+            } else {
+                return data;
+            }
+        }
+
         const dataTable = MockData.get(req.service);
+        let filteredData = _filterByFields(dataTable.data, req.filterInfo.field, dataTable.field);
+        filteredData = _filterByKey(filteredData, req.filterInfo.key);
+        filteredData = _filterByHeaderFilter(filteredData, dataTable.field, req.filterInfo.headerFilters);
+
         const colIndex = dataTable.field.findIndex(item => item === req.field);
-        const columnData = getColumn(dataTable.data, colIndex) || [];
+        const columnData = getColumn(filteredData, colIndex) || [];
         return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
     }
 

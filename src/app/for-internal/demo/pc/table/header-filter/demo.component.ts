@@ -43,9 +43,6 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onLocalPageableHeaderFilterChange($event) {
         console.log($event);
-        if (!this.autoFilter) {
-            this.localPageable.filter(this.localPageableSearchValue || '', null);
-        }
     }
 
     public changeLocalPageable() {
@@ -88,9 +85,6 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onPageableHeaderFilterChange($event) {
         console.log($event);
-        if (!this.autoFilter) {
-            this.pageable.filter(this.pageablePageableSearchValue || '', null);
-        }
     }
 
     constructor(http: HttpClient) {

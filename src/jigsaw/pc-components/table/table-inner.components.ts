@@ -213,7 +213,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     template: `
         <div
             class="jigsaw-table-header-cell"
-            [ngClass]="{ 'jigsaw-table-header-cell-sortable': sortable,
+            [ngClass]="{'jigsaw-table-header-cell-sortable': sortable,
                 'jigsaw-table-header-cell-filterable': filterable}"
         >
             <ng-template jigsaw-renderer-host></ng-template>
@@ -737,10 +737,10 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             return;
         }
 
-        const filterIndex = this.tableData.headerFilters.findIndex(item=> item.field === field);
+        const filterIndex = this.tableData.filterInfo.headerFilters.findIndex(item=> item.field === field);
         if (this._$selectedItems.length === 0) {
             if (filterIndex !== -1) {
-                this.tableData.headerFilters.splice(filterIndex, 1);
+                this.tableData.filterInfo.headerFilters.splice(filterIndex, 1);
                 this._autoFilterData();
                 this.filterCancel();
             } else {
@@ -750,9 +750,9 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         }
 
         if (filterIndex !== -1) {
-            this.tableData.headerFilters[filterIndex].selectKeys = this._$selectedItems.concat([]);
+            this.tableData.filterInfo.headerFilters[filterIndex].selectKeys = this._$selectedItems.concat([]);
         } else {
-            this.tableData.headerFilters.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
+            this.tableData.filterInfo.headerFilters.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
         }
         this._autoFilterData();
         this.filterCancel();
@@ -766,22 +766,18 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     }
 
     private _autoFilterData() {
-        this.hostInstance.headerFilterChange.emit(this.tableData.headerFilters);
-        if (!this.autoFilter) {
-            return;
-        }
-        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.headerFilters));
+        this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilters);
+        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.filterInfo.headerFilters));
     }
 
     private _initData(data: string[]): void {
         this._$dataStatus = 'resolved';
         this._data = data;
-        const found = this.tableData.headerFilters?.find(item => item.field === this.field);
+        const found = this.tableData.filterInfo.headerFilters?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
         }
         this._$handleSearching('');
-        this.autoFilter = this.hostInstance.autoFilter;
     }
 
     ngOnInit(): void {

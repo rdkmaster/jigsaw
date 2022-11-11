@@ -67,7 +67,7 @@ export class RawTableData {
 /**
  * 服务端通过这样的结构去拿缓存数据
  */
-export type PagingServerCacheKey = {service: string, peerParam: Object};
+export type PagingServerCacheKey = { service: string, peerParam: Object };
 
 /**
  * 表格数据的基类，应用一般无需直接使用这个类。
@@ -242,10 +242,60 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 }
 
-function _getStaticDistinctColumnData(field: string, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
-    const colIndex = this.field.findIndex(item => item === field);
-    const columnData = getColumn(rawTableData, colIndex) || [];
+function _getStaticDistinctColumnData(field: string, tableDataField: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
+    let filteredData = _filterByFields(rawTableData, filterInfo.field, tableDataField);
+    filteredData = _filterByKey(filteredData, filterInfo.key);
+    filteredData = _filterByHeaderFilter(filteredData, tableDataField, filterInfo.headerFilters);
+
+    const colIndex = tableDataField.findIndex(item => item === field);
+    const columnData = getColumn(filteredData, colIndex) || [];
     return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
+}
+
+function _filterByFields(data: TableDataMatrix, fields: string[] | number[], tableDataField: TableDataField): TableDataMatrix {
+    if (fields && fields.length != 0) {
+        let numberFields: number[];
+        if (typeof fields[0] === 'string') {
+            numberFields = [];
+            (<string[]>fields).forEach(field => {
+                numberFields.push(tableDataField.findIndex(item => item == field))
+            });
+        } else {
+            numberFields = <number[]>fields;
+        }
+        return data.filter(
+            row => row.filter(
+                (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
+            )
+        );
+    } else {
+        return data;
+    }
+}
+
+function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+    return data.filter(
+        row => row.filter(item => String(item).indexOf(key) != -1).length != 0
+    );
+}
+
+function _filterByHeaderFilter(data: TableDataMatrix, tableDataField: TableDataField, headerFilters: HeaderFilter[]) {
+    if (headerFilters.length !== 0) {
+        return data.filter(item => {
+            let keep: boolean = true;
+            for (let i = 0; i < headerFilters.length; i++) {
+                const colIndex = tableDataField.findIndex(item => item === headerFilters[i].field);
+                const selectKeys = headerFilters[i].selectKeys;
+                keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+                if (!keep) {
+                    break;
+                }
+            }
+            return keep;
+        });
+    } else {
+        return data;
+    }
 }
 
 /**
@@ -357,8 +407,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         }
     }
 
-    public headerFilters: HeaderFilter[] = [];
-    public filterInfo: DataFilterInfo;
+    public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: (string | number)[]): void;
@@ -371,7 +420,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return _getStaticDistinctColumnData(field, this.data);
+        return _getStaticDistinctColumnData(field, this.field, this.filterInfo, this.data);
     }
 
     public destroy() {
@@ -617,13 +666,15 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.headerFilters);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo.headerFilters);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.headerFilters);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo.headerFilters);
+            this.filterInfo.key = term;
+            this.filterInfo.field = stringFields;
         }
         this._filterSubject.next(pfi);
     }
@@ -1240,7 +1291,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     /**
      * @internal
      */
-    public filter(term, fields?: (string | number)[]): void {
+    public filter(term, fields?: string[] | number[]): void {
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term.bind(fields));
         } else {
@@ -1251,43 +1302,13 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
             } else {
                 key = term;
             }
-            if (fields && fields.length != 0) {
-                let numberFields: number[];
-                if (typeof fields[0] === 'string') {
-                    numberFields = [];
-                    (<string[]>fields).forEach(field => {
-                        numberFields.push(this.field.findIndex(item => item == field))
-                    });
-                } else {
-                    numberFields = <number[]>fields;
-                }
-                this.filteredData = this.originalData.filter(
-                    row => row.filter(
-                        (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-                    )
-                );
-            } else {
-                this.filteredData = this.originalData;
-            }
 
-            this.filteredData = this.filteredData.filter(
-                row => row.filter(item => String(item).indexOf(key) != -1).length != 0
-            );
+            this.filteredData = _filterByFields(this.originalData, fields, this.field);
+            this.filteredData = _filterByKey(this.filteredData, key);
+            this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
 
-            if (this.headerFilters.length !== 0) {
-                this.filteredData = this.filteredData.filter(item => {
-                    let keep: boolean = true;
-                    for (let i = 0; i < this.headerFilters.length; i++) {
-                        const colIndex = this.field.findIndex(item => item === this.headerFilters[i].field);
-                        const selectKeys = this.headerFilters[i].selectKeys;
-                        keep = !!selectKeys.find(key => String(item[colIndex]) == key);
-                        if (!keep) {
-                            break;
-                        }
-                    }
-                    return keep;
-                });
-            }
+            this.filterInfo.key = key;
+            this.filterInfo.field = fields;
         }
         this._sortAndPaging();
     }
@@ -1356,7 +1377,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return _getStaticDistinctColumnData(field, this.originalData);
+        return _getStaticDistinctColumnData(field, this.field, this.filterInfo, this.originalData);
     }
 
     public destroy(): void {
