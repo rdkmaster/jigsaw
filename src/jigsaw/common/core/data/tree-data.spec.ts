@@ -1,6 +1,6 @@
 import {escapeXmlString} from "./tree-data";
 
-describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
+describe('Unit Test for SimpleTreeData escapeXmlString', () =>　{
     it('test Normal', () => {
         const xml: string = `
             <node>
