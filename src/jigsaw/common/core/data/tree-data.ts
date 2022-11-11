@@ -122,7 +122,6 @@ export function escapeXmlString(xml: string): string {
     if (!positions.length) {
         return xml;
     }
-
     if (!!quote) {
         // 有未成对的引号，此时格式肯定有问题，要丢弃
         console.error('bad xml format!');
