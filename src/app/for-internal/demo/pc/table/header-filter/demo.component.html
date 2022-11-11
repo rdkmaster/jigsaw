@@ -22,3 +22,13 @@
     <jigsaw-pagination [data]="pageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true" [showQuickJumper]="true"
         (search)="onPageableSearch($event)" searchDebounce="1000"></jigsaw-pagination>
 </div>
+
+<div class="demo-cntr">
+    <jigsaw-header [level]="2">DirectPageableTableData</jigsaw-header>
+    <!-- <j-button width="120">改变数据</j-button> -->
+    <jigsaw-table maxHeight="400px" [data]="directPageable" [columnDefines]="directPageableColumnDefines"
+        (headerFilterChange)="onDirectPageableHeaderFilterChange($event)">
+    </jigsaw-table>
+    <jigsaw-pagination [data]="directPageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true" [showQuickJumper]="true"
+        (search)="onDirectPageableSearch($event)" searchDebounce="1000"></jigsaw-pagination>
+</div>

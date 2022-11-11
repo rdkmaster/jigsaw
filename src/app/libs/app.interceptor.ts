@@ -352,7 +352,7 @@ class PageableData {
             this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
-    private static _filterWithKeyword(data, key, field, allField, headerFilters) {
+    private static _filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allField: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
         let filterData;
         if (key === '') {
             filterData = data.concat();
@@ -408,7 +408,7 @@ class PageableData {
         return filterData;
     }
 
-    private static _filterWithFunction(data, rawFunction, context) {
+    private static _filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {
         let func;
         try {
             func = eval('(' + rawFunction + ')');

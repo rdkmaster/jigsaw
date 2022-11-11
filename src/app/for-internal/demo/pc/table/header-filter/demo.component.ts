@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { LocalPageableTableData, ColumnDefine, PageableTableData } from "jigsaw/public_api";
+import { LocalPageableTableData, ColumnDefine, PageableTableData, DirectPageableTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -87,6 +87,37 @@ export class TableSetHeaderFilterDemoComponent {
         console.log($event);
     }
 
+    public directPageableSearchValue: string;
+    public directPageable: DirectPageableTableData;
+    public directPageableColumnDefines: ColumnDefine[] = [
+        {
+            target: "name",
+            header: {
+                filterable: true,
+            },
+        },
+        {
+            target: "gender",
+            header: {
+                filterable: true,
+            },
+        },
+        {
+            target: "position",
+            header: {
+                filterable: true,
+            },
+        },
+    ];
+    public onDirectPageableSearch(key: string) {
+        this.directPageableSearchValue = key;
+        this.directPageable.filter(key, null);
+    }
+
+    public onDirectPageableHeaderFilterChange($event) {
+        console.log($event);
+    }
+
     constructor(http: HttpClient) {
         this.localPageable = new LocalPageableTableData();
         this.localPageable.http = http;
@@ -100,6 +131,14 @@ export class TableSetHeaderFilterDemoComponent {
             console.log(this.pageable);
         });
         this.pageable.pagingInfo.pageSize = 5;
+
+        this.directPageable = new DirectPageableTableData(http, {
+            url: 'mock-data/hr-list-full', body: { aa: 11, bb: 22 }, method: 'post'
+        });
+        this.directPageable.onAjaxComplete(() => {
+            console.log(this.directPageable);
+        });
+        this.directPageable.pagingInfo.pageSize = 5;
     }
 
     // ====================================================================

@@ -237,6 +237,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                 <div
                     *ngIf="filterable"
                     class="jigsaw-table-filter-box"
+                    [ngClass]="{'has-header-filter': _$hasHeaderFilter }"
                     jigsaw-float
                     [jigsawFloatTarget]="tableHeaderFilterBox"
                     [jigsawFloatOptions]="{ borderType: 'pointer' }"
@@ -353,10 +354,18 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
+    public _$hasHeaderFilter:boolean=false;
+
     ngOnInit() {
         super.ngOnInit();
         //设置默认渲染器
         this.renderer = this.renderer ? this.renderer : DefaultCellRenderer;
+        this.hostInstance.headerFilterChange.subscribe((headerFilters) => {
+            if (headerFilters.length === 0) {
+                this._$hasHeaderFilter = false;
+            }
+            this._$hasHeaderFilter = headerFilters.findIndex(filter => filter.field === this.field) !== -1;
+        })
     }
 
     ngOnDestroy() {
@@ -786,6 +795,8 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             this._initData(data);
             return;
         }
+
+        console.log(this.hostInstance);
 
         this._$dataStatus = 'loading';
         const promise: Promise<any[]> = isObservable(data) ? data.toPromise() : data;

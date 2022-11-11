@@ -43,6 +43,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         display: flex;
         align-items: center;
         height: 100%;
+
+        &.has-header-filter {
+            color: $brand-default;
+        }
     }
 
     i {
@@ -78,6 +82,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             .item-box {
                 display: flex;
                 align-items: center;
+
+                .jigsaw-checkbox-host {
+                    pointer-events: none;
+                }
             }
         }
     }
