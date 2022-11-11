@@ -105,19 +105,20 @@ export function escapeXmlString(xml: string): string {
     let quote: string;
     let pos: Position;
     const positions: Position[] = [];
-    xml.replace(/(?<!\\)['"]/g, (found: string, index: number) => {
-        if (!quote) {
-            quote = found;
-            pos = {start: index, end: -1};
-            return;
-        }
-        if (quote == found) {
-            pos.end = index;
-            positions.push(pos);
-            quote = undefined;
-        }
-        return "";
-    });
+    xml.replace(/\\\\/g, '--') // 连续2个反斜杠就等于是普通字符了，这里将其随便改为另一个字符，避免影响下面的正则
+        .replace(/(?<!\\)['"]/g, (found: string, index: number) => {
+            if (!quote) {
+                quote = found;
+                pos = {start: index, end: -1};
+                return;
+            }
+            if (quote == found) {
+                pos.end = index;
+                positions.push(pos);
+                quote = undefined;
+            }
+            return "";
+        });
     if (!positions.length) {
         return xml;
     }

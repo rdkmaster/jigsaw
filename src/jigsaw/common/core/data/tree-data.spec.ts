@@ -133,4 +133,12 @@ describe('Unit Test for SimpleTreeData escapeXmlString', () =>　{
         const xml: string = `111"aa&quot;bbb"222`
         expect(escapeXmlString(xml)).toBe(`111"aa&amp;quot;bbb"222`);
     });
+    it('test complex back slash1', () => {
+        const xml: string = `111"\\\\"&"222`
+        expect(escapeXmlString(xml)).toBe( `111"\\\\"&"222`);
+    });
+    it('test complex back slash2', () => {
+        const xml: string = `111"\\\\\\"&"222`
+        expect(escapeXmlString(xml)).toBe( `111"\\\\\\"&amp;"222`);
+    });
 })
