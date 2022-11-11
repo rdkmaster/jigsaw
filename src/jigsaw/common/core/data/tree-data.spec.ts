@@ -129,4 +129,8 @@ describe('Unit Test for SimpleTreeData escapeXmlString', () =>　{
         const xml: string = `111"aa&amp;&lt;&gt;bbb&dd>ee<ff"222`
         expect(escapeXmlString(xml)).toBe(`111"aa&amp;&lt;&gt;bbb&amp;dd&gt;ee&lt;ff"222`);
     });
+    it('test no escape2', () => {
+        const xml: string = `111"aa&quot;bbb"222`
+        expect(escapeXmlString(xml)).toBe(`111"aa&amp;quot;bbb"222`);
+    });
 })
