@@ -1,4 +1,4 @@
-import {checkXmlString} from "./tree-data";
+import {escapeXmlString} from "./tree-data";
 
 describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
     it('test Normal', () => {
@@ -7,7 +7,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="转换" icon="iconfont iconfont-e4fb"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label="通用" icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="转换" icon="iconfont iconfont-e4fb"></node>
@@ -19,7 +19,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node label="'通用'" icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="'监控'" icon="iconfont iconfont-e67a"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label="'通用'" icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="'监控'" icon="iconfont iconfont-e67a"></node>
@@ -31,7 +31,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node label='"通用"' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="'监控'" icon="iconfont iconfont-e67a"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label='"通用"' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="'监控'" icon="iconfont iconfont-e67a"></node>
@@ -42,7 +42,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
             <node>
                 <node ---<&>---></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node ---<&>---></node>
             </node>`);
@@ -52,7 +52,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
             <node>
                 <node label= """ </node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label= """ </node>
             </node>`);
@@ -63,7 +63,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                  <node label='通用&' icon="iconfont iconfont-e4b8" selected="true"></node>
                  <node label="监控&" icon="iconfont iconfont-e67a"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                  <node label='通用&amp;' icon="iconfont iconfont-e4b8" selected="true"></node>
                  <node label="监控&amp;" icon="iconfont iconfont-e67a"></node>
@@ -75,7 +75,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node label='通用>' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="监控>" icon="iconfont iconfont-e67a"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label='通用&gt;' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="监控&gt;" icon="iconfont iconfont-e67a"></node>
@@ -87,7 +87,7 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
                 <node label='<通用' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="<监控" icon="iconfont iconfont-e67a"></node>
             </node>`;
-        expect(checkXmlString(xml)).toBe(`
+        expect(escapeXmlString(xml)).toBe(`
             <node>
                 <node label='&lt;通用' icon="iconfont iconfont-e4b8" selected="true"></node>
                 <node label="&lt;监控" icon="iconfont iconfont-e67a"></node>
@@ -95,10 +95,10 @@ describe('Unit Test for SimpleTreeDataCheckEscape', () =>　{
     });
     it('test Double slashes before quotation marks', () => {
         const xml: string = `==='hello&\\'\\", &is me'===`
-        expect(checkXmlString(xml)).toBe(`==='hello&amp;\\'\\", &amp;is me'===`);
+        expect(escapeXmlString(xml)).toBe(`==='hello&amp;\\'\\", &amp;is me'===`);
     });
     it('test All', () => {
         const xml: string = `---<->&---'1"1汉字&2"\\'11'aa<->&a"b<b&b字'b>b'b\\"bb"<->&'cc'`
-        expect(checkXmlString(xml)).toBe(`---<->&---'1"1汉字&amp;2"\\'11'aa<->&a"b&lt;b&amp;b字'b&gt;b'b\\"bb"<->&'cc'`);
+        expect(escapeXmlString(xml)).toBe(`---<->&---'1"1汉字&amp;2"\\'11'aa<->&a"b&lt;b&amp;b字'b&gt;b'b\\"bb"<->&'cc'`);
     });
 })

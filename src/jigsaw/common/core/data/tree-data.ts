@@ -101,7 +101,7 @@ declare const DOMParser;
 let domParser: any;
 type Position = {start: number, end: number};
 
-export function checkXmlString(xml: string): string {
+export function escapeXmlString(xml: string): string {
     let quote: string;
     let pos: Position;
     const positions: Position[] = [];
@@ -186,7 +186,7 @@ export class SimpleTreeData extends GeneralCollection<any> {
     }
 
     public fromXML(xml: string | XMLDocument): SimpleTreeData {
-        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(checkXmlString(xml)) : xml;
+        const xmlDoc = typeof xml == 'string' ? SimpleTreeData.parseXML(escapeXmlString(xml)) : xml;
         if (xmlDoc && !xmlDoc.querySelector('parsererror')) {
             this.nodes = [];
             this._parseXmlNode(xmlDoc.children[0], this);
