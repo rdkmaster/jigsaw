@@ -101,7 +101,16 @@ declare const DOMParser;
 let domParser: any;
 type Position = {start: number, end: number};
 
+function _doXmlEscape(xml: string): string {
+    // 已经人工转义的，这里就不搞了
+    return xml.replace(/&(?!(amp|lt|gt);)/g, '&amp;')
+        .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 export function escapeXmlString(xml: string): string {
+    /*
+     * 先处理掉xml字符串中的属性值里的敏感字符
+     */
     let quote: string;
     let pos: Position;
     const positions: Position[] = [];
@@ -127,17 +136,30 @@ export function escapeXmlString(xml: string): string {
         console.error('bad xml format!');
         return xml;
     }
-
     let newXml: string = '';
     positions.forEach((position, idx) => {
         const lastIndex = positions[idx - 1] ? positions[idx - 1].end : 0;
         newXml += xml.slice(lastIndex, position.start);
-        newXml += xml.slice(position.start, position.end).replace(/&(?!(amp|lt|gt);)/g, '&amp;')
-            .replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        newXml += _doXmlEscape(xml.slice(position.start, position.end));
     });
     const lastPos = positions[positions.length - 1];
     newXml += xml.slice(lastPos.end);
-    return newXml;
+
+    /*
+     * 再处理掉xml字符串文本区里的敏感字符
+     */
+    const magicChar = String.fromCharCode(0), cache = [];
+    newXml = newXml.replace(/<\/?[a-z]\S*?[^>]*>/g, found => cache.push(found) && magicChar);
+    let final: string;
+    if (cache.length) {
+        final = '';
+        const parts = _doXmlEscape(newXml).split(magicChar);
+        cache.forEach((node, idx) => final += parts[idx] + node);
+    } else {
+        final = newXml;
+    }
+
+    return final;
 }
 
 /**
@@ -193,6 +215,8 @@ export class SimpleTreeData extends GeneralCollection<any> {
         if (xmlDoc && !xmlDoc.querySelector('parsererror')) {
             this.nodes = [];
             this._parseXmlNode(xmlDoc.children[0], this);
+        } else {
+            console.warn('failed to parse or invalid xml document:', xml);
         }
 
         this.refresh();
