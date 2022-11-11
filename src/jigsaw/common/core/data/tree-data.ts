@@ -118,6 +118,9 @@ export function escapeXmlString(xml: string): string {
         }
         return "";
     });
+    if (!positions.length) {
+        return xml;
+    }
 
     if (!!quote) {
         // 有未成对的引号，此时格式肯定有问题，要丢弃
@@ -129,10 +132,10 @@ export function escapeXmlString(xml: string): string {
     positions.forEach((position, idx) => {
         const lastIndex = positions[idx - 1] ? positions[idx - 1].end : 0;
         newXml += xml.slice(lastIndex, position.start);
-        newXml += xml.slice(position.start, position.end).replace(/&/g, '&amp;')
+        newXml += xml.slice(position.start, position.end).replace(/&(?!(amp|lt|gt);)/g, '&amp;')
             .replace(/</g, '&lt;').replace(/>/g, '&gt;');
     });
-    const lastPos = positions[positions.length - 1] ? positions[positions.length - 1] : {start: 0, end: 0};
+    const lastPos = positions[positions.length - 1];
     newXml += xml.slice(lastPos.end);
     return newXml;
 }
