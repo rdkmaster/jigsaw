@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { LocalPageableTableData, ColumnDefine, PageableTableData, DirectPageableTableData } from "jigsaw/public_api";
+import {Component} from "@angular/core";
+import {HttpClient, HttpRequest} from "@angular/common/http";
+import {LocalPageableTableData, ColumnDefine, PageableTableData, DirectPageableTableData} from "jigsaw/public_api";
+import {AjaxInterceptor, MockData} from "../../../../../libs/app.interceptor";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -36,6 +37,7 @@ export class TableSetHeaderFilterDemoComponent {
             },
         },
     ];
+
     public onLocalPageableSearch(key: string) {
         this.localPageableSearchValue = key;
         this.localPageable.filter(key, null)
@@ -78,6 +80,7 @@ export class TableSetHeaderFilterDemoComponent {
             },
         },
     ];
+
     public onPageableSearch(key: string) {
         this.pageablePageableSearchValue = key;
         this.pageable.filter(key, null);
@@ -109,6 +112,7 @@ export class TableSetHeaderFilterDemoComponent {
             },
         },
     ];
+
     public onDirectPageableSearch(key: string) {
         this.directPageableSearchValue = key;
         this.directPageable.filter(key, null);
@@ -125,7 +129,7 @@ export class TableSetHeaderFilterDemoComponent {
         this.localPageable.fromAjax("mock-data/hr-list");
 
         this.pageable = new PageableTableData(http, {
-            url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'
+            url: 'mock-data/hr-list', body: {aa: 11, bb: 22}, method: 'post'
         });
         this.pageable.onAjaxComplete(() => {
             console.log(this.pageable);
@@ -133,7 +137,7 @@ export class TableSetHeaderFilterDemoComponent {
         this.pageable.pagingInfo.pageSize = 5;
 
         this.directPageable = new DirectPageableTableData(http, {
-            url: 'mock-data/hr-list-full', body: { aa: 11, bb: 22 }, method: 'post'
+            url: '/direct/pageable/table-data/simulation', method: 'post'
         });
         this.directPageable.onAjaxComplete(() => {
             console.log(this.directPageable);
@@ -147,3 +151,14 @@ export class TableSetHeaderFilterDemoComponent {
     summary: string = "";
     description: string = "";
 }
+
+AjaxInterceptor.registerProcessor('/direct/pageable/table-data/simulation',
+    (req: HttpRequest<any>): any => {
+        // 这里根据req里的参数，做出过滤
+        if (req.params.get('requestFor') == 'distinct-column-data') {
+            console.log('request for distinct column data, field:', req.params.get('field'),
+                'filterInfo:', req.params.get('filterInfo'));
+            return ['aa', 'bb', 'cc'];
+        }
+        return MockData.get('mock-data/hr-list')
+    });
