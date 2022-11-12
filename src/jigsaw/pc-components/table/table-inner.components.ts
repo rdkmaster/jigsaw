@@ -1,15 +1,34 @@
-import { AfterViewInit, ChangeDetectorRef, Component, ComponentFactoryResolver, ComponentRef, ElementRef, EmbeddedViewRef, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, TemplateRef, Type, ViewChild, Directive, NgZone } from "@angular/core";
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    ElementRef,
+    EmbeddedViewRef,
+    EventEmitter,
+    Input,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+    TemplateRef,
+    Type,
+    ViewChild,
+    Directive,
+    NgZone
+} from "@angular/core";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
 import {DataFilterInfo, SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
-import { CheckBoxStatus } from '../checkbox/typings';
-import { JigsawFloat} from "../../common/directive/float/float";
-import { ArrayCollection } from '../../common/core/data/array-collection';
-import { isObservable } from "rxjs";
+import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
+import {CheckBoxStatus} from '../checkbox/typings';
+import {JigsawFloat} from "../../common/directive/float/float";
+import {ArrayCollection} from '../../common/core/data/array-collection';
+import {isObservable} from "rxjs";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -50,6 +69,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     public field: string;
 
     protected _customRenderer: Type<TableCellRendererBase> | TemplateRef<any> | 'html';
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -80,7 +100,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
 
     public set rendererInitData(value: any) {
         this._rendererInitData = value;
-        if(this.rendererRef instanceof ComponentRef) {
+        if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance.initData = value;
         }
     }
@@ -185,7 +205,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
      * 插入渲染器
      * */
     protected insertRenderer() {
-        if(this.renderer != 'html') {
+        if (this.renderer != 'html') {
             this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
             this.changeDetector.detectChanges();
         }
@@ -197,7 +217,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
     }
 
     ngAfterViewInit(): void {
-        if(this.renderer != 'html') {
+        if (this.renderer != 'html') {
             this.insertRenderer();
         }
     }
@@ -350,7 +370,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
 
     private _sort(order: SortOrder): void {
         this.updateSortOrderClass(order);
-        this.sort.emit({ sortAs: this.sortAs, order: order, field: this.field });
+        this.sort.emit({sortAs: this.sortAs, order: order, field: this.field});
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
@@ -594,7 +614,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         <div class="jigsaw-table-header-filter-host">
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
-                <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)">
+                <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)"
+                                     historyStorageKey="jigsawTableHeaderFilter">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
@@ -622,7 +643,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         </div>`
 })
 export class JigsawTableHeaderFilterBox implements OnInit {
-    constructor(protected _changeDetector: ChangeDetectorRef) { }
+    constructor(protected _changeDetector: ChangeDetectorRef) {
+    }
 
     private _data: string[];
 
@@ -693,7 +715,8 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (filterKey.length === 0) {
             this._$filteredData = this._data;
         }
-        this._$filteredData = this._data.filter(item=>String(item).includes(filterKey));
+        filterKey = filterKey.toLowerCase();
+        this._$filteredData = this._data.filter(item => String(item).toLowerCase().includes(filterKey));
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
@@ -749,7 +772,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             return;
         }
 
-        const filterIndex = this.tableData.filterInfo.headerFilters.findIndex(item=> item.field === field);
+        const filterIndex = this.tableData.filterInfo.headerFilters.findIndex(item => item.field === field);
         if (this._$selectedItems.length === 0) {
             if (filterIndex !== -1) {
                 this.tableData.filterInfo.headerFilters.splice(filterIndex, 1);
@@ -764,7 +787,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         if (filterIndex !== -1) {
             this.tableData.filterInfo.headerFilters[filterIndex].selectKeys = this._$selectedItems.concat([]);
         } else {
-            this.tableData.filterInfo.headerFilters.push({ field: field, selectKeys: this._$selectedItems.concat([]) });
+            this.tableData.filterInfo.headerFilters.push({field: field, selectKeys: this._$selectedItems.concat([])});
         }
         this._autoFilterData();
         this.filterCancel();
@@ -798,8 +821,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
             this._initData(data);
             return;
         }
-
-        console.log(this.hostInstance);
 
         this._$dataStatus = 'loading';
         const promise: Promise<any[]> = isObservable(data) ? data.toPromise() : data;

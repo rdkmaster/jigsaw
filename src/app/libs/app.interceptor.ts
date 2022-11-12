@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import {
     HttpEvent,
     HttpEventType,
@@ -9,9 +9,21 @@ import {
     HttpRequest,
     HttpResponse
 } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { v4 as uuidv4 } from 'uuid';
-import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils, getColumn, DataFilterInfo, TableDataMatrix, TableDataField, HeaderFilter } from "jigsaw/public_api"
+import {Observable} from "rxjs";
+import {v4 as uuidv4} from 'uuid';
+import {
+    _filterByHeaderFilter,
+    CommonUtils,
+    DataFilterInfo,
+    getStaticDistinctColumnData,
+    HeaderFilter,
+    InternalUtils,
+    PagingInfo,
+    RawTableData,
+    TableData,
+    TableDataField,
+    TableDataMatrix
+} from "jigsaw/public_api"
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -251,61 +263,8 @@ class PageableData {
             return result;
         }
 
-        function _filterByFields(data: TableDataMatrix, fields: string[] | number[], tableDataField: TableDataField): TableDataMatrix {
-            if (fields && fields.length != 0) {
-                let numberFields: number[];
-                if (typeof fields[0] === 'string') {
-                    numberFields = [];
-                    (<string[]>fields).forEach(field => {
-                        numberFields.push(tableDataField.findIndex(item => item == field))
-                    });
-                } else {
-                    numberFields = <number[]>fields;
-                }
-                return data.filter(
-                    row => row.filter(
-                        (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-                    )
-                );
-            } else {
-                return data;
-            }
-        }
-        
-        function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
-            return data.filter(
-                row => row.filter(item => String(item).indexOf(key) != -1).length != 0
-            );
-        }
-        
-        function _filterByHeaderFilter(data: TableDataMatrix, tableDataField: TableDataField, headerFilters: HeaderFilter[]) {
-            if (headerFilters.length !== 0) {
-                return data.filter(item => {
-                    let keep: boolean = true;
-                    for (let i = 0; i < headerFilters.length; i++) {
-                        const colIndex = tableDataField.findIndex(item => item === headerFilters[i].field);
-                        const selectKeys = headerFilters[i].selectKeys;
-                        keep = !!selectKeys.find(key => String(item[colIndex]) == key);
-                        if (!keep) {
-                            break;
-                        }
-                    }
-                    return keep;
-                });
-            } else {
-                return data;
-            }
-        }
-
         const dataTable = MockData.get(req.service);
-        let filteredData = _filterByFields(dataTable.data, req.filterInfo.field, dataTable.field);
-        filteredData = _filterByKey(filteredData, req.filterInfo.key);
-        const headerFilters = req.filterInfo.headerFilters.filter(filter => filter.field !== req.field);
-        filteredData = _filterByHeaderFilter(filteredData, dataTable.field, headerFilters);
-
-        const colIndex = dataTable.field.findIndex(item => item === req.field);
-        const columnData = getColumn(filteredData, colIndex) || [];
-        return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
+        return getStaticDistinctColumnData(req.field, dataTable.field, req.filterInfo, dataTable.data);
     }
 
     private static _sort(data, index, sortAs, order) {
@@ -353,20 +312,20 @@ class PageableData {
             this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
-    private static _filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allField: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
+    private static _filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allFields: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
         let filterData;
         if (key === '') {
             filterData = data.concat();
         } else {
             key = key.toLowerCase();
-            field = !!field ? field : allField;
+            field = !!field ? field : allFields;
             field = field instanceof Array ? field : [field];
             console.log('filter param: key = [', key, '] field = [', field.join(','),
-                '] allField = [', allField.join(','), ']');
+                '] allField = [', allFields.join(','), ']');
 
             const indexes = [];
             for (let i = 0; i < field.length; i++) {
-                let idx = allField.indexOf(field[i]);
+                let idx = allFields.indexOf(field[i]);
                 if (idx == -1) {
                     console.warn('invalid filter field:', field[i]);
                     continue;
@@ -390,23 +349,7 @@ class PageableData {
                 return false;
             });
         }
-
-        if (headerFilters?.length !== 0) {
-            filterData = filterData.filter(item => {
-                let keep: boolean = true;
-                for (let i = 0; i < headerFilters.length; i++) {
-                    const colIndex = allField.findIndex(item => item === headerFilters[i].field);
-                    const selectKeys = headerFilters[i].selectKeys;
-                    keep = !!selectKeys.find(key => String(item[colIndex]) == key);
-                    if (!keep) {
-                        break;
-                    }
-                }
-                return keep;
-            });
-        }
-
-        return filterData;
+        return _filterByHeaderFilter(filterData, allFields, headerFilters);
     }
 
     private static _filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {

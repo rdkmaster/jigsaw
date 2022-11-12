@@ -242,61 +242,54 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
     }
 }
 
-function _getStaticDistinctColumnData(field: string, tableDataField: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
-    let filteredData = _filterByFields(rawTableData, filterInfo.field, tableDataField);
+export function getStaticDistinctColumnData(field: string, allFields: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
+    let filteredData = _filterByFields(rawTableData, filterInfo.field, allFields);
     filteredData = _filterByKey(filteredData, filterInfo.key);
     const headerFilters = filterInfo.headerFilters.filter(filter => filter.field !== field);
-    filteredData = _filterByHeaderFilter(filteredData, tableDataField, headerFilters);
+    filteredData = _filterByHeaderFilter(filteredData, allFields, headerFilters);
 
-    const colIndex = tableDataField.findIndex(item => item === field);
+    const colIndex = allFields.findIndex(item => item === field);
     const columnData = getColumn(filteredData, colIndex) || [];
     return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
 }
 
-function _filterByFields(data: TableDataMatrix, fields: string[] | number[], tableDataField: TableDataField): TableDataMatrix {
-    if (fields && fields.length != 0) {
-        let numberFields: number[];
-        if (typeof fields[0] === 'string') {
-            numberFields = [];
-            (<string[]>fields).forEach(field => {
-                numberFields.push(tableDataField.findIndex(item => item == field))
-            });
-        } else {
-            numberFields = <number[]>fields;
-        }
-        return data.filter(
-            row => row.filter(
-                (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-            )
-        );
-    } else {
+function _filterByFields(data: TableDataMatrix, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
+    if (!filteringFields || !filteringFields.length) {
         return data;
     }
-}
-
-function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+    const numberFields: number[] = filteringFields.map((field: string | number) =>
+        typeof field == 'number' ? field : allFields.findIndex(item => item == field));
     return data.filter(
-        row => row.filter(item => String(item).indexOf(key) != -1).length != 0
+        row => row.filter(
+            (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
+        )
     );
 }
 
-function _filterByHeaderFilter(data: TableDataMatrix, tableDataField: TableDataField, headerFilters: HeaderFilter[]) {
-    if (headerFilters.length !== 0) {
-        return data.filter(item => {
-            let keep: boolean = true;
-            for (let i = 0; i < headerFilters.length; i++) {
-                const colIndex = tableDataField.findIndex(item => item === headerFilters[i].field);
-                const selectKeys = headerFilters[i].selectKeys;
-                keep = !!selectKeys.find(key => String(item[colIndex]) == key);
-                if (!keep) {
-                    break;
-                }
-            }
-            return keep;
-        });
-    } else {
+function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+    key = key.toLowerCase();
+    return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
+}
+
+/**
+ * @internal
+ */
+export function _filterByHeaderFilter(data: TableDataMatrix, allFields: TableDataField, headerFilters: HeaderFilter[]) {
+    if (!headerFilters || headerFilters.length === 0) {
         return data;
     }
+    return data.filter(item => {
+        let keep: boolean = true;
+        for (let i = 0; i < headerFilters.length; i++) {
+            const colIndex = allFields.findIndex(item => item === headerFilters[i].field);
+            const selectKeys = headerFilters[i].selectKeys;
+            keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+            if (!keep) {
+                break;
+            }
+        }
+        return keep;
+    });
 }
 
 /**
@@ -421,7 +414,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return _getStaticDistinctColumnData(field, this.field, this.filterInfo, this.data);
+        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.data);
     }
 
     public destroy() {
@@ -1286,7 +1279,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
         this._sortAndPaging();
     }
 
-    public filter(callbackfn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
+    public filter(callback: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
     public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     /**
@@ -1378,7 +1371,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return _getStaticDistinctColumnData(field, this.field, this.filterInfo, this.originalData);
+        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.originalData);
     }
 
     public destroy(): void {
