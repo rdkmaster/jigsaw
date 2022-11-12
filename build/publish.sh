@@ -198,6 +198,7 @@ function onExit() {
     cd $jigsawRepo
     git checkout .
 }
+trap onExit EXIT
 
 #######################################################################
 
@@ -211,7 +212,10 @@ if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     exit 1
 fi
 
-trap onExit EXIT
+echo "================= `date` ================="
+echo "publishing with param: $*"
+echo "========================================================================"
+
 jigsawRepo=$(cd `dirname $0`/..; pwd);
 checkRepo $jigsawRepo
 updateJigsawRepo
