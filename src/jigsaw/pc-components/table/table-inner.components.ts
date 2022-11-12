@@ -354,7 +354,10 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
         this.tableData.sort(this.sortAs, order, this.field);
     }
 
-    public _$hasHeaderFilter:boolean=false;
+    /**
+     * @internal
+     */
+    public _$hasHeaderFilter: boolean = false;
 
     ngOnInit() {
         super.ngOnInit();
