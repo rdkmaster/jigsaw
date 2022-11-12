@@ -300,7 +300,8 @@ class PageableData {
         const dataTable = MockData.get(req.service);
         let filteredData = _filterByFields(dataTable.data, req.filterInfo.field, dataTable.field);
         filteredData = _filterByKey(filteredData, req.filterInfo.key);
-        filteredData = _filterByHeaderFilter(filteredData, dataTable.field, req.filterInfo.headerFilters);
+        const headerFilters = req.filterInfo.headerFilters.filter(filter => filter.field !== req.field);
+        filteredData = _filterByHeaderFilter(filteredData, dataTable.field, headerFilters);
 
         const colIndex = dataTable.field.findIndex(item => item === req.field);
         const columnData = getColumn(filteredData, colIndex) || [];

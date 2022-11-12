@@ -245,7 +245,8 @@ export class TableDataBase extends AbstractGeneralCollection<any> {
 function _getStaticDistinctColumnData(field: string, tableDataField: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
     let filteredData = _filterByFields(rawTableData, filterInfo.field, tableDataField);
     filteredData = _filterByKey(filteredData, filterInfo.key);
-    filteredData = _filterByHeaderFilter(filteredData, tableDataField, filterInfo.headerFilters);
+    const headerFilters = filterInfo.headerFilters.filter(filter => filter.field !== field);
+    filteredData = _filterByHeaderFilter(filteredData, tableDataField, headerFilters);
 
     const colIndex = tableDataField.findIndex(item => item === field);
     const columnData = getColumn(filteredData, colIndex) || [];
