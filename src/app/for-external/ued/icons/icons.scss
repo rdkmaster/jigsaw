@@ -19,6 +19,12 @@
             right: 0;
             bottom: 0;
             color: var(--font-color-disabled);
+            user-select: none;
+            cursor: help;
+
+            &:hover {
+                color: var(--brand-hover);
+            }
         }
     }
 

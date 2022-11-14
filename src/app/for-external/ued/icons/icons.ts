@@ -33,7 +33,7 @@ export class IconsDemoComponent implements OnInit {
         }
         if (keyword != '') {
             this._$currentIcons = this._$currentIcons.filter(icon => {
-                return icon.iconCode.toLowerCase().indexOf(keyword) != -1 || icon.iconName.indexOf(keyword) != -1
+                return ('iconfont-' + icon.iconCode.toLowerCase()).indexOf(keyword) != -1 || icon.iconName.indexOf(keyword) != -1
             })
         }
     }
@@ -42,7 +42,7 @@ export class IconsDemoComponent implements OnInit {
         return name.split(/[(（]+/)[0];
     }
 
-    public copyToClipboard(iconCode:string) {
+    public copyToClipboard(iconCode: string) {
         const text = "iconfont-" + iconCode.toLowerCase();
         const el = document.createElement("textarea");
         el.value = text;
@@ -60,7 +60,6 @@ export class IconsDemoComponent implements OnInit {
         this.iconGroup = iconfontInfo.group;
         this.icons = iconfontInfo.icons;
         this._$searchIcons('');
-        console.log(this.iconGroup);
-        console.log(this.icons);
+        window.scrollTo(0, 0);
     }
 }
