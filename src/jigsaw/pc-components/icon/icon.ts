@@ -16,7 +16,6 @@ import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {Subscription} from "rxjs/internal/Subscription";
 
 const defaultHrefValue = 'javascript:void(0);';
 export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled' | 'process' | 'custom';
@@ -46,35 +45,7 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
                 @Optional() private _translateService: TranslateService) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
-        this._langChangeSubscriber = TranslateHelper.languageChangEvent.subscribe(() => {
-            switch (this.status) {
-                case 'success':
-                    this.text = this._translateService.instant(`icon.success`);
-                    break;
-                case 'warning':
-                    this.text = this._translateService.instant(`icon.warning`);
-                    break;
-                case 'error':
-                    this.text = this._translateService.instant(`icon.error`);
-                    break;
-                case 'finish':
-                    this.text = this._translateService.instant(`icon.finish`);
-                    break;
-                case 'disabled':
-                    this.text = this._translateService.instant(`icon.disabled`);
-                    break;
-                case 'process':
-                    this.text = this._translateService.instant(`icon.process`);
-                    break;
-                case 'custom':
-                default:
-                    this.text = this._translateService.instant(`icon.custom`);
-                    break;
-            }
-        });
     }
-
-    private _langChangeSubscriber: Subscription;
 
     /**
      * @internal
@@ -230,38 +201,38 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
         switch (status) {
             case 'success':
                 return {
-                    color: 'var(--success-default)', text: this._translateService.instant(`icon.success`),
+                    color: 'var(--success-default)', text: `icon.success`,
                     className: 'jigsaw-status-success', icon: 'iconfont iconfont-e9f1'
                 };
             case 'warning':
                 return {
-                    color: 'var(--danger-default)', text: this._translateService.instant(`icon.warning`),
+                    color: 'var(--danger-default)', text: `icon.warning`,
                     className: 'jigsaw-status-warning', icon: 'iconfont iconfont-e9f1'
                 };
             case 'error':
                 return {
-                    color: 'var(--error-default)', text: this._translateService.instant(`icon.error`),
+                    color: 'var(--error-default)', text: `icon.error`,
                     className: 'jigsaw-status-error', icon: 'iconfont iconfont-e9f1'
                 };
             case 'finish':
                 return {
-                    color: 'var(--primary-default)', text: this._translateService.instant(`icon.finish`),
+                    color: 'var(--primary-default)', text: `icon.finish`,
                     className: 'jigsaw-status-finish', icon: 'iconfont iconfont-e9f1'
                 };
             case 'disabled':
                 return {
-                    color: 'var(--font-color-disabled)', text: this._translateService.instant(`icon.disabled`),
+                    color: 'var(--font-color-disabled)', text: `icon.disabled`,
                     className: 'jigsaw-status-disabled', icon: 'iconfont iconfont-e9f1'
                 };
             case 'process':
                 return {
-                    color: 'var(--process-default)', text: this._translateService.instant(`icon.process`),
+                    color: 'var(--process-default)', text: `icon.process`,
                     className: 'jigsaw-status-process', icon: 'iconfont iconfont-e9f1'
                 };
             case 'custom':
             default:
                 return {
-                    color: 'inherit', text: this._translateService.instant(`icon.custom`),
+                    color: 'inherit', text: `icon.custom`,
                     className: 'jigsaw-status-custom', icon: 'iconfont iconfont-e9f1'
                 };
         }
