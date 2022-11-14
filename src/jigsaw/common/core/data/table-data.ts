@@ -564,27 +564,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._busy = true;
         this.ajaxStartHandler();
 
-        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
-        const paramProperty = method == 'get' ? 'params' : 'body';
-        const originParams = this.sourceRequestOptions[paramProperty];
-
-        delete options.params;
-        delete options.body;
-        options[paramProperty] = {
-            service: options.url, paging: this.pagingInfo.valueOf()
-        };
-        if (CommonUtils.isDefined(originParams)) {
-            options[paramProperty].peerParam = originParams;
-        }
-        if (CommonUtils.isDefined(this.filterInfo)) {
-            options[paramProperty].filter = this.filterInfo;
-        }
-        if (CommonUtils.isDefined(this.sortInfo)) {
-            options[paramProperty].sort = this.sortInfo;
-        }
-        if (paramProperty == 'params') {
-            options.params = PreparedHttpClientOptions.prepareParams(options.params)
-        }
+        this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
 
@@ -607,6 +587,30 @@ export class PageableTableData extends TableData implements IServerSidePageable,
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
+    }
+
+    protected _fixAjaxOptionsByMethod(options){
+        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+        const paramProperty = method == 'get' ? 'params' : 'body';
+        const originParams = this.sourceRequestOptions[paramProperty];
+
+        delete options.params;
+        delete options.body;
+        options[paramProperty] = {
+            service: options.url, paging: this.pagingInfo.valueOf()
+        };
+        if (CommonUtils.isDefined(originParams)) {
+            options[paramProperty].peerParam = originParams;
+        }
+        if (CommonUtils.isDefined(this.filterInfo)) {
+            options[paramProperty].filter = this.filterInfo;
+        }
+        if (CommonUtils.isDefined(this.sortInfo)) {
+            options[paramProperty].sort = this.sortInfo;
+        }
+        if (paramProperty == 'params') {
+            options.params = PreparedHttpClientOptions.prepareParams(options.params)
+        }
     }
 
     protected invokeChangeCallback(): void {
@@ -758,27 +762,7 @@ export class DirectPageableTableData extends PageableTableData implements IServe
         this._busy = true;
         this.ajaxStartHandler();
 
-        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
-        const paramProperty = method == 'get' ? 'params' : 'body';
-        const originParams = this.sourceRequestOptions[paramProperty];
-
-        delete options.params;
-        delete options.body;
-        options[paramProperty] = {
-            service: options.url, paging: this.pagingInfo.valueOf()
-        };
-        if (CommonUtils.isDefined(originParams)) {
-            options[paramProperty].peerParam = originParams;
-        }
-        if (CommonUtils.isDefined(this.filterInfo)) {
-            options[paramProperty].filter = this.filterInfo;
-        }
-        if (CommonUtils.isDefined(this.sortInfo)) {
-            options[paramProperty].sort = this.sortInfo;
-        }
-        if (paramProperty == 'params') {
-            options.params = PreparedHttpClientOptions.prepareParams(options.params)
-        }
+        this._fixAjaxOptionsByMethod(options);
 
         this.http.request(options.method, options.url, options)
             .pipe(
