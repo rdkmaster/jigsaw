@@ -1,5 +1,6 @@
 import { Component, NgModule, Input, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { ActivatedRoute, Router } from "@angular/router";
 
 const demoNavigationInfo = require('../demo-navigation-info.json');
 
@@ -9,6 +10,9 @@ const demoNavigationInfo = require('../demo-navigation-info.json');
     styleUrls: ["./demo-navigation.scss"],
 })
 export class DemoNavigation implements OnInit {
+    constructor(public route: ActivatedRoute, public router: Router) {
+
+    }
     @Input()
     public navigationData: Element[] = [];
 
@@ -40,6 +44,24 @@ export class DemoNavigation implements OnInit {
             const label = demoNavigationInfo[data.localName].label;
             this._$navData.push({ label: label, el: data });
         });
+
+        this.route.queryParams.subscribe(params => {
+            console.log(params, this.navigationData)
+            if (params['demo'] === undefined) {
+                return;
+            }
+            const demo = params['demo'];
+            const targetDemo = Array.from(this.navigationData).find(item => {
+                return item.localName == demo;
+            })
+
+            if (targetDemo === undefined) {
+                return;
+            }
+            setTimeout(() => {
+                this.scroll(targetDemo);
+            }, 0);
+        })
     }
 }
 
