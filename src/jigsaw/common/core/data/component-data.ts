@@ -832,7 +832,13 @@ export class DataFilterInfo {
     ) {}
 
     public toJSON() {
-        return {key: this.key, field: this.field, headerFilters: this.headerFilters};
+        return {
+            key: this.key, field: this.field,
+            headerFilters: this.headerFilters.map(item => ({
+                field: item.field,
+                selectKeys: item.selectKeys instanceof Array ? item.selectKeys : [...item.selectKeys]
+            }))
+        };
     }
 }
 
