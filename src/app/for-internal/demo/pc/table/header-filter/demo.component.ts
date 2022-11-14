@@ -192,7 +192,6 @@ AjaxInterceptor.registerProcessor('/direct/pageable/table-data/simulation',
         if (CommonUtils.isDefined(filter)) {
             data = _filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
         } else {
-            //浅拷贝一份
             data = dataTable.data.concat();
         }
 
@@ -293,7 +292,6 @@ function _filterWithKeyword(data: TableDataMatrix, key: string, field: string[],
                     continue;
                 }
                 cell = String(cell);
-                //模糊搜索大小写不敏感
                 cell = cell.toLowerCase();
                 if (cell.indexOf(key) != -1) {
                     return true;
@@ -313,7 +311,6 @@ function _fixCurrentPage(currentPage, pagingInfo) {
     currentPage = typeof currentPage !== 'number' || currentPage < 1 ? 1 : currentPage;
     const pageSize = pagingInfo.pageSize;
     if (currentPage * pageSize - pageSize > pagingInfo.totalRecord) {
-        //应用给的当前页过大，调整为最后一页
         console.warn('adjust currentPage[' + currentPage + '] to lastPage[' + pagingInfo.totalPage + ']');
         currentPage = pagingInfo.totalPage;
     }
