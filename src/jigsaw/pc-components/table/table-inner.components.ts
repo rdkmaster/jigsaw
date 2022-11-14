@@ -615,7 +615,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
                 <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)"
-                                     historyStorageKey="jigsawTableHeaderFilter">
+                    floatPosition="topLeft" historyStorageKey="jigsawTableHeaderFilter">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
@@ -628,7 +628,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                     </div>
                 </j-list-option>
             </j-list>
-            <div *ngIf="_$filteredData?.length === 0">{{'table.noData' | translate}}</div>
+            <div *ngIf="_$filteredData?.length === 0" class="jigsaw-table-header-filter-nodata">{{'table.noData' | translate}}</div>
 
             <div *ngIf="_$dataStatus == 'loading'" class="jigsaw-table-header-filter-loading">
                 <jigsaw-circle-loading [size]="'large'"></jigsaw-circle-loading>

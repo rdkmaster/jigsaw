@@ -21,7 +21,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {JigsawInput, JigsawInputBase, JigsawInputModule} from "./input";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import {FloatPosition, JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
 import {WingsTheme} from "../../common/common";
 
 export class DropDownValue {
@@ -89,6 +89,12 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
      */
     @Input()
     public closeDropDownOnSelect: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public floatPosition: FloatPosition = 'bottomLeft';
 
     /**
      * @internal
