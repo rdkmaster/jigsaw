@@ -615,7 +615,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
                 <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)"
-                    floatPosition="topLeft" historyStorageKey="jigsawTableHeaderFilter">
+                    floatPosition="topLeft" [historyStorageKey]="'jigsaw.tableHeaderFilter.' + field">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
@@ -672,7 +672,7 @@ export class JigsawTableHeaderFilterBox implements OnInit {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public tableData: LocalPageableTableData;
+    public tableData: TableData;
 
     /**
      * @NoMarkForCheckRequired
@@ -738,7 +738,6 @@ export class JigsawTableHeaderFilterBox implements OnInit {
 
         this._$selectAllChecked = CheckBoxStatus.unchecked;
     }
-
 
     /**
      * @internal
