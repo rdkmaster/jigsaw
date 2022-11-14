@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -41,8 +41,7 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
 export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
     constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, private _element: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector,
-                @Optional() private _translateService: TranslateService) {
+                private _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }
@@ -267,9 +266,9 @@ export class JigsawIconModule {
                 success: "Success",
                 warning: "Warning",
                 error: "Error",
-                finish: "Finish",
+                finish: "Finished",
                 disabled: "Disabled",
-                process: "Process",
+                process: "Processing",
                 custom: "Custom"
             }
         });
