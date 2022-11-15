@@ -15,6 +15,13 @@ export class StringifyDemoComponent {
         return JSON.stringify(data, null, 2);
     }
 
+    constructor() {
+        console.log('origin ArrayCollection:', this.arrayCollection);
+        console.log('json of ArrayCollection:', this.arrayCollection.toJSON());
+        console.log('origin GeneralCollection:', this.tableData);
+        console.log('json of GeneralCollection:', this.tableData.toJSON());
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
