@@ -148,7 +148,7 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
-        if (req.body.requestFor == 'distinct-column-data') {
+        if (req.body?.requestFor == 'distinct-column-data') {
             return this._queryDistinctColumnData(req);
         } else {
             return this._queryPagingData(req);
