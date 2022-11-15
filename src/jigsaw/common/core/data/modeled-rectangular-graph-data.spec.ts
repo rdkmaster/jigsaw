@@ -441,4 +441,3 @@ describe('Unit Test for ModeledRectangularGraphData', () => {
         expect(options.legend).toBeUndefined();
     });
 });
-

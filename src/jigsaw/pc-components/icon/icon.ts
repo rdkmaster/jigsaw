@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {DomSanitizer, SafeResourceUrl} from "@angular/platform-browser";
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {TranslateModule} from '@ngx-translate/core';
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -41,8 +41,7 @@ export type StatusType = 'success' | 'warning' | 'error' | 'finish' | 'disabled'
 export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
     constructor(private _sanitizer: DomSanitizer, private _renderer: Renderer2, private _element: ElementRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector,
-                @Optional() private _translateService: TranslateService) {
+                private _injector: Injector) {
         super();
         this._$secureUrl = this._sanitizer.bypassSecurityTrustResourceUrl(this._href);
     }
@@ -201,38 +200,38 @@ export class JigsawIcon extends AbstractJigsawComponent implements OnInit {
         switch (status) {
             case 'success':
                 return {
-                    color: 'var(--success-default)', text: this._translateService.instant(`icon.success`),
+                    color: 'var(--success-default)', text: `icon.success`,
                     className: 'jigsaw-status-success', icon: 'iconfont iconfont-e9f1'
                 };
             case 'warning':
                 return {
-                    color: 'var(--danger-default)', text: this._translateService.instant(`icon.warning`),
+                    color: 'var(--danger-default)', text: `icon.warning`,
                     className: 'jigsaw-status-warning', icon: 'iconfont iconfont-e9f1'
                 };
             case 'error':
                 return {
-                    color: 'var(--error-default)', text: this._translateService.instant(`icon.error`),
+                    color: 'var(--error-default)', text: `icon.error`,
                     className: 'jigsaw-status-error', icon: 'iconfont iconfont-e9f1'
                 };
             case 'finish':
                 return {
-                    color: 'var(--primary-default)', text: this._translateService.instant(`icon.finish`),
+                    color: 'var(--primary-default)', text: `icon.finish`,
                     className: 'jigsaw-status-finish', icon: 'iconfont iconfont-e9f1'
                 };
             case 'disabled':
                 return {
-                    color: 'var(--font-color-disabled)', text: this._translateService.instant(`icon.disabled`),
+                    color: 'var(--font-color-disabled)', text: `icon.disabled`,
                     className: 'jigsaw-status-disabled', icon: 'iconfont iconfont-e9f1'
                 };
             case 'process':
                 return {
-                    color: 'var(--process-default)', text: this._translateService.instant(`icon.process`),
+                    color: 'var(--process-default)', text: `icon.process`,
                     className: 'jigsaw-status-process', icon: 'iconfont iconfont-e9f1'
                 };
             case 'custom':
             default:
                 return {
-                    color: 'inherit', text: this._translateService.instant(`icon.custom`),
+                    color: 'inherit', text: `icon.custom`,
                     className: 'jigsaw-status-custom', icon: 'iconfont iconfont-e9f1'
                 };
         }
@@ -267,9 +266,9 @@ export class JigsawIconModule {
                 success: "Success",
                 warning: "Warning",
                 error: "Error",
-                finish: "Finish",
+                finish: "Finished",
                 disabled: "Disabled",
-                process: "Process",
+                process: "Processing",
                 custom: "Custom"
             }
         });

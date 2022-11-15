@@ -10,7 +10,7 @@
                     'text-padding-top':iconPosition=='top',
                     'text-padding-right':iconPosition=='right',
                     'text-padding-bottom':iconPosition=='bottom'}"
-        [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text}}</span>
+        [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text | translate}}</span>
 </a>
 <div *ngIf="!isLinkButton"
     [ngClass]="{'icon-position-left':iconPosition=='left',
@@ -24,5 +24,5 @@
                     'text-padding-top':iconPosition=='top',
                     'text-padding-right':iconPosition=='right',
                     'text-padding-bottom':iconPosition=='bottom'}"
-        [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text}}</span>
+        [ngStyle]="{'font-size.px':textSize, 'color':textColor}">{{text | translate}}</span>
 </div>

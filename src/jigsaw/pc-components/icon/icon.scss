@@ -48,6 +48,10 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
     align-items: center;
     flex-direction: column;
     align-content: flex-start;
+
+    >i {
+        margin-bottom: 4px;
+    }
 }
 
 .icon-position-bottom {
@@ -55,6 +59,10 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
     align-items: center;
     flex-direction: column-reverse;
     align-content: flex-start;
+
+    >i {
+        margin-top: 4px;
+    }
 }
 
 .text-padding-left {

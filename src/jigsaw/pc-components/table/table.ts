@@ -425,7 +425,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return columnDefines;
     }
 
-    public update(): void {
+    public update(isFromAdditional?: boolean): void {
         if (!this.initialized || !this._data) {
             return;
         }
@@ -452,6 +452,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 关闭所有展开行
+            if (isFromAdditional) {
+                return;
+            }
             this._clearExpansion();
         })
     }
@@ -513,10 +516,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeTableDataRefresh) {
             this._removeTableDataRefresh();
         }
-        this._removeTableDataRefresh = value.onRefresh(this.update, this);
+        this._removeTableDataRefresh = value.onRefresh(() => this.update());
 
         if (!this._removeAdditionalDataRefresh) {
-            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(this.update, this);
+            this._removeAdditionalDataRefresh = this._additionalData.onRefresh(() => this.update(true));
         }
     }
 
@@ -579,6 +582,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
+    public scrollRowIntoView(rowIndex: number, autoSelect: boolean = true): void {
+        const row = this._rowElementRefs?.find((_, idx) => idx == rowIndex);
+        if (!row) {
+            console.warn('unable to find row element by index', rowIndex);
+            return;
+        }
+        row.nativeElement.scrollIntoView({block: "center", inline: "nearest"});
+        if (autoSelect) {
+            this.selectedRow = rowIndex;
+        }
+    }
+
     /**
      * @internal
      */
@@ -605,7 +620,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             } else {
                 this._renderer.removeClass(row.nativeElement, 'jigsaw-table-row-selected');
             }
-        })
+        });
     }
 
     /**

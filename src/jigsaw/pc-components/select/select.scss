@@ -220,6 +220,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
             &.#{$jigsaw-list-option}-active {
                 background: none;
+                color: $brand-default;
 
                 &:hover {
                     background: $bg-hover;
@@ -255,7 +256,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 .select-option-label {
                     display: block;
                     width: 100%;
-                    color: $font-color-default;
+                    color: inherit;
                     font-size: $font-size-text-base;
                     overflow: hidden;
                     text-overflow: ellipsis;

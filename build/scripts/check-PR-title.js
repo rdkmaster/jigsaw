@@ -24,13 +24,13 @@ if (!urlMatch) {
     console.error('unable to read PR id from env CIRCLE_PULL_REQUEST');
     process.exit(1);
 }
+const types = ['新增', '优化', '故障', '其他', '破坏性修改'];
 const id = urlMatch[1];
 const prInfo = readData(`https://api.github.com/repos/rdkmaster/jigsaw/pulls/${id}`);
 const titleMatch = prInfo.title.match(/^\s*\[(.+?)].+/);
 if (!titleMatch) {
     exit('PR标题格式非法，未找到类型，title:', prInfo.title);
 }
-const types = ['新增', '优化', '故障', '其他', '破坏性修改'];
 if (types.indexOf(titleMatch[1]) === -1) {
     exit(`PR标题格式非法，类型 ${titleMatch[1]} 不存在，title:`, prInfo.title);
 }
