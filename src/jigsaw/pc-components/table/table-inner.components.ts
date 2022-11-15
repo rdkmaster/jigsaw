@@ -833,6 +833,8 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         const found = this.tableData.filterInfo.headerFilters?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
+        } else {
+            this._$selectedItems = new ArrayCollection([]);
         }
         this._$handleSearching('');
     }

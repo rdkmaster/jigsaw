@@ -28,6 +28,7 @@
         </p>
 
         <jigsaw-table #tableComponent [data]="pageable"
+                      [columnDefines]="columnDefines"
                       [additionalColumnDefines]="additionalColumns"
                       [(additionalData)]="additionalData"
                       (additionalDataChange)="additionalDataChange($event)">

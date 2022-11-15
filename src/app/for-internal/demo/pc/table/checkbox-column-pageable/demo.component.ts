@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     LocalPageableTableData, PageableTableData, AdditionalColumnDefine, AdditionalTableData,
-    TableCellCheckboxRenderer, TableHeadCheckboxRenderer
+    TableCellCheckboxRenderer, TableHeadCheckboxRenderer, ColumnDefine
 } from "jigsaw/public_api";
 
 @Component({
@@ -36,6 +36,15 @@ export class TableAddCheckboxColumnPageableDemoComponent {
     selectedRows: string;
     allSelectedRows: any;
     additionalData: AdditionalTableData;
+
+    columnDefines: ColumnDefine[] = [
+        {
+            target: "name",
+            header: {
+                filterable: true
+            }
+        }
+    ];
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
