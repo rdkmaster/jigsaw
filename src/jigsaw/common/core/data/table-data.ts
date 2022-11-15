@@ -556,7 +556,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._ajax();
     }
 
-    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+    protected _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
 
     protected _ajax(): void {
         if (this._busy) {
@@ -732,7 +732,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 }
 
 export class DirectPageableTableData extends PageableTableData implements IServerSidePageable, IFilterable, ISortable {
-    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+    protected _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
 
     protected _ajax(): void {
         if (this._busy) {
