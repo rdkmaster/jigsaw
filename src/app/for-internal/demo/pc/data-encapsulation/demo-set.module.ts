@@ -5,6 +5,7 @@ import {ArrayCollectionBasicDemoModule} from "./array-basic/demo.module";
 import {ArrayServerSidePaginationDemoModule} from "./array-ssp/demo.module";
 import {RefreshDemoModule} from "./refresh/demo.module";
 import {AjaxEventsDemoModule} from "./ajax-events/demo.module";
+import {StringifyDemoModule} from "./stringify/demo.module";
 
 import {ArrayCollectionBasicDemoComponent} from "./array-basic/demo.component";
 import {ArrayCollectionAjaxDemoComponent} from "./array-ajax/demo.component";
@@ -15,6 +16,7 @@ import {LocalPageableArrayDemoComponent} from "./local-pageable-array/demo.compo
 import {LocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
 import {OnChangeDemoComponent} from "./on-change/demo.component";
 import {OnChangeDemoModule} from "./on-change/demo.module";
+import {StringifyDemoComponent} from "./stringify/demo.component";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     },
     {
         path: 'on-change', component: OnChangeDemoComponent
+    },
+    {
+        path: 'stringify', component: StringifyDemoComponent
     }
 ];
 
@@ -47,7 +52,8 @@ export const routerConfig = [
         ArrayCollectionBasicDemoModule,
         ArrayServerSidePaginationDemoModule,
         RefreshDemoModule, AjaxEventsDemoModule,
-        LocalPageableArrayDemoModule, OnChangeDemoModule
+        LocalPageableArrayDemoModule, OnChangeDemoModule,
+        StringifyDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

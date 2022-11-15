@@ -429,4 +429,8 @@ export class JigsawArray<T> implements Array<T> {
     public copyWithin(target: number, start: number, end?: number): any {
         return this._agent.copyWithin.apply(this, arguments);
     }
+
+    public toJSON(): T[] {
+        return [...this];
+    }
 }

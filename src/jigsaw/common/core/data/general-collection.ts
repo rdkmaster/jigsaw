@@ -180,6 +180,13 @@ export abstract class AbstractGeneralCollection<T = any> implements IAjaxCompone
     public unsubscribe() {
         this._emitter.unsubscribe();
     }
+
+    public toJSON() {
+        const value = {...this};
+        delete value.componentDataHelper;
+        delete value._emitter;
+        return value;
+    }
 }
 
 /**
