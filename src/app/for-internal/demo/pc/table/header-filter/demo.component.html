@@ -4,6 +4,13 @@
 
 <!-- start to learn the demo from here -->
 <div class="demo-cntr">
+    <jigsaw-header [level]="2">TableData</jigsaw-header>
+    <j-button width="120" (click)="changeTableData()">改变数据</j-button>
+    <jigsaw-table [data]="tableData" [columnDefines]="tableDataColumnDefines"
+        (headerFilterChange)="onTableDataHeaderFilterChange($event)"></jigsaw-table>
+</div>
+
+<div class="demo-cntr">
     <jigsaw-header [level]="2">LocalPageableTableData</jigsaw-header>
     <j-button width="120" (click)="changeLocalPageable()">改变数据</j-button>
     <jigsaw-table [data]="localPageable" [columnDefines]="localPageableColumnDefines"

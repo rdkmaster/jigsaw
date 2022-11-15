@@ -361,7 +361,13 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         return TableData.of(rawData).toArray();
     }
 
+    /**
+     * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
+    public originalData: TableDataMatrix;
+
     protected refreshData() {
+        this.originalData = this.data.concat();
         if (this.sortInfo) {
             // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
@@ -410,13 +416,37 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
-    public filter(term: string, fields?: (string | number)[]): void;
+    public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     /**
      * @internal
      */
-    public filter(term, fields?: (string | number)[]): void {
-        throw new Error("Method not implemented.");
+    public filter(term, fields?: string[] | number[]): void {
+        this._filter(this.data, term, fields);
+        if (this.sortInfo) {
+            this.sort(this.sortInfo);
+        }
+    }
+
+    protected _filter(data, term, fields?: string[] | number[]) {
+        if (term instanceof Function) {
+            data = this.originalData.filter(term.bind(fields));
+        } else {
+            let key: string;
+            if (term instanceof DataFilterInfo) {
+                key = term.key;
+                fields = term.field
+            } else {
+                key = term;
+            }
+
+            data = _filterByFields(this.originalData, fields, this.field);
+            data = _filterByKey(data, key);
+            data = _filterByHeaderFilter(data, this.field, this.filterInfo.headerFilters);
+
+            this.filterInfo.key = key;
+            this.filterInfo.field = fields;
+        }
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
@@ -1236,10 +1266,6 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
      */
     public filteredData: TableDataMatrix;
-    /**
-     * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
-     */
-    public originalData: TableDataMatrix;
 
     constructor() {
         super();
@@ -1276,24 +1302,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            this.filteredData = this.originalData.filter(term.bind(fields));
-        } else {
-            let key: string;
-            if (term instanceof DataFilterInfo) {
-                key = term.key;
-                fields = term.field
-            } else {
-                key = term;
-            }
-
-            this.filteredData = _filterByFields(this.originalData, fields, this.field);
-            this.filteredData = _filterByKey(this.filteredData, key);
-            this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
-
-            this.filterInfo.key = key;
-            this.filterInfo.field = fields;
-        }
+        this._filter(this.filteredData, term, fields);
         this._sortAndPaging();
     }
 
