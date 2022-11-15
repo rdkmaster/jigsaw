@@ -22,7 +22,7 @@ import {Subscription} from "rxjs";
 import {TranslateModule} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
-import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent} from "./table-inner.components";
+import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
 import {TableData} from "../../common/core/data/table-data";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {
@@ -37,12 +37,19 @@ import {
     TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
+import {HeaderFilter, IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
 import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
 import {TableUtils} from "./table-utils";
+import { JigsawFloatModule } from "../../common/directive/float/float";
+import { JigsawButtonModule } from "../button/button";
+import { JigsawListModule } from "../list-and-tile/list";
+import { JigsawCheckBoxModule } from "../checkbox/index";
+import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { JigsawLoadingModule } from "../../common/components/loading/loading";
+
 
 @WingsTheme('table.scss')
 @Component({
@@ -90,6 +97,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Output()
     public sort = new EventEmitter<SortChangeEvent>();
+
+    @Output()
+    public headerFilterChange = new EventEmitter<HeaderFilter>();
 
     private _contentWidth: string = 'auto';
 
@@ -1063,8 +1073,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 }
 
 @NgModule({
-    declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
-    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule, TranslateModule.forChild()],
+    declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox],
+    imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule,
+        TranslateModule.forChild(), JigsawFloatModule, JigsawButtonModule, JigsawListModule, JigsawCheckBoxModule, JigsawSearchInputModule,
+        JigsawLoadingModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {
@@ -1072,9 +1084,13 @@ export class JigsawTableModule {
         TranslateHelper.initI18n("table", {
             zh: {
                 noData: "暂无数据",
+                confirm: "确认",
+                cancel: "取消"
             },
             en: {
-                noData: "NO DATA"
+                noData: "NO DATA",
+                confirm: "Confirm",
+                cancel: "Cancel"
             }
         });
     }

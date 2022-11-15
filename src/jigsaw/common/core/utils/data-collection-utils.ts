@@ -433,4 +433,8 @@ export class JigsawArray<T> implements Array<T> {
     public toJSON(): T[] {
         return [...this];
     }
+
+    public valueOf(): T[] {
+        return this.toJSON();
+    }
 }

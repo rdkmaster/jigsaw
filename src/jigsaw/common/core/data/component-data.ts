@@ -798,32 +798,48 @@ export class PagingInfo implements IEmittable {
 }
 
 /**
+ * 用于描述表格的列头过滤时，选中的列和单元格的值的信息
+ */
+export type HeaderFilter = { field: string; selectKeys: string[] };
+
+/**
  * 数据过滤信息，是数据过滤参数的结构化信息类
  *
  * $demo = combo-select/searchable
  */
 export class DataFilterInfo {
-    constructor(/**
-                 * 过滤关键字
-                 */
-                public key: string = '',
-                /**
-                 * 在这些字段中过滤
-                 */
-                public field?: string[] | number[],
-                /**
-                 * 过滤函数源码，主要是传给服务端做自定义过滤用的
-                 */
-                public rawFunction?: string,
-                /**
-                 * `rawFunction`执行时的上下文
-                 */
-                public context?: any
-                ) {
+    constructor(
+        /**
+         * 过滤关键字
+         */
+        public key: string = "",
+        /**
+         * 在这些字段中过滤
+         */
+        public field?: string[] | number[],
+        /**
+         * 过滤函数源码，主要是传给服务端做自定义过滤用的
+         */
+        public rawFunction?: string,
+        /**
+         * `rawFunction`执行时的上下文
+         */
+        public context?: any,
+        /**
+         * 表头过滤
+         */
+        public headerFilters?: HeaderFilter[]
+    ) {}
+
+    public toJSON() {
+        return {
+            key: this.key, field: this.field,
+            headerFilters: this.headerFilters.map(item => ({
+                field: item.field, selectKeys: item.selectKeys.valueOf()
+            }))
+        };
     }
 }
-
-
 
 /**
  * 自定义url参数编解码器，因为angular的这个bug
@@ -940,4 +956,28 @@ export function serializeFilterFunction(filter: Function): string {
         funcString = funcString.replace(/{/, '{\nvar _this = this;\n');
     }
     return funcString;
+}
+
+export function fixAjaxOptionsByMethod(options: PreparedHttpClientOptions) {
+    const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+    const paramProperty = method == 'get' ? 'params' : 'body';
+    const originParams = this.sourceRequestOptions[paramProperty];
+
+    delete options.params;
+    delete options.body;
+    options[paramProperty] = {
+        service: options.url, paging: this.pagingInfo.valueOf()
+    };
+    if (CommonUtils.isDefined(originParams)) {
+        options[paramProperty].peerParam = originParams;
+    }
+    if (CommonUtils.isDefined(this.filterInfo)) {
+        options[paramProperty].filter = this.filterInfo;
+    }
+    if (CommonUtils.isDefined(this.sortInfo)) {
+        options[paramProperty].sort = this.sortInfo;
+    }
+    if (paramProperty == 'params') {
+        options.params = PreparedHttpClientOptions.prepareParams(options.params)
+    }
 }

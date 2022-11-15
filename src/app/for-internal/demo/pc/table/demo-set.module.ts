@@ -115,6 +115,8 @@ import { TableUpdateAdditionalColumnDefineDemoComponent } from "./update-additio
 import { TableUpdateAdditionalColumnDefineDemoModule } from "./update-additional-column-defines/demo.module";
 import { TableExpandPageableDemoComponent } from './expand-pageable/demo.component';
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
+import { TableSetHeaderFilterDemoComponent } from "./header-filter/demo.component";
+import { TableSetHeaderFilterDemoModule } from "./header-filter/demo.module";
 
 export const routerConfig = [
     {
@@ -155,6 +157,9 @@ export const routerConfig = [
     },
     {
         path: 'sortable', component: TableSetHeaderSortDemoComponent
+    },
+    {
+        path: 'header-filter', component: TableSetHeaderFilterDemoComponent
     },
     {
         path: 'cell-render', component: TableSetCellRenderDemoComponent
@@ -308,7 +313,7 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule
+        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule
     ]
 })
 export class TableDemoModule {

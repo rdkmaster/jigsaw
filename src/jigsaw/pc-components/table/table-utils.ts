@@ -10,7 +10,7 @@ export class TableUtils {
         if (!settings) {
             settings = {
                 cellData: null, width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, field: '',
-                sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null
+                sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null, filterable: false
             };
         }
         settings.width = columnDefine.width;
@@ -25,6 +25,7 @@ export class TableUtils {
             settings.noPadding = !!headerDef.noPadding;
             settings.sortable = headerDef.sortable;
             settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
+            settings.filterable = headerDef.filterable;
             settings.defaultSortOrder = CommonUtils.isDefined(headerDef.sortAs) ?
                 headerDef.defaultSortOrder : settings.defaultSortOrder;
             settings.innerHtmlContext = headerDef.innerHtmlContext;

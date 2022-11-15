@@ -6,8 +6,8 @@ import {
     TableData
 } from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
-import {TableCellRendererBase} from "./table-renderer";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {TableCellRendererBase} from "./table-renderer";
 
 export type TableColumnTarget = number | string | (number | string)[];
 export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
@@ -78,6 +78,7 @@ export class TableHeader {
     sortable?: boolean;
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
+    filterable?: boolean;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
     alignment?: 'left' | 'center' | 'right';
@@ -108,6 +109,7 @@ export class TableHeadSetting {
     clazz: string;
     sortable: boolean;
     sortAs: SortAs;
+    filterable: boolean;
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;

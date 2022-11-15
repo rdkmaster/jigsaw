@@ -24,6 +24,7 @@
                                      [sortAs]="head.sortAs"
                                      [defaultSortOrder]="head.defaultSortOrder"
                                      (sort)="_$onSort($event)"
+                                     [filterable]="head.filterable"
                                      [headerTrustedHtml]="head.cellData"
                                      [headerTrustedHtmlContext]="head.innerHtmlContext"
                                      [hostInstance]="this">

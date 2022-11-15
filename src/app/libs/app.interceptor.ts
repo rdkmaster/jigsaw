@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import {Injectable} from "@angular/core";
 import {
     HttpEvent,
     HttpEventType,
@@ -9,9 +9,21 @@ import {
     HttpRequest,
     HttpResponse
 } from "@angular/common/http";
-import { Observable } from "rxjs";
-import { v4 as uuidv4 } from 'uuid';
-import { CommonUtils, RawTableData, TableData, PagingInfo, InternalUtils } from "jigsaw/public_api"
+import {Observable} from "rxjs";
+import {v4 as uuidv4} from 'uuid';
+import {
+    _filterByHeaderFilter,
+    CommonUtils,
+    DataFilterInfo,
+    getStaticDistinctColumnData,
+    HeaderFilter,
+    InternalUtils,
+    PagingInfo,
+    RawTableData,
+    TableData,
+    TableDataField,
+    TableDataMatrix
+} from "jigsaw/public_api"
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -25,6 +37,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
+        AjaxInterceptor.registerProcessor('/direct/pageable/table-data/simulation', this.dealDirectServerPagingRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
     }
 
@@ -135,6 +148,23 @@ export class AjaxInterceptor implements HttpInterceptor {
     }
 
     dealServerSidePagingRequest(req: HttpRequest<any>): any {
+        if (req.body?.requestFor == 'distinct-column-data') {
+            return this._queryDistinctColumnData(req);
+        } else {
+            return this._queryPagingData(req);
+        }
+    }
+
+    private _queryDistinctColumnData(req: HttpRequest<any>): string[] {
+        // 在这里模拟统一分页的获取列数据的代码
+        const field = req.body.field;
+        const peerParam = req.body.key.peerParam;
+        const service = req.body.key.service;
+        const filterInfo = req.body.filterInfo;
+        return PageableData.getDistinctColumnData({ service, field, peerParam, filterInfo })
+    }
+
+    private _queryPagingData(req: HttpRequest<any>): any {
         const params = req.method.toLowerCase() == 'post' ? 'body' : 'params';
         const service = this.getParamValue(req, params, 'service');
         let paging = this.getParamValue(req, params, 'paging') ? this.getParamValue(req, params, 'paging') : null;
@@ -144,6 +174,49 @@ export class AjaxInterceptor implements HttpInterceptor {
         let sort = this.getParamValue(req, params, 'sort') ? this.getParamValue(req, params, 'sort') : null;
         sort = typeof sort === 'string' ? JSON.parse(sort) : sort;
         return PageableData.get({service, paging, filter, sort});
+    }
+
+    dealDirectServerPagingRequest(req: HttpRequest<any>): any {
+        // 这里根据req里的参数，做出过滤
+        if (req.params.get('requestFor') == 'distinct-column-data') {
+            console.log('request for distinct column data, field:', req.params.get('field'),
+                'filterInfo:', req.params.get('filterInfo'));
+            const field = req.params.get('field');
+            const filterInfo: DataFilterInfo = JSON.parse(req.params.get('filterInfo'));
+            const dataTable = MockData.get('mock-data/hr-list');
+            return getStaticDistinctColumnData(field, dataTable.field, filterInfo, dataTable.data);
+        }
+
+        let paging = req.body.paging ? req.body.paging : null;
+        paging = typeof paging === 'string' ? JSON.parse(paging) : paging;
+        let filter = req.body.filter ? req.body.filter : null;
+        filter = typeof filter === 'string' ? JSON.parse(filter) : filter;
+        const dataTable = MockData.get('mock-data/hr-list');
+        let data: TableDataMatrix;
+        if (CommonUtils.isDefined(filter)) {
+            data = PageableData.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
+        } else {
+            data = dataTable.data.concat();
+        }
+
+        const pagingInfo: PagingInfo = new PagingInfo();
+        pagingInfo.pageSize = PageableData.fixPageSize(paging.pageSize);
+        pagingInfo.totalRecord = data.length;
+        pagingInfo.currentPage = PageableData.fixCurrentPage(paging.currentPage, pagingInfo);
+
+        if (CommonUtils.isDefined(paging)) {
+            data = PageableData.paging(data, pagingInfo);
+        } else {
+            console.error('need a "paging" property!');
+            data = [];
+        }
+
+        const result: RawTableData = {data: [], field: [], header: []};
+        result.data = data;
+        result.paging = pagingInfo.valueOf();
+        result.field = dataTable.field;
+        result.header = dataTable.header;
+        return result;
     }
 
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
@@ -192,7 +265,7 @@ class PageableData {
 
         let data;
         if (CommonUtils.isDefined(req.filter)) {
-            data = this._filter(dataTable, req.filter);
+            data = this.filter(dataTable, req.filter);
         } else {
             //浅拷贝一份
             data = dataTable.data.concat();
@@ -201,7 +274,7 @@ class PageableData {
         if (CommonUtils.isDefined(req.sort)) {
             if (data.length > 0) {
                 //sort会改变原数据
-                this._sort(data, dataTable.field.indexOf(req.sort.field),
+                this.sort(data, dataTable.field.indexOf(req.sort.field),
                     req.sort.as, req.sort.order === 'desc' ? -1 : 1);
             } else {
                 console.warn('empty data array, unnecessary to sort');
@@ -209,12 +282,12 @@ class PageableData {
         }
 
         const pagingInfo: PagingInfo = new PagingInfo();
-        pagingInfo.pageSize = this._fixPageSize(req.paging.pageSize);
+        pagingInfo.pageSize = this.fixPageSize(req.paging.pageSize);
         pagingInfo.totalRecord = data.length;
-        pagingInfo.currentPage = this._fixCurrentPage(req.paging.currentPage, pagingInfo);
+        pagingInfo.currentPage = this.fixCurrentPage(req.paging.currentPage, pagingInfo);
 
         if (CommonUtils.isDefined(req.paging)) {
-            data = this._paging(data, pagingInfo);
+            data = this.paging(data, pagingInfo);
         } else {
             console.error('need a "paging" property!');
             data = [];
@@ -227,7 +300,18 @@ class PageableData {
         return result;
     }
 
-    private static _sort(data, index, sortAs, order) {
+    static getDistinctColumnData(req: { service: string, field: string, peerParam: any, filterInfo: DataFilterInfo }): string[] {
+        const result = [];
+        if (!req.service) {
+            console.error('bad argument, need a "service" property!');
+            return result;
+        }
+
+        const dataTable = MockData.get(req.service);
+        return getStaticDistinctColumnData(req.field, dataTable.field, req.filterInfo, dataTable.data);
+    }
+
+    static sort(data, index, sortAs, order) {
         if (index == -1) {
             console.warn('unknown which field to sort!');
             return;
@@ -266,51 +350,53 @@ class PageableData {
         }
     }
 
-    private static _filter(dataTable, filter) {
+    static filter(dataTable, filter) {
         return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
-            this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
-            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field);
+            this.filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
+            this.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
-    private static _filterWithKeyword(data, key, field, allField) {
-        if (!key) {
-            console.warn('invalid filter key, need at least ONE char!');
-            return data.concat();
-        }
-        key = key.toLowerCase();
-        field = !!field ? field : allField;
-        field = field instanceof Array ? field : [field];
-        console.log('filter param: key = [', key, '] field = [', field.join(','),
-            '] allField = [', allField.join(','), ']');
+    static filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allFields: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
+        let filterData;
+        if (key === '') {
+            filterData = data.concat();
+        } else {
+            key = key.toLowerCase();
+            field = !!field ? field : allFields;
+            field = field instanceof Array ? field : [field];
+            console.log('filter param: key = [', key, '] field = [', field.join(','),
+                '] allField = [', allFields.join(','), ']');
 
-        const indexes = [];
-        for (let i = 0; i < field.length; i++) {
-            let idx = allField.indexOf(field[i]);
-            if (idx == -1) {
-                console.warn('invalid filter field:', field[i]);
-                continue;
-            }
-            indexes.push(idx);
-        }
-
-        return data.filter(item => {
-            for (let i = 0, len = indexes.length; i < len; i++) {
-                let cell = item[indexes[i]];
-                if (cell == null) {
+            const indexes = [];
+            for (let i = 0; i < field.length; i++) {
+                let idx = allFields.indexOf(field[i]);
+                if (idx == -1) {
+                    console.warn('invalid filter field:', field[i]);
                     continue;
                 }
-                cell = String(cell);
-                //模糊搜索大小写不敏感
-                cell = cell.toLowerCase();
-                if (cell.indexOf(key) != -1) {
-                    return true;
-                }
+                indexes.push(idx);
             }
-            return false;
-        });
+
+            filterData = data.filter(item => {
+                for (let i = 0, len = indexes.length; i < len; i++) {
+                    let cell = item[indexes[i]];
+                    if (cell == null) {
+                        continue;
+                    }
+                    cell = String(cell);
+                    //模糊搜索大小写不敏感
+                    cell = cell.toLowerCase();
+                    if (cell.indexOf(key) != -1) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+        return _filterByHeaderFilter(filterData, allFields, headerFilters);
     }
 
-    private static _filterWithFunction(data, rawFunction, context) {
+    static filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {
         let func;
         try {
             func = eval('(' + rawFunction + ')');
@@ -330,7 +416,7 @@ class PageableData {
         }
     }
 
-    private static _paging(data, pagingInfo) {
+    static paging(data, pagingInfo) {
         const currentPage = pagingInfo.currentPage;
         const pageSize = pagingInfo.pageSize;
         console.log('paging param: currentPage = [', currentPage, '] pageSize = [', pageSize, ']');
@@ -342,7 +428,7 @@ class PageableData {
         return page;
     }
 
-    private static _fixCurrentPage(currentPage, pagingInfo) {
+    static fixCurrentPage(currentPage, pagingInfo) {
         currentPage = typeof currentPage !== 'number' || currentPage < 1 ? 1 : currentPage;
         const pageSize = pagingInfo.pageSize;
         if (currentPage * pageSize - pageSize > pagingInfo.totalRecord) {
@@ -353,7 +439,7 @@ class PageableData {
         return currentPage;
     }
 
-    private static _fixPageSize(pageSize) {
+    static fixPageSize(pageSize) {
         return typeof pageSize !== 'number' || pageSize < 1 ? 100 : pageSize;
     }
 }

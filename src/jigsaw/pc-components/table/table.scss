@@ -30,8 +30,13 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     text-align: left;
                     line-height: inherit;
 
-                    &.#{$jigsaw-table}-header-cell-sortable {
+                    &.#{$jigsaw-table}-header-cell-sortable,
+                    &.#{$jigsaw-table}-header-cell-filterable {
                         padding: 0 12px 0 8px;
+                    }
+
+                    &.#{$jigsaw-table}-header-cell-sortable.#{$jigsaw-table}-header-cell-filterable {
+                        padding: 0 28px 0 8px;
                     }
 
                     ng-component {

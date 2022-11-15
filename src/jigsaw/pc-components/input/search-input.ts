@@ -21,7 +21,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {TranslateHelper} from '../../common/core/utils/translate-helper';
 import {RequireMarkForCheck} from '../../common/decorator/mark-for-check';
-import {JigsawFloatModule} from '../../common/directive/float/float';
+import {FloatPosition, JigsawFloatModule} from '../../common/directive/float/float';
 import {JigsawListModule} from '../list-and-tile/list';
 import {JigsawAutoCompleteInputModule} from './auto-complete-input';
 
@@ -189,6 +189,14 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
         localStorage.setItem(this.historyStorageKey, JSON.stringify(this._$history));
     }
+
+    /**
+     * 用户用于设置历史记录弹出的位置
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public floatPosition: FloatPosition = 'bottomLeft';
 
     /**
      * @internal

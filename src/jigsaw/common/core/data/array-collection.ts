@@ -8,6 +8,7 @@ import {
     DataFilterInfo,
     DataReviser,
     DataSortInfo,
+    fixAjaxOptionsByMethod,
     HttpClientOptions,
     IAjaxComponentData,
     IEmittable,
@@ -16,10 +17,9 @@ import {
     IServerSidePageable,
     ISortable,
     PagingInfo,
-    PreparedHttpClientOptions,
+    serializeFilterFunction,
     SortAs,
-    SortOrder,
-    serializeFilterFunction
+    SortOrder
 } from "./component-data";
 
 import {TableData} from "./table-data";
@@ -345,6 +345,8 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._ajax();
     }
 
+    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+
     protected _ajax(): void {
         if (this._busy) {
             this.ajaxErrorHandler(null);
@@ -359,27 +361,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._busy = true;
         this.ajaxStartHandler();
 
-        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
-        const paramProperty = method == 'get' ? 'params' : 'body';
-        let originParams = this.sourceRequestOptions[paramProperty];
-
-        delete options.params;
-        delete options.body;
-        options[paramProperty] = {
-            service: options.url, paging: this.pagingInfo.valueOf()
-        };
-        if (CommonUtils.isDefined(originParams)) {
-            options[paramProperty].peerParam = originParams;
-        }
-        if (CommonUtils.isDefined(this.filterInfo)) {
-            options[paramProperty].filter = this.filterInfo;
-        }
-        if (CommonUtils.isDefined(this.sortInfo)) {
-            options[paramProperty].sort = this.sortInfo;
-        }
-        if (paramProperty == 'params') {
-            options.params = PreparedHttpClientOptions.prepareParams(options.params)
-        }
+        this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
 
