@@ -1,11 +1,12 @@
-import { EventEmitter } from '@angular/core';
+import {EventEmitter} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {debounceTime, map} from "rxjs/operators";
-import {Subject, Observable} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {AbstractGeneralCollection} from "./general-collection";
 import {
     DataFilterInfo,
     DataSortInfo,
+    fixAjaxOptionsByMethod,
     HeaderFilter,
     HttpClientOptions,
     IFilterable,
@@ -14,7 +15,6 @@ import {
     ISlicedData,
     ISortable,
     PagingInfo,
-    PreparedHttpClientOptions,
     serializeFilterFunction,
     SortAs,
     SortOrder,
@@ -74,7 +74,7 @@ export type PagingServerCacheKey = { service: string, peerParam: Object };
  *
  * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
  */
-export class TableDataBase extends AbstractGeneralCollection<any> {
+export class TableDataBase extends AbstractGeneralCollection {
     /**
      * 给出`data`的数据结构是否和`RawTableData`一致，即`data`是否是一个合法的表格数据。
      * 注意此方法并非使用类的血缘关系来判断，而是通过数据结构的特征来判断。
@@ -253,7 +253,10 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
     return columnData.filter((data, idx) => columnData.indexOf(data) == idx);
 }
 
-function _filterByFields(data: TableDataMatrix, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
+/**
+ * @internal
+ */
+export function _filterByFields(data: TableDataMatrix, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
     if (!filteringFields || !filteringFields.length) {
         return data;
     }
@@ -266,7 +269,10 @@ function _filterByFields(data: TableDataMatrix, filteringFields: (string | numbe
     );
 }
 
-function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+/**
+ * @internal
+ */
+export function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
     key = key.toLowerCase();
     return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
 }
@@ -550,6 +556,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this._ajax();
     }
 
+    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+
     protected _ajax(): void {
         if (this._busy) {
             this.ajaxErrorHandler(null);
@@ -587,30 +595,6 @@ export class PageableTableData extends TableData implements IServerSidePageable,
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
-    }
-
-    protected _fixAjaxOptionsByMethod(options){
-        const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
-        const paramProperty = method == 'get' ? 'params' : 'body';
-        const originParams = this.sourceRequestOptions[paramProperty];
-
-        delete options.params;
-        delete options.body;
-        options[paramProperty] = {
-            service: options.url, paging: this.pagingInfo.valueOf()
-        };
-        if (CommonUtils.isDefined(originParams)) {
-            options[paramProperty].peerParam = originParams;
-        }
-        if (CommonUtils.isDefined(this.filterInfo)) {
-            options[paramProperty].filter = this.filterInfo;
-        }
-        if (CommonUtils.isDefined(this.sortInfo)) {
-            options[paramProperty].sort = this.sortInfo;
-        }
-        if (paramProperty == 'params') {
-            options.params = PreparedHttpClientOptions.prepareParams(options.params)
-        }
     }
 
     protected invokeChangeCallback(): void {
@@ -748,6 +732,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 }
 
 export class DirectPageableTableData extends PageableTableData implements IServerSidePageable, IFilterable, ISortable {
+    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+
     protected _ajax(): void {
         if (this._busy) {
             this.ajaxErrorHandler(null);

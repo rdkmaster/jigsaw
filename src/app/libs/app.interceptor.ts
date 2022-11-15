@@ -37,6 +37,7 @@ export class AjaxInterceptor implements HttpInterceptor {
 
     constructor() {
         AjaxInterceptor.registerProcessor('/rdk/service/app/common/paging', this.dealServerSidePagingRequest, this);
+        AjaxInterceptor.registerProcessor('/direct/pageable/table-data/simulation', this.dealDirectServerPagingRequest, this);
         AjaxInterceptor.registerProcessor(/\bmock-data\/.+$/, req => MockData.get(req.url));
     }
 
@@ -175,6 +176,49 @@ export class AjaxInterceptor implements HttpInterceptor {
         return PageableData.get({service, paging, filter, sort});
     }
 
+    dealDirectServerPagingRequest(req: HttpRequest<any>): any {
+        // 这里根据req里的参数，做出过滤
+        if (req.params.get('requestFor') == 'distinct-column-data') {
+            console.log('request for distinct column data, field:', req.params.get('field'),
+                'filterInfo:', req.params.get('filterInfo'));
+            const field = req.params.get('field');
+            const filterInfo: DataFilterInfo = JSON.parse(req.params.get('filterInfo'));
+            const dataTable = MockData.get('mock-data/hr-list');
+            return getStaticDistinctColumnData(field, dataTable.field, filterInfo, dataTable.data);
+        }
+
+        let paging = req.body.paging ? req.body.paging : null;
+        paging = typeof paging === 'string' ? JSON.parse(paging) : paging;
+        let filter = req.body.filter ? req.body.filter : null;
+        filter = typeof filter === 'string' ? JSON.parse(filter) : filter;
+        const dataTable = MockData.get('mock-data/hr-list');
+        let data: TableDataMatrix;
+        if (CommonUtils.isDefined(filter)) {
+            data = PageableData.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
+        } else {
+            data = dataTable.data.concat();
+        }
+
+        const pagingInfo: PagingInfo = new PagingInfo();
+        pagingInfo.pageSize = PageableData.fixPageSize(paging.pageSize);
+        pagingInfo.totalRecord = data.length;
+        pagingInfo.currentPage = PageableData.fixCurrentPage(paging.currentPage, pagingInfo);
+
+        if (CommonUtils.isDefined(paging)) {
+            data = PageableData.paging(data, pagingInfo);
+        } else {
+            console.error('need a "paging" property!');
+            data = [];
+        }
+
+        const result: RawTableData = {data: [], field: [], header: []};
+        result.data = data;
+        result.paging = pagingInfo.valueOf();
+        result.field = dataTable.field;
+        result.header = dataTable.header;
+        return result;
+    }
+
     getParamValue(req: HttpRequest<any>, params: string, key: string): any {
         const p = req[params];
         return req.method.toLowerCase() == 'post' ? p[key] : p.get(key);
@@ -221,7 +265,7 @@ class PageableData {
 
         let data;
         if (CommonUtils.isDefined(req.filter)) {
-            data = this._filter(dataTable, req.filter);
+            data = this.filter(dataTable, req.filter);
         } else {
             //浅拷贝一份
             data = dataTable.data.concat();
@@ -230,7 +274,7 @@ class PageableData {
         if (CommonUtils.isDefined(req.sort)) {
             if (data.length > 0) {
                 //sort会改变原数据
-                this._sort(data, dataTable.field.indexOf(req.sort.field),
+                this.sort(data, dataTable.field.indexOf(req.sort.field),
                     req.sort.as, req.sort.order === 'desc' ? -1 : 1);
             } else {
                 console.warn('empty data array, unnecessary to sort');
@@ -238,12 +282,12 @@ class PageableData {
         }
 
         const pagingInfo: PagingInfo = new PagingInfo();
-        pagingInfo.pageSize = this._fixPageSize(req.paging.pageSize);
+        pagingInfo.pageSize = this.fixPageSize(req.paging.pageSize);
         pagingInfo.totalRecord = data.length;
-        pagingInfo.currentPage = this._fixCurrentPage(req.paging.currentPage, pagingInfo);
+        pagingInfo.currentPage = this.fixCurrentPage(req.paging.currentPage, pagingInfo);
 
         if (CommonUtils.isDefined(req.paging)) {
-            data = this._paging(data, pagingInfo);
+            data = this.paging(data, pagingInfo);
         } else {
             console.error('need a "paging" property!');
             data = [];
@@ -267,7 +311,7 @@ class PageableData {
         return getStaticDistinctColumnData(req.field, dataTable.field, req.filterInfo, dataTable.data);
     }
 
-    private static _sort(data, index, sortAs, order) {
+    static sort(data, index, sortAs, order) {
         if (index == -1) {
             console.warn('unknown which field to sort!');
             return;
@@ -306,13 +350,13 @@ class PageableData {
         }
     }
 
-    private static _filter(dataTable, filter) {
+    static filter(dataTable, filter) {
         return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
-            this._filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
-            this._filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
+            this.filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
+            this.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
-    private static _filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allFields: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
+    static filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allFields: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
         let filterData;
         if (key === '') {
             filterData = data.concat();
@@ -352,7 +396,7 @@ class PageableData {
         return _filterByHeaderFilter(filterData, allFields, headerFilters);
     }
 
-    private static _filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {
+    static filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {
         let func;
         try {
             func = eval('(' + rawFunction + ')');
@@ -372,7 +416,7 @@ class PageableData {
         }
     }
 
-    private static _paging(data, pagingInfo) {
+    static paging(data, pagingInfo) {
         const currentPage = pagingInfo.currentPage;
         const pageSize = pagingInfo.pageSize;
         console.log('paging param: currentPage = [', currentPage, '] pageSize = [', pageSize, ']');
@@ -384,7 +428,7 @@ class PageableData {
         return page;
     }
 
-    private static _fixCurrentPage(currentPage, pagingInfo) {
+    static fixCurrentPage(currentPage, pagingInfo) {
         currentPage = typeof currentPage !== 'number' || currentPage < 1 ? 1 : currentPage;
         const pageSize = pagingInfo.pageSize;
         if (currentPage * pageSize - pageSize > pagingInfo.totalRecord) {
@@ -395,7 +439,7 @@ class PageableData {
         return currentPage;
     }
 
-    private static _fixPageSize(pageSize) {
+    static fixPageSize(pageSize) {
         return typeof pageSize !== 'number' || pageSize < 1 ? 100 : pageSize;
     }
 }

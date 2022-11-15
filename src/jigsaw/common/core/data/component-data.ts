@@ -835,8 +835,7 @@ export class DataFilterInfo {
         return {
             key: this.key, field: this.field,
             headerFilters: this.headerFilters.map(item => ({
-                field: item.field,
-                selectKeys: item.selectKeys instanceof Array ? item.selectKeys : [...item.selectKeys]
+                field: item.field, selectKeys: item.selectKeys.valueOf()
             }))
         };
     }
@@ -957,4 +956,28 @@ export function serializeFilterFunction(filter: Function): string {
         funcString = funcString.replace(/{/, '{\nvar _this = this;\n');
     }
     return funcString;
+}
+
+export function fixAjaxOptionsByMethod(options: PreparedHttpClientOptions) {
+    const method = this.sourceRequestOptions.method ? this.sourceRequestOptions.method.toLowerCase() : 'get';
+    const paramProperty = method == 'get' ? 'params' : 'body';
+    const originParams = this.sourceRequestOptions[paramProperty];
+
+    delete options.params;
+    delete options.body;
+    options[paramProperty] = {
+        service: options.url, paging: this.pagingInfo.valueOf()
+    };
+    if (CommonUtils.isDefined(originParams)) {
+        options[paramProperty].peerParam = originParams;
+    }
+    if (CommonUtils.isDefined(this.filterInfo)) {
+        options[paramProperty].filter = this.filterInfo;
+    }
+    if (CommonUtils.isDefined(this.sortInfo)) {
+        options[paramProperty].sort = this.sortInfo;
+    }
+    if (paramProperty == 'params') {
+        options.params = PreparedHttpClientOptions.prepareParams(options.params)
+    }
 }
