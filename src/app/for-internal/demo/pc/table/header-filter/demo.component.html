@@ -6,7 +6,7 @@
 <div class="demo-cntr">
     <jigsaw-header [level]="2">TableData</jigsaw-header>
     <j-button width="120" (click)="changeTableData()">改变数据</j-button>
-    <jigsaw-table [data]="tableData" [columnDefines]="tableDataColumnDefines"
+    <jigsaw-table height="300" [data]="tableData" [columnDefines]="tableDataColumnDefines"
         (headerFilterChange)="onTableDataHeaderFilterChange($event)"></jigsaw-table>
 </div>
 
@@ -34,6 +34,6 @@
     <jigsaw-table maxHeight="400px" [data]="directPageable" [columnDefines]="directPageableColumnDefines"
         (headerFilterChange)="onDirectPageableHeaderFilterChange($event)">
     </jigsaw-table>
-    <jigsaw-pagination [data]="directPageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true" [showQuickJumper]="true"
-        (search)="onDirectPageableSearch($event)" searchDebounce="1000"></jigsaw-pagination>
+    <jigsaw-pagination [data]="directPageable" [pageSizeOptions]="[5, 10, 20]" [searchable]="true"
+        [showQuickJumper]="true" (search)="onDirectPageableSearch($event)" searchDebounce="1000"></jigsaw-pagination>
 </div>

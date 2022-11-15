@@ -101,6 +101,7 @@ export class TableDataBase extends AbstractGeneralCollection {
                  */
                 public header: TableDataHeader = []) {
         super();
+        this._init();
     }
 
     /**
@@ -164,6 +165,8 @@ export class TableDataBase extends AbstractGeneralCollection {
             dest.push(source);
         }
     }
+
+    protected _init() { }
 
     /**
      * 参考 `TableData.toArray`
@@ -362,17 +365,29 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 
     /**
+     * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
+    public filteredData: TableDataMatrix;
+
+    /**
      * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
      */
     public originalData: TableDataMatrix;
 
     protected refreshData() {
+        this._init();
+        if (this.sortInfo) {
+            return;
+        }
+        this.refresh();
+    }
+
+    protected _init() {
         this.originalData = this.data.concat();
+        this.filteredData = this.originalData;
         if (this.sortInfo) {
             // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
-        } else {
-            this.refresh();
         }
     }
 
@@ -422,15 +437,19 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        this._filter(this.data, term, fields);
+        this._filter(term, fields);
+        this.data = this.filteredData;
         if (this.sortInfo) {
+            // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
-        }
+            return;
+        } 
+        this.refresh();
     }
 
-    protected _filter(data, term, fields?: string[] | number[]) {
+    protected _filter(term, fields?: string[] | number[]){
         if (term instanceof Function) {
-            data = this.originalData.filter(term.bind(fields));
+            this.filteredData = this.originalData.filter(term.bind(fields));
         } else {
             let key: string;
             if (term instanceof DataFilterInfo) {
@@ -440,9 +459,9 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
                 key = term;
             }
 
-            data = _filterByFields(this.originalData, fields, this.field);
-            data = _filterByKey(data, key);
-            data = _filterByHeaderFilter(data, this.field, this.filterInfo.headerFilters);
+            this.filteredData = _filterByFields(this.originalData, fields, this.field);
+            this.filteredData = _filterByKey(this.filteredData, key);
+            this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
 
             this.filterInfo.key = key;
             this.filterInfo.field = fields;
@@ -450,13 +469,15 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.data);
+        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.originalData);
     }
 
     public destroy() {
         super.destroy();
         this.sortInfo = null;
         this.filterInfo = null;
+        this.filteredData = null;
+        this.originalData = null;
     }
 }
 
@@ -1262,10 +1283,6 @@ export class BigTableData extends PageableTableData implements ISlicedData {
  */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
-    /**
-     * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
-     */
-    public filteredData: TableDataMatrix;
 
     constructor() {
         super();
@@ -1302,7 +1319,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        this._filter(this.filteredData, term, fields);
+        this._filter(term, fields);
         this._sortAndPaging();
     }
 
