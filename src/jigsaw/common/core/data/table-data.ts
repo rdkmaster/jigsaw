@@ -246,8 +246,7 @@ export class TableDataBase extends AbstractGeneralCollection {
 }
 
 export function getStaticDistinctColumnData(field: string, allFields: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
-    let filteredData = _filterByFields(rawTableData, filterInfo.field, allFields);
-    filteredData = _filterByKey(filteredData, filterInfo.key);
+    let filteredData = _filterByKeyAndFields(rawTableData, filterInfo.key, filterInfo.field, allFields);
     const headerFilters = filterInfo.headerFilters.filter(filter => filter.field !== field);
     filteredData = _filterByHeaderFilter(filteredData, allFields, headerFilters);
 
@@ -259,25 +258,20 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
 /**
  * @internal
  */
-export function _filterByFields(data: TableDataMatrix, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
-    if (!filteringFields || !filteringFields.length) {
-        return data;
-    }
-    const numberFields: number[] = filteringFields.map((field: string | number) =>
-        typeof field == 'number' ? field : allFields.findIndex(item => item == field));
-    return data.filter(
-        row => row.filter(
-            (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-        )
-    );
-}
-
-/**
- * @internal
- */
-export function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
+export function _filterByKeyAndFields(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
     key = key.toLowerCase();
-    return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
+    if (filteringFields && filteringFields.length !=0) {
+        const numberFields: number[] = filteringFields.map((field: string | number) =>
+        typeof field == 'number' ? field : allFields.findIndex(item => item == field));
+        return data.filter(
+            row => row.filter(
+                (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
+            ).filter(
+                item => String(item).toLowerCase().includes(key)).length != 0
+            )
+    } else {
+        return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
+    }
 }
 
 /**
@@ -447,25 +441,25 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         this.refresh();
     }
 
-    protected _filter(term, fields?: string[] | number[]){
+    protected _filter(term, fields?: string[] | number[]) {
         if (term instanceof Function) {
             this.filteredData = this.originalData.filter(term.bind(fields));
-        } else {
-            let key: string;
-            if (term instanceof DataFilterInfo) {
-                key = term.key;
-                fields = term.field
-            } else {
-                key = term;
-            }
-
-            this.filteredData = _filterByFields(this.originalData, fields, this.field);
-            this.filteredData = _filterByKey(this.filteredData, key);
-            this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
-
-            this.filterInfo.key = key;
-            this.filterInfo.field = fields;
+            return;
         }
+        let key: string;
+        if (term instanceof DataFilterInfo) {
+            key = term.key;
+            fields = term.field
+        } else {
+            key = term;
+        }
+
+        this.filteredData = _filterByKeyAndFields(this.originalData, key, fields, this.field);
+        this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
+
+        // 保存过滤时使用的key & fileds
+        this.filterInfo.key = key;
+        this.filterInfo.field = fields;
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {

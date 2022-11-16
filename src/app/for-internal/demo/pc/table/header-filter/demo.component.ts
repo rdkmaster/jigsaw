@@ -7,6 +7,16 @@ import {ColumnDefine, DirectPageableTableData, LocalPageableTableData, PageableT
     styleUrls: ["./demo.component.css"],
 })
 export class TableSetHeaderFilterDemoComponent {
+    public searchFields = [
+        { label: "搜索列无限制", id: 1, value: null },
+        { label: "搜索第一列（string）", id: 2, value: ['name'] },
+        { label: "搜索前三列（string）", id: 3, value: ['name', 'gender', 'position'] },
+        { label: "搜索第一列（index）", id: 4, value: [0] },
+        { label: "搜索前三列（index）", id: 5, value: [0, 1, 2] },
+    ];
+
+    public selectedFields = this.searchFields[0];
+
     public tableData: TableData;
     public tableDataColumnDefines: ColumnDefine[] = [
         {
@@ -35,39 +45,67 @@ export class TableSetHeaderFilterDemoComponent {
             header: {
                 filterable: true
             }
+        }, {
+            target: "gender",
+            header: {
+                filterable: true
+            }
         }
     ];
     public changeTableData() {
         this.tableData.fromObject({
-            data: [
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ]
+            "field": [
+                "name",
+                "gender",
+                "position",
+                "salary",
+                "enroll-date",
+                "office",
+                "desc"
             ],
-            field: ["name", "position", "salary", "enroll-date", "office", "extn"],
-            header: ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]
+            "header": [
+                "姓名",
+                "性别",
+                "职位",
+                "薪资",
+                "入职日期",
+                "部门",
+                "描述"
+            ],
+            "data": [
+                [
+                    "Michelle",
+                    "女",
+                    "Developer",
+                    19850,
+                    "2015/2/18",
+                    "Platform II",
+                    "蜜雪儿，紫菀花。"
+                ],
+                [
+                    "Mignon",
+                    "女",
+                    "System Architect",
+                    13208,
+                    "2016/4/16",
+                    "Platform III",
+                    "蜜妮安，细致而优雅。"
+                ],
+                [
+                    "Edwina",
+                    "女",
+                    "Test Engineer",
+                    19668,
+                    "2017/12/11",
+                    "Online Prod I",
+                    "艾德文娜，有价值的朋友;财产的获得者。"
+                ]
+            ]
         });
+    }
+    public onTableDataSearch(key: string) {
+        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        this.tableData.filter(key, this.selectedFields.value);
     }
 
     public onTableDataHeaderFilterChange($event) {
@@ -106,7 +144,8 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onLocalPageableSearch(key: string) {
         this.localPageableSearchValue = key;
-        this.localPageable.filter(key, null)
+        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        this.localPageable.filter(key, this.selectedFields.value);
     }
 
     public onLocalPageableHeaderFilterChange($event) {
@@ -149,7 +188,8 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onPageableSearch(key: string) {
         this.pageablePageableSearchValue = key;
-        this.pageable.filter(key, null);
+        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        this.pageable.filter(key, this.selectedFields.value);
     }
 
     public onPageableHeaderFilterChange($event) {
@@ -181,7 +221,8 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onDirectPageableSearch(key: string) {
         this.directPageableSearchValue = key;
-        this.directPageable.filter(key, null);
+        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        this.directPageable.filter(key, this.selectedFields.value);
     }
 
     public onDirectPageableHeaderFilterChange($event) {
@@ -213,160 +254,62 @@ export class TableSetHeaderFilterDemoComponent {
         this.tableData = new TableData(
             [
                 [
-                    "Tiger Nixon1",
+                    "Michelle",
+                    "女",
+                    "Developer",
+                    19850,
+                    "2015/2/18",
+                    "Platform II",
+                    "蜜雪儿，紫菀花。"
+                ],
+                [
+                    "Mignon",
+                    "女",
                     "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542"
+                    13208,
+                    "2016/4/16",
+                    "Platform III",
+                    "蜜妮安，细致而优雅。"
                 ],
                 [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
+                    "Edwina",
+                    "女",
+                    "Test Engineer",
+                    19668,
+                    "2017/12/11",
+                    "Online Prod I",
+                    "艾德文娜，有价值的朋友;财产的获得者。"
                 ],
                 [
-                    "Tiger Nixon2",
+                    "Bartley",
+                    "男",
                     "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    15041,
+                    "2015/1/6",
+                    "Platform II",
+                    "巴特莱，看管牧草地的人。"
                 ],
                 [
-                    "Garrett Winslters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
+                    "Alston",
+                    "男",
                     "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    12611,
+                    "2010/9/23",
+                    "Platform II",
+                    "奥斯顿，出身高贵的人。"
                 ],
                 [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Wintsers2",
-                    "Accountant",
-                    "$170,50",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$3,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon1",
-                    "System Architect",
-                    "$320,80",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "542111"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "84212"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tigesr Nixon1",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,750",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tigers Nixon2",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
+                    "Sigrid",
+                    "女",
+                    "Developer",
+                    17516,
+                    "2010/10/26",
+                    "Platform II",
+                    "西格莉德，最被喜爱的人;胜利的。"
                 ]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["name", "gender", "position", "salary", "enroll-date", "office", "desc"],
+            ["姓名", "性别", "职位", "薪资", "入职日期", "部门", "描述"]);
     }
 
     // ====================================================================

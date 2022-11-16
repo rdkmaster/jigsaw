@@ -2,12 +2,22 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<div class="demo-control">
+    <jigsaw-header [level]="2">Demo设置</jigsaw-header>
+    <jigsaw-header [level]="3">设置搜索目标列</jigsaw-header>
+    <jigsaw-radios-lite [(value)]="selectedFields" [data]="searchFields" trackItemBy="id">
+    </jigsaw-radios-lite>
+</div>
+
 <!-- start to learn the demo from here -->
 <div class="demo-cntr">
     <jigsaw-header [level]="2">TableData</jigsaw-header>
     <j-button width="120" (click)="changeTableData()">改变数据</j-button>
-    <jigsaw-table height="300" [data]="tableData" [columnDefines]="tableDataColumnDefines"
+    <jigsaw-table height="260" [data]="tableData" [columnDefines]="tableDataColumnDefines"
         (headerFilterChange)="onTableDataHeaderFilterChange($event)"></jigsaw-table>
+    <jigsaw-pagination [data]="tableData" [searchable]="true" [pageSizeOptions]="[5, 10, 20]" [showQuickJumper]="true"
+        (search)="onTableDataSearch($event)">
+    </jigsaw-pagination>
 </div>
 
 <div class="demo-cntr">
