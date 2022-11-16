@@ -665,8 +665,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             </div>
         </div>`
 })
-export class JigsawTableHeaderFilterBox implements OnInit {
-    constructor(protected _changeDetector: ChangeDetectorRef) {
+export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implements OnInit {
+    constructor(protected _changeDetector: ChangeDetectorRef, protected _zone?: NgZone) {
+        super(_zone);
     }
 
     private _data: string[];
@@ -724,6 +725,9 @@ export class JigsawTableHeaderFilterBox implements OnInit {
     public _$handleSearching(filterKey?: string) {
         this._filterData(filterKey);
         this._checkSelectAll();
+        this.runAfterMicrotasks(() => {
+            this.float.reposition();
+        });
     }
 
     /**
@@ -833,6 +837,8 @@ export class JigsawTableHeaderFilterBox implements OnInit {
         const found = this.tableData.filterInfo.headerFilters?.find(item => item.field === this.field);
         if (found) {
             this._$selectedItems = found.selectKeys;
+        } else {
+            this._$selectedItems = new ArrayCollection([]);
         }
         this._$handleSearching('');
     }

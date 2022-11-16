@@ -101,6 +101,7 @@ export class TableDataBase extends AbstractGeneralCollection {
                  */
                 public header: TableDataHeader = []) {
         super();
+        this._initOriginData();
     }
 
     /**
@@ -163,6 +164,9 @@ export class TableDataBase extends AbstractGeneralCollection {
         } else {
             dest.push(source);
         }
+    }
+
+    protected _initOriginData() {
     }
 
     /**
@@ -243,8 +247,7 @@ export class TableDataBase extends AbstractGeneralCollection {
 }
 
 export function getStaticDistinctColumnData(field: string, allFields: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
-    let filteredData = _filterByFields(rawTableData, filterInfo.field, allFields);
-    filteredData = _filterByKey(filteredData, filterInfo.key);
+    let filteredData = _filterByKeyword(rawTableData, filterInfo.key, filterInfo.field, allFields);
     const headerFilters = filterInfo.headerFilters.filter(filter => filter.field !== field);
     filteredData = _filterByHeaderFilter(filteredData, allFields, headerFilters);
 
@@ -256,32 +259,27 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
 /**
  * @internal
  */
-export function _filterByFields(data: TableDataMatrix, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
-    if (!filteringFields || !filteringFields.length) {
-        return data;
+export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
+    key = key.toLowerCase();
+    if (!filteringFields || filteringFields.length == 0) {
+        return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
+
     const numberFields: number[] = filteringFields.map((field: string | number) =>
         typeof field == 'number' ? field : allFields.findIndex(item => item == field));
-    return data.filter(
-        row => row.filter(
-            (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-        )
-    );
-}
-
-/**
- * @internal
- */
-export function _filterByKey(data: TableDataMatrix, key: string): TableDataMatrix {
-    key = key.toLowerCase();
-    return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
+    return data.filter(row => {
+        const matched = row
+            .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
+            .filter(item => String(item).toLowerCase().includes(key));
+        return matched.length != 0;
+    });
 }
 
 /**
  * @internal
  */
 export function _filterByHeaderFilter(data: TableDataMatrix, allFields: TableDataField, headerFilters: HeaderFilter[]) {
-    if (!headerFilters || headerFilters.length === 0) {
+    if (!headerFilters || !headerFilters.length) {
         return data;
     }
     return data.filter(item => {
@@ -361,12 +359,30 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
         return TableData.of(rawData).toArray();
     }
 
+    /**
+     * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
+    public filteredData: TableDataMatrix;
+
+    /**
+     * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
+     */
+    public originalData: TableDataMatrix;
+
     protected refreshData() {
+        this._initOriginData();
+        if (this.sortInfo) {
+            return;
+        }
+        this.refresh();
+    }
+
+    protected _initOriginData() {
+        this.originalData = this.data.concat();
+        this.filteredData = this.originalData;
         if (this.sortInfo) {
             // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
-        } else {
-            this.refresh();
         }
     }
 
@@ -410,23 +426,53 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     public filterInfo: DataFilterInfo = new DataFilterInfo('', [], undefined, undefined, []);
 
     public filter(compareFn: (value: any, index: number, array: any[]) => any, thisArg?: any): any;
-    public filter(term: string, fields?: (string | number)[]): void;
+    public filter(term: string, fields?: string[] | number[]): void;
     public filter(term: DataFilterInfo): void;
     /**
      * @internal
      */
-    public filter(term, fields?: (string | number)[]): void {
-        throw new Error("Method not implemented.");
+    public filter(term, fields?: string[] | number[]): void {
+        this._filter(term, fields);
+        this.data = this.filteredData;
+        if (this.sortInfo) {
+            // sort的时候会调用一次refresh
+            this.sort(this.sortInfo);
+            return;
+        }
+        this.refresh();
+    }
+
+    protected _filter(term, fields?: string[] | number[]) {
+        if (term instanceof Function) {
+            this.filteredData = this.originalData.filter(term.bind(fields));
+            return;
+        }
+        let key: string;
+        if (term instanceof DataFilterInfo) {
+            key = term.key;
+            fields = term.field
+        } else {
+            key = term;
+        }
+
+        this.filteredData = _filterByKeyword(this.originalData, key, fields, this.field);
+        this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
+
+        // 保存过滤时使用的key & fields
+        this.filterInfo.key = key;
+        this.filterInfo.field = fields;
     }
 
     public getDistinctColumnData(field: string): any[] | Observable<any[]> | Promise<any[]> {
-        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.data);
+        return getStaticDistinctColumnData(field, this.field, this.filterInfo, this.originalData);
     }
 
     public destroy() {
         super.destroy();
         this.sortInfo = null;
         this.filterInfo = null;
+        this.filteredData = null;
+        this.originalData = null;
     }
 }
 
@@ -529,7 +575,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalRecord = 0;
-        this.filterInfo = null;
+        this.filterInfo = new DataFilterInfo('', [], undefined, undefined, []);
         this.sortInfo = null;
         this._dataSourceChanged = true;
     }
@@ -648,13 +694,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo.headerFilters);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo?.headerFilters);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo.headerFilters);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo?.headerFilters);
             this.filterInfo.key = term;
             this.filterInfo.field = stringFields;
         }
@@ -1232,14 +1278,6 @@ export class BigTableData extends PageableTableData implements ISlicedData {
  */
 export class LocalPageableTableData extends TableData implements IPageable, IFilterable, ISortable {
     public pagingInfo: PagingInfo;
-    /**
-     * 原始数据经过过滤后的数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
-     */
-    public filteredData: TableDataMatrix;
-    /**
-     * 原始数据，请勿直接操作这些数据，而是采用本类定义的各个api来操作他们。
-     */
-    public originalData: TableDataMatrix;
 
     constructor() {
         super();
@@ -1276,24 +1314,7 @@ export class LocalPageableTableData extends TableData implements IPageable, IFil
      * @internal
      */
     public filter(term, fields?: string[] | number[]): void {
-        if (term instanceof Function) {
-            this.filteredData = this.originalData.filter(term.bind(fields));
-        } else {
-            let key: string;
-            if (term instanceof DataFilterInfo) {
-                key = term.key;
-                fields = term.field
-            } else {
-                key = term;
-            }
-
-            this.filteredData = _filterByFields(this.originalData, fields, this.field);
-            this.filteredData = _filterByKey(this.filteredData, key);
-            this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
-
-            this.filterInfo.key = key;
-            this.filterInfo.field = fields;
-        }
+        this._filter(term, fields);
         this._sortAndPaging();
     }
 
