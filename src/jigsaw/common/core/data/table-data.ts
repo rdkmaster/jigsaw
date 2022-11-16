@@ -246,7 +246,7 @@ export class TableDataBase extends AbstractGeneralCollection {
 }
 
 export function getStaticDistinctColumnData(field: string, allFields: TableDataField, filterInfo: DataFilterInfo, rawTableData: TableDataMatrix): any[] {
-    let filteredData = _filterByKeyAndFields(rawTableData, filterInfo.key, filterInfo.field, allFields);
+    let filteredData = _filterByKeyword(rawTableData, filterInfo.key, filterInfo.field, allFields);
     const headerFilters = filterInfo.headerFilters.filter(filter => filter.field !== field);
     filteredData = _filterByHeaderFilter(filteredData, allFields, headerFilters);
 
@@ -258,17 +258,14 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
 /**
  * @internal
  */
-export function _filterByKeyAndFields(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
+export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
     key = key.toLowerCase();
-    if (filteringFields && filteringFields.length !=0) {
+    if (filteringFields && filteringFields.length != 0) {
         const numberFields: number[] = filteringFields.map((field: string | number) =>
-        typeof field == 'number' ? field : allFields.findIndex(item => item == field));
-        return data.filter(
-            row => row.filter(
-                (item, index) => CommonUtils.isDefined(numberFields.find(num => num == index))
-            ).filter(
-                item => String(item).toLowerCase().includes(key)).length != 0
-            )
+            typeof field == 'number' ? field : allFields.findIndex(item => item == field));
+        return data.filter(row => row
+            .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
+            .filter(item => String(item).toLowerCase().includes(key)).length != 0)
     } else {
         return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
@@ -278,7 +275,7 @@ export function _filterByKeyAndFields(data: TableDataMatrix, key: string, filter
  * @internal
  */
 export function _filterByHeaderFilter(data: TableDataMatrix, allFields: TableDataField, headerFilters: HeaderFilter[]) {
-    if (!headerFilters || headerFilters.length === 0) {
+    if (!headerFilters || !headerFilters.length) {
         return data;
     }
     return data.filter(item => {
@@ -454,10 +451,10 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
             key = term;
         }
 
-        this.filteredData = _filterByKeyAndFields(this.originalData, key, fields, this.field);
+        this.filteredData = _filterByKeyword(this.originalData, key, fields, this.field);
         this.filteredData = _filterByHeaderFilter(this.filteredData, this.field, this.filterInfo.headerFilters);
 
-        // 保存过滤时使用的key & fileds
+        // 保存过滤时使用的key & fields
         this.filterInfo.key = key;
         this.filterInfo.field = fields;
     }
