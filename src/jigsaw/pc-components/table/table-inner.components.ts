@@ -828,7 +828,7 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
 
     private _autoFilterData() {
         this.hostInstance.headerFilterChange.emit(this.tableData.filterInfo.headerFilters);
-        this.tableData.filter(new DataFilterInfo('', [], undefined, undefined, this.tableData.filterInfo.headerFilters));
+        this.tableData.filter(this.tableData.filterInfo);
     }
 
     private _initData(data: string[]): void {
