@@ -261,6 +261,10 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
  */
 export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
     key = key.toLowerCase();
+    if (key.length === 0) {
+        return data;
+    }
+
     if (!filteringFields || filteringFields.length == 0) {
         return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
@@ -453,6 +457,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
             fields = term.field
         } else {
             key = term;
+            fields = CommonUtils.isUndefined(fields) ? null : fields;
         }
 
         this.filteredData = _filterByKeyword(this.originalData, key, fields, this.field);
