@@ -101,7 +101,7 @@ export class TableDataBase extends AbstractGeneralCollection {
                  */
                 public header: TableDataHeader = []) {
         super();
-        this._init();
+        this._initOriginData();
     }
 
     /**
@@ -166,7 +166,8 @@ export class TableDataBase extends AbstractGeneralCollection {
         }
     }
 
-    protected _init() { }
+    protected _initOriginData() {
+    }
 
     /**
      * 参考 `TableData.toArray`
@@ -260,15 +261,18 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
  */
 export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
     key = key.toLowerCase();
-    if (filteringFields && filteringFields.length != 0) {
-        const numberFields: number[] = filteringFields.map((field: string | number) =>
-            typeof field == 'number' ? field : allFields.findIndex(item => item == field));
-        return data.filter(row => row
-            .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
-            .filter(item => String(item).toLowerCase().includes(key)).length != 0)
-    } else {
+    if (!filteringFields || filteringFields.length == 0) {
         return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
+
+    const numberFields: number[] = filteringFields.map((field: string | number) =>
+        typeof field == 'number' ? field : allFields.findIndex(item => item == field));
+    return data.filter(row => {
+        const matched = row
+            .filter((item, index) => CommonUtils.isDefined(numberFields.find(num => num == index)))
+            .filter(item => String(item).toLowerCase().includes(key));
+        return matched.length != 0;
+    });
 }
 
 /**
@@ -366,14 +370,14 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
     public originalData: TableDataMatrix;
 
     protected refreshData() {
-        this._init();
+        this._initOriginData();
         if (this.sortInfo) {
             return;
         }
         this.refresh();
     }
 
-    protected _init() {
+    protected _initOriginData() {
         this.originalData = this.data.concat();
         this.filteredData = this.originalData;
         if (this.sortInfo) {
@@ -434,7 +438,7 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
             // sort的时候会调用一次refresh
             this.sort(this.sortInfo);
             return;
-        } 
+        }
         this.refresh();
     }
 

@@ -727,7 +727,7 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
         this._checkSelectAll();
         this.runAfterMicrotasks(() => {
             this.float.reposition();
-        })
+        });
     }
 
     /**
