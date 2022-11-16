@@ -834,7 +834,8 @@ export class DataFilterInfo {
     public toJSON() {
         return {
             key: this.key, field: this.field,
-            headerFilters: this.headerFilters.map(item => ({
+            rawFunction: this.rawFunction, context: this.context,
+            headerFilters: this.headerFilters?.map(item => ({
                 field: item.field, selectKeys: item.selectKeys.valueOf()
             }))
         };
@@ -972,7 +973,7 @@ export function fixAjaxOptionsByMethod(options: PreparedHttpClientOptions) {
         options[paramProperty].peerParam = originParams;
     }
     if (CommonUtils.isDefined(this.filterInfo)) {
-        options[paramProperty].filter = this.filterInfo;
+        options[paramProperty].filter = this.filterInfo instanceof DataFilterInfo ? this.filterInfo.toJSON() : this.filterInfo;
     }
     if (CommonUtils.isDefined(this.sortInfo)) {
         options[paramProperty].sort = this.sortInfo;

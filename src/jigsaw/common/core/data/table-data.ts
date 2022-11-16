@@ -580,7 +580,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalRecord = 0;
-        this.filterInfo = new DataFilterInfo('', [], undefined, undefined, []);
+        this.filterInfo = null;
+        // this.filterInfo = new DataFilterInfo('', [], undefined, undefined, []);
         this.sortInfo = null;
         this._dataSourceChanged = true;
     }
@@ -699,13 +700,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             pfi = term;
         } else if (term instanceof Function) {
             // 这里的fields相当于thisArg，即函数执行的上下文对象
-            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo.headerFilters);
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields, this.filterInfo?.headerFilters);
         } else {
             let stringFields: string[];
             if (fields) {
                 stringFields = (<any[]>fields).map(field => typeof field === 'number' ? this.field[field] : field);
             }
-            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo.headerFilters);
+            pfi = new DataFilterInfo(term, stringFields, undefined, undefined, this.filterInfo?.headerFilters);
             this.filterInfo.key = term;
             this.filterInfo.field = stringFields;
         }

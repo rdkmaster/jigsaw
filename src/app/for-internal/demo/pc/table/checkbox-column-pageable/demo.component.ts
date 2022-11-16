@@ -39,9 +39,9 @@ export class TableAddCheckboxColumnPageableDemoComponent {
 
     columnDefines: ColumnDefine[] = [
         {
-            target: "name",
+            target: "salary",
             header: {
-                filterable: true
+                sortable: true
             }
         }
     ];
