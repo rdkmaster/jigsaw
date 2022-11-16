@@ -574,8 +574,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
         this.pagingInfo.currentPage = 1;
         this.pagingInfo.totalRecord = 0;
-        this.filterInfo = null;
-        // this.filterInfo = new DataFilterInfo('', [], undefined, undefined, []);
+        this.filterInfo = new DataFilterInfo('', [], undefined, undefined, []);
         this.sortInfo = null;
         this._dataSourceChanged = true;
     }
