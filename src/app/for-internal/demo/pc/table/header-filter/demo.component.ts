@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {ColumnDefine, DirectPageableTableData, LocalPageableTableData, PageableTableData, TableData} from "jigsaw/public_api";
+import {ColumnDefine, DirectPageableTableData, HttpClientOptions, LocalPageableTableData, PageableTableData, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -194,6 +194,15 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onPageableHeaderFilterChange($event) {
         console.log($event);
+    }
+
+    public changePageable() {
+        this.pageable.fromAjax('mock-data/hr-list-short');
+        const options: HttpClientOptions = {
+            url: 'mock-data/hr-list-short',
+            method: 'post'
+        }
+        this.pageable.updateDataSource(options);
     }
 
     public directPageableSearchValue: string;

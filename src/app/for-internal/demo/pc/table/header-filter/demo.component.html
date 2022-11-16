@@ -32,6 +32,7 @@
 
 <div class="demo-cntr">
     <jigsaw-header [level]="2">PageableTableData</jigsaw-header>
+    <j-button width="120" (click)="changePageable()">改变数据</j-button>
     <jigsaw-table maxHeight="400px" [data]="pageable" [columnDefines]="pageableColumnDefines"
         (headerFilterChange)="onPageableHeaderFilterChange($event)">
     </jigsaw-table>
