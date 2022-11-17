@@ -256,13 +256,6 @@ export class TableSetHeaderFilterDemoComponent {
             url: '/direct/pageable/table-data/simulation', method: 'post'
         });
 
-        this.directPageable.bodyGenerator = () => ({
-            filter: this.directPageable.filterInfo.toJSON(),
-            paging: this.directPageable.pagingInfo,
-            sortInfo: this.directPageable.sortInfo,
-            service: "/direct/pageable/table-data/simulation"
-        })
-
         this.directPageable.onAjaxComplete(() => {
             console.log(this.directPageable);
         });
@@ -339,7 +332,12 @@ export class TableSetHeaderFilterDemoComponent {
 class DemoDirectPageableTableData extends DirectPageableTableData {
     public bodyGenerator: () => any;
     protected _ajax(): void {
-        this.sourceRequestOptions.body = this.bodyGenerator.apply(this);
+        this.sourceRequestOptions.body = {
+            filter: this.filterInfo.toJSON(),
+            paging: this.pagingInfo,
+            sortInfo: this.sortInfo,
+            service: "/direct/pageable/table-data/simulation"
+        }
         super._ajax();
     }
 }
