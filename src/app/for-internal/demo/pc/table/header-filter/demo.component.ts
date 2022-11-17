@@ -230,7 +230,7 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onDirectPageableSearch(key: string) {
         this.directPageableSearchValue = key;
-        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        console.log('filterKey === ', key, 'filterFields === ', this.selectedFields.value);
         this.directPageable.filter(key, this.selectedFields.value);
     }
 

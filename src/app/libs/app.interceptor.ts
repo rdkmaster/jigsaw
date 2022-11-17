@@ -187,9 +187,9 @@ export class AjaxInterceptor implements HttpInterceptor {
             return getStaticDistinctColumnData(field, dataTable.field, filterInfo, dataTable.data);
         }
 
-        let paging = req.body.paging ? req.body.paging : null;
+        let paging = req.body?.paging ? req.body.paging : null;
         paging = typeof paging === 'string' ? JSON.parse(paging) : paging;
-        let filter = req.body.filter ? req.body.filter : null;
+        let filter = req.body?.filter ? req.body.filter : null;
         filter = typeof filter === 'string' ? JSON.parse(filter) : filter;
         const dataTable = MockData.get('mock-data/hr-list');
         let data: TableDataMatrix;
@@ -200,15 +200,14 @@ export class AjaxInterceptor implements HttpInterceptor {
         }
 
         const pagingInfo: PagingInfo = new PagingInfo();
-        pagingInfo.pageSize = PageableData.fixPageSize(paging.pageSize);
         pagingInfo.totalRecord = data.length;
-        pagingInfo.currentPage = PageableData.fixCurrentPage(paging.currentPage, pagingInfo);
 
         if (CommonUtils.isDefined(paging)) {
+            pagingInfo.pageSize = PageableData.fixPageSize(paging.pageSize);
+            pagingInfo.currentPage = PageableData.fixCurrentPage(paging.currentPage, pagingInfo);
             data = PageableData.paging(data, pagingInfo);
         } else {
             console.error('need a "paging" property!');
-            data = [];
         }
 
         const result: RawTableData = {data: [], field: [], header: []};
