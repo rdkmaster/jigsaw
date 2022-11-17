@@ -206,7 +206,7 @@ export class TableSetHeaderFilterDemoComponent {
     }
 
     public directPageableSearchValue: string;
-    public directPageable: DirectPageableTableData;
+    public directPageable: DemoDirectPageableTableData;
     public directPageableColumnDefines: ColumnDefine[] = [
         {
             target: "name",
@@ -230,7 +230,7 @@ export class TableSetHeaderFilterDemoComponent {
 
     public onDirectPageableSearch(key: string) {
         this.directPageableSearchValue = key;
-        console.log('filterKey === ', key, 'filterFiels === ', this.selectedFields.value);
+        console.log('filterKey === ', key, 'filterFields === ', this.selectedFields.value);
         this.directPageable.filter(key, this.selectedFields.value);
     }
 
@@ -252,9 +252,10 @@ export class TableSetHeaderFilterDemoComponent {
         });
         this.pageable.pagingInfo.pageSize = 5;
 
-        this.directPageable = new DirectPageableTableData(http, {
+        this.directPageable = new DemoDirectPageableTableData(http, {
             url: '/direct/pageable/table-data/simulation', method: 'post'
         });
+
         this.directPageable.onAjaxComplete(() => {
             console.log(this.directPageable);
         });
@@ -326,4 +327,16 @@ export class TableSetHeaderFilterDemoComponent {
     // ====================================================================
     summary: string = "";
     description: string = "";
+}
+
+class DemoDirectPageableTableData extends DirectPageableTableData {
+    protected _ajax(): void {
+        this.sourceRequestOptions.body = {
+            filter: this.filterInfo.toJSON(),
+            paging: this.pagingInfo,
+            sortInfo: this.sortInfo,
+            service: "/direct/pageable/table-data/simulation"
+        }
+        super._ajax();
+    }
 }
