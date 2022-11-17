@@ -330,7 +330,6 @@ export class TableSetHeaderFilterDemoComponent {
 }
 
 class DemoDirectPageableTableData extends DirectPageableTableData {
-    public bodyGenerator: () => any;
     protected _ajax(): void {
         this.sourceRequestOptions.body = {
             filter: this.filterInfo.toJSON(),
