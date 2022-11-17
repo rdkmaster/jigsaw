@@ -799,8 +799,6 @@ export class DirectPageableTableData extends PageableTableData implements IServe
         this._busy = true;
         this.ajaxStartHandler();
 
-        this._fixAjaxOptionsByMethod(options);
-
         this.http.request(options.method, options.url, options)
             .pipe(
                 map(res => this.reviseData(res)),

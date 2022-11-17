@@ -206,7 +206,7 @@ export class TableSetHeaderFilterDemoComponent {
     }
 
     public directPageableSearchValue: string;
-    public directPageable: DirectPageableTableData;
+    public directPageable: DemoDirectPageableTableData;
     public directPageableColumnDefines: ColumnDefine[] = [
         {
             target: "name",
@@ -252,9 +252,17 @@ export class TableSetHeaderFilterDemoComponent {
         });
         this.pageable.pagingInfo.pageSize = 5;
 
-        this.directPageable = new DirectPageableTableData(http, {
+        this.directPageable = new DemoDirectPageableTableData(http, {
             url: '/direct/pageable/table-data/simulation', method: 'post'
         });
+
+        this.directPageable.bodyGenerator = () => ({
+            filter: this.directPageable.filterInfo.toJSON(),
+            paging: this.directPageable.pagingInfo,
+            sortInfo: this.directPageable.sortInfo,
+            service: "/direct/pageable/table-data/simulation"
+        })
+
         this.directPageable.onAjaxComplete(() => {
             console.log(this.directPageable);
         });
@@ -326,4 +334,12 @@ export class TableSetHeaderFilterDemoComponent {
     // ====================================================================
     summary: string = "";
     description: string = "";
+}
+
+class DemoDirectPageableTableData extends DirectPageableTableData {
+    public bodyGenerator: () => any;
+    protected _ajax(): void {
+        this.sourceRequestOptions.body = this.bodyGenerator.apply(this);
+        super._ajax();
+    }
 }
