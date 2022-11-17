@@ -260,7 +260,14 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
  * @internal
  */
 export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
-    key = key.toLowerCase();
+    if (key == null) {
+        return data;
+    }
+    key = String(key).trim().toLowerCase();
+    if (key == '') {
+        return data;
+    }
+
     if (!filteringFields || filteringFields.length == 0) {
         return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
