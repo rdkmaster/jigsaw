@@ -173,9 +173,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     /**
      * 不可用属性
-     *
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public disabled: boolean;
 
