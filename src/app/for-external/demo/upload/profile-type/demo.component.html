@@ -1,3 +1,6 @@
 <demo-template [description]="description" [demoSources]="demoSources">
-    <jigsaw-upload width="300px" uploadFileType=".png, .jpg"></jigsaw-upload>
+    <div class="demo-showcase-v">
+        <jigsaw-upload width="300px" uploadFileType=".png, .jpg"></jigsaw-upload>
+        <div>已上传符合要求的文件个数：{{urls?.length}}个</div>
+    </div>
 </demo-template>

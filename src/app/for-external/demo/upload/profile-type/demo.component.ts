@@ -8,7 +8,7 @@ import {AsyncDescription} from "../../../template/demo-template/demo-template";
 export class UploadProfileTypeDemoComponent extends AsyncDescription {
     public demoPath = "demo/upload/profile-type";
 
-    public fileType = '.txt';
+    public urls: string[];
 
     public uploadStart($event) {
         console.log("uploadStart触发了", $event)
@@ -19,6 +19,9 @@ export class UploadProfileTypeDemoComponent extends AsyncDescription {
     }
 
     public uploadComplete($event) {
+        this.urls = $event
+            .filter(e => e.state == "success")
+            .map(f => f.url);
         console.log("uploadComplete触发了", $event)
     }
 }
