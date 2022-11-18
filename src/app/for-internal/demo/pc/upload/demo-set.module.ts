@@ -12,6 +12,8 @@ import { ChangeTargetUrlDemoComponent } from './change-target-url/demo.component
 import { UploadChangeTargetUrlDemoModule } from './change-target-url/demo.module';
 import { UploadDirectiveDemoComponent } from './directive/demo.component';
 import { UploadDirectiveDemoModule } from './directive/demo.module';
+import {UploadGetFileUrlsComponent} from "./get-file-urls/demo.component";
+import {UploadGetFileUrlsModule} from "./get-file-urls/demo.module";
 
 
 export const routerConfig = [
@@ -32,6 +34,9 @@ export const routerConfig = [
     },
     {
         path: 'directive', component: UploadDirectiveDemoComponent
+    },
+    {
+        path: 'get-file-urls', component: UploadGetFileUrlsComponent
     }
 ];
 
@@ -39,7 +44,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         UploadBasicDemoModule, UploadResultDemoModule, UploadContentFieldDemoModule, UploadAutoUploadDemoModule,
-        UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule
+        UploadChangeTargetUrlDemoModule, UploadDirectiveDemoModule, UploadGetFileUrlsModule
     ]
 })
 export class UploadDemoModule {
