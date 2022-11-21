@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-tree-ext [(data)]="data" (onCheck)="onCheck()">
+</jigsaw-tree-ext>
+<div class="demo-seleted-nodes">
+    <span>已选节点</span>
+    <ul>
+        <li *ngFor="let node of selected" (click)="cancelSelected(node)">
+            <span>{{node.label}}</span>
+            <i class="iconfont iconfont-ea25"></i>
+        </li>
+    </ul>
+</div>

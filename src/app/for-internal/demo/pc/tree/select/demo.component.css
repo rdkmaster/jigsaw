@@ -1,0 +1,15 @@
+.demo-seleted-nodes>span {
+    font-size: 20px;
+    font-weight: border;
+}
+
+.demo-seleted-nodes>ul>li {
+    display: flex;
+    align-items: center;
+    height: 24px;
+    cursor: pointer;
+}
+
+.demo-seleted-nodes>ul>li span {
+    margin-right: 4px;
+}
