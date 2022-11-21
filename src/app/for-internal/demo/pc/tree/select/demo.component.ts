@@ -23,7 +23,7 @@ export class ZtreeSelectDemoComponent implements AfterViewInit {
                         label: "父节点11 - 展开",
                         open: true,
                         nodes: [
-                            { label: "叶子节点111" },
+                            { label: "叶子节点111", iconUnicode: 'e4e3' },
                             { label: "叶子节点112" },
                             { label: "叶子节点113" },
                             { label: "叶子节点114" }
