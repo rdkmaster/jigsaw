@@ -2,7 +2,8 @@ import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { SimpleTreeData, JigsawTreeExt } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./demo.component.css']
 })
 export class ZtreeSelectDemoComponent implements AfterViewInit {
     @ViewChild(JigsawTreeExt) treeExt: JigsawTreeExt;
@@ -22,8 +23,8 @@ export class ZtreeSelectDemoComponent implements AfterViewInit {
                         label: "父节点11 - 展开",
                         open: true,
                         nodes: [
-                            { label: "叶子节点111", checked: true },
-                            { label: "叶子节点112", checked: true },
+                            { label: "叶子节点111" },
+                            { label: "叶子节点112" },
                             { label: "叶子节点113" },
                             { label: "叶子节点114" }
                         ]
@@ -77,9 +78,7 @@ export class ZtreeSelectDemoComponent implements AfterViewInit {
         ])
     }
 
-    public onClick(msg: any) {
-        console.log("click");
-        console.log(msg);
+    public onCheck() {
         this.selected = this.treeExt.getCheckedNodes(true);
     }
 
@@ -90,15 +89,14 @@ export class ZtreeSelectDemoComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         if (this.treeExt && this.treeExt.ztree) {
-            console.log(this.treeExt.ztree);
             let nodes = this.treeExt.ztree.getNodes();
             if (nodes.length > 0) {
-                this.treeExt.ztree.selectNode(nodes[0]);
+                this.treeExt.ztree.checkNode(nodes[0].nodes[0].nodes[1], true, true, true);
+                this.treeExt.ztree.checkNode(nodes[0].nodes[0].nodes[3], true, true, true);
             }
         }
 
         this.selected = this.treeExt.getCheckedNodes(true);
-        console.log(this.selected)
     }
 
     // ====================================================================
