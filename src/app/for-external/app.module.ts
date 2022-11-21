@@ -94,7 +94,8 @@ import { PageNotFoundComponent } from "./ued/page-not-found/page-not-found.compo
 import { ComponentMenuNavComponent } from "./ued/component-menu-nav/component-menu-nav.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
-import { DesignComponent } from "./ued/design/design";
+import { SpecificationComponent } from "./ued/design/specification";
+import { PatternComponent } from "./ued/design/pattern";
 import { ApiListDemoModule } from "./demo/api-list/demo.module";
 import { IconsDemoComponent } from "./ued/icons/icons";
 import { CommonModule } from "@angular/common";
@@ -107,7 +108,8 @@ import { CommonModule } from "@angular/common";
                 { path: "", redirectTo: 'home', pathMatch: 'full' },
                 { path: "home", component: HomeComponent },
                 { path: "icons", component: IconsDemoComponent },
-                { path: "designs", component: DesignComponent },
+                { path: "specification", component: SpecificationComponent },
+                { path: "pattern", component: PatternComponent },
                 {
                     path: 'components', component: ComponentMenuNavComponent,
                     children: routerConfig
