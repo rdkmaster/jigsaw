@@ -98,3 +98,6 @@ export * from "./pc-components/chart-icon/chart-icon";
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";
+export {_filterByHeaderFilter} from "./common/core/data/unified-paging/paging";
+export {_filterByKeyword} from "./common/core/data/unified-paging/paging";
+export {getStaticDistinctColumnData} from "./common/core/data/unified-paging/paging";

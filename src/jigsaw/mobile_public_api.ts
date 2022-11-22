@@ -53,4 +53,7 @@ export * from "./mobile-components/switch/index";
 export * from "./mobile-components/tabs/index";
 export * from "./mobile-components/tag/tag";
 export * from "./mobile-components/header/header";
+export {_filterByHeaderFilter} from "./common/core/data/unified-paging/paging";
+export {_filterByKeyword} from "./common/core/data/unified-paging/paging";
+export {getStaticDistinctColumnData} from "./common/core/data/unified-paging/paging";
 
