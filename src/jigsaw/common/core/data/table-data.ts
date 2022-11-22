@@ -67,7 +67,7 @@ export class RawTableData {
 /**
  * 服务端通过这样的结构去拿缓存数据
  */
-export type PagingServerCacheKey = { service: string, peerParam: Object } | string;
+export type PagingServerCacheKey = { service: string, peerParam: Object };
 
 /**
  * 表格数据的基类，应用一般无需直接使用这个类。
@@ -678,14 +678,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         const paramProperty = options.method == 'get' ? 'params' : 'body';
         const originParams = this.sourceRequestOptions[paramProperty];
         // 服务端通过这样的结构去拿缓存数据 {service: url, peerParam: params.peerParam || {}}
-        const cacheKey: PagingServerCacheKey = options.method == 'get' ?
-            JSON.stringify({ service: this.sourceRequestOptions.url, peerParam: originParams }) :
-            { service: this.sourceRequestOptions.url, peerParam: originParams };
+        const cacheKey: PagingServerCacheKey = {service: this.sourceRequestOptions.url, peerParam: originParams};
         const filterInfo = options.method == 'get' ? JSON.stringify(this.filterInfo) : this.filterInfo;
         const req = this.http.request(options.method, pagingService,
             {
                 [paramProperty]: {
-                    key: cacheKey, field: field, filterInfo, requestFor: 'distinct-column-data'
+                    key: options.method == 'get' ? JSON.stringify(cacheKey) : cacheKey,
+                    field: field, filterInfo, requestFor: 'distinct-column-data'
                 }
             });
         return req as Observable<string[]>;
