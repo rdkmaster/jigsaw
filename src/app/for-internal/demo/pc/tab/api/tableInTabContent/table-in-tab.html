@@ -1,0 +1,22 @@
+<jigsaw-tabs [selectedIndex]="0">
+    <jigsaw-tab-pane>
+        <div jigsaw-title>
+            <span> Table-1 </span>
+        </div>
+        <ng-template>
+            <jigsaw-table [data]="pageable"></jigsaw-table>
+            <jigsaw-pagination style="margin-top: 8px" [data]="pageable" [pageSizeOptions]="[5, 10, 20]"
+                [searchable]="true" [showQuickJumper]="true"></jigsaw-pagination>
+        </ng-template>
+    </jigsaw-tab-pane>
+    <jigsaw-tab-pane>
+        <div jigsaw-title>
+            <span> Table-2 </span>
+        </div>
+        <ng-template>
+            <jigsaw-table [data]="pageable"></jigsaw-table>
+            <jigsaw-pagination style="margin-top: 8px" [data]="pageable" [pageSizeOptions]="[5, 10, 20]"
+                [searchable]="true" [showQuickJumper]="true"></jigsaw-pagination>
+        </ng-template>
+    </jigsaw-tab-pane>
+</jigsaw-tabs>
