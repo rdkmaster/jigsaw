@@ -683,7 +683,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         const req = this.http.request(options.method, pagingService,
             {
                 [paramProperty]: {
-                    key: cacheKey, field: field, filterInfo, requestFor: 'distinct-column-data'
+                    key: options.method == 'get' ? JSON.stringify(cacheKey) : cacheKey,
+                    field: field, filterInfo, requestFor: 'distinct-column-data'
                 }
             });
         return req as Observable<string[]>;
