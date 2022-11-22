@@ -1,6 +1,8 @@
 import { Component, ViewChild } from "@angular/core";
 import { JigsawTab, JigsawEditableTabTitleRenderer } from "jigsaw/public_api";
 import { TabContentDefine } from "./tabContent/tabContent";
+import { TableContentComponent } from "./tableContent/table-content";
+import { TableInTabComponent } from "./tableInTabContent/table-in-tab";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -64,7 +66,15 @@ export class DynamicTabDemoComponent {
     }
 
     public addComponentTab() {
-        this.addTab("component tab", TabContentDefine, "jigsaw");
+        this.addTab("component tab", TabContentDefine, {username:"jigsaw"});
+    }
+
+    public addTableTab() {
+        this.addTab("table tab", TableContentComponent, "jigsaw");
+    }
+
+    public addTableInTabTab() {
+        this.addTab("table-in-tab tab", TableInTabComponent, "jigsaw");
     }
 
     // ====================================================================

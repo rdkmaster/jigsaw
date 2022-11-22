@@ -260,7 +260,14 @@ export function getStaticDistinctColumnData(field: string, allFields: TableDataF
  * @internal
  */
 export function _filterByKeyword(data: TableDataMatrix, key: string, filteringFields: (string | number)[], allFields: TableDataField): TableDataMatrix {
-    key = key.toLowerCase();
+    if (key == null) {
+        return data;
+    }
+    key = String(key).trim().toLowerCase();
+    if (key == '') {
+        return data;
+    }
+
     if (!filteringFields || filteringFields.length == 0) {
         return data.filter(row => row.filter(item => String(item).toLowerCase().includes(key)).length != 0);
     }
@@ -676,7 +683,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
         const req = this.http.request(options.method, pagingService,
             {
                 [paramProperty]: {
-                    key: cacheKey, field: field, filterInfo, requestFor: 'distinct-column-data'
+                    key: options.method == 'get' ? JSON.stringify(cacheKey) : cacheKey,
+                    field: field, filterInfo, requestFor: 'distinct-column-data'
                 }
             });
         return req as Observable<string[]>;
@@ -791,8 +799,6 @@ export class DirectPageableTableData extends PageableTableData implements IServe
 
         this._busy = true;
         this.ajaxStartHandler();
-
-        this._fixAjaxOptionsByMethod(options);
 
         this.http.request(options.method, options.url, options)
             .pipe(
