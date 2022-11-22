@@ -10,14 +10,6 @@ export class UploadProfileTypeDemoComponent extends AsyncDescription {
 
     public urls: string[];
 
-    public uploadStart($event) {
-        console.log("uploadStart触发了", $event)
-    }
-
-    public uploadProgress($event) {
-        console.log("uploadProgress触发了", $event)
-    }
-
     public uploadComplete($event) {
         this.urls = $event
             .filter(e => e.state == "success")
