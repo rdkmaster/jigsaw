@@ -1,8 +1,9 @@
 import {debounceTime} from "rxjs/operators";
 import {Subscription} from "rxjs";
-import {HttpHeaders, HttpParams, HttpParameterCodec} from "@angular/common/http";
+import {HttpHeaders, HttpParameterCodec, HttpParams} from "@angular/common/http";
 import {EventEmitter} from "@angular/core";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
+import {DataFilterInfo} from "./unified-paging/paging";
 
 /**
  * 参考 `IAjaxComponentData.dataReviser`的说明
@@ -794,51 +795,6 @@ export class PagingInfo implements IEmittable {
             totalRecord: this.totalRecord, currentPage: this.currentPage,
             pageSize: this.pageSize, totalPage: this.totalPage
         }
-    }
-}
-
-/**
- * 用于描述表格的列头过滤时，选中的列和单元格的值的信息
- */
-export type HeaderFilter = { field: string; selectKeys: string[] };
-
-/**
- * 数据过滤信息，是数据过滤参数的结构化信息类
- *
- * $demo = combo-select/searchable
- */
-export class DataFilterInfo {
-    constructor(
-        /**
-         * 过滤关键字
-         */
-        public key: string = "",
-        /**
-         * 在这些字段中过滤
-         */
-        public field?: string[] | number[],
-        /**
-         * 过滤函数源码，主要是传给服务端做自定义过滤用的
-         */
-        public rawFunction?: string,
-        /**
-         * `rawFunction`执行时的上下文
-         */
-        public context?: any,
-        /**
-         * 表头过滤
-         */
-        public headerFilters?: HeaderFilter[]
-    ) {}
-
-    public toJSON() {
-        return {
-            key: this.key, field: this.field,
-            rawFunction: this.rawFunction, context: this.context,
-            headerFilters: this.headerFilters?.map(item => ({
-                field: item.field, selectKeys: item.selectKeys.valueOf()
-            }))
-        };
     }
 }
 

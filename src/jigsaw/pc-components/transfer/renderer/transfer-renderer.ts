@@ -16,9 +16,10 @@ import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
 import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
 import {JigsawTable} from '../../../pc-components/table/table';
-import {TableData, LocalPageableTableData, PageableTableData, TableDataMatrix, TableMatrixRow} from '../../../common/core/data/table-data';
+import {TableData, LocalPageableTableData, PageableTableData} from '../../../common/core/data/table-data';
 import {SimpleTreeData, SimpleNode} from '../../../common/core/data/tree-data';
 import {JigsawTransfer} from "../transfer";
+import {TableDataMatrix, TableMatrixRow} from "../../../common/core/data/unified-paging/paging";
 
 export type ListOption = {
     disabled?: boolean;

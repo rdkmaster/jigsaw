@@ -16,6 +16,7 @@ export * from "./common/core/data/general-collection";
 export * from "./common/core/data/graph-data";
 export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
+export * from "./common/core/data/unified-paging/exports";
 export * from "./common/core/theming/theme";
 export * from "./common/core/utils/common-utils";
 export * from "./common/core/utils/data-collection-utils";
@@ -33,8 +34,7 @@ export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
 export * from "./common/service/time.types";
-export * from "./common/novice-guide/novice-guide";
-export * from "./common/novice-guide/types";
+export * from "./common/novice-guide/exports";
 export * from "./pc-components/alert/alert";
 export * from "./pc-components/box/index";
 export * from "./pc-components/breadcrumb/breadcrumb";
@@ -98,6 +98,3 @@ export * from "./pc-components/chart-icon/chart-icon";
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";
-export {_filterByHeaderFilter} from "./common/core/data/unified-paging/paging";
-export {_filterByKeyword} from "./common/core/data/unified-paging/paging";
-export {getStaticDistinctColumnData} from "./common/core/data/unified-paging/paging";

@@ -4,7 +4,6 @@ import {debounceTime, map} from "rxjs/operators";
 import {Observable, Subject} from "rxjs";
 import {AbstractGeneralCollection} from "./general-collection";
 import {
-    DataFilterInfo,
     DataSortInfo,
     fixAjaxOptionsByMethod,
     HttpClientOptions,
@@ -21,27 +20,19 @@ import {
 } from "./component-data";
 import {CommonUtils} from "../utils/common-utils";
 import {SimpleNode, SimpleTreeData} from "./tree-data";
-import {_filterByHeaderFilter, _filterByKeyword, getStaticDistinctColumnData} from "./unified-paging/paging";
+import {
+    _filterByHeaderFilter,
+    _filterByKeyword, DataFilterInfo,
+    getStaticDistinctColumnData,
+    TableDataField,
+    TableDataMatrix
+} from "./unified-paging/paging";
 
-/**
- * 代表表格数据矩阵`TableDataMatrix`里的一行
- */
-export type TableMatrixRow = any[];
 /**
  * 代表表格的列头描述，其个数需要与表格数据`TableDataMatrix`的列数相等并一一对应
  * 这里的数据将会显示在界面上，需要确保对他们进行国际化处理
  */
 export type TableDataHeader = string[];
-/**
- * 代表表格的列头字段，其个数需要与表格数据`TableDataMatrix`的列数相等并一一对应，
- * 并且不能重复，建议以数据库表字段对应起来。
- * 这些数据对表格识别列至关重要，无效的、重复的值将会被忽略
- */
-export type TableDataField = string[];
-/**
- * 代表表格的数据区，是一个二维矩阵。矩阵的列数需要和`TableDataField`以及`TableDataHeader`的个数一致且一一对应。
- */
-export type TableDataMatrix = TableMatrixRow[];
 
 /**
  * 原始表格数据结构，Jigsaw的表格组件接收的唯一数据结构。

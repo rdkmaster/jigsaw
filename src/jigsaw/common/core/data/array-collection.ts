@@ -5,7 +5,6 @@ import {HttpClient} from "@angular/common/http";
 
 import {
     ComponentDataHelper,
-    DataFilterInfo,
     DataReviser,
     DataSortInfo,
     fixAjaxOptionsByMethod,
@@ -25,6 +24,7 @@ import {
 import {TableData} from "./table-data";
 import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {JigsawArray} from "../utils/data-collection-utils";
+import {DataFilterInfo} from "./unified-paging/paging";
 
 function _fromArray(dest: ArrayCollection<any>, source: any[]): boolean {
     source = source instanceof Array || (source as any) instanceof ArrayCollection ?

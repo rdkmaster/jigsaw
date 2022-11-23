@@ -15,6 +15,7 @@ export * from "./common/core/data/general-collection";
 export * from "./common/core/data/graph-data";
 export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
+export * from "./common/core/data/unified-paging/exports";
 export * from "./common/core/theming/theme";
 export * from "./common/core/utils/common-utils";
 export * from "./common/core/utils/internal-utils";
@@ -53,7 +54,4 @@ export * from "./mobile-components/switch/index";
 export * from "./mobile-components/tabs/index";
 export * from "./mobile-components/tag/tag";
 export * from "./mobile-components/header/header";
-export {_filterByHeaderFilter} from "./common/core/data/unified-paging/paging";
-export {_filterByKeyword} from "./common/core/data/unified-paging/paging";
-export {getStaticDistinctColumnData} from "./common/core/data/unified-paging/paging";
 
