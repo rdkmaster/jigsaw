@@ -52,6 +52,11 @@ function buildCandidatePackage(packageName, path) {
                 writeFileSync(`${dist}/${file}`, readFileSync(`${dist}/tmp/${file}`));
             });
             removeDir(`${dist}/tmp`);
+            const indexJs = `${dist}/index.js`;
+            const src = readFileSync(indexJs).toString()
+                .replace(/^!/, '(')
+                .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
+            writeFileSync(indexJs, src);
             resolve();
         });
     });

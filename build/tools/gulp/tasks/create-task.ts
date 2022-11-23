@@ -2,7 +2,7 @@ import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
-import {moveSync, readFileSync, writeFileSync} from 'fs-extra';
+import {readFileSync, writeFileSync} from 'fs-extra';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
@@ -17,13 +17,8 @@ async function noviceGuideBuilder() {
     await buildCandidatePackage('novice-guide', 'src/jigsaw/common/novice-guide/exports.ts');
 
     // 把noviceGuide对象暴露到window.jigsaw上
-    const dist = `${__dirname}/../../../../dist/@rdkmaster/jigsaw/novice-guide`;
-    let src = readFileSync(`${dist}/index.js`).toString();
-    if (/^!/.test(src)) {
-        src = src.replace(/^!/, '(')
-            .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
-    }
-    writeFileSync(`${dist}/index.js`, 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + src);
+    const indexJs = `${__dirname}/../../../../dist/@rdkmaster/jigsaw/unified-paging/index.js`;
+    writeFileSync(indexJs, 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + readFileSync(indexJs).toString());
 }
 
 export function createTask(packageName: string) {
@@ -111,6 +106,8 @@ export function createTask(packageName: string) {
     task('build:novice-guide', noviceGuideBuilder);
     task('build:unified-paging', async function () {
         await buildCandidatePackage('unified-paging', 'src/jigsaw/common/core/data/unified-paging/exports.ts');
+        const indexJs = `${__dirname}/../../../../dist/@rdkmaster/jigsaw/unified-paging/index.js`;
+        writeFileSync(indexJs, 'module.exports=' + readFileSync(indexJs).toString());
     });
 
     task(`build:${packageName}`, sequenceTask(
