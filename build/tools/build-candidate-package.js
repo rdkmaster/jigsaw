@@ -3,14 +3,20 @@ const {execSync} = require("child_process");
 const {readdirSync, unlinkSync, rmdirSync} = require("fs");
 const glob = require('glob').sync;
 
-const minimize = process.argv[require.main === module ? 2 : 3] !== 'debug';
 module.exports = {buildCandidatePackage};
 
-function buildCandidatePackage(packageName, path) {
-    console.log(`building ${packageName} ..., minimize=${minimize}`);
+function buildCandidatePackage() {
+    const packageName = this["packageName"];
+    const entryPath = this["entryPath"];
+    const exportTo = this["exportTo"] ? this["exportTo"] + '=' : '';
+    const strParam = `\n   packageName = ${packageName}\n     entryPath = ${entryPath}\n      exportTo = ${this["exportTo"]}`;
+    if (!packageName || !entryPath || !exportTo) {
+        throw `invalid parameters:${strParam}`;
+    }
+    console.log(`building ${packageName} with parameter:${strParam}`);
 
     const home = `${__dirname}/../..`;
-    glob(`${home}/${path.replace(/\/exports\.ts$/, '')}/**/*.ts`)
+    glob(`${home}/${entryPath.replace(/\/exports\.ts$/, '')}/**/*.ts`)
         .map(file => readFileSync(file).toString())
         .forEach(src => src.replace(/import\s*(\*.+?|[\s\S]*?)\s*from\s*['"](.*?)['"]/g, (_1, _2, from) => {
             console.log('checking import from path:', from);
@@ -27,7 +33,7 @@ function buildCandidatePackage(packageName, path) {
 
     console.log(`compiling ${packageName} with tsc...`);
     try {
-        execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 --declaration --outDir ${dist}/tmp ${home}/${path}`);
+        execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 --declaration --outDir ${dist}/tmp ${home}/${entryPath}`);
     } catch (e) {
         console.error('tsc failed, detail:', e.message);
         console.error(e.stderr.toString());
@@ -39,7 +45,7 @@ function buildCandidatePackage(packageName, path) {
     return new Promise(resolve => {
         webpack({
             entry: {[packageName]: `${dist}/tmp/exports.js`},
-            optimization: {minimize},
+            optimization: {minimize: true},
             resolve: {extensions: ['.js']},
             output: {path: dist, filename: 'index.js'},
         }, (err, stats) => {
@@ -56,7 +62,7 @@ function buildCandidatePackage(packageName, path) {
             const src = readFileSync(indexJs).toString()
                 .replace(/^!/, '(')
                 .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
-            writeFileSync(indexJs, src);
+            writeFileSync(indexJs, exportTo + src);
             resolve();
         });
     });

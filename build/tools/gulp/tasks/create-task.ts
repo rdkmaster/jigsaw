@@ -2,7 +2,7 @@ import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
-import {readFileSync, writeFileSync} from 'fs-extra';
+import {writeFileSync} from 'fs-extra';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
@@ -12,14 +12,6 @@ const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
 const gulpCleanCss = require('gulp-clean-css');
-
-async function noviceGuideBuilder() {
-    await buildCandidatePackage('novice-guide', 'src/jigsaw/common/novice-guide/exports.ts');
-
-    // 把noviceGuide对象暴露到window.jigsaw上
-    const indexJs = `${__dirname}/../../../../dist/@rdkmaster/jigsaw/unified-paging/index.js`;
-    writeFileSync(indexJs, 'window.jigsaw=window.jigsaw||{};window.jigsaw=' + readFileSync(indexJs).toString());
-}
 
 export function createTask(packageName: string) {
     const projectName = packageName;
@@ -103,12 +95,16 @@ export function createTask(packageName: string) {
         }
     });
 
-    task('build:novice-guide', noviceGuideBuilder);
-    task('build:unified-paging', async function () {
-        await buildCandidatePackage('unified-paging', 'src/jigsaw/common/core/data/unified-paging/exports.ts');
-        const indexJs = `${__dirname}/../../../../dist/@rdkmaster/jigsaw/unified-paging/index.js`;
-        writeFileSync(indexJs, 'module.exports=' + readFileSync(indexJs).toString());
-    });
+    task('build:novice-guide',buildCandidatePackage.bind({
+            packageName: "novice-guide",
+            entryPath: "src/jigsaw/common/novice-guide/exports.ts",
+            exportTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+        }));
+    task('build:unified-paging', buildCandidatePackage.bind({
+            packageName: "unified-paging",
+            entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
+            exportTo: "module.exports",
+        }));
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
