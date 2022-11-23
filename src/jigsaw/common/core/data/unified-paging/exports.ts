@@ -1,1 +1,2 @@
-export * from "./paging";
+export * from "./exports.min";
+export * from "./extra";

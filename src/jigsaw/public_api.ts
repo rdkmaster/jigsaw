@@ -16,7 +16,7 @@ export * from "./common/core/data/general-collection";
 export * from "./common/core/data/graph-data";
 export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
-export * from "./common/core/data/unified-paging/exports";
+export * from "./common/core/data/unified-paging/exports.min";
 export * from "./common/core/theming/theme";
 export * from "./common/core/utils/common-utils";
 export * from "./common/core/utils/data-collection-utils";
