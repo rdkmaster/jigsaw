@@ -8,9 +8,9 @@ module.exports = {buildCandidatePackage};
 function buildCandidatePackage() {
     const packageName = this["packageName"];
     const entryPath = this["entryPath"];
-    const exportTo = this["exportTo"] ? this["exportTo"] + '=' : '';
-    const strParam = `\n   packageName = ${packageName}\n     entryPath = ${entryPath}\n      exportTo = ${this["exportTo"]}`;
-    if (!packageName || !entryPath || !exportTo) {
+    const rollupTo = this["rollupTo"] ? this["rollupTo"] + '=' : '';
+    const strParam = `\n   packageName = ${packageName}\n     entryPath = ${entryPath}\n      rollupTo = ${this["rollupTo"]}`;
+    if (!packageName || !entryPath) {
         throw `invalid parameters:${strParam}`;
     }
     console.log(`building ${packageName} with parameter:${strParam}`);
@@ -32,13 +32,18 @@ function buildCandidatePackage() {
     mkdirpSync(dist);
 
     console.log(`compiling ${packageName} with tsc...`);
+    const outDir = rollupTo ? `${dist}/tmp` : dist;
     try {
-        execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 --declaration --outDir ${dist}/tmp ${home}/${entryPath}`);
+        execSync(`${home}/node_modules/.bin/tsc --module commonjs --target es6 --declaration --outDir ${outDir} ${home}/${entryPath}`);
     } catch (e) {
         console.error('tsc failed, detail:', e.message);
         console.error(e.stderr.toString());
         console.error(e.stdout.toString());
         throw `Error: tsc failed to build ${packageName}`;
+    }
+
+    if (!rollupTo) {
+        return;
     }
 
     const webpack = require('webpack');
@@ -62,7 +67,7 @@ function buildCandidatePackage() {
             const src = readFileSync(indexJs).toString()
                 .replace(/^!/, '(')
                 .replace(/,([^,]+?})(\(\[function\()/, ';return $1)$2');
-            writeFileSync(indexJs, exportTo + src);
+            writeFileSync(indexJs, rollupTo + src);
             resolve();
         });
     });

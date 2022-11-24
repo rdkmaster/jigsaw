@@ -98,12 +98,12 @@ export function createTask(packageName: string) {
     task('build:novice-guide',buildCandidatePackage.bind({
             packageName: "novice-guide",
             entryPath: "src/jigsaw/common/novice-guide/exports.ts",
-            exportTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+            rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
         }));
     task('build:unified-paging', buildCandidatePackage.bind({
             packageName: "unified-paging",
             entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
-            exportTo: "module.exports",
+            rollupTo: "",
         }));
 
     task(`build:${packageName}`, sequenceTask(
