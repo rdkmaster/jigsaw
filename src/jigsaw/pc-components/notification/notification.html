@@ -28,7 +28,7 @@
     </div>
 
     <div class="jigsaw-notification-close">
-        <span (click)='_$close()'>&times;</span>
+        <span (click)='_$close(); _$resolvePromise()'>&times;</span>
     </div>
 </div>
 

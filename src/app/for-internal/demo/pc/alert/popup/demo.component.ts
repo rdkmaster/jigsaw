@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ButtonInfo, JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
+import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -244,8 +244,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     @Input()
     public innerHtmlContext: any;
 
-    private _timeout;
-    private _timer;
+    private _timeout: number;
+    private _timer: number;
     private _callback: (button: ButtonInfo) => void;
     private _callbackContext: any;
     private _position: NotificationPosition;
@@ -389,7 +389,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             .subscribe(() => {
                 this._routerChangeSubscription.unsubscribe();
                 this._routerChangeSubscription = null;
-                this._$close()
+                this._$close();
+                this._$resolvePromise();
             });
     }
 
@@ -406,8 +407,18 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     _$onLeave() {
         if (this._timeout > 0) {
             this.clearCallLater(this._timer);
-            this._timer = this.callLater(() => this._$close(), this._timeout);
+            this._timer = this.callLater(() => {
+                this._$close();
+                this._$resolvePromise();
+            }, this._timeout);
         }
+    }
+
+    _$resolvePromise() {
+        if (!this._popupInfo || typeof this._popupInfo['_promiseResolver'] != 'function') {
+            return;
+        }
+        this._popupInfo['_promiseResolver']();
     }
 
     // ===================================================================================

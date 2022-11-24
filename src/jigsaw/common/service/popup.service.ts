@@ -206,11 +206,14 @@ export class PopupInfo {
     // 用于弹出方自行定制
     extra?: any;
 
+    promise: Promise<any>;
+    private _promiseResolver: Function;
     toPromise<T = ButtonInfo>(): Promise<T> {
         if (!this.answer) {
             return null;
         }
-        return new Promise(resolve => {
+        this.promise = new Promise(resolve => {
+            this._promiseResolver = resolve;
             this.answer.subscribe(
                 (value: T) => {
                     this.answer?.unsubscribe();
@@ -225,6 +228,7 @@ export class PopupInfo {
                     resolve(null);
                 });
         });
+        return this.promise;
     }
 }
 

@@ -2,6 +2,7 @@
     <div jigsaw-body>
         <p>一个自定义对话框在关闭时，一般需要返回一些数据给弹出的地方，这里演示了这样的一个过程。点击不同的按钮返回不同的字符串出去吧。</p>
         <p>提示：点击右上角的叉叉试试看</p>
+        <p>对话框主动<a (click)="dispose();answer.emit('Data3')">dispose</a>并发送一些数据</p>
     </div>
     <div jigsaw-button-bar>
         <jigsaw-button colorType="primary" (click)="dispose();answer.emit('Data1')">
