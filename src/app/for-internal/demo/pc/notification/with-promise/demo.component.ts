@@ -9,7 +9,7 @@ export class NotificationWithPromiseDemoComponent {
         const buttons = [{label: 'Opt1'}, {label: 'Opt2'}];
         const msg = '带按钮的notification也可以async/await';
         const callback = (value) => console.log('回调函数的输出', value);
-        const opt = {buttons, disposeOnRouterChanged: true, callback}
+        const opt = {buttons, callback, disposeOnRouterChanged: true, timeout: 3000};
         const selected = await JigsawNotification.showInfo(msg, opt).toPromise();
         const text = 'async/await的输出：你选择了 ' + selected?.label;
         console.log(text);
