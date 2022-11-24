@@ -95,7 +95,7 @@ export function createTask(packageName: string) {
         }
     });
 
-    task('build:novice-guide',buildCandidatePackage.bind({
+    task('build:novice-guide', buildCandidatePackage.bind({
             packageName: "novice-guide",
             entryPath: "src/jigsaw/common/novice-guide/exports.ts",
             rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
