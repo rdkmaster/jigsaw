@@ -2,7 +2,6 @@ import {
     AfterContentInit,
     AfterViewInit,
     ChangeDetectionStrategy,
-    ChangeDetectorRef,
     Component,
     ContentChildren,
     Directive,
@@ -27,11 +26,11 @@ import {JigsawBlockModule} from "../../common/components/block/block";
 import {JigsawMovableModule} from "../../common/directive/movable/index";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
-export interface IDialog extends IPopupable {
+export interface IDialog<T = ButtonInfo> extends IPopupable {
     buttons: ButtonInfo[];
     caption: string;
     dialog: JigsawDialog;
-    dispose: (answer?: ButtonInfo) => void;
+    dispose: (answer?: T) => void;
 }
 
 export type DialogCallback = (button: ButtonInfo) => void;
@@ -47,7 +46,7 @@ export type NoticeLevel = 'success' | 'error' | 'warning' | 'info';
  * 可以看到JigsawAlert使用起来比较麻烦，但是它具体化后的这些组件使用起来就非常简单了。
  */
 @Directive()
-export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
+export abstract class DialogBase<T = ButtonInfo> implements IDialog<T>, AfterViewInit, OnInit {
 
     /**
      * @NoMarkForCheckRequired
@@ -110,9 +109,9 @@ export abstract class DialogBase implements IDialog, AfterViewInit, OnInit {
     }
 
     @Output()
-    public answer: EventEmitter<ButtonInfo> = new EventEmitter<ButtonInfo>();
+    public answer: EventEmitter<T> = new EventEmitter<T>();
 
-    public dispose: (answer?: ButtonInfo) => void;
+    public dispose: (answer?: T) => void;
 
     public ngOnInit() {
         if (this.dialog) {
@@ -137,9 +136,9 @@ export abstract class AbstractDialogComponentBase
     extends AbstractJigsawComponent
     implements IPopupable, AfterContentInit, OnDestroy {
 
-    constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+    protected constructor(protected renderer: Renderer2, protected elementRef: ElementRef, protected _zone: NgZone,
+                          // @RequireMarkForCheck 需要用到，勿删
+                          protected _injector: Injector) {
         super(_zone);
     }
 

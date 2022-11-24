@@ -32,13 +32,15 @@ export class LoadingService {
                 popupInfo.dispose();
             };
 
-            return {
-                element: popupInfo.element,
-                dispose: dispose,
-                answer: popupInfo.answer,
-                instance: popupInfo.instance
-            }
-        } else if (blockTo) {
+            const pi = new PopupInfo();
+            pi.element = popupInfo.element;
+            pi.dispose = dispose;
+            pi.answer = popupInfo.answer;
+            pi.instance = popupInfo.instance;
+            return pi;
+        }
+
+        if (blockTo) {
             blockBy = blockTo;
             if (blockBy instanceof Type) {
                 popupInfo = this._popupService.popup(blockBy, LoadingService._getDefaultOptions());

@@ -1,0 +1,15 @@
+<jigsaw-dialog top="20%" width="40%" (close)="dispose()" caption="返回不同值" icon="iconfont iconfont-e3f0">
+    <div jigsaw-body>
+        <p>一个自定义对话框在关闭时，一般需要返回一些数据给弹出的地方，这里演示了这样的一个过程。点击不同的按钮返回不同的字符串出去吧。</p>
+        <p>提示：点击右上角的叉叉试试看</p>
+    </div>
+    <div jigsaw-button-bar>
+        <jigsaw-button colorType="primary" (click)="dispose();answer.emit('Data1')">
+            Data1
+        </jigsaw-button>
+        <jigsaw-button colorType="warning" (click)="dispose();answer.emit('Data2')">
+            Data2
+        </jigsaw-button>
+    </div>
+</jigsaw-dialog>
+

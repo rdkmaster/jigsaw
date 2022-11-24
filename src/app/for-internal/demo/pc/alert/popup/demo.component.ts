@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
+import {ButtonInfo, JigsawConfirmAlert, JigsawErrorAlert, JigsawInfoAlert, JigsawWarningAlert} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,38 +14,45 @@ export class AlertPopupDemoComponent {
         this.message = 'This is very long regular text in English. This is very long regular text in English. This is very long abnormall texxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxt in English. 这是一长串数字123456789012345678901234567890123456789012345678901234567890';
     }
 
-    commonInfoAlert() {
+    /**
+     * 采用Promise方式来处理对话框，推荐。
+     */
+    async commonInfoAlert() {
         this.answer = 'waiting for an answer';
         const info = {header: this.header, message: this.message};
-        JigsawInfoAlert.show(info, answer => {
-            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        });
+        const answer = await JigsawInfoAlert.show(info).toPromise();
+        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
-    commonWarningAlert() {
+    /**
+     * 采用Promise方式来处理对话框，推荐。
+     */
+    async commonWarningAlert() {
         this.answer = 'waiting for an answer';
         const info = {header: this.header, message: this.message};
-        JigsawWarningAlert.show(info, answer => {
-            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        });
+        const answer = await JigsawWarningAlert.show(info).toPromise();
+        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
-    commonErrorAlert() {
+    /**
+     * 采用Promise方式来处理对话框，推荐。
+     */
+    async commonErrorAlert() {
         this.answer = 'waiting for an answer';
         const info = {header: this.header, message: this.message};
-        JigsawErrorAlert.show(info, answer => {
-            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        });
+        const answer = await JigsawErrorAlert.show(info).toPromise();
+        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
-    commonConfirmAlert() {
+    /**
+     * 采用Promise方式来处理对话框，推荐。
+     */
+    async commonConfirmAlert() {
         this.answer = 'waiting for an answer';
         const info = { header: this.header, message: this.message };
-        JigsawConfirmAlert.show(info, answer => {
-            this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
-        },
-            /* custom your own buttons*/
-            [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }]);
+        const buttons = [{ label: 'alert.button.yes' }, { label: 'alert.button.no' }, { label: "不知道" }];
+        const answer = await JigsawConfirmAlert.show(info, buttons).toPromise();
+        this.answer = answer ? 'great! your answer is: ' + answer.label : 'you closed the alert with the close button';
     }
 
     // ====================================================================
