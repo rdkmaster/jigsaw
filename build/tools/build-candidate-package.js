@@ -41,6 +41,7 @@ function buildCandidatePackage() {
         console.error(e.stdout.toString());
         throw `Error: tsc failed to build ${packageName}`;
     }
+    writeFileSync(`${dist}/package.json`, '{"module": "exports.js","typings": "exports.d.ts"}');
 
     if (!rollupTo) {
         return;
