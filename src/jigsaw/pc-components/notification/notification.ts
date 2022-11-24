@@ -409,9 +409,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     _$onLeave() {
         if (this._timeout > 0) {
             this.clearCallLater(this._timer);
-            this._timer = this.callLater(() => {
-                this._$close();
-            }, this._timeout);
+            this._timer = this.callLater(() => this._$close(), this._timeout);
         }
     }
 
