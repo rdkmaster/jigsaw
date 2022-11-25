@@ -20,7 +20,7 @@
                         (close)="_$removeTag(tagItem)">
                 {{_$getItemLabel(tagItem, labelField)}}
             </jigsaw-tag>
-            <jigsaw-input #editor [theme]="theme" *ngIf="searchable && !disabled" [(value)]="searchKeyword" [disabled]="searching"
+            <jigsaw-input #editor [theme]="theme" *ngIf="searchable" [(value)]="searchKeyword" [disabled]="disabled || searching"
                           width="100%" (valueChange)="_$handleSearchBoxChange()"
                           [clearable]="false" [placeholder]="value.length == 0 ? placeholder : ''">
             </jigsaw-input>

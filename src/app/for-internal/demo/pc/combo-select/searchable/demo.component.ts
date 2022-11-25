@@ -10,6 +10,10 @@ import {
     styleUrls: ['./demo.component.css'],
 })
 export class ComboSelectAutoCompleteDemo {
+    public disabled: boolean;
+    public searching: boolean;
+    public searchKeyword: string = "";
+
     lpaCountries: LocalPageableArray<ComboSelectValue>;
     spaCountries: PageableArray;
     selectedCountries: any;

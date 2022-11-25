@@ -1,7 +1,20 @@
 <!-- ignore the following lines, they are not important to this demo -->
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
-
+<ul class="demo-options">
+    <li>
+        <span>disabled</span>
+        <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+    </li>
+    <li>
+        <span>searching</span>
+        <jigsaw-switch [(checked)]="searching"></jigsaw-switch>
+    </li>
+    <li>
+        <span>searchKeyword</span>
+        <jigsaw-input [(value)]="searchKeyword"></jigsaw-input>
+    </li>
+</ul>
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
@@ -12,6 +25,9 @@
                         [clearable]="true"
                         labelField="enName"
                         [searchable]="true"
+                        [disabled]="disabled"
+                        [searching]="searching"
+                        [searchKeyword]="searchKeyword"
                         placeholder="search a country..."
                         (openChange)="onLocalSearchOpen($event)"
                         (searchKeywordChange)="handleSearching($event, lpaCountries)">
@@ -36,6 +52,8 @@
                         labelField="enName"
                         [searchable]="true"
                         [searching]="spaCountries.busy"
+                        [disabled]="disabled"
+                        [searchKeyword]="searchKeyword"
                         placeholder="输入中文也行"
                         (openChange)="onServerSearchOpen($event)"
                         (searchKeywordChange)="handleSearching($event, spaCountries)">
@@ -57,6 +75,8 @@
         <j-combo-select maxWidth="500"
                         [(value)]="selectedCountries3"
                         [clearable]="true"
+                        [disabled]="disabled"
+                        [searching]="searching"
                         labelField="enName"
                         placeholder="search a country..."
                         (openChange)="onLocalSearchOpen($event)">
