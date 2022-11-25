@@ -19,6 +19,6 @@ export class NotificationWithPromiseDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个demo介绍了通知提醒框的4种基础类型：';
+    summary: string = '这个demo介绍了如何使用async/await来处理notification上的按钮';
     description: string = '';
 }
