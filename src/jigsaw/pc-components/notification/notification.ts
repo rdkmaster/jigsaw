@@ -244,8 +244,8 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     @Input()
     public innerHtmlContext: any;
 
-    private _timeout;
-    private _timer;
+    private _timeout: number;
+    private _timer: number;
     private _callback: (button: ButtonInfo) => void;
     private _callbackContext: any;
     private _position: NotificationPosition;
@@ -281,7 +281,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         }
 
         this._popupInfo = value;
-        this._popupInfo.answer.subscribe(answer => this._$close(answer));
+        this._popupInfo.answer.subscribe(answer => this._$close(answer, false));
         this._$onLeave();
     }
 
@@ -305,7 +305,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
     /**
      * @internal
      */
-    public _$close(answer?: ButtonInfo) {
+    public _$close(answer?: ButtonInfo, needResolve: boolean = true) {
         if (this._popupInfo) {
             this._popupInfo.answer.unsubscribe();
             this._popupInfo.dispose();
@@ -318,6 +318,9 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
         }
 
         CommonUtils.safeInvokeCallback(this._callbackContext, this._callback, [answer]);
+        if (needResolve && typeof this._popupInfo?.['_promiseResolver'] == 'function') {
+            this._popupInfo['_promiseResolver']();
+        }
 
         const removeListener = this.renderer.listen(this.elementRef.nativeElement, 'animationend',
             () => {
@@ -389,7 +392,7 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
             .subscribe(() => {
                 this._routerChangeSubscription.unsubscribe();
                 this._routerChangeSubscription = null;
-                this._$close()
+                this._$close();
             });
     }
 

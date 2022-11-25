@@ -117,7 +117,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             return;
         }
 
-        this._popupInfoValue.answer.subscribe(answer => this._$close());
+        this._popupInfoValue.answer.subscribe(() => this._$close());
         this._$onLeave();
     }
 
@@ -149,8 +149,7 @@ export class JigsawToast extends AbstractDialogComponentBase implements OnDestro
             icon: opt.icon,
             timeout: opt.timeout,
             iconType: opt.iconType
-        }
-
+        };
         const popupInfo = PopupService.instance.popup(JigsawToast, popupOptions, initData);
         (<JigsawToast>popupInfo.instance).popupInfo = popupInfo;
         toastInstances.push(popupInfo)

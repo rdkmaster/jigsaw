@@ -191,8 +191,8 @@ export class ButtonInfo {
 
 export type PopupDisposer = () => void;
 
-export interface IPopupable extends IDynamicInstantiatable {
-    answer: EventEmitter<ButtonInfo>;
+export interface IPopupable<T = ButtonInfo> extends IDynamicInstantiatable {
+    answer: EventEmitter<T>;
 
     [index: string]: any;
 }
@@ -205,6 +205,31 @@ export class PopupInfo {
     windowListener?: PopupDisposer;
     // 用于弹出方自行定制
     extra?: any;
+
+    promise: Promise<any>;
+    private _promiseResolver: Function;
+    toPromise<T = ButtonInfo>(): Promise<T> {
+        if (!this.answer) {
+            return null;
+        }
+        this.promise = new Promise(resolve => {
+            this._promiseResolver = resolve;
+            this.answer.subscribe(
+                (value: T) => {
+                    this.answer?.unsubscribe();
+                    resolve(value);
+                },
+                () => {
+                    this.answer?.unsubscribe();
+                    resolve(null);
+                },
+                () => {
+                    this.answer?.unsubscribe();
+                    resolve(null);
+                });
+        });
+        return this.promise;
+    }
 }
 
 // @dynamic
@@ -274,9 +299,9 @@ export class PopupService {
      * @param initData
      * @return PopupInfo
      */
-    public popup(what: Type<IPopupable>, options?: PopupOptions, initData?: any): PopupInfo;
-    public popup(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
-    public popup(what: Type<IPopupable> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
+    public popup<T = ButtonInfo>(what: Type<IPopupable<T>>, options?: PopupOptions, initData?: any): PopupInfo;
+    public popup<T = any>(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
+    public popup<T = ButtonInfo>(what: Type<IPopupable<T>> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
         if (!InternalUtils.viewContainerRef || !InternalUtils.renderer) {
             console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
@@ -330,10 +355,11 @@ export class PopupService {
                 }
             }
         });
-        const result = {
-            instance: popupRef['instance'], element: element, dispose: disposer,
-            answer: popupRef['instance'] ? popupRef['instance'].answer : undefined
-        };
+        const result = new PopupInfo();
+        result.instance = (<ComponentRef<IPopupable>>popupRef).instance;
+        result.element = element;
+        result.dispose = disposer;
+        result.answer = result.instance?.answer;
         PopupService._popups.push(result);
         return result;
     }
@@ -398,7 +424,10 @@ export class PopupService {
         InternalUtils.renderer.setStyle(element, 'position', 'fixed');
         InternalUtils.renderer.setStyle(element, 'top', 0);
         const disposer: PopupDisposer = this._getDisposer(options, ref, element);
-        return [{element: element, dispose: disposer, answer: null, instance: null}, ref];
+        const pi = new PopupInfo();
+        pi.element = element;
+        pi.dispose = disposer;
+        return [pi, ref];
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {

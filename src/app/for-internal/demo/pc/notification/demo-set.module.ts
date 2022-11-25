@@ -7,6 +7,8 @@ import {NotificationBasicDemoComponent} from "./basic/demo.component";
 import {NotificationBasicDemoModule} from "./basic/demo.module";
 import {NotificationDisposeOnRouterDemoComponent} from "./dispose-on-router-changed/demo.component";
 import {NotificationDisposeOnRouterDemoModule} from "./dispose-on-router-changed/demo.module";
+import {NotificationWithPromiseDemoComponent} from "./with-promise/demo.component";
+import {NotificationWithPromiseDemoModule} from "./with-promise/demo.module";
 
 export const routerConfig = [
     {
@@ -18,12 +20,16 @@ export const routerConfig = [
     {
         path: 'dispose-on-router-changed', component: NotificationDisposeOnRouterDemoComponent
     },
+    {
+        path: 'with-promise', component: NotificationWithPromiseDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), NotificationFullDemoModule, 
+        RouterModule.forChild(routerConfig), NotificationFullDemoModule,
         NotificationBasicDemoModule, NotificationDisposeOnRouterDemoModule,
+        NotificationWithPromiseDemoModule
     ],
 })
 export class NotificationDemoModule {

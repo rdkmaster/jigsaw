@@ -458,11 +458,36 @@ export class JigsawConfirmAlert extends JigsawCommonAlert {
     public buttons: ButtonInfo[] = [{label: 'alert.button.yes', 'type': 'primary'}, {label: 'alert.button.no'}];
 
     public static show(info: string | AlertMessage,
+                       buttons?: ButtonInfo[],
+                       callback?: DialogCallback,
+                       caption?: string,
+                       modal?: boolean,
+                       popupOptions?: PopupOptions): PopupInfo;
+    public static show(info: string | AlertMessage,
                        callback?: DialogCallback,
                        buttons?: ButtonInfo[],
                        caption?: string,
+                       modal?: boolean,
+                       popupOptions?: PopupOptions): PopupInfo;
+    public static show(info: string | AlertMessage,
+                       callbackOrButtons1?: DialogCallback | ButtonInfo[],
+                       callbackOrButtons2?: DialogCallback | ButtonInfo[],
+                       caption?: string,
                        modal: boolean = true,
                        popupOptions?: PopupOptions): PopupInfo {
+        let callback: DialogCallback, buttons: ButtonInfo[];
+        if (callbackOrButtons1 instanceof Function) {
+            callback = callbackOrButtons1;
+        }
+        if (callbackOrButtons2 instanceof Function) {
+            callback = callbackOrButtons2;
+        }
+        if (callbackOrButtons1 instanceof Array) {
+            buttons = callbackOrButtons1;
+        }
+        if (callbackOrButtons2 instanceof Array) {
+            buttons = callbackOrButtons2;
+        }
         return JigsawCommonAlert.showAlert(JigsawConfirmAlert, info, callback, buttons, caption, modal, popupOptions);
     }
 }
