@@ -1,0 +1,7 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+<jigsaw-header>获取上传成功文件的数量和对应的url</jigsaw-header>
+<jigsaw-upload width="300px" [uploadMultiple]="true" uploadFileType=".png, .docx, .json, .doc" (complete)="uploadComplete($event)">
+</jigsaw-upload>
+已上传符合要求的文件个数：<span>{{urls?.length}}</span><br>
+已上传符合要求的文件url：<div *ngFor="let url of urls"><span>{{url}}</span></div>

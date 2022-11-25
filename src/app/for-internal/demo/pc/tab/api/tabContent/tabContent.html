@@ -1,8 +1,8 @@
 <div class="content-box">
-    <h3 class="content-title">{{initData}} user register center</h3>
+    <h3 class="content-title">{{initData.username}} user register center</h3>
     <div class="content-line">
         <label>Username: </label>
-        <jigsaw-input></jigsaw-input>
+        <jigsaw-input [(value)]="initData.username"></jigsaw-input>
     </div>
     <div class="content-line">
         <label>Email: </label>

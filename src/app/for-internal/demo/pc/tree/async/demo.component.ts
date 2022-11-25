@@ -28,6 +28,10 @@ export class ZTreeAsyncDemoComponent {
 
     public data = new SimpleTreeData();
 
+    public editData(){
+        console.log('这里可以进行数据编辑');
+    }
+
     constructor() {
         this.data.fromObject([
             {key: '1', name: 'n1', label: "n1", isParent: true},
