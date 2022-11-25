@@ -1,4 +1,5 @@
-import {aggregate, distinct, flat, getColumn, getRow, group} from "./data-collection-utils";
+import {aggregate, distinct, flat, getRow, group} from "./data-collection-utils";
+import {getColumn} from "../data/unified-paging/paging";
 
 describe('Unit Test for data-collection-utils/getColumn()', () => {
     it('getColumn - normal', (done) => {

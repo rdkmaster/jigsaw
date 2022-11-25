@@ -8,7 +8,7 @@ import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
 
-const noviceGuideBuilder = require("../../../../src/jigsaw/common/novice-guide/build.js");
+const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
 const gulpRun = require('gulp-run');
 const gulpCleanCss = require('gulp-clean-css');
@@ -95,7 +95,16 @@ export function createTask(packageName: string) {
         }
     });
 
-    task('build:novice-guide', noviceGuideBuilder.build);
+    task('build:novice-guide', buildCandidatePackage.bind({
+            packageName: "novice-guide",
+            entryPath: "src/jigsaw/common/novice-guide/exports.ts",
+            rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+        }));
+    task('build:unified-paging', buildCandidatePackage.bind({
+            packageName: "unified-paging",
+            entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
+            rollupTo: "",
+        }));
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',
@@ -104,6 +113,7 @@ export function createTask(packageName: string) {
         `:build:${packageName}-styles`,
         `:build:${packageName}-copy-files`,
         'build:novice-guide',
+        'build:unified-paging',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(

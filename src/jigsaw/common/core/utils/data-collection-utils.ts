@@ -1,16 +1,4 @@
-
-export function getColumn(matrix: any[][], column: number): any[] {
-    if (!matrix || matrix.length == 0) {
-        return undefined;
-    }
-    if (column < 0) {
-        return undefined;
-    }
-    if (matrix[0].length <= column) {
-        return undefined;
-    }
-    return matrix.map(row => row[column]);
-}
+import {getColumn} from "../data/unified-paging/paging";
 
 export function getRow(matrix: any[][], row: number): any[] {
     if (!matrix || matrix.length == 0) {

@@ -22,13 +22,14 @@ import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
-import {DataFilterInfo, SortAs, SortOrder} from "../../common/core/data/component-data";
+import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {CheckBoxStatus} from '../checkbox/typings';
 import {JigsawFloat} from "../../common/directive/float/float";
 import {ArrayCollection} from '../../common/core/data/array-collection';
 import {isObservable} from "rxjs";
+import {DataFilterInfo} from "../../common/core/data/unified-paging/paging";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {

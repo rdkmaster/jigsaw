@@ -37,7 +37,7 @@ import {
     TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {HeaderFilter, IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
+import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
 import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
@@ -49,6 +49,7 @@ import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
+import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
 
 
 @WingsTheme('table.scss')

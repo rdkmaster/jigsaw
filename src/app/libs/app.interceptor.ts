@@ -12,18 +12,16 @@ import {
 import {Observable} from "rxjs";
 import {v4 as uuidv4} from 'uuid';
 import {
-    _filterByHeaderFilter,
     CommonUtils,
     DataFilterInfo,
     getStaticDistinctColumnData,
-    HeaderFilter,
     InternalUtils,
     PagingInfo,
     RawTableData,
     TableData,
-    TableDataField,
     TableDataMatrix
 } from "jigsaw/public_api"
+import {filterWithKeyword} from "../../jigsaw/common/core/data/unified-paging/extra";
 
 @Injectable()
 export class AjaxInterceptor implements HttpInterceptor {
@@ -194,7 +192,7 @@ export class AjaxInterceptor implements HttpInterceptor {
         const dataTable = MockData.get('mock-data/hr-list');
         let data: TableDataMatrix;
         if (CommonUtils.isDefined(filter)) {
-            data = PageableData.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
+            data = filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
         } else {
             data = dataTable.data.concat();
         }
@@ -352,47 +350,7 @@ class PageableData {
     static filter(dataTable, filter) {
         return filter.hasOwnProperty('rawFunction') && !!filter.rawFunction ?
             this.filterWithFunction(dataTable.data, filter.rawFunction, filter.context) :
-            this.filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
-    }
-
-    static filterWithKeyword(data: TableDataMatrix, key: string, field: string[], allFields: TableDataField, headerFilters: HeaderFilter[]): TableDataMatrix {
-        let filterData;
-        if (key === '') {
-            filterData = data.concat();
-        } else {
-            key = key.toLowerCase();
-            field = !!field ? field : allFields;
-            field = field instanceof Array ? field : [field];
-            console.log('filter param: key = [', key, '] field = [', field.join(','),
-                '] allField = [', allFields.join(','), ']');
-
-            const indexes = [];
-            for (let i = 0; i < field.length; i++) {
-                let idx = allFields.indexOf(field[i]);
-                if (idx == -1) {
-                    console.warn('invalid filter field:', field[i]);
-                    continue;
-                }
-                indexes.push(idx);
-            }
-
-            filterData = data.filter(item => {
-                for (let i = 0, len = indexes.length; i < len; i++) {
-                    let cell = item[indexes[i]];
-                    if (cell == null) {
-                        continue;
-                    }
-                    cell = String(cell);
-                    //模糊搜索大小写不敏感
-                    cell = cell.toLowerCase();
-                    if (cell.indexOf(key) != -1) {
-                        return true;
-                    }
-                }
-                return false;
-            });
-        }
-        return _filterByHeaderFilter(filterData, allFields, headerFilters);
+            filterWithKeyword(dataTable.data, filter.key, filter.field, dataTable.field, filter.headerFilters);
     }
 
     static filterWithFunction(data: TableDataMatrix, rawFunction: Function, context: any): TableDataMatrix {
