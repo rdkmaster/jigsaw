@@ -31,8 +31,10 @@ if (app === 'jigsaw-app-external' && !fs.existsSync(docOutput)) {
 
 if (buildMode === 'dev') {
     const port = process.argv[4] || 4200;
-    exec(`node --max_old_space_size=4096 ../node_modules/@angular/cli/bin/ng serve ${app} ` +
-        `--poll 500 --disable-host-check --host 0.0.0.0 --port ${port}`);
+    const moreConfig = process.argv.slice(5).join(' ');
+    console.log('more ng serve compile options:', moreConfig);
+    exec(`node --max_old_space_size=4096 ../node_modules/@angular/cli/bin/ng serve ${app} --disable-host-check ` +
+        `--poll 500 --host 0.0.0.0 --port ${port} --proxy-config proxy-config.json ${moreConfig}`);
 } else {
     const appOutput = process.argv[4] || 'dist';
     const code = exec(`node --max_old_space_size=4096 ../node_modules/@angular/cli/bin/ng build ${app} ` +

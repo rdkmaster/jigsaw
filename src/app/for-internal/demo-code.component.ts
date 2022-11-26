@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, ElementRef, OnDestroy, Renderer2, ViewChild, ViewEncapsulation} from "@angular/core";
 import {
-    JigsawConfirmAlert,
     JigsawErrorAlert,
     JigsawTreeExt,
     SimpleNode,

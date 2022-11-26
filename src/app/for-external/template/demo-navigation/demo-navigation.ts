@@ -11,8 +11,8 @@ const demoNavigationInfo = require('../demo-navigation-info.json');
 })
 export class DemoNavigation implements OnInit {
     constructor(public route: ActivatedRoute, public router: Router) {
-
     }
+
     @Input()
     public navigationData: Element[] = [];
 

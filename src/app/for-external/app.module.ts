@@ -99,6 +99,7 @@ import { PatternComponent } from "./ued/design/pattern";
 import { ApiListDemoModule } from "./demo/api-list/demo.module";
 import { IconsDemoComponent } from "./ued/icons/icons";
 import { CommonModule } from "@angular/common";
+import {InternalDemoModule} from "./demo/internal-demo/demo.module";
 
 @NgModule({
     declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent, IconsDemoComponent],
@@ -201,6 +202,7 @@ import { CommonModule } from "@angular/common";
         PerfectScrollbarModule,
         QuickStartDemoModule,
         ApiListDemoModule,
+        InternalDemoModule,
         JigsawSearchInputModule,
         CommonModule
     ],

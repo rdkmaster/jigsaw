@@ -70,6 +70,7 @@ import { TableRendererAllComponent } from "./demo/table-renderer/demo.component"
 import { IntroduceComponent } from "./ued/introduce/introduce";
 import { QuickStartDemoComponent } from "./demo/quick-start/demo.component";
 import { ApiListComponent } from "./demo/api-list/demo.component";
+import {InternalDemoComponent} from "./demo/internal-demo/demo.component";
 
 export const componentGroup = {
     start: '开始',
@@ -170,6 +171,7 @@ export const routerConfigPC = [
     { path: "table-renderer", component: TableRendererAllComponent, group: componentGroup.display },
     { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start },
     { path: "api-list", component: ApiListComponent, group: componentGroup.other },
+    { path: "internal-demo", component: InternalDemoComponent, group: componentGroup.other },
 ];
 export const routerConfig = routerConfigPC;
 

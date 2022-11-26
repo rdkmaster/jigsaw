@@ -1,0 +1,9 @@
+.demo-wrapper {
+    display: flex;
+    justify-content: space-between;
+    iframe {
+        width: calc(100% - 12px);
+        height: calc(100vh - 64px);
+        border: none;
+    }
+}
