@@ -1,5 +1,5 @@
 {
-  "/internal-demo/": {
+  "/latest/internal-demo/": {
       "target": "http://localhost:9999",
       "secure": false
   }

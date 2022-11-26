@@ -1,7 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {DemoSetBase} from "../../template/demo-template/demo-template";
 
-
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.scss"],
@@ -9,7 +8,7 @@ import {DemoSetBase} from "../../template/demo-template/demo-template";
 export class InternalDemoComponent extends DemoSetBase implements OnInit, AfterViewInit {
     @ViewChild('frame')
     private _frame: ElementRef;
-    private _demoUrl: string;
+    private _demoUrl: string = '/pc';
 
     ngOnInit() {
         window.onmessage = (msg) => {
@@ -23,19 +22,22 @@ export class InternalDemoComponent extends DemoSetBase implements OnInit, AfterV
             });
         }
         this.route.queryParams.subscribe(params => {
-            this._demoUrl = this._demoUrl || params.url;
-            if (!params.url || !this._frame?.nativeElement.location) {
+            this._demoUrl = params.url || '/pc';
+            if (!this._demoWindow?.location) {
                 return;
             }
-            this._frame.nativeElement.location.hash = params.url;
+            this._demoWindow.location.hash = this._demoUrl;
         });
     }
 
     ngAfterViewInit() {
-        const demoWindow = this._frame.nativeElement.contentWindow;
-        demoWindow.onload = () => {
-            demoWindow.location.hash = this._demoUrl;
-            demoWindow.onload = null;
+        this._demoWindow.onload = () => {
+            this._demoWindow.location.hash = this._demoUrl;
+            this._demoWindow.onload = null;
         }
+    }
+
+    private get _demoWindow(): any {
+        return this._frame?.nativeElement.contentWindow;
     }
 }
