@@ -13,12 +13,12 @@ import {
     Renderer2,
     ViewChild,
 } from "@angular/core";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {CommonModule} from "@angular/common";
-import {ActivatedRoute} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
-import {JigsawButtonBarModule, JigsawSelectModule, JigsawTabsModule,} from "jigsaw/public_api";
-import {JigsawMarkdownModule} from "../../../libs/markdown/markdown";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { CommonModule } from "@angular/common";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Observable, Subscription } from "rxjs";
+import { JigsawButtonBarModule, JigsawSelectModule, JigsawTabsModule, } from "jigsaw/public_api";
+import { JigsawMarkdownModule } from "../../../libs/markdown/markdown";
 
 declare const Prism: any;
 
@@ -51,23 +51,23 @@ export class DemoTemplate implements AfterViewInit {
     // 类似 "small小,default中,large大" 这样的文本，多个备选项用逗号分隔
     public sizeController: string = '';
 
-    public get _$sizeController(): {label: string, size: string}[] {
+    public get _$sizeController(): { label: string, size: string }[] {
         if (typeof this.sizeController != 'string') {
             return [];
         }
         return this.sizeController?.split(/,/).map(s => {
             const match = s.match(/([a-z]+)(.+)$/);
-            return {label: match[2], size: match[1]};
+            return { label: match[2], size: match[1] };
         });
     }
 
     @Input()
-    public selectedSize: {size: string};
+    public selectedSize: { size: string };
 
     @Input()
     public demoSources: DemoSource[] = [
-        {label: "HTML", content: "暂无源码", language: "html"},
-        {label: "Typescript", content: "// 暂无源码", language: "ts"},
+        { label: "HTML", content: "暂无源码", language: "html" },
+        { label: "Typescript", content: "// 暂无源码", language: "ts" },
     ];
 
     @Output()
@@ -107,7 +107,7 @@ export class AsyncDescription implements OnDestroy {
         setTimeout(onScroll, 100);
     }
 
-    public selectedSize: {size: string};
+    public selectedSize: { size: string };
     protected demoPath: string;
 
     private _description: string;
@@ -140,7 +140,7 @@ export class AsyncDescription implements OnDestroy {
     public get demoSources(): DemoSource[] {
         const sources: DemoSource[] = demoSourceFileInfo[this.demoPath] || [];
         sources.filter(src => !src.content)
-            .forEach(src => src.content = this._http.get(`app/for-external/demo/${src.file}`, {responseType: "text"}));
+            .forEach(src => src.content = this._http.get(`app/for-external/demo/${src.file}`, { responseType: "text" }));
         return sources;
     }
 
@@ -157,7 +157,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterConten
     protected docPath: string[] = [];
     public navigationData = [];
 
-    constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer:Renderer2) {
+    constructor(public route: ActivatedRoute, public http: HttpClient, public el: ElementRef, public renderer: Renderer2, public router: Router) {
         super(http, el);
         route.fragment.subscribe(fragment => {
             this._demoSelector = fragment;
@@ -195,7 +195,7 @@ export class DemoSetBase extends AsyncDescription implements OnInit, AfterConten
         if (demoWrapper.length === 0) {
             return;
         }
-        this.navigationData= demoWrapper.children;
+        this.navigationData = demoWrapper.children;
     }
 
     ngOnDestroy(): void {

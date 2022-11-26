@@ -32,7 +32,6 @@ import { UploadAllComponent } from "./demo/upload/demo.component";
 import { CollapseDemoComponent } from "./demo/collapse/demo.component";
 import { DialogDemoComponent } from "./demo/dialog/demo.component";
 import { MovableAllComponent } from "./demo/movable/demo.component";
-import { IconsDemoComponent } from "./demo/icons/demo.component";
 import { LoadingDemoComponent } from "./demo/loading/demo.component";
 import { ThemePropertiesAllComponent } from "./demo/theme-properties/demo.component";
 import { AdjustFontColorAllDemoComponent } from "./demo/adjust-font-color/demo.component";
@@ -145,7 +144,6 @@ export const routerConfigPC = [
     { path: "color-select", component: ColorSelectDemoComponent, group: componentGroup.general },
     { path: "collapse", component: CollapseDemoComponent, group: componentGroup.container },
     { path: "dialog", component: DialogDemoComponent, group: componentGroup.message },
-    { path: "icons", component: IconsDemoComponent, group: componentGroup.other },
     { path: "loading", component: LoadingDemoComponent, group: componentGroup.service },
     { path: "navigation-menu", component: NavigationMenuAllDemoComponent, group: componentGroup.navigation },
     { path: "notification", component: NotificationDemoComponent, group: componentGroup.message },

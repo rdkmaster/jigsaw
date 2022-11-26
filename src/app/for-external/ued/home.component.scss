@@ -45,7 +45,7 @@
     position: relative;
     height: calc(100vh - 60px);
     overflow: hidden;
-    min-width: 815px;
+    min-width: 855px;
   }
 }
 
@@ -261,7 +261,7 @@
 }
 
 .box-develop {
-  @include position(14%, 77%, 185px);
+  @include position(15%, 77%, 185px);
 
   .ring-1 {
     @include rotator(#D3DEEE, 1.15, .85, .6);

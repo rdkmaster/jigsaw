@@ -1,6 +1,6 @@
-import {HttpHeaders} from "@angular/common/http";
-import {Component, OnInit} from "@angular/core";
-import {DemoSetBase} from "../../template/demo-template/demo-template";
+import { HttpHeaders } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { DemoSetBase } from "../../template/demo-template/demo-template";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -25,15 +25,17 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
     ];
 
     public showApiDetail(api) {
-        const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
         const type = api[0].split("[")[0].slice(0, -1);
         const category = api[0].split("[")[1].slice(0, -1);
 
-        this.http
-            .get(`app/for-external/assets/docs/fragments/${category}/${type}.html`, {headers, responseType: 'text'})
-            .subscribe((data) => {
-                this.apiDetail = data;
-            });
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+                category: category,
+                type: type
+            },
+            queryParamsHandling: 'merge'
+        });
     }
 
     public getLengthByCategory(category: string): Number {
@@ -47,5 +49,21 @@ export class ApiListComponent extends DemoSetBase implements OnInit {
     ngOnInit() {
         this._apiData = this.apiList.map(api => `${api.type} [${api.category}]`);
         this.apiData = this._apiData;
+
+        this.route.queryParams.subscribe(
+            params => {
+                if (params['category'] === undefined) {
+                    this.apiDetail = "";
+                    return;
+                }
+                const category = params['category'];
+                const type = params['type'];
+                const headers = new HttpHeaders().set('Content-Type', 'text/plain; charset=utf-8');
+                this.http
+                    .get(`app/for-external/assets/docs/fragments/${category}/${type}.html`, { headers, responseType: 'text' })
+                    .subscribe((data) => {
+                        this.apiDetail = data;
+                    });
+            });
     }
 }

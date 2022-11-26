@@ -496,12 +496,9 @@ export class JigsawTabBar extends JigsawTabBase {
  * `JigsawTab`提供了多个api用于动态创建、销毁、隐藏tab页，
  * 这些是利用`JigsawTab`实现复杂、交互密集的视图的有力工具。
  *
- * 如果需要动态增减的视图内容形式比较单一，也可以通过`ng-for`来实现tab动态化，
- * 参考[这个demo]($demo=tab/with-ngfor)。
+ * 如果需要动态增减的视图内容形式比较单一，也可以通过`ng-for`来实现tab动态化。
  *
- * $demo = tab/basic
- * $demo = tab/update-title
- * $demo = tab/with-input
+ * [组件Demo](/#/components/tab)
  */
 @WingsTheme('tab.scss')
 @Component({

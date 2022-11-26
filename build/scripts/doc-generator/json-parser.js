@@ -524,29 +524,6 @@ function fixDescription(metaInfo) {
     if (!metaInfo.hasOwnProperty('description')) {
         metaInfo.description = '';
     }
-    metaInfo.description = metaInfo.description
-        // .replace(/<a\s+href\s*=\s*['"]\$demo\s*=\s*(.+?)\/(.+?)(#|\?.*?)?['"]/g, (found, comp, demoName, extra) => {
-        //     const demoPath = comp[0] === '?' ? demoName : `pc/${comp}/${demoName}`;
-        //     if (!fs.existsSync(`${__dirname}/../../../src/app/demo/${demoPath}/demo.component.ts`)) {
-        //         console.error("Error: demo not found:", demoPath);
-        //         process.exit(1);
-        //     }
-        //     extra = extra || '';
-        //     const script = getOpenPopupScript(`/${comp}/${demoName}${extra}`);
-        //     return `<a onclick="${script}"`;
-        // })
-        .replace(/\$(\w+)\s*=\s*(.*?)\s*('|"|\n|<\/p>)/g, function (found, prop, value, suffix) {
-            let values = metaInfo[prop];
-            if (!metaInfo[prop]) {
-                values = [];
-                metaInfo[prop] = values;
-            }
-            if (values.indexOf(value) === -1) {
-                values.push(value);
-            }
-            // remove these messages
-            return suffix;
-        });
     metaInfo.description = addDescLink(metaInfo.description);
 }
 
@@ -914,10 +891,6 @@ $description
 
 $demos
 `
-}
-
-function getNoDataRowTemplate() {
-    return '<tr><td style="text-align: center;" colspan="1000">无</td></tr>';
 }
 
 function anchor(name) {

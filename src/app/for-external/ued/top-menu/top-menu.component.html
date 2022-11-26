@@ -4,14 +4,18 @@
     <ul class="nav-tabs">
       <li><a routerLink="/home" routerLinkActive="active">首页</a></li>
       <li><a routerLink="/components" routerLinkActive="active">组件</a></li>
-      <li><a routerLink="/designs" routerLinkActive="active">规范</a></li>
+      <li><a routerLink="/icons" routerLinkActive="active">图标</a></li>
+      <li><a routerLink="/specification" routerLinkActive="active">规范</a></li>
+      <li><a routerLink="/pattern" routerLinkActive="active">模式</a></li>
       <li><a href="https://rdk.zte.com.cn:8080" target="_blank">RDK</a></li>
       <li><a href="https://rdk.zte.com.cn/vmax-studio/awade/" target="_blank">Awade</a></li>
     </ul>
   </nav>
   <div class="theme-select">
-    <jigsaw-select [data]="versionData" [value]="versionData[0]" (valueChange)="changeVersion($event)"></jigsaw-select>
-    <jigsaw-group-select [data]="themeData" [selectListPositionType]="positionType" placeholder="选择皮肤" width="140px" (valueChange)="themeChange($event)">
+    <jigsaw-group-select [ngClass]="{'hide': !showThemeSelect}" [data]="themeData"
+      [selectListPositionType]="positionType" [value]="selectedTheme" placeholder="选择皮肤" width="140px"
+      (valueChange)="themeChange($event)">
     </jigsaw-group-select>
+    <jigsaw-select [data]="versionData" [value]="versionData[0]" (valueChange)="changeVersion($event)"></jigsaw-select>
   </div>
 </div>

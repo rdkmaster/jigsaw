@@ -34,14 +34,12 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
  *
  * - 如果需要选择的是一个时间范围，则请使用`JigsawRangeDateTimePicker`；
  * - 如果需要选择的是一个时分秒，不带日期，则请使用`JigsawTimePicker`；
- * - 如果你需要的是一个日历的功能，那请参考[这个demo]($demo=table/calendar)，通过表格+渲染器的方式来模拟；
+ * - 如果你需要的是一个日历的功能，那请参考[这个demo](/#/components/table-renderer?demo=table-renderer-calendar)，通过表格+渲染器的方式来模拟；
  * - 时间选择器常常是收纳到下拉框中以解决视图空间，则请使用 `JigsawDateTimeSelect` 和 `JigsawRangeDateTimeSelect`，
- * 参考[这个demo]($demo=date-time-picker/date-time-select)；
+ * 参考[这个demo](/#/components/date-time-picker?demo=date-time-picker-date-time-select)；
  *
- * 时间控件是对表单友好的，你可以给时间控件编写表单校验器，参考[这个demo]($demo=form/template-driven)。
+ * 时间控件是对表单友好的，你可以给时间控件编写表单校验器。
  *
- * $demo = date-time-picker/basic
- * $demo = date-time-picker/date-time-select
  */
 @WingsTheme('date-time-picker.scss')
 @Component({

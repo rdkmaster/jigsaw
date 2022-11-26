@@ -1,0 +1,25 @@
+<div class="icons-cntr">
+    <div class="icon-search">
+        <jigsaw-search-input width="650" (search)="_$searchIcons(_$searchKeyword = $event)" [value]="_$searchKeyword"
+            placeholder="请输入图标名称或图标码进行搜索" historyStorageKey="JigsawExternalDemoIconsSearchKey">
+        </jigsaw-search-input>
+        <span class="tips">Jigsaw已经不建议使用FontAwesome图标了，建议全部改用Jigsaw内置的图标。</span>
+    </div>
+    <ul class="icon-group">
+        <li (click)="_$clickGroupTag(-1)" [ngClass]="{'group-active': _$currentGroupIndex === -1}">
+            <span>全部</span>
+        </li>
+        <ng-container *ngFor="let group of iconGroup; index as i">
+            <li (click)="_$clickGroupTag(i)" [ngClass]="{'group-active': i === _$currentGroupIndex}">
+                <span>{{_$getGroupName(group.groupName)}}</span>
+            </li>
+        </ng-container>
+    </ul>
+    <ul class="icon-data">
+        <li *ngFor="let icon of _$currentIcons" (click)="copyToClipboard(icon.iconCode)">
+            <i class="iconfont" [ngClass]="'iconfont-' + icon.iconCode.toLowerCase()"></i>
+            <span>{{"iconfont-" + icon.iconCode.toLowerCase()}}</span>
+            <span>{{icon.iconName}}</span>
+        </li>
+    </ul>
+</div>

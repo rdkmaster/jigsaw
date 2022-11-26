@@ -474,10 +474,10 @@ export class JigsawNotification extends AbstractDialogComponentBase implements O
 
     /**
      * 方便快速地将一些信息以卡片的方式弹出在视图上，起到通知用户的作用。
-     * 这种提示方式相比[alert]($demo=alert/popup)柔和许多，对用户干扰较少，**建议优先使用**。
-     * 只有在一些非要用户立即处理不可的通知才通过[alert]($demo=alert/popup)的方式通知用户。
+     * 这种提示方式相比[alert](/#/components/alert?demo=alert-popup)柔和许多，对用户干扰较少，**建议优先使用**。
+     * 只有在一些非要用户立即处理不可的通知才通过[alert](/#/components/alert?demo=alert-popup)的方式通知用户。
      *
-     * $demo = notification/full
+     * [组件Demo](/#/components/notification)
      *
      * @param message 消息内容，支持基础html标记的富文本，也支持在html中添交互加动作。
      * @return 返回的是被弹出的`JigsawNotification`组件实例的相关信息

@@ -1,0 +1,3 @@
+WaiBuYinruIconfont——不能删除，属于外部引入文件
+WaiBuYinruUIkit——不能删除，属于sketch发布文件
+将index.html删除，然后把主页，例如“数据可视化类”重命名成index.html，这样就避免axure原来框架，方面陈旭直接引用index这个文件，覆盖服务器更新即可。

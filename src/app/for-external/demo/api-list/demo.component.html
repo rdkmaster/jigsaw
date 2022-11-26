@@ -1,5 +1,5 @@
 <div class="demo-wrapper">
-    <div class="doc-cntr">
+    <div class="doc-cntr" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20 }">
         <p *ngIf="apiDetail.length === 0" class="welcome">
             欢迎阅读组件API，请在右侧搜索/选择所需的API
         </p>

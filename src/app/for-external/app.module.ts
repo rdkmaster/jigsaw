@@ -17,6 +17,7 @@ import {
     JigsawSelectModule,
     MajorStyle,
     JigsawButtonModule,
+    JigsawSearchInputModule,
 } from "jigsaw/public_api";
 import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
@@ -51,7 +52,6 @@ import { ComboSelectDemoModule } from "./demo/combo-select/demo.module";
 import { CollapseDemoModule } from "./demo/collapse/demo.module";
 import { DialogDemoModule } from "./demo/dialog/demo.module";
 import { UploadDemoModule } from "./demo/upload/demo.module";
-import { IconsDemoModule } from "./demo/icons/demo.module";
 import { LoadingDemoModule } from "./demo/loading/demo.module";
 import { MovableDemoModule } from "./demo/movable/demo.module";
 import { AdjustFontColorDemoModule } from "./demo/adjust-font-color/demo.module";
@@ -94,17 +94,22 @@ import { PageNotFoundComponent } from "./ued/page-not-found/page-not-found.compo
 import { ComponentMenuNavComponent } from "./ued/component-menu-nav/component-menu-nav.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
 import { QuickStartDemoModule } from "./demo/quick-start/demo.module";
-import { DesignComponent } from "./ued/design/design";
+import { SpecificationComponent } from "./ued/design/specification";
+import { PatternComponent } from "./ued/design/pattern";
 import { ApiListDemoModule } from "./demo/api-list/demo.module";
+import { IconsDemoComponent } from "./ued/icons/icons";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
-    declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent],
+    declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent, IconsDemoComponent],
     imports: [
         RouterModule.forRoot(
             [
                 { path: "", redirectTo: 'home', pathMatch: 'full' },
                 { path: "home", component: HomeComponent },
-                { path: "designs", component: DesignComponent },
+                { path: "icons", component: IconsDemoComponent },
+                { path: "specification", component: SpecificationComponent },
+                { path: "pattern", component: PatternComponent },
                 {
                     path: 'components', component: ComponentMenuNavComponent,
                     children: routerConfig
@@ -160,7 +165,6 @@ import { ApiListDemoModule } from "./demo/api-list/demo.module";
         RibbonDemoModule,
         DialogDemoModule,
         ComboSelectDemoModule,
-        IconsDemoModule,
         LoadingDemoModule,
         NavigationMenuDemoModule,
         NotificationDemoModule,
@@ -196,7 +200,9 @@ import { ApiListDemoModule } from "./demo/api-list/demo.module";
         JigsawButtonModule,
         PerfectScrollbarModule,
         QuickStartDemoModule,
-        ApiListDemoModule
+        ApiListDemoModule,
+        JigsawSearchInputModule,
+        CommonModule
     ],
     providers: [
         {

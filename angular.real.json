@@ -188,12 +188,21 @@
               "src/app/for-external/demo"
             ],
             "styles": [
-              "node_modules/prismjs/themes/prism.css",
               "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css",
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",
               "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
               "node_modules/@rdkmaster/icon-font/iconfont.css",
               "src/app/styles.scss",
+              {
+                "input": "node_modules/prismjs/themes/prism.css",
+                "bundleName": "themes/prism-light",
+                "inject": false
+              },
+              {
+                "input": "node_modules/prismjs/themes/prism-twilight.css",
+                "bundleName": "themes/prism-dark",
+                "inject": false
+              },
               {
                 "input": "src/jigsaw/common/core/theming/themes/paletx-pro-light.scss",
                 "bundleName": "themes/paletx-pro-light",

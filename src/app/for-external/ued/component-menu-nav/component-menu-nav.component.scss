@@ -1,9 +1,3 @@
-$menu-left-color: #6f7f8e;
-$background-color: #fff;
-$active-menu-color: #288bf0;
-$active-menu-2-color: #58b0e8;
-
-/* 布局 */
 .m-component-menu-nav {
   position: relative;
   width: 100%;
@@ -17,7 +11,6 @@ $active-menu-2-color: #58b0e8;
     top: 0;
     bottom: 0;
 
-    /* 菜单 */
     ul.menu-nav-group {
       position: fixed;
       height: calc(100vh - 60px);
@@ -25,7 +18,7 @@ $active-menu-2-color: #58b0e8;
       li {
         width: 280px;
         line-height: 30px;
-        color: #a9a9a9;
+        color: var(--font-color-default);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -40,10 +33,10 @@ $active-menu-2-color: #58b0e8;
       }
 
       li a {
-        color: $menu-left-color;
+        color: var(--font-color-default);
 
         &:hover {
-          color: $active-menu-color;
+          color: var(--brand-hover);
           font-size: 14px;
           background-color: rgba(0, 171, 255, 0.2);
           transition: font-size .35s;
@@ -51,9 +44,9 @@ $active-menu-2-color: #58b0e8;
 
         &.active {
           border: none;
-          border-left: 2px solid $active-menu-color;
+          border-left: 3px solid var(--brand-active);
           background-color: rgba(0, 171, 255, 0.2);
-          color: $active-menu-color;
+          color: var(--brand-active);
           font-size: 14px;
         }
       }
