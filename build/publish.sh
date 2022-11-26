@@ -86,11 +86,17 @@ function publishUed() {
     fi
 
     cd $jigsawRepo
-    node build/build.js jigsaw-app-external prod
+    node build/build.js jigsaw-app-external prod dist "/latest/"
     if [ "$?" != "0" ]; then
         echo "Error: failed to build jigsaw external app!"
         exit 1
     fi
+    node build/build.js jigsaw-app-internal prod dist/internal-demo "/latest/internal-demo/"
+    if [ "$?" != "0" ]; then
+        echo "Error: failed to build jigsaw internal app!"
+        exit 1
+    fi
+
     if [ "$server" == "gitee" ]; then
         publishToGitee
     else

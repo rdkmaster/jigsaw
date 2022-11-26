@@ -1,4 +1,5 @@
 import {Component, OnInit} from "@angular/core";
+import {NavigationStart, Router} from "@angular/router";
 import {PopupPositionType} from 'jigsaw/public_api';
 import {routerConfig as alertConfig} from "./demo/pc/alert/demo-set.module";
 import {routerConfig as autoCompleteInputConfig} from "./demo/pc/auto-complete-input/demo-set.module";
@@ -116,6 +117,18 @@ export class PCDemoListComponent implements OnInit {
     public routes: any[] = DemoListManager.fullRouterConfig;
     public selectedItems: any[];
     public jComponents: string[] = this.routes.map(item => item.path);
+
+    constructor(router: Router) {
+        if (top == window) {
+            return;
+        }
+        router.events.subscribe(event => {
+            if (!(event instanceof NavigationStart)) {
+                return;
+            }
+            top.postMessage({type: 'internal-demo-router-change', url: event.url}, location.origin);
+        });
+    }
 
     showHideDemos(selectedItems: string[]) {
         this.routes.forEach(item => {

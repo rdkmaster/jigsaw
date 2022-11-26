@@ -1,6 +1,6 @@
 {
-  "/rdk/service/": {
-      "target": "http://localhost:5812",
+  "/latest/internal-demo/": {
+      "target": "http://localhost:9999",
       "secure": false
   }
 }
