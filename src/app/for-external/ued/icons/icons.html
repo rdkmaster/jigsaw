@@ -9,6 +9,9 @@
         <li (click)="_$clickGroupTag(-1)" [ngClass]="{'group-active': _$currentGroupIndex === -1}">
             <span>全部</span>
         </li>
+        <li (click)="_$clickGroupTag(-2)" [ngClass]="{'group-active': _$currentGroupIndex === -2}">
+            <span>常用图标</span>
+        </li>
         <ng-container *ngFor="let group of iconGroup; index as i">
             <li (click)="_$clickGroupTag(i)" [ngClass]="{'group-active': i === _$currentGroupIndex}">
                 <span>{{_$getGroupName(group.groupName)}}</span>
