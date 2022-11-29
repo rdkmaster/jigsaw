@@ -4,7 +4,7 @@ import { BarGraphData } from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
-    selector: 'graph-bar-chart',
+    selector: 'graph-bar',
     templateUrl: './demo.component.html'
 })
 export class GraphBarChartDemoComponent extends AsyncDescription {
