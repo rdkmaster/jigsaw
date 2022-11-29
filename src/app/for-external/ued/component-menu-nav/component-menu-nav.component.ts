@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
 import { Router } from '@angular/router';
 
@@ -11,7 +11,6 @@ const demoNavigationInfo = require('../../template/demo-navigation-info.json');
 export class ComponentMenuNavComponent implements AfterViewInit {
   constructor(private _router: Router) {
   }
-
   public routerGroup: any[] = DemoListManager.fullRouterConfig;
 
   public getUrl(router): string {
