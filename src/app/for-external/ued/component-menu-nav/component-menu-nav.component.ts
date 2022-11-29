@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { componentGroup, routerConfigPC } from 'app/for-external/router-config';
 import { Router } from '@angular/router';
 
@@ -8,9 +8,10 @@ const demoNavigationInfo = require('../../template/demo-navigation-info.json');
   templateUrl: './component-menu-nav.component.html',
   styleUrls: ['./component-menu-nav.component.scss']
 })
-export class ComponentMenuNavComponent {
+export class ComponentMenuNavComponent implements AfterViewInit {
   constructor(private _router: Router) {
   }
+
   public routerGroup: any[] = DemoListManager.fullRouterConfig;
 
   public getUrl(router): string {
@@ -27,6 +28,17 @@ export class ComponentMenuNavComponent {
 
   public scrollToTop(): void {
     window.scrollTo(0, 0)
+  }
+
+  ngAfterViewInit(): void {
+      if(this._router.url == '/components') {
+        return
+      }
+
+      const activeNav = document.querySelector('ul.menu-nav-group-child a.active');
+      if (activeNav) {
+        activeNav.scrollIntoView({block: "center"});
+      }
   }
 }
 
