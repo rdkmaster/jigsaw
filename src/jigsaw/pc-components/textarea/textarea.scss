@@ -5,6 +5,7 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
     position: relative;
     line-height: 1.2;
     font-size: $font-size-base;
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-textarea}-icon-end {
         position: absolute;

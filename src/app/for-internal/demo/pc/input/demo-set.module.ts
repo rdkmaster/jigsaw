@@ -23,6 +23,8 @@ import {InputPasswordModule} from "./password/demo.module";
 import {InputPasswordComponent} from "./password/demo.component";
 import {InputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
 import {InputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
+import { InputReadonlyDemoComponent } from "./readonly/demo.component";
+import { InputReadonlyDemoModule } from "./readonly/demo.module";
 
 export const routerConfig = [
     {
@@ -61,6 +63,9 @@ export const routerConfig = [
     {
         desc: 'ignore-blur-on-clear', url: '/pc/table/auto-save', path: ''
     },
+    {
+        path: 'readonly', component: InputReadonlyDemoComponent
+    },
 ];
 
 @NgModule({
@@ -76,7 +81,8 @@ export const routerConfig = [
         InputValidModule,
         InputSelectDemoModule,
         InputPasswordModule,
-        InputPrefixSuffixDemoModule
+        InputPrefixSuffixDemoModule,
+        InputReadonlyDemoModule
     ]
 })
 export class InputDemoModule {
