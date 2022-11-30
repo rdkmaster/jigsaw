@@ -5,6 +5,7 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
 .#{$jigsaw-button-bar}-host {
     @include inline-block;
     height: $height-base;
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-tile}-host {
         padding: 0 0;
@@ -26,11 +27,11 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
             font-size: $font-size-base;
 
             &:first-child {
-                border-radius: 3px 0 0 3px;
+                border-radius: $border-radius-base 0 0 $border-radius-base;
             }
 
             &:last-child {
-                border-radius: 0 3px 3px 0;
+                border-radius: 0 $border-radius-base $border-radius-base 0;
             }
 
             &:not(:first-child) {

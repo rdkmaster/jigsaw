@@ -14,6 +14,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 .#{$jigsaw-collapse-select}-host {
     @include inline-block();
     color: $font-color-default;
+    border-radius: $border-radius-base;
 
     &.#{$jigsaw-select}-single-select {
         .#{$jigsaw-combo-select}-host {

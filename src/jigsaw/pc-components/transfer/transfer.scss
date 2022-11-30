@@ -5,6 +5,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 .#{$jigsaw-transfer}-host {
     $cntr-padding-top: 4px;
     $header-padding-bottom: 8px;
+    border-radius: $border-radius-base;
 
     position: relative;
     display: inline-flex;

@@ -4,6 +4,8 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
 
 .#{$jigsaw-date-time-select}-host {
     @include inline-block();
+    border-radius: $border-radius-base;
+
     .#{$jigsaw-combo-select}-selection-rendered .#{$jigsaw-tag}-host {
         border: none;
         max-width: none;
