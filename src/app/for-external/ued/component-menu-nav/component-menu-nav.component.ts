@@ -22,7 +22,7 @@ export class ComponentMenuNavComponent {
   }
 
   public isSelected(url): boolean {
-    return this._router.url.split('/').pop() === url.path;
+    return this._router.url.split('?').shift() === '/components/' + url.path;
   }
 
   public scrollToTop(): void {
