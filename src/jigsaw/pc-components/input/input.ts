@@ -44,7 +44,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public clearable: boolean = true;
 
     /**
-     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     * 设置input框不可交互状态的开关，为true则不可交互，为false则可交互。
      *
      * $demo = input/disabled
      */
@@ -53,7 +53,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public disabled: boolean = false;
 
     /**
-     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     * 设置input框只读的开关，为true则只读，为false则可交互。
      *
      * $demo = input/readonly
      */
