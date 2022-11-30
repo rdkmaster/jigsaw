@@ -53,6 +53,15 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public disabled: boolean = false;
 
     /**
+     * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
+     *
+     * $demo = input/readonly
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public readonly: boolean = false;
+
+    /**
      * 当用户输入非法时，组件给予样式上的提示，以提升易用性，常常和表单配合使用。
      *
      * $demo = input/valid
@@ -317,6 +326,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
         '[class.jigsaw-input-disabled]': 'disabled',
+        '[class.jigsaw-input-readonly]': 'readonly',
         '(click)': '_$stopPropagation($event)'
     },
     providers: [

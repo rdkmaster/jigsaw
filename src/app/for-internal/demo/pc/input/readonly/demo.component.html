@@ -1,0 +1,16 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li>
+        <span>Readonly</span>
+        <jigsaw-switch [(checked)]="readonly"></jigsaw-switch>
+    </li>
+</ul>
+<jigsaw-header>readonly</jigsaw-header>
+<jigsaw-input width="200" [(value)]="inputValue" placeholder="Readonly demo" [readonly]="readonly">
+</jigsaw-input>
+<jigsaw-input width="200" [(value)]="inputValue2" placeholder="Readonly demo" [readonly]="readonly">
+</jigsaw-input>
