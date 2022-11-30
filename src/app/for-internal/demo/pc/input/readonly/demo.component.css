@@ -1,4 +1,4 @@
-ul.demo-options li {
+.demo-options>li {
     display: flex;
     align-items: center;
 }
