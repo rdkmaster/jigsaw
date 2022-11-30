@@ -7,11 +7,13 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     min-width: 240px;
     max-width: 100%;
     color: $font-color-default;
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-combo-select} {
         position: relative;
         color: $icon-color-default;
         font-size: $font-size-text-base;
+        border-radius: inherit;
         cursor: pointer;
 
         .#{$jigsaw-combo-select}-arrow {

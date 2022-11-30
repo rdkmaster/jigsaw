@@ -5,6 +5,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 .#{$jigsaw-search-input}-host {
     display: inline-flex;
     color: $font-color-default;
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-search-input} {
         display: inline-flex;
