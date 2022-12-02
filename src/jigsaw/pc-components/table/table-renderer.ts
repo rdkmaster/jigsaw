@@ -226,14 +226,14 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
-                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password" [valid]="_$valid"
+                      (valueChange)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password" [valid]="_$valid"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
         </jigsaw-input>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellTextEditorRenderer extends TableCellRendererBase implements AfterViewInit {
-    constructor(protected _injector: Injector, private _renderer: Renderer2) {
+    constructor(protected _injector: Injector, private _renderer: Renderer2, private _cdr: ChangeDetectorRef) {
         super(_injector);
     }
 
@@ -263,6 +263,14 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngAfterViewInit() {
         if (this.editorMode == 'always-show') {
+            this.hostInstance.edit.subscribe(() => {
+                this._cdr.markForCheck();
+            })
+            if (this.hostInstance.additionalColumnDefines){
+                this.hostInstance.additionalDataChange.subscribe(() => {
+                    this._cdr.markForCheck();
+                })
+            }
             return;
         }
         if (this._$disabled) {
@@ -275,6 +283,8 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngOnDestroy() {
         super.ngOnDestroy();
+        this.hostInstance.edit.unsubscribe();
+        this.hostInstance.additionalDataChange.unsubscribe()
         if (this._removeListener) {
             this._removeListener();
             this._removeListener = null;

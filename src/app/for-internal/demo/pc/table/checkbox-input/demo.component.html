@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-table #tableComponent maxHeight="400" [data]="tableData" [additionalColumnDefines]="additionalColumns" [columnDefines]="columnDefines"
+              [(additionalData)]="additionalData" (additionalDataChange)="additionalDataChange()" (edit)="onCellChange()">
+</jigsaw-table>
+<p class="message">selectedRowsIndex: <span>{{selectedRows}}</span></p>
