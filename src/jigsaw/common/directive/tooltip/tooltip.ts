@@ -57,9 +57,9 @@ export class JigsawTooltipComponent implements IPopupable {
 @Directive({
     selector: '[jigsaw-tooltip],[j-tooltip],[jigsawTooltip]',
     host: {
-        '(mouseenter)': "_$openByHover($event)",
-        '(mouseleave)': "_$closeByHover($event, 1)",
-        '(click)': "_$onHostClick()"
+        '(mouseenter)': "_$checkOverflow() && _$openByHover($event)",
+        '(mouseleave)': "_$checkOverflow() && _$closeByHover($event, 1)",
+        '(click)': "_$checkOverflow() && _$onHostClick()"
     }
 })
 export class JigsawTooltip extends JigsawFloatBase {
@@ -79,6 +79,8 @@ export class JigsawTooltip extends JigsawFloatBase {
     public jigsawFloatOpenTrigger: 'click' | 'mouseenter' | 'none' = 'mouseenter';
     @Input('jigsawTooltipCloseTrigger')
     public jigsawFloatCloseTrigger: 'click' | 'mouseleave' | 'none' = 'mouseleave';
+    @Input('jigsawTooltipOverflowOnly')
+    public overflowOnly: boolean = false;
 
     @Output('jigsawTooltipOpenChange')
     public jigsawFloatOpenChange: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -131,6 +133,16 @@ export class JigsawTooltip extends JigsawFloatBase {
     protected _init(): void {
         this.jigsawFloatTarget = JigsawTooltipComponent;
         this.jigsawFloatOptions = { borderType: 'pointer', size: { minWidth: 30 }, showBorder: true, borderColor: '#e5e5e5', borderRadius: '2px', useCustomizedBackground: true };
+    }
+
+    /**
+     * @internal
+     */
+    public _$checkOverflow(): boolean {
+        if (!this.overflowOnly) {
+            return true;
+        }
+        return this._elementRef.nativeElement.offsetWidth < this._elementRef.nativeElement.scrollWidth
     }
 }
 
