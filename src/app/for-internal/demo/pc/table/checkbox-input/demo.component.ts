@@ -100,6 +100,6 @@ export class TableCheckBoxInputDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这demo介绍table中使用内置checkbox渲染器';
+    summary: string = '这demo介绍table中使用additional列的内置checkbox渲染器来控制Input框渲染器的valid值（当该行的checkbox被选中，该行的input框必须要有值,这样输入框才不是非法的）';
     description: string = "";
 }

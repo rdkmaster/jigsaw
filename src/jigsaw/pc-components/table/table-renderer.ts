@@ -23,6 +23,7 @@ import {DragDropInfo} from "../../common/directive/dragdrop/types";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
 import {JigsawIcon, JigsawIconModule, StatusType} from "../icon/icon";
 import {LabelPosition, Status} from "../progress/base";
+import {Subscription} from "rxjs/internal/Subscription";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -260,14 +261,16 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 
     private _removeListener: Function;
+    protected tableEditSubscription = new Subscription();
+    protected additionalDataSubscription = new Subscription();
 
     ngAfterViewInit() {
         if (this.editorMode == 'always-show') {
-            this.hostInstance.edit.subscribe(() => {
+            this.tableEditSubscription = this.hostInstance.edit.subscribe(() => {
                 this._cdr.markForCheck();
             })
-            if (this.hostInstance.additionalColumnDefines){
-                this.hostInstance.additionalDataChange.subscribe(() => {
+            if (this.hostInstance.additionalColumnDefines) {
+                this.additionalDataSubscription = this.hostInstance.additionalDataChange.subscribe(() => {
                     this._cdr.markForCheck();
                 })
             }
@@ -283,8 +286,8 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this.hostInstance.edit.unsubscribe();
-        this.hostInstance.additionalDataChange.unsubscribe()
+        this.tableEditSubscription?.unsubscribe();
+        this.additionalDataSubscription?.unsubscribe()
         if (this._removeListener) {
             this._removeListener();
             this._removeListener = null;
