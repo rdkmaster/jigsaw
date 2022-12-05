@@ -70,7 +70,7 @@ export class NavigationMenuNavDemo {
                     {label: '告警统计'},
                     {label: '定时导出'},
                     {label: '告警同步'},
-                    {label: '告警提示'}
+                    {label: 'Test Looooooooooong English Text'}
                 ]
             },
             {
@@ -79,7 +79,7 @@ export class NavigationMenuNavDemo {
                 nodes: [{label: '告警查询'}]
             },
             {
-                label: '通知',
+                label: '测试超长长长长长长长长长中文文本',
                 icon: 'iconfont iconfont-e605',
                 nodes: [{label: '通知监控'}]
             },
