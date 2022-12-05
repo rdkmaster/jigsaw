@@ -54,9 +54,10 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
             this._removeWindowMouseMoveListener();
         }
         const offset = this.moveOffset.apply(this);
+        const scale = CommonUtils.getScale(this._movableTarget);
         this._zone.runOutsideAngular(() => {
             this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', (event) => {
-                this._dragMove(event, offset)
+                this._dragMove(event, offset, scale)
             });
         });
 
@@ -66,15 +67,15 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         this._removeWindowMouseUpListener = this._renderer.listen(document, 'mouseup', this._dragEnd);
     };
 
-    private _dragMove = (event, offset) => {
+    private _dragMove = (event, offset, scale) => {
         if (this._moving) {
             const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0) - offset.left;
             const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0) - offset.top;
             this._renderer.removeStyle(this._movableTarget, 'right');
             this._renderer.removeStyle(this._movableTarget, 'bottom');
-            this._renderer.setStyle(this._movableTarget, 'left', ox + 'px');
-            this._renderer.setStyle(this._movableTarget, 'top', oy + 'px');
-            this.moving.emit({x: ox, y: oy});
+            this._renderer.setStyle(this._movableTarget, 'left', ox/scale + 'px');
+            this._renderer.setStyle(this._movableTarget, 'top', oy/scale + 'px');
+            this.moving.emit({x: ox/scale, y: oy/scale});
         }
     };
 

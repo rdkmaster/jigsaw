@@ -602,6 +602,17 @@ export class CommonUtils {
         }
         return v;
     }
+
+    public static getScale(el: HTMLElement): number {
+        if (!el) {
+            return 1;
+        }
+        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1]);
+        if (scale) {
+            return scale;
+        }
+        return this.getScale(el.parentElement);
+    }
 }
 
 export type CallbackRemoval = () => void;
