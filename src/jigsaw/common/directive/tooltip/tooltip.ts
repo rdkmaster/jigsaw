@@ -57,9 +57,9 @@ export class JigsawTooltipComponent implements IPopupable {
 @Directive({
     selector: '[jigsaw-tooltip],[j-tooltip],[jigsawTooltip]',
     host: {
-        '(mouseenter)': "_$checkOverflow() && _$openByHover($event)",
-        '(mouseleave)': "_$checkOverflow() && _$closeByHover($event, 1)",
-        '(click)': "_$checkOverflow() && _$onHostClick()"
+        '(mouseenter)': "_$isOverflow() && _$openByHover($event)",
+        '(mouseleave)': "_$isOverflow() && _$closeByHover($event, 1)",
+        '(click)': "_$isOverflow() && _$onHostClick()"
     }
 })
 export class JigsawTooltip extends JigsawFloatBase {
@@ -138,7 +138,7 @@ export class JigsawTooltip extends JigsawFloatBase {
     /**
      * @internal
      */
-    public _$checkOverflow(): boolean {
+    public _$isOverflow(): boolean {
         if (!this.overflowOnly) {
             return true;
         }
