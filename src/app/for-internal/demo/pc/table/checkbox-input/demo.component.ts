@@ -1,13 +1,13 @@
-import { Component, ViewEncapsulation} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {Component, ViewEncapsulation} from "@angular/core";
 import {
     AdditionalColumnDefine,
     AdditionalTableData,
-    TableCellCheckboxRenderer,
-    TableHeadCheckboxRenderer,
-    TableData,
     ColumnDefine,
-    TableValueGenerators, TableCellTextEditorRenderer
+    TableCellCheckboxRenderer,
+    TableCellTextEditorRenderer,
+    TableData,
+    TableHeadCheckboxRenderer,
+    TableValueGenerators
 } from "jigsaw/public_api";
 
 @Component({
@@ -15,91 +15,73 @@ import {
     encapsulation: ViewEncapsulation.None,
 })
 export class TableCheckBoxInputDemoComponent {
-    constructor(http: HttpClient) {
-        this.tableData = new TableData();
-        this.tableData.http = http;
-        this.tableData.fromAjax('mock-data/hr-list');
-        this.tableData.onAjaxComplete(() => {
-            setTimeout(() => {
-                if(this.additionalData) console.log(this.additionalData.data);
-            }, 1000)
-        })
+    constructor() {
+        this.tableData = new TableData(
+            [
+                ["", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "541"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "543"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "544"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "545"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "546"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "547"],
+                ["Garrett Winters", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "548"],
+            ],
+            ["name", "position", "salary", "enroll-date", "office", "extension"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
     tableData: TableData;
-    selectedRows: string;
     additionalData: AdditionalTableData;
-    checkField: string[];
+    checkFields: string[];
 
     additionalColumns: AdditionalColumnDefine[] = [{
         pos: 0,
         width: 30,
         header: {
             renderer: TableHeadCheckboxRenderer,
-            rendererInitData: (td, row, col) => {
-                return {
-                    disabled: false
-                }
-            }
         },
         cell: {
             renderer: TableCellCheckboxRenderer,
-            data: (td, row, col) => this.checkField?.includes(td.data[row][0]),
+            data: (td, row) => this.checkFields?.includes(td.data[row][5]),
         }
     }];
 
     columnDefines: ColumnDefine[] = [
         {
-        target: 'desc',
-        cell: {
-            tooltip: TableValueGenerators.originCellDataGenerator,
-            editorRenderer: TableCellTextEditorRenderer,
-            editorRendererInitData: {
-                valid: (td, row, col) => {
-                    return !(!td.data[row][col] && this.checkField?.includes(td.data[row][0]));
+            target: 'name',
+            cell: {
+                tooltip: TableValueGenerators.originCellDataGenerator,
+                editorRenderer: TableCellTextEditorRenderer,
+                editorRendererInitData: {
+                    valid: (td, row, col) => {
+                        return !this.checkFields?.includes(td.data[row][5]) || td.data[row][col];
+                    },
+                    clearable: false,
                 },
-                clearable: false,
+                editable: true,
+                alwaysShowEditor: true,
             },
-            editable: true,
-            alwaysShowEditor: true,
-        },
-        },
-        {
-            target: 'gender', visible: false
         }
     ];
 
     additionalDataChange() {
-        this.selectedRows = this.getSelectedRows(this.additionalData);
         this.onCellChange()
     }
 
-
     public onCellChange() {
-        this.checkField = this.additionalData.data.reduce((selectedRows, item, index) => {
+        this.checkFields = this.additionalData.data.reduce((selectedRows, item, index) => {
             if (item[0]) {
-                selectedRows.push(this.tableData.data[index][0]);
+                selectedRows.push(this.tableData.data[index][5]);
             }
             return selectedRows;
         }, []);
-        console.log(this.checkField)
-    }
-    /**
-     * 获取选中的行
-     * @param additionalData
-     */
-    getSelectedRows(additionalData) {
-        return additionalData.data.reduce((selectedRows, item, index) => {
-            if (item[0]) {
-                selectedRows.push(index);
-            }
-            return selectedRows;
-        }, []).join(',');
+        console.log(this.checkFields)
     }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这demo介绍table中使用additional列的内置checkbox渲染器来控制Input框渲染器的valid值（当该行的checkbox被选中，该行的input框必须要有值,这样输入框才不是非法的）';
+    summary: string = 'table中使用additional列的内置checkbox渲染器来控制Input框渲染器的valid值（当该行的checkbox被选中，该行的input框必须要有值）';
     description: string = "";
 }
