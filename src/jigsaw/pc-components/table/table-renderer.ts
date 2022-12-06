@@ -261,8 +261,8 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 
     private _removeListener: Function;
-    private _tableEditSubscription = new Subscription();
-    private _additionalDataSubscription = new Subscription();
+    private _tableEditSubscription: Subscription;
+    private _additionalDataSubscription: Subscription;
 
     ngAfterViewInit() {
         if (this.editorMode == 'always-show') {
