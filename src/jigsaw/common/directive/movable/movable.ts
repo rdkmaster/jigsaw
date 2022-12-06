@@ -45,16 +45,20 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
     private _dragStart = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        this._position = [event.clientX - AffixUtils.offset(this._movableTarget).left,
-            event.clientY - AffixUtils.offset(this._movableTarget).top];
-        this._moving = true;
         this._isFixed = this._checkFixed();
+        let scale = CommonUtils.getScale(this._movableTarget, NaN);
+        // 有缩放时，fixed失效，按照absolute的运行
+        const targetRect = this._isFixed && isNaN(scale) ? this._movableTarget.getBoundingClientRect() : AffixUtils.offset(this._movableTarget);
+        if (isNaN(scale)) {
+            scale = 1;
+        }
+        this._position = [event.clientX - targetRect.left, event.clientY - targetRect.top];
+        this._moving = true;
 
         if (this._removeWindowMouseMoveListener) {
             this._removeWindowMouseMoveListener();
         }
         const offset = this.moveOffset.apply(this);
-        const scale = CommonUtils.getScale(this._movableTarget);
         this._zone.runOutsideAngular(() => {
             this._removeWindowMouseMoveListener = this._renderer.listen(document, 'mousemove', (event) => {
                 this._dragMove(event, offset, scale)
@@ -69,8 +73,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _dragMove = (event, offset, scale) => {
         if (this._moving) {
-            const ox = event.clientX - this._position[0] - (this._isFixed ? window.pageXOffset : 0) - offset.left;
-            const oy = event.clientY - this._position[1] - (this._isFixed ? window.pageYOffset : 0) - offset.top;
+            const ox = event.clientX - this._position[0] - offset.left;
+            const oy = event.clientY - this._position[1] - offset.top;
             this._renderer.removeStyle(this._movableTarget, 'right');
             this._renderer.removeStyle(this._movableTarget, 'bottom');
             this._renderer.setStyle(this._movableTarget, 'left', ox/scale + 'px');

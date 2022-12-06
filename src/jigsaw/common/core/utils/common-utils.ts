@@ -603,15 +603,15 @@ export class CommonUtils {
         return v;
     }
 
-    public static getScale(el: HTMLElement): number {
+    public static getScale(el: HTMLElement, defaultValue: number = 1): number {
         if (!el) {
-            return 1;
+            return defaultValue;
         }
-        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1]);
+        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1] || el.style?.scale);
         if (scale) {
             return scale;
         }
-        return this.getScale(el.parentElement);
+        return this.getScale(el.parentElement, defaultValue);
     }
 }
 
