@@ -607,8 +607,9 @@ export class CommonUtils {
         if (!el) {
             return defaultValue;
         }
-        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1] || el.style?.scale);
-        if (scale) {
+        // 防止el.style?.scale == ''的情况
+        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1] || (el.style?.scale ? el.style?.scale : undefined));
+        if (!isNaN(scale)) {
             return scale;
         }
         return this.getScale(el.parentElement, defaultValue);
