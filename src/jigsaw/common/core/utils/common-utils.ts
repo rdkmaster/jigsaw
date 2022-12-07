@@ -607,8 +607,10 @@ export class CommonUtils {
         if (!el) {
             return defaultValue;
         }
-        // 防止el.style?.scale == ''的情况
-        const scale = Number(el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1] || (el.style?.scale ? el.style?.scale : undefined));
+        const transformScale = el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1];
+        // 当el.style?.scale == ''时，需要取undefined值
+        const styleScale = el.style?.scale ? el.style?.scale : undefined;
+        const scale = Number(transformScale || styleScale);
         if (!isNaN(scale)) {
             return scale;
         }
