@@ -46,7 +46,9 @@ import {TablePageableDemoModule} from "./pageable/demo.module";
 import {TablePageableReadyDemoComponent} from "./pageable-ready/demo.component";
 import {TablePageableReadyDemoModule} from "./pageable-ready/demo.module";
 import {TableRendererDemoComponent} from "./renderer/demo.component";
+import {TableCheckBoxInputDemoComponent} from "./checkbox-input/demo.component";
 import {TableRendererDemoModule} from "./renderer/demo.module";
+import {TableCheckBoxInputDemoModule} from "./checkbox-input/demo.module";
 import {TableRendererOfTemplateRefDemoComponent} from "./template-ref-renderer/demo.component";
 import {TableRendererOfTemplateRefDemoModule} from "./template-ref-renderer/demo.module";
 import {TableSelectRowDemoComponent} from "./select-row/demo.component";
@@ -121,6 +123,9 @@ import { TableSetHeaderFilterDemoModule } from "./header-filter/demo.module";
 export const routerConfig = [
     {
         path: 'renderer', component: TableRendererDemoComponent
+    },
+    {
+        path: 'checkbox-input', component: TableCheckBoxInputDemoComponent
     },
     {
         path: 'swim-lane-diagram', component: SwimLaneDiagramDemoComponent
@@ -304,7 +309,7 @@ export const routerConfig = [
         TableAddCheckboxColumnDemoModule, TableAddColumnDemoModule, TableAddIDColumnDemoModule,
         TableAddIDWithPagingModule, TableBasicDemoModule, TableDataChangeDemoModule, TableDataFromAjaxDemoModule,
         TableFixedHeadDemoModule, BigTableDataDemoModule, LocalPagingDataDemoModule, TablePageableDemoModule, TablePageableReadyDemoModule,
-        TableRendererDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
+        TableRendererDemoModule, TableCheckBoxInputDemoModule, TableRendererOfTemplateRefDemoModule, TableContentWidthDemoModule, BigColumnDemoModule,
         TableSetCellClassDemoModule, TableSetCellEditableDemoModule, TableSetCellRenderDemoModule, TableColumnGroupDemoModule,
         TableColumnSetVisibleDemoModule, TableColumnSetWidthDemoModule, TableSetHeaderClassDemoModule, TableSetHeaderRenderDemoModule,
         TableSetHeaderSortDemoModule, TableDataWithPopupDemoModule, SwimLaneDiagramDemoModule, TableHideHeadDemoModule, TableChangeDataDemoModule,
