@@ -592,6 +592,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
         const hostRect = host.getBoundingClientRect();
         const popupRect = popupElement.getBoundingClientRect();
+        const scale = CommonUtils.getScale(host);
         const popupPos = this._getElementPos(popupElement);
         const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
         const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
@@ -635,7 +636,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.top = 7 + hostBottom + 'px';
             }
             ele.style.top = `-${arrowOffset}px`;
-            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderRight = `1px solid ${borderColor}`;
@@ -649,7 +650,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.top = hostTop - popupRect.height - 7 + 'px';
             }
             ele.style.bottom = `-${arrowOffset}px`;
-            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderLeft = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -662,7 +663,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.left = hostRight + 7 + 'px';
             }
             ele.style.left = `-${arrowOffset}px`;
-            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderLeft = `1px solid ${borderColor}`;
@@ -676,7 +677,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.left = hostLeft - popupRect.width - 7 + 'px';
             }
             ele.style.right = `-${arrowOffset}px`;
-            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint, scale) + 'px';
             if (options.showBorder) {
                 ele.style.borderRight = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -693,8 +694,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
         }
 
-        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-            let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
+        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint, scale: number): number {
+            // 箭头的位置要计算缩放前的，因为float弹出组件会缩放，箭头会跟着缩放
+            let delta = position.x / scale + host.offsetWidth / 2 - popupElement.offsetLeft / scale - 7 / 2;
             if (delta < 4) {
                 delta = 4;
             } else if (delta > popupElement.offsetWidth - 13) {
@@ -703,8 +705,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return delta;
         }
 
-        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-            let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
+        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint, scale: number): number {
+            // 箭头的位置要计算缩放前的，因为float弹出组件会缩放，箭头会跟着缩放
+            let delta = position.y / scale + host.offsetHeight / 2 - popupElement.offsetTop / scale - 7 / 2;
             if (delta < 4) {
                 delta = 4;
             } else if (delta > popupElement.offsetHeight - 13) {
