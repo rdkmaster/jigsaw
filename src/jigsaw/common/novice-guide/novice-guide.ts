@@ -169,7 +169,7 @@ function createBubbleOrDialogNotice(guide: NoviceGuide, notice: NoviceGuideNotic
     } else if (guide.type === NoviceGuideType.dialog) {
         html = `
             <div class="${guide.type} ${guide.type}-${notice.position}">
-                <div class="notice-cntr">
+                <div class="notice-cntr" style="width: ${notice.width}">
                     <div class="title">${notice.title}</div>
                     <div class="text">${notice.notice}</div>
                     <div class="button-cntr">
@@ -212,7 +212,7 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
     const cloneEle = createCloneElement(targetEle, notice.key);
     cloneEle.innerHTML = `
         <div class="${NoviceGuideType.dialog} ${NoviceGuideType.dialog}-${notice.position}">
-            <div class="notice-cntr">
+            <div class="notice-cntr" style="width: ${notice.width}">
                 <div class="title">${notice.title}
                     <div class="close iconfont iconfont-e14b close-arrow"></div>
                 </div>
