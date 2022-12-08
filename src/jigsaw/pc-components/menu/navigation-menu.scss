@@ -47,6 +47,10 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     right: 16px;
                     @include prefixer(transition, all 0.3s ease);
                 }
+
+                &>div {
+                    max-width: calc(100% - 70px);
+                }
             }
 
             .#{$jigsaw-nav-menu}-submenus {
@@ -96,11 +100,23 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                             display: none;
                         }
                     }
+
+                    &>div {
+                        max-width: calc(100% - 48px);
+                    }
                 }
             }
 
             .#{$jigsaw-nav-menu}-item-selected-top {
                 background-color: $nav-active;
+            }
+
+            span.#{$jigsaw-nav-menu}-item-text {
+                display: block;
+                width: 100%;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;
             }
         }
 
@@ -186,7 +202,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-items .#{$jigsaw-nav-menu}-item-inactive,
     .#{$jigsaw-nav-menu}-items-inline .#{$jigsaw-nav-menu}-item-inactive {
-        > .#{$jigsaw-nav-menu}-item-top {
+        >.#{$jigsaw-nav-menu}-item-top {
             .#{$jigsaw-nav-menu}-item-arrow {
                 @include prefixer(transform, rotate(180deg));
             }
@@ -258,6 +274,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     background: #3c4c5a;
 
                     &-activated {
+
                         .#{$jigsaw-nav-menu}-sub-item:first-child,
                         .#{$jigsaw-nav-menu}-sub-item:last-child {
                             border: none;
