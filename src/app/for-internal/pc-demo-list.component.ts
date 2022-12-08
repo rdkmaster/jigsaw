@@ -55,6 +55,7 @@ import {routerConfig as iconConfig} from "./demo/pc/icon/demo-set.module";
 import {routerConfig as transferConfig} from "./demo/pc/transfer/demo-set.module";
 import {routerConfig as breadcrumbConfig} from "./demo/pc/breadcrumb/demo-set.module";
 import {routerConfig as menuConfig} from "./demo/pc/menu/demo-set.module";
+import {routerConfig as navigationBarConfig} from "./demo/pc/navigation-bar/demo-set.module";
 import {routerConfig as datePickerConfig} from "./demo/pc/date-picker/demo-set.module";
 import {routerConfig as timePickerConfig} from "./demo/pc/time-picker/demo-set.module";
 import {routerConfig as dateTimePickerConfig} from "./demo/pc/date-time-picker/demo-set.module";
@@ -228,6 +229,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'transfer', transferConfig);
         this._addRouterConfig(routerConfig, 'breadcrumb', breadcrumbConfig);
         this._addRouterConfig(routerConfig, 'menu', menuConfig);
+        this._addRouterConfig(routerConfig, 'navigation-bar', navigationBarConfig);
         this._addRouterConfig(routerConfig, 'date-picker', datePickerConfig);
         this._addRouterConfig(routerConfig, 'time-picker', timePickerConfig);
         this._addRouterConfig(routerConfig, 'date-time-picker', dateTimePickerConfig);

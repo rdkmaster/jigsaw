@@ -1,0 +1,43 @@
+$jigsaw-navigation-bar: #{$jigsaw-prefix}-navigation-bar;
+
+.#{$jigsaw-navigation-bar}-host {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 48px;
+    color: #fff;
+
+    &.#{$jigsaw-navigation-bar}-preset-nav {
+        background: $nav-navigation;
+    }
+
+    .nav-bar-icon {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        margin-left: 10px;
+        margin-right: 16px;
+        background: rgba(255, 255, 255, 0.20);
+        border-radius: 2px;
+        color: white;
+        cursor: pointer;
+
+        i {
+            font-size: 24px;
+        }
+    }
+
+    .nav-bar-logo{
+        max-height: 100%;
+    }
+
+    .nav-bar-title{
+        color: inherit;
+        font-size: 14px;
+        line-height: 22px;
+        font-weight: 400;
+        margin-left: 16px;
+    }
+}

@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="demo-container">
+    <jigsaw-header>基础用法</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [buttonIcon]="buttonIcon" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        (logoClick)="clickEvent('logo')" (navButtonClick)="clickEvent('导航按钮')" (titleClick)="clickEvent('功能标题')">
+    </jigsaw-navigation-bar>
+    <span>点击事件：{{eventTxt}}</span>
+
+    <jigsaw-header>无配置</jigsaw-header>
+    <jigsaw-navigation-bar> </jigsaw-navigation-bar>
+</div>

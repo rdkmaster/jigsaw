@@ -1,0 +1,8 @@
+<div *ngIf="!!buttonIcon" class="nav-bar-icon" (click)="navButtonClick.emit()">
+    <i class="{{buttonIcon}}"></i>
+</div>
+<img *ngIf="!!logoSrc" class="nav-bar-logo" [src]="logoSrc" [alt]="logoAlt" (click)="logoClick.emit()">
+<div *ngIf="!!title" class="nav-bar-title" (click)="titleClick.emit()">{{title}}</div>
+<div>
+    <ng-content></ng-content>
+</div>
