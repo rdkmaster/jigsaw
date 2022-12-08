@@ -525,7 +525,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             posType: PopupPositionType.absolute,
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
                 const scale = CommonUtils.getScale(this._elementRef.nativeElement);
-                if (scale != 1) {
+                if (scale != 1 && isNaN(CommonUtils.getScale(popupElement, NaN))) {
                     popupElement.style.transform += `scale(${scale})`;
                     popupElement.style.transformOrigin = 'left top';
                 }
