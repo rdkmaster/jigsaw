@@ -29,18 +29,33 @@ type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNavigationBar extends AbstractJigsawComponent {
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public logoSrc: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public logoAlt: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public navigationButton: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public title: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public color: string = null;
 
