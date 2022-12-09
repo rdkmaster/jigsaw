@@ -130,7 +130,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
 }
 
 @Directive({
-    selector: '[j-upload], [jigsaw-upload]',
+    selector: '[j-upload], [jigsaw-upload]'
 })
 export class JigsawUploadDirective extends JigsawUploadBase implements IUploader, OnDestroy {
     constructor(@Optional() private _http: HttpClient,
