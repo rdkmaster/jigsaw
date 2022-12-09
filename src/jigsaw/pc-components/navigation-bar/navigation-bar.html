@@ -1,8 +1,8 @@
-<div *ngIf="!!buttonIcon" class="nav-bar-icon" (click)="navButtonClick.emit()">
-    <i class="{{buttonIcon}}"></i>
+<div *ngIf="!!navigationButton" class="jigsaw-navigation-bar-icon" (click)="navigationButtonClick.emit()">
+    <i class="{{navigationButton}}"></i>
 </div>
-<img *ngIf="!!logoSrc" class="nav-bar-logo" [src]="logoSrc" [alt]="logoAlt" (click)="logoClick.emit()">
-<div *ngIf="!!title" class="nav-bar-title" (click)="titleClick.emit()">{{title}}</div>
-<div class="nav-bar-content">
+<img *ngIf="!!logoSrc" class="jigsaw-navigation-bar-logo" [src]="logoSrc" [alt]="logoAlt" (click)="logoClick.emit()">
+<div *ngIf="!!title" class="jigsaw-navigation-bar-title" (click)="titleClick.emit()">{{title}}</div>
+<div class="jigsaw-navigation-bar-content">
     <ng-content></ng-content>
 </div>

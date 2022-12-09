@@ -4,11 +4,34 @@
 
 <div class="demo-container">
     <jigsaw-header>基础用法</jigsaw-header>
-    <jigsaw-navigation-bar [title]="title" [buttonIcon]="buttonIcon" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
-        (logoClick)="clickEvent('logo')" (navButtonClick)="clickEvent('导航按钮')" (titleClick)="clickEvent('功能标题')">
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        (logoClick)="clickEvent('logo')" (navigationButtonClick)="clickEvent('导航按钮')" (titleClick)="clickEvent('功能标题')">
     </jigsaw-navigation-bar>
     <span>点击事件：{{eventTxt}}</span>
 
     <jigsaw-header>无配置</jigsaw-header>
-    <jigsaw-navigation-bar> </jigsaw-navigation-bar>
+    <jigsaw-navigation-bar></jigsaw-navigation-bar>
+
+    <jigsaw-header>设置不同背景</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-blue"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-black"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-nav"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="#000000"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="green"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="linear-gradient(90deg, #e66465, #9198e5)"></jigsaw-navigation-bar>
+
+    <jigsaw-header>设置文本颜色</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+    background="lightgoldenrodyellow" color="#000"></jigsaw-navigation-bar>
 </div>

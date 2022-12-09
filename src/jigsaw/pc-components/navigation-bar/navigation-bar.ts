@@ -19,6 +19,7 @@ type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.background]': '_$commonColor',
+        '[style.color]': 'color',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-navigation-bar-host]': 'true',
         '[class.jigsaw-navigation-bar-preset-nav]': 'background == "preset-nav"',
@@ -35,10 +36,13 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
     public logoAlt: string = '';
 
     @Input()
-    public buttonIcon: string = '';
+    public navigationButton: string = '';
 
     @Input()
     public title: string = '';
+
+    @Input()
+    public color: string = null;
 
     /**
      * @NoMarkForCheckRequired
@@ -51,6 +55,7 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
      * @internal
      */
     public get _$commonColor(): string {
+        console.log(this.background.startsWith("preset-") ? null : this.background)
         return this.background.startsWith("preset-") ? null : this.background;
     }
 
@@ -58,7 +63,7 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
     public logoClick = new EventEmitter();
 
     @Output()
-    public navButtonClick = new EventEmitter();
+    public navigationButtonClick = new EventEmitter();
 
     @Output()
     public titleClick = new EventEmitter();
