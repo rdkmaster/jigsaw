@@ -21,9 +21,9 @@ type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
         '[style.background]': '_$commonColor',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-navigation-bar-host]': 'true',
-        '[class.jigsaw-navigation-bar-preset-nav]': 'color == "preset-nav"',
-        '[class.jigsaw-navigation-bar-preset-blue]': 'color == "preset-blue"',
-        '[class.jigsaw-navigation-bar-preset-black]': 'color == "preset-black"'
+        '[class.jigsaw-navigation-bar-preset-nav]': 'background == "preset-nav"',
+        '[class.jigsaw-navigation-bar-preset-blue]': 'background == "preset-blue"',
+        '[class.jigsaw-navigation-bar-preset-black]': 'background == "preset-black"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -44,14 +44,14 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public color: string | PresetColor = 'preset-nav';
+    public background: string | PresetColor = 'preset-nav';
 
     /**
      * 当使用普通原色时，需要在切换选中时，通过设置null值，清除之前的值
      * @internal
      */
     public get _$commonColor(): string {
-        return this.color.startsWith("preset-") ? null : this.color;
+        return this.background.startsWith("preset-") ? null : this.background;
     }
 
     @Output()
