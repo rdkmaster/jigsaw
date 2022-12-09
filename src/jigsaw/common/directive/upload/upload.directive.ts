@@ -119,6 +119,9 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
 
+    @Output('uploadFailCheck')
+    public fail = new EventEmitter<UploadFileInfo[]>();
+
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
 
@@ -127,7 +130,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
 }
 
 @Directive({
-    selector: '[j-upload], [jigsaw-upload]'
+    selector: '[j-upload], [jigsaw-upload]',
 })
 export class JigsawUploadDirective extends JigsawUploadBase implements IUploader, OnDestroy {
     constructor(@Optional() private _http: HttpClient,
@@ -251,6 +254,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 const pendingFiles = this.files.filter(file => file.state == 'pause');
                 if (pendingFiles.length == 0) {
                     this.complete.emit(this.files);
+                    const failFiles = this.files.filter(file => file.state == 'error');
+                    if (failFiles.length != 0) {
+                        this.fail.emit(failFiles);
+                    }
                     return;
                 }
                 for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
@@ -372,6 +379,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         if (!this.multiple) {
             this.complete.emit(this.files);
+            if (this.files[0].state == "error") {
+                this.fail.emit(this.files);
+            }
             return;
         }
 
@@ -380,6 +390,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
             this.complete.emit(this.files);
+            const failFiles = this.files.filter(file => file.state == 'error');
+            if (failFiles.length != 0) {
+                this.fail.emit(failFiles);
+            }
         }
         this._cdr.markForCheck();
     }
