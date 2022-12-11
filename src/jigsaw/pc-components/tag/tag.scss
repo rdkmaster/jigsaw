@@ -14,7 +14,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     color: inherit;
     background: $bg-gray;
     box-sizing: border-box;
-    user-select: none;
     cursor: pointer;
 
     &.#{$jigsaw-tag}-preset {
@@ -98,7 +97,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         &.#{$jigsaw-tag}-disabled {
             color: $font-color-disabled;
             border-color: $border-color-default;
-            user-select: none;
             cursor: not-allowed;
 
             &:hover {
