@@ -38,7 +38,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             border-style: solid;
             border-color: $border-color-default;
             border-radius: $border-radius-base;
-            user-select: none;
 
             &:hover {
                 border-color: $brand-default;
