@@ -5,18 +5,21 @@ $jigsaw-navigation-bar: #{$jigsaw-prefix}-navigation-bar;
     align-items: center;
     width: 100%;
     height: 48px;
-    color: #fff;
+    color: $nav-color;
 
     &.#{$jigsaw-navigation-bar}-preset-nav {
         background: $nav-navigation;
+        color: $nav-color;
     }
 
     &.#{$jigsaw-navigation-bar}-preset-blue {
-        background: #41addc;
+        background: #0096e7;
+        color: #fff;
     }
 
     &.#{$jigsaw-navigation-bar}-preset-black {
-        background: #232734;
+        background: #32404e;
+        color: #fff;
     }
 
     .#{$jigsaw-navigation-bar}-icon {
@@ -27,7 +30,6 @@ $jigsaw-navigation-bar: #{$jigsaw-prefix}-navigation-bar;
         width: 30px;
         height: 30px;
         margin-left: 10px;
-        margin-right: 16px;
         background: rgba(255, 255, 255, 0.20);
         border-radius: 2px;
         color: inherit;
@@ -40,6 +42,7 @@ $jigsaw-navigation-bar: #{$jigsaw-prefix}-navigation-bar;
 
     .#{$jigsaw-navigation-bar}-logo {
         flex-shrink: 0;
+        margin-left: 16px;
         max-height: 100%;
     }
 
@@ -49,7 +52,7 @@ $jigsaw-navigation-bar: #{$jigsaw-prefix}-navigation-bar;
         font-size: 14px;
         line-height: 22px;
         font-weight: 400;
-        margin-left: 16px;
+        margin-left: 48px;
     }
 
     .#{$jigsaw-navigation-bar}-content {

@@ -9,6 +9,16 @@
     </jigsaw-navigation-bar>
     <span>点击事件：{{eventTxt}}</span>
 
+    <jigsaw-header>不同配置</jigsaw-header>
+    <jigsaw-navigation-bar [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+
     <jigsaw-header>无配置</jigsaw-header>
     <jigsaw-navigation-bar></jigsaw-navigation-bar>
 
@@ -33,5 +43,9 @@
 
     <jigsaw-header>设置文本颜色</jigsaw-header>
     <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
-    background="lightgoldenrodyellow" color="#000"></jigsaw-navigation-bar>
+        background="lightgoldenrodyellow" titleColor="#000" navigationButtonColor="#000"
+        navigationButtonBackground="rgba(0,0,0,0.2)"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-blue" titleColor="red" navigationButtonColor="gray"></jigsaw-navigation-bar>
 </div>
