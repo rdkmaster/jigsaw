@@ -11,13 +11,11 @@ export class JigsawNavigationBarPrestDemoComponent {
     public title: string = '功能标题'
 
     public backgroundData = new ArrayCollection([
-        { label: "preset-nav", id: 1 },
-        { label: "preset-blue", id: 2 },
-        { label: "preset-black", id: 3 },
-        // { label: "preset-white", id: 4 }
+        { label: "preset-dark", id: 1 },
+        { label: "preset-zte-blue", id: 2 },
     ]);
 
-    public selectedBackground = [{ label: "preset-nav", id: 1 }];
+    public selectedBackground = [{ label: "preset-dark", id: 1 }];
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

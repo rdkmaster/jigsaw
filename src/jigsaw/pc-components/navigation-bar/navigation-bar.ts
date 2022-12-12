@@ -9,7 +9,7 @@ import {
 import { CommonModule } from "@angular/common";
 import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
 
-type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
+type PresetColor = 'preset-dark' | 'preset-zte-blue';
 
 @WingsTheme('navigation-bar.scss')
 @Component({
@@ -21,9 +21,8 @@ type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
         '[style.background]': '_$commonColor',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-navigation-bar-host]': 'true',
-        '[class.jigsaw-navigation-bar-preset-nav]': 'background == "preset-nav"',
-        '[class.jigsaw-navigation-bar-preset-blue]': 'background == "preset-blue"',
-        '[class.jigsaw-navigation-bar-preset-black]': 'background == "preset-black"'
+        '[class.jigsaw-navigation-bar-preset-zte-blue]': 'background == "preset-zte-blue"',
+        '[class.jigsaw-navigation-bar-preset-dark]': 'background == "preset-dark"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -74,7 +73,7 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public background: string | PresetColor = 'preset-nav';
+    public background: string | PresetColor = 'preset-dark';
 
     /**
      * 当使用普通原色时，需要在切换选中时，通过设置null值，清除之前的值
