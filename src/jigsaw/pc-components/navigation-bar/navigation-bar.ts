@@ -8,8 +8,6 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { AbstractJigsawComponent, WingsTheme } from "../../common/common";
-import { RequireMarkForCheck } from "jigsaw/common/decorator/mark-for-check";
-import { CommonUtils } from "jigsaw/public_api";
 
 type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
 
@@ -21,7 +19,6 @@ type PresetColor = 'preset-nav' | 'preset-blue' | 'preset-black';
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.background]': '_$commonColor',
-        '[style.color]': 'color',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-navigation-bar-host]': 'true',
         '[class.jigsaw-navigation-bar-preset-nav]': 'background == "preset-nav"',
@@ -73,7 +70,9 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
     @Input()
     public navigationButtonBackground: string = null;
 
-    @RequireMarkForCheck()
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public background: string | PresetColor = 'preset-nav';
 
