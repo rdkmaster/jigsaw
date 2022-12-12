@@ -602,6 +602,20 @@ export class CommonUtils {
         }
         return v;
     }
+
+    public static getScale(el: HTMLElement, defaultValue: number = 1): number {
+        if (!el) {
+            return defaultValue;
+        }
+        const transformScale = el.style?.transform?.match(/scale\(([\d.]+)\)/)?.[1];
+        // 当el.style?.scale == ''时，需要取undefined值
+        const styleScale = el.style?.scale ? el.style?.scale : undefined;
+        const scale = Number(transformScale || styleScale);
+        if (!isNaN(scale)) {
+            return scale;
+        }
+        return this.getScale(el.parentElement, defaultValue);
+    }
 }
 
 export type CallbackRemoval = () => void;

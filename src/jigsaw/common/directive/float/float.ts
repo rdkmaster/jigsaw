@@ -420,41 +420,41 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     private _getPos(): PopupPoint {
         let point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
+        const hostRect = this._elementRef.nativeElement.getBoundingClientRect();
         switch (this.jigsawFloatPosition) {
             case 'bottomLeft':
-                point.y += this._elementRef.nativeElement.offsetHeight + differ;
+                point.y += hostRect.height + differ;
                 break;
             case 'bottomRight':
-                point.x += this._elementRef.nativeElement.offsetWidth;
-                point.y += this._elementRef.nativeElement.offsetHeight + differ;
+                point.x += hostRect.width;
+                point.y += hostRect.height + differ;
                 break;
             case 'topRight':
-                point.x += this._elementRef.nativeElement.offsetWidth;
+                point.x += hostRect.width;
                 break;
             case 'leftBottom':
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.y += hostRect.height;
                 break;
             case 'rightTop':
-                point.x += this._elementRef.nativeElement.offsetWidth + differ;
+                point.x += hostRect.width + differ;
                 break;
             case 'rightBottom':
-                point.x += this._elementRef.nativeElement.offsetWidth + differ;
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.x += hostRect.width + differ;
+                point.y += hostRect.height;
                 break;
             case 'top':
-                point.x += this._elementRef.nativeElement.offsetWidth / 2;
+                point.x += hostRect.width / 2;
                 break;
             case 'bottom':
-                point.x += this._elementRef.nativeElement.offsetWidth / 2;
-                point.y += this._elementRef.nativeElement.offsetHeight;
+                point.x += hostRect.width / 2;
+                point.y += hostRect.height;
                 break;
             case 'left':
-                point.y += this._elementRef.nativeElement.offsetHeight / 2;
+                point.y += hostRect.height / 2;
                 break;
             case 'right':
-                point.x += this._elementRef.nativeElement.offsetWidth;
-                point.y += this._elementRef.nativeElement.offsetHeight / 2;
-
+                point.x += hostRect.width;
+                point.y += hostRect.height / 2;
         }
         return point;
     }
@@ -476,40 +476,41 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
     // 被弹出的控件高度宽度，在弹出之前并不知道，故要再控件位置微调时加入进去
     private _changePosByFloatPosition(pos: PopupPositionValue, popupElement: HTMLElement) {
+        const popupRect = popupElement.getBoundingClientRect();
         switch (this.jigsawFloatPosition) {
             case 'bottomRight':
-                pos.left -= popupElement.offsetWidth;
+                pos.left -= popupRect.width;
                 break;
             case 'topLeft':
-                pos.top -= popupElement.offsetHeight;
+                pos.top -= popupRect.height;
                 break;
             case 'topRight':
-                pos.top -= popupElement.offsetHeight;
-                pos.left -= popupElement.offsetWidth;
+                pos.top -= popupRect.height;
+                pos.left -= popupRect.width;
                 break;
             case 'rightBottom':
-                pos.top -= popupElement.offsetHeight;
+                pos.top -= popupRect.height;
                 break;
             case 'leftTop':
-                pos.left -= popupElement.offsetWidth;
+                pos.left -= popupRect.width;
                 break;
             case 'leftBottom':
-                pos.left -= popupElement.offsetWidth;
-                pos.top -= popupElement.offsetHeight;
+                pos.left -= popupRect.width;
+                pos.top -= popupRect.height;
                 break;
             case 'top':
-                pos.left -= popupElement.offsetWidth / 2;
-                pos.top -= popupElement.offsetHeight;
+                pos.left -= popupRect.width / 2;
+                pos.top -= popupRect.height;
                 break;
             case 'bottom':
-                pos.left -= popupElement.offsetWidth / 2;
+                pos.left -= popupRect.width / 2;
                 break;
             case 'left':
-                pos.left -= popupElement.offsetWidth;
-                pos.top -= popupElement.offsetHeight / 2;
+                pos.left -= popupRect.width;
+                pos.top -= popupRect.height / 2;
                 break;
             case 'right':
-                pos.top -= popupElement.offsetHeight / 2;
+                pos.top -= popupRect.height / 2;
                 break;
         }
     }
@@ -523,6 +524,11 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             pos: this._getPos(),
             posType: PopupPositionType.absolute,
             posReviser: (pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue => {
+                const scale = CommonUtils.getScale(this._elementRef.nativeElement);
+                if (scale != 1 && isNaN(CommonUtils.getScale(popupElement, NaN))) {
+                    popupElement.style.transform += `scale(${scale})`;
+                    popupElement.style.transformOrigin = 'left top';
+                }
                 this._changePosByFloatPosition(pos, popupElement);
                 this._positionReviser(pos, popupElement);
                 return pos;
@@ -584,15 +590,19 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
     }
 
     private _setArrowPosition(ele: HTMLElement, popupElement: HTMLElement, position: PopupPoint, host: HTMLElement, arrowPoint: PopupPoint, options: PopupOptions) {
+        const hostRect = host.getBoundingClientRect();
+        const popupRect = popupElement.getBoundingClientRect();
+        const scale = CommonUtils.getScale(host);
+        const popupPos = this._getElementPos(popupElement);
         const arrowOffset = options.showBorder ? 7 / 2 + 1 : 7 / 2;
         const borderColor = options.borderColor ? options.borderColor : '#dcdcdc';
-        const popupEleTop = popupElement.offsetTop;
-        const popupEleBottom = popupElement.offsetTop + popupElement.offsetHeight;
-        const popupEleLeft = popupElement.offsetLeft;
-        const popupEleRight = popupElement.offsetLeft + popupElement.offsetWidth;
+        const popupEleTop = popupPos.y;
+        const popupEleBottom = popupPos.y + popupRect.height;
+        const popupEleLeft = popupPos.x;
+        const popupEleRight = popupPos.x + popupRect.width;
         const hostTop = position.y;
-        const hostBottom = position.y + host.offsetHeight;
-        const hostRight = position.x + host.offsetWidth;
+        const hostBottom = position.y + hostRect.height;
+        const hostRight = position.x + hostRect.width;
         const hostLeft = position.x;
 
         let adjustPopup = true;
@@ -626,7 +636,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.top = 7 + hostBottom + 'px';
             }
             ele.style.top = `-${arrowOffset}px`;
-            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderRight = `1px solid ${borderColor}`;
@@ -635,11 +645,12 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         /* 箭头在下 */
         function _createBottomArrow() {
+            const popupRect = popupElement.getBoundingClientRect();
             if (adjustPopup && (hostTop - popupEleBottom < 7)) {
-                popupElement.style.top = hostTop - popupElement.offsetHeight - 7 + 'px';
+                popupElement.style.top = hostTop - popupRect.height - 7 + 'px';
             }
             ele.style.bottom = `-${arrowOffset}px`;
-            ele.style.left = _getLeft(host, popupElement, arrowPoint) + 'px';
+            ele.style.left = _getLeft(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderLeft = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -652,7 +663,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 popupElement.style.left = hostRight + 7 + 'px';
             }
             ele.style.left = `-${arrowOffset}px`;
-            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint, scale)  + 'px';
             if (options.showBorder) {
                 ele.style.borderTop = `1px solid ${borderColor}`;
                 ele.style.borderLeft = `1px solid ${borderColor}`;
@@ -661,11 +672,12 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
 
         /* 箭头在右 */
         function _createRightArrow() {
+            const popupRect = popupElement.getBoundingClientRect();
             if (adjustPopup && (hostLeft - popupEleRight < 7)) {
-                popupElement.style.left = hostLeft - popupElement.offsetWidth - 7 + 'px';
+                popupElement.style.left = hostLeft - popupRect.width - 7 + 'px';
             }
             ele.style.right = `-${arrowOffset}px`;
-            ele.style.top = _getTop(host, popupElement, arrowPoint) + 'px';
+            ele.style.top = _getTop(host, popupElement, arrowPoint, scale) + 'px';
             if (options.showBorder) {
                 ele.style.borderRight = `1px solid ${borderColor}`;
                 ele.style.borderBottom = `1px solid ${borderColor}`;
@@ -682,8 +694,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
         }
 
-        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-            let delta = position.x + host.offsetWidth / 2 - popupElement.offsetLeft - 7 / 2;
+        function _getLeft(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint, scale: number): number {
+            // 箭头的位置要计算缩放前的，因为float弹出组件会缩放，箭头会跟着缩放
+            let delta = position.x / scale + host.offsetWidth / 2 - popupElement.offsetLeft / scale - 7 / 2;
             if (delta < 4) {
                 delta = 4;
             } else if (delta > popupElement.offsetWidth - 13) {
@@ -692,8 +705,9 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             return delta;
         }
 
-        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint): number {
-            let delta = position.y + host.offsetHeight / 2 - popupElement.offsetTop - 7 / 2;
+        function _getTop(host: HTMLElement, popupElement: HTMLElement, position: PopupPoint, scale: number): number {
+            // 箭头的位置要计算缩放前的，因为float弹出组件会缩放，箭头会跟着缩放
+            let delta = position.y / scale + host.offsetHeight / 2 - popupElement.offsetTop / scale - 7 / 2;
             if (delta < 4) {
                 delta = 4;
             } else if (delta > popupElement.offsetHeight - 13) {
@@ -707,31 +721,31 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
      * 计算弹层区域的位置，当指定的方向位置不够，且反向弹位置足够时，那么反向弹层
      */
     private _positionReviser(pos: PopupPositionValue, popupElement: HTMLElement): PopupPositionValue {
-        const offsetWidth = this._elementRef.nativeElement.offsetWidth;
-        const offsetHeight = this._elementRef.nativeElement.offsetHeight;
+        const hostRect = this._elementRef.nativeElement.getBoundingClientRect();
+        const popupRect = popupElement.getBoundingClientRect();
         const point = this._getElementPos();
         const differ = this.jigsawFloatOptions && this.jigsawFloatOptions.borderType == 'pointer' ? 7 : 0;
         // 调整上下左右位置
         if (this.jigsawFloatPosition === 'topLeft' || this.jigsawFloatPosition === 'topRight' ||
             this.jigsawFloatPosition === 'bottomLeft' || this.jigsawFloatPosition === 'bottomRight') {
-            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
-            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
-            const leftDelta = popupElement.offsetWidth;
-            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
+            const upDelta = hostRect.height + popupRect.height + differ;
+            pos = this._calPositionY(pos, upDelta, popupElement, point, hostRect.height);
+            const leftDelta = popupRect.width;
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, hostRect.width);
         } else if (this.jigsawFloatPosition === 'leftTop' || this.jigsawFloatPosition === 'rightTop' ||
             this.jigsawFloatPosition === 'leftBottom' || this.jigsawFloatPosition === 'rightBottom') {
-            const upDelta = popupElement.offsetHeight;
-            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
-            const leftDelta = popupElement.offsetWidth + offsetWidth + differ;
-            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
+            const upDelta = popupRect.height;
+            pos = this._calPositionY(pos, upDelta, popupElement, point, hostRect.height);
+            const leftDelta = popupRect.width + hostRect.width + differ;
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, hostRect.width);
         } else if (this.jigsawFloatPosition === 'top' || this.jigsawFloatPosition === 'bottom') {
             pos.left = Math.max(8 /*安全边距*/, pos.left);
-            const upDelta = offsetHeight + popupElement.offsetHeight + differ;
-            pos = this._calPositionY(pos, upDelta, popupElement, point, offsetHeight);
+            const upDelta = hostRect.height + popupRect.height + differ;
+            pos = this._calPositionY(pos, upDelta, popupElement, point, hostRect.height);
         } else if (this.jigsawFloatPosition === 'left' || this.jigsawFloatPosition === 'right') {
             pos.top = Math.max(8 /*安全边距*/, pos.top);
-            const leftDelta = popupElement.offsetWidth + offsetWidth + differ + 8 /*安全边距*/;
-            pos = this._calPositionX(pos, leftDelta, popupElement, point, offsetWidth);
+            const leftDelta = popupRect.width + hostRect.width + differ + 8 /*安全边距*/;
+            pos = this._calPositionX(pos, leftDelta, popupElement, point, hostRect.width);
         }
         return pos;
     }
@@ -741,6 +755,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             // 可视区域比弹出的UI宽度还小就不要调整了
             return pos;
         }
+        const popupRect = popupElement.getBoundingClientRect();
         const totalWidth = window.pageXOffset + document.body.clientWidth;
         // 宿主组件在可视范围外
         const atLeft = this.jigsawFloatPosition == 'topLeft' || this.jigsawFloatPosition == 'bottomLeft' || this.jigsawFloatPosition == 'left';
@@ -750,10 +765,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         } else if (point.x + offsetWidth > totalWidth && atRight && point.x >= leftDelta) {
             pos.left -= offsetWidth;
         }
-        if (pos.left < 0 && pos.left + leftDelta + popupElement.offsetWidth <= totalWidth) {
+        if (pos.left < 0 && pos.left + leftDelta + popupRect.width <= totalWidth) {
             // 左边位置不够且右边位置足够的时候才做调整
             pos.left += leftDelta;
-        } else if (pos.left + popupElement.offsetWidth > totalWidth && pos.left >= leftDelta) {
+        } else if (pos.left + popupRect.width > totalWidth && pos.left >= leftDelta) {
             // 右边位置不够且左边位置足够的时候才做调整
             pos.left -= leftDelta;
         }
@@ -765,6 +780,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             // 可视区域比弹出的UI高度还小就不要调整了
             return pos;
         }
+        const popupRect = popupElement.getBoundingClientRect();
         const totalHeight = window.pageYOffset + document.body.clientHeight;
 
         // 宿主组件在可视范围外
@@ -775,10 +791,10 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
         } else if (point.y + offsetHeight > totalHeight && atBottom && point.y >= upDelta) {
             pos.top -= offsetHeight;
         }
-        if (pos.top < 0 && pos.top + upDelta + popupElement.offsetHeight <= totalHeight) {
+        if (pos.top < 0 && pos.top + upDelta + popupRect.height <= totalHeight) {
             // 上位置不够且下方位置足够的时候才做调整
             pos.top += upDelta;
-        } else if (pos.top + popupElement.offsetHeight > totalHeight && pos.top >= upDelta) {
+        } else if (pos.top + popupRect.height > totalHeight && pos.top >= upDelta) {
             // 下方位置不够且上方位置足够的时候才做调整
             pos.top -= upDelta;
         }

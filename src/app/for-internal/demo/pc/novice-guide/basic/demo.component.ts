@@ -109,7 +109,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             {notice: '这是一个使用attribute的示例', tagName: 'div', id: "ad", position: 'left'},
             {
                 notice: '这是指引使用了delay，应该晚一点才出现', tagName: 'i', position: "right",
-                classes: 'jigsaw-nav-menu-toggle-button-arrow', delay: 1000
+                classes: 'jigsaw-nav-menu-toggle-button-arrow', delay: 1000, width: '250px'
             },
         ],
         version: 'v0.0.1'
@@ -133,7 +133,7 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
             {notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', position: 'left'},
             {
                 notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', position: "top",
-                innerText: /All Rights Reserved/, classes: 'footer copyright',
+                innerText: /All Rights Reserved/, classes: 'footer copyright', width: '250px'
             }
         ],
         version: 'v0.0.1'
@@ -155,7 +155,10 @@ export class JigsawNoviceGuideBasicDemoComponent implements OnInit {
                 tagName: 'ul', id: 'header-menu', position: 'bottom', delay: 1000
             },
             {notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', id: 'ad', position: 'left'},
-            {notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本', tagName: 'div', classes: 'footer copyright', position: 'top'}
+            {
+                notice: '这是一条对话框新手指引', title: '自定义标题', button: '自定义按钮文本',
+                tagName: 'div', classes: 'footer copyright', position: 'top', width: '250px'
+            }
         ],
         version: 'v0.0.1'
     };

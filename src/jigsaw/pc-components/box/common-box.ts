@@ -282,7 +282,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             return fs;
         }, 0);
 
-        return sizes.map(size => size / (this.parent.element[sizeProp] - fixedSize) * 100);
+        return sizes.map(size => size / (this.parent.element.getBoundingClientRect()[sizeProp] - fixedSize) * 100);
     }
 
     /**
@@ -302,7 +302,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             }
             return arr;
         }, []);
-        offsets.push(this.parent.element[sizeProp]);
+        offsets.push(this.parent.element.getBoundingClientRect()[sizeProp]);
         return offsets;
     }
 
@@ -318,7 +318,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     protected _getPropertyByDirection(): string[] {
         return [this.parent.direction == 'column' ? 'top' : 'left',
-            this.parent.direction == 'column' ? 'offsetHeight' : 'offsetWidth']
+            this.parent.direction == 'column' ? 'height' : 'width']
     }
 
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
@@ -326,9 +326,10 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const curIndex = this._getCurrentIndex();
         const childrenBox = this.parent.childrenBox.toArray();
         const prevBox = childrenBox[curIndex - 1], curBox = childrenBox[curIndex];
+        const scale = CommonUtils.getScale(this.element);
         return [
-            this._rawOffsets[curIndex] - this._getBoxGrowSize(prevBox),
-            this._rawOffsets[curIndex] + this._getBoxGrowSize(curBox)
+            this._rawOffsets[curIndex] - this._getBoxGrowSize(prevBox) * scale,
+            this._rawOffsets[curIndex] + this._getBoxGrowSize(curBox) * scale
         ];
     }
 

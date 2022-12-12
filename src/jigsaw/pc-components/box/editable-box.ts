@@ -231,15 +231,16 @@ export class JigsawEditableBox extends JigsawBox {
             this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'none');
             return;
         }
-        const reverseInsertResult = this._reverseInsert(mousePos);
-        return reverseInsertResult ? reverseInsertResult : this._normalInsert(mousePos);
+        const globalScale = CommonUtils.getScale(this.element);
+        const reverseInsertResult = this._reverseInsert(mousePos, globalScale);
+        return reverseInsertResult ? reverseInsertResult : this._normalInsert(mousePos, globalScale);
     }
 
     /**
      * 判断插入方向，如果和父box不是一个方向，则分 before, after
      * @private
      */
-    private _reverseInsert(mousePos: { x: number, y: number }): BoxInsertPosition {
+    private _reverseInsert(mousePos: { x: number, y: number }, globalScale: number = 1): BoxInsertPosition {
         let insertPos: 'before' | 'after';
         let lineOffset: number;
         if (!this._$childrenBox.length) {
@@ -279,7 +280,7 @@ export class JigsawEditableBox extends JigsawBox {
                 this.renderer.addClass(this._insertionLine.nativeElement, 'jigsaw-editable-box-insert-line-column');
             }
             // offset值需要设置缩放之前的值
-            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'left' : 'top', lineOffset / this._getDirectScale(true) + 'px');
+            this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'left' : 'top', lineOffset / this._getDirectScale(true) / globalScale + 'px');
             this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'top' : 'left', (this.direction == 'column' ? this.element.scrollTop : this.element.scrollLeft) + 'px');
             this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'block');
         }, 350);
@@ -290,7 +291,7 @@ export class JigsawEditableBox extends JigsawBox {
         };
     }
 
-    private _normalInsert(mousePos: { x: number, y: number }): BoxInsertPosition {
+    private _normalInsert(mousePos: { x: number, y: number }, globalScale: number = 1): BoxInsertPosition {
         const posProp = this.direction == 'column' ? 'y' : 'x';
         const sizeProp = this.direction == 'column' ? 'height' : 'width';
         const mouseDirectPos = mousePos[posProp];
@@ -310,7 +311,7 @@ export class JigsawEditableBox extends JigsawBox {
             const insertOffset = this._getInsertOffset(endBoxIndex, posProp, sizeProp);
             // offset值需要设置缩放之前的值
             this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'top' : 'left',
-                (insertOffset / this._getDirectScale()) + 'px');
+                (insertOffset / this._getDirectScale() / globalScale) + 'px');
             this.renderer.setStyle(this._insertionLine.nativeElement, this.direction == 'column' ? 'left' : 'top',
                 (this.direction == 'column' ? this.element.scrollLeft : this.element.scrollTop) + 'px');
             this.renderer.setStyle(this._insertionLine.nativeElement, 'display', 'block');
@@ -407,7 +408,7 @@ export class JigsawEditableBox extends JigsawBox {
             // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
             sizes[index] = sizes[index] - parentPaddingSize - paddingSize - marginSize - borderSize;
         });
-        return [sizes, sizes.map(size => size / this.parent.element[sizeProp] * 100)];
+        return [sizes, sizes.map(size => size / this.parent.element.getBoundingClientRect()[sizeProp] * 100)];
     }
 
     /**
