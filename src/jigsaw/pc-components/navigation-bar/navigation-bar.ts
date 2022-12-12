@@ -100,5 +100,4 @@ export class JigsawNavigationBar extends AbstractJigsawComponent {
     exports: [JigsawNavigationBar]
 })
 export class JigsawNavigationBarModule {
-
 }

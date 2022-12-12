@@ -7,7 +7,10 @@ import { JigsawNavigationBarPrestDemoComponent } from "./preset/demo.component";
 
 export const routerConfig = [
     { path: "basic", component: JigsawNavigationBarBasicDemoComponent },
-    { path: "preset", component: JigsawNavigationBarPrestDemoComponent }
+    { path: "preset", component: JigsawNavigationBarPrestDemoComponent },
+    {
+        desc: 'navigation-menu', url: '/pc/menu/navigation', path: ''
+    },
 ];
 
 @NgModule({
