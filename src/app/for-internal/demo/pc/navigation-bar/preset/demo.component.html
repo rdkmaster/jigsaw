@@ -1,0 +1,12 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="demo-container">
+    <jigsaw-header>预设背景</jigsaw-header>
+    <jigsaw-button-bar [(selectedItems)]="selectedBackground" [data]="backgroundData"></jigsaw-button-bar>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        [background]="selectedBackground[0].label">
+    </jigsaw-navigation-bar>
+    <span>已选背景：</span><span>{{selectedBackground[0].label}}</span>
+</div>

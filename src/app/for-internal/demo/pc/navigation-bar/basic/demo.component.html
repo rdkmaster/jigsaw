@@ -1,0 +1,48 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="demo-container">
+    <jigsaw-header>基础用法</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        (logoClick)="clickEvent('logo')" (navigationButtonClick)="clickEvent('导航按钮')" (titleClick)="clickEvent('功能标题')">
+    </jigsaw-navigation-bar>
+    <span>点击事件：{{eventTxt}}</span>
+
+    <jigsaw-header>不同配置</jigsaw-header>
+    <jigsaw-navigation-bar [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [logoSrc]="logoSrc" [logoAlt]="logoAlt">
+    </jigsaw-navigation-bar>
+
+    <jigsaw-header>无配置</jigsaw-header>
+    <jigsaw-navigation-bar></jigsaw-navigation-bar>
+
+    <jigsaw-header>设置不同背景</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-zte-blue"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-dark"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="#000000"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="green"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="linear-gradient(90deg, #e66465, #9198e5)"></jigsaw-navigation-bar>
+
+    <jigsaw-header>设置文本颜色</jigsaw-header>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="lightgoldenrodyellow" titleColor="#000" navigationButtonColor="#000"
+        navigationButtonBackground="rgba(0,0,0,0.2)"></jigsaw-navigation-bar>
+    <br>
+    <jigsaw-navigation-bar [title]="title" [navigationButton]="navigationButton" [logoSrc]="logoSrc" [logoAlt]="logoAlt"
+        background="preset-zte-blue" titleColor="red" navigationButtonColor="gray"></jigsaw-navigation-bar>
+</div>

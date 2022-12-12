@@ -1,0 +1,10 @@
+<div *ngIf="!!navigationButton" class="jigsaw-navigation-bar-icon" [style.color]="navigationButtonColor"
+    [style.background]="navigationButtonBackground" (click)="navigationButtonClick.emit()">
+    <i class="{{navigationButton}}"></i>
+</div>
+<img *ngIf="!!logoSrc" class="jigsaw-navigation-bar-logo" [src]="logoSrc" [alt]="logoAlt" (click)="logoClick.emit()">
+<div *ngIf="!!title" class="jigsaw-navigation-bar-title" [style.color]="titleColor" (click)="titleClick.emit()">
+    {{title}}</div>
+<div class="jigsaw-navigation-bar-content">
+    <ng-content></ng-content>
+</div>

@@ -91,6 +91,7 @@ export * from "./pc-components/tree/ztree-types";
 export * from "./pc-components/upload/index";
 export * from "./pc-components/viewport/viewport";
 export * from "./pc-components/menu/index";
+export * from "./pc-components/navigation-bar/navigation-bar";
 export * from "./pc-components/color-select/index";
 export * from "./pc-components/process-status/index";
 export * from "./pc-components/toast/toast";
