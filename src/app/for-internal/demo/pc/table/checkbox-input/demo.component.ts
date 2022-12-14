@@ -54,8 +54,8 @@ export class TableCheckBoxInputDemoComponent {
                 tooltip: TableValueGenerators.originCellDataGenerator,
                 editorRenderer: TableCellTextEditorRenderer,
                 editorRendererInitData: {
-                    valid: (td, row, col) => {
-                        return !this.checkFields?.includes(td.data[row][5]) || td.data[row][col];
+                    valid: (td, row, col, inputVal) => {
+                        return !this.checkFields?.includes(td.data[row][5]) || !!inputVal;
                     },
                     clearable: false,
                 },

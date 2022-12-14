@@ -227,7 +227,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 @Component({
     template: `
         <jigsaw-input [theme]="theme" #input [(value)]="cellData" width="100%" height="28px" [placeholder]="_$placeholder"
-                      (valueChange)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password" [valid]="_$valid"
+                      (blur)="dispatchChangeEvent(cellData)" [icon]="_$icon" [password]="_$password" [valid]="_$valid"
                       [preIcon]="_$preIcon" [clearable]="_$clearable" [disabled]="_$disabled" tabindex="-1" style="outline: none">
         </jigsaw-input>
     `,
@@ -260,15 +260,22 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
         return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
     }
 
+    protected _calcInitProperty(property: string, defaultValue: boolean): boolean {
+        if (!this.initData || !this.initData.hasOwnProperty(property)) {
+            return defaultValue;
+        }
+        if (typeof this.initData[property] == 'function') {
+            const inputVal = CommonUtils.isUndefined(this._input) ? '' : this._input.value;
+            return !!this.initData[property](this.tableData, this.row, this.column, inputVal);
+        }
+        return !!this.initData[property];
+    }
+
     private _removeListener: Function;
-    private _tableEditSubscription: Subscription;
     private _additionalDataSubscription: Subscription;
 
     ngAfterViewInit() {
         if (this.editorMode == 'always-show') {
-            this._tableEditSubscription = this.hostInstance.edit.subscribe(() => {
-                this._cdr.markForCheck();
-            })
             if (this.hostInstance.additionalColumnDefines) {
                 this._additionalDataSubscription = this.hostInstance.additionalDataChange.subscribe(() => {
                     this._cdr.markForCheck();
@@ -286,8 +293,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._tableEditSubscription?.unsubscribe();
-        this._additionalDataSubscription?.unsubscribe()
+        this._additionalDataSubscription?.unsubscribe();
         if (this._removeListener) {
             this._removeListener();
             this._removeListener = null;
