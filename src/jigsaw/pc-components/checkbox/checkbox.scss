@@ -23,7 +23,6 @@ $jigsaw-checkbox: #{$jigsaw-prefix}-checkbox;
         outline: none;
         font-size: $font-size-text-base;
         line-height: 1;
-        user-select: none;
         cursor: pointer;
         &:not(:last-child) {
             margin-right: 8px;

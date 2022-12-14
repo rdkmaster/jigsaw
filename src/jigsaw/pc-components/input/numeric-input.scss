@@ -6,7 +6,6 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
     height: $height-base;
     font-size: $font-size-text-base;
     border-radius: $border-radius-base;
-    user-select: none;
 
     .#{$jigsaw-numeric-input}-container {
         display: flex;
