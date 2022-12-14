@@ -100,6 +100,7 @@ import { ApiListDemoModule } from "./demo/api-list/demo.module";
 import { IconsDemoComponent } from "./ued/icons/icons";
 import { CommonModule } from "@angular/common";
 import {InternalDemoModule} from "./demo/internal-demo/demo.module";
+import { NavigationBarDemoModule } from "./demo/navigation-bar/demo.module";
 
 @NgModule({
     declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent, IconsDemoComponent],
@@ -204,7 +205,8 @@ import {InternalDemoModule} from "./demo/internal-demo/demo.module";
         ApiListDemoModule,
         InternalDemoModule,
         JigsawSearchInputModule,
-        CommonModule
+        CommonModule,
+        NavigationBarDemoModule
     ],
     providers: [
         {

@@ -71,6 +71,7 @@ import { IntroduceComponent } from "./ued/introduce/introduce";
 import { QuickStartDemoComponent } from "./demo/quick-start/demo.component";
 import { ApiListComponent } from "./demo/api-list/demo.component";
 import {InternalDemoComponent} from "./demo/internal-demo/demo.component";
+import { NavigationBarAllDemoComponent } from "./demo/navigation-bar/demo.component";
 
 export const componentGroup = {
     start: '开始',
@@ -147,6 +148,7 @@ export const routerConfigPC = [
     { path: "dialog", component: DialogDemoComponent, group: componentGroup.message },
     { path: "loading", component: LoadingDemoComponent, group: componentGroup.service },
     { path: "navigation-menu", component: NavigationMenuAllDemoComponent, group: componentGroup.navigation },
+    { path: "navigation-bar", component: NavigationBarAllDemoComponent, group: componentGroup.navigation },
     { path: "notification", component: NotificationDemoComponent, group: componentGroup.message },
     { path: "toast", component: ToastDemoComponent, group: componentGroup.message },
     { path: "tooltip", component: TooltipDemoComponent, group: componentGroup.directive },
