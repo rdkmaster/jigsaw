@@ -272,10 +272,14 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     }
 
     private _removeListener: Function;
+    private _tableEditSubscription: Subscription;
     private _additionalDataSubscription: Subscription;
 
     ngAfterViewInit() {
         if (this.editorMode == 'always-show') {
+            this._tableEditSubscription = this.hostInstance.edit.subscribe(() => {
+                this._cdr.markForCheck();
+            })
             if (this.hostInstance.additionalColumnDefines) {
                 this._additionalDataSubscription = this.hostInstance.additionalDataChange.subscribe(() => {
                     this._cdr.markForCheck();
@@ -293,6 +297,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
 
     ngOnDestroy() {
         super.ngOnDestroy();
+        this._tableEditSubscription?.unsubscribe();
         this._additionalDataSubscription?.unsubscribe();
         if (this._removeListener) {
             this._removeListener();
