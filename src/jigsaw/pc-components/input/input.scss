@@ -4,6 +4,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     @include inline-block();
     height: $height-base;
     font-size: $font-size-text-base;
+    border-radius: $border-radius-base;
     overflow: hidden;
 
     .#{$jigsaw-input}-container {
