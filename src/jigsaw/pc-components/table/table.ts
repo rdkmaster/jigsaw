@@ -166,7 +166,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public columnResizable: boolean = false;
 
     /**
-     * @NoMarkForCheckRequired
+     * @internal
      */
     public _$onResize: boolean = false;
 
