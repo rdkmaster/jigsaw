@@ -63,7 +63,7 @@ import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
         '[class.jigsaw-table-column-resizable]': 'columnResizable',
-        '[class.jigsaw-table-on-resize]': '_onResize'
+        '[class.jigsaw-table-on-resize]': '_$onResize'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -165,7 +165,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public columnResizable: boolean = false;
 
-    private _onResize: boolean = false;
+    /**
+     * @NoMarkForCheckRequired
+     */
+    public _$onResize: boolean = false;
 
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
@@ -197,7 +200,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _tableHeaderCell: QueryList<ElementRef>;
 
     public colResize(e:MouseEvent, index:number) {
-        this._onResize = true;
+        this._$onResize = true;
         const tableLeft = this._tableHeader.nativeElement.getBoundingClientRect().x;
         const preCell = this._tableHeaderCell.toArray()[index];
         const nextCell = this._tableHeaderCell.toArray()[index + 1];
@@ -210,7 +213,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         window.addEventListener('mousemove', mousemoveListener);
         window.addEventListener('mouseup', (e:MouseEvent) => {
-            this._onResize = false;
+            this._$onResize = false;
             window.removeEventListener("mousemove", mousemoveListener);
             const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
             const preWidth = calcLeft - preCellLeft;
