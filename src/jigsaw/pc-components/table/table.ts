@@ -61,7 +61,9 @@ import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
-        '[class.jigsaw-table-ff]': '_$isFFBrowser'
+        '[class.jigsaw-table-ff]': '_$isFFBrowser',
+        '[class.jigsaw-table-column-resizable]': 'columnResizable',
+        '[class.jigsaw-table-on-resize]': '_onResize'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -157,6 +159,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public columnResizable: boolean = false;
+
+    private _onResize: boolean = false;
+
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
     @Output()
@@ -175,6 +185,52 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return '';
         }
         return tableData.header[index];
+    }
+
+    @ViewChild('columnResizeLine')
+    private _columnResizeLine: ElementRef;
+
+    @ViewChild('tableHeader')
+    private _tableHeader: ElementRef;
+
+    @ViewChildren('tableHeaderCell', {read: ElementRef})
+    private _tableHeaderCell: QueryList<ElementRef>;
+
+    public colResize(e:MouseEvent, index:number) {
+        this._onResize = true;
+        const tableLeft = this._tableHeader.nativeElement.getBoundingClientRect().x;
+        const preCell = this._tableHeaderCell.toArray()[index];
+        const nextCell = this._tableHeaderCell.toArray()[index + 1];
+        const preCellLeft = preCell.nativeElement.getBoundingClientRect().x;
+        const nextCellRight = nextCell.nativeElement.getBoundingClientRect().right;
+        this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', e.x - tableLeft + 'px');
+        const mousemoveListener = (e:MouseEvent) => {
+            const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
+            this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', calcLeft - tableLeft + 'px');
+        }
+        window.addEventListener('mousemove', mousemoveListener);
+        window.addEventListener('mouseup', (e:MouseEvent) => {
+            this._onResize = false;
+            window.removeEventListener("mousemove", mousemoveListener);
+            const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
+            const preWidth = calcLeft - preCellLeft;
+            const nextWidth = nextCellRight - calcLeft;
+            this._updateColumnWidth(index,preWidth,nextWidth);
+            this.resize();
+        }, { once: true });
+    }
+
+    @ViewChildren('tableHeaderColgroup', { read: ElementRef })
+    private _tableHeaderColgroup: QueryList<ElementRef>;
+
+    @ViewChildren('tableBodyHeaderColgroup', { read: ElementRef })
+    private _tableBodyHeaderColgroup: QueryList<ElementRef>;
+
+    private _updateColumnWidth(index: number, preWidth: number, nextWidth: number) {
+        this._renderer.setStyle(this._tableHeaderColgroup.toArray()[index].nativeElement, 'width', preWidth + 'px');
+        this._renderer.setStyle(this._tableHeaderColgroup.toArray()[index + 1].nativeElement, 'width', nextWidth + 'px');
+        this._renderer.setStyle(this._tableBodyHeaderColgroup.toArray()[index].nativeElement, 'width', preWidth + 'px');
+        this._renderer.setStyle(this._tableBodyHeaderColgroup.toArray()[index + 1].nativeElement, 'width', nextWidth + 'px');
     }
 
     /**
@@ -438,6 +494,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const columnDefines = this._getMixedColumnDefines();
         this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
+        console.log(this._$headerSettings);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
 

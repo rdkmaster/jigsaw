@@ -245,6 +245,42 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             cursor: pointer;
         }
     }
+
+    .#{$jigsaw-table}-column-resize-line {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        display: none;
+        width: 0;
+        z-index: 10;
+    }
+
+    &.#{$jigsaw-table}-column-resizable {
+        table thead tr td {
+            position: relative;
+
+            .column-resize-handler {
+                position: absolute;
+                top: 0;
+                right: -1px;
+                width: 2px;
+                height: 100%;
+                cursor: col-resize;
+                z-index: 1;
+            }
+        }
+
+    }
+
+    &.#{$jigsaw-table}-on-resize {
+        user-select: none;
+
+        .#{$jigsaw-table}-column-resize-line {
+            display: block;
+            border-left: 2px dashed $brand-default;
+        }
+    }
 }
 
 @-moz-document url-prefix() {

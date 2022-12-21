@@ -1,13 +1,13 @@
 <div class="jigsaw-table-range" #contentScrollbar
      [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}"
      [class.jigsaw-table-hide-head]="hideHeader">
-    <table class="jigsaw-table-header" [hidden]="hideHeader">
+    <table #tableHeader class="jigsaw-table-header" [hidden]="hideHeader">
         <colgroup>
-            <col *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
+            <col #tableHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
         </colgroup>
         <thead>
         <tr>
-            <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}"
+            <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index" class="{{head.clazz}}"
             [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
                         'jigsaw-cell-align-center': head.alignment === 'center',
                         'jigsaw-cell-align-right': head.alignment === 'right',
@@ -29,6 +29,7 @@
                                      [headerTrustedHtmlContext]="head.innerHtmlContext"
                                      [hostInstance]="this">
                 </jigsaw-table-header>
+                <div *ngIf="columnResizable && !last" class="column-resize-handler" (mousedown)="colResize($event, index)"></div>
             </td>
         </tr>
         </thead>
@@ -42,7 +43,7 @@
          </div>
         <table class="jigsaw-table-body">
             <colgroup>
-                <col *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
+                <col #tableBodyHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
             <thead *ngIf="_$isFFBrowser">
                 <tr>
@@ -104,4 +105,5 @@
             </tbody>
         </table>
     </div>
+    <div #columnResizeLine class="jigsaw-table-column-resize-line"></div>
 </div>
