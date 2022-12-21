@@ -497,7 +497,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const columnDefines = this._getMixedColumnDefines();
         this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
-        console.log(this._$headerSettings);
         this._updateCellSettings(columnDefines);
         this._changeDetectorRef.detectChanges();
 
