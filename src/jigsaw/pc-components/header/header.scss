@@ -2,13 +2,15 @@ $header-prefix-cls: #{$jigsaw-prefix}-header;
 
 .#{$header-prefix-cls}-host {
     display: flex;
+    color: $font-color-heading;
+
     &.#{$header-prefix-cls}-level-1 {
         .#{$header-prefix-cls}-content {
             display: flex;
             align-items: center;
             font-size: $font-title-lg;
             font-weight: bold;
-            color: $font-color-heading;
+            color: inherit;
             line-height: 32px;
         }
     }
@@ -20,7 +22,7 @@ $header-prefix-cls: #{$jigsaw-prefix}-header;
             align-items: center;
             font-size: $font-title-med;
             font-weight: bold;
-            color: $font-color-heading;
+            color: inherit;
             line-height: 22px;
 
             &::before {
@@ -40,7 +42,7 @@ $header-prefix-cls: #{$jigsaw-prefix}-header;
             align-items: center;
             font-size: $font-title-sm;
             font-weight: bold;
-            color: $font-color-heading;
+            color: inherit;
             line-height: 18px;
         }
     }
