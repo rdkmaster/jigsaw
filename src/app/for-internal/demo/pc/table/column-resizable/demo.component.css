@@ -1,1 +1,18 @@
-.demo-options {}
+.demo-scale {
+    transform: scale(1.5);
+    transform-origin: top left;
+}
+
+.demo-scale-2 {
+    transform: scale(0.8);
+    transform-origin: top left;
+}
+
+.demo-options li {
+    display: flex;
+}
+
+.demo-options li>* {
+    margin-right: 8px;
+    margin-bottom: 8px;
+}

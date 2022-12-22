@@ -199,26 +199,27 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableHeaderCell', {read: ElementRef})
     private _tableHeaderCell: QueryList<ElementRef>;
 
-    public colResize(e:MouseEvent, index:number) {
+    public colResize(e: MouseEvent, index: number) {
         this._$onResize = true;
         const tableLeft = this._tableHeader.nativeElement.getBoundingClientRect().x;
+        const scaleRatio = this._tableHeader.nativeElement.getBoundingClientRect().width / this._tableHeader.nativeElement.offsetWidth;
         const preCell = this._tableHeaderCell.toArray()[index];
         const nextCell = this._tableHeaderCell.toArray()[index + 1];
         const preCellLeft = preCell.nativeElement.getBoundingClientRect().x;
         const nextCellRight = nextCell.nativeElement.getBoundingClientRect().right;
-        this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', e.x - tableLeft + 'px');
-        const mousemoveListener = (e:MouseEvent) => {
+        this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', (e.x - tableLeft) / scaleRatio + 'px');
+        const mousemoveListener = (e: MouseEvent) => {
             const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
-            this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', calcLeft - tableLeft + 'px');
+            this._renderer.setStyle(this._columnResizeLine.nativeElement, 'left', (calcLeft - tableLeft) / scaleRatio + 'px');
         }
         window.addEventListener('mousemove', mousemoveListener);
-        window.addEventListener('mouseup', (e:MouseEvent) => {
+        window.addEventListener('mouseup', (e: MouseEvent) => {
             this._$onResize = false;
             window.removeEventListener("mousemove", mousemoveListener);
             const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
-            const preWidth = calcLeft - preCellLeft;
-            const nextWidth = nextCellRight - calcLeft;
-            this._updateColumnWidth(index,preWidth,nextWidth);
+            const preWidth = (calcLeft - preCellLeft) / scaleRatio;
+            const nextWidth = (nextCellRight - calcLeft) / scaleRatio;
+            this._updateColumnWidth(index, preWidth, nextWidth);
             this.resize();
         }, { once: true });
     }

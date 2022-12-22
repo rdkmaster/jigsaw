@@ -11,11 +11,20 @@
             <jigsaw-switch [(checked)]="columnResizable"></jigsaw-switch>
         </li>
         <li>
+            <span>缩放1.5</span>
+            <jigsaw-switch [(checked)]="demoScale"></jigsaw-switch>
+        </li>
+        <li>
+            <span>缩放0.8</span>
+            <jigsaw-switch [(checked)]="demoScale2"></jigsaw-switch>
+        </li>
+        <li>
             <jigsaw-button (click)="columnVisible(0)">第 1 列{{columns[0].visible ? '隐藏' : '显示'}}</jigsaw-button>
             <jigsaw-button (click)="columnVisible(1)">第 2 列{{columns[1].visible ? '隐藏' : '显示'}}</jigsaw-button>
             <jigsaw-button (click)="columnVisible(2)">第 3 列{{columns[2].visible ? '隐藏' : '显示'}}</jigsaw-button>
         </li>
     </ul>
 </div>
-
-<jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns"></jigsaw-table>
+<div [ngClass]="{'demo-scale': demoScale, 'demo-scale-2': demoScale2}">
+    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns"></jigsaw-table>
+</div>

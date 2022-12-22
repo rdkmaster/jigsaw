@@ -7,9 +7,11 @@ import { TableData, ColumnDefine } from "jigsaw/public_api";
     styleUrls: ['./demo.component.css']
 })
 export class TableColumnResizableDemoComponent {
-    tableData: TableData;
+    public tableData: TableData;
 
     public columnResizable: boolean = true;
+    public demoScale: boolean = false;
+    public demoScale2: boolean = false;
     public columnIndex: number = 1;
     public columnVisible(index: number) {
         this.columns[index].visible = !this.columns[index].visible;
