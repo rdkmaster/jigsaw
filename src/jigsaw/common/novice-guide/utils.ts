@@ -98,7 +98,7 @@ export function closeNoviceGuideNotice(noticeKey: string, checkMask: boolean) {
     }
 
     if (checkMask) {
-        const dialogClone = document.querySelectorAll('.novice-guide-clone .dialog');
+        const dialogClone = document.querySelectorAll('.novice-guide-clone .novice-guide-dialog');
         const mask = document.getElementById('novice-guide-mask');
         if (mask) {
             mask.innerHTML = '';
@@ -148,7 +148,7 @@ export function relocateClone(target: HTMLElement, clone: HTMLElement, mask?: HT
         mask.innerHTML += `<rect x="${left}" y="${top}" width="${width}" height="${height}"/>`
     }
     const container = getGuideContainer(false);
-    if (container.classList.contains('wizard')) {
+    if (container.classList.contains('novice-guide-wizard')) {
         container.style.clipPath = `polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0, ${left}px ${top + height}px, ${left + width}px ${top + height}px, ${left + width}px ${top}px, ${left}px ${top}px, ${left}px ${top + height}px`
     }
 }
@@ -274,7 +274,7 @@ export function checkStyle(): void {
             z-index: var(--novice-guide-z-index, ${Number.MAX_SAFE_INTEGER});
         }
 
-        #novice-guide-container.wizard {
+        #novice-guide-container.novice-guide-wizard {
             background: #00000099;
         }
 
@@ -297,7 +297,7 @@ export function checkStyle(): void {
             z-index: 1;
         }
 
-        .novice-guide-clone .bubble {
+        .novice-guide-clone .novice-guide-bubble {
             position: relative;
             width: 8px;
             height: 8px;
@@ -305,58 +305,58 @@ export function checkStyle(): void {
             outline: 2px solid var(--brand-default, #1a93ff);
         }
 
-        .novice-guide-clone .bubble .line {
+        .novice-guide-clone .novice-guide-bubble .novice-guide-line {
             position: absolute;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .novice-guide-clone .bubble .line>div {
+        .novice-guide-clone .novice-guide-bubble .novice-guide-line>div {
             background: var(--brand-default, #1a93ff);
         }
 
-        .novice-guide-clone .bubble.bubble-bottom .line {
+        .novice-guide-clone .novice-guide-bubble.bubble-bottom .novice-guide-line {
             top: 8px;
             left: 0;
             width: 100%;
             height: 80px;
         }
 
-        .novice-guide-clone .bubble.bubble-top .line {
+        .novice-guide-clone .novice-guide-bubble.bubble-top .novice-guide-line {
             left: 0;
             bottom: 8px;
             width: 100%;
             height: 80px;
         }
 
-        .novice-guide-clone .bubble.bubble-bottom .line>div,
-        .novice-guide-clone .bubble.bubble-top .line>div {
+        .novice-guide-clone .novice-guide-bubble.bubble-bottom .novice-guide-line>div,
+        .novice-guide-clone .novice-guide-bubble.bubble-top .novice-guide-line>div {
             width: 1px;
             height: 100%;
         }
 
-        .novice-guide-clone .bubble.bubble-right .line {
+        .novice-guide-clone .novice-guide-bubble.bubble-right .novice-guide-line {
             top: 0;
             left: 8px;
             width: 80px;
             height: 100%;
         }
 
-        .novice-guide-clone .bubble.bubble-left .line {
+        .novice-guide-clone .novice-guide-bubble.bubble-left .novice-guide-line {
             top: 0;
             right: 8px;
             width: 80px;
             height: 100%;
         }
 
-        .novice-guide-clone .bubble.bubble-right .line>div,
-        .novice-guide-clone .bubble.bubble-left .line>div {
+        .novice-guide-clone .novice-guide-bubble.bubble-right .novice-guide-line>div,
+        .novice-guide-clone .novice-guide-bubble.bubble-left .novice-guide-line>div {
             width: 100%;
             height: 1px;
         }
 
-        .novice-guide-clone .bubble .notice-cntr {
+        .novice-guide-clone .novice-guide-bubble .notice-cntr {
             position: absolute;
             display: flex;
             justify-content: flex-start;
@@ -368,40 +368,40 @@ export function checkStyle(): void {
             box-shadow: var(--box-shadow-lv3, 0px 5px 12px rgba(0, 0, 0, 0.12));
         }
 
-        .novice-guide-clone .bubble .notice-cntr .text {
+        .novice-guide-clone .novice-guide-bubble .notice-cntr .novice-guide-text {
             width: 95%;
             color: #fff;
             font-size: var(--font-size-text-base, 12px);
         }
 
-        .novice-guide-clone .bubble .notice-cntr .close {
+        .novice-guide-clone .novice-guide-bubble .notice-cntr .novice-guide-close {
             color: #fff;
             cursor: pointer;
         }
 
-        .novice-guide-clone .bubble.bubble-bottom .notice-cntr {
+        .novice-guide-clone .novice-guide-bubble.bubble-bottom .notice-cntr {
             top: 88px;
             left: -192px;
         }
 
-        .novice-guide-clone .bubble.bubble-top .notice-cntr {
+        .novice-guide-clone .novice-guide-bubble.bubble-top .notice-cntr {
             bottom: 88px;
             left: -192px;
         }
 
-        .novice-guide-clone .bubble.bubble-right .notice-cntr {
+        .novice-guide-clone .novice-guide-bubble.bubble-right .notice-cntr {
             top: 50%;
             left: 88px;
             transform: translateY(-50%);
         }
 
-        .novice-guide-clone .bubble.bubble-left .notice-cntr {
+        .novice-guide-clone .novice-guide-bubble.bubble-left .notice-cntr {
             top: 50%;
             right: 88px;
             transform: translateY(-50%);
         }
 
-        .novice-guide-clone .dialog .notice-cntr {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr {
             position: absolute;
             width: 400px;
             padding: 16px;
@@ -409,25 +409,25 @@ export function checkStyle(): void {
             background: var(--bg-component, #f5f5f5);
         }
 
-        .novice-guide-clone .dialog .notice-cntr .title {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .novice-guide-title {
             position: relative;
             font-size: 14px;
             font-weight: bold;
         }
 
-        .novice-guide-clone .dialog .notice-cntr .text {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .novice-guide-text {
             min-height: 64px;
             font-size: var(--font-size-text-base, 12px);
         }
 
-        .novice-guide-clone .dialog .notice-cntr .button-cntr {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .button-cntr {
             position: relative;
             display: flex;
             justify-content: flex-end;
             align-items: center;
         }
 
-        .novice-guide-clone .dialog .notice-cntr .button-cntr .progress {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .button-cntr .progress {
             position: absolute;
             top: 0;
             left: 0;
@@ -436,14 +436,14 @@ export function checkStyle(): void {
             height: 32px;
         }
 
-        .novice-guide-clone .dialog .notice-cntr .title .close-arrow {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .novice-guide-title .close-arrow {
             position: absolute;
             top: 0;
             right: 0;
             cursor: pointer;
         }
 
-        .novice-guide-clone .dialog .notice-cntr .button {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .novice-guide-button {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -457,7 +457,7 @@ export function checkStyle(): void {
             cursor: pointer;
         }
 
-        .novice-guide-clone .dialog .notice-cntr::after {
+        .novice-guide-clone .novice-guide-dialog .notice-cntr::after {
             content: '';
             position: absolute;
             background: var(--bg-component, #f5f5f5);
@@ -467,73 +467,73 @@ export function checkStyle(): void {
             z-index: -1;
         }
 
-        .novice-guide-clone .dialog.dialog-right .notice-cntr {
+        .novice-guide-clone .novice-guide-dialog.dialog-right .notice-cntr {
             top: 50%;
             left: calc(100% + 20px);
             transform: translateY(-50%);
         }
 
-        .novice-guide-clone .dialog.dialog-right .notice-cntr::after {
+        .novice-guide-clone .novice-guide-dialog.dialog-right .notice-cntr::after {
             top: 50%;
             left: -10px;
             margin-top: -10px;
         }
 
-        .novice-guide-clone .dialog.dialog-left .notice-cntr {
+        .novice-guide-clone .novice-guide-dialog.dialog-left .notice-cntr {
             top: 50%;
             right: calc(100% + 20px);
             transform: translateY(-50%);
         }
 
-        .novice-guide-clone .dialog.dialog-left .notice-cntr::after {
+        .novice-guide-clone .novice-guide-dialog.dialog-left .notice-cntr::after {
             top: 50%;
             right: -10px;
             margin-top: -10px;
         }
 
-        .novice-guide-clone .dialog.dialog-bottom .notice-cntr {
+        .novice-guide-clone .novice-guide-dialog.dialog-bottom .notice-cntr {
             top: calc(100% + 20px);
             left: 50%;
             transform: translateX(-50%);
         }
 
-        .novice-guide-clone .dialog.dialog-bottom .notice-cntr::after {
+        .novice-guide-clone .novice-guide-dialog.dialog-bottom .notice-cntr::after {
             top: -10px;
             left: 50%;
             margin-left: -5px;
         }
 
-        .novice-guide-clone .dialog.dialog-top .notice-cntr {
+        .novice-guide-clone .novice-guide-dialog.dialog-top .notice-cntr {
             bottom: calc(100% + 20px);
             left: 50%;
             transform: translateX(-50%);
         }
 
-        .novice-guide-clone .dialog.dialog-top .notice-cntr::after {
+        .novice-guide-clone .novice-guide-dialog.dialog-top .notice-cntr::after {
             bottom: -10px;
             left: 50%;
             margin-left: -5px;
         }
 
-        .novice-guide-clone .wizard {
+        .novice-guide-clone .novice-guide-wizard {
             position: absolute;
             width: 300px;
         }
 
-        .novice-guide-clone .wizard .arrow-cntr {
+        .novice-guide-clone .novice-guide-wizard .arrow-cntr {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 50px;
         }
 
-        .novice-guide-clone .wizard .arrow-cntr .arrow {
+        .novice-guide-clone .novice-guide-wizard .arrow-cntr .arrow {
             color: #fff;
             font-size: 24px;
             animation: 0.3s ease-out infinite alternate bounce_arrow;
         }
 
-        .novice-guide-clone .wizard .close {
+        .novice-guide-clone .novice-guide-wizard .novice-guide-close {
             position: absolute;
             top: 100%;
             left: 50%;
@@ -543,7 +543,7 @@ export function checkStyle(): void {
             cursor: pointer;
         }
 
-        .novice-guide-clone .wizard .notice-cntr {
+        .novice-guide-clone .novice-guide-wizard .notice-cntr {
             position: relative;
             padding: 0 16px;
             color: #fff;
@@ -551,11 +551,11 @@ export function checkStyle(): void {
             text-align: center;
         }
 
-        .novice-guide-clone .wizard.wizard-bottom {
+        .novice-guide-clone .novice-guide-wizard.wizard-bottom {
             top: 100%;
         }
 
-        .novice-guide-clone .wizard.wizard-bottom .arrow-cntr {
+        .novice-guide-clone .novice-guide-wizard.wizard-bottom .arrow-cntr {
             transform: rotate(90deg);
         }
 

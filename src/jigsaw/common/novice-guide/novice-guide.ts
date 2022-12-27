@@ -158,23 +158,23 @@ function createBubbleOrDialogNotice(guide: NoviceGuide, notice: NoviceGuideNotic
     let html: string;
     if (guide.type === NoviceGuideType.bubble) {
         html = `
-            <div class="${guide.type} ${guide.type}-${notice.position}">
-                <div class="line">
+            <div class="novice-guide-${guide.type} ${guide.type}-${notice.position}">
+                <div class="novice-guide-line">
                     <div></div>
                 </div>
                 <div class="notice-cntr" ${style}>
-                    <div class="text">${notice.notice}</div>
-                    <i class="close iconfont iconfont-e14b"></i>
+                    <div class="novice-guide-text">${notice.notice}</div>
+                    <i class="novice-guide-close iconfont iconfont-e14b"></i>
                 </div>
             </div>`;
     } else if (guide.type === NoviceGuideType.dialog) {
         html = `
-            <div class="${guide.type} ${guide.type}-${notice.position}">
+            <div class="novice-guide-${guide.type} ${guide.type}-${notice.position}">
                 <div class="notice-cntr" ${style}>
-                    <div class="title">${notice.title}</div>
-                    <div class="text">${notice.notice}</div>
+                    <div class="novice-guide-title">${notice.title}</div>
+                    <div class="novice-guide-text">${notice.notice}</div>
                     <div class="button-cntr">
-                        <div class="close button">${notice.button}</div>
+                        <div class="novice-guide-close novice-guide-button">${notice.button}</div>
                     </div>
                 </div>
             </div>`;
@@ -183,7 +183,7 @@ function createBubbleOrDialogNotice(guide: NoviceGuide, notice: NoviceGuideNotic
     const cloneEle = createCloneElement(targetEle, notice.key);
     cloneEle.innerHTML = html;
     cloneEle.onclick = (e) => {
-        if (!(e.target as HTMLElement).classList.contains('close')) {
+        if (!(e.target as HTMLElement).classList.contains('novice-guide-close')) {
             return;
         }
         cloneEle.onclick = null;
@@ -203,22 +203,22 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
     const isLast = current === guide.notices.length - 1;
     let buttonHtml: string;
     if (current === 0) {
-        buttonHtml = `<div class="next button">下一步</div>`
+        buttonHtml = `<div class="novice-guide-next novice-guide-button">下一步</div>`
     } else if (isLast) {
-        buttonHtml = `<div class="pre button">上一步</div><div class="close button">结束</div>`
+        buttonHtml = `<div class="novice-guide-pre novice-guide-button">上一步</div><div class="novice-guide-close novice-guide-button">结束</div>`
     } else {
-        buttonHtml = `<div class="pre button">上一步</div><div class="next button">下一步</div>`
+        buttonHtml = `<div class="novice-guide-pre novice-guide-button">上一步</div><div class="novice-guide-next novice-guide-button">下一步</div>`
     }
 
     const cloneEle = createCloneElement(targetEle, notice.key);
     const style = notice.width ? `style="width: ${notice.width}"` : '';
     cloneEle.innerHTML = `
-        <div class="${NoviceGuideType.dialog} ${NoviceGuideType.dialog}-${notice.position}">
+        <div class="novice-guide-${NoviceGuideType.dialog} ${NoviceGuideType.dialog}-${notice.position}">
             <div class="notice-cntr" ${style}>
-                <div class="title">${notice.title}
-                    <div class="close iconfont iconfont-e14b close-arrow"></div>
+                <div class="novice-guide-title">${notice.title}
+                    <div class="novice-guide-close iconfont iconfont-e14b close-arrow"></div>
                 </div>
-                <div class="text">${notice.notice}</div>
+                <div class="novice-guide-text">${notice.notice}</div>
                 <div class="button-cntr">
                     <div class="progress">${current + 1}/${guide.notices.length}</div>
                     ${buttonHtml}
@@ -229,25 +229,25 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
 
     cloneEle.onclick = (e) => {
         // 处理提示里的叉叉按钮，鼠标点击了它后，鼠标事件冒泡到最外头被这个函数抓住
-        if ((e.target as HTMLElement).classList.contains('close')) {
+        if ((e.target as HTMLElement).classList.contains('novice-guide-close')) {
             cloneEle.onclick = null;
             closeNoviceGuideNotice(notice.key, true);
             saveShownGuide(guide, notice);
             return;
         }
 
-        if ((e.target as HTMLElement).classList.contains('next')) {
-            onClicked('next');
-        } else if ((e.target as HTMLElement).classList.contains('pre')) {
-            onClicked('pre');
+        if ((e.target as HTMLElement).classList.contains('novice-guide-next')) {
+            onClicked('novice-guide-next');
+        } else if ((e.target as HTMLElement).classList.contains('novice-guide-pre')) {
+            onClicked('novice-guide-pre');
         }
     };
 
     getGuideContainer(true).appendChild(cloneEle);
     resize();
 
-    function onClicked(type: 'pre' | 'next') {
-        const offset = type === 'pre' ? -1 : 1;
+    function onClicked(type: 'novice-guide-pre' | 'novice-guide-next') {
+        const offset = type === 'novice-guide-pre' ? -1 : 1;
         const nextNotice = guide.notices[current + offset];
         const target = queryNode(nextNotice);
         if (!target) {
@@ -267,20 +267,20 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
 
     const cloneEle = createCloneElement(targetEle, notice.key);
     cloneEle.innerHTML = `
-        <div class="${NoviceGuideType.wizard} ${NoviceGuideType.wizard}-${notice.position || 'bottom'}">
+        <div class="novice-guide-${NoviceGuideType.wizard} ${NoviceGuideType.wizard}-${notice.position || 'bottom'}">
             <div class="arrow-cntr">
                 <i class="arrow iconfont iconfont-e250"></i>
             </div>
             <div class="notice-cntr">
-                <div class="text">${notice.notice}</div>
-                <i class="close iconfont iconfont-e14b"></i>
+                <div class="novice-guide-text">${notice.notice}</div>
+                <i class="novice-guide-close iconfont iconfont-e14b"></i>
             </div>
         </div>
     `;
 
     const current = guide.notices.indexOf(notice);
     cloneEle.onclick = (e) => {
-        if (!(e.target as HTMLElement).classList.contains('close')) {
+        if (!(e.target as HTMLElement).classList.contains('novice-guide-close')) {
             return;
         }
         cloneEle.onclick = null;
@@ -304,7 +304,7 @@ function createWizardStep(guide: NoviceGuide, notice: NoviceGuideNotice, targetE
 
     const container = getGuideContainer(false);
     container.appendChild(cloneEle);
-    container.classList.add('wizard');
+    container.classList.add('novice-guide-wizard');
     resize();
 }
 
