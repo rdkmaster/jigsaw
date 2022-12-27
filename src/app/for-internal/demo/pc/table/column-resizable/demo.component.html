@@ -26,5 +26,9 @@
     </ul>
 </div>
 <div [ngClass]="{'demo-scale': demoScale, 'demo-scale-2': demoScale2}">
-    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns"></jigsaw-table>
+    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns"
+                  height="300px" width="98%"></jigsaw-table>
+    <br><br>
+    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns">
+    </jigsaw-table>
 </div>
