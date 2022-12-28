@@ -63,7 +63,7 @@ import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
         '[class.jigsaw-table-column-resizable]': 'columnResizable',
-        '[class.jigsaw-table-on-resize]': '_$onResize'
+        '[class.jigsaw-table-resizing]': '_$resizing'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -168,7 +168,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$onResize: boolean = false;
+    public _$resizing: boolean = false;
 
     @Output()
     public selectChange: EventEmitter<number> = new EventEmitter<number>();
@@ -199,10 +199,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableHeaderCell', {read: ElementRef})
     private _tableHeaderCell: QueryList<ElementRef>;
 
-    public colResize(e: MouseEvent, index: number) {
-        this._$onResize = true;
-        const tableLeft = this._tableHeader.nativeElement.getBoundingClientRect().x;
-        const scaleRatio = this._tableHeader.nativeElement.getBoundingClientRect().width / this._tableHeader.nativeElement.offsetWidth;
+    public resizeColumn(e: MouseEvent, index: number) {
+        this._$resizing = true;
+        const tablePos = this._tableHeader.nativeElement.getBoundingClientRect();
+        const tableLeft = tablePos.x;
+        const scaleRatio = tablePos.width / this._tableHeader.nativeElement.offsetWidth;
         const preCell = this._tableHeaderCell.toArray()[index];
         const nextCell = this._tableHeaderCell.toArray()[index + 1];
         const preCellLeft = preCell.nativeElement.getBoundingClientRect().x;
@@ -214,7 +215,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         window.addEventListener('mousemove', mousemoveListener);
         window.addEventListener('mouseup', (e: MouseEvent) => {
-            this._$onResize = false;
+            this._$resizing = false;
             window.removeEventListener("mousemove", mousemoveListener);
             const calcLeft = Math.min(Math.max(e.x, preCellLeft + 40), nextCellRight - 40);
             const preWidth = (calcLeft - preCellLeft) / scaleRatio;

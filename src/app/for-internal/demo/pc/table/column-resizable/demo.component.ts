@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { TableData, ColumnDefine } from "jigsaw/public_api";
+import { TableData, ColumnDefine, ArrayCollection } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,8 +10,12 @@ export class TableColumnResizableDemoComponent {
     public tableData: TableData;
 
     public columnResizable: boolean = true;
-    public demoScale: boolean = false;
-    public demoScale2: boolean = false;
+    public selectedScale = [{label: "1.0", id: 2}];
+    public scales = new ArrayCollection([
+        {label: "0.8", id: 1},
+        {label: "1.0", id: 2},
+        {label: "1.5", id: 3}
+    ]);
     public columnIndex: number = 1;
     public columnVisible(index: number) {
         this.columns[index].visible = !this.columns[index].visible;

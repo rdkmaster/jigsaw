@@ -8,6 +8,8 @@
     transform-origin: top left;
 }
 
+.demo-scale-3 {}
+
 .demo-options li {
     display: flex;
 }

@@ -263,8 +263,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             .column-resize-handler {
                 position: absolute;
                 top: 0;
-                right: -1px;
-                width: 2px;
+                right: -2px;
+                width: 4px;
                 height: 100%;
                 cursor: col-resize;
                 z-index: 1;
@@ -273,7 +273,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
     }
 
-    &.#{$jigsaw-table}-on-resize {
+    &.#{$jigsaw-table}-resizing {
         user-select: none;
 
         .#{$jigsaw-table}-column-resize-line {
