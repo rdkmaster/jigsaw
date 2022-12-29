@@ -29,7 +29,7 @@
                                      [headerTrustedHtmlContext]="head.innerHtmlContext"
                                      [hostInstance]="this">
                 </jigsaw-table-header>
-                <div *ngIf="columnResizable && !last" class="column-resize-handler" (mousedown)="resizeColumn($event, index)"></div>
+                <div *ngIf="columnResizable && !last" class="column-resize-handler" (mousedown)="_$resizeColumn($event, index)"></div>
             </td>
         </tr>
         </thead>

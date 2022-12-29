@@ -199,7 +199,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableHeaderCell', {read: ElementRef})
     private _tableHeaderCell: QueryList<ElementRef>;
 
-    public resizeColumn(e: MouseEvent, index: number) {
+    /**
+     * @internal
+     */
+    public _$resizeColumn(e: MouseEvent, index: number) {
         this._$resizing = true;
         const tablePos = this._tableHeader.nativeElement.getBoundingClientRect();
         const tableLeft = tablePos.x;
