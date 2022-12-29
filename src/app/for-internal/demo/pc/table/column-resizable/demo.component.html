@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="demo-options">
+    <ul>
+        <li>
+            <span>拖拽改变列宽</span>
+            <jigsaw-switch [(checked)]="columnResizable"></jigsaw-switch>
+        </li>
+        <li>
+            <span>缩放</span>
+            <jigsaw-button-bar [(selectedItems)]="selectedScale" [data]="scales">
+            </jigsaw-button-bar>
+        </li>
+        <li>
+            <jigsaw-button (click)="columnVisible(0)">第 1 列{{columns[0].visible ? '隐藏' : '显示'}}</jigsaw-button>
+            <jigsaw-button (click)="columnVisible(1)">第 2 列{{columns[1].visible ? '隐藏' : '显示'}}</jigsaw-button>
+            <jigsaw-button (click)="columnVisible(2)">第 3 列{{columns[2].visible ? '隐藏' : '显示'}}</jigsaw-button>
+        </li>
+    </ul>
+</div>
+<div [ngClass]="{'demo-scale': selectedScale[0].id == 3, 'demo-scale-2': selectedScale[0].id == 1, 'demo-scale-3': selectedScale[0].id == 2}">
+    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns" height="300px"
+        width="98%"></jigsaw-table>
+    <br><br>
+    <jigsaw-table [columnResizable]="columnResizable" [data]="tableData" [columnDefines]="columns">
+    </jigsaw-table>
+</div>

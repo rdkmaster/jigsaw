@@ -23,6 +23,8 @@ import {TableColumnGroupDemoComponent} from "./column-group/demo.component";
 import {TableColumnGroupDemoModule} from "./column-group/demo.module";
 import {TableColumnSetVisibleDemoComponent} from "./column-visible/demo.component";
 import {TableColumnSetVisibleDemoModule} from "./column-visible/demo.module";
+import {TableColumnResizableDemoComponent} from "./column-resizable/demo.component";
+import {TableColumnResizableDemoModule} from "./column-resizable/demo.module";
 import {TableColumnSetWidthDemoComponent} from "./update-column-define/demo.component";
 import {TableColumnSetWidthDemoModule} from "./update-column-define/demo.module";
 import {TableContentWidthDemoComponent} from "./content-width/demo.component";
@@ -153,6 +155,9 @@ export const routerConfig = [
     },
     {
         path: 'column-visible', component: TableColumnSetVisibleDemoComponent
+    },
+    {
+        path: 'column-resizable', component: TableColumnResizableDemoComponent
     },
     {
         path: 'header-render', component: TableSetHeaderRenderDemoComponent
@@ -318,7 +323,7 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule
+        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule
     ]
 })
 export class TableDemoModule {

@@ -33,6 +33,7 @@ import { TableResizeDemoComponent } from "./resize/demo.component";
 import { TableExpandPageableDemoComponent } from "./expand-pageable/demo.component";
 import { TableDataWithPopupDemoComponent } from "./with-popup/demo.component";
 import { TableAutoSaveDemoComponent } from "./auto-save/demo.component";
+import { TableColumnResizableDemoComponent } from "./column-resizable/demo.component";
 @NgModule({
     declarations: [
         TableActionsAllComponent,
@@ -47,7 +48,8 @@ import { TableAutoSaveDemoComponent } from "./auto-save/demo.component";
         TableResizeDemoComponent,
         TableExpandPageableDemoComponent,
         TableDataWithPopupDemoComponent,
-        TableAutoSaveDemoComponent
+        TableAutoSaveDemoComponent,
+        TableColumnResizableDemoComponent
     ],
     imports: [
         DemoTemplateModule,
