@@ -4,7 +4,11 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class DateTimePickerBasicDemoComponent {
-    date='now';
+    public date = 'now';
+
+    public dateChange($event) {
+        console.log('dateChange==>' + $event)
+    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
