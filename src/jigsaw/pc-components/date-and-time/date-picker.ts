@@ -38,6 +38,7 @@ export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean
 export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType, label?: string };
 export type MarkRange = { from: Time, to: Time };
 export type MarkDateType = 'none' | 'recommend' | 'warn' | 'error';
+export type CellType = 'day' | 'month' | 'year';
 
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
@@ -253,6 +254,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (yearCell.isDisabled) {
             return;
         }
+        this.cellClick.emit('year');
         if (this.date) {
             let date = TimeService.getRealDateOfMonth(yearCell.year, this._$curMonth.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
@@ -314,6 +316,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
+        this.cellClick.emit('month');
         if (monthCell.isSelected && TimeGr[this._gr] === 'month') {
             this.clearDate();
             return;
@@ -477,6 +480,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (dayCell.isDisabled) {
             return;
         }
+        this.cellClick.emit('day');
         if (dayCell.isSelected) {
             this.clearDate();
             return;
@@ -604,6 +608,12 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
+
+    /**
+     * 当前日期控件内的内容被点击时，发出此事件，告知点击的日期格的类型
+     */
+    @Output()
+    public cellClick = new EventEmitter<CellType>();
 
     private _limitStart: Time;
 
