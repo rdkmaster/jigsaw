@@ -264,6 +264,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         this._propagateChange(this._date);
     }
 
+    /**
+     * @internal
+     */
     public _$closeComboSelect(cellType: CellType) {
         if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             return;
