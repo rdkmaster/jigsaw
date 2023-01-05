@@ -16,15 +16,15 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {GrItem, JigsawDatePicker, JigsawDatePickerModule, MarkDate} from "./date-picker";
+import { TranslateModule } from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {DateTimeCellType, GrItem, JigsawDatePicker, JigsawDatePickerModule, MarkDate} from "./date-picker";
 import {JigsawTimePicker, JigsawTimePickerModule, TimeStep} from "./time-picker";
 import {JigsawButtonModule} from "../button/button";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {Time, WeekTime} from "../../common/service/time.types";
-import {Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import { TranslateModule } from '@ngx-translate/core';
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 /**
@@ -228,6 +228,12 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
      */
     @Output()
     public dateChange = new EventEmitter<WeekTime>();
+
+    /**
+     * 当前日期控件内的内容被点击时，发出此事件，告知点击的日期格的类型
+     */
+    @Output()
+    public dateTimeSelect = new EventEmitter<DateTimeCellType>();
 
     private _limitStart: Time;
     private _timeLimitStart: string;

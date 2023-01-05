@@ -25,25 +25,13 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawDateTimePickerModule} from "./date-time-picker";
-import {GrItem, MarkDate} from "./date-picker";
+import {DateTimeCellType, GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 
 @WingsTheme('date-time-select.scss')
 @Component({
     selector: 'jigsaw-date-time-select, j-date-time-select',
-    template: `
-        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : '150'" [textTag]="false"
-                             (openChange)="_$onComboOpenChange($event)" selectIcon="iconfont iconfont-e177">
-            <ng-template>
-                <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
-                                         (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton"
-                                         [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates"
-                                         [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains">
-                </jigsaw-date-time-picker>
-            </ng-template>
-        </jigsaw-combo-select>
-    `,
+    templateUrl: './date-time-select.html',
     host: {
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
@@ -271,12 +259,25 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     public writeValue(date: WeekTime): void {
         this._date = date;
-        if (this._comboSelect && (this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
-            this._comboSelect.open = false;
-        }
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);
         this._propagateChange(this._date);
+    }
+
+    /**
+     * @internal
+     */
+    public _$closeComboSelect(cellType: DateTimeCellType) {
+        if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
+            return;
+        }
+        if ((this.gr == TimeGr.date || this.gr == TimeGr.week) && cellType != 'day') {
+            return;
+        }
+        if (this.gr == TimeGr.month && cellType != 'month') {
+            return;
+        }
+        this._comboSelect.open = false;
     }
 
     private _changeDateByGr() {
