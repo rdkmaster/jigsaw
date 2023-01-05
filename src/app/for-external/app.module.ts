@@ -101,6 +101,7 @@ import { IconsDemoComponent } from "./ued/icons/icons";
 import { CommonModule } from "@angular/common";
 import {InternalDemoModule} from "./demo/internal-demo/demo.module";
 import { NavigationBarDemoModule } from "./demo/navigation-bar/demo.module";
+import { TranslateDemoModule } from "./demo/translate/demo.module";
 
 @NgModule({
     declarations: [AppComponent, HomeComponent, TopMenuComponent, PageNotFoundComponent, ComponentMenuNavComponent, IconsDemoComponent],
@@ -206,7 +207,8 @@ import { NavigationBarDemoModule } from "./demo/navigation-bar/demo.module";
         InternalDemoModule,
         JigsawSearchInputModule,
         CommonModule,
-        NavigationBarDemoModule
+        NavigationBarDemoModule,
+        TranslateDemoModule
     ],
     providers: [
         {

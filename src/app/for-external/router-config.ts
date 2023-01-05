@@ -72,6 +72,7 @@ import { QuickStartDemoComponent } from "./demo/quick-start/demo.component";
 import { ApiListComponent } from "./demo/api-list/demo.component";
 import {InternalDemoComponent} from "./demo/internal-demo/demo.component";
 import { NavigationBarAllDemoComponent } from "./demo/navigation-bar/demo.component";
+import { TranslateDemoComponent } from "./demo/translate/demo.component";
 
 export const componentGroup = {
     start: '开始',
@@ -174,6 +175,7 @@ export const routerConfigPC = [
     { path: "quick-start", component: QuickStartDemoComponent, group: componentGroup.start },
     { path: "api-list", component: ApiListComponent, group: componentGroup.other },
     { path: "internal-demo", component: InternalDemoComponent, group: componentGroup.other },
+    { path: "translate", component: TranslateDemoComponent, group: componentGroup.service },
 ];
 export const routerConfig = routerConfigPC;
 
