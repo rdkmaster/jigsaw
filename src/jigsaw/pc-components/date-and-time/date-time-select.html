@@ -4,9 +4,10 @@
     selectIcon="iconfont iconfont-e177">
     <ng-template>
         <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
-            (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton" [limitStart]="limitStart"
-            [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
-            [firstWeekMustContains]="firstWeekMustContains" (cellClick)="_$closeComboSelect($event)">
+                                 (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton" [limitStart]="limitStart"
+                                 [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
+                                 [firstWeekMustContains]="firstWeekMustContains"
+                                 (dateTimeSelect)="_$closeComboSelect($event)">
         </jigsaw-date-time-picker>
     </ng-template>
 </jigsaw-combo-select>

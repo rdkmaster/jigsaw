@@ -25,7 +25,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawDateTimePickerModule} from "./date-time-picker";
-import {CellType, GrItem, MarkDate} from "./date-picker";
+import {DateTimeCellType, GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 
 @WingsTheme('date-time-select.scss')
@@ -267,7 +267,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     /**
      * @internal
      */
-    public _$closeComboSelect(cellType: CellType) {
+    public _$closeComboSelect(cellType: DateTimeCellType) {
         if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             return;
         }

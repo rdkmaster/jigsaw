@@ -11,11 +11,11 @@ import {
     Renderer2,
     Injector
 } from '@angular/core';
-import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
+import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {TimeGr, TimeService, TimeUnit, TimeWeekStart} from "../../common/service/time.service";
 import {Time, TimeWeekDay, WeekTime} from "../../common/service/time.types";
 import {PopupService} from "../../common/service/popup.service";
@@ -38,7 +38,14 @@ export type YearCell = { year: number, isSelected: boolean, isDisabled?: boolean
 export type MarkDate = { date: Time | Time[] | MarkRange, mark: MarkDateType, label?: string };
 export type MarkRange = { from: Time, to: Time };
 export type MarkDateType = 'none' | 'recommend' | 'warn' | 'error';
-export type CellType = 'day' | 'month' | 'year';
+export type DateTimeCellType = 'day' | 'month' | 'year';
+
+const DAY_CAL_COL = 7;
+const DAY_CAL_ROW = 6;
+const MONTH_CAL_COL = 3;
+const MONTH_CAL_ROW = 4;
+const YEAR_CAL_COL = 3;
+const YEAR_CAL_ROW = 4;
 
 /**
  * 时间范围生成函数，用于生成自定义的时间范围
@@ -176,13 +183,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _langChangeSubscriber: Subscription;
     private _weekPos: number[];
 
-    private readonly _DAY_CAL_COL = 7;
-    private readonly _DAY_CAL_ROW = 6;
-    private readonly _MONTH_CAL_COL = 3;
-    private readonly _MONTH_CAL_ROW = 4;
-    private readonly _YEAR_CAL_COL = 3;
-    private readonly _YEAR_CAL_ROW = 4;
-
     private _createCalendar(year?: number, month?: number) {
         if (!year || !month) {
             let date = TimeService.convertValue(this.date, TimeGr.date);
@@ -204,17 +204,17 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _createYearCal(year: number) {
         this._verifyLimit();
         let startYear = year - year % 10 - 1;
-        let endYear = startYear + (this._YEAR_CAL_COL * this._YEAR_CAL_ROW - 1);
+        let endYear = startYear + (YEAR_CAL_COL * YEAR_CAL_ROW - 1);
         this._$yearList = this._createYearList(startYear, endYear);
         this._$rangeYear = `${startYear + 1} - ${endYear - 1}`
     }
 
     private _createYearList(startYear: number, endYear: number): YearCell[][] {
         let yearCount = startYear;
-        return Array.from(new Array(this._YEAR_CAL_ROW).keys()).map(() => {
+        return Array.from(new Array(YEAR_CAL_ROW).keys()).map(() => {
             let rowArr = [];
             let index = 0;
-            while (index < this._YEAR_CAL_COL) {
+            while (index < YEAR_CAL_COL) {
                 rowArr[index] = {
                     year: yearCount,
                     isSelected: this._isYearSelected(yearCount),
@@ -254,7 +254,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (yearCell.isDisabled) {
             return;
         }
-        this.cellClick.emit('year');
+        this.dateSelect.emit('year');
         if (this.date) {
             let date = TimeService.getRealDateOfMonth(yearCell.year, this._$curMonth.month, TimeService.getDay(TimeService.convertValue(this.date, TimeGr.date)));
             this.writeValue(date);
@@ -279,10 +279,10 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             isDisabled: this._isMonthDisabled(i + 1, year)
         }));
         let monthIndex = 0;
-        return Array.from(new Array(this._MONTH_CAL_ROW).keys()).map(() => {
+        return Array.from(new Array(MONTH_CAL_ROW).keys()).map(() => {
             let rowArr = [];
             let index = 0;
-            while (index < this._MONTH_CAL_COL) {
+            while (index < MONTH_CAL_COL) {
                 rowArr[index] = monthList[monthIndex];
                 index++;
                 monthIndex++;
@@ -316,7 +316,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (monthCell.isDisabled) {
             return;
         }
-        this.cellClick.emit('month');
+        this.dateSelect.emit('month');
         if (monthCell.isSelected && TimeGr[this._gr] === 'month') {
             this.clearDate();
             return;
@@ -343,11 +343,11 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     private _getWeekPos(): number[] {
         const weekStart = TimeService.getWeekStart();
         let week;
-        return Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => {
+        return Array.from(new Array(DAY_CAL_COL).keys()).map(num => {
             week = num == 0 ? weekStart : week;
             let weekCur = week;
             week++;
-            if (week > this._DAY_CAL_COL - 1) {
+            if (week > DAY_CAL_COL - 1) {
                 week = 0;
             }
             return weekCur;
@@ -365,9 +365,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         let [countDayNum, maxDayNum, countNextMonthDayNum] = [1, TimeService.getDay(TimeService.getLastDateOfMonth(year, month)), 1];
         const firstDayWeek = new Date(firstDate).getDay();
         const firstDayWeekPos = weekPos.findIndex(w => w === firstDayWeek);
-        return Array.from(new Array(this._DAY_CAL_ROW).keys()).map(row => {
+        return Array.from(new Array(DAY_CAL_ROW).keys()).map(row => {
             let index = row == 0 ? firstDayWeekPos : 0;
-            let rowArr: DayCell[] = Array.from(new Array(this._DAY_CAL_COL).keys()).map(num => ({day: -1}));
+            let rowArr: DayCell[] = Array.from(new Array(DAY_CAL_COL).keys()).map(num => ({day: -1}));
             while (index < rowArr.length && countDayNum <= maxDayNum) {
                 rowArr[index] = this._getDayCell(year, month, countDayNum, 'cur');
                 index++;
@@ -480,7 +480,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (dayCell.isDisabled) {
             return;
         }
-        this.cellClick.emit('day');
+        this.dateSelect.emit('day');
         if (dayCell.isSelected) {
             this.clearDate();
             return;
@@ -613,7 +613,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * 当前日期控件内的内容被点击时，发出此事件，告知点击的日期格的类型
      */
     @Output()
-    public cellClick = new EventEmitter<CellType>();
+    public dateSelect = new EventEmitter<DateTimeCellType>();
 
     private _limitStart: Time;
 
