@@ -1,3 +1,4 @@
+import { EventEmitter } from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
 export type SupportedTheme = 'paletx-pro' | 'vmax-pro';
@@ -7,6 +8,7 @@ export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 declare const document;
 
 export type ThemeProperty = {name: string, value: string};
+export type ThemeInfo = {usingTheme: string, majorStyle: string};
 
 // @dynamic
 export class JigsawTheme {
@@ -41,6 +43,7 @@ export class JigsawTheme {
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
             this._readThemeProperties();
+            this.themeChange.emit({ usingTheme: this._usingTheme, majorStyle: this._majorStyle });
             style.onload = null;
         };
     }
@@ -96,4 +99,6 @@ export class JigsawTheme {
     public static getProperties(): ThemeProperty[] {
         return [...this._themeProperties];
     }
+
+    public static themeChange = new EventEmitter<ThemeInfo>();
 }

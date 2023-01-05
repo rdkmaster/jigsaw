@@ -121,6 +121,8 @@ import { TableExpandPageableDemoComponent } from './expand-pageable/demo.compone
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 import { TableSetHeaderFilterDemoComponent } from "./header-filter/demo.component";
 import { TableSetHeaderFilterDemoModule } from "./header-filter/demo.module";
+import { TableMaxWidthDemoComponent } from "./max-width/demo.component";
+import { TableMaxWidthDemoModule } from "./max-width/demo.module";
 
 export const routerConfig = [
     {
@@ -146,6 +148,9 @@ export const routerConfig = [
     },
     {
         path: 'basic', component: TableBasicDemoComponent
+    },
+    {
+        path: 'max-width', component: TableMaxWidthDemoComponent
     },
     {
         path: 'data-from-ajax', component: TableDataFromAjaxDemoComponent
@@ -323,7 +328,8 @@ export const routerConfig = [
         TableNoDataDemoModule, TableHtmlRendererDemoModule, RebuildTableDataDemoModule, TableCellSelectRenderDemoModule, TableMixinTableDemoModule,
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
-        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule
+        TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
+        TableMaxWidthDemoModule
     ]
 })
 export class TableDemoModule {
