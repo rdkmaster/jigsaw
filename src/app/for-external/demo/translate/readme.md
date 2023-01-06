@@ -5,6 +5,7 @@
 ## 用法
 
 先在构造函数里注入`TranslateService`
+
 ```
 import { TranslateService } from "@ngx-translate/core";
 
@@ -15,7 +16,7 @@ constructor( public translateService: TranslateService ) {
 然后在任意位置调用这个代码就可以切换语言了
 
 ```
-import { TranslateHelper } from "jigsaw/mobile_public_api";
+import { TranslateHelper } from "@rdkmaster/jigsaw";
 
 const lang: 'zh' | 'en' = 'zh';
 
