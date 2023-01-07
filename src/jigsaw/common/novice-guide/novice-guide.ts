@@ -205,7 +205,7 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
     if (current === 0) {
         buttonHtml = `<div class="novice-guide-next novice-guide-button">&rarr;</div>`
     } else if (isLast) {
-        buttonHtml = `<div class="novice-guide-pre novice-guide-button">&larr;</div><div class="novice-guide-close novice-guide-button">&radic;</div>`
+        buttonHtml = `<div class="novice-guide-pre novice-guide-button">&larr;</div><div class="novice-guide-close novice-guide-button">&times;</div>`
     } else {
         buttonHtml = `<div class="novice-guide-pre novice-guide-button">&larr;</div><div class="novice-guide-next novice-guide-button">&rarr;</div>`
     }
