@@ -120,7 +120,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     public complete = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadFailCheck')
-    public fail = new EventEmitter<UploadFileInfo[]>();
+    public fail = new EventEmitter<string[]>();
 
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
@@ -230,6 +230,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return false;
         }
         const files = this._checkFiles(Array.from(fileInput.files || []));
+        const failFilesMes = files.filter(file => file.state == 'error').map(f => f.name + f.message);
+        if (failFilesMes.length != 0) {
+            this.fail.emit(failFilesMes);
+        }
         fileInput.value = null;
         this.files.push(...files);
         if (files.length > 0) {
@@ -254,10 +258,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 const pendingFiles = this.files.filter(file => file.state == 'pause');
                 if (pendingFiles.length == 0) {
                     this.complete.emit(this.files);
-                    const failFiles = this.files.filter(file => file.state == 'error');
-                    if (failFiles.length != 0) {
-                        this.fail.emit(failFiles);
-                    }
                     return;
                 }
                 for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
@@ -379,9 +379,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         if (!this.multiple) {
             this.complete.emit(this.files);
-            if (this.files[0].state == "error") {
-                this.fail.emit(this.files);
-            }
             return;
         }
 
@@ -390,10 +387,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._sequenceUpload(waitingFile)
         } else if (this._isAllFilesUploaded()) {
             this.complete.emit(this.files);
-            const failFiles = this.files.filter(file => file.state == 'error');
-            if (failFiles.length != 0) {
-                this.fail.emit(failFiles);
-            }
         }
         this._cdr.markForCheck();
     }
