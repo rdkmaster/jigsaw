@@ -119,8 +119,8 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadFailCheck')
-    public fail = new EventEmitter<string[]>();
+    @Output('uploadCheckFilesError')
+    public fail = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
@@ -230,9 +230,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return false;
         }
         const files = this._checkFiles(Array.from(fileInput.files || []));
-        const failFilesMes = files.filter(file => file.state == 'error').map(f => f.name + f.message);
-        if (failFilesMes.length != 0) {
-            this.fail.emit(failFilesMes);
+        const failFiles = files.filter(file => file.state == 'error')
+        if (failFiles.length > 0) {
+            this.fail.emit(failFiles);
         }
         fileInput.value = null;
         this.files.push(...files);
@@ -284,16 +284,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 message: this._translateService.instant(`upload.unknownStatus`)
             }
             if (!fileTypes.find(type => this._testFileType(file.name, type))) {
+                fileInfo.errorType = "fileTypeError";
                 fileInfo.message = this._translateService.instant(`upload.fileTypeError`);
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }
             if (!isNaN(this.minSize) && file.size < this.minSize * 1024 * 1024) {
+                fileInfo.errorType = "fileMinSizeError";
                 fileInfo.message = this._translateService.instant(`upload.fileMinSizeError`);
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;
             }
             if (!isNaN(this.maxSize) && file.size > this.maxSize * 1024 * 1024) {
+                fileInfo.errorType = "fileMaxSizeError";
                 fileInfo.message = this._translateService.instant(`upload.fileMaxSizeError`);
                 this._statusLog(fileInfo, fileInfo.message);
                 return fileInfo;

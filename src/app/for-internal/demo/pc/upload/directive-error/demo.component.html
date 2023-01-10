@@ -19,7 +19,7 @@
     <br>
     <br>
     <j-button j-upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
-              (uploadComplete)="getAllUploadFiles($event)" (uploadFailCheck)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
+              (uploadComplete)="getAllUploadFiles($event)" (uploadCheckFilesError)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
               [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
         上传
     </j-button>

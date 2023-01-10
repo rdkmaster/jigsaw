@@ -19,7 +19,8 @@ export class UploadDirectiveErrorDemoComponent {
         console.log('one file uploaded', fileInfo);
     }
 
-    getFailFile(failMessage: string[]) {
+    getFailFile(fileInfo: UploadFileInfo[]) {
+        const failMessage: string[] = fileInfo.map(f => f.name + " " + f.message);
         console.log('files fail to uploaded:' + failMessage.join("\n"));
         JigsawNotification.showError(failMessage.join("<br>"));
         this.firstJigsawUploadDirective.clear();
