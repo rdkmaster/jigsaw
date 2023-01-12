@@ -32,7 +32,7 @@ export class ButtonBarBasicDemoComponent implements AfterContentInit {
 
     selectedCityStr2: string;
     selectedCity2: any[];
-    cities2 = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安",]);
+    cities2 = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
 
     basicSelectChange2(cityArr: ArrayCollection<any>) {
         this.selectedCityStr2 = cityArr.join(',');
