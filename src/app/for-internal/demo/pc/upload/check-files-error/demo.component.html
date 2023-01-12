@@ -24,7 +24,7 @@
     最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
     <br>
     <br>
-    <j-button j-upload #upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)"
+    <j-button j-upload #upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)" [uploadImmediately]="uploadImmediately"
               (uploadComplete)="getAllUploadFiles($event)" (uploadCheckFilesError)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
               [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
         上传
