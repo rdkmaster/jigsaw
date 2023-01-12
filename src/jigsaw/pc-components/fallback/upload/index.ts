@@ -29,7 +29,7 @@ import { TranslateHelper } from "../../../common/core/utils/translate-helper";
 })
 export class JigsawUploadFallbackModule {
     constructor() {
-        TranslateHelper.initI18n("upload", {
+        TranslateHelper.initI18n("uploadFallback", {
             zh: {
                 waiting: "等待中",
                 uploading: "上传中",
