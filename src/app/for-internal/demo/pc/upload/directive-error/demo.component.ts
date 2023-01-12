@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawNotification, JigsawUploadDirective, UploadFileInfo} from "jigsaw/public_api";
+import {IUploader, JigsawNotification, JigsawUploadDirective, UploadFileInfo} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,9 +11,17 @@ export class UploadDirectiveErrorDemoComponent {
     isButtonUploadWaiting: boolean;
     maxSize: number = 1024;
     minSize: number = 0;
+    uploadImmediately: boolean = false;
 
     @ViewChild(JigsawUploadDirective)
-    firstJigsawUploadDirective: JigsawUploadDirective
+    firstJigsawUploadDirective: JigsawUploadDirective;
+
+    @ViewChild("upload", { read: JigsawUploadDirective })
+    uploader: IUploader;
+
+    onChange(msg: string, data: UploadFileInfo | UploadFileInfo[]) {
+        console.log(msg, "!!!!!!", data);
+    }
 
     getUploadFile(fileInfo: UploadFileInfo) {
         console.log('one file uploaded', fileInfo);
