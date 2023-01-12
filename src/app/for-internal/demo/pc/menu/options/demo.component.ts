@@ -96,27 +96,27 @@ export class MenuOptionsDemo {
         `);
         } else if (type == 'long') {
             this.data.fromXML(`
-            <node>
+        <node>
             <node label="业务域">
-            <node label="domain_auto_ods_level1">
-            <node label="domain_auto_ods_level2">
-            <node label="domain_auto_ods_level3" id="809846288656924672"></node>
+                <node label="domain_auto_ods_level1">
+                    <node label="domain_auto_ods_level2">
+                        <node label="domain_auto_ods_level3" id="809846288656924672"></node>
+                    </node>
+                </node>
+                <node label="domain_auto_all_level1">
+                    <node label="domain_auto_all_level2">
+                        <node label="domain_auto_all_level3" id="809846223259336704"></node>
+                    </node>
+                </node>
+                <node label="test_111" id="809847919838527488"></node>
+                <node label="rfat">
+                    <node label="crfat">
+                        <node label="ccrfat" id="809837662907170816"></node>
+                    </node>
+                </node>
+                <node label="test_222" id="809847969868185600"></node>
             </node>
-            </node>
-            <node label="domain_auto_all_level1">
-            <node label="domain_auto_all_level2">
-            <node label="domain_auto_all_level3" id="809846223259336704"></node>
-            </node>
-            </node>
-            <node label="test_111" id="809847919838527488"></node>
-            <node label="rfat">
-            <node label="crfat">
-            <node label="ccrfat" id="809837662907170816"></node>
-            </node>
-            </node>
-            <node label="test_222" id="809847969868185600"></node>
-            </node>
-            </node>
+        </node>
         `);
         }
     }
