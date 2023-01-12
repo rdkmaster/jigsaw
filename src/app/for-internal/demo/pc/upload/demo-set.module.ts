@@ -14,8 +14,8 @@ import { UploadDirectiveDemoComponent } from './directive/demo.component';
 import { UploadDirectiveDemoModule } from './directive/demo.module';
 import {UploadGetFileUrlsComponent} from "./get-file-urls/demo.component";
 import {UploadGetFileUrlsModule} from "./get-file-urls/demo.module";
-import {UploadDirectiveErrorDemoComponent} from "./directive-error/demo.component";
-import {UploadDirectiveErrorDemoModule} from "./directive-error/demo.module";
+import {UploadDirectiveErrorDemoComponent} from "./check-files-error/demo.component";
+import {UploadDirectiveErrorDemoModule} from "./check-files-error/demo.module";
 import { UploadFallbackDemoComponent } from "./upload-fallback/demo.component";
 import { UploadFallbackDemoModule } from "./upload-fallback/demo.module";
 
@@ -40,7 +40,7 @@ export const routerConfig = [
         path: 'directive', component: UploadDirectiveDemoComponent
     },
     {
-        path: "get-directive-error", component: UploadDirectiveErrorDemoComponent
+        path: "check-files-error", component: UploadDirectiveErrorDemoComponent
     },
     {
         path: 'get-file-urls', component: UploadGetFileUrlsComponent
