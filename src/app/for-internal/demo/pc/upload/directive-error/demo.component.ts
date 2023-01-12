@@ -42,6 +42,6 @@ export class UploadDirectiveErrorDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo展示了`jigsaw-upload`指令在有文件上传失败时如何报错';
+    summary: string = '本demo展示了`jigsaw-upload`指令在有文件上传失败时如何报错。';
     description: string = '';
 }
