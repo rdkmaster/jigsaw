@@ -31,6 +31,12 @@
     高度
     <jigsaw-numeric-input [(value)]="height" [step]="10"></jigsaw-numeric-input>
 </p>
+<p class="message">
+    数据
+    <jigsaw-button-bar [(selectedItems)]="dataType" [multipleSelect]="false"
+                       [data]="['normal', 'long']" (selectedItemsChange)="changeData($event)">
+    </jigsaw-button-bar>
+</p>
 
 <p class="message" style="width: 500px;">
     关于高度说明：<br>
