@@ -9,7 +9,6 @@ import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 export class ButtonBarSetHeightComponent extends AsyncDescription {
     public demoPath = "demo/button-bar/set-height";
-    public selectedSize = { size: "default" };
 
     public cities = new ArrayCollection(["北京-一个很长的地址", "上海", "南京", "深圳", "长沙", "西安"]);
     public selectedCity: any[] = ['南京'];
