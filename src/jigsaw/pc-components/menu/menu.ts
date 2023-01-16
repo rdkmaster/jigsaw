@@ -85,6 +85,7 @@ export class JigsawMenuHelper implements IPopupable {
                 [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
             <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
                            [theme]="_$realTheme"
+                           [ngClass]="{'jigsaw-menu-list-separator':!node.label}"
                            jigsawCascadingMenu
                            [jigsawCascadingMenuOptions]="_$realOptions"
                            [jigsawCascadingMenuWidth]="_$realWidth"
@@ -101,28 +102,23 @@ export class JigsawMenuHelper implements IPopupable {
                                 !node.disabled && !!node.label && initData?.select?.emit(node);
                             "
                            (mouseenter)="_$mouseenter(index, node)"
-                           (mouseleave)="_$mouseleave(index)"
-                           [style.minHeight]="_$getMinHeight(node.label)">
+                           (mouseleave)="_$mouseleave(index)">
                 <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
-                     [ngStyle]="_$getTitleWidth(node)">
+                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')">
                     <i class="{{node.icon}}"></i>
                     <span>{{node.label}}</span>
                 </div>
-                <hr *ngIf="!node.label && _$realTheme != 'navigation'">
                 <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
-                     [ngStyle]="_$getSubTitleWidth(node, index)">
+                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')">
                     <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
                     <i class="{{node.subIcon}} jigsaw-menu-subIcon"
                        *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
                 </div>
                 <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
-                    {{node.label}}
+                    <span>{{node.label}}</span>
                     <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
-                       style="position: absolute;right: 10px;line-height: 40px"></i>
-                    <hr *ngIf="!node.label">
+                       style="position: absolute;right: 8px;line-height: 40px"></i>
                 </div>
             </j-list-option>
         </j-list>`,
