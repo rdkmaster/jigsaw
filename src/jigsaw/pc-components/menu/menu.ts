@@ -297,29 +297,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     /**
      * @internal
      */
-    public _$getMinHeight(label: string): string {
-        if (!label) {
-            return "1px";
-        } else {
-            return "32px";
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$getTitleWidth(node: SimpleNode): any {
-        if (!node.nodes || node.nodes.length == 0) {
-            return {maxWidth: '100%'};
-        } else {
-            // 5是给有子节点时，留下的箭头；2是给标题和箭头之间留点距离；一共为7px
-            return {maxWidth: 'calc(100% - 7px)'};
-        }
-    }
-
-    /**
-     * @internal
-     */
     _$isSubTitleOverflow(index: number): boolean {
         if (!this._menuListElement) {
             return false;
@@ -327,28 +304,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         const listOptionElements = this._menuListElement.nativeElement.children;
         const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
         return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
-    }
-
-    /**
-     * @internal
-     */
-    public _$getSubTitleWidth(node: SimpleNode, index: number): any {
-        if (!this._menuListElement || node.disabled || !node.label) {
-            return {maxWidth: 'auto'};
-        }
-        const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-title")[0];
-        if (!titleElement) {
-            return {maxWidth: 'auto'};
-        }
-        const wrapElement = titleElement.parentElement;
-        // 14是给有子节点时，留下的箭头；
-        const minWidth = node.nodes && node.nodes.length > 0 ? 14 : 0;
-        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
-            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
-        } else {
-            return {width: `${minWidth}px`};
-        }
     }
 
     /**
