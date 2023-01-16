@@ -12,16 +12,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             padding: 0px 8px;
 
             &.#{$jigsaw-list-option}-disabled {
-                .#{$jigsaw-menu}-list-title {
+                .#{$jigsaw-list-option}-wrapper .#{$jigsaw-menu}-list-title {
                     color: $font-color-disabled;
-
-                    i {
-                        color: $font-color-disabled;
-                    }
-
-                    span {
-                        color: $font-color-disabled;
-                    }
                 }
 
                 cursor: not-allowed;
@@ -64,7 +56,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     overflow: hidden;
 
                     i {
-                        color: $font-color-default;
+                        color: inherit;
                         margin-right: 4px;
                     }
 
