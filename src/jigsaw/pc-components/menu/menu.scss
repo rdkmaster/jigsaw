@@ -141,6 +141,12 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                     }
+
+                    >i {
+                        position: absolute;
+                        right: 8px;
+                        height: 40px;
+                    }
                 }
             }
         }

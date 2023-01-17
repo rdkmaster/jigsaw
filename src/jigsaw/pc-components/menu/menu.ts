@@ -80,47 +80,7 @@ export class JigsawMenuHelper implements IPopupable {
 @WingsTheme('menu.scss')
 @Component({
     selector: 'jigsaw-menu, j-menu',
-    template: `
-        <j-list #menuList [theme]="_$realTheme" [width]="_$realWidth" [height]="_$realHeight"
-                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
-            <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
-                           [theme]="_$realTheme"
-                           [ngClass]="{'jigsaw-menu-list-separator':!node.label}"
-                           jigsawCascadingMenu
-                           [jigsawCascadingMenuOptions]="_$realOptions"
-                           [jigsawCascadingMenuWidth]="_$realWidth"
-                           [jigsawCascadingMenuHeight]="_$realHeight"
-                           [jigsawCascadingMenuShowBorder]="_$realShowBorder"
-                           [jigsawCascadingMenuData]="node"
-                           [jigsawCascadingMenuTheme]="_$realTheme"
-                           [jigsawCascadingMenuPosition]="'rightTop'"
-                           [jigsawCascadingMenuOpenTrigger]="'mouseenter'"
-                           [jigsawCascadingMenuInitData]="{select:_$realSelect}"
-                           [disabled]="node.disabled"
-                           (click)="
-                                !node.disabled && !!node.label && select.emit(node);
-                                !node.disabled && !!node.label && initData?.select?.emit(node);
-                            "
-                           (mouseenter)="_$mouseenter(index, node)"
-                           (mouseleave)="_$mouseleave(index)">
-                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')">
-                    <i class="{{node.icon}}"></i>
-                    <span>{{node.label}}</span>
-                </div>
-                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')">
-                    <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
-                    <i *ngIf="!!node.subIcon" class="{{node.subIcon}} jigsaw-menu-subIcon"></i>
-                    <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
-                </div>
-                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
-                    <span>{{node.label}}</span>
-                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
-                       style="position: absolute;right: 8px;line-height: 40px"></i>
-                </div>
-            </j-list-option>
-        </j-list>`,
+    templateUrl: 'menu.html',
     host: {
         '[attr.data-theme]': '_$realTheme',
         '[class.jigsaw-menu-host]': 'true',
