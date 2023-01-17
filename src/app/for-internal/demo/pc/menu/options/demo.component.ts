@@ -99,7 +99,7 @@ export class MenuOptionsDemo {
         <node>
             <node label="业务域">
                 <node label="domain_auto_ods_level1">
-                    <node label="domain_auto_ods_level2">
+                    <node label="domain_auto_ods_level2" icon="iconfont iconfont-e314" subIcon="iconfont iconfont-e314" subTitle="Shift+F10">
                         <node label="domain_auto_ods_level3" id="809846288656924672"></node>
                     </node>
                 </node>

@@ -111,8 +111,7 @@ export class JigsawMenuHelper implements IPopupable {
                 <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
                      [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')">
                     <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
-                    <i class="{{node.subIcon}} jigsaw-menu-subIcon"
-                       *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
+                    <i *ngIf="!!node.subIcon" class="{{node.subIcon}} jigsaw-menu-subIcon"></i>
                     <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
                 </div>
                 <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
@@ -292,18 +291,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
             const listItems = this._menuListInstance._items.toArray();
             listItems[index].selected = false;
         }
-    }
-
-    /**
-     * @internal
-     */
-    _$isSubTitleOverflow(index: number): boolean {
-        if (!this._menuListElement) {
-            return false;
-        }
-        const listOptionElements = this._menuListElement.nativeElement.children;
-        const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
-        return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
     }
 
     /**

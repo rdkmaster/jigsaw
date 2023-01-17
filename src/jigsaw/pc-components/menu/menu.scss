@@ -73,9 +73,11 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     display: flex;
                     flex-direction: row;
                     align-items: center;
+                    max-width: 50%;
                     min-height: 32px;
                     margin-left: auto;
                     color: $font-color-default;
+                    overflow: hidden;
 
                     .#{$jigsaw-menu}-subIcon {
                         overflow: hidden;
