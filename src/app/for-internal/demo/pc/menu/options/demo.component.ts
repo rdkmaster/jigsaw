@@ -61,7 +61,6 @@ export class MenuOptionsDemo {
     }
 
     public changeData(type) {
-        console.log(type);
         if (type == 'normal') {
             this.data.fromXML(`
             <node>
