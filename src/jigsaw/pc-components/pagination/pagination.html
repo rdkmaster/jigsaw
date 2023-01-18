@@ -66,7 +66,7 @@
                        (valueChange)="_$changePageSize($event)"
                        [trackItemBy]="['value','label']"
                        labelField="label"
-                       width="108"
+                       [width]="_$selectWidth"
                        [data]="pageSizeOptions"
                        [disabled]="!pageSize || data?.pagingInfo?.autoPageSizing">
         </jigsaw-select>
