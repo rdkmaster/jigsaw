@@ -18,10 +18,10 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
                            [width]="optionWidth" [height]="'100%'" [disabled]="item?.disabled"
-                           title="{{item && item[labelField] != null ? item[labelField] : item}}">
-                <span *ngIf="item.icon" [class]="item.icon"
+                           title="{{item?.title == null ? '' : item.title}}">
+                <span *ngIf="item?.icon" [class]="item?.icon"
                       [ngClass]="{'jigsaw-button-bar-icon-only': item === '' || item[labelField] === ''}"></span>
-                <p>{{item && (item[labelField] || item[labelField] === '') ? item[labelField] : item }}</p>
+                <p>{{item == null ? "" : (item[labelField] != null ? item[labelField] : item)}}</p>
             </j-tile-option>
         </j-tile>`,
     host: {

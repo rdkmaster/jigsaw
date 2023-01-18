@@ -448,13 +448,18 @@ export function checkStyle(): void {
             justify-content: center;
             align-items: center;
             margin-left: 4px;
-            padding: 0 16px;
-            min-width: 80px;
+            padding: 0 8px;
+            min-width: 64px;
             height: 32px;
             border-radius: 3px;
             background: var(--brand-default, #1a93ff);
             color: white;
             cursor: pointer;
+            font-size: 14px;
+        }
+
+        .novice-guide-clone .novice-guide-dialog .notice-cntr .novice-guide-button:hover {
+            background: var(--brand-hover, #1178d9);
         }
 
         .novice-guide-clone .novice-guide-dialog .notice-cntr::after {

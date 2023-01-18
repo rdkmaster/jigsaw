@@ -15,7 +15,16 @@
     change language to Chinese
 </jigsaw-button><br>
 
-<h4 class="header">alert</h4><jigsaw-info-alert [initData]="infoInitData"></jigsaw-info-alert><br>
+<div>
+    <h4 class="header">alert</h4><jigsaw-info-alert [initData]="infoInitData"></jigsaw-info-alert><br>
+    <p style="margin-top: 8px;">
+        自定义按钮文本，中文
+        <jigsaw-input [(value)]="alertButtonZh"></jigsaw-input>，
+        英文 <jigsaw-input [(value)]="alertButtonEn"></jigsaw-input>
+        <a (click)="customizeAlertButtonLabel()">更新</a>
+    </p>
+</div>
+
 <h4 class="header">dialog</h4>
 <jigsaw-dialog class="dialog-container" width="400" [buttons]="buttons">
     <div jigsaw-title>
@@ -88,6 +97,6 @@
 </div>
 <br>
 <div>
-    <jigsaw-table [data]="tableData" ></jigsaw-table>   
+    <jigsaw-table [data]="tableData" ></jigsaw-table>
 </div>
 

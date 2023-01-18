@@ -64,7 +64,8 @@ import { JigsawTheme } from "../../common/core/theming/theme";
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
         '[class.jigsaw-table-column-resizable]': 'columnResizable',
-        '[class.jigsaw-table-resizing]': '_$resizing'
+        '[class.jigsaw-table-resizing]': '_$resizing',
+        '[class.jigsaw-table-hide-column-dividers]': 'hideColumnDividers',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -165,6 +166,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     @Input()
     public columnResizable: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public hideColumnDividers: boolean = false;
 
     /**
      * @internal

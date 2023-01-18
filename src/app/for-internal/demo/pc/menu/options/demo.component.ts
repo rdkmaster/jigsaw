@@ -36,12 +36,33 @@ export class MenuOptionsDemo {
 
     public data: SimpleTreeData;
     public theme: string[] = ['dark'];
+    public dataType: string[] = ['normal'];
     public width: number = 150;
     public height: number = 0;
 
     constructor( private ps: PopupService) {
         this.data = new SimpleTreeData();
-        this.data.fromXML(`
+        this.changeData('normal');
+    }
+
+    menuSelect(node: SimpleNode) {
+        console.log("Dropdown menu selected, node =", node);
+    }
+
+    contextMenu(event: MouseEvent) {
+        JigsawMenu.show(event, {
+            data: this.data,
+            width: this.width,
+            height: this.height,
+            theme: this.theme[0] as MenuTheme,
+        }, node => {
+            console.log("Context menu selected, node =", node);
+        });
+    }
+
+    public changeData(type) {
+        if (type == 'normal') {
+            this.data.fromXML(`
             <node>
                 <node label="File">
                     <node label="New">
@@ -72,21 +93,31 @@ export class MenuOptionsDemo {
                 <node label="Exit"></node>
             </node>
         `);
-    }
-
-    menuSelect(node: SimpleNode) {
-        console.log("Dropdown menu selected, node =", node);
-    }
-
-    contextMenu(event: MouseEvent) {
-        JigsawMenu.show(event, {
-            data: this.data,
-            width: this.width,
-            height: this.height,
-            theme: this.theme[0] as MenuTheme,
-        }, node => {
-            console.log("Context menu selected, node =", node);
-        });
+        } else if (type == 'long') {
+            this.data.fromXML(`
+        <node>
+            <node label="业务域">
+                <node label="domain_auto_ods_level1">
+                    <node label="domain_auto_ods_level2" icon="iconfont iconfont-e314" subIcon="iconfont iconfont-e314" subTitle="Shift+F10">
+                        <node label="domain_auto_ods_level3" id="809846288656924672"></node>
+                    </node>
+                </node>
+                <node label="domain_auto_all_level1">
+                    <node label="domain_auto_all_level2">
+                        <node label="domain_auto_all_level3" id="809846223259336704"></node>
+                    </node>
+                </node>
+                <node label="test_111" id="809847919838527488"></node>
+                <node label="rfat">
+                    <node label="crfat">
+                        <node label="ccrfat" id="809837662907170816"></node>
+                    </node>
+                </node>
+                <node label="test_222" id="809847969868185600"></node>
+            </node>
+        </node>
+        `);
+        }
     }
 
     // ====================================================================

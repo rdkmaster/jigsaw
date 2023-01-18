@@ -31,6 +31,9 @@ import {
 export class I18nFullDemoComponent {
     pageable: LocalPageableTableData;
     tableData: TableData;
+    alertButtonZh: string = '知道了';
+    alertButtonEn: string = 'Gotcha';
+
     constructor(public translateService: TranslateService, http: HttpClient) {
         this.pageable = new LocalPageableTableData();
         this.pageable.http = http;
@@ -96,6 +99,17 @@ export class I18nFullDemoComponent {
     infoInitData = {
         message: this.translateService.instant('alertText')
     };
+
+    customizeAlertButtonLabel() {
+        this.translateService.setTranslation('zh', {
+            // 结构要和src/jigsaw/pc-components/alert/alert.ts里的一致
+            alert: { button: {ok: this.alertButtonZh} }
+        }, true);
+        this.translateService.setTranslation('en', {
+            // 结构要和src/jigsaw/pc-components/alert/alert.ts里的一致
+            alert: { button: {ok: this.alertButtonEn} }
+        }, true);
+    }
 
     buttons: Array<ButtonInfo> = [
         {

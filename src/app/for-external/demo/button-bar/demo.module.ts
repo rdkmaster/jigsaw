@@ -12,6 +12,7 @@ import { ButtonBarColorTypeComponent } from "./color-type/demo.component";
 import { ButtonBarIconsComponent } from "./icons/demo.component";
 import { ButtonBarMultipleComponent } from "./multiple/demo.component";
 import { ButtonBarSetHeightComponent } from "./set-height/demo.component";
+import {ButtonBarTitleComponent} from "./title/demo.component";
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ButtonBarSetHeightComponent } from "./set-height/demo.component";
         ButtonBarColorTypeComponent,
         ButtonBarIconsComponent,
         ButtonBarMultipleComponent,
-        ButtonBarSetHeightComponent
+        ButtonBarSetHeightComponent,
+        ButtonBarTitleComponent
     ],
     imports: [
         DemoTemplateModule,

@@ -123,6 +123,8 @@ import { TableSetHeaderFilterDemoComponent } from "./header-filter/demo.componen
 import { TableSetHeaderFilterDemoModule } from "./header-filter/demo.module";
 import { TableMaxWidthDemoComponent } from "./max-width/demo.component";
 import { TableMaxWidthDemoModule } from "./max-width/demo.module";
+import { HideColumnDividersDemoComponent } from "./hide-column-dividers/demo.component";
+import { HideColumnDividersDemoModule } from "./hide-column-dividers/demo.module";
 
 export const routerConfig = [
     {
@@ -309,6 +311,9 @@ export const routerConfig = [
         path: 'expand-pageable', component: TableExpandPageableDemoComponent
     },
     {
+        path: 'hide-column-dividers', component: HideColumnDividersDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -329,7 +334,7 @@ export const routerConfig = [
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
-        TableMaxWidthDemoModule
+        TableMaxWidthDemoModule, HideColumnDividersDemoModule
     ]
 })
 export class TableDemoModule {

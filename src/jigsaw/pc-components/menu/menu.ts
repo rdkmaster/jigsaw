@@ -48,7 +48,7 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
  */
 @Component({
     template: `
-        <div style="width:0px; height:0px;" jigsawCascadingMenu
+        <div style="width:0; height:0;" jigsawCascadingMenu
              [jigsawCascadingMenuOptions]="initData?.options"
              [jigsawCascadingMenuWidth]="initData?.width"
              [jigsawCascadingMenuHeight]="initData?.height"
@@ -80,52 +80,7 @@ export class JigsawMenuHelper implements IPopupable {
 @WingsTheme('menu.scss')
 @Component({
     selector: 'jigsaw-menu, j-menu',
-    template: `
-        <j-list #menuList [theme]="_$realTheme" [width]="_$realWidth" [height]="_$realHeight"
-                [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
-            <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node"
-                           [theme]="_$realTheme"
-                           jigsawCascadingMenu
-                           [jigsawCascadingMenuOptions]="_$realOptions"
-                           [jigsawCascadingMenuWidth]="_$realWidth"
-                           [jigsawCascadingMenuHeight]="_$realHeight"
-                           [jigsawCascadingMenuShowBorder]="_$realShowBorder"
-                           [jigsawCascadingMenuData]="node"
-                           [jigsawCascadingMenuTheme]="_$realTheme"
-                           [jigsawCascadingMenuPosition]="'rightTop'"
-                           [jigsawCascadingMenuOpenTrigger]="'mouseenter'"
-                           [jigsawCascadingMenuInitData]="{select:_$realSelect}"
-                           [disabled]="node.disabled"
-                           (click)="
-                                !node.disabled && !!node.label && select.emit(node);
-                                !node.disabled && !!node.label && initData?.select?.emit(node);
-                            "
-                           (mouseenter)="_$mouseenter(index, node)"
-                           (mouseleave)="_$mouseleave(index)"
-                           [style.minHeight]="_$getMinHeight(node.label)">
-                <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')"
-                     [ngStyle]="_$getTitleWidth(node)">
-                    <i class="{{node.icon}}"></i>
-                    <span>{{node.label}}</span>
-                </div>
-                <hr *ngIf="!node.label && _$realTheme != 'navigation'">
-                <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-                     [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')"
-                     [ngStyle]="_$getSubTitleWidth(node, index)">
-                    <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
-                    <i class="{{node.subIcon}} jigsaw-menu-subIcon"
-                       *ngIf="!!node.subIcon && !_$isSubTitleOverflow(index)"></i>
-                    <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
-                </div>
-                <div class="jigsaw-menu-navigation-title" *ngIf="_$realTheme == 'navigation'">
-                    {{node.label}}
-                    <i *ngIf="node.nodes && node.nodes.length>0 && !!node.label " class="iconfont iconfont-e144"
-                       style="position: absolute;right: 10px;line-height: 40px"></i>
-                    <hr *ngIf="!node.label">
-                </div>
-            </j-list-option>
-        </j-list>`,
+    templateUrl: 'menu.html',
     host: {
         '[attr.data-theme]': '_$realTheme',
         '[class.jigsaw-menu-host]': 'true',
@@ -134,7 +89,7 @@ export class JigsawMenuHelper implements IPopupable {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit, AfterContentInit {
+export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
 
     public initData: MenuOptions;
 
@@ -165,14 +120,14 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realHeight(): number | string {
-        return this.initData && this.initData.height ? this.initData.height : this.height;
+        return this.initData?.height ? this.initData.height : this.height;
     }
 
     /**
      * @internal
      */
     public get _$realShowBorder(): boolean {
-        return this.initData && this.initData.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
+        return this.initData?.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
     }
 
     /**
@@ -190,7 +145,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realSelect(): any {
-        if (this.initData && this.initData.select) {
+        if (this.initData?.select) {
             return this.initData.select;
         } else {
             return this.select;
@@ -257,9 +212,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         this.theme = this.initData?.theme;
     }
 
-    ngAfterContentInit() {
-    }
-
     private _setBorder() {
         if (!this._$realShowBorder) {
             this._menuListElement.nativeElement.style.border = 'none';
@@ -295,63 +247,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         if (!popupInfo || popupInfo.extra !== cascadingMenuFlag) {
             const listItems = this._menuListInstance._items.toArray();
             listItems[index].selected = false;
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$getMinHeight(label: string): string {
-        if (!label) {
-            return "1px";
-        } else {
-            return "32px";
-        }
-    }
-
-    /**
-     * @internal
-     */
-    public _$getTitleWidth(node: SimpleNode): any {
-        if (!node.nodes || node.nodes.length == 0) {
-            return {maxWidth: '100%'};
-        } else {
-            // 5是给有子节点时，留下的箭头；2是给标题和箭头之间留点距离；一共为7px
-            return {maxWidth: 'calc(100% - 7px)'};
-        }
-    }
-
-    /**
-     * @internal
-     */
-    _$isSubTitleOverflow(index: number): boolean {
-        if (!this._menuListElement) {
-            return false;
-        }
-        const listOptionElements = this._menuListElement.nativeElement.children;
-        const subTitleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-sub-title")[0].children[0];
-        return subTitleElement.offsetWidth < subTitleElement.scrollWidth;
-    }
-
-    /**
-     * @internal
-     */
-    public _$getSubTitleWidth(node: SimpleNode, index: number): any {
-        if (!this._menuListElement || node.disabled || !node.label) {
-            return {maxWidth: 'auto'};
-        }
-        const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName("jigsaw-menu-list-title")[0];
-        if (!titleElement) {
-            return {maxWidth: 'auto'};
-        }
-        const wrapElement = titleElement.parentElement;
-        // 14是给有子节点时，留下的箭头；
-        const minWidth = node.nodes && node.nodes.length > 0 ? 14 : 0;
-        if (titleElement.offsetWidth < wrapElement.offsetWidth - minWidth - 6) {
-            return {maxWidth: `${wrapElement.offsetWidth - titleElement.offsetWidth - 6}px`};
-        } else {
-            return {width: `${minWidth}px`};
         }
     }
 

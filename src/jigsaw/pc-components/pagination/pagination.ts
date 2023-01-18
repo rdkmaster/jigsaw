@@ -619,11 +619,13 @@ export class JigsawPaginationModule {
         TranslateHelper.initI18n("pagination", {
             zh: {
                 page: "页",
-                goto: "前往"
+                goto: "前往",
+                page2: "页"
             },
             en: {
-                page: "",
-                goto: "Goto page"
+                page: "Page",
+                goto: "Goto page",
+                page2: ""
             }
         });
     }

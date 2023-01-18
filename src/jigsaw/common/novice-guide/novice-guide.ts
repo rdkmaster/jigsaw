@@ -203,11 +203,11 @@ function createSteppedNotice(guide: NoviceGuide, notice: NoviceGuideNotice, targ
     const isLast = current === guide.notices.length - 1;
     let buttonHtml: string;
     if (current === 0) {
-        buttonHtml = `<div class="novice-guide-next novice-guide-button">下一步</div>`
+        buttonHtml = `<div class="novice-guide-next novice-guide-button">&rarr;</div>`
     } else if (isLast) {
-        buttonHtml = `<div class="novice-guide-pre novice-guide-button">上一步</div><div class="novice-guide-close novice-guide-button">结束</div>`
+        buttonHtml = `<div class="novice-guide-pre novice-guide-button">&larr;</div><div class="novice-guide-close novice-guide-button">&times;</div>`
     } else {
-        buttonHtml = `<div class="novice-guide-pre novice-guide-button">上一步</div><div class="novice-guide-next novice-guide-button">下一步</div>`
+        buttonHtml = `<div class="novice-guide-pre novice-guide-button">&larr;</div><div class="novice-guide-next novice-guide-button">&rarr;</div>`
     }
 
     const cloneEle = createCloneElement(targetEle, notice.key);
