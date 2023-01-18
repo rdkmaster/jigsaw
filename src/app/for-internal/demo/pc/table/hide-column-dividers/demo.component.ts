@@ -8,6 +8,7 @@ import { LocalPageableTableData } from "jigsaw/public_api";
 export class HideColumnDividersDemoComponent {
 
     public pageable: LocalPageableTableData;
+    public hideColumnDividers: boolean = true;
 
     constructor(http: HttpClient) {
         this.pageable = new LocalPageableTableData();
