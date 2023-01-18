@@ -121,8 +121,8 @@ import { TableExpandPageableDemoComponent } from './expand-pageable/demo.compone
 import { TableExpandPageableDemoModule } from './expand-pageable/demo.module';
 import { TableSetHeaderFilterDemoComponent } from "./header-filter/demo.component";
 import { TableSetHeaderFilterDemoModule } from "./header-filter/demo.module";
-import { RemoveVerticalLinesDemoComponent } from "./remove-vertical-lines/demo.component";
-import { RemoveVerticalLinesDemoModule } from "./remove-vertical-lines/demo.module";
+import { HideColumnDividersDemoComponent } from "./hide-column-dividers/demo.component";
+import { HideColumnDividersDemoModule } from "./hide-column-dividers/demo.module";
 
 export const routerConfig = [
     {
@@ -306,7 +306,7 @@ export const routerConfig = [
         path: 'expand-pageable', component: TableExpandPageableDemoComponent
     },
     {
-        path: 'remove-vertical-lines', component: RemoveVerticalLinesDemoComponent
+        path: 'hide-column-dividers', component: HideColumnDividersDemoComponent
     },
     {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
@@ -329,7 +329,7 @@ export const routerConfig = [
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
-        RemoveVerticalLinesDemoModule
+        HideColumnDividersDemoModule
     ]
 })
 export class TableDemoModule {

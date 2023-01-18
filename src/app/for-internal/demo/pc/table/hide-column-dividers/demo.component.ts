@@ -5,7 +5,7 @@ import { LocalPageableTableData } from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html'
 })
-export class RemoveVerticalLinesDemoComponent {
+export class HideColumnDividersDemoComponent {
 
     public pageable: LocalPageableTableData;
 

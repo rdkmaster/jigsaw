@@ -281,7 +281,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         }
     }
 
-    &.#{$jigsaw-table}-remove-vertical-lines {
+    &.#{$jigsaw-table}-hide-column-dividers {
 
         table tbody tr td,
         table tbody tr.jigsaw-table-row-expansion,
