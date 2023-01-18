@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div>
+    <jigsaw-header [level]="2">配置参数</jigsaw-header>
+    文件上传方式：
+    <jigsaw-button-bar [data]="['自动', '手动']" [selectedItems]="'手动'"
+                       (selectedItemsChange)="uploadImmediately = $event[0] == '自动'">
+    </jigsaw-button-bar>
+    <br>
+    <br>
+    文件数目：
+    <j-switch [(checked)]="multiple" onLabel="上传多个文件" offLabel="上传单个文件"></j-switch>
+    <br>
+    <br>
+    文件类型：
+    <jigsaw-radios-lite [(value)]="fileType" [data]="['.zip', '.docx, .doc', '.json', '.png, .jpg']">
+    </jigsaw-radios-lite>
+    <br>
+    <br>
+    文件大小：
+    最小限制 <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input> MB
+    最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
+    <br>
+    <br>
+    <j-button j-upload #upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)" [uploadImmediately]="uploadImmediately"
+              (uploadComplete)="getAllUploadFiles($event)" (uploadFileVerificationFailed)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
+              [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
+        上传
+    </j-button>
+    <j-button colorType="primary" (click)="uploader.upload()" *ngIf="!uploadImmediately">开始上传</j-button><br>
+    <jigsaw-upload-result [uploader]="uploader" (change)="onChange('change', $event)"
+                          (progress)="onChange('progress', $event)" (remove)="onChange('remove', $event)">
+    </jigsaw-upload-result>
+</div>
