@@ -9,6 +9,7 @@ export class PaginationBasicDemoComponent {
     searchable: boolean = false;
     pageable: LocalPageableTableData;
     pageableForSimple: LocalPageableTableData;
+    maxPageSize: number[] = [99];
     pageSizeOptions = null;
     showQuickJumper = true;
 
@@ -23,6 +24,17 @@ export class PaginationBasicDemoComponent {
         // 小尺寸的分页通过data设置pageSize
         this.pageableForSimple.pagingInfo.pageSize = 20;
         this.pageableForSimple.fromAjax('mock-data/hr-list-full');
+    }
+
+    getPageSizeOptions(): number[] {
+        const options = [];
+        let max = (this.maxPageSize[0] + 1) / 10;
+        while (max >= 100) {
+            options.unshift(max);
+            max /= 10;
+        }
+        options.unshift(5, 10, 20);
+        return options;
     }
 
     getCurrentPage(message: any) {

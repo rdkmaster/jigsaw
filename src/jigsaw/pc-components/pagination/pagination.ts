@@ -122,11 +122,27 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     public set pageSizeOptions(newValue: number[]) {
         this._pageSizeOptions = [];
-        (newValue || []).forEach(num => {
+        if (!newValue) {
+            return;
+        }
+        newValue.forEach(num => {
             let option = { value: num, label: num + "/" + this._translateService.instant("pagination.page") };
             this._pageSizeOptions.push(option);
         });
+        const maxPageSize = Math.max(...newValue);
+        if (maxPageSize < 100) {
+            this._$selectWidth = 88;
+        } else if (maxPageSize < 1000) {
+            this._$selectWidth = 96;
+        } else {
+            this._$selectWidth = 104;
+        }
     }
+
+    /**
+     * @internal
+     */
+    public _$selectWidth: number = 80;
 
     /**
      * 搜索功能开关
