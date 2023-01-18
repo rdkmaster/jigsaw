@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="2">设置columnDefines中width为"byContent"</jigsaw-header>
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines" [additionalColumnDefines]="additionalColumnDefines"
+    [columnResizable]="true"></jigsaw-table>
+
+<jigsaw-header [level]="2">设置contentWidth为'_inner_auto_'</jigsaw-header>
+<jigsaw-table [data]="tableData" [columnDefines]="columnDefines2" [additionalColumnDefines]="additionalColumnDefines2"
+    [columnResizable]="true" contentWidth="_inner_auto_"></jigsaw-table>
+
+<br />
+<br />
+<jigsaw-table [data]="tableData2" [columnDefines]="columnDefines3" [columnResizable]="true" contentWidth="_inner_auto_">
+</jigsaw-table>

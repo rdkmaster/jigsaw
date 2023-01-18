@@ -3,17 +3,18 @@ import {
 } from "./table-typings";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {TableCellRendererBase, TableCellCheckboxRenderer} from "./table-renderer";
+import {TableCellRendererBase} from "./table-renderer";
 
 export class TableUtils {
     public static updateHeaderSettings(columnDefine: ColumnDefine, settings: TableHeadSetting): TableHeadSetting {
         if (!settings) {
             settings = {
-                cellData: null, width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, field: '',
+                cellData: null, width: null, maxWidth: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, field: '',
                 sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null, filterable: false
             };
         }
         settings.width = columnDefine.width;
+        settings.maxWidth = columnDefine.maxWidth;
         settings.field = <string>columnDefine.target;
         let headerDef = columnDefine.header;
         if (headerDef) {

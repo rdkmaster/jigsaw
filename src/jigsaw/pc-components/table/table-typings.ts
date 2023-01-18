@@ -45,6 +45,7 @@ export class ColumnDefine {
     header?: TableHeader;
     cell?: TableCell;
     group?: boolean;
+    maxWidth?: number;
 }
 
 export class AdditionalColumnDefine {
@@ -54,6 +55,7 @@ export class AdditionalColumnDefine {
     header?: TableHeader;
     cell?: TableCell;
     group?: boolean;
+    maxWidth?: number;
 }
 
 export class TableDataChangeEvent {
@@ -103,6 +105,7 @@ export class TableCell {
 export class TableHeadSetting {
     cellData: string | number;
     width: string | number;
+    maxWidth: number;
     visible: boolean;
     renderer: Type<TableCellRendererBase> | TemplateRef<any>;
     rendererInitData?: any;

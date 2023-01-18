@@ -50,6 +50,7 @@ import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
+import { JigsawTheme } from "../../common/core/theming/theme";
 
 
 @WingsTheme('table.scss')
@@ -703,6 +704,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
+    private _themeChangeSubscription: Subscription;
 
     private _addWindowListener() {
         this._removeWindowListener();
@@ -718,6 +720,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                     'window', 'scroll', () => this._fixHeaderTop());
             });
         }
+
+        this._themeChangeSubscription?.unsubscribe();
+        this._themeChangeSubscription = JigsawTheme.themeChange.subscribe(() => {
+            this._handleScrollBar();
+        });
     }
 
     public resize() {
@@ -758,6 +765,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeWindowResizeListener();
             this._removeWindowResizeListener = null;
         }
+        this._themeChangeSubscription?.unsubscribe();
     }
 
     @ViewChildren(JigsawTableHeaderInternalComponent)
@@ -839,9 +847,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         // 设置表头随内容撑开
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
-        // 有的皮肤是14px字体默认，避免在使用这样皮肤的时候计算出来的尺寸不够，这里暂时加上字体，后续会去掉
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'font-size', '14px');
-
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
@@ -856,25 +861,25 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         host.querySelectorAll('.jigsaw-table-body > tbody tr:first-child td')
-            .forEach(td => widthStorage.push(td.offsetWidth));
+            .forEach(td => widthStorage.push(this._getElementWidth(td)));
 
         if (widthStorage.length) {
             host.querySelectorAll('.jigsaw-table-header > thead tr:first-child td')
                 .forEach((td, index) => {
-                    if (td.offsetWidth > widthStorage[index]) {
-                        widthStorage[index] = td.offsetWidth;
+                    if (this._getElementWidth(td) > widthStorage[index]) {
+                        widthStorage[index] = this._getElementWidth(td);
                     }
                 });
         } else {
             host.querySelectorAll('.jigsaw-table-header > thead tr:first-child td')
                 .forEach(td => {
-                    widthStorage.push(td.offsetWidth);
+                    widthStorage.push(this._getElementWidth(td));
                 });
         }
 
         this._$headerSettings.forEach((headerSetting, index) => {
-            const colWidth = headerSetting.width == 'byContent' || this.contentWidth == '_inner_auto_' ? widthStorage[index] :
-                !!headerSetting.width ? headerSetting.width : '0*';
+            const colWidth = headerSetting.width == 'byContent' || this.contentWidth == '_inner_auto_' ?
+                this._getAcceptableWidth(widthStorage[index], headerSetting.maxWidth) : !!headerSetting.width ? headerSetting.width : '0*';
             tHeadColGroup[index] && tHeadColGroup[index].setAttribute('width', colWidth);
             tBodyColGroup[index] && tBodyColGroup[index].setAttribute('width', colWidth);
             if (this._$isFFBrowser) {
@@ -889,14 +894,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         });
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
-        this._renderer.removeStyle(host.querySelector('.jigsaw-table-header'), 'font-size');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
     }
 
+    private _getElementWidth(el: Element): number {
+        // 使用getComputedStyle要比offsetWidth准确
+        return parseFloat(window.getComputedStyle(el).width)
+    }
+
+    private _getAcceptableWidth(width: number, maxWidth: number): number {
+        return CommonUtils.isUndefined(maxWidth) ? width : Math.min(width, maxWidth);
+    }
+
     /**
      * 处理滚动条
-     *
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
@@ -906,7 +918,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 校正表头表体的宽度
-     *
      */
     private _calibrateTable() {
 
@@ -1127,6 +1138,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeAdditionalDataChangeSubscription) {
             this._removeAdditionalDataChangeSubscription.unsubscribe();
             this._removeAdditionalDataChangeSubscription = null;
+        }
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
 
         this._removeWindowListener();
