@@ -48,7 +48,7 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
  */
 @Component({
     template: `
-        <div style="width:0px; height:0px;" jigsawCascadingMenu
+        <div style="width:0; height:0;" jigsawCascadingMenu
              [jigsawCascadingMenuOptions]="initData?.options"
              [jigsawCascadingMenuWidth]="initData?.width"
              [jigsawCascadingMenuHeight]="initData?.height"
@@ -89,7 +89,7 @@ export class JigsawMenuHelper implements IPopupable {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit, AfterContentInit {
+export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, AfterViewInit {
 
     public initData: MenuOptions;
 
@@ -120,14 +120,14 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realHeight(): number | string {
-        return this.initData && this.initData.height ? this.initData.height : this.height;
+        return this.initData?.height ? this.initData.height : this.height;
     }
 
     /**
      * @internal
      */
     public get _$realShowBorder(): boolean {
-        return this.initData && this.initData.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
+        return this.initData?.hasOwnProperty('showBorder') ? this.initData.showBorder : this.showBorder;
     }
 
     /**
@@ -145,7 +145,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realSelect(): any {
-        if (this.initData && this.initData.select) {
+        if (this.initData?.select) {
             return this.initData.select;
         } else {
             return this.select;
@@ -210,9 +210,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     ngAfterViewInit() {
         this._setBorder();
         this.theme = this.initData?.theme;
-    }
-
-    ngAfterContentInit() {
     }
 
     private _setBorder() {
