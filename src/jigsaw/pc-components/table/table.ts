@@ -697,7 +697,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
-    private _removeThemeChangeSubscribe: Subscription;
+    private _themeChangeSubscription: Subscription;
 
     private _addWindowListener() {
         this._removeWindowListener();
@@ -714,13 +714,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             });
         }
 
-        if (this._removeThemeChangeSubscribe) {
-            this._removeThemeChangeSubscribe.unsubscribe();
-            this._removeThemeChangeSubscribe = null;
-        }
-        JigsawTheme.themeChange.subscribe(($event) => {
+        this._themeChangeSubscription?.unsubscribe();
+        this._themeChangeSubscription = JigsawTheme.themeChange.subscribe(() => {
             this._handleScrollBar();
-        })
+        });
     }
 
     public resize() {
@@ -761,6 +758,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeWindowResizeListener();
             this._removeWindowResizeListener = null;
         }
+        this._themeChangeSubscription?.unsubscribe();
     }
 
     @ViewChildren(JigsawTableHeaderInternalComponent)
@@ -904,7 +902,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 处理滚动条
-     *
      */
     private _handleScrollBar() {
         this._calculateContentWidth();
@@ -914,7 +911,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     /**
      * 校正表头表体的宽度
-     *
      */
     private _calibrateTable() {
 
@@ -1136,9 +1132,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._removeAdditionalDataChangeSubscription.unsubscribe();
             this._removeAdditionalDataChangeSubscription = null;
         }
-        if (this._removeThemeChangeSubscribe) {
-            this._removeThemeChangeSubscribe.unsubscribe();
-            this._removeThemeChangeSubscribe = null;
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
 
         this._removeWindowListener();
