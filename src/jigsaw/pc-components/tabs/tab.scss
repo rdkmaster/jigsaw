@@ -103,7 +103,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
             .#{$jigsaw-tabs}-nav-wrap {
                 @include clearfix();
-                width: calc(100% - 40px);
+                width: 100%;
                 overflow: hidden;
 
                 .#{$jigsaw-tabs}-nav {
