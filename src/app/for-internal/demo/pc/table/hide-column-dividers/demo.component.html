@@ -1,0 +1,9 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<a (click)="hideColumnDividers = !hideColumnDividers">切换是否显示竖线</a>
+<jigsaw-table [data]="pageable" [hideColumnDividers]="hideColumnDividers"></jigsaw-table>
+<jigsaw-pagination style="margin-top: 8px" [data]="pageable" [pageSizeOptions]="[5, 10, 20]"></jigsaw-pagination>
