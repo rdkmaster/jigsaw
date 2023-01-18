@@ -10,11 +10,16 @@
     <span>显示搜索框</span>
     <jigsaw-switch style="margin-right: 20px" [(checked)]="searchable">
     </jigsaw-switch>
+
     <span>显示单页数</span>
-    <jigsaw-switch style="margin-right: 20px" [checked]="!!pageSizeOptions"
-                   (checkedChange)="pageSizeOptions = !!pageSizeOptions ? null : [5, 10, 20, 100, 200]">
+    <jigsaw-switch [checked]="!!pageSizeOptions" (checkedChange)="pageSizeOptions = !!pageSizeOptions ? null : getPageSizeOptions()">
     </jigsaw-switch>
-    <span>显示跳转框</span>
+    <span *ngIf="!!pageSizeOptions">最大页数</span>
+    <jigsaw-button-bar *ngIf="!!pageSizeOptions" [data]="[99, 999, 9999, 99999]" [(selectedItems)]="maxPageSize"
+                       (selectedItemsChange)="pageSizeOptions = getPageSizeOptions()">
+    </jigsaw-button-bar>
+
+    <span style="margin-left: 20px">显示跳转框</span>
     <jigsaw-switch style="margin-right: 20px" [(checked)]="showQuickJumper">
     </jigsaw-switch>
     <br>

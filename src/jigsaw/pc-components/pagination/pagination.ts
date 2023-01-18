@@ -131,9 +131,12 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
         });
         const maxPageSize = Math.max(...newValue);
         if (maxPageSize < 100) {
-            return;
+            this._$selectWidth = 88;
+        } else if (maxPageSize < 1000) {
+            this._$selectWidth = 96;
+        } else {
+            this._$selectWidth = 104;
         }
-        this._$selectWidth = Math.min(60 + String(maxPageSize).length * 10, 120)
     }
 
     /**
