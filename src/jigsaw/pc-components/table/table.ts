@@ -170,7 +170,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public removeVerticalLines: boolean = true;
+    public removeVerticalLines: boolean = false;
 
     /**
      * @internal
