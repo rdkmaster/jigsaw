@@ -28,7 +28,7 @@ export class UploadDirectiveErrorDemoComponent {
     }
 
     getFailFile(fileInfo: UploadFileInfo[]) {
-        const failMessage: string[] = fileInfo.map(f => f.name + " " + f.message);
+        const failMessage: string[] = fileInfo.map(f => `待上传文件 ${f.name} 非法，${f.message}`);
         console.log('files check error:', fileInfo);
         JigsawNotification.showError(failMessage.join("<br>"));
         this.firstJigsawUploadDirective.clear();

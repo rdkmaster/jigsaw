@@ -119,8 +119,8 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Output('uploadComplete')
     public complete = new EventEmitter<UploadFileInfo[]>();
 
-    @Output('uploadCheckFilesError')
-    public checkFilesError = new EventEmitter<UploadFileInfo[]>();
+    @Output('uploadFileVerificationFailed')
+    public fileVerificationFailed = new EventEmitter<UploadFileInfo[]>();
 
     @Output('uploadStart')
     public start = new EventEmitter<UploadFileInfo[]>();
@@ -232,7 +232,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         const files = this._checkFiles(Array.from(fileInput.files || []));
         const failFiles = files.filter(file => file.state == 'error')
         if (failFiles.length > 0) {
-            this.checkFilesError.emit(failFiles);
+            this.fileVerificationFailed.emit(failFiles);
         }
         fileInput.value = null;
         this.files.push(...files);

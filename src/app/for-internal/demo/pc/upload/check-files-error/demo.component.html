@@ -25,7 +25,7 @@
     <br>
     <br>
     <j-button j-upload #upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)" [uploadImmediately]="uploadImmediately"
-              (uploadComplete)="getAllUploadFiles($event)" (uploadCheckFilesError)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
+              (uploadComplete)="getAllUploadFiles($event)" (uploadFileVerificationFailed)="getFailFile($event)" [uploadMultiple]="multiple" [uploadMinSize]="minSize"
               [uploadMaxSize]="maxSize" [uploadFileType]="fileType">
         上传
     </j-button>
