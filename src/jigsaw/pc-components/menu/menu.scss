@@ -145,6 +145,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     >i {
                         position: absolute;
                         right: 8px;
+                        display: flex;
+                        align-items: center;
                         height: 40px;
                     }
                 }
