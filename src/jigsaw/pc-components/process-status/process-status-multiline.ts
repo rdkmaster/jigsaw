@@ -167,7 +167,7 @@ export class JigsawProcessStatusMultiline extends AbstractJigsawComponent {
      * @internal
      */
     public _$handleItemClick($event, step: any) {
-        if ($event.path[0].tagName.toLowerCase() == "i") {
+        if ($event.composedPath()[0].tagName.toLowerCase() == "i") {
             this.select.emit(step);
         }
     }
