@@ -406,7 +406,7 @@ export class JigsawEditableBox extends JigsawBox {
                 borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
             }
             // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
-            sizes[index] = sizes[index] - parentPaddingSize - paddingSize - marginSize - borderSize;
+            sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * CommonUtils.getScale(this.element);
         });
         return [sizes, sizes.map(size => size / this.parent.element.getBoundingClientRect()[sizeProp] * 100)];
     }
@@ -427,7 +427,16 @@ export class JigsawEditableBox extends JigsawBox {
         this.parent._$childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
-                box.element.style.flexBasis = sizes[index] + 'px';
+                let paddingSize: number, borderSize: number;
+                const boxStyle = getComputedStyle(box.element);
+                if (this.parent.direction == 'column') {
+                    paddingSize = this._pxToNumber(boxStyle.paddingTop) + this._pxToNumber(boxStyle.paddingBottom);
+                    borderSize = this._pxToNumber(boxStyle.borderTopWidth) + this._pxToNumber(boxStyle.borderBottomWidth);
+                } else {
+                    paddingSize = this._pxToNumber(boxStyle.paddingLeft) + this._pxToNumber(boxStyle.paddingRight);
+                    borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
+                }
+                box.element.style.flexBasis = sizes[index] / CommonUtils.getScale(this.element) + paddingSize + borderSize + 'px';
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
