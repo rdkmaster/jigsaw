@@ -391,6 +391,7 @@ export class JigsawEditableBox extends JigsawBox {
         const parentPaddingBottom = this._pxToNumber(parentStyle.paddingBottom) + this._pxToNumber(parentStyle.borderBottomWidth);
         const parentPaddingLeft = this._pxToNumber(parentStyle.paddingLeft) + this._pxToNumber(parentStyle.borderLeftWidth);
         const parentPaddingRight = this._pxToNumber(parentStyle.paddingRight) + this._pxToNumber(parentStyle.borderRightWidth);
+        const globalScale = CommonUtils.getScale(this.element);
         this.parent._$childrenBox.forEach((box, index) => {
             let paddingSize: number, marginSize: number, borderSize: number, parentPaddingSize: number;
             const boxStyle = getComputedStyle(box.element);
@@ -406,7 +407,7 @@ export class JigsawEditableBox extends JigsawBox {
                 borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
             }
             // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
-            sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * CommonUtils.getScale(this.element);
+            sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * globalScale;
         });
         return [sizes, sizes.map(size => size / this.parent.element.getBoundingClientRect()[sizeProp] * 100)];
     }
@@ -424,6 +425,7 @@ export class JigsawEditableBox extends JigsawBox {
 
         const sizeProp = this._getPropertyByDirection()[1];
         const [sizes, sizeRatios] = this._computeSizeRatios2(sizeProp, offset);
+        const globalScale = CommonUtils.getScale(this.element);
         this.parent._$childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
                 // 固定尺寸的设置basis，而不是grow
@@ -436,7 +438,7 @@ export class JigsawEditableBox extends JigsawBox {
                     paddingSize = this._pxToNumber(boxStyle.paddingLeft) + this._pxToNumber(boxStyle.paddingRight);
                     borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
                 }
-                box.element.style.flexBasis = sizes[index] / CommonUtils.getScale(this.element) + paddingSize + borderSize + 'px';
+                box.element.style.flexBasis = sizes[index] / globalScale + paddingSize + borderSize + 'px';
                 box.element.style.flexGrow = '0';
             } else {
                 box.grow = sizeRatios[index];
