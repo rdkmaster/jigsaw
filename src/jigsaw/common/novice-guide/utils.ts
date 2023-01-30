@@ -206,6 +206,7 @@ export function queryNode(notice: NoviceGuideNotice): HTMLElement {
         if (typeof selector != 'string') {
             selector = getSelector(innerTextNotice)
         }
+        // 实测querySelector的性能可以接受（万次耗时500~700ms）
         const nodes = document.querySelectorAll(selector);
         return <HTMLElement>Array.from(nodes).find((node: HTMLElement) => {
             if (typeof innerTextNotice.innerText == 'string') {
