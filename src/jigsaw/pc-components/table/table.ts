@@ -489,7 +489,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 const acd = this._additionalColumnDefines[i];
                 const cd: ColumnDefine = {
                     target: 'additional-field-' + i, header: acd.header, group: acd.group,
-                    cell: acd.cell, width: acd.width, visible: acd.visible
+                    cell: acd.cell, width: acd.width, visible: acd.visible, maxWidth: acd.maxWidth
                 };
                 const pos = CommonUtils.isDefined(acd.pos) ? acd.pos : columnDefines.length;
                 columnDefines.splice(pos, 0, cd);
