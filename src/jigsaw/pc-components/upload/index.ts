@@ -31,6 +31,7 @@ export class JigsawUploadModule {
                 "uploading": "上传中",
                 "done": "上传成功",
                 "failed": "上传失败",
+                "retry": "重新上传",
                 "unknownStatus": "未知状态",
 
                 "Bad Request": "错误详情：错误请求",
@@ -95,6 +96,7 @@ export class JigsawUploadModule {
                 "uploading": "Uploading",
                 "done": "Success to upload",
                 "failed": "Failed to upload",
+                "retry": "Retry",
                 "unknownStatus": "Unknown status",
 
                 "Bad Request": "Error detail: Bad Request",

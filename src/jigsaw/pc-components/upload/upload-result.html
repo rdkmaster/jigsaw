@@ -22,7 +22,7 @@
                 status="processing"
             ></jigsaw-progress>
             <span class="jigsaw-upload-result-re-upload" *ngIf="!_$checkRetry(file) && file.state === 'error'"
-                  (click)="_$retryUpload(file)">重新上传</span>
+                  (click)="_$retryUpload(file)">{{'upload.retry' | translate }}</span>
             <ul>
                 <li *ngFor="let log of file.log">
                     <span class="detail-time" [jigsawTooltip]="log.time">{{log.time.split(" ")[1]}}</span>
