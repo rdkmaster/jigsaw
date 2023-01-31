@@ -62,6 +62,7 @@ export class TableMaxWidthDemoComponent {
 
     public additionalColumnDefines2: AdditionalColumnDefine[] = [{
         pos: 0,
+        maxWidth: 100,
         header: {
             text: '长长长长长长长长长长文本'
         },
