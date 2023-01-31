@@ -61,7 +61,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
     .#{$jigsaw-tabs-bar} {
         border-bottom-width: 1px;
         border-bottom-style: solid;
-        border-bottom-color: $splitline-default;
+        border-bottom-color: $border-color-default;
         outline: none;
 
         .#{$jigsaw-tabs}-nav-container {
@@ -117,12 +117,13 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         display: inline-flex;
                         align-items: center;
                         position: relative;
-                        padding: 8px 20px;
+                        padding: 8px 16px;
                         height: 100%;
+                        color: $font-color-tag;
                         transition: color 0.3s $ease-in-out;
                         cursor: pointer;
                         text-decoration: none;
-
+                        
                         &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
                             background: $brand-lighten;
                         }
@@ -135,9 +136,18 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                             display: none;
                         }
 
+                        &.#{$jigsaw-tabs}-tab-editable {
+                            padding-left: 8px;
+                            padding-right: 24px;
+                        }
+
                         &.#{$jigsaw-tabs}-tab-disabled {
                             color: $font-color-disabled-spec;
                             cursor: not-allowed;
+
+                            .#{$jigsaw-tabs}-remove-bar{
+                                pointer-events: none;
+                            }
                         }
 
                         &.#{$jigsaw-tabs}-tab-active {
@@ -146,17 +156,20 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
                         .#{$jigsaw-tabs}-remove-bar {
                             position: absolute;
-                            right: 0;
+                            right: 4px;
                             top: 0;
                             display: flex;
                             align-items: center;
                             justify-content: center;
                             height: 100%;
                             font-size: 18px;
-                            color: $icon-color-default;
 
                             &:hover {
                                 color: $brand-default;
+                            }
+
+                            &.#{$jigsaw-tabs}-remove-bar{
+                                user-select: none;
                             }
                         }
 
@@ -197,7 +210,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                     .#{$jigsaw-tabs}-add-bar {
                         font-size: 18px;
                         vertical-align: middle;
-                        color: $icon-color-default;
+                        color: $font-color-tag;
                         cursor: pointer;
 
                         &:hover {
@@ -230,11 +243,10 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             display: flex;
             align-items: center;
             position: absolute;
-            right: 0;
+            right: 4px;
             top: 0;
             height: 100%;
             font-size: 18px;
-            color: $icon-color-default;
 
             &:hover {
                 color: $brand-default;
@@ -307,25 +319,14 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                                 color: $font-color-disabled-spec;
                             }
 
+                            &.#{$jigsaw-tabs}-tab-editable {
+                                padding-left: 8px;
+                                padding-right: 24px;
+                            }
+
                             &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
                                 background: $brand-lighten;
                             }
-                        }
-                    }
-                }
-            }
-        }
-
-        &.#{$jigsaw-tabs}-editable {
-            .#{$jigsaw-tabs}-remove-bar {
-                right: 4px;
-            }
-
-            .#{$jigsaw-tabs}-nav-container {
-                .#{$jigsaw-tabs}-nav-wrap {
-                    .#{$jigsaw-tabs}-nav {
-                        .#{$jigsaw-tabs}-tab {
-                            padding-right: 20px;
                         }
                     }
                 }
