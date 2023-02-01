@@ -17,6 +17,10 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 })
 export class JigsawMenuModule {
     constructor() {
+        // aaaaaaaaaaaaaa
+        /* fdafdafdfa
+
+         */
         TranslateHelper.initI18n('navigation', {
             zh: {
                 hide: "收起"

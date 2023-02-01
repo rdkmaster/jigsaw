@@ -36,6 +36,7 @@ jobs:
                     node build/scripts/check-tagname-selector.js
                     node build/scripts/extract-theme-variables.js
                     node build/scripts/check-extraction.js
+                    node build/scripts/check-i18n-error.js
                     node build/scripts/create-component-wings-theme.js
                     node build/scripts/generate-external-demo-info.js
                     node build/scripts/generate-external-navigation-info.js

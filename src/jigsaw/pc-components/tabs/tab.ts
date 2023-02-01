@@ -614,8 +614,7 @@ export class JigsawTab extends JigsawTabBase {
      * $demo = tab/api
      *
      * @param titleString 以一个简单的字符串作为标题
-     * @param contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，
-     * 当tab页的内容比较简单时，建议采用此方式。
+     * @param contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，当tab页的内容比较简单时，建议采用此方式。
      * @param initData 提供给`contentTemplate`的初始化数据
      * @param activateImmediately 是否立即激活新增的Tab页，默认值是`true`
      */
@@ -631,8 +630,7 @@ export class JigsawTab extends JigsawTabBase {
     public addTab(titleTemplate: TemplateRef<any>, contentTemplate: TemplateRef<any>,
                   initData?: Object, activateImmediately?: boolean);
     /**
-     * @param titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，
-     * 例如加图标，甚至添加按钮、进度条等复杂视图。
+     * @param titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。
      * @param contentTemplate
      * @param initData
      * @param activateImmediately
@@ -712,7 +710,7 @@ export class JigsawTab extends JigsawTabBase {
      */
     public removeTab(index: number): void {
         if (this._$tabPanes.length - index < 1) {
-            console.info("没有对应tab-pane 供删除");
+            console.info("invalid tab index to remove, index:", index);
             return;
         }
 
