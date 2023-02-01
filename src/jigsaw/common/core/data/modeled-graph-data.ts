@@ -18,10 +18,6 @@ import {getColumn} from "./unified-paging/paging";
 export abstract class AbstractModeledGraphTemplate {
     public abstract getInstance(): EchartOptions;
 
-    public themes? = [
-        {name: '默认浅色系', theme: lightGraphTheme},
-        {name: '默认深色系', theme: darkGraphTheme}
-    ];
     public title?: EchartTitle;
     public tooltip?: EchartTooltip;
     public toolbox?: EchartToolbox;
