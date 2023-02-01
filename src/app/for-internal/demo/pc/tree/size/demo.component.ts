@@ -23,7 +23,24 @@ export class ZtreeSizeComponent implements AfterViewInit {
             <node>
                 <node label="父节点1 - 展开" open="true">
                     <node label="父节点11 - 折叠">
-                        <node label="叶子节点111"></node>
+                        <node label="父节点111">
+                            <node label="父节点1111">
+                                <node label="父节点11111">
+                                    <node label="父节点111111">
+                                        <node label="父节点1111111">
+                                            <node label="父节点11111111">
+                                                <node label="父节点111111111">
+                                                    <node label="父1">
+                                                        <node label="父2">
+                                                        </node>
+                                                    </node>
+                                                </node>
+                                            </node>
+                                        </node>
+                                    </node>
+                                </node>
+                            </node>
+                        </node>
                         <node label="叶子节点112"></node>
                         <node label="叶子节点113"></node>
                         <node label="叶子节点114"></node>
