@@ -32,6 +32,7 @@ export type PinyinDictionary = {
     [chineseChar: string]: Letter
 };
 
+// @ignoring-i18n-check-start
 const _zhBorderChars = [
     '帀Z', '丫Y', '夕X', '屲W', '他T', '仨S', '呥R', '七Q', '妑P', '喔O', '嗯N', '呣M',
     '垃L', '咔K', '丌J', '哈H', '旮G', '发F', '妸E', '咑D', '嚓C', '丷B', '阿A'
@@ -40,7 +41,7 @@ const _zhBorderChars = [
 const _commonChinesePinyinReviser = {
     "嗯": "E", "咳": "K", "椎": "Z"
 };
-
+// @ignoring-i18n-check-end
 
 @WingsTheme('alphabetical-index.scss')
 @Component({
