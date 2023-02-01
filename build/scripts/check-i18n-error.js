@@ -17,7 +17,7 @@ const invalidFiles = sourceFiles.filter(file => {
     }
     const src = fs.readFileSync(file).toString()
         // 去掉手工忽略的代码段
-        .replace(/@ignoring-i18n-start[\s\S]*?@ignoring-i18n-end\b/, '')
+        .replace(/@ignoring-i18n-check-start[\s\S]*?@ignoring-i18n-check-end\b/, '')
         // 代码里的注释，这里头是有汉字的
         .replace(/\/\/.*$/mg, '')
         .replace(/\/\*[\s\S]*?\*\//g, '')
@@ -33,10 +33,10 @@ if (invalidFiles.length > 0) {
     console.log(invalidFiles.map(f => `  --> ${f}`).join('\n'));
     console.log("----------------------------------------------------------------------------------------------");
     console.log("提示，可以使用类似如下格式来忽略误报的代码片段");
-    console.log("  // @ignoring-i18n-start");
+    console.log("  // @ignoring-i18n-check-start");
     console.log("  public data1 = '这个词条是误报的';");
     console.log("  public data2 = '这个词条也是误报的';");
-    console.log("  // @ignoring-i18n-end");
+    console.log("  // @ignoring-i18n-check-end");
     console.log("----------------------------------------------------------------------------------------------");
 }
 process.exit(invalidFiles.length);

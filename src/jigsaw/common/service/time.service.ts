@@ -397,7 +397,7 @@ export class TimeService {
         return result;
     }
 
-    // @ignoring-i18n-start
+    // @ignoring-i18n-check-start
     public static deFineZhLocale() {
         moment.defineLocale('zh', {
             months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split('_'),
@@ -494,7 +494,7 @@ export class TimeService {
             }
         });
     }
-    // @ignoring-i18n-end
+    // @ignoring-i18n-check-end
 
     public static setLocale(lang: string) {
         moment.locale(lang);
