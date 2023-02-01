@@ -23,7 +23,7 @@ const invalidFiles = sourceFiles.filter(file => {
         .replace(/\/\*[\s\S]*?\*\//g, '')
         .replace(/<!--[\s\S]*?-->/g, '')
         // 去掉控制台打印里的汉字
-        .replace(/\bconsole\.(log|error|info|warn)\(.*?\)/g, '')
+        .replace(/\bconsole\.(log|error|info|warn)\(.+\)?/g, '')
         // 删掉国际化词条定义的代码
         .replace(/\bTranslateHelper\.initI18n\([\s\S]*?}\);?/g, '')
     return /\p{Unified_Ideograph}/u.test(src);
