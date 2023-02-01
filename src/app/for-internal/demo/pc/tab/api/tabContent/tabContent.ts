@@ -6,7 +6,7 @@ import { IDynamicInstantiatable } from "jigsaw/public_api";
     styleUrls: ['./tabContent.css']
 })
 export class TabContentComponent {
-    initData: any;
+    public initData = { username: "zte" };
 }
 
 @Component({

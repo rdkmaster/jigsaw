@@ -122,7 +122,7 @@ export abstract class JigsawTabItemBase extends AbstractJigsawComponent implemen
 @Component({
     selector: 'jigsaw-tab-label',
     template: `
-        <div *ngIf="_$isSimpleTabItem; else body">
+        <div *ngIf="_$isSimpleTabItem; else body" class="jigsaw-tabs-simple-content">
             <span *ngIf="icon" [ngClass]="icon"></span>
             <span [trustedHtml]="tabItem" [trustedHtmlContext]="htmlContext"></span>
         </div>

@@ -1,3 +1,7 @@
 .demo-container .jigsaw-header-host:not(:first-of-type) {
     margin-top: 20px;
 }
+
+.demo-container>jigsaw-tabs-bar {
+    margin-bottom: 8px;
+}

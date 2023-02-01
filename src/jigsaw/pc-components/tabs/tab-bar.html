@@ -14,6 +14,7 @@
                                   [class.jigsaw-tabs-tab-active]="_$selectedIndex === i"
                                   [class.jigsaw-tabs-tab-disabled]="tab.disabled"
                                   [class.jigsaw-tabs-tab-hidden]="tab.hidden"
+                                  [class.jigsaw-tabs-tab-editable]="editable"
                                   (click)="!tab.disabled && _$tabClick(i)"
                                   (remove)="_$handleRemove($event)"
                                   (labelChange)="titleChange.emit($event)">

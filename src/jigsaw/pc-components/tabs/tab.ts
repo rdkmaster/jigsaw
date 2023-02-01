@@ -424,8 +424,7 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-tabs-bar-host]': 'true',
-        '[class.jigsaw-tabs-page]': 'tabType == "page"',
-        '[class.jigsaw-tabs-editable]': 'editable'
+        '[class.jigsaw-tabs-page]': 'tabType == "page"'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
