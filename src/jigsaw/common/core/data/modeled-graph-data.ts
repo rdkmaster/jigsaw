@@ -12,7 +12,6 @@ import {
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
-import {lightGraphTheme, darkGraphTheme} from "../theming/echarts-theme";
 import {getColumn} from "./unified-paging/paging";
 
 export abstract class AbstractModeledGraphTemplate {
