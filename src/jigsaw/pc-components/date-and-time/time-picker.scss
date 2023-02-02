@@ -13,7 +13,7 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
     color: $font-color-default;
     font-size: $font-size-base;
     overflow: hidden;
-    padding: 4px 34px 4px 8px;
+    padding: 4px 34px 4px 0px;
 
     &:hover,
     &.#{$jigsaw-time-picker}-active {
@@ -26,6 +26,7 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
         justify-content: center;
         align-items: center;
         height: 100%;
+        padding-left: 8px;
 
         input {
             @include inline-block();
