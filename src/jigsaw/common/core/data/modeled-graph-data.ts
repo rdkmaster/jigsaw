@@ -16,7 +16,6 @@ import {getColumn} from "./unified-paging/paging";
 
 export abstract class AbstractModeledGraphTemplate {
     public abstract getInstance(): EchartOptions;
-
     public title?: EchartTitle;
     public tooltip?: EchartTooltip;
     public toolbox?: EchartToolbox;
