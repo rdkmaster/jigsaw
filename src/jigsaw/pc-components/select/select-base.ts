@@ -399,11 +399,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$showAllStatistics(): boolean {
+    public _$showAllStatistics(validData?: SelectOption[]): boolean {
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
-        const validData = this._getValidData();
+        validData = validData || this._getValidData();
         if (this.searchable) {
             return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
@@ -415,10 +415,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showNumStatistics(): boolean {
-        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._getValidData().length || !this._$selectedItems.length) {
-            return false
+        if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
+            return false;
         }
-        return !this._$showAllStatistics();
+        const validData = this._getValidData();
+        if (!validData.length) {
+            return false;
+        }
+        return !this._$showAllStatistics(validData);
     }
 
     /**
