@@ -807,7 +807,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         return valid;
     }
 
-    public get _$searchable(): string {
+    public get _$searchable(): boolean {
         return this.initData?.hasOwnProperty('searchable') ? this.initData.searchable : false;
     }
 
