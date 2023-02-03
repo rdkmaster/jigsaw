@@ -64,6 +64,10 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         border-style: solid;
         border-color: $brand-default;
     }
+    
+    &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper {
+        border-color: $brand-active;
+    }
 
     &.#{$jigsaw-input}-disabled {
         .#{$jigsaw-input}-wrapper {

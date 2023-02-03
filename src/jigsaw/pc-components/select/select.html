@@ -45,7 +45,7 @@
                         [enableIndeterminate]="true">
                         <span>{{'select.selectAll' | translate}}</span>
                     </jigsaw-checkbox>
-                    <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected" (click)="_$showSelected = true">
+                    <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()" (click)="_$showSelected = true">
                         <span>{{'select.checkSelected' | translate}}</span>
                     </div>
                     <div class="jigsaw-select-show-all" *ngIf="_$showSelected" (click)="_$showSelected = false">
