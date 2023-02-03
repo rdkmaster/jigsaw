@@ -24,11 +24,14 @@ export class TableCellSelectRenderDemoComponent {
             target: 'office', width: '180',
             cell: {
                 editorRenderer: TableCellSelectRenderer,
-                editorRendererInitData: (td, row, col) => {
-                    if (!this.offices) {
-                        this.offices = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
-                    }
-                    return this.offices
+                editorRendererInitData: {
+                    initData: (td, row, col) => {
+                        if (!this.offices) {
+                            this.offices = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
+                        }
+                        return this.offices
+                    },
+                    searchable: true
                 },
                 editable: true
             }

@@ -711,6 +711,7 @@ export type InitDataGenerator = (td: TableData, row: number, column: number) =>
 export type SelectRendererInitData = {
     disabled?: Function | boolean;
     valid?: Function | boolean;
+    searchable?: boolean;
     placeholder: string;
     initData: InitDataGenerator | ArrayCollection<any> | any[];
 }
@@ -724,7 +725,8 @@ export type SelectRendererInitData = {
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px" [disabled]="_$disabled"
                        [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger"
-                       closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)">
+                       closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)" 
+                       [searchable]="_$searchable">
         </jigsaw-select>
     `,
     styles: [
@@ -803,6 +805,10 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         // 修改border样式必须要及时，因此只得在这里修改border样式，_setBorderColor已充分考虑了性能问题
         this._setBorderColor(valid ? 'transparent' : '');
         return valid;
+    }
+
+    public get _$searchable(): string {
+        return this.initData?.hasOwnProperty('searchable') ? this.initData.searchable : false;
     }
 
     private _formatData(data: any): { label: string }[] {
