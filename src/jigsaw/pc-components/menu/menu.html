@@ -1,5 +1,5 @@
 <j-list #menuList [theme]="_$realTheme" [width]="_$realWidth" [height]="_$realHeight"
-        [maxHeight]="_$realMaxHeight"
+        [ngStyle]="{'max-height': _$realMaxHeight}"
     [perfectScrollbar]="{wheelSpeed: 0.5, minScrollbarLength: 20,suppressScrollX: true}">
     <j-list-option *ngFor="let node of _$realData?.nodes; index as index" [value]="node" [theme]="_$realTheme"
         [ngClass]="{'jigsaw-menu-list-separator':!node.label}" jigsawCascadingMenu

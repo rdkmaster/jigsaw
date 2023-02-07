@@ -128,7 +128,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      * @internal
      */
     public get _$realMaxHeight(): number | string {
-        return this.initData?.maxHeight ? this.initData.maxHeight : this.maxHeight;
+        return (this.initData?.maxHeight ? this.initData.maxHeight : this.maxHeight) + 'px';
     }
 
     /**
