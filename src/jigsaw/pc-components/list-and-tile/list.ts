@@ -23,6 +23,7 @@ import {WingsTheme} from "../../common/common";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.max-height]': 'maxHeight',
         '[attr.data-theme]':'theme',
         '[class.jigsaw-list-host]': 'true',
         '[class.jigsaw-list-error]': '!valid',

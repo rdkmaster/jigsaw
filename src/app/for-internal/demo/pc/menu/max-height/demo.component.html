@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>设置jigsawCascadingMenuMaxHeight</jigsaw-header>
+<ul class="demo-cascade-menu">
+    <li *ngFor="let menu of menuData" class="demo-cascade-menu-item" jigsawCascadingMenu [jigsawCascadingMenuData]="menu.data"
+        jigsawCascadingMenuWidth="220" jigsawCascadingMenuMaxHeight="128" jigsawCascadingMenuTheme="light"
+        (jigsawCascadingMenuSelect)="menuSelect($event)">
+        {{menu.label}}
+    </li>
+</ul>

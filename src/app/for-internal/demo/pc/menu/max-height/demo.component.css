@@ -1,0 +1,11 @@
+.demo-cascade-menu .demo-cascade-menu-item {
+    display: inline-flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 60px;
+    color: var(--brand-default);
+}
+
+.demo-cascade-menu .demo-cascade-menu-item:hover {
+    cursor: pointer;
+}
