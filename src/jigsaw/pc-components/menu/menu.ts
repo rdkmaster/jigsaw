@@ -23,6 +23,7 @@ export class MenuOptions {
     data?: SimpleTreeData;
     width?: string | number;
     height?: string | number;
+    maxHeight?: string | number;
     theme?: MenuTheme;
     options?: PopupOptions;
     showBorder?: boolean;
@@ -121,6 +122,13 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
      */
     public get _$realHeight(): number | string {
         return this.initData?.height ? this.initData.height : this.height;
+    }
+
+    /**
+     * @internal
+     */
+    public get _$realMaxHeight(): number | string {
+        return this.initData?.maxHeight ? this.initData.maxHeight : this.maxHeight;
     }
 
     /**

@@ -10,6 +10,8 @@ import {NavigationMenuNavDemo} from "./navigation/demo.component";
 import {NavigationMenuInlineDemo} from "./nav-inline/demo.component";
 import {NavigationMenuInlineDemoModule} from "./nav-inline/demo.module";
 import {NavigationMenuNavDemoModule} from "./navigation/demo.module";
+import { MenuMaxHeightDemoModule } from "./max-height/demo.module";
+import { MenuMaxHeightDemo } from "./max-height/demo.component";
 
 export const routerConfig = [
     {
@@ -26,13 +28,17 @@ export const routerConfig = [
     },
     {
         path: 'nav-inline', component: NavigationMenuInlineDemo
+    },
+    {
+        path: 'max-height', component: MenuMaxHeightDemo
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), MenuOptionsModule, MenuInDialogDemoModule,
-        MenuUsageDemoModule, NavigationMenuInlineDemoModule, NavigationMenuNavDemoModule
+        MenuUsageDemoModule, NavigationMenuInlineDemoModule, NavigationMenuNavDemoModule,
+        MenuMaxHeightDemoModule
     ]
 })
 export class MenuDemoModule {

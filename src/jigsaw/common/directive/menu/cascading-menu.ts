@@ -18,6 +18,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
+    private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: MenuTheme = JigsawTheme.majorStyle;
@@ -72,6 +73,18 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._jigsawCascadingMenuHeight != value) {
             this._jigsawCascadingMenuHeight = value;
             this.jigsawFloatInitData.height = value;
+        }
+    }
+
+    @Input()
+    get jigsawCascadingMenuMaxHeight(): string | number {
+        return this._jigsawCascadingMenuMaxHeight;
+    }
+
+    set jigsawCascadingMenuMaxHeight(value: string | number) {
+        if (this._jigsawCascadingMenuMaxHeight != value) {
+            this._jigsawCascadingMenuMaxHeight = value;
+            this.jigsawFloatInitData.maxHeight = value;
         }
     }
 
@@ -154,6 +167,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatInitData.data = data;
         this.jigsawFloatInitData.width = this.jigsawCascadingMenuWidth;
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
+        this.jigsawFloatInitData.maxHeight = this.jigsawCascadingMenuMaxHeight;
         this.jigsawFloatInitData.options = this.jigsawFloatOptions;
         if (!this.jigsawFloatInitData.select) {
             this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
