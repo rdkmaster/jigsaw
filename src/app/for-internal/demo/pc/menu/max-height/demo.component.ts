@@ -1,9 +1,8 @@
 import { Component } from "@angular/core";
-import { SimpleTreeData, JigsawMenu } from "jigsaw/public_api";
+import { SimpleTreeData } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html',
-    styleUrls: [`./demo.component.css`]
+    templateUrl: './demo.component.html'
 })
 export class MenuMaxHeightDemo {
     public menuData: SimpleTreeData = this.initMenuData();
