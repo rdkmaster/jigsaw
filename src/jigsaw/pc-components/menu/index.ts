@@ -22,7 +22,7 @@ export class JigsawMenuModule {
                 hide: "收起"
             },
             en: {
-                hide: "Dismiss"
+                hide: "Collpase"
             }
         });
     }
