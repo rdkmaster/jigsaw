@@ -372,6 +372,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             delete additionalFields['file-verify'];
         }
 
+        // 这里将配置的文件类型，放入 allowedFileTypes 这个属性中，用于上传服务的校验，未配置则传星号，表示支持所有类型
+        const fileTypes = this.fileType ? this.fileType.trim() : '*';
+        formData.append('allowedFileTypes', encodeURIComponent(fileTypes));
+
         for (let prop in this.additionalFields) {
             formData.append(prop, encodeURIComponent(this.additionalFields[prop]));
         }
