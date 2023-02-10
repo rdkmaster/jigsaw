@@ -245,7 +245,7 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
 
     .#{$jigsaw-nav-menu}-toggle-button .#{$jigsaw-nav-menu}-toggle-button-arrow {
         font-size: 16px;
-        @include prefixer(transition, all 0.3s ease);
+        @include prefixer(transition, transform 0.3s ease);
     }
 
     .#{$jigsaw-nav-menu}-toggle-button-collapsed {
