@@ -40,6 +40,9 @@ export class UploadOfflineDemoComponent {
     public uploader: JigsawUpload;
 
     public run() {
+        if (!this._check()) {
+            return;
+        }
         const file = this.uploader.files[0].file;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
@@ -53,6 +56,9 @@ export class UploadOfflineDemoComponent {
     }
 
     public run2() {
+        if (!this._check()) {
+            return;
+        }
         const file = this.uploader.files[0].file;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
@@ -65,9 +71,17 @@ export class UploadOfflineDemoComponent {
         }
     }
 
+    private _check(): boolean {
+        if (this.uploader?.files?.length > 0) {
+            return true;
+        }
+        alert('先在上传组件里选择文件后再试');
+        return false;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo展示了`jigsaw-upload`组件的基本用法';
+    summary: string = '本demo展示了`jigsaw-upload`组件在离线场景下的的用法，离线模式可以实现选择文件后就地处理，或者实现文件内容拦截';
     description: string = '';
 }

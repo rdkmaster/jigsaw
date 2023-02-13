@@ -23,5 +23,7 @@
     (complete)="uploadComplete($event)" (change)="uploadChange($event)" (remove)="uploadRemove($event)"
     (retry)="retry($event)">
 </jigsaw-upload>
-<a (click)="run()">执行离线读取逻辑（success）</a>
-<a (click)="run2()">执行离线读取逻辑（error）</a>
+<span>演示离线模式读取文件内容的逻辑：</span>
+<a (click)="run()">内容合法</a>
+<span>/</span>
+<a (click)="run2()">内容非法</a>
