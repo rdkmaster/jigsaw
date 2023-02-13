@@ -1,0 +1,27 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header class="main-header" [level]="1">Upload</jigsaw-header>
+<section>
+    <jigsaw-header [level]="2">注意！</jigsaw-header>
+    <p>
+        为了便于便于应用在更多的场合实现文件上传功能，<b>文件上传功能</b>与<b>文件上传结果显示功能</b>两部分可以单独使用，
+        其中执行上传功能的部分以 <code>j-upload</code> / <code>jigsaw-upload</code> 指令的形式存在，详情请 <a
+            href="/#/pc/upload/directive">参考这个demo</a>。
+    </p>
+    <p>
+        结果展示的功能，则以<code>j-upload-result</code> / <code>jigsaw-upload-result</code> 组件的形式存在，
+        详情请 <a href="/#/pc/upload/upload-result">参考这个demo</a>。
+    </p>
+</section>
+
+<jigsaw-upload #demo width="300px" uploadFileType=".txt" [offline]="true" (start)="uploadStart($event)"
+    (dataSendProgress)="uploadDataSendProgress($event)" (progress)="uploadProgress($event)"
+    (complete)="uploadComplete($event)" (change)="uploadChange($event)" (remove)="uploadRemove($event)"
+    (retry)="retry($event)">
+</jigsaw-upload>
+<a (click)="run()">执行离线读取逻辑（success）</a>
+<a (click)="run2()">执行离线读取逻辑（error）</a>

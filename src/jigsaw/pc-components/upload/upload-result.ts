@@ -54,6 +54,9 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     @Output()
     public remove = new EventEmitter<UploadFileInfo>();
 
+    @Output()
+    public retry = new EventEmitter<UploadFileInfo>();
+
     @ViewChild(PerfectScrollbarDirective)
     private _perfectScrollbar: PerfectScrollbarDirective;
 
@@ -158,6 +161,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
     public _$retryUpload(file) {
         file.progress = 0;
         this.uploader.retryUpload(file);
+        this.retry.emit(file);
     }
 
     ngOnDestroy() {

@@ -9,7 +9,7 @@
             <p class="drop-text-hint">
                 <a j-upload #uploadEle [uploadTargetUrl]="targetUrl" [uploadFileType]="fileType"
                     [uploadMultiple]="multiple" [uploadContentField]="contentField"
-                    [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify"
+                    [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify" [uploadOffline]="offline"
                     [uploadAdditionalFields]="additionalFields" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
                     [uploadImmediately]="uploadImmediately" (uploadProgress)="progress.emit($event)"
                     (uploadDataSendProgress)="dataSendProgress.emit($event)" (uploadComplete)="complete.emit($event)"
@@ -27,7 +27,7 @@
     <div class="jigsaw-upload-results"
         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
         <jigsaw-upload-result #uploadResultEle *ngIf="showResult" [theme]="theme" [uploader]="_$uploader" width="90%"
-                              (remove)="remove.emit($event); change.emit(_$uploader.files)">
+                              (remove)="remove.emit($event); change.emit(_$uploader.files)" (retry)="retry.emit($event)">
         </jigsaw-upload-result>
     </div>
 </div>

@@ -104,6 +104,9 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadImmediately')
     public uploadImmediately: boolean = true;
 
+    @Input('uploadOffline')
+    public uploadOffline: boolean = false;
+
     /**
      * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
      */
@@ -153,6 +156,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
+        if (this.uploadOffline) {
+            return;
+        }
+
         if (!fileInfo || !fileInfo.file) {
             console.error('invalid retry upload file:', fileInfo);
             return;
@@ -255,6 +262,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     return;
                 }
                 this.start.emit(this.files);
+                if (this.uploadOffline) {
+                    return;
+                }
                 const pendingFiles = this.files.filter(file => file.state == 'pause');
                 if (pendingFiles.length == 0) {
                     this.complete.emit(this.files);
