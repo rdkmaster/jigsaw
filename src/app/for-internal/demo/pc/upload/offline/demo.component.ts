@@ -67,7 +67,8 @@ export class UploadOfflineDemoComponent {
             this.uploader.files[0].log = [
                 { time: '2023-02-13 14:57:40', content: '加载中' },
                 { time: '2023-02-13 14:57:42', content: '上传中' },
-                { time: '2023-02-13 14:57:44', content: '错误详情：这里可以返回错误信息' }
+                { time: '2023-02-13 14:57:44', content: '错误详情：错误请求' },
+                { time: '2023-02-13 14:58:44', content: '这里可以返回错误信息' },
             ];
             this.uploader.files[0].state = 'error';
             this.uploader.files[0].progress = 70;
