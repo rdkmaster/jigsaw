@@ -17,6 +17,8 @@ import {CommonUtils} from '../../core/utils/common-utils';
 import {TimeGr, TimeService} from '../../service/time.service';
 import {IUploader, UploadFileInfo} from "./uploader-typings";
 
+declare const JSEncrypt: any;
+
 const maxConcurrencyUpload = 5;
 
 @Directive()
@@ -374,7 +376,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         // 这里将配置的文件类型，放入 allowedFileTypes 这个属性中，用于上传服务的校验，未配置则传星号，表示支持所有类型
         const fileTypes = this.fileType ? this.fileType.trim() : '*';
-        formData.append('allowedFileTypes', encodeURIComponent(fileTypes));
+        const allowedFileTypes = JSEncrypt ? encrypt(fileTypes) : fileTypes;
+        formData.append('allowedFileTypes', encodeURIComponent(allowedFileTypes));
 
         for (let prop in this.additionalFields) {
             formData.append(prop, encodeURIComponent(this.additionalFields[prop]));
@@ -417,4 +420,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             this._fileInputElement = null;
         }
     }
+}
+
+const PUBLIC_KEY = "MIGJAoGBALQWuGjjP19CA4K5892Wihg71EMJD2+UbUNEnb4PlcPzKQQORUwQvc7ecaT4NfS4DbSJXhJ2sCuqdcGLcM86NuLgb/x2rpT2PrNXkzXuiIo0IZGIrLa++WKr6rC2AfXsIzJpgdhGuy0MIAdOxfOCwwHQ1kxNrln/axzaDFj6c1E/AgMBAAE=";
+
+function encrypt(data: string): string {
+    const encryptor = new JSEncrypt();
+    encryptor.setPublicKey(PUBLIC_KEY);
+    return encryptor.encrypt(data);
 }
