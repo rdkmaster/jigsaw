@@ -40,6 +40,10 @@ export class UploadOfflineDemoComponent {
     public uploader: JigsawUpload;
 
     public run() {
+        if (!this.uploader || this.uploader.files.length < 1) {
+            alert('请先上传文件');
+            return;
+        }
         const file = this.uploader.files[0].file;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
@@ -53,12 +57,20 @@ export class UploadOfflineDemoComponent {
     }
 
     public run2() {
+        if (!this.uploader || this.uploader.files.length < 1) {
+            alert('请先上传文件');
+            return;
+        }
         const file = this.uploader.files[0].file;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
         reader.onload = () => {
             console.log('The file result is:' + JSON.stringify(reader.result));
-            this.uploader.files[0].log = [{ time: '2023-02-13 14:57:40', content: '加载中' }, { time: '2023-02-13 14:57:44', content: '已完成' }];
+            this.uploader.files[0].log = [
+                { time: '2023-02-13 14:57:40', content: '加载中' },
+                { time: '2023-02-13 14:57:42', content: '上传中' },
+                { time: '2023-02-13 14:57:44', content: '错误详情：这里可以返回错误信息' }
+            ];
             this.uploader.files[0].state = 'error';
             this.uploader.files[0].progress = 70;
             this.uploader.refresh();
