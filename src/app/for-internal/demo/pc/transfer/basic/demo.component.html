@@ -34,6 +34,15 @@
     </li>
 </ul>
 <jigsaw-header [level]="2">含有空字符串的数据</jigsaw-header>
-<j-transfer width="100%" height="500" [data]="data1"
+<j-transfer width="100%" height="300" [data]="data1"
+            [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer">
+</j-transfer>
+<jigsaw-header>含子标题的的数据</jigsaw-header>
+<j-transfer width="100%" height="300" [data]="data2"
+            [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer">
+</j-transfer>
+<jigsaw-header>含子标题的的数据</jigsaw-header>
+<j-transfer width="100%" height="300" [data]="data3"
+            labelField="custom" subLabelField="someOtherField" trackItemBy="custom"
             [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer">
 </j-transfer>

@@ -112,8 +112,15 @@ export abstract class AbstractTransferRendererBase {
     /**
      * @internal
      */
-    public _$getItemLabel(item: any, labelField: string = 'label'): string {
-        return String(CommonUtils.isDefined(item?.[labelField]) ? item[labelField] : item);
+    public _$getItemLabel(item: any): string {
+        return String(CommonUtils.isDefined(item?.[this.labelField]) ? item[this.labelField] : item);
+    }
+
+    /**
+     * @internal
+     */
+    public _$getItemSubLabel(item: any): string {
+        return String(CommonUtils.isDefined(item?.[this.subLabelField]) ? item[this.subLabelField] : '');
     }
 }
 
