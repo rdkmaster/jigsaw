@@ -11,11 +11,17 @@ export class TransferArrayDemoComponent {
 
     data: ArrayCollection<any>;
     data1: ArrayCollection<any>;
+    data2: ArrayCollection<any>;
+    data3: ArrayCollection<any>;
     selectedItems: ArrayCollection<any>;
 
     constructor() {
         this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
         this.data1 = new ArrayCollection(["北京", "上海", "", "深圳", "长沙", "西安"]);
+        this.data2 = new ArrayCollection([{ label: "北京", subLabel: '子标题' }, { label: "上海" }, { label: "南京" },
+        { label: "深圳" }, { label: "长沙" }, { label: "西安", subLabel: '子标题' }]);
+        this.data3 = new ArrayCollection([{ custom: "北京", someOtherField: '子标题' }, { custom: "上海" }, { custom: "南京" },
+        { custom: "深圳" }, { custom: "长沙" }, { custom: "西安", someOtherField: '子标题' }]);
         this.selectedItems = new ArrayCollection(["上海", "南京"]);
     }
 
