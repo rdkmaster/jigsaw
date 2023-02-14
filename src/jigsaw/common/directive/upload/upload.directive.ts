@@ -376,7 +376,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         // 这里将配置的文件类型，放入 allowedFileTypes 这个属性中，用于上传服务的校验，未配置则传星号，表示支持所有类型
         const fileTypes = this.fileType ? this.fileType.trim() : '*';
-        const allowedFileTypes = JSEncrypt ? encrypt(fileTypes) : fileTypes;
+        const allowedFileTypes = typeof JSEncrypt == "function" ? encrypt(fileTypes) : fileTypes;
         formData.append('allowedFileTypes', encodeURIComponent(allowedFileTypes));
 
         for (let prop in this.additionalFields) {
