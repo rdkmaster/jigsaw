@@ -135,7 +135,6 @@ export class JigsawAutoCompleteInput extends JigsawInputBase implements OnDestro
         }
         this._$maxDropDownWidth = CommonUtils.getCssValue(value);
     }
-    
 
     /**
      * 下拉提示数据，支持简单字符串列表，也可以支持带分类的结构数据

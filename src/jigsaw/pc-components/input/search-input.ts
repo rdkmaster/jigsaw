@@ -116,6 +116,18 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public searchDebounce: number | "none" = NaN;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxDropDownHeight: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxDropDownWidth: string;
+
     public clearHistory(): void {
         if (!this.historyStorageKey) {
             return;

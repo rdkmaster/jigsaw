@@ -1,0 +1,20 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<jigsaw-header>设置弹出最大宽高</jigsaw-header>
+<ul>
+    <li>
+        <span>最大宽度：</span>
+        <jigsaw-input [(value)]="maxDropDownWidth"></jigsaw-input>
+    </li>
+    <li>
+        <span>最大高度：</span>
+        <jigsaw-input [(value)]="maxDropDownHeight"></jigsaw-input>
+    </li>
+</ul>
+
+<jigsaw-search-input width="200px" [(value)]="value" (search)="value = $event" [searchDebounce]="1000"
+    [maxDropDownWidth]="maxDropDownWidth" [maxDropDownHeight]="maxDropDownHeight">
+</jigsaw-search-input>

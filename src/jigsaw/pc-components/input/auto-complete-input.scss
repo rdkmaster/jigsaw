@@ -26,14 +26,17 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
         li {
             padding: 6px 16px;
-            cursor: pointer;
             font-size: 12px;
             background: $bg-component;
+            cursor: pointer;
 
-            label {
-                margin: 0;
+            span {
+                display: inline-block;
+                width: 100%;
                 color: $font-color-default;
-                font-weight: 400;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
             }
 
             &:hover {
