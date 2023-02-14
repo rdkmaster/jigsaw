@@ -52,6 +52,9 @@ export class JigsawUpload extends JigsawUploadBase {
     @Output()
     public remove = new EventEmitter<UploadFileInfo>();
 
+    @Output()
+    public retry = new EventEmitter<UploadFileInfo>();
+
     /**
      * @internal
      */
@@ -141,6 +144,12 @@ export class JigsawUpload extends JigsawUploadBase {
     @Input()
     public uploadImmediately: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public offline: boolean = false;
+
     public upload() {
         this._$uploader.upload();
     }
@@ -151,6 +160,10 @@ export class JigsawUpload extends JigsawUploadBase {
 
     public retryUpload(file: UploadFileInfo) {
         this._$uploader.retryUpload(file);
+    }
+
+    public refresh(){
+        this._uploadResultEle._$cdr.markForCheck();
     }
 
     /**
