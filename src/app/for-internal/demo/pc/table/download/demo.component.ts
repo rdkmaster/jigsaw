@@ -37,18 +37,22 @@ export class TableDownloadDemoComponent {
 
     public download(type: string) {
         if (type == 'tableData') {
+            console.log(this.tableData);
             this.tableDataCmp.download('my_data.csv');
             return;
         }
         if (type == 'localPageableData') {
+            console.log(this.localPageableData);
             this.localPageableDataCmp.download('my_data.csv');
             return;
         }
         if (type == 'pageableData') {
+            console.log(this.pageableData);
             this.pageableDataCmp.download('my_data.csv');
             return;
         }
         if (type == 'additionalColumnDefines') {
+            console.log(this.additionalColumnDefines);
             this.additionalColumnDefinesCmp.download('my_data.csv');
             return;
         }

@@ -23,7 +23,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
-import {TableData} from "../../common/core/data/table-data";
+import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
@@ -1101,9 +1101,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.warn('Download table data failed!')
             return;
         }
-        const csvContent = "data:text/csv;charset=utf-8,"
-            + this.data.header.join(",") + "\n"
-            + this.data.data.map(e => e.join(",")).join("\n");
+        
+        let csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`;
+        if (this.data instanceof LocalPageableTableData){
+            csvContent += this.data.originalData.map(e => e.join(",")).join("\n");
+        } else {
+            csvContent += this.data.data.map(e => e.join(",")).join("\n");
+        }
+        
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
