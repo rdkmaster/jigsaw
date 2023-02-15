@@ -20,7 +20,9 @@ import {FieldWrapper} from '@ngx-formly/core';
                 <formly-validation-message [field]="field"></formly-validation-message>
             </div>
 
-            <small *ngIf="to.description">{{ to.description }}</small>
+            <div *ngIf="to.description && !showError" class="jigsaw-formly-field-wrapper-description">
+                {{ to.description }}
+            </div>
         </div>
     `,
     styles: [`
@@ -52,11 +54,19 @@ import {FieldWrapper} from '@ngx-formly/core';
             justify-content: center;
         }
 
-        .jigsaw-formly-field-wrapper-error {
-            color: red;
+        .jigsaw-formly-field-wrapper-error,
+        .jigsaw-formly-field-wrapper-description {
             font-size: 12px;
             position: absolute;
             top: 100%;
+        }
+
+        .jigsaw-formly-field-wrapper-error {
+            color: var(--error-default, red);
+        }
+
+        .jigsaw-formly-field-wrapper-description {
+            color: var(--font-color-hint, #999)
         }
 
         .jigsaw-formly-field-required {
