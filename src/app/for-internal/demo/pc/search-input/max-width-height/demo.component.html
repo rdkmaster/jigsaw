@@ -8,6 +8,7 @@
     <li>
         <span>最大宽度：</span>
         <jigsaw-input [(value)]="maxDropDownWidth"></jigsaw-input>
+        <span>实际宽度取搜索文本和配置值的最小值，也支持百分比</span>
     </li>
     <li>
         <span>最大高度：</span>
@@ -15,6 +16,6 @@
     </li>
 </ul>
 
-<jigsaw-search-input width="200px" [(value)]="value" (search)="value = $event" [searchDebounce]="1000"
+<jigsaw-search-input width="200px" [(value)]="value" [searchDebounce]="1000"
     [maxDropDownWidth]="maxDropDownWidth" [maxDropDownHeight]="maxDropDownHeight">
 </jigsaw-search-input>
