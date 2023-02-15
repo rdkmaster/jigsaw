@@ -1096,6 +1096,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
+    public download(name: string = 'table-data.csv') {
+        if (!this.data || !this.data.data) {
+            console.warn('Download table data failed!')
+            return;
+        }
+        const csvContent = "data:text/csv;charset=utf-8,"
+            + this.data.header.join(",") + "\n"
+            + this.data.data.map(e => e.join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", name);
+        link.click();
+    }
+
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);
 
