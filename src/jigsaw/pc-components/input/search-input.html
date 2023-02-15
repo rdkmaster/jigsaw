@@ -1,7 +1,7 @@
 <div class="jigsaw-search-input">
     <jigsaw-auto-complete-input [theme]="theme" [placeholder]="placeholder" [disabled]="disabled" [(value)]="value" [data]="_$history"
         preIcon="iconfont iconfont-e366" [clearable]="clearable" [floatPosition]="floatPosition" (valueChange)="_$valueChange($event)"
-        (keydown.enter)="_$enterSearch()" (blur)="_$onBlur()">
+        (keydown.enter)="_$enterSearch()" (blur)="_$onBlur()" [maxDropDownHeight]="maxDropDownHeight" [maxDropDownWidth]="maxDropDownWidth">
     </jigsaw-auto-complete-input>
     <span class="iconfont iconfont-e366 jigsaw-search-input-button" (click)="_$searchBtnClicked()"></span>
 </div>
