@@ -1102,13 +1102,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         
-        let csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`;
-        if (this.data instanceof LocalPageableTableData){
-            csvContent += this.data.originalData.map(e => e.join(",")).join("\n");
-        } else {
-            csvContent += this.data.data.map(e => e.join(",")).join("\n");
-        }
-        
+        const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
+        const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
+            + data.map(e => e.join(",")).join("\n");
+
         const encodedUri = encodeURI(csvContent);
         const link = document.createElement("a");
         link.setAttribute("href", encodedUri);
