@@ -38,7 +38,7 @@ export class TableDownloadDemoComponent {
         this.additionalColumnDefinesData = new TableData(
             [
                 [
-                    "\"测试带双引号的文本\"",
+                    "测试带\"双引号\"的文本",
                     "System Architect",
                     "$320,00",
                     "2011/04/25",
@@ -46,7 +46,7 @@ export class TableDownloadDemoComponent {
                     542
                 ],
                 [
-                    "\"测试带单引号的文本\"",
+                    "测试带\'单引号\'的文本",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -70,7 +70,7 @@ export class TableDownloadDemoComponent {
                     "8422"
                 ],
                 [
-                    "Tiger Nixon2",
+                    "测试逗号，的文本",
                     "System Architect",
                     "$320,8000",
                     "2011/04/25",
@@ -78,7 +78,7 @@ export class TableDownloadDemoComponent {
                     "5421"
                 ],
                 [
-                    "Garrett Winters1",
+                    "\"测试带双引号的文本\"",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -86,7 +86,7 @@ export class TableDownloadDemoComponent {
                     "8422"
                 ],
                 [
-                    "Tiger Nixon2",
+                    '"测试带双引号的文本"',
                     "System Architect",
                     "$320,8000",
                     "2011/04/25",
@@ -94,7 +94,7 @@ export class TableDownloadDemoComponent {
                     "5421"
                 ],
                 [
-                    "Garrett Winters1",
+                    "测试带'单引号'的文本",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
@@ -102,7 +102,7 @@ export class TableDownloadDemoComponent {
                     "8422"
                 ],
                 [
-                    "Tiger Nixon2",
+                    "'测试带单引号的文本'",
                     "System Architect",
                     "$320,8000",
                     "2011/04/25",
