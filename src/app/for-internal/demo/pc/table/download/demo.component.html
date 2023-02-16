@@ -18,6 +18,6 @@
 <jigsaw-table #pageableDataCmp [data]="pageableData" height="200px"></jigsaw-table>
 <jigsaw-pagination [data]="pageableData"></jigsaw-pagination>
 
-<jigsaw-header>additionalColumnDefines</jigsaw-header>
+<jigsaw-header>additionalColumnDefines(不包含)</jigsaw-header>
 <jigsaw-button (click)="download('additionalColumnDefines')">下载数据</jigsaw-button>
 <jigsaw-table #additionalColumnDefinesCmp [data]="tableData" height="200px" [additionalColumnDefines]="additionalColumnDefines"></jigsaw-table>
