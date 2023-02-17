@@ -522,6 +522,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _editorRendererSubscribe(renderer: TableCellRendererBase) {
         renderer.cellDataChange.subscribe(cellData => {
+            console.log(cellData)
             if (CommonUtils.isUndefined(cellData)) {
                 //cellData === '' 认为是合法值
                 return;

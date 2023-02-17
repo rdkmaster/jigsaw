@@ -41,13 +41,14 @@ export class TableDraggableDemoComponent {
     public additionalColumns: AdditionalColumnDefine[] = [
         {
             pos: 0,
-            width: "40px",
+            width: "80px",
             header: {
                 text: "拖拽换行",
             },
             cell: {
                 renderer: TableDragReplaceRow,
-                rendererInitData: this.rendererInitData
+                rendererInitData: this.rendererInitData,
+                alignment: "center"
             }
         }
     ];
