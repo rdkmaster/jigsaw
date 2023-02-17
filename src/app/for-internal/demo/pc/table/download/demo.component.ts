@@ -34,116 +34,32 @@ export class TableDownloadDemoComponent {
             url: 'mock-data/hr-list', body: { aa: 11, bb: 22 }, method: 'post'
         });
         this.pageableData.pagingInfo.pageSize = 10;
-        
+
         this.additionalColumnDefinesData = new TableData(
             [
                 [
                     "测试带\"双引号\"的文本",
-                    "System Architect",
-                    "$320,00",
-                    "2011/04/25",
-                    "Edinburgh",
+                    "测试带\'单引号\'的文本",
                     542
                 ],
                 [
-                    "测试带\'单引号\'的文本",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    8422
+                    "测试带'单引号'的文本",
+                    "测试中文逗号，的文本",
+                    "测试英文逗号,的文本"
                 ],
                 [
                     "测试换行的文本\n测试换行的文本",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
                     "测试换行的文本\r测试换行的文本",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "测试逗号，的文本",
-                    "System Architect",
                     "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
                 ],
                 [
                     "\"测试带双引号的文本\"",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
                     '"测试带双引号的文本"',
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "测试带'单引号'的文本",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
                     "'测试带单引号的文本'",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
                 ],
-                [
-                    "Garrett Wintsers2",
-                    "Accountant",
-                    "$170,50",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$3,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Tiger Nixon3",
-                    "System Architect",
-                    "$320,800",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ]
             ],
-            ["name", "position", "salary", "enroll-date", "office", "extn"],
-            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+            ["name", "position", "salary"],
+            ["姓名", "职位", "薪资",]);
     }
 
     public download(type: string) {
