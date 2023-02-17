@@ -432,7 +432,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 }
 
-const PUBLIC_KEY = "MIGJAoGBALQWuGjjP19CA4K5892Wihg71EMJD2+UbUNEnb4PlcPzKQQORUwQvc7ecaT4NfS4DbSJXhJ2sCuqdcGLcM86NuLgb/x2rpT2PrNXkzXuiIo0IZGIrLa++WKr6rC2AfXsIzJpgdhGuy0MIAdOxfOCwwHQ1kxNrln/axzaDFj6c1E/AgMBAAE=";
+const PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNsaW+pHR7tipUGYt+ZpYz+lLlep5le40PDFKrRXkjbFXjemTIGW0s1MRdtwXouHnn8a8gucNs6peFdy3kzFe2pfxIXmNLkkzV2vSZslQEHpCsDlibgoF9KSWDYJVC5Jb1AgTxOd5/Ay/ub58SgrOcbbAq2WCT0TCDQSpUZGB9LQIDAQAB";
 
 function encrypt(data: string): string {
     const encryptor = new JSEncrypt();
