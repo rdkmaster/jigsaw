@@ -48,8 +48,8 @@ export class TableDownloadDemoComponent {
                     "测试英文逗号,的文本"
                 ],
                 [
-                    "测试换行的文本\n测试换行的文本",
-                    "测试换行的文本\r测试换行的文本",
+                    "测试换行（Linux风格）：第一行\n第二行",
+                    "测试换行（windows风格）：第一行\r\n第二行",
                     "$320,8000",
                 ],
                 [
