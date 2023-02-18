@@ -1,0 +1,23 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>TableData</jigsaw-header>
+<jigsaw-button (click)="download('tableData')">下载数据</jigsaw-button>
+<jigsaw-table #tableDataCmp [data]="tableData" height="200px"></jigsaw-table>
+
+<jigsaw-header>localPageableData</jigsaw-header>
+<jigsaw-button (click)="download('localPageableData')">下载数据</jigsaw-button>
+<jigsaw-table #localPageableDataCmp [data]="localPageableData" height="200px"></jigsaw-table>
+<jigsaw-pagination [data]="localPageableData"></jigsaw-pagination>
+
+<jigsaw-header>pageableData</jigsaw-header>
+<jigsaw-button (click)="download('pageableData')">下载数据</jigsaw-button>
+<jigsaw-table #pageableDataCmp [data]="pageableData" height="200px"></jigsaw-table>
+<jigsaw-pagination [data]="pageableData"></jigsaw-pagination>
+
+<jigsaw-header>additionalColumnDefines(不包含)</jigsaw-header>
+<jigsaw-button (click)="download('additionalColumnDefines')">下载数据</jigsaw-button>
+<jigsaw-table #additionalColumnDefinesCmp [data]="additionalColumnDefinesData" height="200px" [additionalColumnDefines]="additionalColumnDefines"></jigsaw-table>
