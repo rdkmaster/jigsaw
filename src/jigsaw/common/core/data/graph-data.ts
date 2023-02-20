@@ -3,7 +3,7 @@ import {TableDataBase} from "./table-data";
 import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
-import echarts from "echarts";
+declare const echarts: any;
 import {JigsawTheme} from "../theming/theme";
 
 export type GraphMatrixRow = (string | number)[];
