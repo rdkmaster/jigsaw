@@ -424,11 +424,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
         this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
             this._checkSourceSelectAll();
-            this.sourceCheckedChange.emit(currentSelectedItems);
+            this.sourceChecked.emit(currentSelectedItems);
         });
         this.destSelectedItemsChangeSubscribe = this.destComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
             this._checkDestSelectAll();
-            this.destCheckedChange.emit(currentSelectedItems);
+            this.destinationChecked.emit(currentSelectedItems);
         });
     }
 
@@ -680,13 +680,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
      * 源数据的选中状态发生变化时，向外发送事件
      */
     @Output()
-    public sourceCheckedChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
+    public sourceChecked: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     /**
      * 源数据的选中状态发生变化时，向外发送事件
      */
     @Output()
-    public destCheckedChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
+    public destinationChecked: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     public get isPageable(): boolean {
         return this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity;
@@ -772,7 +772,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public _$sourceSelectAll(): void {
         this.sourceComponent.selectAll();
         this._$sourceButton = this.sourceComponent.selectedItems.length > 0;
-        this.sourceCheckedChange.emit(this.sourceComponent.selectedItems);
+        this.sourceChecked.emit(this.sourceComponent.selectedItems);
     }
 
     /**
@@ -781,7 +781,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     public _$destSelectAll(): void {
         this.destComponent.selectAll();
         this._$destButton = this.destComponent.selectedItems.length > 0;
-        this.destCheckedChange.emit(this.destComponent.selectedItems);
+        this.destinationChecked.emit(this.destComponent.selectedItems);
     }
 
     /**

@@ -21,12 +21,12 @@ export class TransferCheckedChangeDemoComponent {
     public sourceCheckedItems: string;
     public destCheckedItems: string;
 
-    public sourceCheckedChange($event: ArrayCollection<ListOption>): void {
+    public sourceChecked($event: ArrayCollection<ListOption>): void {
         console.log("source checked change: ", $event);
         this.sourceCheckedItems = $event.join(", ");
     }
 
-    public destCheckedChange($event: ArrayCollection<ListOption>): void {
+    public destinationChecked($event: ArrayCollection<ListOption>): void {
         console.log("dest checked change: ", $event);
         this.destCheckedItems = $event.join(", ");
     }
