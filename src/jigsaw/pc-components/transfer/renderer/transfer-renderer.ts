@@ -10,14 +10,14 @@ import {
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
-import {ArrayCollection, PageableArray, LocalPageableArray} from '../../../common/core/data/array-collection';
+import {ArrayCollection, LocalPageableArray, PageableArray} from '../../../common/core/data/array-collection';
 import {CommonUtils} from '../../../common/core/utils/common-utils';
 import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
 import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
 import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
 import {JigsawTable} from '../../../pc-components/table/table';
-import {TableData, LocalPageableTableData, PageableTableData} from '../../../common/core/data/table-data';
-import {SimpleTreeData, SimpleNode} from '../../../common/core/data/tree-data';
+import {LocalPageableTableData, PageableTableData, TableData} from '../../../common/core/data/table-data';
+import {SimpleNode, SimpleTreeData} from '../../../common/core/data/tree-data';
 import {JigsawTransfer} from "../transfer";
 import {TableDataMatrix, TableMatrixRow} from "../../../common/core/data/unified-paging/paging";
 
@@ -39,18 +39,22 @@ export abstract class AbstractTransferRendererBase {
      * @internal
      */
     public abstract reset();
+
     /**
      * @internal
      */
     public abstract update();
+
     /**
      * @internal
      */
     public abstract selectAll();
+
     /**
      * @internal
      */
     public abstract dataFilter(...args): void;
+
     /**
      * @internal
      */
@@ -87,7 +91,7 @@ export abstract class AbstractTransferRendererBase {
     /**
      * @internal
      */
-    public selectedItemsChange: EventEmitter<void>;
+    public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>>;
     /**
      * @internal
      */
@@ -172,7 +176,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
-    public selectedItemsChange = new EventEmitter();
+    public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     /**
      * 渲染器配置
@@ -208,7 +212,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      * @internal
      */
     public _$updateSelectedItems(): void {
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     public selectAll(): void {
@@ -246,7 +250,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
 
     public reset(): void {
         this.selectedItems.splice(0, this.selectedItems.length);
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 }
 
@@ -377,7 +381,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
-    public selectedItemsChange = new EventEmitter();
+    public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     /**
      * 渲染器配置
@@ -414,7 +418,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         const allCheckedNodes = this.treeExt.getCheckedNodes(true);
         const checkedNodes = allCheckedNodes.filter(node => !node.isParent && !node.isHidden);
         this.selectedItems.fromArray(checkedNodes);
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
@@ -437,7 +441,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
 
     public reset(): void {
         this.selectedItems.splice(0, this.selectedItems.length);
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     /**
@@ -541,7 +545,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
     public selectedItems: ArrayCollection<ListOption> = new ArrayCollection([]);
 
     @Output()
-    public selectedItemsChange = new EventEmitter();
+    public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     /**
      * 渲染器配置
@@ -577,7 +581,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
     public _$updateSelectedItems(value: AdditionalTableData): void {
         this.selectedRows = this._getSelectedRows(value);
         this.selectedItems = new ArrayCollection(this.selectedRows);
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     public update(): void {
@@ -601,7 +605,7 @@ export abstract class TransferTableRendererBase extends AbstractTransferRenderer
         }
         this.additionalData.reset();
         this.additionalData.refresh();
-        this.selectedItemsChange.emit();
+        this.selectedItemsChange.emit(this.selectedItems);
     }
 
     /**
