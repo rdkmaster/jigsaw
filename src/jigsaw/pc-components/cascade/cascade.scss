@@ -78,8 +78,13 @@ $jigsaw-tile: #{$jigsaw-prefix}-tile;
         padding: 0 8px;
     }
 
-    .#{$jigsaw-cascade}-pagination-wrapper {
-        padding: 4px 0;
-        text-align: center;
+    .#{$jigsaw-cascade}-footer{
+        display: flex;
+        justify-content: flex-start;
+        padding: 4px 8px;
+
+        .#{$jigsaw-cascade}-confirm-button-wrapper{
+            margin-left: auto;
+        }
     }
 }

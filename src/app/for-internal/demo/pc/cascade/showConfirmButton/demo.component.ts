@@ -1,21 +1,22 @@
-import {Component, OnInit} from "@angular/core";
-import {HttpClient, HttpRequest} from "@angular/common/http";
-import {CascadeData, ArrayCollection} from "jigsaw/public_api";
-import {AjaxInterceptor, MockData} from "../../../../../libs/app.interceptor";
+import { Component, OnInit } from "@angular/core";
+import { HttpClient, HttpRequest } from "@angular/common/http";
+import { CascadeData, ArrayCollection } from "jigsaw/public_api";
+import { AjaxInterceptor, MockData } from "../../../../../libs/app.interceptor";
+import { dealAreaRequest } from "../search-and-paging/demo.component";
 
 @Component({
     templateUrl: './demo.component.html'
 })
-export class CascadeSearchAndPagingDemoComponent implements OnInit {
+export class CascadeShowConfirmButtonDemoComponent implements OnInit {
     constructor(public http: HttpClient) {
     }
 
     lazyLoadSelectedItems: any[];
 
     levelInfos = [
-        {title: '省/直辖市', field: 'provinceId'},
-        {title: '市', field: 'cityId'},
-        {title: '区', field: 'districtId'},
+        { title: '省/直辖市', field: 'provinceId' },
+        { title: '市', field: 'cityId' },
+        { title: '区', field: 'districtId' },
     ];
 
     ngOnInit() {
@@ -36,7 +37,7 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
         const levelInfo = this.levelInfos[level];
         return {
             title: levelInfo.title, noMore: level >= 2,
-            list: this.http.get<any[]>('/mock-data/cascade/selected-items/area', {params: params}),
+            list: this.http.get<any[]>('/mock-data/cascade/selected-items/area', { params: params }),
         }
     }
 
@@ -55,6 +56,19 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
         }, []).join(' | ');
     }
 
+    public showConfirmButton: boolean = localStorage.getItem('demoShowConfirmButton') == 'true';;
+
+    public confirm($event) {
+        console.log("confirm=>", $event);
+        this.parseMessage($event);
+    }
+
+    public update() {
+        // 提示：现在的版本无法很好支持showConfirmButton属性的动态化。
+        localStorage.setItem('demoShowConfirmButton', String(this.showConfirmButton));
+        setTimeout(() => location.reload(), 300);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
@@ -62,23 +76,4 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
     description: string = '';
 }
 
-
-/* 模拟请求代码 start */
-
 AjaxInterceptor.registerProcessor('/mock-data/cascade/selected-items/area', dealAreaRequest);
-
-export function dealAreaRequest(req: HttpRequest<any>): any {
-    const provinces = MockData.get('mock-data/provinces.json');
-    const cities = MockData.get('mock-data/cities.json');
-    const districts = MockData.get('mock-data/districts.json');
-
-    if (req.params.get('cityId')) {
-        return districts.filter(d => d.cityId == req.params.get('cityId')).map(d => ({...d}));
-    }
-    if (req.params.get('provinceId')) {
-        return cities.filter(c => c.provinceId == req.params.get('provinceId')).map(c => ({...c}));
-    }
-    return provinces.map(p => ({...p}));
-}
-
-/* 模拟请求代码 end */

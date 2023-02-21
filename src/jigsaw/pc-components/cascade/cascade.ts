@@ -26,6 +26,7 @@ import {SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
 import {JigsawInputModule} from "../input/input";
 import {JigsawPaginationModule} from "../pagination/pagination";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import { JigsawButtonModule } from "../button/button";
 
 export class CascadeData {
     /**
@@ -76,6 +77,7 @@ export class CascadeTabContentInitData {
     showAll: boolean;
     optionWidth: number | string;
     theme: 'light' | 'dark';
+    showConfirmButton: boolean;
 }
 
 /**
@@ -289,6 +291,15 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     public optionWidth: number | string;
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showConfirmButton: boolean = false;
+
+    @Output()
+    public confirm = new EventEmitter<any[]>();
+
+    /**
      * @internal
      */
     public _handleMultipleSelect(selectedItems: any[], level: number) {
@@ -350,6 +361,13 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this.selectedItemsChange.emit(this._selectedItems);
     }
 
+    /**
+     * @internal
+     */
+    public _$confirm() {
+        this.confirm.emit(this._selectedItems);
+    }
+
     private _addCascadingTab(level: number, lazy: boolean) {
         this._removeCascadingTabs(level);
         this._tabs.addTab(this._cascadeDataList[level].title, InternalTabContent, {
@@ -359,7 +377,8 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             multipleSelect: this._cascadeDataList[level].noMore && this.multipleSelect,
             showAll: this._cascadeDataList[level].showAll,
             optionWidth: this.optionWidth,
-            theme: this.theme
+            theme: this.theme,
+            showConfirmButton: this.showConfirmButton
         }, !lazy);
     }
 
@@ -452,8 +471,14 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                             {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
                 </j-tile>
-                <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
-                    <j-pagination [theme]="initData?.theme || 'light'" [data]="_$list" mode="simple"></j-pagination>
+                
+                <div class="jigsaw-cascade-footer">
+                    <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
+                        <j-pagination size='small' [theme]="initData?.theme || 'light'" [data]="_$list" mode="simple"></j-pagination>
+                    </div>
+                    <div class="jigsaw-cascade-confirm-button-wrapper" *ngIf="initData?.showConfirmButton && initData?.noMore">
+                        <jigsaw-button preSize='small' (click)="_$handleConfirm()">{{'cascade.confirm' | translate}}</jigsaw-button>
+                    </div>
                 </div>
             </ng-template>
         </div>
@@ -626,6 +651,13 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
         });
     }
 
+    /**
+     * @internal
+     */
+    public _$handleConfirm() {
+        this._$cascade._$confirm();
+    }
+
     private _init(data: any[], allSelectedData: any[]) {
         this._$list = data;
         if (allSelectedData instanceof Array || (allSelectedData as any) instanceof ArrayCollection) {
@@ -688,7 +720,9 @@ export class InternalTabContent extends AbstractJigsawComponent implements IDyna
 }
 
 @NgModule({
-    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule.forChild(), CommonModule, JigsawInputModule, JigsawPaginationModule],
+    imports: [JigsawTabsModule, JigsawTileSelectModule, TranslateModule.forChild(), CommonModule, JigsawInputModule, JigsawPaginationModule,
+        JigsawButtonModule
+    ],
     declarations: [JigsawCascade, InternalTabContent],
     exports: [JigsawCascade]
 })
@@ -696,10 +730,12 @@ export class JigsawCascadeModule {
     constructor() {
         TranslateHelper.initI18n('cascade', {
             zh: {
-                all: "全部"
+                all: "全部",
+                confirm: "确定"
             },
             en: {
-                all: "All"
+                all: "All",
+                confirm: "Confirm"
             }
         });
     }

@@ -16,6 +16,8 @@ import {CascadeWithComboDemoComponent} from "./with-combo/demo.component";
 import {CascadeWithComboDemoModule} from "./with-combo/demo.module";
 import {CascadeSearchAndPagingDemoComponent} from "./search-and-paging/demo.component";
 import {CascadeSearchAndPagingDemoModule} from "./search-and-paging/demo.module";
+import { CascadeShowConfirmButtonDemoModule } from "./showConfirmButton/demo.module";
+import { CascadeShowConfirmButtonDemoComponent } from "./showConfirmButton/demo.component";
 
 export const routerConfig = [
     {
@@ -47,6 +49,9 @@ export const routerConfig = [
     },
     {
         path: 'search-and-paging', component: CascadeSearchAndPagingDemoComponent
+    },
+    {
+        path: 'show-confirm-button', component: CascadeShowConfirmButtonDemoComponent
     }
 ];
 
@@ -62,7 +67,8 @@ export const routerConfig = [
         CascadeTrackItemByDemoModule,
         CascadeShowAllDemoModule,
         CascadeWithComboDemoModule,
-        CascadeSearchAndPagingDemoModule
+        CascadeSearchAndPagingDemoModule,
+        CascadeShowConfirmButtonDemoModule
     ]
 })
 export class CascadeDemoModule {
