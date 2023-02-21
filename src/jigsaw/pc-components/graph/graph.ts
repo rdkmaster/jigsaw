@@ -431,9 +431,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public axisareaselected = new EventEmitter<any>();
     // basic
     @Output()
-    public focusnodeadjacency = new EventEmitter<any>();
+    public focusNodeAdjacency = new EventEmitter<any>();
     @Output()
-    public unfocusnodeadjacency = new EventEmitter<any>();
+    public unfocusNodeAdjacency = new EventEmitter<any>();
 
     // 区域选择
     @Output()
