@@ -22,7 +22,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
-declare const echarts: any;
+import echarts from "echarts";
 
 // 某些情况，需要把Jigsaw在服务端一起编译，直接使用window对象，会导致后端编译失败
 declare const window: any;

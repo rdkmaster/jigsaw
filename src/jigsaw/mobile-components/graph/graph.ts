@@ -8,7 +8,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 
-declare const echarts: any;
+import echarts from "echarts";
 
 @Component({
     selector: 'jigsaw-mobile-graph, jm-graph',
