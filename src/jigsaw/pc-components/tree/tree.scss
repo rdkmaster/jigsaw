@@ -4,8 +4,6 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 }
 
 .#{$jigsaw-tree}-host {
-    overflow: hidden;
-
     .ztree li span:not(.node_name) {
         color: $font-color-default;
 
@@ -84,33 +82,16 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
         }
 
         a {
-            position: relative;
             display: inline-flex;
             align-items: center;
             height: 24px !important;
             color: $font-color-default;
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: -1px;
-                right: 100%;
-                width: 100vw;
-                height: 100%;
-                z-index: -1;
-                box-sizing: content-box;
-            }
 
             &:hover {
                 background: $bg-hover;
 
                 .node_name {
                     text-decoration: none;
-                }
-
-                &::after {
-                    border: 1px solid $bg-hover;
-                    background: $bg-hover;
                 }
             }
 
@@ -122,11 +103,6 @@ $jigsaw-tree: #{$jigsaw-prefix}-tree;
 
                 .node_name {
                     color: $brand-default;
-                }
-
-                &::after {
-                    border: 1px solid $bg-hover;
-                    background: $bg-hover;
                 }
             }
         }
