@@ -22,10 +22,10 @@ export class ZtreeSizeComponent implements AfterViewInit {
         this.data.fromXML(`
             <node>
                 <node label="父节点1 - 展开" open="true">
-                    <node label="父节点11 - 折叠">
-                        <node label="父节点111">
-                            <node label="父节点1111">
-                                <node label="父节点11111">
+                    <node label="父节点11" open="true">
+                        <node label="父节点111" open="true">
+                            <node label="父节点1111" open="true">
+                                <node label="父节点11111" open="true">
                                     <node label="父节点111111">
                                         <node label="父节点1111111">
                                             <node label="父节点11111111">
