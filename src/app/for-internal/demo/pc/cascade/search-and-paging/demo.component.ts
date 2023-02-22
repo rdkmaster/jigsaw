@@ -67,7 +67,7 @@ export class CascadeSearchAndPagingDemoComponent implements OnInit {
 
 AjaxInterceptor.registerProcessor('/mock-data/cascade/selected-items/area', dealAreaRequest);
 
-function dealAreaRequest(req: HttpRequest<any>): any {
+export function dealAreaRequest(req: HttpRequest<any>): any {
     const provinces = MockData.get('mock-data/provinces.json');
     const cities = MockData.get('mock-data/cities.json');
     const districts = MockData.get('mock-data/districts.json');

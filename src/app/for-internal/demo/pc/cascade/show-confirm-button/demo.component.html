@@ -1,0 +1,20 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<span>确认按钮</span>
+<jigsaw-switch [(checked)]="showConfirmButton" (checkedChange)="update()"></jigsaw-switch>
+<p>提示：现在的版本无法很好支持showConfirmButton属性的动态化。这里把showConfirmButton暂存在localeStorage里，然后刷新浏览器</p>
+<jigsaw-header [level]="2">显示确认按钮</jigsaw-header>
+<j-cascade [showConfirmButton]="showConfirmButton" [data]="generator" [generatorContext]="this"
+    [selectedItems]="lazyLoadSelectedItems" labelField="name" [multipleSelect]="true" [searchable]="true" [pageSize]="5"
+    width="400" (selectedItemsChange)="confirm($event)">
+</j-cascade>
+<p class="message">选择的区域是：{{message1}}</p>
+
+<j-cascade style="margin-top: 30px" width="400"
+           [data]="areas" [showConfirmButton]="showConfirmButton"
+           (selectedItemsChange)="parseMessage2($event)">
+</j-cascade>
+<p class="message">选择的区域是：{{message2}}</p>
