@@ -36,7 +36,7 @@ export class CascadeShowConfirmButtonDemoComponent implements OnInit {
         }
         const levelInfo = this.levelInfos[level];
         return {
-            title: levelInfo.title, noMore: level >= 2,
+            title: levelInfo.title, noMore: level >= 2, showAll: true,
             list: this.http.get<any[]>('/mock-data/cascade/selected-items/area', { params: params }),
         }
     }
