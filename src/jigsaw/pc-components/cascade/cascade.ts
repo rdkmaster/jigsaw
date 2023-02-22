@@ -361,9 +361,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this._tabs.selectedIndex = this._tabs.length - 1;
         this._selectedItems = this._selectedItems.slice(0, level);
         this._changeDetectorRef.markForCheck();
-        if (this.showConfirmButton) {
-            return;
-        }
         this.selectedItemsChange.emit(this._selectedItems);
     }
 
