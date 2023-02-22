@@ -339,14 +339,14 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this._updateTabTitle(selectedItem, level);
         this._selectedItems.splice(level, this.selectedItems.length - level, selectedItem);
         this._changeDetectorRef.markForCheck();
-        if (this._cascadeDataList[level].noMore) {
-            if (this.showConfirmButton) {
-                return;
-            }
-            this.selectedItemsChange.emit(this._selectedItems);
-        } else {
+        if (!this._cascadeDataList[level].noMore) {
             this._cascading(level + 1, selectedItem);
+            return;
         }
+        if (this.showConfirmButton) {
+            return;
+        }
+        this.selectedItemsChange.emit(this._selectedItems);
     }
 
     /**
@@ -411,7 +411,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             // 这里需要清除掉多余的tab页
             this._removeCascadingTabs(level);
             // 更新选中的数据
-            if (this._cascadeDataList.length > 0 && !this.showConfirmButton) {
+            if (this._cascadeDataList.length > 0) {
                 this.selectedItemsChange.emit(this._selectedItems);
             }
             return;
@@ -474,13 +474,15 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
                             {{item && item[_$cascade?.labelField] ? item[_$cascade?.labelField] : item}}</span>
                     </j-tile-option>
                 </j-tile>
-                
+
                 <div class="jigsaw-cascade-footer">
                     <div class="jigsaw-cascade-pagination-wrapper" *ngIf="_$list?.pagingInfo?.totalPage > 1">
                         <j-pagination size='small' [theme]="initData?.theme || 'light'" [data]="_$list" mode="simple"></j-pagination>
                     </div>
                     <div class="jigsaw-cascade-confirm-button-wrapper" *ngIf="initData?.showConfirmButton && initData?.noMore">
-                        <jigsaw-button preSize='small' (click)="_$handleConfirm()">{{'cascade.confirm' | translate}}</jigsaw-button>
+                        <jigsaw-button preSize='small' colorType="primary" width="60px"
+                                       (click)="_$handleConfirm()">{{'cascade.confirm' | translate}}
+                        </jigsaw-button>
                     </div>
                 </div>
             </ng-template>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { CascadeData, ArrayCollection } from "jigsaw/public_api";
+import {CascadeData, ArrayCollection, SimpleTreeData} from "jigsaw/public_api";
 import { AjaxInterceptor } from "../../../../../libs/app.interceptor";
 import { dealAreaRequest } from "../search-and-paging/demo.component";
 
@@ -8,7 +8,11 @@ import { dealAreaRequest } from "../search-and-paging/demo.component";
     templateUrl: './demo.component.html'
 })
 export class CascadeShowConfirmButtonDemoComponent implements OnInit {
+    areas: SimpleTreeData;
+
     constructor(public http: HttpClient) {
+        // 虽然是从ajax请求过来的，但是注意这是一笔静态数据
+        http.get('/mock-data/tree-data').subscribe((data: SimpleTreeData) => this.areas = data);
     }
 
     lazyLoadSelectedItems: any[];
@@ -41,10 +45,11 @@ export class CascadeShowConfirmButtonDemoComponent implements OnInit {
         }
     }
 
-    message: string = '';
+    message1: string = '';
+    message2: string = '';
 
-    parseMessage(selectedItems) {
-        this.message = selectedItems.reduce((result, item) => {
+    parseMessage1(selectedItems) {
+        this.message1 = selectedItems.reduce((result, item) => {
             const districts = [];
             if (item instanceof ArrayCollection || item instanceof Array) {
                 item.forEach(district => districts.push(district.name));
@@ -60,13 +65,20 @@ export class CascadeShowConfirmButtonDemoComponent implements OnInit {
 
     public confirm($event) {
         console.log("selectedItemsChange=>", $event);
-        this.parseMessage($event);
+        this.parseMessage1($event);
     }
 
     public update() {
         // 提示：现在的版本无法很好支持showConfirmButton属性的动态化。
         localStorage.setItem('demoShowConfirmButton', String(this.showConfirmButton));
         setTimeout(() => location.reload(), 300);
+    }
+
+    parseMessage2(selectedItems) {
+        this.message2 = selectedItems.reduce((result, item) => {
+            result.push(item.label);
+            return result;
+        }, []).join(' | ');
     }
 
     // ====================================================================

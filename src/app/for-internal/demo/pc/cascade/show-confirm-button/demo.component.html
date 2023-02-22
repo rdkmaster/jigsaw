@@ -11,4 +11,10 @@
     [selectedItems]="lazyLoadSelectedItems" labelField="name" [multipleSelect]="true" [searchable]="true" [pageSize]="5"
     width="400" (selectedItemsChange)="confirm($event)">
 </j-cascade>
-<p class="message">选择的区域是：{{message}}</p>
+<p class="message">选择的区域是：{{message1}}</p>
+
+<j-cascade style="margin-top: 30px" width="400"
+           [data]="areas" [showConfirmButton]="showConfirmButton"
+           (selectedItemsChange)="parseMessage2($event)">
+</j-cascade>
+<p class="message">选择的区域是：{{message2}}</p>
