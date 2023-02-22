@@ -23,10 +23,10 @@ export class TableCellRenderFullComponent {
             [
                 ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false],
                 ["Garrett2", "123456", "二Tokyo", "", "System Architect2", "2000", false],
-                ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", true],
-                ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true],
-                ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false],
-                ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true],
+                // ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", true],
+                // ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true],
+                // ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false],
+                // ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true],
             ],
             [
                 "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
