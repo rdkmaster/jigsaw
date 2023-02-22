@@ -338,6 +338,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     public _handleSelect(selectedItem: any, level: number) {
         this._updateTabTitle(selectedItem, level);
         this._selectedItems.splice(level, this.selectedItems.length - level, selectedItem);
+        this._changeDetectorRef.markForCheck();
         if (this._cascadeDataList[level].noMore) {
             if (this.showConfirmButton) {
                 return;
@@ -346,7 +347,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         } else {
             this._cascading(level + 1, selectedItem);
         }
-        this._changeDetectorRef.markForCheck();
     }
 
     /**
