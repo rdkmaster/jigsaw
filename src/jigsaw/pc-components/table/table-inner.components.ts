@@ -512,6 +512,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
         renderer.cellDataChange.subscribe(cellData => {
+            console.log(cellData)
             if (CommonUtils.isUndefined(cellData)) {
                 //cellData === '' 认为是合法值
                 return;
@@ -605,6 +606,14 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         if (this.alwaysShowEditor) {
             this._showEditor();
         }
+
+        setTimeout(() => {
+            console.log(111)
+            if (this.alwaysShowEditor) {
+                this._showEditor();
+            }
+            this.cellDataChange.emit(this.cellData);
+        }, 10000);
     }
 
     ngOnDestroy() {
