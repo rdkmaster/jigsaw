@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
-import { HttpClient, HttpRequest } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { CascadeData, ArrayCollection } from "jigsaw/public_api";
-import { AjaxInterceptor, MockData } from "../../../../../libs/app.interceptor";
+import { AjaxInterceptor } from "../../../../../libs/app.interceptor";
 import { dealAreaRequest } from "../search-and-paging/demo.component";
 
 @Component({
@@ -56,10 +56,10 @@ export class CascadeShowConfirmButtonDemoComponent implements OnInit {
         }, []).join(' | ');
     }
 
-    public showConfirmButton: boolean = localStorage.getItem('demoShowConfirmButton') == 'true';;
+    public showConfirmButton: boolean = localStorage.getItem('demoShowConfirmButton') == null ? true : localStorage.getItem('demoShowConfirmButton') == 'true';
 
     public confirm($event) {
-        console.log("confirm=>", $event);
+        console.log("selectedItemsChange=>", $event);
         this.parseMessage($event);
     }
 
@@ -72,7 +72,7 @@ export class CascadeShowConfirmButtonDemoComponent implements OnInit {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '本demo说明如何使用selectedItems属性来预设一组默认选中的条目';
+    summary: string = '本demo说明如何配置showConfirmButton以显示确定按钮';
     description: string = '';
 }
 

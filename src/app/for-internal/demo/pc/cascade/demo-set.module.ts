@@ -16,8 +16,8 @@ import {CascadeWithComboDemoComponent} from "./with-combo/demo.component";
 import {CascadeWithComboDemoModule} from "./with-combo/demo.module";
 import {CascadeSearchAndPagingDemoComponent} from "./search-and-paging/demo.component";
 import {CascadeSearchAndPagingDemoModule} from "./search-and-paging/demo.module";
-import { CascadeShowConfirmButtonDemoModule } from "./showConfirmButton/demo.module";
-import { CascadeShowConfirmButtonDemoComponent } from "./showConfirmButton/demo.component";
+import { CascadeShowConfirmButtonDemoModule } from "./show-confirm-button/demo.module";
+import { CascadeShowConfirmButtonDemoComponent } from "./show-confirm-button/demo.component";
 
 export const routerConfig = [
     {

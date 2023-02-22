@@ -9,6 +9,6 @@
 <jigsaw-header [level]="2">显示确认按钮</jigsaw-header>
 <j-cascade [showConfirmButton]="showConfirmButton" [data]="generator" [generatorContext]="this"
     [selectedItems]="lazyLoadSelectedItems" labelField="name" [multipleSelect]="true" [searchable]="true" [pageSize]="5"
-    width="400" (confirm)="confirm($event)">
+    width="400" (selectedItemsChange)="confirm($event)">
 </j-cascade>
 <p class="message">选择的区域是：{{message}}</p>

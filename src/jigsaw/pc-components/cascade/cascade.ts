@@ -296,9 +296,6 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
     @Input()
     public showConfirmButton: boolean = false;
 
-    @Output()
-    public confirm = new EventEmitter<any[]>();
-
     /**
      * @internal
      */
@@ -329,6 +326,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         }
         this._changeDetectorRef.markForCheck();
         // 多选的tab是级联结束的地方，在这更新选中的数据
+        if (this.showConfirmButton) {
+            return;
+        }
         this.selectedItemsChange.emit(this._selectedItems);
     }
 
@@ -339,6 +339,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this._updateTabTitle(selectedItem, level);
         this._selectedItems.splice(level, this.selectedItems.length - level, selectedItem);
         if (this._cascadeDataList[level].noMore) {
+            if (this.showConfirmButton) {
+                return;
+            }
             this.selectedItemsChange.emit(this._selectedItems);
         } else {
             this._cascading(level + 1, selectedItem);
@@ -358,6 +361,9 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
         this._tabs.selectedIndex = this._tabs.length - 1;
         this._selectedItems = this._selectedItems.slice(0, level);
         this._changeDetectorRef.markForCheck();
+        if (this.showConfirmButton) {
+            return;
+        }
         this.selectedItemsChange.emit(this._selectedItems);
     }
 
@@ -365,7 +371,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
      * @internal
      */
     public _$confirm() {
-        this.confirm.emit(this._selectedItems);
+        this.selectedItemsChange.emit(this._selectedItems);
     }
 
     private _addCascadingTab(level: number, lazy: boolean) {
@@ -408,7 +414,7 @@ export class JigsawCascade extends AbstractJigsawComponent implements AfterViewI
             // 这里需要清除掉多余的tab页
             this._removeCascadingTabs(level);
             // 更新选中的数据
-            if (this._cascadeDataList.length > 0) {
+            if (this._cascadeDataList.length > 0 && !this.showConfirmButton) {
                 this.selectedItemsChange.emit(this._selectedItems);
             }
             return;
