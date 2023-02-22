@@ -125,6 +125,8 @@ import { TableMaxWidthDemoComponent } from "./max-width/demo.component";
 import { TableMaxWidthDemoModule } from "./max-width/demo.module";
 import { HideColumnDividersDemoComponent } from "./hide-column-dividers/demo.component";
 import { HideColumnDividersDemoModule } from "./hide-column-dividers/demo.module";
+import { TableDownloadDemoComponent } from "./download/demo.component";
+import { TableDownloadDemoModule } from "./download/demo.module";
 
 export const routerConfig = [
     {
@@ -314,6 +316,9 @@ export const routerConfig = [
         path: 'hide-column-dividers', component: HideColumnDividersDemoComponent
     },
     {
+        path: 'download', component: TableDownloadDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -334,7 +339,7 @@ export const routerConfig = [
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
-        TableMaxWidthDemoModule, HideColumnDividersDemoModule
+        TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule
     ]
 })
 export class TableDemoModule {

@@ -23,7 +23,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
-import {TableData} from "../../common/core/data/table-data";
+import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
@@ -1094,6 +1094,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 return false;
             }
         })
+    }
+
+    public download(name: string = 'table-data.csv') {
+        if (!this.data || !this.data.data) {
+            console.warn('Download table data failed!')
+            return;
+        }
+        
+        const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
+        const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
+            + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
+
+        const link = document.createElement("a");
+        link.setAttribute("href", csvContent);
+        link.setAttribute("download", name);
+        link.click();
     }
 
     ngAfterViewInit() {

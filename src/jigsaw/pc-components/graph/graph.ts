@@ -341,12 +341,15 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     /* *************** 事件声明 start ***************************** */
     // 1. 像饼图的事件等放到对应的组件中
-    private _eventArr = ['click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout',
-        'globalout', 'contextmenu', 'legendselectchanged', 'legendselected', 'legendunselected',
-        'datazoom', 'datarangeselected', 'timelinechanged', 'timelineplaychanged', 'restore',
-        'dataviewchanged', 'magictypechanged', 'geoselectchanged', 'geoselected', 'geounselected',
-        'pieselectchanged', 'pieselected', 'pieunselected', 'mapselectchanged', 'mapselected',
-        'brush', 'brushselected'];
+    private _eventArr = [
+        'click', 'dblclick', 'mousedown', 'mouseup', 'mouseover', 'mouseout', 'globalout', 'contextmenu',
+        'legendselectchanged', 'legendselected', 'legendunselected', 'legendselectall', 'legendinverseselect', 'legendscroll',
+        'datazoom', 'datarangeselected', 'timelinechanged', 'timelineplaychanged', 'restore', 'dataviewchanged', 'magictypechanged',
+        'geoselectchanged', 'geoselected', 'geounselected', 'pieselectchanged', 'pieselected', 'pieunselected',
+        'mapselectchanged', 'mapselected', 'mapunselected', 'axisareaselected', 'focusnodeadjacency', 'unfocusnodeadjacency',
+        'highlight', 'downplay', 'selectchanged', 'graphroam', 'georoam', 'treeroam', 'brush', 'brushEnd', 'brushselected',
+        'globalcursortaken', 'rendered', 'finished'
+    ];
 
     // **************** 鼠标事件 start
     @Output()
@@ -376,12 +379,16 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     @Output()
     public legendselectchanged = new EventEmitter<any>();
-
     @Output()
     public legendselected = new EventEmitter<any>();
-
     @Output()
     public legendunselected = new EventEmitter<any>();
+    @Output()
+    public legendselectall = new EventEmitter<any>();
+    @Output()
+    public legendinverseselect = new EventEmitter<any>();
+    @Output()
+    public legendscroll = new EventEmitter<any>();
 
     @Output()
     public datazoom = new EventEmitter<any>();
@@ -432,7 +439,28 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     @Output()
     public brush = new EventEmitter<any>();
     @Output()
+    public brushEnd = new EventEmitter<any>();
+    @Output()
     public brushselected = new EventEmitter<any>();
+    @Output()
+    public globalcursortaken = new EventEmitter<any>();
+    @Output()
+    public rendered = new EventEmitter<any>();
+    @Output()
+    public finished = new EventEmitter<any>();
+
+    @Output()
+    public highlight = new EventEmitter<any>();
+    @Output()
+    public downplay = new EventEmitter<any>();
+    @Output()
+    public selectchanged = new EventEmitter<any>();
+    @Output()
+    public graphroam = new EventEmitter<any>();
+    @Output()
+    public georoam = new EventEmitter<any>();
+    @Output()
+    public treeroam = new EventEmitter<any>();
 
     // 将onInit 暴露给外面
     @Output()

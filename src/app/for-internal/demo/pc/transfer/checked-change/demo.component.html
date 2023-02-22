@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<div class="live-demo-wrap">
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="2">点击CheckBox触发事件</jigsaw-header>
+        <j-transfer width="100%" height="500" [data]="data" [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer"
+                    [labelField]="labelField" [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"
+                    (selectedItemsChange)="selectedItemsChange()"
+                    (sourceChecked)="sourceChecked($event)"
+                    (destinationChecked)="destinationChecked($event)"></j-transfer>
+        <div>左侧窗口中选中的条目：{{sourceCheckedItems}}</div>
+        <div>右侧窗口中选中的条目：{{destCheckedItems}}</div>
+    </div>
+</div>

@@ -3,17 +3,17 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<div class="sized-tree">
+<div class="sized-tree" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}" style="width: 200px;">
     <jigsaw-header>Size: default</jigsaw-header>
     <jigsaw-tree-ext [(data)]="data" size="default"></jigsaw-tree-ext>
 </div>
 
-<div class="sized-tree">
+<div class="sized-tree" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}" style="width: 200px;">
     <jigsaw-header>Size: medium</jigsaw-header>
     <jigsaw-tree-ext [(data)]="data" size="medium"></jigsaw-tree-ext>
 </div>
 
-<div class="sized-tree">
+<div class="sized-tree" [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true}" style="width: 200px;">
     <jigsaw-header>Size: large</jigsaw-header>
     <jigsaw-tree-ext [(data)]="data" size="large"></jigsaw-tree-ext>
 </div>
