@@ -281,6 +281,7 @@ export class JigsawWeekSectionPicker extends AbstractJigsawComponent implements 
             TimeService.setLocale(langInfo.curLang);
             this._$weekList = this._createWeekList();
         });
+        // 组件依赖的第三方库moment.js需要在创建时读取国际化数据
         const currentLang = _translateService.currentLang ? _translateService.currentLang : _translateService.getBrowserLang();
         TimeService.setLocale(currentLang);
         this._$weekList = this._createWeekList();
