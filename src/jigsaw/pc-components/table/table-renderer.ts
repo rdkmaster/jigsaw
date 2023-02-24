@@ -763,6 +763,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     private _onKeyDown($event) {
         if ($event.type == 'click' && $event.composedPath().find(el => el == this._hostCellEl)) {
+            console.log(123123)
             return;
         }
         this.dispatchChangeEvent(this.selected ? this.selected.label : '');
