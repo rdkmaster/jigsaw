@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive, ChangeDetectorRef, AfterViewChecked, NgZone } from "@angular/core";
 import { IPopupable } from "../../service/popup.service";
 import { CommonModule } from "@angular/common";
 import {AbstractJigsawComponent, WingsTheme} from "../../common";
-import { JigsawBlock, JigsawBlockModule } from "../block/block";
+import { JigsawBlockModule } from "../block/block";
 
 /**
  * Loading组件的基类，自定义Loading组件必须继承这个类。
@@ -166,6 +166,21 @@ export class JigsawBallLoading extends JigsawLoadingBase implements OnInit {
         return this.getPopupElement().querySelectorAll('.jigsaw-loading-content > div');
     }
 
+}
+
+@WingsTheme('circle-loading.scss')
+@Component({
+    selector: 'jigsaw-circle-loading-svg, j-circle-loading-svg',
+    templateUrl: 'loading-circle-svg.html'
+})
+export class JigsawCircleLoadingSVG extends JigsawLoadingBase implements OnInit {
+    constructor(private renderer: Renderer2, private elementRef: ElementRef) {
+        super(renderer, elementRef);
+    }
+
+    ngOnInit() {
+        this.renderer.addClass(this.elementRef.nativeElement, 'jigsaw-circle-loading-host');
+    }
 }
 
 @WingsTheme('circle-loading.scss')

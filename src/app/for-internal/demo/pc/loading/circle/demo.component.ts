@@ -1,11 +1,11 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {LoadingService, PopupInfo, JigsawCircleLoading } from "jigsaw/public_api";
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { LoadingService, PopupInfo, JigsawCircleLoading, JigsawCircleLoadingSVG } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class CircleLoadingDemoComponent {
+export class CircleLoadingDemoComponent implements AfterViewInit {
     @ViewChild('block') block: ElementRef;
 
     percent: number = 0;
@@ -60,6 +60,11 @@ export class CircleLoadingDemoComponent {
         }
     }
 
+    ngAfterViewInit(): void {
+        // 测试loading是否会触发ExpressionChangedAfterItHasBeenCheckedError
+        const loadingAfterViewInit = this.loadingService.show(JigsawCircleLoadingSVG);
+        loadingAfterViewInit.dispose();
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
