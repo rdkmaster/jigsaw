@@ -586,11 +586,13 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         
     }
 
-    public refresh() {
+    public updateAfterDataChange() {
         this.hostInstance.rowDrop.subscribe(() => {
-            if (this.alwaysShowEditor) {
-                this._showEditor();
-            }
+            this.runAfterMicrotasks(() => {
+                if (this.alwaysShowEditor) {
+                    this._showEditor();
+                }
+            })
         })
     }
 
@@ -614,16 +616,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this.refresh();
+            this.updateAfterDataChange();
         }
-
-        // setTimeout(() => {
-        //     console.log(111)
-        //     if (this.alwaysShowEditor) {
-        //         this._showEditor();
-        //     }
-        //     this.cellDataChange.emit(this.cellData);
-        // }, 10000);
     }
 
     ngOnDestroy() {
