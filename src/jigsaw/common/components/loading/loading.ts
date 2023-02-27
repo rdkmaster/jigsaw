@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive, ChangeDetectorRef, AfterViewChecked, NgZone } from "@angular/core";
+import { Component, ElementRef, EventEmitter, Input, NgModule, OnInit, Renderer2, Directive } from "@angular/core";
 import { IPopupable } from "../../service/popup.service";
 import { CommonModule } from "@angular/common";
 import {AbstractJigsawComponent, WingsTheme} from "../../common";
