@@ -21,7 +21,7 @@ import {
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
-import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
+import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
@@ -29,7 +29,6 @@ import {CheckBoxStatus} from '../checkbox/typings';
 import {JigsawFloat} from "../../common/directive/float/float";
 import {ArrayCollection} from '../../common/core/data/array-collection';
 import {isObservable} from "rxjs";
-import {DataFilterInfo} from "../../common/core/data/unified-paging/paging";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -512,7 +511,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _rendererSubscribe(renderer: TableCellRendererBase): void {
         renderer.cellDataChange.subscribe(cellData => {
-            console.log("_rendererSubscribe",cellData)
             if (CommonUtils.isUndefined(cellData)) {
                 //cellData === '' 认为是合法值
                 return;
@@ -523,7 +521,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     private _editorRendererSubscribe(renderer: TableCellRendererBase) {
         renderer.cellDataChange.subscribe(cellData => {
-            console.log("_editorRendererSubscribe",cellData)
             if (CommonUtils.isUndefined(cellData)) {
                 //cellData === '' 认为是合法值
                 return;
@@ -541,6 +538,16 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this._setGoEditListener();
             });
         });
+    }
+
+    private _editorNeedUpdateSubscribe() {
+        this.hostInstance.rowDrop.subscribe(() => {
+            this.runAfterMicrotasks(() => {
+                if (this.alwaysShowEditor) {
+                    this._showEditor();
+                }
+            })
+        })
     }
 
     /**
@@ -586,16 +593,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         
     }
 
-    public updateAfterDataChange() {
-        this.hostInstance.rowDrop.subscribe(() => {
-            this.runAfterMicrotasks(() => {
-                if (this.alwaysShowEditor) {
-                    this._showEditor();
-                }
-            })
-        })
-    }
-
     ngOnInit() {
         super.ngOnInit();
 
@@ -616,7 +613,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this.updateAfterDataChange();
+            this._editorNeedUpdateSubscribe();
         }
     }
 
@@ -636,6 +633,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
         if (this._editorRendererRef instanceof ComponentRef) {
             this._editorRendererRef.instance.cellDataChange.unsubscribe();
+            this.hostInstance.rowDrop.unsubscribe();
         }
     }
 }

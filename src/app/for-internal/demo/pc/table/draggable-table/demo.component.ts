@@ -53,6 +53,10 @@ export class TableDraggableDemoComponent {
         }
     ];
 
+    public handleRowDrop($event) {
+        console.log('rowDrop events => drop row index:', $event);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
