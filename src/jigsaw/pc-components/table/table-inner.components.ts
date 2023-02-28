@@ -516,7 +516,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 //cellData === '' 认为是合法值
                 return;
             }
-            this._emitDataChange(cellData);
+            if (this.cellData != cellData) {
+                this._emitDataChange(cellData);
+            }
         });
     }
 
