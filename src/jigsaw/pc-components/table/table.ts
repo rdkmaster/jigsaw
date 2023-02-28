@@ -403,7 +403,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 }
             }
         });
-        console.log()
     }
 
     /**

@@ -128,7 +128,6 @@ export class TableCellRenderFullComponent {
         {
             target: "TableCellNumericEditorRenderer",
             width: "220",
-            // group: true,
             cell: {
                 editable: true,
                 alwaysShowEditor: this.alwaysShowEditor,
