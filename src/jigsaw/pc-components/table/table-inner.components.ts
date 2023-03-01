@@ -540,16 +540,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         });
     }
 
-    private _editorNeedUpdateSubscribe() {
-        this.hostInstance.rowDrop.subscribe(() => {
-            this.runAfterMicrotasks(() => {
-                if (this.alwaysShowEditor) {
-                    this._showEditor();
-                }
-            })
-        })
-    }
-
     /**
      * 插入渲染器
      */
@@ -590,7 +580,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     private _showEditor() {
         this.rendererHost?.viewContainerRef.clear();
         this.insertEditorRenderer();
-        
     }
 
     ngOnInit() {
@@ -613,7 +602,13 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this._editorNeedUpdateSubscribe();
+            this.hostInstance._rowDrop.subscribe(() => {
+                this.runAfterMicrotasks(() => {
+                    if (this.alwaysShowEditor) {
+                        this._showEditor();
+                    }
+                })
+            })
         }
     }
 
@@ -627,13 +622,16 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this._goEditCallback();
         }
 
+        if (this.alwaysShowEditor) {
+            this.hostInstance._rowDrop.unsubscribe();
+        }
+
         if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance.cellDataChange.unsubscribe();
         }
 
         if (this._editorRendererRef instanceof ComponentRef) {
             this._editorRendererRef.instance.cellDataChange.unsubscribe();
-            this.hostInstance.rowDrop.unsubscribe();
         }
     }
 }
