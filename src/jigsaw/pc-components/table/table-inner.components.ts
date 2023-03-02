@@ -18,18 +18,17 @@ import {
     Directive,
     NgZone
 } from "@angular/core";
+import {isObservable, Subscription} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
-import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
+import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {CheckBoxStatus} from '../checkbox/typings';
 import {JigsawFloat} from "../../common/directive/float/float";
 import {ArrayCollection} from '../../common/core/data/array-collection';
-import {isObservable} from "rxjs";
-import {DataFilterInfo} from "../../common/core/data/unified-paging/paging";
 
 @Directive()
 export class TableInternalCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
@@ -601,15 +600,26 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
+    private _rowDropSubscription: Subscription;
+
     ngAfterViewInit() {
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
+            this._rowDropSubscription = this.hostInstance._rowDrop.subscribe(() => {
+                this.runAfterMicrotasks(() => {
+                    if (this.alwaysShowEditor) {
+                        this._showEditor();
+                    }
+                })
+            })
         }
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
+        this._rowDropSubscription?.unsubscribe();
+
         if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');
         }

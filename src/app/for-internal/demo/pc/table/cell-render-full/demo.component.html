@@ -8,4 +8,4 @@
 <jigsaw-switch [(checked)]="alwaysShowEditor" (checkedChange)="updateColumnDefines()"></jigsaw-switch>
 <p>提示：现在的版本无法很好支持alwaysShowEditor属性的动态化。这里把alwaysShowEditor暂存在localeStorage里，然后刷新浏览器</p>
 
-<jigsaw-table [data]="tableData" [columnDefines]="columns" (edit)="onEdit($event)"></jigsaw-table>
+<jigsaw-table [data]="tableData" [columnDefines]="columns" [additionalColumnDefines]="additionalColumnDefines" (edit)="onEdit($event)"></jigsaw-table>

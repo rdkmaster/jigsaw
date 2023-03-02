@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import {
+    AdditionalColumnDefine,
     ColumnDefine,
     DefaultCellRenderer,
     TableCellAutoCompleteEditorRenderer,
@@ -7,7 +8,7 @@ import {
     TableCellPasswordRenderer,
     TableCellSelectRenderer, TableCellSwitchRenderer,
     TableCellTextEditorRenderer,
-    TableData, TableDataChangeEvent
+    TableData, TableDataChangeEvent, TableDragReplaceRow
 } from "jigsaw/public_api";
 
 @Component({
@@ -20,12 +21,12 @@ export class TableCellRenderFullComponent {
     constructor() {
         this.tableData = new TableData(
             [
-                ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000", false],
-                ["Garrett", "123456", "Tokyo", "", "System Architect", "8000", false],
-                ["Tiger", "123456", "Edinburgh", "2011/04/25", "Developer", "5000", true],
-                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000", true],
-                ["Garrett", "123456", "Edinburgh", "", "Developer", "5000", false],
-                ["Garrett", "123456", "Tokyo", "2011/07/25", "System Architect", "8000", true],
+                ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false],
+                ["Garrett2", "123456", "二Tokyo", "2011/02/25", "System Architect2", "2000", true],
+                ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", false],
+                ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true],
+                ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false],
+                ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true],
             ],
             [
                 "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
@@ -127,7 +128,6 @@ export class TableCellRenderFullComponent {
         {
             target: "TableCellNumericEditorRenderer",
             width: "220",
-            group: true,
             cell: {
                 editable: true,
                 alwaysShowEditor: this.alwaysShowEditor,
@@ -151,6 +151,20 @@ export class TableCellRenderFullComponent {
                     disabled: (td, row) => row % 2,
                     valid: (td, row, col) => td.data[row][col]
                 }
+            }
+        }
+    ];
+
+    public additionalColumnDefines: AdditionalColumnDefine[] = [
+        {
+            pos: 0,
+            width: "80px",
+            header: {
+                text: "拖拽换行",
+            },
+            cell: {
+                renderer: TableDragReplaceRow,
+                alignment: "center"
             }
         }
     ];

@@ -600,6 +600,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public edit = new EventEmitter<TableDataChangeEvent>();
 
     /**
+    * @internal
+    */
+    public _rowDrop = new EventEmitter<number>();
+
+    /**
      * @NoMarkForCheckRequired
      */
     @Input()
