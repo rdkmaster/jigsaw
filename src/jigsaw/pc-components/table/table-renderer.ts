@@ -4,7 +4,7 @@ import {
     Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {Observable} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
@@ -23,7 +23,6 @@ import {DragDropInfo} from "../../common/directive/dragdrop/types";
 import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
 import {JigsawIcon, JigsawIconModule, StatusType} from "../icon/icon";
 import {LabelPosition, Status} from "../progress/base";
-import {Subscription} from "rxjs/internal/Subscription";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -725,7 +724,7 @@ export type SelectRendererInitData = {
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px" [disabled]="_$disabled"
                        [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger"
-                       closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)" 
+                       closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)"
                        [searchable]="_$searchable">
         </jigsaw-select>
     `,
