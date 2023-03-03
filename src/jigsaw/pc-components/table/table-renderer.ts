@@ -1075,7 +1075,6 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         }
         // inform jigsaw-table to update view
         this.tableData.refresh();
-        this.hostInstance._rowDrop.emit(this.row)
     }
 
     private _resetSelectedRow() {

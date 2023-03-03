@@ -39,6 +39,28 @@ export class TableCellRenderFullComponent {
         );
     }
 
+    public changeData(){
+        console.log("通过fromObject的方式修改数据");
+        this.tableData.fromObject({
+            data:[
+                ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true],
+                ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false],
+                ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true],
+                ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", false],
+                ["Garrett2", "123456", "二Tokyo", "2011/02/25", "System Architect2", "2000", true],
+                ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false],
+            ],
+            field:[
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ],
+            header:[
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ]
+        })
+    }
+
     public updateColumnDefines() {
         // 提示：现在的版本无法很好支持alwaysShowEditor属性的动态化。
         localStorage.setItem('alwaysShowEditor', String(this.alwaysShowEditor));

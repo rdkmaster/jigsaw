@@ -600,13 +600,13 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
-    private _rowDropSubscription: Subscription;
+    private _updateSubscription: Subscription;
 
     ngAfterViewInit() {
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this._rowDropSubscription = this.hostInstance._rowDrop.subscribe(() => {
+            this._updateSubscription = this.hostInstance._tableUpdate.subscribe(() => {
                 this.runAfterMicrotasks(() => {
                     if (this.alwaysShowEditor) {
                         this._showEditor();
@@ -618,7 +618,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._rowDropSubscription?.unsubscribe();
+        this._updateSubscription?.unsubscribe();
 
         if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');

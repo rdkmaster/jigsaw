@@ -497,7 +497,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         return columnDefines;
     }
-
+    
     public update(isFromAdditional?: boolean): void {
         if (!this.initialized || !this._data) {
             return;
@@ -506,11 +506,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.warn('invalid table data, need a "field" property.');
             return;
         }
-
+        
         const columnDefines = this._getMixedColumnDefines();
         this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
+        this._tableUpdate.emit();
         this._changeDetectorRef.detectChanges();
 
         this.runMicrotask(() => {
@@ -602,7 +603,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
     * @internal
     */
-    public _rowDrop = new EventEmitter<number>();
+    public _tableUpdate = new EventEmitter();
 
     /**
      * @NoMarkForCheckRequired
