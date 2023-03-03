@@ -75,7 +75,7 @@ export class TableCellRenderFullComponent {
     columns: ColumnDefine[] = [
         {
             target: "DefaultCell",
-            width: "10%",
+            width: "120",
             cell: {
                 renderer: DefaultCellRenderer
             }

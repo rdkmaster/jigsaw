@@ -497,7 +497,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
         return columnDefines;
     }
-    
+
     public update(isFromAdditional?: boolean): void {
         if (!this.initialized || !this._data) {
             return;
@@ -506,7 +506,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.warn('invalid table data, need a "field" property.');
             return;
         }
-        
+
         const columnDefines = this._getMixedColumnDefines();
         this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
