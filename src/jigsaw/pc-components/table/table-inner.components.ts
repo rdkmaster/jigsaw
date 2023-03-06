@@ -415,7 +415,6 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     protected _updateDataInRenderer(prop: string, value: any){
         super._updateDataInRenderer(prop, value);
         if (this.alwaysShowEditor) {
-            console.log(this._editorRendererRef)
             if (this._editorRendererRef instanceof ComponentRef) {
                 this._editorRendererRef.instance[prop] = value;
             }
