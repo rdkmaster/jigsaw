@@ -609,6 +609,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             this._updateSubscription = this.hostInstance._tableUpdate.subscribe(() => {
                 this.runAfterMicrotasks(() => {
                     if (this.alwaysShowEditor) {
+                        // console.log(1111111111111)
                         this._showEditor();
                     }
                 })
