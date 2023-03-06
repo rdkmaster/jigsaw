@@ -144,7 +144,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         this._initTargetData();
     }
 
-    private _updateDataInRenderer(prop: string, value: any) {
+    protected _updateDataInRenderer(prop: string, value: any) {
         if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance[prop] = value;
         } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
@@ -412,6 +412,16 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Input()
     public alwaysShowEditor: boolean = false;
 
+    protected _updateDataInRenderer(prop: string, value: any){
+        super._updateDataInRenderer(prop, value);
+        if (this.alwaysShowEditor) {
+            console.log(this._editorRendererRef)
+            if (this._editorRendererRef instanceof ComponentRef) {
+                this._editorRendererRef.instance[prop] = value;
+            }
+        }
+    }
+
     private _editable: boolean = false;
 
     /**
@@ -600,26 +610,15 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
-    private _updateSubscription: Subscription;
-
     ngAfterViewInit() {
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this._updateSubscription = this.hostInstance._tableUpdate.subscribe(() => {
-                this.runAfterMicrotasks(() => {
-                    if (this.alwaysShowEditor) {
-                        // console.log(1111111111111)
-                        this._showEditor();
-                    }
-                })
-            })
         }
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._updateSubscription?.unsubscribe();
 
         if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');

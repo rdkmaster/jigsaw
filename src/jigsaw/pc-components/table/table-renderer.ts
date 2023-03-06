@@ -723,7 +723,7 @@ export type SelectRendererInitData = {
 @Component({
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px" [disabled]="_$disabled"
-                       [valid]="_$valid" [optionCount]="5" width="100%" openTrigger="mouseenter"
+                       [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger"
                        closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)"
                        [searchable]="_$searchable">
         </jigsaw-select>
@@ -761,11 +761,6 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     private _hostCellEl: HTMLElement;
 
     private _onKeyDown($event) {
-        // return;
-        console.log('click');
-        console.log($event);
-        console.log(this._hostCellEl)
-        console.log($event.composedPath().find(el => el == this._hostCellEl))
         if ($event.type == 'click' && $event.composedPath().find(el => el == this._hostCellEl)) {
             return;
         }
@@ -782,16 +777,12 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     /**
      * @internal
      */
-    public _$handleValueChange(selectedValue: {label: string}) {
+    public _$handleValueChange(selectedValue: { label: string }) {
         if (!selectedValue || selectedValue.label == this.cellData) {
             return;
         }
-    
-        setTimeout(() => {
-            this.cellData = selectedValue.label;
-            this.dispatchChangeEvent(selectedValue.label);
-            
-        }, 1000);
+        this.cellData = selectedValue.label;
+        this.dispatchChangeEvent(selectedValue.label);
     }
 
     private _selectionElement: HTMLElement;

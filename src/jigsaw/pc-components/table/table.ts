@@ -511,7 +511,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._initAdditionalData();
         this._updateHeaderSettings(columnDefines);
         this._updateCellSettings(columnDefines);
-        this._tableUpdate.emit();
         this._changeDetectorRef.detectChanges();
 
         this.runMicrotask(() => {
@@ -599,11 +598,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
-
-    /**
-    * @internal
-    */
-    public _tableUpdate = new EventEmitter();
 
     /**
      * @NoMarkForCheckRequired
