@@ -412,12 +412,10 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Input()
     public alwaysShowEditor: boolean = false;
 
-    protected _updateDataInRenderer(prop: string, value: any){
+    protected _updateDataInRenderer(prop: string, value: any) {
         super._updateDataInRenderer(prop, value);
-        if (this.alwaysShowEditor) {
-            if (this._editorRendererRef instanceof ComponentRef) {
-                this._editorRendererRef.instance[prop] = value;
-            }
+        if (this.alwaysShowEditor && this._editorRendererRef instanceof ComponentRef) {
+            this._editorRendererRef.instance[prop] = value;
         }
     }
 
