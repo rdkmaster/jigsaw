@@ -53,7 +53,7 @@
                                             'jigsaw-cell-no-padding': head.noPadding}"></td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody #tableBody>
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex"
                 (click)="_$clickRow(rowIndex)" (dblclick)="_$handleRowDoubleClick(rowIndex)">
                 <td *ngFor="let cell of row;"
