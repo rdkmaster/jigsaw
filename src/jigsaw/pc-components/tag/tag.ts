@@ -110,6 +110,12 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     public icon: string;
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public title: string = '';
+
+    /**
      * @internal
      */
     public get _$realColor(): string {

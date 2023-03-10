@@ -6,6 +6,8 @@ import {JigsawTag} from "jigsaw/public_api";
     styleUrls: ['./demo.component.css']
 })
 export class TagBasicDemoComponent {
+    public value: string = '初始文本';
+
     handleClose(tag) {
         console.log(tag)
     }
