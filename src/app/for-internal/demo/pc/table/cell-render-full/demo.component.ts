@@ -39,6 +39,28 @@ export class TableCellRenderFullComponent {
         );
     }
 
+    public changeData(){
+        console.log("通过fromObject的方式修改数据");
+        this.tableData.fromObject({
+            data:[
+                ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true],
+                ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false],
+                ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true],
+                ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", false],
+                ["Garrett2", "123456", "二Tokyo", "2011/02/25", "System Architect2", "2000", true],
+                ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false],
+            ],
+            field:[
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ],
+            header:[
+                "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
+                "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer"
+            ]
+        })
+    }
+
     public updateColumnDefines() {
         // 提示：现在的版本无法很好支持alwaysShowEditor属性的动态化。
         localStorage.setItem('alwaysShowEditor', String(this.alwaysShowEditor));
@@ -53,7 +75,7 @@ export class TableCellRenderFullComponent {
     columns: ColumnDefine[] = [
         {
             target: "DefaultCell",
-            width: "10%",
+            width: "120",
             cell: {
                 renderer: DefaultCellRenderer
             }
@@ -69,7 +91,7 @@ export class TableCellRenderFullComponent {
                 editorRendererInitData: {
                     placeholder: "Type to edit...",
                     password: true,
-                    disabled: (td, row) => row % 2,
+                    disabled: (td, row) => row > 2,
                     valid: (td, row, col) => td.data[row][col] != ''
                 }
             }
@@ -83,7 +105,7 @@ export class TableCellRenderFullComponent {
                 editorRenderer: TableCellTextEditorRenderer,
                 editorRendererInitData: {
                     clearable: true,
-                    disabled: (td, row) => row % 2,
+                    disabled: (td, row) => row > 2,
                     valid: (td, row, col) => td.data[row][col] != ''
                 }
             }
@@ -100,7 +122,7 @@ export class TableCellRenderFullComponent {
                         }
                         return this.dates;
                     },
-                    disabled: (td, row) => row % 2,
+                    disabled: (td, row) => row > 2,
                     valid: (td, row, col) => td.data[row][col] != ''
                 },
                 editable: true,
@@ -118,9 +140,9 @@ export class TableCellRenderFullComponent {
                     return {
                         data: ["Developer", "System Architect", "Test Engineer"],
                         placeholder: "Try to edit...",
-                        disabled: row % 2,
+                        disabled: row > 2,
                         valid: td.data[row][col] != '',
-                        clearable: row % 3,
+                        clearable: row > 2,
                     };
                 }
             }
@@ -136,8 +158,8 @@ export class TableCellRenderFullComponent {
                     placeholder: "Type to edit...",
                     min: 0,
                     step: 1000,
-                    disabled: (td, row) => row % 2,
-                    valid: (td, row, col) => td.data[row][col] > 0
+                    disabled: (td, row) => row > 2,
+                    valid: (td, row, col) => td.data[row][col] > 2
                 }
             }
         },
@@ -148,7 +170,7 @@ export class TableCellRenderFullComponent {
                 editable: false,
                 renderer: TableCellSwitchRenderer,
                 rendererInitData: {
-                    disabled: (td, row) => row % 2,
+                    disabled: (td, row) => row > 2,
                     valid: (td, row, col) => td.data[row][col]
                 }
             }

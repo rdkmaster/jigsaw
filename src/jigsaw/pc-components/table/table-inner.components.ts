@@ -18,7 +18,7 @@ import {
     Directive,
     NgZone
 } from "@angular/core";
-import {isObservable, Subscription} from "rxjs";
+import {isObservable} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
@@ -144,7 +144,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
         this._initTargetData();
     }
 
-    private _updateDataInRenderer(prop: string, value: any) {
+    protected _updateDataInRenderer(prop: string, value: any) {
         if (this.rendererRef instanceof ComponentRef) {
             this.rendererRef.instance[prop] = value;
         } else if (this.rendererRef && this.rendererRef.context && this.rendererRef.context.context) {
@@ -412,6 +412,13 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Input()
     public alwaysShowEditor: boolean = false;
 
+    protected _updateDataInRenderer(prop: string, value: any) {
+        super._updateDataInRenderer(prop, value);
+        if (this.alwaysShowEditor && this._editorRendererRef instanceof ComponentRef) {
+            this._editorRendererRef.instance[prop] = value;
+        }
+    }
+
     private _editable: boolean = false;
 
     /**
@@ -600,25 +607,15 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         }
     }
 
-    private _rowDropSubscription: Subscription;
-
     ngAfterViewInit() {
         super.ngAfterViewInit();
         if (this.alwaysShowEditor) {
             this._showEditor();
-            this._rowDropSubscription = this.hostInstance._rowDrop.subscribe(() => {
-                this.runAfterMicrotasks(() => {
-                    if (this.alwaysShowEditor) {
-                        this._showEditor();
-                    }
-                })
-            })
         }
     }
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._rowDropSubscription?.unsubscribe();
 
         if (this._editable) {
             this._renderer.setStyle(this._elementRef.nativeElement.parentElement, 'cursor', 'default');

@@ -777,7 +777,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     /**
      * @internal
      */
-    public _$handleValueChange(selectedValue: {label: string}) {
+    public _$handleValueChange(selectedValue: { label: string }) {
         if (!selectedValue || selectedValue.label == this.cellData) {
             return;
         }
@@ -1075,7 +1075,6 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         }
         // inform jigsaw-table to update view
         this.tableData.refresh();
-        this.hostInstance._rowDrop.emit(this.row)
     }
 
     private _resetSelectedRow() {
