@@ -18,7 +18,7 @@ import {
     Directive,
     NgZone
 } from "@angular/core";
-import {isObservable, Subscription} from "rxjs";
+import {isObservable} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
