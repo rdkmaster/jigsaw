@@ -23,8 +23,14 @@
     <jigsaw-tag color="#01c5c2">#01c5c2</jigsaw-tag>
     <jigsaw-tag color="#a17660">#a17660</jigsaw-tag>
 </p>
-<p style="color:#fff; margin-top:24px;">
-    <jigsaw-tag [color]="null">非法值1</jigsaw-tag>
-    <jigsaw-tag [color]="112233">非法值2</jigsaw-tag>
-    <jigsaw-tag [color]="{}">非法值3</jigsaw-tag>
-</p>
+<jigsaw-header>color值非法</jigsaw-header>
+<jigsaw-tag [color]="null">非法值1</jigsaw-tag>
+<jigsaw-tag [color]="112233">非法值2</jigsaw-tag>
+<jigsaw-tag [color]="{}">非法值3</jigsaw-tag>
+
+<jigsaw-header>提示文本</jigsaw-header>
+<div>
+    <jigsaw-tag color="preset-blue" [(title)]="tagTitle">{{tagText}}</jigsaw-tag>
+</div>
+<div>Tag主文本<jigsaw-input [(value)]="tagText" placeholder="请输入Tag主文本"></jigsaw-input></div>
+<div>Tag提示文本<jigsaw-input [(value)]="tagTitle" placeholder="请输入Tag提示文本"></jigsaw-input></div>
