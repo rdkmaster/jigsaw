@@ -21,11 +21,6 @@ describe('ButtonDisableDemoComponent', () => {
     it('should create', () => {
         expect(component).toBeDefined();
         const testButton = fixture.nativeElement.querySelector('#test-button');
-        console.log(111111,testButton.innerText);
-        expect(!!testButton).toBe(true);
-        /*expect(testButton.classList.contains('jigsaw-button-disabled')).toBe(true);
-        const checkbox = fixture.nativeElement.querySelector('jigsaw-checkbox');
-        checkbox.dispatchEvent(new Event('click'));
-        expect(testButton.classList.contains('jigsaw-button-disabled')).toBe(false);*/
+        expect(testButton.innerText).toBe('click me ');
     });
 });
