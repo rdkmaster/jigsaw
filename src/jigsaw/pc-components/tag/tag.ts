@@ -8,7 +8,8 @@ import {
     NgModule,
     OnInit,
     Output,
-    Renderer2
+    Renderer2,
+    ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
@@ -109,11 +110,24 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public icon: string;
 
+    @ViewChild('text', { read: ElementRef })
+    private _text: ElementRef;
+
+    private _title: string;
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public title: string = '';
+    public get title(): string {
+        return CommonUtils.isDefined(this._title) ? this._title : this._text?.nativeElement.innerText;
+    }
+
+    public set title(value: string) {
+        if (value == this._title) {
+            return;
+        }
+        this._title = value;
+    }
 
     /**
      * @internal
