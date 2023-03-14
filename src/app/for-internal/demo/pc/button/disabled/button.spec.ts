@@ -21,6 +21,6 @@ describe('ButtonDisableDemoComponent', () => {
     it('should create', () => {
         expect(component).toBeDefined();
         const testButton = fixture.nativeElement.querySelector('#test-button');
-        expect(testButton.innerText).toBe('click me ');
+        expect(testButton.innerText).toBe('click me1 ');
     });
 });

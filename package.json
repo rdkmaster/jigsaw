@@ -13,7 +13,8 @@
         "build-mobile": "gulp build:jigsaw-mobile:clean",
         "build-formly": "gulp build:formly:clean",
         "test": "ts-node --project src/app/for-internal/tsconfig.spec.json node_modules/jasmine/bin/jasmine --config=spec/support/jasmine.json",
-        "ng-test": "ng test --no-progress",
+        "ng-test": "ng test",
+        "ng-test-headless": "ng test --no-progress --browsers=ChromeHeadlessCI",
         "lint": "ng lint",
         "e2e": "ng e2e"
     },
