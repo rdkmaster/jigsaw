@@ -28,7 +28,7 @@ export class NavigationMenuNavDemo {
             <node>
                 <node label="当前告警" icon="iconfont iconfont-e5fd" isActive="true" selected="true">
                     <node label="告警监控" selected="true" icon="iconfont iconfont-e2d8"></node>
-                    <node label="告警统计"></node>
+                    <node label="告警统计" disabled="true"></node>
                     <node label="定时导出" icon="iconfont iconfont-e601"></node>
                     <node label="告警同步"></node>
                     <node label="告警提示" icon="iconfont iconfont-e52a"></node>
@@ -36,10 +36,11 @@ export class NavigationMenuNavDemo {
                 <node label="历史告警" icon="iconfont iconfont-e5f7">
                     <node label="告警查询"></node>
                 </node>
-                <node label="通知" icon="iconfont iconfont-e605">
+                <node label="通知" icon="iconfont iconfont-e605" disabled="true">
                     <node label="通知监控"></node>
                 </node>
                 <node label="告警设置" icon="iconfont iconfont-e36f"></node>
+                <node label="其他设置" icon="iconfont iconfont-e810" disabled="true"></node>
             </node>
         `);
         const xmlData = `
@@ -103,7 +104,7 @@ export class NavigationMenuNavDemo {
                 <node label="一级菜单3" icon="iconfont iconfont-e605">
                     <node label="二级菜单"></node>
                 </node>
-                <node label="一级菜单4" icon="iconfont iconfont-e36f"></node>
+                <node label="一级菜单4" disabled="true" icon="iconfont iconfont-e36f"></node>
             </node>
         `);
     }
