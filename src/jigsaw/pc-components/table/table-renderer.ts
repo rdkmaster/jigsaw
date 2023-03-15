@@ -106,7 +106,6 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     }
 
     public dispatchChangeEvent(value: any): void {
-        console.log(1);
         this.cellDataChange.emit(value)
     }
 
