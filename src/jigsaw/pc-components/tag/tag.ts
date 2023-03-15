@@ -52,8 +52,7 @@ export type PresetColor = 'preset-blue' | 'preset-cyan' | 'preset-green' | 'pres
     },
     animations: [
         AnimationDestroy
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    ]
 })
 export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     constructor(private _renderer: Renderer2,
