@@ -89,25 +89,14 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             return false;
         }
         let lv1: SimpleNode, lv2: SimpleNode;
-        if (args[0] instanceof SimpleNode) {
-            [lv1, lv2] = this._findNode(args[0]);
-        } else {
-            const target: any = {}, trackItemBy = [];
-            for (let i = 0; i < args.length; i += 2) {
-                if (args[i]) {
-                    target[args[i]] = args[i + 1];
-                    trackItemBy.push(args[i]);
-                }
-            }
-            [lv1, lv2] = this._findNode(target, trackItemBy);
-        }
+        [lv1, lv2] = this._getNodes(args);
         if (!lv1 && !lv2) {
             return false;
         }
 
         if (lv2) {
-            if (lv2.selected) {
-                // 已选中，直接返回
+            if (lv2.selected || lv2.disabled) {
+                // 已选中 or 已禁用，直接返回
                 return;
             }
             this._resetMenuSelected();
@@ -119,6 +108,10 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         }
 
         if (lv1) {
+            if (lv1.disabled) {
+                // 已禁用，直接返回
+                return;
+            }
             if (lv1.nodes?.length) {
                 // 有子菜单，只切换开闭状态
                 lv1.isActive = !lv1.isActive;
@@ -132,6 +125,21 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
             this._resetMenuSelected();
             lv1.selected = true;
             this.select.emit(lv1);
+        }
+    }
+
+    private _getNodes(args): [SimpleNode, SimpleNode] {
+        if (args[0] instanceof SimpleNode) {
+            return this._findNode(args[0]);
+        } else {
+            const target: any = {}, trackItemBy = [];
+            for (let i = 0; i < args.length; i += 2) {
+                if (args[i]) {
+                    target[args[i]] = args[i + 1];
+                    trackItemBy.push(args[i]);
+                }
+            }
+            return this._findNode(target, trackItemBy);
         }
     }
 
@@ -162,6 +170,26 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         return [null, null];
     }
 
+    public toggleMenuDisabled(item: SimpleNode): void;
+    public toggleMenuDisabled(property1: string, value1: string | number,
+                      property2?: string, value2?: string | number,
+                      property3?: string, value3?: string | number): void;
+    public toggleMenuDisabled(...args): void {
+        if (!this.data?.nodes?.length) {
+            return;
+        }
+        let lv1: SimpleNode, lv2: SimpleNode;
+        [lv1, lv2] = this._getNodes(args);
+        if (lv2) {
+            lv2.disabled = !lv2.disabled;
+            this._cdr.markForCheck();
+            return;
+        }
+        if (lv1) {
+            lv1.disabled = !lv1.disabled;
+            this._cdr.markForCheck();
+        }
+    }
     /**
      * @NoMarkForCheckRequired
      */

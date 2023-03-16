@@ -119,6 +119,12 @@ export class NavigationMenuNavDemo {
         });
     }
 
+    toggleMenuDisabled(): void {
+        this.menus.forEach(menu => {
+            menu.toggleMenuDisabled('label', this.selectedMenuLabel);
+        });
+    }
+
     @ViewChild('menu')
     navigationMenu: JigsawNavigationMenu;
 

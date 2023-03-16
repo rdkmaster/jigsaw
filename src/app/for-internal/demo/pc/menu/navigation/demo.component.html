@@ -9,11 +9,12 @@
         <span>目标菜单文本：</span>
         <jigsaw-auto-complete-input [data]="[
                 '当前告警', '告警监控', '告警统计', '定时导出', '告警同步', '告警提示',
-                '历史告警', '告警查询', '通知', '通知监控', '告警设置',
+                '历史告警', '告警查询', '通知', '通知监控', '告警设置', '其他设置',
                 '标准图标1', '标准图标2', '标准图标3', '标准图标4', '标准图标5', '标准图标6', '标准图标7', '标准图标8'
             ]" [(value)]="selectedMenuLabel">
         </jigsaw-auto-complete-input>
         <a (click)="selectMenu()">选择菜单</a>
+        <a (click)="toggleMenuDisabled()">切换菜单禁用状态</a>
     </div>
     <div class="clearfix">
         <div class="live-demo block">
