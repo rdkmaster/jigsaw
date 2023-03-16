@@ -128,19 +128,19 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         }
     }
 
-    private _getNodes(args): [SimpleNode, SimpleNode] {
+    private _getNodes(args: any[]): [SimpleNode, SimpleNode] {
         if (args[0] instanceof SimpleNode) {
             return this._findNode(args[0]);
-        } else {
-            const target: any = {}, trackItemBy = [];
-            for (let i = 0; i < args.length; i += 2) {
-                if (args[i]) {
-                    target[args[i]] = args[i + 1];
-                    trackItemBy.push(args[i]);
-                }
-            }
-            return this._findNode(target, trackItemBy);
         }
+        const target: any = {}, trackItemBy = [];
+        for (let i = 0; i < args.length; i += 2) {
+            if (args[i]) {
+                target[args[i]] = args[i + 1];
+                trackItemBy.push(args[i]);
+            }
+        }
+        return this._findNode(target, trackItemBy);
+
     }
 
     private _resetMenuSelected(): void {
@@ -182,12 +182,17 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         [lv1, lv2] = this._getNodes(args);
         if (lv2) {
             lv2.disabled = !lv2.disabled;
+            lv2.selected = false;
             this._cdr.markForCheck();
             return;
         }
         if (lv1) {
-            lv1.disabled = !lv1.disabled;
             this._cdr.markForCheck();
+            lv1.disabled = !lv1.disabled;
+            if (lv1.isActive) {
+                // 如果该菜单已经展开，则自动关闭
+                lv1.isActive = false;
+            }
         }
     }
     /**

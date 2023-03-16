@@ -1,5 +1,5 @@
 import {Component, QueryList, ViewChild, ViewChildren} from "@angular/core";
-import {JigsawNavigationMenu, JigsawProgress, SimpleNode, SimpleTreeData} from "jigsaw/public_api";
+import {JigsawNavigationMenu, SimpleNode, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
