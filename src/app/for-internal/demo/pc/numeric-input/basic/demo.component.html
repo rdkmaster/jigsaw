@@ -10,11 +10,13 @@
     <div class="live-demo">
         <jigsaw-header [level]="2">基本用法</jigsaw-header>
         <p class="comment">试试获取input焦点后，敲击键盘的上下键</p>
-        <j-numeric-input [(value)]="value" min="0" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)"></j-numeric-input>
+        <j-numeric-input [(value)]="value" min="-10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)">
+        </j-numeric-input>
         <p class="message">输入值是：<span>{{value}}</span></p>
         <div>
-            <jigsaw-button (click)="changeValue1()">设置为undefined</jigsaw-button>
-            <jigsaw-button (click)="changeValue2()">设置为null</jigsaw-button>
+            <jigsaw-button (click)="value = undefined">设置为undefined</jigsaw-button>
+            <jigsaw-button (click)="value = null">设置为null</jigsaw-button>
+            <jigsaw-button (click)="value = 88">设置为88</jigsaw-button>
         </div>
     </div>
 </div>

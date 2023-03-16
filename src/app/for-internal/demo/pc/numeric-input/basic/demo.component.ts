@@ -10,13 +10,6 @@ export class NumericInputBasicDemoComponent {
         console.log($event, typeof $event == "number");
     }
 
-    public changeValue1() {
-        this.value = undefined;
-    }
-    public changeValue2() {
-        this.value = null;
-    }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
