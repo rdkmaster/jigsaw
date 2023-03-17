@@ -76,7 +76,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     }
 
     public set minSize(value: number) {
-        value = parseInt(<any>value);
+        value = parseFloat(<any>value);
         if (isNaN(value)) {
             console.error('minSize property must be a number, please input a number or number string');
             return;
@@ -95,7 +95,7 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     }
 
     public set maxSize(value: number) {
-        value = parseInt(<any>value);
+        value = parseFloat(<any>value);
         if (isNaN(value)) {
             console.error('maxSize property must be a number, please input a number or number string');
             return;

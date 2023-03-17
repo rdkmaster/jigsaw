@@ -20,8 +20,8 @@
     <br>
     <br>
     文件大小：
-    最小限制 <jigsaw-numeric-input [min]="0" [(value)]="minSize"></jigsaw-numeric-input> MB
-    最大限制 <jigsaw-numeric-input [min]="0" [(value)]="maxSize"></jigsaw-numeric-input> MB
+    最小限制 <jigsaw-numeric-input [min]="0" step="0.1" [(value)]="minSize"></jigsaw-numeric-input> MB
+    最大限制 <jigsaw-numeric-input [min]="0" step="0.1" [(value)]="maxSize"></jigsaw-numeric-input> MB
     <br>
     <br>
     <j-button j-upload #upload (uploadStart)="isButtonUploadWaiting = true" (uploadProgress)="getUploadFile($event)" [uploadImmediately]="uploadImmediately"
