@@ -534,7 +534,8 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 //cellData === '' 认为是合法值
                 return;
             }
-            if (typeof cellData == "object" || typeof cellData == "function" ? cellData != this.cellData : String(cellData) != this.cellData) {
+
+            if (this._getComparableValue(cellData) != this._getComparableValue(this.cellData)) {
                 this._emitDataChange(cellData);
             }
 
@@ -547,6 +548,10 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this._setGoEditListener();
             });
         });
+    }
+
+    private _getComparableValue(cellData: any) {
+        return typeof cellData == "object" || typeof cellData == "function" ? cellData : String(cellData);
     }
 
     /**

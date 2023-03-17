@@ -369,11 +369,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        if (CommonUtils.isUndefined(this._value) || <any>this._value === "") {
-            this._blurEmitter.emit(event);
-            return;
-        }
-        if (this._value < this.min || isNaN(this._value)) {
+        if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
         }
