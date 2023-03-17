@@ -38,8 +38,13 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     text-align: center;
                 }
 
-                &:hover {
+                &:not(.#{$jigsaw-nav-menu}-item-disabled):hover {
                     background: $nav-hover;
+                }
+
+                &.#{$jigsaw-nav-menu}-item-disabled {
+                    color: $font-color-disabled;
+                    cursor: not-allowed;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -79,12 +84,17 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                         text-align: center;
                     }
 
-                    &:hover {
+                    &:not(.#{$jigsaw-nav-menu}-sub-item-disabled):hover {
                         background: $nav-hover;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-selected {
                         background-color: $nav-active;
+                    }
+
+                    &.#{$jigsaw-nav-menu}-sub-item-disabled {
+                        color: $font-color-disabled;
+                        cursor: not-allowed;
                     }
 
                     &.#{$jigsaw-nav-menu}-sub-item-collapsed {
@@ -160,8 +170,13 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     text-align: center;
                 }
 
-                &:hover {
+                &:not(.#{$jigsaw-nav-menu}-item-disabled):hover {
                     background: $bg-hover;
+                }
+
+                &.#{$jigsaw-nav-menu}-item-disabled {
+                    color: $font-color-disabled;
+                    cursor: not-allowed;
                 }
 
                 .#{$jigsaw-nav-menu}-item-arrow {
@@ -184,8 +199,13 @@ $jigsaw-nav-menu: #{$jigsaw-prefix}-nav-menu;
                     font-weight: 400;
                     cursor: pointer;
 
-                    &:hover {
+                    &:not(.#{$jigsaw-nav-menu}-sub-item-disabled):hover {
                         background: $bg-hover;
+                    }
+
+                    &.#{$jigsaw-nav-menu}-sub-item-disabled {
+                        color: $font-color-disabled;
+                        cursor: not-allowed;
                     }
                 }
             }
