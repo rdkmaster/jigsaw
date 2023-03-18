@@ -188,8 +188,16 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     }
 
     public set value(value: number) {
-        if (CommonUtils.isUndefined(value) || this._value === value) {
+        if (this._value === value) {
             this._propagateChange(this._value);
+            this._cdr.markForCheck();
+            return;
+        }
+        if (CommonUtils.isUndefined(value) || <any>value === "") {
+            this._value = value;
+            if (this.initialized) {
+                this.valueChange.emit(this._value);
+            }
             this._cdr.markForCheck();
             return;
         }
@@ -361,7 +369,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        if (this._value < this.min || isNaN(this._value) || <any>this._value === "") {
+        if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
         }

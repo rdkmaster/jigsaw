@@ -1,13 +1,14 @@
 import {Component} from "@angular/core";
 
 @Component({
-  templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html'
 })
 export class NumericInputBasicDemoComponent {
     value: number;
+    notANumber = NaN;
 
     valueChange($event) {
-        console.log($event, typeof $event == 'number');
+        console.log($event, typeof $event == "number");
     }
 
     // ====================================================================
