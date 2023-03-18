@@ -550,7 +550,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
         });
     }
 
-    private _getComparableValue(cellData: any) {
+    private _getComparableValue(cellData: unknown): object | Function | string {
         return typeof cellData == "object" || typeof cellData == "function" ? cellData : String(cellData);
     }
 

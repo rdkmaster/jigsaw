@@ -5,6 +5,7 @@ import {Component} from "@angular/core";
 })
 export class NumericInputBasicDemoComponent {
     value: number;
+    notANumber = NaN;
 
     valueChange($event) {
         console.log($event, typeof $event == "number");
