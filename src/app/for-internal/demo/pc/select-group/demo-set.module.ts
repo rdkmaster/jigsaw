@@ -8,6 +8,8 @@ import {SelectGroupCustomizeGroupFieldDemoModule} from "./customize-group-field/
 import {SelectGroupCustomizeGroupFieldDemoComponent} from "./customize-group-field/demo.component";
 import { SelectGroupValidDemoComponent } from './valid/demo.component';
 import { SelectGroupValidDemoModule } from './valid/demo.module';
+import { SelectGroupSearchableDemoComponent } from "./searchable/demo.component";
+import { SelectGroupSearchableDemoModule } from "./searchable/demo.module";
 
 export const routerConfig = [
     {
@@ -21,6 +23,9 @@ export const routerConfig = [
     },
     {
         path: 'valid', component: SelectGroupValidDemoComponent
+    },
+    {
+        path: 'searchable', component: SelectGroupSearchableDemoComponent
     }
 ];
 
@@ -30,7 +35,8 @@ export const routerConfig = [
         SelectGroupDemoModule,
         SelectGroupEditResultDemoModule,
         SelectGroupCustomizeGroupFieldDemoModule,
-        SelectGroupValidDemoModule
+        SelectGroupValidDemoModule,
+        SelectGroupSearchableDemoModule
     ]
 })
 export class SelectGroupDemoSetModule {

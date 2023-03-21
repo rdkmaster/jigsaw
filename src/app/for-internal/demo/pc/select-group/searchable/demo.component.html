@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">Group-Select</jigsaw-header>
+<jigsaw-header [level]="2">valid</jigsaw-header>
+<jigsaw-group-select [data]="cityList" placeholder="请选择城市">
+</jigsaw-group-select>
+<div class="demo-setting-wrap">
+    <span class="text">valid:</span>
+    <jigsaw-switch [(checked)]="valid"></jigsaw-switch>
+</div>

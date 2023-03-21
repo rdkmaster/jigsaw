@@ -572,7 +572,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
     }
 
-    private _filterData(filterKey?: string) {
+    protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
@@ -613,7 +613,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray) {
+        console.log(value);
         this._setData(value);
+        console.log(this._data);
         this._setEmptyValue(value);
         if (this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
@@ -794,6 +796,34 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._updateSelectedItems();
         this._$checkSelectAll();
         this.remove.emit(removedItem);
+    }
+
+    public _$handleSearching(filterKey?: string) {
+        // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
+        this._searchKeyBak = filterKey;
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+            this._filterData(filterKey);
+        } else {
+            const data = new LocalPageableArray<GroupSelectOption>();
+            data.pagingInfo.pageSize = Infinity;
+            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                removeUpdateSubscriber.unsubscribe();
+                this.data = data;
+                this._filterData(filterKey);
+            });
+            data.fromArray(this.data);
+        }
+    }
+
+    protected _filterData(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        this.data.forEach(group => {
+            console.log(group);
+            group.data.filter(filterKey, [this.labelField]);
+        })
+        // (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        // this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
     ngOnDestroy() {

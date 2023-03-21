@@ -5,5 +5,8 @@
 
 <!-- start to learn the demo from here -->
 <p>点击树节点，每个节点的子节点都从实时从服务端取一次数据，在树节点的数据量很大时非常有用</p>
-<jigsaw-tree-ext [(setting)]="setting" [(data)]="data" (onAsyncSuccess)="editData()">
+<div>
+    <jigsaw-input (valueChange)="treeExt.fuzzySearch($event, ['key', 'label'])" placeholder="搜索key或label"></jigsaw-input>
+</div>
+<jigsaw-tree-ext #ztree1 [(setting)]="setting" [(data)]="data" (onAsyncSuccess)="editData()">
 </jigsaw-tree-ext>

@@ -28,6 +28,7 @@
                     <span>{{'select.checkAll' | translate}}</span>
                 </div>
             </div>
+            <jigsaw-search-input historyStorageSize="1" (valueChange)="_$handleSearching($event)"></jigsaw-search-input>
 
             <jigsaw-collapse [ngStyle]="{'max-height': _$listHeight}" arrowPosition="right"
                              [ngClass]="{'jigsaw-group-select-option-cntr': _$type == 'group',
