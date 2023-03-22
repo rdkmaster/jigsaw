@@ -9,6 +9,7 @@ export * from "./common/components/block/block";
 export * from "./common/components/loading/loading";
 export * from "./common/components/scrollbar/index";
 export * from "./common/core/data/array-collection";
+export * from "./common/core/data/pageable-select-array";
 export * from "./common/core/data/component-data";
 export * from "./common/core/data/echart-types";
 export * from "./common/core/data/modeled-graph-data";

@@ -760,3 +760,231 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this._sortSubject = null;
     }
 }
+
+export class PageableSelectArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
+    public pagingInfo: PagingInfo;
+    public filterInfo: DataFilterInfo;
+    public sortInfo: DataSortInfo;
+
+    public pagingServerUrl: string;
+
+    /**
+     * 参考`PageableTableData.sourceRequestOptions`的说明
+     */
+    public sourceRequestOptions: HttpClientOptions;
+
+    private _filterSubject = new Subject<DataFilterInfo>();
+    private _sortSubject = new Subject<DataSortInfo>();
+    private _dataSourceChanged: boolean = false;
+
+    constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
+        super();
+
+        if (!http) {
+            throw new Error('invalid http!');
+        }
+
+        this.pagingInfo = new PagingInfo();
+        this.pagingInfo.subscribe(() => {
+            this._ajax();
+        });
+        this.sourceRequestOptions = typeof requestOptionsOrUrl === 'string' ? {url: requestOptionsOrUrl} : requestOptionsOrUrl;
+
+        this._initSubjects();
+    }
+
+    private _initSubjects(): void {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+            this.filterInfo = filter;
+            this._ajax();
+        });
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+            this.sortInfo = sort;
+            this._ajax();
+        });
+    }
+
+    public updateDataSource(options: HttpClientOptions): void
+    public updateDataSource(url: string): void;
+    /**
+     * @internal
+     */
+    public updateDataSource(optionsOrUrl: HttpClientOptions | string): void {
+        this.sourceRequestOptions = typeof optionsOrUrl === 'string' ? {url: optionsOrUrl} : optionsOrUrl;
+        this.pagingInfo.currentPage = 1;
+        this.pagingInfo.totalRecord = 0;
+        this.filterInfo = null;
+        this.sortInfo = null;
+        this._dataSourceChanged = true;
+    }
+
+    public fromAjax(url?: string): void;
+    public fromAjax(options?: HttpClientOptions): void;
+    /**
+     * @internal
+     */
+    public fromAjax(optionsOrUrl?: HttpClientOptions | string): void {
+        if (optionsOrUrl instanceof HttpClientOptions) {
+            this.updateDataSource(<HttpClientOptions>optionsOrUrl);
+        } else if (!!optionsOrUrl) {
+            this.updateDataSource(<string>optionsOrUrl);
+        } else {
+            this._dataSourceChanged = true;
+        }
+        this._ajax();
+    }
+
+    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this._fixAjaxOptionsByMethod(options);
+
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+
+        this.http.request(options.method, pagingService, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    const tableData: TableData = new TableData();
+                    if (TableData.isTableData(data)) {
+                        tableData.fromObject(data);
+                    } else {
+                        console.error('invalid data format, need a TableData object.');
+                    }
+                    return tableData;
+                }))
+            .subscribe(
+                tableData => this.ajaxSuccessHandler(tableData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
+
+    protected _updatePagingInfo(data: any): void {
+        if (!data.hasOwnProperty('paging')) {
+            return;
+        }
+        const paging = data.paging;
+        this.pagingInfo.totalRecord = paging.hasOwnProperty('totalRecord') ? paging.totalRecord : this.pagingInfo.totalRecord;
+    }
+
+    protected ajaxSuccessHandler(data: any): void {
+        console.log('get data from paging server success!!');
+        if (_fromArray(this, data.toArray())) {
+            this.refresh();
+            if (this._dataSourceChanged) {
+                this.componentDataHelper.invokeChangeCallback();
+            }
+        }
+        this._dataSourceChanged = false;
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
+    }
+
+    public filter(callback: (value: any, index: number, array: any[]) => any, thisArg?: any): PageableSelectArray;
+    public filter(term: string, fields?: string[] | number[]): PageableSelectArray;
+    public filter(term: DataFilterInfo): PageableSelectArray;
+    /**
+     * @internal
+     */
+    public filter(term: string | DataFilterInfo | Function, fields?: string[] | number[]): PageableSelectArray {
+        let pfi: DataFilterInfo;
+        if (term instanceof DataFilterInfo) {
+            pfi = term;
+        } else if (term instanceof Function) {
+            // 这里的fields相当于thisArg，即函数执行的上下文对象
+            pfi = new DataFilterInfo(undefined, undefined, serializeFilterFunction(term), fields);
+        } else {
+            pfi = new DataFilterInfo(term, fields);
+        }
+        this._filterSubject.next(pfi);
+        return this;
+    }
+
+    public sort(compareFn?: (a: any, b: any) => number): PageableSelectArray;
+    public sort(as: SortAs, order: SortOrder, field: string | number): PageableSelectArray;
+    public sort(sort: DataSortInfo): PageableSelectArray;
+    /**
+     * @internal
+     */
+    public sort(as, order?: SortOrder, field?: string | number): PageableSelectArray {
+        if (as instanceof Function) {
+            throw 'compare function is NOT accepted by this class!';
+        }
+        const psi = as instanceof DataSortInfo ? as : new DataSortInfo(as, order, field);
+        this._sortSubject.next(psi);
+        return this;
+    }
+
+    public changePage(currentPage: number, pageSize?: number): void;
+    public changePage(info: PagingInfo): void;
+    /**
+     * @internal
+     */
+    public changePage(currentPage, pageSize?: number): void {
+        pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
+        const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
+        let needRefresh: boolean = false;
+
+        if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
+            this.pagingInfo.currentPage = pi.currentPage;
+            needRefresh = true;
+        } else {
+            console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
+        }
+        if (pi.pageSize > 0) {
+            this.pagingInfo.pageSize = pi.pageSize;
+            needRefresh = true;
+        } else {
+            console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
+        }
+        if (needRefresh) {
+            this._ajax();
+        }
+    }
+
+    public firstPage(): void {
+        this.changePage(1);
+    }
+
+    public previousPage(): void {
+        this.changePage(this.pagingInfo.currentPage - 1);
+    }
+
+    public nextPage(): void {
+        this.changePage(this.pagingInfo.currentPage + 1);
+    }
+
+    public lastPage(): void {
+        this.changePage(this.pagingInfo.pageSize);
+    }
+
+    public destroy(): void {
+        super.destroy();
+
+        this.http = null;
+        this.sourceRequestOptions = null;
+        this.pagingInfo && this.pagingInfo.unsubscribe();
+        this.pagingInfo = null;
+        this.filterInfo = null;
+        this.sortInfo = null;
+        this._filterSubject && this._filterSubject.unsubscribe();
+        this._filterSubject = null;
+        this._sortSubject && this._sortSubject.unsubscribe();
+        this._sortSubject = null;
+    }
+}
