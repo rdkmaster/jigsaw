@@ -19,6 +19,8 @@ import { OnChangeDemoModule } from "./on-change/demo.module";
 import { StringifyDemoComponent } from "./stringify/demo.component";
 import { PageableSelectArrayDemoComponent } from "./pageable-select-array/demo.component";
 import { PageableSelectArrayDemoModule } from "./pageable-select-array/demo.module";
+import { LocalPageableSelectArrayDemoComponent } from "./local-pageable-select-array/demo.component";
+import { LocalPageableSelectArrayDemoModule } from "./local-pageable-select-array/demo.module";
 
 export const routerConfig = [
     {
@@ -40,6 +42,9 @@ export const routerConfig = [
         path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
     },
     {
+        path: 'local-pageable-select-array', component: LocalPageableSelectArrayDemoComponent
+    },
+    {
         path: 'pageable-select-array', component: PageableSelectArrayDemoComponent
     },
     {
@@ -59,7 +64,8 @@ export const routerConfig = [
         RefreshDemoModule, AjaxEventsDemoModule,
         LocalPageableArrayDemoModule, OnChangeDemoModule,
         StringifyDemoModule,
-        PageableSelectArrayDemoModule
+        PageableSelectArrayDemoModule,
+        LocalPageableSelectArrayDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

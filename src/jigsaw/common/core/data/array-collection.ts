@@ -544,12 +544,7 @@ export class DirectPageableArray extends PageableArray {
     }
 }
 
-/**
- * 在本地分页、排序、过滤的数组。
- *
- * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
- */
-export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
+export class LocalPageableArrayBase<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
 
     private _bakData: T[] = [];
@@ -620,7 +615,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     private _initSubjects(): void {
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
-            this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
+            this.filteredData = this._bakData.filter(item => LocalPageableArrayBase.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
@@ -635,13 +630,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         })
     }
 
-    public filter(callback: (value: any, index: number, array: any[]) => any, context?: any): LocalPageableArray<T>;
-    public filter(term: string, fields?: string[] | number[]): LocalPageableArray<T>;
-    public filter(term: DataFilterInfo): LocalPageableArray<T>;
+    public filter(callback: (value: any, index: number, array: any[]) => any, context?: any): LocalPageableArrayBase<T>;
+    public filter(term: string, fields?: string[] | number[]): LocalPageableArrayBase<T>;
+    public filter(term: DataFilterInfo): LocalPageableArrayBase<T>;
     /**
      * @internal
      */
-    public filter(term, fields?: string[] | number[]): LocalPageableArray<T> {
+    public filter(term, fields?: string[] | number[]): LocalPageableArrayBase<T> {
         if (!this._bakData) {
             return this;
         }
@@ -655,13 +650,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         return this;
     }
 
-    public sort(compareFn?: (a: any, b: any) => number): LocalPageableArray<T>;
-    public sort(as: SortAs, order: SortOrder, field?: string | number): LocalPageableArray<T>;
-    public sort(sort: DataSortInfo): LocalPageableArray<T>;
+    public sort(compareFn?: (a: any, b: any) => number): LocalPageableArrayBase<T>;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): LocalPageableArrayBase<T>;
+    public sort(sort: DataSortInfo): LocalPageableArrayBase<T>;
     /**
      * @internal
      */
-    public sort(as, order?: SortOrder, field?: string | number): LocalPageableArray<T> {
+    public sort(as, order?: SortOrder, field?: string | number): LocalPageableArrayBase<T> {
         if (!this.filteredData) {
             return this;
         }
@@ -702,7 +697,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         }
     }
 
-    private _setDataByPageInfo() {
+    protected _setDataByPageInfo() {
         let source: T[];
         if (this.pagingInfo.pageSize == Infinity) {
             source = this.filteredData;
@@ -758,6 +753,29 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this.pagingInfo = null;
         this._filterSubject = null;
         this._sortSubject = null;
+    }
+}
+
+/**
+ * 在本地分页、排序、过滤的数组。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
+export class LocalPageableArray<T> extends LocalPageableArrayBase<T> { }
+
+export class LocalPageableSelectArray<T> extends LocalPageableArrayBase<T>{
+    protected _setDataByPageInfo() {
+        let source: T[];
+        if (this.pagingInfo.pageSize == Infinity) {
+            source = this.filteredData;
+        } else {
+            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
+                this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            source = this.filteredData.slice(0, end);
+        }
+        if (_fromArray(this, source)) {
+            this.refresh();
+        }
     }
 }
 
