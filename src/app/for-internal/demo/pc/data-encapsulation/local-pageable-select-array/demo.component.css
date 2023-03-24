@@ -1,0 +1,11 @@
+.demo-list {
+    width: 200px;
+    height: 160px;
+    border: 1px solid var(--border-color-default);
+}
+
+.demo-list-item {
+    display: flex;
+    align-items: center;
+    height: 32px;
+}

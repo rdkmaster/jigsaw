@@ -860,6 +860,7 @@ export class PageableSelectArray extends ArrayCollection<any> implements IServer
             return;
         }
         const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        console.log(options);
         if (!options) {
             console.error('invalid source request options, use updateDataSource() to reset the option.');
             return;
