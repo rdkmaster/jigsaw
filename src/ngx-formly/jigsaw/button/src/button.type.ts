@@ -13,7 +13,7 @@ export enum SizeType {
 @Component({
     selector: 'formly-field-jigsaw-button',
     template: `
-        <jigsaw-button width="100%"
+        <jigsaw-button [width]="to.width ? to.width : '100%'"
                        [formlyAttributes]="field"
                        [disabled]="to.disabled"
                        [colorType]="to.colorType"
