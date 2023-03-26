@@ -4,7 +4,7 @@
 
 
 <!-- start to learn the demo from here -->
-<p><strong>Tip:</strong> use <a href="/pagination/basic">jigsaw-pagination</a> in your product development is strongly
+<!-- <p><strong>Tip:</strong> use <a href="/pagination/basic">jigsaw-pagination</a> in your product development is strongly
     recommended!</p>
 <p [ngClass]="tipClass" *ngIf="!ready"><strong>Tip:</strong> this demo shows how use ServerSidePagingArray, <a
         (click)="start()">continue</a>.</p>
@@ -34,4 +34,20 @@
 <hr style="margin-top: 20px">
 <div *ngIf="ready">
     <p *ngFor="let item of pageable">{{item | json}}</p>
+</div> -->
+
+<div>
+    <span>搜索：</span>
+    <jigsaw-input width="300" (valueChange)="_$handleSearching($event)" placeholder="请输入关键字搜索"></jigsaw-input>
+    <span>是否搜索分组：</span>
+    <jigsaw-switch [(checked)]="searchGroup"></jigsaw-switch>
 </div>
+
+<jigsaw-header>无限滚动</jigsaw-header>
+<ul class="demo-list" #contentScrollbar
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+    <li *ngFor="let item of psa" class="demo-list-item">
+        <span>{{item.zhName}}</span>
+        <span>{{item.enName}}</span>
+    </li>
+</ul>

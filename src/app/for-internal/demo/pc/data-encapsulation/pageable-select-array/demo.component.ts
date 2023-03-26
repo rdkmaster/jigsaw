@@ -1,25 +1,29 @@
-import { Component } from "@angular/core";
+import { Component, Renderer2, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { PageableArray } from "jigsaw/public_api";
+import { PageableSelectArray } from "jigsaw/public_api";
+import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
-    templateUrl: './demo.component.html', styles: ['.alert {color: red;}']
+    templateUrl: "./demo.component.html",
+    styleUrls: ["./demo.component.css"],
 })
 export class PageableSelectArrayDemoComponent {
-    pageable: PageableArray;
-    ready = false;
-    errorInfo = "";
-    tipClass = { 'alert': !!this.errorInfo };
+    public psa: PageableSelectArray;
+    public ready = false;
+    public searchGroup = false;
 
-    constructor(http: HttpClient) {
-        this.pageable = new PageableArray(http,
-            {
-                url: 'mock-data/countries',
-                params: { aa: 11, bb: 22 }
-            });
-        this.pageable.onAjaxSuccess(this.onAjaxSuccess, this);
-        this.pageable.onAjaxError(this.onAjaxError, this);
-        this.pageable.pagingInfo.pageSize = 20;
+    @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
+    public contentScrollbar: PerfectScrollbarDirective;
+
+    constructor(http: HttpClient, private _renderer: Renderer2) {
+        this.psa = new PageableSelectArray(http, {
+            url: "mock-data/countries",
+            params: { aa: 11, bb: 22 },
+        });
+        this.psa.onAjaxSuccess(this.onAjaxSuccess, this);
+        this.psa.onAjaxError(this.onAjaxError, this);
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
     }
 
     keyword: string;
@@ -30,10 +34,10 @@ export class PageableSelectArrayDemoComponent {
         // 这里context变量是filter的执行上下文（即filter函数里的this所指向的对象），它将会一起传输给服务端，
         // 因此这里需要注意控制context的值里只包含有用的数据，以加快前后端通信速度
         const filter = function (item) {
-            return item[0].match(new RegExp(this.reg, 'g'));
+            return item[0].match(new RegExp(this.reg, "g"));
         };
         const context = { reg: this.regExp };
-        this.pageable.filter(filter, context);
+        this.psa.filter(filter, context);
     }
 
     onAjaxSuccess(data): void {
@@ -42,25 +46,48 @@ export class PageableSelectArrayDemoComponent {
 
     onAjaxError(err): void {
         this.ready = false;
-        this.errorInfo = err;
     }
 
     start() {
-        this.errorInfo = '';
-        this.pageable.fromAjax();
+        this.psa.fromAjax();
     }
 
     previousPage() {
-        this.pageable.previousPage();
+        this.psa.previousPage();
     }
 
     nextPage() {
-        this.pageable.nextPage();
+        this.psa.nextPage();
     }
 
+    public _$handleSearching(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : "";
+        if (this.searchGroup) {
+            this.psa.filter(filterKey, ["zhName", "groupName"]);
+        } else {
+            this.psa.filter(filterKey);
+        }
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+
+    ngAfterViewInit() {
+        const el = this.contentScrollbar.elementRef.nativeElement;
+        this._renderer.listen(el, "ps-y-reach-end", ($event) => {
+            if ($event.target.scrollTop == 0) {
+                return;
+            }
+            if (
+                this.psa.pagingInfo.currentPage == this.psa.pagingInfo.totalPage
+            ) {
+                return;
+            }
+            console.log($event);
+            this.psa.nextPage();
+        });
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
-    description: string = '';
+    summary: string = "";
+    description: string = "";
 }
