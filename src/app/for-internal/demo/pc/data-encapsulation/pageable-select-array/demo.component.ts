@@ -16,8 +16,15 @@ export class PageableSelectArrayDemoComponent {
     @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    constructor(private _http: HttpClient, private _renderer: Renderer2) {
-        this._$resetData(_http);
+    constructor(public http: HttpClient, private _renderer: Renderer2) {
+        this.psa = new PageableSelectArray(http, {
+            url: "mock-data/hr-list-full",
+            params: { aa: 11, bb: 22 },
+        });
+        this.psa.onAjaxSuccess(this.onAjaxSuccess, this);
+        this.psa.onAjaxError(this.onAjaxError, this);
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
     }
 
     public _$handleSearching(filterKey?: string) {
@@ -36,28 +43,34 @@ export class PageableSelectArrayDemoComponent {
         this.contentScrollbar.scrollToTop(0, 1);
     }
 
-    public _$changeData() { }
-
-    public _$resetData(http) {
-        this.psa = new PageableSelectArray(http, {
-            url: "mock-data/hr-list-full",
+    public _$changeData() {
+        this.psa = new PageableSelectArray(this.http, {
+            url: "mock-data/hr-list",
             params: { aa: 11, bb: 22 },
+            method: 'post'
         });
-        this.psa.onAjaxSuccess(this.onAjaxSuccess, this);
-        this.psa.onAjaxError(this.onAjaxError, this);
         this.psa.pagingInfo.pageSize = 20;
         this.psa.fromAjax();
-        if (this.contentScrollbar) {
-            this.contentScrollbar.scrollToTop(0, 1);
-        }
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+
+    public _$resetData() {
+        this.psa = new PageableSelectArray(this.http, {
+            url: "mock-data/hr-list-full",
+            params: { aa: 11, bb: 22 },
+            method: 'post'
+        });
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
+        this.contentScrollbar.scrollToTop(0, 1);
     }
 
     onAjaxSuccess(data): void {
-        // this.ready = true;
+        console.log(data);
     }
 
     onAjaxError(err): void {
-        // this.ready = false;
+        console.log(err);
     }
 
     ngAfterViewInit() {
