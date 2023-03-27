@@ -1,5 +1,5 @@
 import { Component, Renderer2, ViewChild } from "@angular/core";
-import { LocalPageableSelectArray } from "jigsaw/public_api";
+import { LocalPageableSelectArray, SortAs, SortOrder } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
@@ -9,11 +9,43 @@ import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 export class LocalPageableSelectArrayDemoComponent {
     public lpsa: LocalPageableSelectArray<any>;
     public searchGroup = false;
+    public sortOrders = [{ id: 1, label: "正序" }, { id: 2, label: "倒序" }];
+    public selectedsortOrder = { id: 1, label: "正序" };
 
     @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
     constructor(private _renderer: Renderer2) {
+        this._$resetData();
+    }
+
+    public _$handleSearching(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : "";
+        if (this.searchGroup) {
+            this.lpsa.filter(filterKey, ["label", "groupName"]);
+        } else {
+            this.lpsa.filter(filterKey, ["label"]);
+        }
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+
+    public _$handleSort() {
+        const sortOrder = this.selectedsortOrder.id == 1 ? SortOrder.asc : SortOrder.desc;
+        this.lpsa.sort(SortAs.string, sortOrder, 'label');
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+    
+    public _$changeData() {
+        let array = [];
+        for (let i = 1; i <= 100; i++) {
+            let groupName = "其他分组";
+            array.push({ label: "改变数据源选项" + i, groupName: groupName });
+        }
+        this.lpsa.fromArray(array);
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+    
+    public _$resetData() {
         let array = [];
         for (let i = 1; i <= 1000; i++) {
             let groupName = "其他分组";
@@ -29,16 +61,9 @@ export class LocalPageableSelectArrayDemoComponent {
         this.lpsa = new LocalPageableSelectArray();
         this.lpsa.fromArray(array);
         this.lpsa.pagingInfo.pageSize = 15;
-    }
-
-    public _$handleSearching(filterKey?: string) {
-        filterKey = filterKey ? filterKey.trim() : "";
-        if (this.searchGroup) {
-            this.lpsa.filter(filterKey, ["label", "groupName"]);
-        } else {
-            this.lpsa.filter(filterKey, ["label"]);
+        if (this.contentScrollbar) {
+            this.contentScrollbar.scrollToTop(0, 1);
         }
-        this.contentScrollbar.scrollToTop(0, 1);
     }
 
     ngAfterViewInit() {
