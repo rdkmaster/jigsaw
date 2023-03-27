@@ -277,8 +277,8 @@ export class PageableArraybase extends ArrayCollection<any> implements IServerSi
      */
     public sourceRequestOptions: HttpClientOptions;
 
-    private _filterSubject = new Subject<DataFilterInfo>();
-    private _sortSubject = new Subject<DataSortInfo>();
+    protected _filterSubject = new Subject<DataFilterInfo>();
+    protected _sortSubject = new Subject<DataSortInfo>();
     protected _dataSourceChanged: boolean = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
@@ -297,7 +297,7 @@ export class PageableArraybase extends ArrayCollection<any> implements IServerSi
         this._initSubjects();
     }
 
-    private _initSubjects(): void {
+    protected _initSubjects(): void {
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
@@ -354,6 +354,7 @@ export class PageableArraybase extends ArrayCollection<any> implements IServerSi
         this._busy = true;
         this.ajaxStartHandler();
 
+        console.log(options);
         this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
@@ -530,7 +531,20 @@ export class PageableSelectArray extends PageableArraybase {
         this._isAppend = false;
         this.componentDataHelper.invokeAjaxCompleteCallback();
     }
-    // 搜索触发之前缓存
+
+    protected _initSubjects(): void {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+            this.filterInfo = filter;
+            this.pagingInfo.currentPage = 1;
+            this._ajax();
+        });
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+            this.sortInfo = sort;
+            this.pagingInfo.currentPage = 1;
+            this._ajax();
+            this.firstPage();
+        });
+    }
 }
 
 /**
