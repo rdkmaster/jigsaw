@@ -1,0 +1,10 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div>
+    <jigsaw-header>基本用法</jigsaw-header>
+    <jigsaw-select [data]="data" [optionCount]="5" placeholder="请选择" (valueChange)="valueChange($event)">
+    </jigsaw-select>
+</div>

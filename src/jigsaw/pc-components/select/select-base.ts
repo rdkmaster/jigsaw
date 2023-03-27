@@ -1,8 +1,8 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, LocalPageableSelectArray, PageableArray, PageableSelectArray} from "../../common/core/data/array-collection";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -20,7 +20,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
-        protected _zone?: NgZone
+        protected _renderer: Renderer2,
+        protected _zone?: NgZone,
     ) {
         super(_zone);
     }
@@ -454,13 +455,16 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption>
+        | PageableArray | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption>
+        | PageableArray | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         this._setData(value);
-        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
+        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection
+            || (this._data as any) instanceof LocalPageableSelectArray || (this._data as any) instanceof PageableSelectArray) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
@@ -501,6 +505,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @ViewChild('contentList')
+    private _contentList: ElementRef;
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -535,6 +541,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onComboOpenChange(openState: boolean) {
         this.openChange.emit(openState);
         this._onTouched();
+        this.runAfterMicrotasks(() => this._setInfiniteScroll());
         if (openState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
@@ -576,6 +583,41 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
+    }
+
+
+    private _setInfiniteScroll() {
+        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
+            if (!this._listScrollbar) {
+                console.log(123123);
+                return;
+            }
+            console.log(999);
+            const el = this._listScrollbar.elementRef.nativeElement;
+            // console.log(this._renderer);
+            // console.log(this._contentList);
+            // this._contentList.nativeElement.addEventListener("ps-y-reach-end",($event)=>{
+            //     console.log($event);
+            // })
+            el.addEventListener("ps-y-reach-end",($event)=>{
+                console.log($event);
+            })
+            document.addEventListener("ps-y-reach-end",($event)=>{
+                console.log($event);
+                (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
+            })
+            // this._contentList.listen(el, "ps-y-reach-end", ($event) => {
+            //     console.log(11);
+            //     if ($event.target.scrollTop == 0) {
+            //         return;
+            //     }
+            //     if ( this.data['pagingInfo'].currentPage == this.data['pagingInfo'].totalPage ) {
+            //         return; 
+            //     }
+            //     (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
+            // });
+        }
+        
     }
 }
 
