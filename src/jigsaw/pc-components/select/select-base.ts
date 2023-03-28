@@ -8,6 +8,7 @@ import {PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {JigsawComboSelect} from '../combo-select/index';
+import { JigsawList } from "../list-and-tile/list";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -25,6 +26,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     ) {
         super(_zone);
     }
+
+    public _$infiniteScroll: boolean = false;
 
     protected _width: string = "120px";
 
@@ -463,8 +466,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption>
         | PageableArray | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         this._setData(value);
-        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection
-            || (this._data as any) instanceof LocalPageableSelectArray || (this._data as any) instanceof PageableSelectArray) {
+        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray || this._data instanceof ArrayCollection) {
+            if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray) {
+                this._$infiniteScroll = true;
+            }
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
@@ -506,7 +511,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('contentList')
-    private _contentList: ElementRef;
+    private _contentList: JigsawList;
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -541,7 +546,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onComboOpenChange(openState: boolean) {
         this.openChange.emit(openState);
         this._onTouched();
-        this.runAfterMicrotasks(() => this._setInfiniteScroll());
+        if (openState) {
+            this.runAfterMicrotasks(() => this._setInfiniteScroll());
+        }
         if (openState || !this.searchable) return;
         // combo关闭时，重置数据
         this._$handleSearching();
@@ -564,7 +571,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray
+            || this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -585,27 +593,33 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
-
     private _setInfiniteScroll() {
+        console.log(this.data);
         if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
             if (!this._listScrollbar) {
-                console.log(123123);
+                console.log('no scroll bar')
                 return;
             }
             console.log(999);
+            console.log(this._contentList)
             const el = this._listScrollbar.elementRef.nativeElement;
             // console.log(this._renderer);
             // console.log(this._contentList);
             // this._contentList.nativeElement.addEventListener("ps-y-reach-end",($event)=>{
             //     console.log($event);
             // })
-            el.addEventListener("ps-y-reach-end",($event)=>{
+            this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
                 console.log($event);
+                
+                console.log(this.data);
+                this._zone.run(()=>{
+                    (this.data as any).nextPage();
+                });
             })
-            document.addEventListener("ps-y-reach-end",($event)=>{
-                console.log($event);
-                (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
-            })
+            // document.addEventListener("ps-y-reach-end",($event)=>{
+            //     console.log($event);
+            //     (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
+            // })
             // this._contentList.listen(el, "ps-y-reach-end", ($event) => {
             //     console.log(11);
             //     if ($event.target.scrollTop == 0) {

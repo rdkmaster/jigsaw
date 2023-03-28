@@ -36,7 +36,8 @@
                          (selectedItemsChange)="_$handleSelectChange($event)"
                          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
                          [ngStyle]="{'max-height': _$listHeight}"
-                         [multipleSelect]="multipleSelect">
+                         [multipleSelect]="multipleSelect"
+                         [autoRemoveInvalidValue]="!_$infiniteScroll">
                 <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
                         *ngIf="!_$showSelected"

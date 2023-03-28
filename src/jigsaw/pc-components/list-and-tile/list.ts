@@ -8,7 +8,8 @@ import {
     forwardRef, Injector,
     Input,
     NgModule,
-    QueryList
+    QueryList,
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -34,6 +35,12 @@ import {WingsTheme} from "../../common/common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
+    constructor(public _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector,
+        public renderer: Renderer2) {
+        super(_cdr, _injector);
+    }
     /**
      * 默认单选
      */
