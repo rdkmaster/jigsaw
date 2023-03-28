@@ -855,7 +855,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public _$handleSearching(filterKey?: string) {
-        // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
+
         this._searchKeyBak = filterKey;
         if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
             this._filterData(filterKey);
