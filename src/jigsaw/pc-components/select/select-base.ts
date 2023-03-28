@@ -664,11 +664,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray {
+    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray) {
+    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[]) {
         console.log(value);
         this._setData(value);
         console.log(this._data);
@@ -687,7 +687,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
     }
 
-    private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
+    private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[]): void {
         this._$listValue = new ArrayCollection([]);
         value.forEach(groupData => {
             this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
@@ -857,7 +857,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<GroupSelectOption>();
@@ -874,10 +874,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this.data.forEach(group => {
-            console.log(group);
-            group.data.filter(filterKey, [this.labelField]);
-        })
+        // this.data.forEach(group => {
+        //     console.log(group);
+        //     group.data.filter(filterKey, [this.labelField]);
+        // })
         // (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
         // this._listScrollbar && this._listScrollbar.scrollToTop();
     }

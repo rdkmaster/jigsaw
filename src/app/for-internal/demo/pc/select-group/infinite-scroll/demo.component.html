@@ -1,0 +1,34 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>分页：</span>
+        <jigsaw-button (click)="_$switchData()" [disabled]="isLocal">本地</jigsaw-button>
+        <jigsaw-button (click)="_$switchData()" [disabled]="!isLocal">服务器</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>数据：</span>
+        <jigsaw-button (click)="_$changeData()">修改</jigsaw-button>
+        <jigsaw-button (click)="_$resetData()">重置</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>搜索：</span>
+        <jigsaw-switch [(checked)]="searchable"></jigsaw-switch>
+        <span>禁用：</span>
+        <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+        <span>多选：</span>
+        <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>选项条数：</span>
+        <j-numeric-input [(value)]="optionCount" min="3" max="10" placeholder="请输入展示的选项条数">
+        </j-numeric-input>
+    </li>
+</ul>
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-select [data]="data" [optionCount]="optionCount" [searchable]="searchable" [(value)]="value" [disabled]="disabled"
+    [multipleSelect]="multipleSelect" width="300" labelField="name" placeholder="请选择" (valueChange)="valueChange($event)">
+</jigsaw-select>
