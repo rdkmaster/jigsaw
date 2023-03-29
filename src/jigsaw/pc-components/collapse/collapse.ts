@@ -12,6 +12,7 @@ import {
     NgModule,
     Output,
     QueryList,
+    Renderer2,
     ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -120,7 +121,8 @@ export class JigsawCollapse extends AbstractJigsawComponent {
 
     constructor(
     // @RequireMarkForCheck 需要用到，勿删
-    private _injector: Injector) {
+    private _injector: Injector,
+    public renderer: Renderer2) {
         super();
     }
 

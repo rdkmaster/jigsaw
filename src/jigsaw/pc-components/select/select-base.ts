@@ -1,14 +1,15 @@
-import {ChangeDetectorRef, Directive, ElementRef, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild} from "@angular/core";
+import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild} from "@angular/core";
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, LocalPageableSelectArray, PageableArray, PageableSelectArray} from "../../common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, LocalPageableSelectArray, PageableSelectArray} from "../../common/core/data/array-collection";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {JigsawComboSelect} from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
+import { JigsawCollapse } from "../collapse/collapse";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -458,15 +459,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption>
-        | PageableArray | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption>
-        | PageableArray | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         this._setData(value);
-        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray || this._data instanceof ArrayCollection) {
+        if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray || this._data instanceof ArrayCollection) {
             if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray) {
                 this._$infiniteScroll = true;
             }
@@ -481,7 +480,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
     }
 
-    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -511,7 +510,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     @ViewChild('contentList')
-    private _contentList: JigsawList;
+    private _contentList: JigsawList | JigsawCollapse;
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -571,8 +570,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray
-            || this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
+        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -589,7 +587,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        (<LocalPageableSelectArray<any> | PageableSelectArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
@@ -651,6 +649,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
+    public _$viewData: ArrayCollection<GroupSelectOption>;
+
     protected _data: ArrayCollection<GroupSelectOption>;
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
@@ -664,20 +664,21 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] {
+    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[]) {
+    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         console.log(value);
         this._setData(value);
         console.log(this._data);
-        this._setEmptyValue(value);
+        // this._setEmptyValue(value);
         if (this._data instanceof ArrayCollection) {
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
+                console.log(111111111111);
                 this._setEmptyValue(this._data);
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
@@ -726,7 +727,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     public set value(newValue: any) {
-        this._setValue(newValue);
+        // this._setValue(newValue);
+        this._$listValue = newValue;
     }
 
     public writeValue(value: any): void {
@@ -749,7 +751,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             return;
         }
 
-        this._setEmptyValue(this.data);
+        // this._setEmptyValue(this.data);
 
         this.runMicrotask(() => {
             newValue.forEach((groupData: GroupSelectOption) => {

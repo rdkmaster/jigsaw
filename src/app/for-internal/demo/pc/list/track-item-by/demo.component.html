@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul>
+    <li *ngFor="let group of list">
+        <div>{{group[0].groupName}}</div>
+        <jigsaw-list [(selectedItems)]="selectedItems" [multipleSelect]="true" [autoRemoveInvalidValue]="false"
+            (selectedItemsChange)="_$handleGroupSelectChange($event)" [trackItemBy]="trackItemBy">
+            <jigsaw-list-option #listItem *ngFor="let item of group" [value]="item" height="32">
+                {{item.label}}
+            </jigsaw-list-option>
+        </jigsaw-list>
+    </li>
+</ul>
+<div>
+    <li *ngFor="let select of selectedItems">
+        <span>{{select.label}}</span>
+        <span>{{select.groupName}}</span>
+    </li>
+</div>

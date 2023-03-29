@@ -9,8 +9,11 @@
                     'jigsaw-select-show-selected': _$showSelected,
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">
+            <jigsaw-input *ngIf="!searchable" width="100%" (valueChange)="_$handleSearching($event)">
+                <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
+            </jigsaw-input>
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
-                <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
+                <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>hhhzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz
                 <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
                 <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
@@ -28,22 +31,20 @@
                     <span>{{'select.checkAll' | translate}}</span>
                 </div>
             </div>
-            <jigsaw-search-input historyStorageSize="1" (valueChange)="_$handleSearching($event)"></jigsaw-search-input>
-
             <jigsaw-collapse [ngStyle]="{'max-height': _$listHeight}" arrowPosition="right"
                              [ngClass]="{'jigsaw-group-select-option-cntr': _$type == 'group',
                                             'jigsaw-collapse-select-option-cntr': _$type =='collapse'}"
                              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
                 <jigsaw-collapse-pane [isActive]="true" *ngFor="let group of data; let i = index;"
-                                      [ngStyle]="{'display': _$showSelected && _$listValue[i].data.length === 0 ? 'none' : 'flex'}">
+                                      [ngStyle]="{'display': _$showSelected}">
                     <div j-title class="jigsaw-select-option-title">{{group[groupField] || '--'}}</div>
                     <div j-body>
                         <span *ngIf="!data[i]?.data || data[i].data.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
                         </span>
                         <jigsaw-list *ngIf="data[i]?.data?.length > 0" width="100%" [trackItemBy]="trackItemBy"
-                                     [(selectedItems)]="_$listValue[i].data" (selectedItemsChange)="_$handleGroupSelectChange(i)"
-                                     [multipleSelect]="multipleSelect">
+                                     [(selectedItems)]="_$listValue" (selectedItemsChange)="_$handleGroupSelectChange(i)"
+                                     [multipleSelect]="multipleSelect" [autoRemoveInvalidValue]="!_$infiniteScroll">
                             <jigsaw-list-option #listItem *ngFor="let item of group.data" [value]="item"
                                                 [disabled]="item.disabled" [height]="optionHeight">
                                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
