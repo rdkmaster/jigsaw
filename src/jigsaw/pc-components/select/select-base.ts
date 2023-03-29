@@ -473,6 +473,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
+                console.log('9999999999999999999')
+                this._test();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
@@ -496,6 +498,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     protected _getValidData(): SelectOption[] {
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
         return this._data.concat().filter(item => !item.disabled);
+    }
+
+    protected _test(){
+        return;
     }
 
     /**
@@ -649,245 +655,259 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
-    public _$viewData: ArrayCollection<GroupSelectOption>;
+    public _$viewData: SelectOption[];
 
-    protected _data: ArrayCollection<GroupSelectOption>;
+    // protected _data: ArrayCollection<GroupSelectOption>;
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
     public _$type: "collapse" | "group";
 
-    /**
-     * 提供选择的数据集合
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
-        return this._data;
+    protected _test(): void {
+        console.log(this.data);
+        const groups = new Set(this.data.map(item=>item[this.groupField]))
+        console.log(groups);
+        const data = (this.data as ArrayCollection<SelectOption>).toJSON();
+        const result = [];
+        groups.forEach(group => {
+            const arr = data.filter(item => item[this.groupField] == group);
+            result.push(arr);
+        })
+        console.log(result);
+        this._$viewData = result;
     }
 
-    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
-        console.log(value);
-        this._setData(value);
-        console.log(this._data);
-        // this._setEmptyValue(value);
-        if (this._data instanceof ArrayCollection) {
-            if (this._removeOnRefresh) {
-                this._removeOnRefresh();
-            }
-            this._removeOnRefresh = this._data.onRefresh(() => {
-                console.log(111111111111);
-                this._setEmptyValue(this._data);
-                this._$checkSelectAll();
-                // 等待数据处理完成赋值，消除统计的闪动
-                this._searchKey = this._searchKeyBak;
-                this._changeDetector.markForCheck();
-            })
-        }
-    }
+    // /**
+    //  * 提供选择的数据集合
+    //  *
+    //  * @NoMarkForCheckRequired
+    //  */
+    // @Input()
+    // public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
+    //     return this._data;
+    // }
 
-    private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[]): void {
-        this._$listValue = new ArrayCollection([]);
-        value.forEach(groupData => {
-            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
-        });
-        this._$selectedItems = [];
-    }
+    // public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
+    //     console.log(value);
+    //     this._setData(value);
+    //     console.log(this._data);
+    //     // this._setEmptyValue(value);
+    //     if (this._data instanceof ArrayCollection) {
+    //         if (this._removeOnRefresh) {
+    //             this._removeOnRefresh();
+    //         }
+    //         this._removeOnRefresh = this._data.onRefresh(() => {
+    //             console.log(111111111111);
+    //             this._setEmptyValue(this._data);
+    //             this._$checkSelectAll();
+    //             // 等待数据处理完成赋值，消除统计的闪动
+    //             this._searchKey = this._searchKeyBak;
+    //             this._changeDetector.markForCheck();
+    //         })
+    //     }
+    // }
 
-    protected _getValidData(): GroupSelectOption[] {
-        const validData = [];
-        (this._data || []).forEach((group: GroupSelectOption) => {
-            (group.data || []).filter(item => !item.disabled).forEach(item => validData.push(item));
-        });
-        return validData;
-    }
+    // private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[]): void {
+    //     this._$listValue = new ArrayCollection([]);
+    //     value.forEach(groupData => {
+    //         this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
+    //     });
+    //     this._$selectedItems = [];
+    // }
 
-    /**
-     * @internal
-     */
-    public _$disableSelectAll(): boolean {
-        return !(this._data || []).find((group: GroupSelectOption) => (group.data || []).find(item => !item.disabled));
-    }
+    // protected _getValidData(): GroupSelectOption[] {
+    //     const validData = [];
+    //     (this._data || []).forEach((group: GroupSelectOption) => {
+    //         (group.data || []).filter(item => !item.disabled).forEach(item => validData.push(item));
+    //     });
+    //     return validData;
+    // }
+
+    // /**
+    //  * @internal
+    //  */
+    // public _$disableSelectAll(): boolean {
+    //     return !(this._data || []).find((group: GroupSelectOption) => (group.data || []).find(item => !item.disabled));
+    // }
 
     /**
      * @internal
      */
     public _$listValue: ArrayCollection<GroupSelectOption>;
 
-    /**
-     * 选择的结果，单选时单个的item对象，多选时是item对象的数组
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get value(): any {
-        return this._value;
-    }
+    // /**
+    //  * 选择的结果，单选时单个的item对象，多选时是item对象的数组
+    //  *
+    //  * @NoMarkForCheckRequired
+    //  */
+    // @Input()
+    // public get value(): any {
+    //     return this._value;
+    // }
 
-    public set value(newValue: any) {
-        // this._setValue(newValue);
-        this._$listValue = newValue;
-    }
+    // public set value(newValue: any) {
+    //     // this._setValue(newValue);
+    //     this._$listValue = newValue;
+    // }
 
-    public writeValue(value: any): void {
-        // 表单初始值需要
-        this._setValue(value, false);
-        this._changeDetector.markForCheck();
-    }
+    // public writeValue(value: any): void {
+    //     // 表单初始值需要
+    //     // this._setValue(value, false);
+    //     this._changeDetector.markForCheck();
+    // }
 
-    protected _setValue(newValue: any, emit = true): boolean {
-        if (this._value == newValue) {
-            return;
-        }
-        if (CommonUtils.isUndefined(newValue)) {
-            this.runMicrotask(() => {
-                this._$handleClearable();
-            })
-            return;
-        }
-        if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
-            return;
-        }
+    // protected _setValue(newValue: any, emit = true): boolean {
+    //     if (this._value == newValue) {
+    //         return;
+    //     }
+    //     if (CommonUtils.isUndefined(newValue)) {
+    //         this.runMicrotask(() => {
+    //             this._$handleClearable();
+    //         })
+    //         return;
+    //     }
+    //     if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
+    //         return;
+    //     }
 
-        // this._setEmptyValue(this.data);
+    //     // this._setEmptyValue(this.data);
 
-        this.runMicrotask(() => {
-            newValue.forEach((groupData: GroupSelectOption) => {
-                const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                (groupData.data || []).forEach(item => {
-                    const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
-                    if (srcDataItem && targetData.findIndex(item => item[this.labelField] === srcDataItem[this.labelField]) == -1) {
-                        targetData.push(srcDataItem);
-                    }
-                });
-            });
-            this._updateValue();
-            if (emit) {
-                this.valueChange.emit(this.value);
-            }
-            this._propagateChange(this.value);
-            this._changeDetector.detectChanges();
-            this._$checkSelectAll();
-        });
-    }
+    //     this.runMicrotask(() => {
+    //         newValue.forEach((groupData: GroupSelectOption) => {
+    //             const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
+    //             const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
+    //             (groupData.data || []).forEach(item => {
+    //                 const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
+    //                 if (srcDataItem && targetData.findIndex(item => item[this.labelField] === srcDataItem[this.labelField]) == -1) {
+    //                     targetData.push(srcDataItem);
+    //                 }
+    //             });
+    //         });
+    //         this._updateValue();
+    //         if (emit) {
+    //             this.valueChange.emit(this.value);
+    //         }
+    //         this._propagateChange(this.value);
+    //         this._changeDetector.detectChanges();
+    //         this._$checkSelectAll();
+    //     });
+    // }
 
-    /**
-     * @internal
-     */
-    public _$handleGroupSelectChange(groupIndex: number): void {
-        if (!this.multipleSelect) {
-            this._$listValue
-                .filter((group: GroupSelectOption, index: number) => index !== groupIndex && group.data.length > 0)
-                .forEach((group: GroupSelectOption) => group.data = new ArrayCollection([]));
-        }
-        this._updateSelectedItems();
-        this._$checkSelectAll();
-        this._changeDetector.markForCheck();
-    }
+    // /**
+    //  * @internal
+    //  */
+    // public _$handleGroupSelectChange(groupIndex: number): void {
+    //     if (!this.multipleSelect) {
+    //         this._$listValue
+    //             .filter((group: GroupSelectOption, index: number) => index !== groupIndex && group.data.length > 0)
+    //             .forEach((group: GroupSelectOption) => group.data = new ArrayCollection([]));
+    //     }
+    //     this._updateSelectedItems();
+    //     this._$checkSelectAll();
+    //     this._changeDetector.markForCheck();
+    // }
 
-    private _removeOnRefreshListener: CallbackRemoval;
+    // private _removeOnRefreshListener: CallbackRemoval;
 
-    private _updateValue(): void {
-        this._$selectedItems = [];
-        this._value = new ArrayCollection([]);
-        this._$listValue.forEach((groupData: GroupSelectOption) => {
-            this._$selectedItems = [...this._$selectedItems, ...groupData.data];
-            if (groupData.data?.length > 0) {
-                this._value.push(groupData);
-            }
-        });
-        if (this._removeOnRefreshListener) {
-            this._removeOnRefreshListener();
-        }
-        this._removeOnRefreshListener = this._value.onRefresh(() => {
-            this._comboSelect._cdr.markForCheck();
-        });
-    }
+    // private _updateValue(): void {
+    //     this._$selectedItems = [];
+    //     this._value = new ArrayCollection([]);
+    //     this._$listValue.forEach((groupData: GroupSelectOption) => {
+    //         this._$selectedItems = [...this._$selectedItems, ...groupData.data];
+    //         if (groupData.data?.length > 0) {
+    //             this._value.push(groupData);
+    //         }
+    //     });
+    //     if (this._removeOnRefreshListener) {
+    //         this._removeOnRefreshListener();
+    //     }
+    //     this._removeOnRefreshListener = this._value.onRefresh(() => {
+    //         this._comboSelect._cdr.markForCheck();
+    //     });
+    // }
 
-    private _updateSelectedItems(): void {
-        this._updateValue();
-        this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
-    }
+    // private _updateSelectedItems(): void {
+    //     this._updateValue();
+    //     this._propagateChange(this.value);
+    //     this.valueChange.emit(this.value);
+    // }
 
-    /**
-     * @internal
-     */
-    public _$selectAll() {
-        if (this._allSelectCheck()) {
-            this._setEmptyValue(this._data);
-            this._$selectAllChecked = CheckBoxStatus.unchecked;
-        } else {
-            this._data.forEach((groupData: GroupSelectOption, index) => {
-                this._$listValue[index].data = new ArrayCollection((groupData.data || []).filter(item => !item.disabled))
-            })
-            this._$selectAllChecked = CheckBoxStatus.checked;
-        }
-        this._updateSelectedItems();
-        this._changeDetector.markForCheck();
-    }
+    // /**
+    //  * @internal
+    //  */
+    // public _$selectAll() {
+    //     if (this._allSelectCheck()) {
+    //         // this._setEmptyValue(this._data);
+    //         this._$selectAllChecked = CheckBoxStatus.unchecked;
+    //     } else {
+    //         this._data.forEach((groupData: GroupSelectOption, index) => {
+    //             this._$listValue[index].data = new ArrayCollection((groupData.data || []).filter(item => !item.disabled))
+    //         })
+    //         this._$selectAllChecked = CheckBoxStatus.checked;
+    //     }
+    //     this._updateSelectedItems();
+    //     this._changeDetector.markForCheck();
+    // }
 
-    /**
-     * @internal
-     */
-    public _$handleClearable(): void {
-        this._setEmptyValue(this._data);
-        this._updateSelectedItems();
-        this._$selectAllChecked = CheckBoxStatus.unchecked;
-        this._changeDetector.markForCheck();
-    }
+    // /**
+    //  * @internal
+    //  */
+    // public _$handleClearable(): void {
+    //     // this._setEmptyValue(this._data);
+    //     this._updateSelectedItems();
+    //     this._$selectAllChecked = CheckBoxStatus.unchecked;
+    //     this._changeDetector.markForCheck();
+    // }
 
-    /**
-     * @internal
-     */
-    public _$onTagRemove(removedItem): void {
-        this._$listValue.forEach((groupData: GroupSelectOption) => {
-            const itemIndex = groupData.data.findIndex(item => item == removedItem);
-            if (itemIndex !== -1) {
-                groupData.data.splice(itemIndex, 1);
-                groupData.data.refresh();
-            }
-        });
-        this._updateSelectedItems();
-        this._$checkSelectAll();
-        this.remove.emit(removedItem);
-    }
+    // /**
+    //  * @internal
+    //  */
+    // public _$onTagRemove(removedItem): void {
+    //     this._$listValue.forEach((groupData: GroupSelectOption) => {
+    //         const itemIndex = groupData.data.findIndex(item => item == removedItem);
+    //         if (itemIndex !== -1) {
+    //             groupData.data.splice(itemIndex, 1);
+    //             groupData.data.refresh();
+    //         }
+    //     });
+    //     this._updateSelectedItems();
+    //     this._$checkSelectAll();
+    //     this.remove.emit(removedItem);
+    // }
 
-    public _$handleSearching(filterKey?: string) {
+    // public _$handleSearching(filterKey?: string) {
 
-        this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
-            this._filterData(filterKey);
-        } else {
-            const data = new LocalPageableArray<GroupSelectOption>();
-            data.pagingInfo.pageSize = Infinity;
-            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
-                removeUpdateSubscriber.unsubscribe();
-                this.data = data;
-                this._filterData(filterKey);
-            });
-            data.fromArray(this.data);
-        }
-    }
+    //     this._searchKeyBak = filterKey;
+    //     if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
+    //         this._filterData(filterKey);
+    //     } else {
+    //         const data = new LocalPageableArray<GroupSelectOption>();
+    //         data.pagingInfo.pageSize = Infinity;
+    //         const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+    //             // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+    //             removeUpdateSubscriber.unsubscribe();
+    //             this.data = data;
+    //             this._filterData(filterKey);
+    //         });
+    //         data.fromArray(this.data);
+    //     }
+    // }
 
-    protected _filterData(filterKey?: string) {
-        filterKey = filterKey ? filterKey.trim() : '';
-        // this.data.forEach(group => {
-        //     console.log(group);
-        //     group.data.filter(filterKey, [this.labelField]);
-        // })
-        // (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
-        // this._listScrollbar && this._listScrollbar.scrollToTop();
-    }
+    // protected _filterData(filterKey?: string) {
+    //     filterKey = filterKey ? filterKey.trim() : '';
+    //     // this.data.forEach(group => {
+    //     //     console.log(group);
+    //     //     group.data.filter(filterKey, [this.labelField]);
+    //     // })
+    //     // (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+    //     // this._listScrollbar && this._listScrollbar.scrollToTop();
+    // }
 
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (this._removeOnRefreshListener) {
-            this._removeOnRefreshListener();
-        }
-    }
+    // ngOnDestroy() {
+    //     super.ngOnDestroy();
+    //     if (this._removeOnRefreshListener) {
+    //         this._removeOnRefreshListener();
+    //     }
+    // }
 }

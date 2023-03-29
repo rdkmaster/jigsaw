@@ -45,7 +45,15 @@ export class SelectGroupInfiniteScrollDemoComponent {
         if (this.isLocal) {
             let array = [];
             for (let i = 1; i <= 1000; i++) {
-                array.push({ name: "测试选项" + i });
+                let gender = "其他分组";
+                if (i < 20) {
+                    gender = "分组1";
+                } else if (i < 50) {
+                    gender = "分组2";
+                } else if (i < 150) {
+                    gender = "分组3";
+                }
+                array.push({ name: "测试选项" + i, gender: gender });
             }
             this.data = new LocalPageableSelectArray();
             this.data.fromArray(array);
