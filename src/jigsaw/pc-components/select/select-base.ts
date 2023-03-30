@@ -639,8 +639,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public _$type: "collapse" | "group";
 
     protected _getViewData(): void {
-        const data = (this.data as ArrayCollection<SelectOption>).toJSON();
-        this._$viewData = this._getNestedData(data);
+        const data = (this.data as ArrayCollection<SelectOption>).toJSON();    
+        const groups = new Set(data.map(item => item[this.groupField]))
+        const result = [];
+        groups.forEach(group => {
+            const arr = data.filter(item => item[this.groupField] == group);
+            result.push(arr);
+        })
+        this._$viewData = result;
     }
 
     protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
@@ -671,10 +677,17 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     @Input()
     public get value(): any {
-        if (this._$infiniteScroll){
+        if (!this._value ||this._$infiniteScroll){
             return this._value;
         }
-        return this._getNestedData(this._value);
+        const value = Array.isArray(this._value) ? this._value : [this._value];
+        const groups = new Set(value.map(item => item[this.groupField]))
+        const result = [];
+        groups.forEach(group => {
+            const arr = value.filter(item => item[this.groupField] == group);
+            result.push({ [this.groupField]: group, data: arr });
+        })
+        return result;
     }
 
     public set value(newValue: any) {
@@ -709,20 +722,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 item[this.groupField] = group[this.groupField];
                 result.push(item);
             })
-        })
-        return result;
-    }
-
-    private _getNestedData(value: SelectOption[]): GroupSelectOption[] {
-        if (!value) {
-            return;
-        }
-        value = Array.isArray(value) ? value : [value];
-        const groups = new Set(value.map(item => item[this.groupField]))
-        const result = [];
-        groups.forEach(group => {
-            const arr = value.filter(item => item[this.groupField] == group);
-            result.push(arr);
         })
         return result;
     }
