@@ -281,7 +281,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
-                console.log(this.multipleSelect)
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
             } else {
                 this._$selectedItems = new ArrayCollection([]);
@@ -596,20 +595,17 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
-    private scrollBarListener: any;
+    private _scrollBarListener: any;
     private _setInfiniteScroll() {
         if (!this._$infiniteScroll) {
             return;
         }
         if (!this._listScrollbar) {
-            console.log('no scroll bar')
             return;
         }
-        console.log(this.scrollBarListener);
+        console.log(this._scrollBarListener);
         const el = this._listScrollbar.elementRef.nativeElement;
-        this.scrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
-            console.log($event);
-            console.log(this.data);
+        this._scrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
             this._zone.run(() => {
                 (this.data as any).nextPage();
             });
@@ -634,6 +630,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public groupField: string = "groupName";
 
     public _$viewData: SelectOption[];
+    public _$collapseStatus = {};
 
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
@@ -732,5 +729,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         (<LocalPageableSelectArray<any> | PageableSelectArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
+        this._$collapseStatus = {};
     }
 }
