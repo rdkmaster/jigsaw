@@ -9,7 +9,7 @@
                     'jigsaw-select-show-selected': _$showSelected,
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">
-            <jigsaw-input *ngIf="!searchable" width="100%" (valueChange)="_$handleSearching($event)">
+            <jigsaw-input *ngIf="searchable" width="100%" (valueChange)="_$handleSearching($event)">
                 <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
             </jigsaw-input>
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
@@ -17,9 +17,9 @@
                 <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
                 <p *ngIf="data && data['busy']">{{'select.loading' | translate}}</p>
             </div>
-            <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
+            <div *ngIf="multipleSelect && _$viewData?.length > 0" class="jigsaw-select-select-all">
                 <jigsaw-checkbox *ngIf="!_$showSelected" [(checked)]="_$selectAllChecked"
-                                 [disabled]="_$disableSelectAll()" (checkedChange)="_$selectAll()">
+                                  (checkedChange)="_$selectAll()">
                     <span>{{'select.selectAll' | translate}}</span>
                 </jigsaw-checkbox>
                 <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()"
@@ -39,12 +39,12 @@
                                       [ngStyle]="{'display': _$showSelected}">
                     <div j-title class="jigsaw-select-option-title">{{group[0][groupField] || '--'}}</div>
                     <div j-body>
-                        <span *ngIf="!data[i]?.data || data[i].data.length === 0" class="jigsaw-select-option-no-data">
+                        <span *ngIf="!group || group.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
                         </span>
                         <jigsaw-list *ngIf="group.length > 0" width="100%" [trackItemBy]="trackItemBy"
                                      [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange($event)"
-                                     [multipleSelect]="multipleSelect" [autoRemoveInvalidValue]="!_$infiniteScroll">
+                                     [multipleSelect]="multipleSelect" [autoRemoveInvalidValue]="false">
                             <jigsaw-list-option #listItem *ngFor="let item of group" [value]="item"
                                                 [disabled]="item.disabled" [height]="optionHeight">
                                 <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"

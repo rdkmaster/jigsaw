@@ -143,7 +143,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$listHeight: string;
 
-    private _trackItemBy: string[];
+    protected _trackItemBy: string[];
 
     /**
      * 设置对象的标识
@@ -280,6 +280,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
+                console.log(this.multipleSelect)
                 this._$selectedItems = this.multipleSelect ? newValue : [newValue];
             } else {
                 this._$selectedItems = new ArrayCollection([]);
@@ -466,15 +467,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
         this._setData(value);
         if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray || this._data instanceof ArrayCollection) {
-            if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray) {
-                this._$infiniteScroll = true;
-            }
             if (this._removeOnRefresh) {
                 this._removeOnRefresh();
             }
             this._removeOnRefresh = this._data.onRefresh(() => {
-                console.log('9999999999999999999')
-                this._test();
+                this._getViewData();
                 this._$checkSelectAll();
                 // 等待数据处理完成赋值，消除统计的闪动
                 this._searchKey = this._searchKeyBak;
@@ -483,6 +480,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
+        if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray) {
+            this._$infiniteScroll = true;
+        }
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -500,9 +500,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         return this._data.concat().filter(item => !item.disabled);
     }
 
-    protected _test(){
-        return;
-    }
+    protected _getViewData():void{}
 
     /**
      * 在多选时，用户点击被选中条目的叉叉时发出此事件
@@ -598,44 +596,21 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     private _setInfiniteScroll() {
-        console.log(this.data);
-        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
-            if (!this._listScrollbar) {
-                console.log('no scroll bar')
-                return;
-            }
-            console.log(999);
-            console.log(this._contentList)
-            const el = this._listScrollbar.elementRef.nativeElement;
-            // console.log(this._renderer);
-            // console.log(this._contentList);
-            // this._contentList.nativeElement.addEventListener("ps-y-reach-end",($event)=>{
-            //     console.log($event);
-            // })
-            this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
-                console.log($event);
-                
-                console.log(this.data);
-                this._zone.run(()=>{
-                    (this.data as any).nextPage();
-                });
-            })
-            // document.addEventListener("ps-y-reach-end",($event)=>{
-            //     console.log($event);
-            //     (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
-            // })
-            // this._contentList.listen(el, "ps-y-reach-end", ($event) => {
-            //     console.log(11);
-            //     if ($event.target.scrollTop == 0) {
-            //         return;
-            //     }
-            //     if ( this.data['pagingInfo'].currentPage == this.data['pagingInfo'].totalPage ) {
-            //         return; 
-            //     }
-            //     (this.data as LocalPageableSelectArray<SelectOption>).nextPage();
-            // });
+        if (!this._$infiniteScroll) {
+            return;
         }
-        
+        if (!this._listScrollbar) {
+            console.log('no scroll bar')
+            return;
+        }
+        const el = this._listScrollbar.elementRef.nativeElement;
+        this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
+            console.log($event);
+            console.log(this.data);
+            this._zone.run(() => {
+                (this.data as any).nextPage();
+            });
+        })
     }
 }
 
@@ -657,25 +632,99 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     public _$viewData: SelectOption[];
 
-    // protected _data: ArrayCollection<GroupSelectOption>;
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
     public _$type: "collapse" | "group";
 
-    protected _test(): void {
-        console.log(this.data);
-        const groups = new Set(this.data.map(item=>item[this.groupField]))
-        console.log(groups);
+    protected _getViewData(): void {
         const data = (this.data as ArrayCollection<SelectOption>).toJSON();
+        this._$viewData = this._getNestedData(data);
+    }
+
+    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
+        if (value instanceof LocalPageableSelectArray || value instanceof PageableSelectArray){
+            this._data = value;
+            return;
+        }
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+            value = value.toJSON();
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
+        this._data = new LocalPageableSelectArray<SelectOption>();
+        this._data.fromArray(this._getFlatData(value));
+        (this._data as LocalPageableSelectArray<SelectOption>).pagingInfo.pageSize = Infinity
+    }
+
+    @Input()
+    public get trackItemBy(): string | string[] {
+        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
+        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField]) : null;
+    }
+
+    @Input()
+    public get value(): any {
+        if (this._$infiniteScroll){
+            return this._value;
+        }
+        return this._getNestedData(this._value);
+    }
+
+    public set value(newValue: any) {
+        const value = this._$infiniteScroll ? newValue : this._getFlatData(newValue);
+        if (this.initialized && CommonUtils.compareValue(this._value, value, this.trackItemBy)) {
+            return;
+        }
+
+        this._value = value;
+        this._propagateChange(value);
+        this.runMicrotask(() => {
+            if (CommonUtils.isDefined(value)) {
+                this._$selectedItems = this._$infiniteScroll && !this.multipleSelect ? [value] : value;
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
+            }
+            this._$checkSelectAll();
+            this._changeDetector.detectChanges();
+        })
+    }
+
+    private _getFlatData(value: GroupSelectOption[]): SelectOption[] {
+        if (!value) {
+            return;
+        }
+        const result = [];
+        value.forEach(group => {
+            if (!group.data) {
+                return;
+            }
+            group.data.forEach(item => {
+                item[this.groupField] = group[this.groupField];
+                result.push(item);
+            })
+        })
+        return result;
+    }
+
+    private _getNestedData(value: SelectOption[]): GroupSelectOption[] {
+        if (!value) {
+            return;
+        }
+        value = Array.isArray(value) ? value : [value];
+        const groups = new Set(value.map(item => item[this.groupField]))
         const result = [];
         groups.forEach(group => {
-            const arr = data.filter(item => item[this.groupField] == group);
+            const arr = value.filter(item => item[this.groupField] == group);
             result.push(arr);
         })
-        console.log(result);
-        this._$viewData = result;
+        return result;
     }
 
     // /**
