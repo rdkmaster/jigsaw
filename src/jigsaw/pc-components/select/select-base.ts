@@ -10,6 +10,7 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {JigsawComboSelect} from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
+import { Subscription } from "rxjs";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -595,6 +596,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
+    private scrollBarListener: any;
     private _setInfiniteScroll() {
         if (!this._$infiniteScroll) {
             return;
@@ -603,8 +605,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             console.log('no scroll bar')
             return;
         }
+        console.log(this.scrollBarListener);
         const el = this._listScrollbar.elementRef.nativeElement;
-        this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
+        this.scrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
             console.log($event);
             console.log(this.data);
             this._zone.run(() => {
