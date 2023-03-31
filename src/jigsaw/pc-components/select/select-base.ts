@@ -679,12 +679,18 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         (this._data as LocalPageableSelectArray<SelectOption>).pagingInfo.pageSize = Infinity
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get trackItemBy(): string | string[] {
         const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
         return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField]) : null;
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get value(): any {
         if (!this._value ||this._$infiniteScroll){
