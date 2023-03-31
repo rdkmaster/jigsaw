@@ -58,6 +58,10 @@
                     </div>
                 </jigsaw-collapse-pane>
             </jigsaw-collapse>
+            <div *ngIf="_$infiniteScroll && data.length > 0 && data['busy']" class="jigsaw-select-infinite-scroll-loading">
+                <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
+                <p>{{'select.loading' | translate}}</p>
+            </div>
         </div>
     </ng-template>
     <div *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics"
