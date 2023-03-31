@@ -395,5 +395,9 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         &>p {
             padding-left: 8px;
         }
+
+        #{$jigsaw-loading} {
+            transform: scale(0.5);
+        }
     }
 }
