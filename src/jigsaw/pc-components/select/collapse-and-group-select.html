@@ -5,7 +5,9 @@
                      (clear)="_$handleClearable()" (remove)="_$onTagRemove($event)">
     <ng-template>
         <div [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}"
-             [ngClass]="{'jigsaw-select-list-host':true,
+             [ngClass]="{
+                    'jigsaw-select-list-host': true,
+                    'jigsaw-select-list-cntr-host': true,
                     'jigsaw-select-show-selected': _$showSelected,
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">

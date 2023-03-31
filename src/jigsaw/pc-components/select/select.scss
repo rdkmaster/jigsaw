@@ -131,8 +131,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 }
 
 .#{$jigsaw-select}-list-host {
-    position: relative;
-
     &.#{$jigsaw-select}-single-list {
         .#{$jigsaw-collapse-select}-option-cntr,
         .#{$jigsaw-group-select}-option-cntr {
@@ -379,6 +377,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
     }
+}
+
+.#{$jigsaw-select}-list-cntr-host{
+    position: relative;
 
     .#{$jigsaw-select}-infinite-scroll-loading {
         position: absolute;
