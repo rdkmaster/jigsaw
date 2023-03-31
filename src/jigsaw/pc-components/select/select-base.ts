@@ -10,7 +10,6 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {JigsawComboSelect} from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
-import { Subscription } from "rxjs";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -553,6 +552,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this.runAfterMicrotasks(() => this._setInfiniteScroll());
         }
         if (openState || !this.searchable) return;
+        if (!openState && this._scrollBarListener) {
+            this._scrollBarListener();
+        }
         // combo关闭时，重置数据
         this._$handleSearching();
     }
@@ -603,11 +605,19 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!this._listScrollbar) {
             return;
         }
+        console.log(111);
         console.log(this._scrollBarListener);
+        if (this._scrollBarListener) {
+            this._scrollBarListener();
+        }
         const el = this._listScrollbar.elementRef.nativeElement;
         this._scrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
             this._zone.run(() => {
-                (this.data as any).nextPage();
+                const data = <LocalPageableSelectArray<any> | PageableSelectArray>this.data;
+                if (data.busy || data.pagingInfo.currentPage == data.pagingInfo.totalPage) {
+                    return;
+                }
+                data.nextPage();
             });
         })
     }

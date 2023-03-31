@@ -378,3 +378,22 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 }
+
+.#{$jigsaw-select}-list-cntr {
+    position: relative;
+
+    .#{$jigsaw-select}-infinite-scroll-loading {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+        backdrop-filter: blur(2px);
+
+        &>p {
+            padding-left: 8px;
+        }
+    }
+}
