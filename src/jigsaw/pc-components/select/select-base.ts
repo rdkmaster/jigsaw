@@ -692,9 +692,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         if (!this._value || this._$infiniteScroll) {
             return this._value;
         }
-        const value = Array.isArray(this._value) ? this._value : [this._value];
+        const value = this._value instanceof ArrayCollection ? this._value : [this._value];
         const groups = new Set(value.map(item => item[this.groupField]))
-        const result = [];
+        const result = new ArrayCollection([]);
         groups.forEach(group => {
             const arr = value.filter(item => item[this.groupField] == group);
             result.push({ [this.groupField]: group, data: arr });
