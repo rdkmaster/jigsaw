@@ -265,7 +265,16 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
     }
 }
 
-export class PageableArraybase extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
+/**
+ * 这是实际使用时最常用的数组对象，具备服务端分页、服务端排序、服务端过滤能力。
+ * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
+ * 更多信息请参考`PagingInfo.pagingServerUrl`
+ *
+ * 实际用法请参考[这个demo]($demo=data-encapsulation/array-ssp)
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
+export class PageableArray extends ArrayCollection<any> implements IServerSidePageable, ISortable, IFilterable {
     public pagingInfo: PagingInfo;
     public filterInfo: DataFilterInfo;
     public sortInfo: DataSortInfo;
@@ -494,18 +503,7 @@ export class PageableArraybase extends ArrayCollection<any> implements IServerSi
     }
 }
 
-/**
- * 这是实际使用时最常用的数组对象，具备服务端分页、服务端排序、服务端过滤能力。
- * 注意：需要有一个统一的具备服务端分页、服务端排序、服务端过滤能力的REST服务配合使用，
- * 更多信息请参考`PagingInfo.pagingServerUrl`
- *
- * 实际用法请参考[这个demo]($demo=data-encapsulation/array-ssp)
- *
- * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
- */
-export class PageableArray extends PageableArraybase { }
-
-export class PageableSelectArray extends PageableArraybase {
+export class InfiniteScrollArray extends PageableArray {
     private _isAppend = false;
 
     public nextPage(): void {
@@ -591,7 +589,12 @@ export class DirectPageableArray extends PageableArray {
     }
 }
 
-export class LocalPageableArrayBase<T> extends ArrayCollection<T> implements IPageable {
+/**
+ * 在本地分页、排序、过滤的数组。
+ *
+ * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
+ */
+export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageable {
     public pagingInfo: PagingInfo;
 
     private _bakData: T[] = [];
@@ -803,14 +806,7 @@ export class LocalPageableArrayBase<T> extends ArrayCollection<T> implements IPa
     }
 }
 
-/**
- * 在本地分页、排序、过滤的数组。
- *
- * 关于Jigsaw数据体系详细介绍，请参考`IComponentData`的说明
- */
-export class LocalPageableArray<T> extends LocalPageableArrayBase<T> { }
-
-export class LocalPageableSelectArray<T> extends LocalPageableArrayBase<T>{
+export class LocalInfiniteScrollArray<T> extends LocalPageableArray<T>{
     protected _setDataByPageInfo() {
         let source: T[];
         if (this.pagingInfo.pageSize == Infinity) {
