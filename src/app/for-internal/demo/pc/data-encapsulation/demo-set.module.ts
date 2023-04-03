@@ -17,10 +17,10 @@ import {LocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
 import {OnChangeDemoComponent} from "./on-change/demo.component";
 import {OnChangeDemoModule} from "./on-change/demo.module";
 import {StringifyDemoComponent} from "./stringify/demo.component";
-import { PageableSelectArrayDemoComponent } from "./pageable-select-array/demo.component";
-import { PageableSelectArrayDemoModule } from "./pageable-select-array/demo.module";
-import { LocalPageableSelectArrayDemoComponent } from "./local-pageable-select-array/demo.component";
-import { LocalPageableSelectArrayDemoModule } from "./local-pageable-select-array/demo.module";
+import { InfiniteScrollArrayDemoComponent } from "./pageable-select-array/demo.component";
+import { InfiniteScrollArrayDemoModule } from "./pageable-select-array/demo.module";
+import { LocalInfiniteScrollArrayDemoComponent } from "./local-pageable-select-array/demo.component";
+import { LocalInfiniteScrollArrayDemoModule } from "./local-pageable-select-array/demo.module";
 
 export const routerConfig = [
     {
@@ -42,10 +42,10 @@ export const routerConfig = [
         path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
     },
     {
-        path: 'local-pageable-select-array', component: LocalPageableSelectArrayDemoComponent
+        path: 'local-infinite-scroll-array', component: LocalInfiniteScrollArrayDemoComponent
     },
     {
-        path: 'pageable-select-array', component: PageableSelectArrayDemoComponent
+        path: 'infinite-scroll-array', component: InfiniteScrollArrayDemoComponent
     },
     {
         path: 'on-change', component: OnChangeDemoComponent
@@ -64,8 +64,8 @@ export const routerConfig = [
         RefreshDemoModule, AjaxEventsDemoModule,
         LocalPageableArrayDemoModule, OnChangeDemoModule,
         StringifyDemoModule,
-        PageableSelectArrayDemoModule,
-        LocalPageableSelectArrayDemoModule
+        InfiniteScrollArrayDemoModule,
+        LocalInfiniteScrollArrayDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

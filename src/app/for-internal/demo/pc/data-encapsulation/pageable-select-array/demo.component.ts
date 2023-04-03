@@ -1,14 +1,14 @@
 import { Component, Renderer2, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { PageableSelectArray, SortAs, SortOrder } from "jigsaw/public_api";
+import { InfiniteScrollArray, SortAs, SortOrder } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"],
 })
-export class PageableSelectArrayDemoComponent {
-    public psa: PageableSelectArray;
+export class InfiniteScrollArrayDemoComponent {
+    public psa: InfiniteScrollArray;
     public searchGroup = false;
     public sortOrders = [{ id: 1, label: "正序" }, { id: 2, label: "倒序" }];
     public selectedsortOrder = { id: 1, label: "正序" };
@@ -17,7 +17,7 @@ export class PageableSelectArrayDemoComponent {
     public contentScrollbar: PerfectScrollbarDirective;
 
     constructor(public http: HttpClient, private _renderer: Renderer2) {
-        this.psa = new PageableSelectArray(http, {
+        this.psa = new InfiniteScrollArray(http, {
             url: "mock-data/hr-list-full",
             params: { aa: 11, bb: 22 },
         });
@@ -44,7 +44,7 @@ export class PageableSelectArrayDemoComponent {
     }
 
     public _$changeData() {
-        this.psa = new PageableSelectArray(this.http, {
+        this.psa = new InfiniteScrollArray(this.http, {
             url: "mock-data/hr-list",
             params: { aa: 11, bb: 22 },
             method: 'post'
@@ -55,7 +55,7 @@ export class PageableSelectArrayDemoComponent {
     }
 
     public _$resetData() {
-        this.psa = new PageableSelectArray(this.http, {
+        this.psa = new InfiniteScrollArray(this.http, {
             url: "mock-data/hr-list-full",
             params: { aa: 11, bb: 22 },
             method: 'post'

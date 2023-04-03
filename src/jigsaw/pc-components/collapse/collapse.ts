@@ -119,10 +119,9 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
 
-    constructor(
-    // @RequireMarkForCheck 需要用到，勿删
-    private _injector: Injector,
-    public renderer: Renderer2) {
+    constructor(public renderer: Renderer2,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
     }
 

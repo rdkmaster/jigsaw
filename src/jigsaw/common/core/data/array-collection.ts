@@ -665,7 +665,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
 
     private _initSubjects(): void {
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
-            this.filteredData = this._bakData.filter(item => LocalPageableArrayBase.filterItemByKeyword(item, filter.key, filter.field));
+            this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
@@ -680,13 +680,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         })
     }
 
-    public filter(callback: (value: any, index: number, array: any[]) => any, context?: any): LocalPageableArrayBase<T>;
-    public filter(term: string, fields?: string[] | number[]): LocalPageableArrayBase<T>;
-    public filter(term: DataFilterInfo): LocalPageableArrayBase<T>;
+    public filter(callback: (value: any, index: number, array: any[]) => any, context?: any): LocalPageableArray<T>;
+    public filter(term: string, fields?: string[] | number[]): LocalPageableArray<T>;
+    public filter(term: DataFilterInfo): LocalPageableArray<T>;
     /**
      * @internal
      */
-    public filter(term, fields?: string[] | number[]): LocalPageableArrayBase<T> {
+    public filter(term, fields?: string[] | number[]): LocalPageableArray<T> {
         if (!this._bakData) {
             return this;
         }
@@ -700,13 +700,13 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         return this;
     }
 
-    public sort(compareFn?: (a: any, b: any) => number): LocalPageableArrayBase<T>;
-    public sort(as: SortAs, order: SortOrder, field?: string | number): LocalPageableArrayBase<T>;
-    public sort(sort: DataSortInfo): LocalPageableArrayBase<T>;
+    public sort(compareFn?: (a: any, b: any) => number): LocalPageableArray<T>;
+    public sort(as: SortAs, order: SortOrder, field?: string | number): LocalPageableArray<T>;
+    public sort(sort: DataSortInfo): LocalPageableArray<T>;
     /**
      * @internal
      */
-    public sort(as, order?: SortOrder, field?: string | number): LocalPageableArrayBase<T> {
+    public sort(as, order?: SortOrder, field?: string | number): LocalPageableArray<T> {
         if (!this.filteredData) {
             return this;
         }

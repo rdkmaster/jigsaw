@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnD
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, LocalPageableSelectArray, PageableSelectArray} from "../../common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, LocalInfiniteScrollArray, InfiniteScrollArray} from "../../common/core/data/array-collection";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -459,29 +459,30 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
-        if (value instanceof LocalPageableSelectArray || value instanceof PageableSelectArray) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
+        if (value instanceof LocalInfiniteScrollArray || value instanceof InfiniteScrollArray) {
             this._$infiniteScroll = true;
         }
         this._setData(value);
-        if (this._data instanceof LocalPageableSelectArray || this._data instanceof PageableSelectArray || this._data instanceof ArrayCollection) {
-            if (this._removeOnRefresh) {
-                this._removeOnRefresh();
-            }
-            this._removeOnRefresh = this._data.onRefresh(() => {
-                this._getViewData();
-                this._$checkSelectAll();
-                // 等待数据处理完成赋值，消除统计的闪动
-                this._searchKey = this._searchKeyBak;
-            })
+        if (!(this._data.onRefresh instanceof Function)) {
+            return;
         }
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+        }
+        this._removeOnRefresh = this._data.onRefresh(() => {
+            this._updateViewData();
+            this._$checkSelectAll();
+            // 等待数据处理完成赋值，消除统计的闪动
+            this._searchKey = this._searchKeyBak;
+        })
     }
 
-    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -499,7 +500,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         return this._data.concat().filter(item => !item.disabled);
     }
 
-    protected _getViewData(): void { }
+    protected _updateViewData(): void { }
 
     /**
      * 在多选时，用户点击被选中条目的叉叉时发出此事件
@@ -552,8 +553,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this.runAfterMicrotasks(() => this._setInfiniteScroll());
         }
         if (openState || !this.searchable) return;
-        if (!openState && this._scrollBarListener) {
-            this._scrollBarListener();
+        if (!openState && this._removeScrollBarListener) {
+            this._removeScrollBarListener();
         }
         // combo关闭时，重置数据
         this._$handleSearching();
@@ -576,7 +577,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableSelectArray || this.data instanceof PageableSelectArray) {
+        if (this.data instanceof LocalInfiniteScrollArray || this.data instanceof InfiniteScrollArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -593,27 +594,22 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableSelectArray<any> | PageableSelectArray>this.data).filter(filterKey, [this.labelField]);
+        (<LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
-    private _scrollBarListener: any;
+    private _removeScrollBarListener: Function;
     private _setInfiniteScroll() {
-        if (!this._$infiniteScroll) {
+        if (!this._$infiniteScroll || !this._listScrollbar) {
             return;
         }
-        if (!this._listScrollbar) {
-            return;
-        }
-        console.log(111);
-        console.log(this._scrollBarListener);
-        if (this._scrollBarListener) {
-            this._scrollBarListener();
+        if (this._removeScrollBarListener) {
+            this._removeScrollBarListener();
         }
         const el = this._listScrollbar.elementRef.nativeElement;
-        this._scrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", ($event) => {
+        this._removeScrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", () => {
             this._zone.run(() => {
-                const data = <LocalPageableSelectArray<any> | PageableSelectArray>this.data;
+                const data = <LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data;
                 if (data.busy || data.pagingInfo.currentPage == data.pagingInfo.totalPage) {
                     return;
                 }
@@ -640,7 +636,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public groupField: string = "groupName";
 
     public _$viewData: SelectOption[];
-    public _$collapseStatus = {};
+    public _$collapseStatus: boolean[] = [];
 
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
@@ -648,7 +644,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     public _$type: "collapse" | "group";
 
-    protected _getViewData(): void {
+    protected _updateViewData(): void {
         const data = (this.data as ArrayCollection<SelectOption>).toJSON();    
         const groups = new Set(data.map(item => item[this.groupField]))
         const result = [];
@@ -659,8 +655,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$viewData = result;
     }
 
-    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableSelectArray<SelectOption> | PageableSelectArray) {
-        if (value instanceof LocalPageableSelectArray || value instanceof PageableSelectArray){
+    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
+        if (value instanceof LocalInfiniteScrollArray || value instanceof InfiniteScrollArray){
             this._data = value;
             return;
         }
@@ -674,9 +670,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         } else {
             value = (value || []).filter(el => el != null);
         }
-        this._data = new LocalPageableSelectArray<SelectOption>();
+        this._data = new LocalInfiniteScrollArray<SelectOption>();
         this._data.fromArray(this._getFlatData(value));
-        (this._data as LocalPageableSelectArray<SelectOption>).pagingInfo.pageSize = Infinity
+        (this._data as LocalInfiniteScrollArray<SelectOption>).pagingInfo.pageSize = Infinity;
     }
 
     /**
@@ -693,7 +689,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     @Input()
     public get value(): any {
-        if (!this._value ||this._$infiniteScroll){
+        if (!this._value || this._$infiniteScroll) {
             return this._value;
         }
         const value = Array.isArray(this._value) ? this._value : [this._value];
@@ -744,7 +740,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableSelectArray<any> | PageableSelectArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
-        this._$collapseStatus = {};
+        (<LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
+        this._$collapseStatus = [];
     }
 }

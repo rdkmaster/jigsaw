@@ -1,13 +1,13 @@
 import { Component, Renderer2, ViewChild } from "@angular/core";
-import { LocalPageableSelectArray, SortAs, SortOrder } from "jigsaw/public_api";
+import { LocalInfiniteScrollArray, SortAs, SortOrder } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"],
 })
-export class LocalPageableSelectArrayDemoComponent {
-    public lpsa: LocalPageableSelectArray<any>;
+export class LocalInfiniteScrollArrayDemoComponent {
+    public lpsa: LocalInfiniteScrollArray<any>;
     public searchGroup = false;
     public sortOrders = [{ id: 1, label: "正序" }, { id: 2, label: "倒序" }];
     public selectedsortOrder = { id: 1, label: "正序" };
@@ -58,7 +58,7 @@ export class LocalPageableSelectArrayDemoComponent {
             }
             array.push({ label: "测试选项" + i, groupName: groupName });
         }
-        this.lpsa = new LocalPageableSelectArray();
+        this.lpsa = new LocalInfiniteScrollArray();
         this.lpsa.fromArray(array);
         this.lpsa.pagingInfo.pageSize = 15;
         if (this.contentScrollbar) {

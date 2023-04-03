@@ -1,13 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { LocalPageableSelectArray, PageableSelectArray } from "jigsaw/public_api";
+import { LocalInfiniteScrollArray, InfiniteScrollArray } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
 export class SelectGroupInfiniteScrollDemoComponent {
-    public data: LocalPageableSelectArray<any> | PageableSelectArray;
+    public data: LocalInfiniteScrollArray<any> | InfiniteScrollArray;
     public value;
     public searchable = true;
     public disabled = false;
@@ -32,7 +32,7 @@ export class SelectGroupInfiniteScrollDemoComponent {
             this.data.fromArray(array);
             return;
         }
-        this.data = new PageableSelectArray(this.http, {
+        this.data = new InfiniteScrollArray(this.http, {
             url: "mock-data/hr-list",
             params: { aa: 11, bb: 22 },
             method: 'post'
@@ -55,12 +55,12 @@ export class SelectGroupInfiniteScrollDemoComponent {
                 }
                 array.push({ name: "测试选项" + i, gender: gender });
             }
-            this.data = new LocalPageableSelectArray();
+            this.data = new LocalInfiniteScrollArray();
             this.data.fromArray(array);
             this.data.pagingInfo.pageSize = 15;
             return;
         }
-        this.data = new PageableSelectArray(this.http, {
+        this.data = new InfiniteScrollArray(this.http, {
             url: "mock-data/hr-list-full",
             params: { aa: 11, bb: 22 },
         });

@@ -36,9 +36,9 @@ import {WingsTheme} from "../../common/common";
 })
 export class JigsawList extends AbstractJigsawGroupComponent implements AfterContentInit {
     constructor(public _cdr: ChangeDetectorRef,
+        public renderer: Renderer2,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector,
-        public renderer: Renderer2) {
+        protected _injector: Injector) {
         super(_cdr, _injector);
     }
     /**
