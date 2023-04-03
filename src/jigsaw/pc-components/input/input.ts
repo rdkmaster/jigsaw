@@ -358,14 +358,6 @@ export class JigsawInput extends JigsawInputBase {
         return this.password ? "password" : "text";
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get autocomplete(): string {
-        return this.password ? "new-password" : "off";
-    }
-
     @ViewChild('input')
     private _inputElement: ElementRef;
 
