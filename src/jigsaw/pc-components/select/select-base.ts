@@ -28,6 +28,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         super(_zone);
     }
 
+    /**
+     * @internal
+     */
     public _$infiniteScroll: boolean = false;
 
     protected _width: string = "120px";
@@ -443,7 +446,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$showSelected: boolean = false;
 
-    protected _data: ArrayCollection<SelectOption>;
+    protected _data: ArrayCollection<SelectOption> | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray;
     protected _removeOnRefresh: CallbackRemoval;
 
     ngOnDestroy() {
@@ -635,7 +638,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
+    /**
+     * @internal
+     */
     public _$viewData: SelectOption[];
+
+    /**
+     * @internal
+     */
     public _$collapseStatus: boolean[] = [];
 
     /**
