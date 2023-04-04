@@ -1,7 +1,10 @@
-.demo-item {
-    padding-top: 5px;
+.demo-options .demo-options-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
 }
 
-.demo-item .item-buttons {
-    padding: 2px 0;
+.demo-options .demo-options-item>span:not(:first-of-type),
+.demo-options .demo-options-item>jigsaw-button:not(:first-of-type) {
+    margin-left: 5px;
 }
