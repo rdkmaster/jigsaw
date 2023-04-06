@@ -533,14 +533,13 @@ export class InfiniteScrollArray extends PageableArray {
     protected _initSubjects(): void {
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
-            this.pagingInfo.currentPage = 1;
+            this.pagingInfo['_currentPage'] = 1;
             this._ajax();
         });
         this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
             this.sortInfo = sort;
-            this.pagingInfo.currentPage = 1;
+            this.pagingInfo['_currentPage'] = 1;
             this._ajax();
-            this.firstPage();
         });
     }
 }
