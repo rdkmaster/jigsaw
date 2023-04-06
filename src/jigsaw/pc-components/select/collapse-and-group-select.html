@@ -39,7 +39,7 @@
                              [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
                 <jigsaw-collapse-pane [isActive]="_$type == 'group' || !this._$collapseStatus[i]" *ngFor="let group of _$viewData; let i = index;"
                                       [ngStyle]="{'display': _$showSelected}" (isActiveChange)="_$collapseStatus[i] = !$event">
-                    <div j-title class="jigsaw-select-option-title">{{group[0][groupField] || '--'}}</div>
+                    <div j-title class="jigsaw-select-option-title">{{group[0][groupField]}}</div>
                     <div j-body>
                         <span *ngIf="!group || group.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}

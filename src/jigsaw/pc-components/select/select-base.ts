@@ -353,7 +353,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         this._value = this._$selectedItems;
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -535,7 +535,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -547,7 +547,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._value = this.multipleSelect ? new ArrayCollection([]) : "";
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -576,7 +576,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -626,6 +626,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                 data.nextPage();
             });
         })
+    }
+
+    protected _valueChange(value): void {
+        this.valueChange.emit(value);
     }
 }
 
@@ -706,13 +710,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         return null;
     }
 
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get value(): any {
-        if (!this._value || this._$infiniteScroll) {
-            return this._value;
+    private _outputValue: any;
+    private _updateValue() {
+        if (CommonUtils.isUndefined(this._value)) {
+            this._outputValue = this._value;
+            return;
         }
         const value = this._value instanceof ArrayCollection ? this._value : [this._value];
         const groups = new Set(value.map(item => item[this.groupField]))
@@ -721,7 +723,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             const arr = value.filter(item => item[this.groupField] == group);
             result.push({ [this.groupField]: group, data: arr });
         })
-        return result;
+        this._outputValue = result;
+    }
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get value(): any {
+        return this._$infiniteScroll ? this._value : this._outputValue;
     }
 
     public set value(newValue: any) {
@@ -731,6 +741,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
 
         this._value = value;
+        this._updateValue();
         this._propagateChange(value);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(value)) {
@@ -741,6 +752,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$checkSelectAll();
             this._changeDetector.detectChanges();
         })
+    }
+
+    protected _valueChange(value: any): void {
+        if (this._$infiniteScroll) {
+            this.valueChange.emit(value);
+            return;
+        }
+        this._updateValue();
+        this.valueChange.emit(this._outputValue);
     }
 
     private _getFlatData(value: GroupSelectOption[]): SelectOption[] {

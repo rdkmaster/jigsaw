@@ -6,8 +6,9 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>分页：</span>
-        <jigsaw-button (click)="_$switchData()" [disabled]="isLocal">本地</jigsaw-button>
-        <jigsaw-button (click)="_$switchData()" [disabled]="!isLocal">服务器</jigsaw-button>
+        <jigsaw-button-bar [(selectedItems)]="selectedDataType" [data]="dataType" (selectedItemsChange)="_$switchData()"
+            optionWidth=80>
+        </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
         <span>数据：</span>

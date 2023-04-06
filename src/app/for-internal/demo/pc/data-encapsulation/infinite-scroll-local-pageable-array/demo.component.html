@@ -19,7 +19,7 @@
         <span>排序：</span>
         <jigsaw-button (click)="_$handleSort()">开始排序</jigsaw-button>
         <span>排序方式：</span>
-        <jigsaw-radios [(value)]="selectedsortOrder" trackItemBy="id">
+        <jigsaw-radios [(value)]="selectedSortOrder" trackItemBy="id">
             <jigsaw-radio-option *ngFor="let item of sortOrders" [value]="item">
                 {{item.label}}
             </jigsaw-radio-option>

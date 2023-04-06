@@ -14,6 +14,8 @@ export class SelectInfiniteScrollDemoComponent {
     public multipleSelect = false;
     public optionCount = 5;
     public isLocal = true;
+    public dataType = [{ label: '本地', id: 1 }, { label: '服务器', id: 2 }];
+    public selectedDataType = [{ label: '本地', id: 1 }];
 
     constructor(public http: HttpClient) {
         this._$resetData();

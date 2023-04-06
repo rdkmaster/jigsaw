@@ -42,10 +42,10 @@ export const routerConfig = [
         path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
     },
     {
-        path: 'local-infinite-scroll-array', component: InfiniteScrollLocalPageableArrayDemoComponent
+        path: 'infinite-scroll-local-pageable-array', component: InfiniteScrollLocalPageableArrayDemoComponent
     },
     {
-        path: 'infinite-scroll-array', component: InfiniteScrollPageableArrayDemoComponent
+        path: 'infinite-scroll-pageable-array', component: InfiniteScrollPageableArrayDemoComponent
     },
     {
         path: 'on-change', component: OnChangeDemoComponent

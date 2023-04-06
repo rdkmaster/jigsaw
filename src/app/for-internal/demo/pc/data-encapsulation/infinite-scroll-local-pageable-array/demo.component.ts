@@ -10,7 +10,7 @@ export class InfiniteScrollLocalPageableArrayDemoComponent {
     public lpsa: InfiniteScrollLocalPageableArray<any>;
     public searchGroup = false;
     public sortOrders = [{ id: 1, label: "正序" }, { id: 2, label: "倒序" }];
-    public selectedsortOrder = { id: 1, label: "正序" };
+    public selectedSortOrder = { id: 1, label: "正序" };
 
     @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
@@ -30,7 +30,7 @@ export class InfiniteScrollLocalPageableArrayDemoComponent {
     }
 
     public _$handleSort() {
-        const sortOrder = this.selectedsortOrder.id == 1 ? SortOrder.asc : SortOrder.desc;
+        const sortOrder = this.selectedSortOrder.id == 1 ? SortOrder.asc : SortOrder.desc;
         this.lpsa.sort(SortAs.string, sortOrder, 'label');
         this.contentScrollbar.scrollToTop(0, 1);
     }
@@ -72,10 +72,7 @@ export class InfiniteScrollLocalPageableArrayDemoComponent {
             if ($event.target.scrollTop == 0) {
                 return;
             }
-            if (
-                this.lpsa.pagingInfo.currentPage ==
-                this.lpsa.pagingInfo.totalPage
-            ) {
+            if (this.lpsa.pagingInfo.currentPage == this.lpsa.pagingInfo.totalPage) {
                 return;
             }
             console.log($event);
