@@ -258,18 +258,6 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         }
     }
 
-    /**
-     * @internal
-     */
-    public _$getTitle(label: string, index: number, titleClass: string): string {
-        if (!this._menuListElement || !label) {
-            return '';
-        }
-        const listOptionElements = this._menuListElement.nativeElement.children;
-        const titleElement = listOptionElements[index].getElementsByClassName(titleClass)[0];
-        return titleElement && titleElement.scrollWidth > titleElement.offsetWidth ? label : '';
-    }
-
     public static show(event: MouseEvent, options: MenuOptions | SimpleTreeData,
                        callback?: (node: SimpleNode) => void, context?: any): PopupInfo {
         if (!event) {

@@ -17,14 +17,12 @@
         (click)="!node.disabled && !!node.label && select.emit(node);
                  !node.disabled && !!node.label && initData?.select?.emit(node);"
         (mouseenter)="_$mouseenter(index, node)" (mouseleave)="_$mouseleave(index)">
-        <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'"
-            [title]="_$getTitle(node.label,index,'jigsaw-menu-list-title')">
+        <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'">
             <i class="{{node.icon}}"></i>
-            <span>{{node.label}}</span>
+            <span [jigsawTooltip]="node.label" jigsawTooltipOverflowOnly="true">{{node.label}}</span>
         </div>
-        <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'"
-            [title]="_$getTitle(node.subTitle,index,'jigsaw-menu-list-sub-title')">
-            <span *ngIf="!!node.subTitle">{{node.subTitle}}</span>
+        <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'">
+            <span *ngIf="!!node.subTitle" [jigsawTooltip]="node.subTitle" jigsawTooltipOverflowOnly="true">{{node.subTitle}}</span>
             <i *ngIf="!!node.subIcon" class="{{node.subIcon}} jigsaw-menu-subIcon"></i>
             <i *ngIf="node.nodes && node.nodes.length>0" class="iconfont iconfont-e144"></i>
         </div>
