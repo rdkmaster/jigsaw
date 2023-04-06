@@ -19,7 +19,7 @@
         (mouseenter)="_$mouseenter(index, node)" (mouseleave)="_$mouseleave(index)">
         <div class="jigsaw-menu-list-title" *ngIf="!!node.label && _$realTheme != 'navigation'">
             <i class="{{node.icon}}"></i>
-            <span [jigsawTooltip]="node.label" jigsawTooltipOverflowOnly="true">{{node.label}}</span>
+            <span [jigsawTooltip]="node.label" jigsawTooltipOverflowOnly="true" jigsawTooltipPosition="topLeft">{{node.label}}</span>
         </div>
         <div class="jigsaw-menu-list-sub-title" *ngIf="_$realTheme != 'navigation'">
             <span *ngIf="!!node.subTitle" [jigsawTooltip]="node.subTitle" jigsawTooltipOverflowOnly="true">{{node.subTitle}}</span>
