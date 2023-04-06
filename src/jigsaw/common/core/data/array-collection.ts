@@ -503,7 +503,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 }
 
-export class InfiniteScrollArray extends PageableArray {
+export class InfiniteScrollPageableArray extends PageableArray {
     private _isAppend = false;
 
     public nextPage(): void {
@@ -805,7 +805,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 }
 
-export class LocalInfiniteScrollArray<T> extends LocalPageableArray<T>{
+export class InfiniteScrollLocalPageableArray<T> extends LocalPageableArray<T>{
     protected _setDataByPageInfo() {
         let source: T[];
         if (this.pagingInfo.pageSize == Infinity) {

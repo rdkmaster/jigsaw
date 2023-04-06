@@ -17,10 +17,10 @@ import {LocalPageableArrayDemoModule} from "./local-pageable-array/demo.module";
 import {OnChangeDemoComponent} from "./on-change/demo.component";
 import {OnChangeDemoModule} from "./on-change/demo.module";
 import {StringifyDemoComponent} from "./stringify/demo.component";
-import { InfiniteScrollArrayDemoComponent } from "./pageable-select-array/demo.component";
-import { InfiniteScrollArrayDemoModule } from "./pageable-select-array/demo.module";
-import { LocalInfiniteScrollArrayDemoComponent } from "./local-pageable-select-array/demo.component";
-import { LocalInfiniteScrollArrayDemoModule } from "./local-pageable-select-array/demo.module";
+import { InfiniteScrollPageableArrayDemoComponent } from "./infinite-scroll-pageable-array/demo.component";
+import { InfiniteScrollPageableArrayDemoModule } from "./infinite-scroll-pageable-array/demo.module";
+import { InfiniteScrollLocalPageableArrayDemoComponent } from "./infinite-scroll-local-pageable-array/demo.component";
+import { InfiniteScrollLocalPageableArrayDemoModule } from "./infinite-scroll-local-pageable-array/demo.module";
 
 export const routerConfig = [
     {
@@ -42,10 +42,10 @@ export const routerConfig = [
         path: 'local-pageable-array', component: LocalPageableArrayDemoComponent
     },
     {
-        path: 'local-infinite-scroll-array', component: LocalInfiniteScrollArrayDemoComponent
+        path: 'local-infinite-scroll-array', component: InfiniteScrollLocalPageableArrayDemoComponent
     },
     {
-        path: 'infinite-scroll-array', component: InfiniteScrollArrayDemoComponent
+        path: 'infinite-scroll-array', component: InfiniteScrollPageableArrayDemoComponent
     },
     {
         path: 'on-change', component: OnChangeDemoComponent
@@ -64,8 +64,8 @@ export const routerConfig = [
         RefreshDemoModule, AjaxEventsDemoModule,
         LocalPageableArrayDemoModule, OnChangeDemoModule,
         StringifyDemoModule,
-        InfiniteScrollArrayDemoModule,
-        LocalInfiniteScrollArrayDemoModule
+        InfiniteScrollPageableArrayDemoModule,
+        InfiniteScrollLocalPageableArrayDemoModule
     ]
 })
 export class DataEncapsulationDemoModule {

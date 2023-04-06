@@ -2,7 +2,7 @@ import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnD
 import {ControlValueAccessor} from "@angular/forms";
 import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
 import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, LocalInfiniteScrollArray, InfiniteScrollArray} from "../../common/core/data/array-collection";
+import {ArrayCollection, LocalPageableArray, InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray} from "../../common/core/data/array-collection";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {PopupPositionType} from "../../common/service/popup.service";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -155,8 +155,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
-        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField]) : null;
+        if (this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number') {
+            if (CommonUtils.isDefined(this._trackItemBy)) {
+                return this._trackItemBy;
+            }
+            return [this.labelField];
+        }
+        return null;
     }
 
     public set trackItemBy(value: string | string[]) {
@@ -446,7 +451,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$showSelected: boolean = false;
 
-    protected _data: ArrayCollection<SelectOption> | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray;
+    protected _data: ArrayCollection<SelectOption> | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray;
     protected _removeOnRefresh: CallbackRemoval;
 
     ngOnDestroy() {
@@ -462,12 +467,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
-        if (value instanceof LocalInfiniteScrollArray || value instanceof InfiniteScrollArray) {
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
             this._$infiniteScroll = true;
         }
         this._setData(value);
@@ -485,7 +490,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         })
     }
 
-    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -555,7 +560,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (openState) {
             this.runAfterMicrotasks(() => this._setInfiniteScroll());
         }
-        if (openState || !this.searchable) return;
+        if (openState || !this.searchable) {
+            return;
+        }
         if (!openState && this._removeScrollBarListener) {
             this._removeScrollBarListener();
         }
@@ -580,7 +587,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalInfiniteScrollArray || this.data instanceof InfiniteScrollArray) {
+        if (this.data instanceof InfiniteScrollLocalPageableArray || this.data instanceof InfiniteScrollPageableArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -597,7 +604,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data).filter(filterKey, [this.labelField]);
+        (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
@@ -612,7 +619,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         const el = this._listScrollbar.elementRef.nativeElement;
         this._removeScrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", () => {
             this._zone.run(() => {
-                const data = <LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data;
+                const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
                 if (data.busy || data.pagingInfo.currentPage == data.pagingInfo.totalPage) {
                     return;
                 }
@@ -641,7 +648,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * @internal
      */
-    public _$viewData: SelectOption[];
+    public _$viewData: SelectOption[][];
 
     /**
      * @internal
@@ -655,9 +662,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     public _$type: "collapse" | "group";
 
     protected _updateViewData(): void {
-        const data = (this.data as ArrayCollection<SelectOption>).toJSON();    
+        const data = (this.data as ArrayCollection<SelectOption>).toJSON();
         const groups = new Set(data.map(item => item[this.groupField]))
-        const result = [];
+        const result: SelectOption[][] = [];
         groups.forEach(group => {
             const arr = data.filter(item => item[this.groupField] == group);
             result.push(arr);
@@ -665,8 +672,8 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$viewData = result;
     }
 
-    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalInfiniteScrollArray<SelectOption> | InfiniteScrollArray) {
-        if (value instanceof LocalInfiniteScrollArray || value instanceof InfiniteScrollArray){
+    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray){
             this._data = value;
             return;
         }
@@ -680,9 +687,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         } else {
             value = (value || []).filter(el => el != null);
         }
-        this._data = new LocalInfiniteScrollArray<SelectOption>();
+        this._data = new InfiniteScrollLocalPageableArray<SelectOption>();
         this._data.fromArray(this._getFlatData(value));
-        (this._data as LocalInfiniteScrollArray<SelectOption>).pagingInfo.pageSize = Infinity;
+        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;
     }
 
     /**
@@ -690,8 +697,13 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
-        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField]) : null;
+        if (this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number') {
+            if (CommonUtils.isDefined(this._trackItemBy)) {
+                return this._trackItemBy;
+            }
+            return [this.labelField, this.groupField];
+        }
+        return null;
     }
 
     /**
@@ -750,7 +762,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalInfiniteScrollArray<any> | InfiniteScrollArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
+        (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
         this._$collapseStatus = [];
     }
 }

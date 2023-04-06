@@ -1,13 +1,14 @@
 import { Component, Renderer2, ViewChild } from "@angular/core";
-import { LocalInfiniteScrollArray, SortAs, SortOrder } from "jigsaw/public_api";
+import { HttpClient } from "@angular/common/http";
+import { InfiniteScrollPageableArray, SortAs, SortOrder } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"],
 })
-export class LocalInfiniteScrollArrayDemoComponent {
-    public lpsa: LocalInfiniteScrollArray<any>;
+export class InfiniteScrollPageableArrayDemoComponent {
+    public psa: InfiniteScrollPageableArray;
     public searchGroup = false;
     public sortOrders = [{ id: 1, label: "正序" }, { id: 2, label: "倒序" }];
     public selectedsortOrder = { id: 1, label: "正序" };
@@ -15,55 +16,61 @@ export class LocalInfiniteScrollArrayDemoComponent {
     @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    constructor(private _renderer: Renderer2) {
-        this._$resetData();
+    constructor(public http: HttpClient, private _renderer: Renderer2) {
+        this.psa = new InfiniteScrollPageableArray(http, {
+            url: "mock-data/hr-list-full",
+            params: { aa: 11, bb: 22 },
+        });
+        this.psa.onAjaxSuccess(this.onAjaxSuccess, this);
+        this.psa.onAjaxError(this.onAjaxError, this);
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
     }
 
     public _$handleSearching(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : "";
         if (this.searchGroup) {
-            this.lpsa.filter(filterKey, ["label", "groupName"]);
+            this.psa.filter(filterKey, ["name", "gender"]);
         } else {
-            this.lpsa.filter(filterKey, ["label"]);
+            this.psa.filter(filterKey, ["name"]);
         }
         this.contentScrollbar.scrollToTop(0, 1);
     }
 
     public _$handleSort() {
         const sortOrder = this.selectedsortOrder.id == 1 ? SortOrder.asc : SortOrder.desc;
-        this.lpsa.sort(SortAs.string, sortOrder, 'label');
+        this.psa.sort(SortAs.string, sortOrder, 'name');
         this.contentScrollbar.scrollToTop(0, 1);
     }
-    
+
     public _$changeData() {
-        let array = [];
-        for (let i = 1; i <= 100; i++) {
-            let groupName = "其他分组";
-            array.push({ label: "改变数据源选项" + i, groupName: groupName });
-        }
-        this.lpsa.fromArray(array);
+        this.psa = new InfiniteScrollPageableArray(this.http, {
+            url: "mock-data/hr-list",
+            params: { aa: 11, bb: 22 },
+            method: 'post'
+        });
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
         this.contentScrollbar.scrollToTop(0, 1);
     }
-    
+
     public _$resetData() {
-        let array = [];
-        for (let i = 1; i <= 1000; i++) {
-            let groupName = "其他分组";
-            if (i < 20) {
-                groupName = "分组1";
-            } else if (i < 50) {
-                groupName = "分组2";
-            } else if (i < 150) {
-                groupName = "分组3";
-            }
-            array.push({ label: "测试选项" + i, groupName: groupName });
-        }
-        this.lpsa = new LocalInfiniteScrollArray();
-        this.lpsa.fromArray(array);
-        this.lpsa.pagingInfo.pageSize = 15;
-        if (this.contentScrollbar) {
-            this.contentScrollbar.scrollToTop(0, 1);
-        }
+        this.psa = new InfiniteScrollPageableArray(this.http, {
+            url: "mock-data/hr-list-full",
+            params: { aa: 11, bb: 22 },
+            method: 'post'
+        });
+        this.psa.pagingInfo.pageSize = 20;
+        this.psa.fromAjax();
+        this.contentScrollbar.scrollToTop(0, 1);
+    }
+
+    onAjaxSuccess(data): void {
+        console.log(data);
+    }
+
+    onAjaxError(err): void {
+        console.log(err);
     }
 
     ngAfterViewInit() {
@@ -73,16 +80,14 @@ export class LocalInfiniteScrollArrayDemoComponent {
                 return;
             }
             if (
-                this.lpsa.pagingInfo.currentPage ==
-                this.lpsa.pagingInfo.totalPage
+                this.psa.pagingInfo.currentPage == this.psa.pagingInfo.totalPage
             ) {
                 return;
             }
             console.log($event);
-            this.lpsa.nextPage();
+            this.psa.nextPage();
         });
     }
-
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
