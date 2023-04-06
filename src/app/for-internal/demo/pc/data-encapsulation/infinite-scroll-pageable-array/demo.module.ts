@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { JigsawButtonModule, JigsawHeaderModule, JigsawInputModule, JigsawRadioModule, JigsawSwitchModule } from "jigsaw/public_api";
+import { JigsawButtonModule, JigsawHeaderModule, JigsawInputModule, JigsawLoadingModule, JigsawRadioModule, JigsawSwitchModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/for-internal/description/demo-description";
 import { InfiniteScrollPageableArrayDemoComponent } from "./demo.component";
 import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
@@ -9,7 +9,7 @@ import { PerfectScrollbarModule } from "ngx-perfect-scrollbar";
     declarations: [InfiniteScrollPageableArrayDemoComponent],
     exports: [InfiniteScrollPageableArrayDemoComponent],
     imports: [JigsawButtonModule, CommonModule, JigsawDemoDescriptionModule, JigsawInputModule,
-        PerfectScrollbarModule, JigsawHeaderModule, JigsawSwitchModule, JigsawRadioModule]
+        PerfectScrollbarModule, JigsawHeaderModule, JigsawSwitchModule, JigsawRadioModule, JigsawLoadingModule]
 })
 export class InfiniteScrollPageableArrayDemoModule {
 }

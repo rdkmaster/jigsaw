@@ -228,11 +228,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 }
             }
         }
-        &.#{$jigsaw-select}-show-selected {
-            #{$jigsaw-list-option}:not(.jigsaw-list-option-active) {
-                display: none;
-            }
-        }
     }
 
     &.#{$jigsaw-select}-single-list,

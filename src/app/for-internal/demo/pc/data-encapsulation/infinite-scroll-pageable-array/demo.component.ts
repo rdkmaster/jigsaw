@@ -79,6 +79,9 @@ export class InfiniteScrollPageableArrayDemoComponent {
             if ($event.target.scrollTop == 0) {
                 return;
             }
+            if (this.psa.busy) {
+                return
+            }
             if (this.psa.pagingInfo.currentPage == this.psa.pagingInfo.totalPage) {
                 return;
             }

@@ -557,6 +557,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onComboOpenChange(openState: boolean) {
         this.openChange.emit(openState);
         this._onTouched();
+        this._$showSelected = false;
         if (openState) {
             this.runAfterMicrotasks(() => this._setInfiniteScroll());
         }
@@ -618,6 +619,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         const el = this._listScrollbar.elementRef.nativeElement;
         this._removeScrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", () => {
+            if (this._$showSelected) {
+                return
+            }
             this._zone.run(() => {
                 const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
                 if (data.busy || data.pagingInfo.currentPage == data.pagingInfo.totalPage) {
@@ -657,6 +661,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     /**
      * @internal
      */
+    public _$viewValue: SelectOption[][];
+
+    /**
+     * @internal
+     */
     public _$collapseStatus: boolean[] = [];
 
     /**
@@ -667,13 +676,18 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _updateViewData(): void {
         const data = (this.data as ArrayCollection<SelectOption>).toJSON();
+        this._$viewData = this._getGroupedData(data);
+    }
+
+    // 获取结构化分组数据
+    private _getGroupedData(data) {
         const groups = new Set(data.map(item => item[this.groupField]))
         const result: SelectOption[][] = [];
         groups.forEach(group => {
             const arr = data.filter(item => item[this.groupField] == group);
             result.push(arr);
         })
-        this._$viewData = result;
+        return result;
     }
 
     protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
@@ -726,6 +740,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._outputValue = result;
     }
 
+    private _updateViewValue() {
+        if (!this.multipleSelect) {
+            return;
+        }
+        const data = (this._value as ArrayCollection<SelectOption>).toJSON();
+        this._$viewValue = this._getGroupedData(data);
+    }
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -755,6 +777,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     protected _valueChange(value: any): void {
+        this._updateViewValue();
         if (this._$infiniteScroll) {
             this.valueChange.emit(value);
             return;
