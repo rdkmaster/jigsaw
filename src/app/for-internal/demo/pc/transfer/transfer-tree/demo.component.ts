@@ -11,10 +11,10 @@ export class TransferTreeDemoComponent {
     public sourceRenderer = TransferTreeSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
+    isAjax = false;
+
     constructor(public http: HttpClient) {
-        this.data = new SimpleTreeData();
-        this.data.http = http;
-        this.data.fromAjax("mock-data/tree-data");
+        this.resetData();
 
         this.selectedData = new ArrayCollection([
             { label: "叶子节点112", id: 2 },
@@ -28,7 +28,48 @@ export class TransferTreeDemoComponent {
     labelField = 'label';
     trackItemBy = 'label';
 
-    changeDataFromObject() {
+    changeData(){
+        this.data.fromObject(
+            [
+                {
+                    label: "父节点1",
+                    open: true,
+                    nodes: [
+                        {
+                            label: "父节点11",
+                            open: true,
+                            nodes: [
+                                { label: "修改节点111", id: 1 },
+                                { label: "修改节点112", id: 2 },
+                                { label: "修改节点113", id: 3 },
+                                { label: "修改节点114", id: 4 }
+                            ]
+                        },
+                        {
+                            label: "父节点12",
+                            nodes: [
+                                { label: "修改节点121", id: 5 },
+                                { label: "修改节点122", id: 6 },
+                                { label: "修改节点123", id: 7 },
+                                { label: "修改节点124", id: 8 }
+                            ]
+                        }
+                    ]
+                },
+            ]
+        );
+
+    }
+
+    resetData(){
+        if (this.isAjax){
+            this.data = new SimpleTreeData();
+            this.data.http = this.http;
+            this.data.fromAjax("mock-data/tree-data");
+            return;
+        }
+
+        this.data = new SimpleTreeData();
         this.data.fromObject(
             [
                 {
@@ -95,12 +136,6 @@ export class TransferTreeDemoComponent {
                 }
             ]
         );
-    }
-
-    resetInputData() {
-        this.data = new SimpleTreeData();
-        this.data.http = this.http;
-        this.data.fromAjax("mock-data/tree-data");
     }
 
     selectedItemsChange($event) {

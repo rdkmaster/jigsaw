@@ -482,7 +482,22 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 
     ngAfterViewInit() {
-        this.treeExt.setting.edit.enable = false;
+        this.treeExt.setting = {
+            data: {
+                key: {
+                    children: 'nodes',
+                    name: this.labelField
+                }
+            },
+            edit: {
+                enable: false
+            },
+            check: {
+                enable: true,
+                chkStyle: "checkbox",
+                chkboxType: { "Y": "ps", "N": "ps" }
+            }
+        }
     }
 }
 

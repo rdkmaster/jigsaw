@@ -7,23 +7,24 @@
 
 <jigsaw-header [level]="1">Transfer(tree to list)</jigsaw-header>
 
-<jigsaw-header [level]="2">普通数据</jigsaw-header>
-<ul>
-    <li class="demo-item">
-        <div class="item-buttons">
-            <span>输入数据：</span>
-            <jigsaw-button (click)="changeDataFromObject()">通过fromObject()更新</jigsaw-button>
-        </div>
-
-        <div class="item-buttons">
-            <span>数据重置：</span>
-            <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
-            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
-        </div>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>输入数据类型：</span>
+        <jigsaw-button (click)="isAjax = !isAjax; resetData()" [disabled]="!isAjax">普通数据</jigsaw-button>
+        <jigsaw-button (click)="isAjax = !isAjax; resetData()" [disabled]="isAjax">服务器数据</jigsaw-button>
     </li>
-    <li class="demo-item">
-        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
-                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer"
-                    (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+    <li class="demo-options-item">
+        <span>输入数据编辑：</span>
+        <jigsaw-button (click)="changeData()" [disabled]="isAjax">修改</jigsaw-button>
+        <jigsaw-button (click)="resetData()">重置</jigsaw-button>
+    </li>
+
+    <li class="demo-options-item">
+        <span>已穿梭数据：</span>
+        <jigsaw-button (click)="resetSelectedData()">重置</jigsaw-button>
     </li>
 </ul>
+
+<jigsaw-header>穿梭框</jigsaw-header>
+<j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData" [sourceRenderer]="sourceRenderer"
+    [destRenderer]="targetRenderer" (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
