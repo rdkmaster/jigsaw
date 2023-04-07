@@ -228,6 +228,22 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 }
             }
         }
+
+        &.#{$jigsaw-select}-show-selected {
+            .#{$jigsaw-checkbox}-host .#{$jigsaw-checkbox}-wrapper .#{$jigsaw-checkbox} {
+                transition:none;
+                
+                &::after, &::before {
+                    transition: none
+                }
+
+                &.#{$jigsaw-checkbox}-checked {
+                    &::after, &::before {
+                        transition: none;
+                    }
+                }
+            }
+        }
     }
 
     &.#{$jigsaw-select}-single-list,

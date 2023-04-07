@@ -54,28 +54,15 @@
                         <span>{{'select.checkAll' | translate}}</span>
                     </div>
                 </div>
-                <ng-container *ngIf="!_$showSelected">
-                    <jigsaw-list-option #listItem *ngFor="let item of data" [value]="item" [disabled]="item.disabled"
-                        [height]="optionHeight">
-                        <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"
-                            mode="minimalist">
-                        </jigsaw-checkbox>
-                        <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
-                            {{_$getItemLabel(item, labelField)}}
-                        </span>
-                    </jigsaw-list-option>
-                </ng-container>
-                <ng-container *ngIf="_$showSelected">
-                    <jigsaw-list-option #listItem *ngFor="let item of _$selectedItems" [value]="item" [disabled]="item.disabled"
-                        [height]="optionHeight">
-                        <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"
-                            mode="minimalist">
-                        </jigsaw-checkbox>
-                        <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
-                            {{_$getItemLabel(item, labelField)}}
-                        </span>
-                    </jigsaw-list-option>
-                </ng-container>
+                <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item" [disabled]="item.disabled"
+                    [height]="optionHeight">
+                    <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"
+                        mode="minimalist">
+                    </jigsaw-checkbox>
+                    <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
+                        {{_$getItemLabel(item, labelField)}}
+                    </span>
+                </jigsaw-list-option>
                 <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                     <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
                     <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>

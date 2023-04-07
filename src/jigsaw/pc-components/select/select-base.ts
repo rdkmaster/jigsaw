@@ -462,6 +462,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     /**
+     * @internal
+     */
+    public get _$viewData() {
+        return this._$showSelected ? this._$selectedItems : this._data;
+    }
+
+    /**
      * 提供选择的数据集合
      *
      * @NoMarkForCheckRequired
@@ -536,6 +543,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
         this._valueChange(this.value);
+        if (this._$showSelected && this.value.length == 0) {
+            this._$showSelected = false;
+        }
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -557,8 +567,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onComboOpenChange(openState: boolean) {
         this.openChange.emit(openState);
         this._onTouched();
-        this._$showSelected = false;
         if (openState) {
+            this._$showSelected = false;
             this.runAfterMicrotasks(() => this._setInfiniteScroll());
         }
         if (openState || !this.searchable) {
@@ -653,15 +663,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
-    /**
-     * @internal
-     */
-    public _$viewData: SelectOption[][];
+    private _viewData: SelectOption[][];
+    private _viewValue: SelectOption[][];
 
     /**
      * @internal
      */
-    public _$viewValue: SelectOption[][];
+    public get _$viewData() {
+        return this._$showSelected ? this._viewValue : this._viewData;
+    }
 
     /**
      * @internal
@@ -676,7 +686,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     protected _updateViewData(): void {
         const data = (this.data as ArrayCollection<SelectOption>).toJSON();
-        this._$viewData = this._getGroupedData(data);
+        this._viewData = this._getGroupedData(data);
     }
 
     // 获取结构化分组数据
@@ -745,7 +755,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             return;
         }
         const data = (this._value as ArrayCollection<SelectOption>).toJSON();
-        this._$viewValue = this._getGroupedData(data);
+        this._viewValue = this._getGroupedData(data);
     }
 
     /**
