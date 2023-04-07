@@ -29,7 +29,7 @@ export class SelectCollapseInfiniteScrollDemoComponent {
         if (this.isLocal) {
             let array = [];
             for (let i = 1; i <= 100; i++) {
-                array.push({ name: "修改数据" + i });
+                array.push({ name: "修改数据" + i, gender: "修改分组" });
             }
             this.data.fromArray(array);
             return;

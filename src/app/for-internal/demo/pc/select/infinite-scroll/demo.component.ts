@@ -44,6 +44,7 @@ export class SelectInfiniteScrollDemoComponent {
     }
 
     public _$resetData() {
+        this.value = undefined;
         if (this.isLocal) {
             let array = [];
             for (let i = 1; i <= 1000; i++) {
@@ -67,6 +68,9 @@ export class SelectInfiniteScrollDemoComponent {
         this._$resetData();
     }
 
+    public _$clearValue() {
+        this.value = undefined;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

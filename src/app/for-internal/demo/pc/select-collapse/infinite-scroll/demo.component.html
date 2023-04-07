@@ -22,7 +22,7 @@
         <span>禁用：</span>
         <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
         <span>多选：</span>
-        <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="multipleSelect" (checkedChange)="_$clearValue()"></jigsaw-switch>
     </li>
     <li class="demo-options-item">
         <span>选项条数：</span>
