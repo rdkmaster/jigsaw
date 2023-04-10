@@ -382,11 +382,10 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     &.#{$jigsaw-collapse}-select-option-last {
                         .#{$jigsaw-collapse}-item{
                             .#{$jigsaw-collapse}-header {
-                                pointer-events: none;
-
-                                .#{$jigsaw-collapse}-arrow {
-                                    &::before{
-                                        content: "\e193";
+                                // pointer-events: none;
+                                &:hover {
+                                    .#{$jigsaw-collapse}-arrow {
+                                        color: $icon-color-disabled;
                                     }
                                 }
                             }    

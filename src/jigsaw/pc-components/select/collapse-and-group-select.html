@@ -40,7 +40,8 @@
                 <jigsaw-collapse-pane *ngFor="let group of _$viewData; let i = index; let last = last"
                     [isActive]="_$showSelected || _$type == 'group' ? true : !_$collapseStatus[i]"
                     (isActiveChange)="!_$showSelected && _$collapseStatus[i] = !$event"
-                    [ngClass]="{'jigsaw-collapse-select-option-last': _$infiniteScroll && last}">
+                    [ngClass]="{'jigsaw-collapse-select-option-last': _$infiniteScroll && last}"
+                    [disabled]="!_$showSelected && _$infiniteScroll && last" (_onHeaderClick)="_$handleHeaderClick(!_$showSelected && last)">
                     <div j-title class="jigsaw-select-option-title">{{group[0][groupField]}}</div>
                     <div j-body>
                         <span *ngIf="!group || group.length === 0" class="jigsaw-select-option-no-data">

@@ -10,6 +10,7 @@ import {CheckBoxStatus} from "../checkbox/typings";
 import {JigsawComboSelect} from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
+import { JigsawToast } from "../toast/toast";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -711,14 +712,27 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                     value.splice(i, 1);
                 }
             }
+            this._originalData = value;
             value = value.toJSON();
+            if (!(this._originalData.onRefresh instanceof Function)) {
+                return;
+            }
+            if (this._removeOriginalOnRefresh) {
+                this._removeOriginalOnRefresh();
+            }
+            this._removeOriginalOnRefresh =this._originalData.onRefresh(() => {
+                this.data = this._originalData;
+            })
         } else {
             value = (value || []).filter(el => el != null);
         }
         this._data = new InfiniteScrollLocalPageableArray<SelectOption>();
         this._data.fromArray(this._getFlatData(value));
-        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;
+        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;        
     }
+
+    private _originalData;
+    private _removeOriginalOnRefresh: Function;
 
     /**
      * @NoMarkForCheckRequired
@@ -817,5 +831,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         filterKey = filterKey ? filterKey.trim() : '';
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
         this._$collapseStatus = [];
+    }
+
+    public _$handleHeaderClick(check){
+        if (!check) {
+            return;
+        }
+        JigsawToast.showWarn('数据未完全加载，暂时无法折叠');
     }
 }
