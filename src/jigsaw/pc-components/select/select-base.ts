@@ -1,13 +1,13 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild} from "@angular/core";
-import {ControlValueAccessor} from "@angular/forms";
-import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
-import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray} from "../../common/core/data/array-collection";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {PopupPositionType} from "../../common/service/popup.service";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {CheckBoxStatus} from "../checkbox/typings";
-import {JigsawComboSelect} from '../combo-select/index';
+import { ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild } from "@angular/core";
+import { ControlValueAccessor } from "@angular/forms";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
+import { ArrayCollection, LocalPageableArray, InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray } from "../../common/core/data/array-collection";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { PopupPositionType } from "../../common/service/popup.service";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { CheckBoxStatus } from "../checkbox/typings";
+import { JigsawComboSelect } from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
 import { JigsawToast } from "../toast/toast";
@@ -156,13 +156,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        if (this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number') {
-            if (CommonUtils.isDefined(this._trackItemBy)) {
-                return this._trackItemBy;
-            }
-            return [this.labelField];
+        if (!this.data) {
+            return null;
         }
-        return null;
+        // 如果是基础类型，则也不用trackItemBy 
+        if (typeof this.data[0] != "object" || this.data[0] == null) {
+            return null;
+        }
+        return CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField];
     }
 
     public set trackItemBy(value: string | string[]) {
@@ -414,6 +415,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showAllStatistics(validData?: SelectOption[]): boolean {
+        // if (this._$infiniteScroll) {
+        //     const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
+        //     console.log(this._value?.length == data.pagingInfo.totalPage)
+        //     return this._value?.length == data.pagingInfo.totalPage;
+        // }
+        console.log(this.data['pagingInfo'])
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
@@ -666,6 +673,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
 
     private _viewData: SelectOption[][];
     private _viewValue: SelectOption[][];
+    private _outputValue: any;
 
     /**
      * @internal
@@ -691,7 +699,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     // 获取结构化分组数据
-    private _getGroupedData(data) {
+    private _getGroupedData(data: SelectOption[]): SelectOption[][] {
         const groups = new Set(data.map(item => item[this.groupField]))
         const result: SelectOption[][] = [];
         groups.forEach(group => {
@@ -702,7 +710,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
-        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray){
+        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
             this._data = value;
             return;
         }
@@ -720,7 +728,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             if (this._removeOriginalOnRefresh) {
                 this._removeOriginalOnRefresh();
             }
-            this._removeOriginalOnRefresh =this._originalData.onRefresh(() => {
+            this._removeOriginalOnRefresh = this._originalData.onRefresh(() => {
                 this.data = this._originalData;
             })
         } else {
@@ -728,7 +736,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
         this._data = new InfiniteScrollLocalPageableArray<SelectOption>();
         this._data.fromArray(this._getFlatData(value));
-        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;        
+        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;
     }
 
     private _originalData;
@@ -739,17 +747,17 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        if (this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number') {
-            if (CommonUtils.isDefined(this._trackItemBy)) {
-                return this._trackItemBy;
-            }
-            return [this.labelField, this.groupField];
+        if (!this.data) {
+            return null;
         }
-        return null;
+        // 如果是基础类型，则也不用trackItemBy 
+        if (typeof this.data[0] != "object" || this.data[0] == null) {
+            return null;
+        }
+        return CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField];
     }
 
-    private _outputValue: any;
-    private _updateValue() {
+    private _updateOutputValue() {
         if (CommonUtils.isUndefined(this._value)) {
             this._outputValue = this._value;
             return;
@@ -787,7 +795,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         }
 
         this._value = value;
-        this._updateValue();
+        this._updateOutputValue();
         this._propagateChange(value);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(value)) {
@@ -806,7 +814,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this.valueChange.emit(value);
             return;
         }
-        this._updateValue();
+        this._updateOutputValue();
         this.valueChange.emit(this._outputValue);
     }
 
@@ -833,7 +841,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$collapseStatus = [];
     }
 
-    public _$handleHeaderClick(check){
+    public _$handleHeaderClick(check) {
         if (!check) {
             return;
         }

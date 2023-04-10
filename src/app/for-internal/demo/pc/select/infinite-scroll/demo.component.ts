@@ -47,7 +47,7 @@ export class SelectInfiniteScrollDemoComponent {
         this.value = undefined;
         if (this.isLocal) {
             let array = [];
-            for (let i = 1; i <= 1000; i++) {
+            for (let i = 1; i <= 200; i++) {
                 array.push({ name: "测试选项" + i });
             }
             this.data = new InfiniteScrollLocalPageableArray();

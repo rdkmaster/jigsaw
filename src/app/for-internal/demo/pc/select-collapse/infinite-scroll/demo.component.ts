@@ -47,7 +47,7 @@ export class SelectCollapseInfiniteScrollDemoComponent {
         this._$clearValue();
         if (this.isLocal) {
             let array = [];
-            for (let i = 1; i <= 1000; i++) {
+            for (let i = 1; i <= 200; i++) {
                 let gender = "其他分组";
                 if (i < 20) {
                     gender = "分组1";
