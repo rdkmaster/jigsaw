@@ -380,8 +380,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             &.#{$jigsaw-collapse}-host {
                 .#{$jigsaw-collapse}-pane {
                     &.#{$jigsaw-collapse}-select-option-last {
-                        pointer-events: none;
-
                         .#{$jigsaw-collapse}-item{
                             .#{$jigsaw-collapse}-header {
                                 pointer-events: none;
