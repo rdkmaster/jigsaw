@@ -54,7 +54,8 @@
                         <span>{{'select.checkAll' | translate}}</span>
                     </div>
                 </div>
-                <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item" [disabled]="item.disabled"
+                <div>
+                    <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item" [disabled]="item.disabled"
                     [height]="optionHeight">
                     <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"
                         mode="minimalist">
@@ -63,6 +64,7 @@
                         {{_$getItemLabel(item, labelField)}}
                     </span>
                 </jigsaw-list-option>
+                </div>
                 <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                     <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
                     <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>
