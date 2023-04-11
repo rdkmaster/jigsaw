@@ -107,6 +107,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public headerFilterChange = new EventEmitter<HeaderFilter>();
 
     private _contentWidth: string = 'auto';
+    private _pageBak: number = 1;
 
     /**
      * @NoMarkForCheckRequired
@@ -1093,7 +1094,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _clearExpansion() {
         const data: IPageable = <any>this.data;
         const currentPage = data?.pagingInfo instanceof PagingInfo ? data.pagingInfo.currentPage : undefined;
-        this._tableBody.nativeElement.scrollTop = 0;
+        if (currentPage !== this._pageBak) {
+            this._tableBody.nativeElement.scrollTop = 0;
+        }
+        this._pageBak = currentPage;
         this._allExpandedRows = this._allExpandedRows.filter(rowInfo => {
             if (rowInfo.remainOpen && rowInfo.currentPage === currentPage && rowInfo.rowIndex < this._data.data.length) {
                 return true
