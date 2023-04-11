@@ -841,6 +841,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$collapseStatus = [];
     }
 
+    /**
+    * @internal
+    */
     public _$handleHeaderClick(check) {
         if (!check) {
             return;

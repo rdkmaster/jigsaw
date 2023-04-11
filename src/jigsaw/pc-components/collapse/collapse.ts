@@ -70,6 +70,10 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     @Output()
     public isActiveChange = new EventEmitter<boolean>();
 
+
+    /**
+    * @internal
+    */
     @Output()
     public _onHeaderClick = new EventEmitter<boolean>();
 
