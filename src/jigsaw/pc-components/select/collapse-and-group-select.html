@@ -41,9 +41,9 @@
                     [isActive]="_$showSelected || _$type == 'group' ? true : !_$collapseStatus[i]"
                     (isActiveChange)="!_$showSelected && _$collapseStatus[i] = !$event"
                     [ngClass]="{'jigsaw-collapse-select-option-last': last}"
-                    [disabled]="_$getCollapseDisabled(last)">
+                    [frozen]="_$getCollapseFrozen(last)">
                     <div j-title class="jigsaw-select-option-title"
-                        title="{{ (_$getCollapseDisabled(last) ? 'select.preventCollapse' : '') | translate}}">
+                        title="{{ (_$getCollapseFrozen(last) ? 'select.preventCollapse' : '') | translate}}">
                         {{group[0][groupField]}}
                     </div>
                     <div j-body>

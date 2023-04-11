@@ -44,7 +44,7 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
                 }
             }
 
-            &.#{$jigsaw-collapse}-item-disabled {
+            &.#{$jigsaw-collapse}-item-frozen {
                 > .#{$jigsaw-collapse}-header {
                     .#{$jigsaw-collapse}-arrow {
                         color: $icon-color-disabled;

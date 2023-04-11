@@ -382,7 +382,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             &.#{$jigsaw-collapse}-host {
                 .#{$jigsaw-collapse}-pane {
                     &.#{$jigsaw-collapse}-select-option-last {
-                        .#{$jigsaw-collapse}-item-disabled {
+                        .#{$jigsaw-collapse}-item-frozen {
                             .#{$jigsaw-collapse}-header {
                                 &:hover {
                                     cursor: not-allowed;

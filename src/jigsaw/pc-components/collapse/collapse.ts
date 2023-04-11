@@ -75,18 +75,18 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public title: string;
 
     /**
-    * 禁用
+    * 冻结
     *
     * @NoMarkForCheckRequired
     */
     @Input()
-    public disabled: boolean;
+    public frozen: boolean;
 
     /**
      * @internal
      */
     public _$onClick() {
-        if (this.disabled) {
+        if (this.frozen) {
             return;
         }
         this.isActive = !this.isActive;
