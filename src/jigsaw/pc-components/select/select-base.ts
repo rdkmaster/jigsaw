@@ -840,15 +840,4 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
         this._$collapseStatus = [];
     }
-
-    /**
-    * @internal
-    */
-    public _$handleHeaderClick(check) {
-        if (!check) {
-            return;
-        }
-        JigsawToast.showWarn(this._translateService.instant('select.preventCollapse'));
-        
-    }
 }

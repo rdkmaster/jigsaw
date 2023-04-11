@@ -332,6 +332,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                             }
 
                             .#{$jigsaw-select}-option-title {
+                                width: 100%;
+                                background: 100%;
                                 font-size: $font-title-med;
                                 color: $font-color-heading;
                             }
@@ -382,8 +384,9 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                     &.#{$jigsaw-collapse}-select-option-last {
                         .#{$jigsaw-collapse}-item{
                             .#{$jigsaw-collapse}-header {
-                                // pointer-events: none;
                                 &:hover {
+                                    cursor: not-allowed;
+
                                     .#{$jigsaw-collapse}-arrow {
                                         color: $icon-color-disabled;
                                     }
