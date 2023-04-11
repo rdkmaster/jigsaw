@@ -164,8 +164,12 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @ContentChild(TemplateRef)
     public _$contentTemplateRef: any;
 
+    /**
+     * @internal
+     */
     @ViewChild(JigsawFloat)
     public _jigsawFloat: JigsawFloat;
+
     /**
      * @internal
      */

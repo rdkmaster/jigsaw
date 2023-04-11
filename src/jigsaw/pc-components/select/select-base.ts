@@ -842,6 +842,9 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$collapseStatus = [];
     }
 
+    /**
+     * @internal
+     */
     public _$getCollapseDisabled(last: boolean) {
         if (!this._$infiniteScroll || !last || this._$showSelected) {
             return false;
