@@ -643,6 +643,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
                     return;
                 }
                 data.nextPage();
+                this._changeDetector.markForCheck();
             });
         })
     }
