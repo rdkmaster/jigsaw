@@ -8,6 +8,10 @@ import {SelectGroupCustomizeGroupFieldDemoModule} from "./customize-group-field/
 import {SelectGroupCustomizeGroupFieldDemoComponent} from "./customize-group-field/demo.component";
 import { SelectGroupValidDemoComponent } from './valid/demo.component';
 import { SelectGroupValidDemoModule } from './valid/demo.module';
+import { SelectGroupSearchableDemoComponent } from "./searchable/demo.component";
+import { SelectGroupSearchableDemoModule } from "./searchable/demo.module";
+import { SelectGroupInfiniteScrollDemoComponent } from "./infinite-scroll/demo.component";
+import { SelectGroupInfiniteScrollDemoModule } from "./infinite-scroll/demo.module";
 
 export const routerConfig = [
     {
@@ -21,6 +25,12 @@ export const routerConfig = [
     },
     {
         path: 'valid', component: SelectGroupValidDemoComponent
+    },
+    {
+        path: 'searchable', component: SelectGroupSearchableDemoComponent
+    },
+    {
+        path: 'infinite-scroll', component: SelectGroupInfiniteScrollDemoComponent
     }
 ];
 
@@ -30,7 +40,9 @@ export const routerConfig = [
         SelectGroupDemoModule,
         SelectGroupEditResultDemoModule,
         SelectGroupCustomizeGroupFieldDemoModule,
-        SelectGroupValidDemoModule
+        SelectGroupValidDemoModule,
+        SelectGroupSearchableDemoModule,
+        SelectGroupInfiniteScrollDemoModule
     ]
 })
 export class SelectGroupDemoSetModule {

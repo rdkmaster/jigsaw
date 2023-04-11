@@ -1,0 +1,37 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>数据：</span>
+        <jigsaw-button (click)="_$changeData()">修改</jigsaw-button>
+        <jigsaw-button (click)="_$resetData()">重置</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>搜索：</span>
+        <jigsaw-input width="300" (valueChange)="_$handleSearching($event)" placeholder="请输入关键字搜索"></jigsaw-input>
+        <span>是否搜索分组：</span>
+        <jigsaw-switch [(checked)]="searchGroup"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>排序：</span>
+        <jigsaw-button (click)="_$handleSort()">开始排序</jigsaw-button>
+        <span>排序方式：</span>
+        <jigsaw-radios [(value)]="selectedSortOrder" trackItemBy="id">
+            <jigsaw-radio-option *ngFor="let item of sortOrders" [value]="item">
+                {{item.label}}
+            </jigsaw-radio-option>
+        </jigsaw-radios>
+    </li>
+</ul>
+
+<jigsaw-header>无限滚动</jigsaw-header>
+<ul class="demo-list" #contentScrollbar
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+    <li *ngFor="let item of lpsa" class="demo-list-item">
+        <span>{{item.label}}</span>
+        <span>{{item.groupName}}</span>
+    </li>
+</ul>

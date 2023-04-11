@@ -228,9 +228,20 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 }
             }
         }
+
         &.#{$jigsaw-select}-show-selected {
-            #{$jigsaw-list-option}:not(.jigsaw-list-option-active) {
-                display: none;
+            .#{$jigsaw-checkbox}-host .#{$jigsaw-checkbox}-wrapper .#{$jigsaw-checkbox} {
+                transition:none;
+                
+                &::after, &::before {
+                    transition: none
+                }
+
+                &.#{$jigsaw-checkbox}-checked {
+                    &::after, &::before {
+                        transition: none;
+                    }
+                }
             }
         }
     }
@@ -321,6 +332,8 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                             }
 
                             .#{$jigsaw-select}-option-title {
+                                width: 100%;
+                                background: 100%;
                                 font-size: $font-title-med;
                                 color: $font-color-heading;
                             }
@@ -365,6 +378,26 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
 
+        .#{$jigsaw-collapse-select}-option-cntr {
+            &.#{$jigsaw-collapse}-host {
+                .#{$jigsaw-collapse}-pane {
+                    &.#{$jigsaw-collapse}-select-option-last {
+                        .#{$jigsaw-collapse}-item-frozen {
+                            .#{$jigsaw-collapse}-header {
+                                &:hover {
+                                    cursor: not-allowed;
+
+                                    .#{$jigsaw-collapse}-arrow {
+                                        color: $icon-color-disabled;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .#{$jigsaw-select}-no-data {
             display: flex;
             justify-content: center;
@@ -375,6 +408,29 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             #{$jigsaw-loading} {
                 transform: scale(0.5);
             }
+        }
+    }
+}
+
+.#{$jigsaw-select}-list-cntr-host{
+    position: relative;
+
+    .#{$jigsaw-select}-infinite-scroll-loading {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 32px;
+        backdrop-filter: blur(2px);
+
+        &>p {
+            padding-left: 8px;
+        }
+
+        #{$jigsaw-loading} {
+            transform: scale(0.5);
         }
     }
 }

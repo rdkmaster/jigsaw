@@ -31,6 +31,8 @@ import { SelectValueChangeDemoComponent } from './value-change/demo.component';
 import { SelectValueChangeDemoModule } from './value-change/demo.module';
 import { SelectValidDemoComponent } from './valid/demo.component';
 import { SelectValidDemoModule } from './valid/demo.module';
+import { SelectInfiniteScrollDemoComponent } from "./infinite-scroll/demo.component";
+import { SelectInfiniteScrollDemoModule } from "./infinite-scroll/demo.module";
 
 export const routerConfig = [
     {
@@ -77,6 +79,9 @@ export const routerConfig = [
     },
     {
         path: 'valid', component: SelectValidDemoComponent
+    },
+    {
+        path: 'infinite-scroll', component: SelectInfiniteScrollDemoComponent
     }
 ];
 
@@ -97,7 +102,8 @@ export const routerConfig = [
         MultipleSelectDemoModule,
         SelectOptionWidthDemoModule,
         SelectValueChangeDemoModule,
-        SelectValidDemoModule
+        SelectValidDemoModule,
+        SelectInfiniteScrollDemoModule
     ]
 })
 export class SelectDemoModule {

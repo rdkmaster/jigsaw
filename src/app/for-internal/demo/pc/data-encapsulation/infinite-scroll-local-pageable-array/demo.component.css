@@ -1,0 +1,24 @@
+.demo-options .demo-options-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.demo-options .demo-options-item>span:not(:first-of-type),
+.demo-options .demo-options-item>jigsaw-button:not(:first-of-type) {
+    margin-left: 5px;
+}
+
+.demo-list {
+    width: 200px;
+    height: 160px;
+    border: 1px solid var(--border-color-default);
+}
+
+.demo-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    padding: 0 8px;
+}

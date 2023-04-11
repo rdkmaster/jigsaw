@@ -1,0 +1,40 @@
+.demo-options .demo-options-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.demo-options .demo-options-item>span:not(:first-of-type),
+.demo-options .demo-options-item>jigsaw-button:not(:first-of-type) {
+    margin-left: 5px;
+}
+
+.demo-cntr{
+    position: relative;
+    width: fit-content;
+}
+
+.demo-list {
+    width: 200px;
+    height: 160px;
+    border: 1px solid var(--border-color-default);
+}
+
+.demo-list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 32px;
+    padding: 0 8px;
+}
+
+.demo-list-loading {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 32px;
+    backdrop-filter: blur(2px);
+}

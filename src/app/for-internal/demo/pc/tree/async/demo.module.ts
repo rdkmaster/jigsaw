@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {JigsawTreeExtModule} from "jigsaw/public_api";
+import {JigsawInputModule, JigsawTreeExtModule} from "jigsaw/public_api";
 import {ZTreeAsyncDemoComponent} from './demo.component';
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
 
 @NgModule({
-    imports: [JigsawTreeExtModule, JigsawDemoDescriptionModule],
+    imports: [JigsawTreeExtModule, JigsawDemoDescriptionModule, JigsawInputModule],
     declarations: [ZTreeAsyncDemoComponent],
     exports: [ZTreeAsyncDemoComponent]
 })

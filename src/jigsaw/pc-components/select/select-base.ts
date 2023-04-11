@@ -1,13 +1,16 @@
-import {ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, ViewChild} from "@angular/core";
-import {ControlValueAccessor} from "@angular/forms";
-import {PerfectScrollbarDirective} from 'ngx-perfect-scrollbar';
-import {AbstractJigsawComponent, IJigsawFormControl} from "../../common/common";
-import {ArrayCollection, LocalPageableArray, PageableArray} from "../../common/core/data/array-collection";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {PopupPositionType} from "../../common/service/popup.service";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {CheckBoxStatus} from "../checkbox/typings";
-import {JigsawComboSelect} from '../combo-select/index';
+import { ChangeDetectorRef, Directive, EventEmitter, Injector, Input, NgZone, OnDestroy, Output, Renderer2, ViewChild } from "@angular/core";
+import { ControlValueAccessor } from "@angular/forms";
+import { PerfectScrollbarDirective } from 'ngx-perfect-scrollbar';
+import { AbstractJigsawComponent, IJigsawFormControl } from "../../common/common";
+import { ArrayCollection, LocalPageableArray, InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray } from "../../common/core/data/array-collection";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { PopupPositionType } from "../../common/service/popup.service";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { CheckBoxStatus } from "../checkbox/typings";
+import { JigsawComboSelect } from '../combo-select/index';
+import { JigsawList } from "../list-and-tile/list";
+import { JigsawCollapse } from "../collapse/collapse";
+import { TranslateService } from "@ngx-translate/core";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -20,10 +23,17 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public constructor(
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
+        protected _renderer: Renderer2,
+        protected _translateService: TranslateService,
         protected _zone?: NgZone
     ) {
         super(_zone);
     }
+
+    /**
+     * @internal
+     */
+    public _$infiniteScroll: boolean = false;
 
     protected _width: string = "120px";
 
@@ -138,7 +148,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$listHeight: string;
 
-    private _trackItemBy: string[];
+    protected _trackItemBy: string[];
 
     /**
      * 设置对象的标识
@@ -147,8 +157,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     @Input()
     public get trackItemBy(): string | string[] {
-        const isObjectArray = this.data && typeof this.data[0] !== 'string' && typeof this.data[0] !== 'number';
-        return isObjectArray ? (CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField]) : null;
+        if (!this.data) {
+            return null;
+        }
+        // 如果是基础类型，则也不用trackItemBy
+        if (typeof this.data[0] != "object" || this.data[0] == null) {
+            return null;
+        }
+        return CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField];
     }
 
     public set trackItemBy(value: string | string[]) {
@@ -340,7 +356,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         this._value = this._$selectedItems;
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -404,6 +420,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return false
         }
         validData = validData || this._getValidData();
+        if (this._$infiniteScroll) {
+            // this._$infiniteScroll为真就确保是滚动分页数据类型了
+            const data = <InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray>this.data;
+            return this._$selectedItems.length === data.pagingInfo.totalRecord;
+        }
         if (this.searchable) {
             return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
@@ -438,7 +459,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$showSelected: boolean = false;
 
-    protected _data: ArrayCollection<SelectOption>;
+    protected _data: ArrayCollection<SelectOption> | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray;
     protected _removeOnRefresh: CallbackRemoval;
 
     ngOnDestroy() {
@@ -449,30 +470,42 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     /**
+     * @internal
+     */
+    public get _$viewData() {
+        return this._$showSelected ? this._$selectedItems : this._data;
+    }
+
+    /**
      * 提供选择的数据集合
      *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray {
+    public get data(): ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
-        this._setData(value);
-        if (this._data instanceof LocalPageableArray || this._data instanceof PageableArray || this._data instanceof ArrayCollection) {
-            if (this._removeOnRefresh) {
-                this._removeOnRefresh();
-            }
-            this._removeOnRefresh = this._data.onRefresh(() => {
-                this._$checkSelectAll();
-                // 等待数据处理完成赋值，消除统计的闪动
-                this._searchKey = this._searchKeyBak;
-            })
+    public set data(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
+            this._$infiniteScroll = true;
         }
+        this._setData(value);
+        if (!(this._data.onRefresh instanceof Function)) {
+            return;
+        }
+        if (this._removeOnRefresh) {
+            this._removeOnRefresh();
+        }
+        this._removeOnRefresh = this._data.onRefresh(() => {
+            this._updateViewData();
+            this._$checkSelectAll();
+            // 等待数据处理完成赋值，消除统计的闪动
+            this._searchKey = this._searchKeyBak;
+        })
     }
 
-    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | LocalPageableArray<SelectOption> | PageableArray) {
+    protected _setData(value: ArrayCollection<SelectOption> | SelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
         if (value instanceof ArrayCollection) {
             for (let i = value.length - 1; i >= 0; i--) {
                 if (CommonUtils.isUndefined(value[i])) {
@@ -490,6 +523,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         return this._data.concat().filter(item => !item.disabled);
     }
 
+    protected _updateViewData(): void { }
+
     /**
      * 在多选时，用户点击被选中条目的叉叉时发出此事件
      *
@@ -501,8 +536,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    @ViewChild('contentList')
+    private _contentList: JigsawList | JigsawCollapse;
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild('comboSelect')
+    private _comboSelect: JigsawComboSelect;
 
     /**
      * @internal
@@ -513,7 +552,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
+        if (this._$showSelected && this.value.length == 0) {
+            this._$showSelected = false;
+        }
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -525,7 +567,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._value = this.multipleSelect ? new ArrayCollection([]) : "";
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
 
@@ -535,7 +577,19 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onComboOpenChange(openState: boolean) {
         this.openChange.emit(openState);
         this._onTouched();
-        if (openState || !this.searchable) return;
+        if (openState) {
+            this._$showSelected = false;
+            const removeListener = this._renderer.listen(this._comboSelect._jigsawFloat.popupElement, 'animationend', () => {
+                removeListener();
+                this._setInfiniteScroll()
+            })
+        }
+        if (openState || !this.searchable) {
+            return;
+        }
+        if (!openState && this._removeScrollBarListener) {
+            this._removeScrollBarListener();
+        }
         // combo关闭时，重置数据
         this._$handleSearching();
     }
@@ -546,7 +600,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
         this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
+        this._valueChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
     }
@@ -557,7 +611,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleSearching(filterKey?: string) {
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
-        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof InfiniteScrollLocalPageableArray || this.data instanceof InfiniteScrollPageableArray) {
             this._filterData(filterKey);
         } else {
             const data = new LocalPageableArray<SelectOption>();
@@ -572,10 +626,39 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
     }
 
-    private _filterData(filterKey?: string) {
+    protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        (<LocalPageableArray<any> | PageableArray>this.data).filter(filterKey, [this.labelField]);
+        (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField]);
         this._listScrollbar && this._listScrollbar.scrollToTop();
+    }
+
+    private _removeScrollBarListener: Function;
+
+    private _setInfiniteScroll() {
+        if (!this._$infiniteScroll || !this._listScrollbar) {
+            return;
+        }
+        if (this._removeScrollBarListener) {
+            this._removeScrollBarListener();
+        }
+        const el = this._listScrollbar.elementRef.nativeElement;
+        this._removeScrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", () => {
+            if (this._$showSelected) {
+                return;
+            }
+            this._zone.run(() => {
+                const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
+                if (data.busy || data.pagingInfo.currentPage == data.pagingInfo.totalPage) {
+                    return;
+                }
+                data.nextPage();
+                this._changeDetector.markForCheck();
+            });
+        })
+    }
+
+    protected _valueChange(value): void {
+        this.valueChange.emit(value);
     }
 }
 
@@ -584,9 +667,6 @@ export type GroupSelectOption = {
 }
 @Directive()
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    @ViewChild('comboSelect')
-    private _comboSelect: JigsawComboSelect;
-
     /**
      * 设置组名的显示字段
      *
@@ -595,211 +675,184 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     @Input()
     public groupField: string = "groupName";
 
-    protected _data: ArrayCollection<GroupSelectOption>;
+    private _viewData: SelectOption[][];
+    private _viewValue: SelectOption[][];
+    private _outputValue: any;
+
+    /**
+     * @internal
+     */
+    public get _$viewData() {
+        return this._$showSelected ? this._viewValue : this._viewData;
+    }
+
+    /**
+     * @internal
+     */
+    public _$collapseStatus: boolean[] = [];
+
     /**
      * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
-    public _$type: "collapse" | "group";
+    public _$dropdownType: "collapse" | "group";
+
+    protected _updateViewData(): void {
+        const data = (this.data as ArrayCollection<SelectOption>).toJSON();
+        this._viewData = this._getGroupedData(data);
+    }
+
+    // 获取结构化分组数据
+    private _getGroupedData(data: SelectOption[]): SelectOption[][] {
+        const groups = new Set(data.map(item => item[this.groupField]))
+        const result: SelectOption[][] = [];
+        groups.forEach(group => {
+            const arr = data.filter(item => item[this.groupField] == group);
+            result.push(arr);
+        })
+        return result;
+    }
+
+    protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+        if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
+            this._data = value;
+            return;
+        }
+        if (value instanceof ArrayCollection) {
+            for (let i = value.length - 1; i >= 0; i--) {
+                if (CommonUtils.isUndefined(value[i])) {
+                    value.splice(i, 1);
+                }
+            }
+            this._originalData = value;
+            value = value.toJSON();
+            if (!(this._originalData.onRefresh instanceof Function)) {
+                return;
+            }
+            if (this._removeOriginalOnRefresh) {
+                this._removeOriginalOnRefresh();
+            }
+            this._removeOriginalOnRefresh = this._originalData.onRefresh(() => {
+                this.data = this._originalData;
+            })
+        } else {
+            value = (value || []).filter(el => el != null);
+        }
+        this._data = new InfiniteScrollLocalPageableArray<SelectOption>();
+        this._data.fromArray(this._getFlatData(value));
+        (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;
+    }
+
+    private _originalData: ArrayCollection<GroupSelectOption>;
+    private _removeOriginalOnRefresh: Function;
 
     /**
-     * 提供选择的数据集合
-     *
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray {
-        return this._data;
-    }
-
-    public set data(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray) {
-        this._setData(value);
-        this._setEmptyValue(value);
-        if (this._data instanceof ArrayCollection) {
-            if (this._removeOnRefresh) {
-                this._removeOnRefresh();
-            }
-            this._removeOnRefresh = this._data.onRefresh(() => {
-                this._setEmptyValue(this._data);
-                this._$checkSelectAll();
-                // 等待数据处理完成赋值，消除统计的闪动
-                this._searchKey = this._searchKeyBak;
-                this._changeDetector.markForCheck();
-            })
+    public get trackItemBy(): string | string[] {
+        if (!this.data) {
+            return null;
         }
+        // 如果是基础类型，则也不用trackItemBy
+        if (typeof this.data[0] != "object" || this.data[0] == null) {
+            return null;
+        }
+        return CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField];
     }
 
-    private _setEmptyValue(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | LocalPageableArray<GroupSelectOption> | PageableArray): void {
-        this._$listValue = new ArrayCollection([]);
-        value.forEach(groupData => {
-            this._$listValue.push({[this.groupField]: groupData[this.groupField], data: new ArrayCollection([])})
-        });
-        this._$selectedItems = [];
+    private _updateOutputValue() {
+        if (CommonUtils.isUndefined(this._value)) {
+            this._outputValue = this._value;
+            return;
+        }
+        const value = this._value instanceof ArrayCollection ? this._value : [this._value];
+        const groups = new Set(value.map(item => item[this.groupField]))
+        const result = new ArrayCollection([]);
+        groups.forEach(group => {
+            const arr = value.filter(item => item[this.groupField] == group);
+            result.push({ [this.groupField]: group, data: arr });
+        })
+        this._outputValue = result;
     }
 
-    protected _getValidData(): GroupSelectOption[] {
-        const validData = [];
-        (this._data || []).forEach((group: GroupSelectOption) => {
-            (group.data || []).filter(item => !item.disabled).forEach(item => validData.push(item));
-        });
-        return validData;
+    private _updateViewValue() {
+        if (!this.multipleSelect) {
+            return;
+        }
+        const data = (this._value as ArrayCollection<SelectOption>).toJSON();
+        this._viewValue = this._getGroupedData(data);
     }
 
     /**
-     * @internal
-     */
-    public _$disableSelectAll(): boolean {
-        return !(this._data || []).find((group: GroupSelectOption) => (group.data || []).find(item => !item.disabled));
-    }
-
-    /**
-     * @internal
-     */
-    public _$listValue: ArrayCollection<GroupSelectOption>;
-
-    /**
-     * 选择的结果，单选时单个的item对象，多选时是item对象的数组
-     *
      * @NoMarkForCheckRequired
      */
     @Input()
     public get value(): any {
-        return this._value;
+        return this._$infiniteScroll ? this._value : this._outputValue;
     }
 
     public set value(newValue: any) {
-        this._setValue(newValue);
-    }
-
-    public writeValue(value: any): void {
-        // 表单初始值需要
-        this._setValue(value, false);
-        this._changeDetector.markForCheck();
-    }
-
-    protected _setValue(newValue: any, emit = true): boolean {
-        if (this._value == newValue) {
-            return;
-        }
-        if (CommonUtils.isUndefined(newValue)) {
-            this.runMicrotask(() => {
-                this._$handleClearable();
-            })
-            return;
-        }
-        if (!(newValue instanceof Array || newValue instanceof ArrayCollection)) {
+        const value = this._$infiniteScroll ? newValue : this._getFlatData(newValue);
+        if (this.initialized && CommonUtils.compareValue(this._value, value, this.trackItemBy)) {
             return;
         }
 
-        this._setEmptyValue(this.data);
-
+        this._value = value;
+        this._updateOutputValue();
+        this._propagateChange(value);
         this.runMicrotask(() => {
-            newValue.forEach((groupData: GroupSelectOption) => {
-                const srcData = this._data.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                const targetData = this._$listValue.find(dataItem => dataItem[this.groupField] === groupData[this.groupField]).data;
-                (groupData.data || []).forEach(item => {
-                    const srcDataItem = srcData.find(srcDataItem => item[this.labelField] === srcDataItem[this.labelField]);
-                    if (srcDataItem && targetData.findIndex(item => item[this.labelField] === srcDataItem[this.labelField]) == -1) {
-                        targetData.push(srcDataItem);
-                    }
-                });
-            });
-            this._updateValue();
-            if (emit) {
-                this.valueChange.emit(this.value);
+            if (CommonUtils.isDefined(value)) {
+                this._$selectedItems = this._$infiniteScroll && !this.multipleSelect ? [value] : value;
+            } else {
+                this._$selectedItems = new ArrayCollection([]);
             }
-            this._propagateChange(this.value);
-            this._changeDetector.detectChanges();
             this._$checkSelectAll();
-        });
+            this._changeDetector.detectChanges();
+        })
     }
 
-    /**
-     * @internal
-     */
-    public _$handleGroupSelectChange(groupIndex: number): void {
-        if (!this.multipleSelect) {
-            this._$listValue
-                .filter((group: GroupSelectOption, index: number) => index !== groupIndex && group.data.length > 0)
-                .forEach((group: GroupSelectOption) => group.data = new ArrayCollection([]));
+    protected _valueChange(value: any): void {
+        this._updateViewValue();
+        if (this._$infiniteScroll) {
+            this.valueChange.emit(value);
+            return;
         }
-        this._updateSelectedItems();
-        this._$checkSelectAll();
-        this._changeDetector.markForCheck();
+        this._updateOutputValue();
+        this.valueChange.emit(this._outputValue);
     }
 
-    private _removeOnRefreshListener: CallbackRemoval;
-
-    private _updateValue(): void {
-        this._$selectedItems = [];
-        this._value = new ArrayCollection([]);
-        this._$listValue.forEach((groupData: GroupSelectOption) => {
-            this._$selectedItems = [...this._$selectedItems, ...groupData.data];
-            if (groupData.data?.length > 0) {
-                this._value.push(groupData);
+    private _getFlatData(value: GroupSelectOption[]): SelectOption[] {
+        if (!value) {
+            return;
+        }
+        const result = [];
+        value.forEach(group => {
+            if (!group.data) {
+                return;
             }
-        });
-        if (this._removeOnRefreshListener) {
-            this._removeOnRefreshListener();
-        }
-        this._removeOnRefreshListener = this._value.onRefresh(() => {
-            this._comboSelect._cdr.markForCheck();
-        });
-    }
-
-    private _updateSelectedItems(): void {
-        this._updateValue();
-        this._propagateChange(this.value);
-        this.valueChange.emit(this.value);
-    }
-
-    /**
-     * @internal
-     */
-    public _$selectAll() {
-        if (this._allSelectCheck()) {
-            this._setEmptyValue(this._data);
-            this._$selectAllChecked = CheckBoxStatus.unchecked;
-        } else {
-            this._data.forEach((groupData: GroupSelectOption, index) => {
-                this._$listValue[index].data = new ArrayCollection((groupData.data || []).filter(item => !item.disabled))
+            group.data.forEach(item => {
+                item[this.groupField] = group[this.groupField];
+                result.push(item);
             })
-            this._$selectAllChecked = CheckBoxStatus.checked;
-        }
-        this._updateSelectedItems();
-        this._changeDetector.markForCheck();
+        })
+        return result;
+    }
+
+    protected _filterData(filterKey?: string) {
+        filterKey = filterKey ? filterKey.trim() : '';
+        (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
+        this._$collapseStatus = [];
     }
 
     /**
      * @internal
      */
-    public _$handleClearable(): void {
-        this._setEmptyValue(this._data);
-        this._updateSelectedItems();
-        this._$selectAllChecked = CheckBoxStatus.unchecked;
-        this._changeDetector.markForCheck();
-    }
-
-    /**
-     * @internal
-     */
-    public _$onTagRemove(removedItem): void {
-        this._$listValue.forEach((groupData: GroupSelectOption) => {
-            const itemIndex = groupData.data.findIndex(item => item == removedItem);
-            if (itemIndex !== -1) {
-                groupData.data.splice(itemIndex, 1);
-                groupData.data.refresh();
-            }
-        });
-        this._updateSelectedItems();
-        this._$checkSelectAll();
-        this.remove.emit(removedItem);
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (this._removeOnRefreshListener) {
-            this._removeOnRefreshListener();
+    public _$getCollapseFrozen(last: boolean) {
+        if (!this._$infiniteScroll || !last || this._$showSelected) {
+            return false;
         }
+        const pagingInfo = this.data['pagingInfo'];
+        return pagingInfo.currentPage != pagingInfo.totalPage;
     }
 }

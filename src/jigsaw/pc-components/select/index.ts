@@ -10,6 +10,7 @@ import { JigsawCollapseModule } from "../collapse/collapse";
 import {JigsawInputModule} from "../input/input";
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { JigsawToastModule } from "../toast/toast";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
         JigsawInputModule,
         PerfectScrollbarModule,
         JigsawLoadingModule,
+        JigsawToastModule,
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
@@ -36,7 +38,8 @@ export class JigsawSelectModule {
                 selected: "已选择 {{ num }} 项",
                 noData: "暂无数据",
                 loading: "数据加载中...",
-                groupNoData: "无数据"
+                groupNoData: "无数据",
+                preventCollapse: "在此分组数据未完整加载时，折叠被临时禁用"
             },
             en: {
                 selectAll: "All",
@@ -46,7 +49,8 @@ export class JigsawSelectModule {
                 selected: "Selected {{ num }} item(s)",
                 noData: "No Data",
                 loading: "Loading...",
-                groupNoData: "No Data"
+                groupNoData: "No Data",
+                preventCollapse: "Folding is temporarily disabled while this grouped data is not fully loaded."
             }
         });
     }

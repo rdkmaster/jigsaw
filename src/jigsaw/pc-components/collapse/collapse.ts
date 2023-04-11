@@ -12,6 +12,7 @@ import {
     NgModule,
     Output,
     QueryList,
+    Renderer2,
     ViewEncapsulation
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
@@ -74,9 +75,20 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     public title: string;
 
     /**
+    * 冻结
+    *
+    * @NoMarkForCheckRequired
+    */
+    @Input()
+    public frozen: boolean;
+
+    /**
      * @internal
      */
     public _$onClick() {
+        if (this.frozen) {
+            return;
+        }
         this.isActive = !this.isActive;
     }
 
@@ -118,9 +130,9 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
 })
 export class JigsawCollapse extends AbstractJigsawComponent {
 
-    constructor(
-    // @RequireMarkForCheck 需要用到，勿删
-    private _injector: Injector) {
+    constructor(public renderer: Renderer2,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
         super();
     }
 

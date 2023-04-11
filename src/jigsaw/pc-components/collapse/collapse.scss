@@ -43,6 +43,15 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
                     }
                 }
             }
+
+            &.#{$jigsaw-collapse}-item-frozen {
+                > .#{$jigsaw-collapse}-header {
+                    .#{$jigsaw-collapse}-arrow {
+                        color: $icon-color-disabled;
+                        cursor: not-allowed;
+                    }
+                }
+            }
         }
 
         .#{$jigsaw-collapse}-item .#{$jigsaw-collapse}-content {

@@ -26,12 +26,14 @@ import {CallbackRemoval, CommonUtils} from "../utils/common-utils";
 import {JigsawArray} from "../utils/data-collection-utils";
 import {DataFilterInfo} from "./unified-paging/paging";
 
-function _fromArray(dest: ArrayCollection<any>, source: any[]): boolean {
+function _fromArray(dest: ArrayCollection<any>, source: any[], isAppend: boolean = false): boolean {
     source = source instanceof Array || (source as any) instanceof ArrayCollection ?
         source : CommonUtils.isDefined(source) ? [source] : [];
     const needRefresh = dest.length > 0 || source.length > 0;
 
-    dest.splice(0, dest.length);
+    if (!isAppend) {
+        dest.splice(0, dest.length);
+    }
     if (source.length > 0) {
         source.forEach(item => dest.push(item));
     }
@@ -284,9 +286,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
      */
     public sourceRequestOptions: HttpClientOptions;
 
-    private _filterSubject = new Subject<DataFilterInfo>();
-    private _sortSubject = new Subject<DataSortInfo>();
-    private _dataSourceChanged: boolean = false;
+    protected _filterSubject = new Subject<DataFilterInfo>();
+    protected _sortSubject = new Subject<DataSortInfo>();
+    protected _dataSourceChanged: boolean = false;
 
     constructor(public http: HttpClient, requestOptionsOrUrl: HttpClientOptions | string) {
         super();
@@ -304,7 +306,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._initSubjects();
     }
 
-    private _initSubjects(): void {
+    protected _initSubjects(): void {
         this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
@@ -361,6 +363,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._busy = true;
         this.ajaxStartHandler();
 
+        console.log(options);
         this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
@@ -497,6 +500,47 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._filterSubject = null;
         this._sortSubject && this._sortSubject.unsubscribe();
         this._sortSubject = null;
+    }
+}
+
+export class InfiniteScrollPageableArray extends PageableArray {
+    private _isAppend: boolean = false;
+
+    public nextPage(): void {
+        this.changePage(this.pagingInfo.currentPage + 1);
+        this._isAppend = true;
+    }
+
+    protected ajaxSuccessHandler(data: any): void {
+        console.log("get data from paging server success!!");
+        if (_fromArray(this, data.toArray(), this._isAppend)) {
+            this.refresh();
+            if (this._dataSourceChanged) {
+                this.componentDataHelper.invokeChangeCallback();
+            }
+        }
+        this._dataSourceChanged = false;
+        this.componentDataHelper.invokeAjaxSuccessCallback(data);
+    }
+
+    protected ajaxCompleteHandler() {
+        console.log("get data from paging server complete!!");
+        this._busy = false;
+        this._isAppend = false;
+        this.componentDataHelper.invokeAjaxCompleteCallback();
+    }
+
+    protected _initSubjects(): void {
+        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+            this.filterInfo = filter;
+            this.pagingInfo['_currentPage'] = 1;
+            this._ajax();
+        });
+        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+            this.sortInfo = sort;
+            this.pagingInfo['_currentPage'] = 1;
+            this._ajax();
+        });
     }
 }
 
@@ -702,7 +746,7 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         }
     }
 
-    private _setDataByPageInfo() {
+    protected _setDataByPageInfo() {
         let source: T[];
         if (this.pagingInfo.pageSize == Infinity) {
             source = this.filteredData;
@@ -758,5 +802,21 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         this.pagingInfo = null;
         this._filterSubject = null;
         this._sortSubject = null;
+    }
+}
+
+export class InfiniteScrollLocalPageableArray<T> extends LocalPageableArray<T>{
+    protected _setDataByPageInfo() {
+        let source: T[];
+        if (this.pagingInfo.pageSize == Infinity) {
+            source = this.filteredData;
+        } else {
+            const currentRecords = this.pagingInfo.currentPage * this.pagingInfo.pageSize;
+            const end = currentRecords < this.pagingInfo.totalRecord ? currentRecords : this.pagingInfo.totalRecord;
+            source = this.filteredData.slice(0, end);
+        }
+        if (_fromArray(this, source)) {
+            this.refresh();
+        }
     }
 }
