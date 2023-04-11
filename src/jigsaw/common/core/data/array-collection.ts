@@ -504,7 +504,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
 }
 
 export class InfiniteScrollPageableArray extends PageableArray {
-    private _isAppend = false;
+    private _isAppend: boolean = false;
 
     public nextPage(): void {
         this.changePage(this.pagingInfo.currentPage + 1);
@@ -811,8 +811,8 @@ export class InfiniteScrollLocalPageableArray<T> extends LocalPageableArray<T>{
         if (this.pagingInfo.pageSize == Infinity) {
             source = this.filteredData;
         } else {
-            const end = this.pagingInfo.currentPage * this.pagingInfo.pageSize < this.pagingInfo.totalRecord ?
-                this.pagingInfo.currentPage * this.pagingInfo.pageSize : this.pagingInfo.totalRecord;
+            const currentRecords = this.pagingInfo.currentPage * this.pagingInfo.pageSize;
+            const end = currentRecords < this.pagingInfo.totalRecord ? currentRecords : this.pagingInfo.totalRecord;
             source = this.filteredData.slice(0, end);
         }
         if (_fromArray(this, source)) {

@@ -55,15 +55,15 @@
                     </div>
                 </div>
                 <div>
-                    <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item" [disabled]="item.disabled"
-                    [height]="optionHeight">
-                    <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled" [(checked)]="listItem.selected"
-                        mode="minimalist">
-                    </jigsaw-checkbox>
-                    <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
-                        {{_$getItemLabel(item, labelField)}}
-                    </span>
-                </jigsaw-list-option>
+                    <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item"
+                                        [disabled]="item.disabled" [height]="optionHeight">
+                        <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
+                                         [(checked)]="listItem.selected" mode="minimalist">
+                        </jigsaw-checkbox>
+                        <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
+                            {{_$getItemLabel(item, labelField)}}
+                        </span>
+                    </jigsaw-list-option>
                 </div>
                 <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                     <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
@@ -77,16 +77,10 @@
             </div>
         </div>
     </ng-template>
-    <div
-        *ngIf="_$showAllStatistics()"
-        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
-    >
+    <div  *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.allSelected' | translate}}
     </div>
-    <div
-        *ngIf="_$showNumStatistics()"
-        class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}"
-    >
+    <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}
     </div>
 </jigsaw-combo-select>

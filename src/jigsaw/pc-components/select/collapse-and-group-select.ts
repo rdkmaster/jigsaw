@@ -27,7 +27,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
     /**
      * @internal
      */
-    public _$type: "collapse" | "group" = "group";
+    public _$dropdownType: "collapse" | "group" = "group";
 
     ngOnInit() {
         super.ngOnInit();
@@ -61,7 +61,7 @@ export class JigsawSelectCollapse extends JigsawSelectGroupBase implements OnIni
     /**
      * @internal
      */
-    public _$type: "collapse" | "group" = "collapse";
+    public _$dropdownType: "collapse" | "group" = "collapse";
 
     ngOnInit() {
         super.ngOnInit();

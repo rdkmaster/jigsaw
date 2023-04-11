@@ -160,7 +160,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!this.data) {
             return null;
         }
-        // 如果是基础类型，则也不用trackItemBy 
+        // 如果是基础类型，则也不用trackItemBy
         if (typeof this.data[0] != "object" || this.data[0] == null) {
             return null;
         }
@@ -421,7 +421,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         }
         validData = validData || this._getValidData();
         if (this._$infiniteScroll) {
-            return this._$selectedItems.length === this.data['pagingInfo'].totalRecord;
+            // this._$infiniteScroll为真就确保是滚动分页数据类型了
+            const data = <InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray>this.data;
+            return this._$selectedItems.length === data.pagingInfo.totalRecord;
         }
         if (this.searchable) {
             return this._$selectedItems.length === validData.length && !this._searchKey;
@@ -631,6 +633,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     private _removeScrollBarListener: Function;
+
     private _setInfiniteScroll() {
         if (!this._$infiniteScroll || !this._listScrollbar) {
             return;
@@ -641,7 +644,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         const el = this._listScrollbar.elementRef.nativeElement;
         this._removeScrollBarListener = this._contentList.renderer.listen(el, "ps-y-reach-end", () => {
             if (this._$showSelected) {
-                return
+                return;
             }
             this._zone.run(() => {
                 const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
@@ -692,7 +695,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
      * select分组下拉的类型，用于给float添加class进行样式控制
      * @internal
      */
-    public _$type: "collapse" | "group";
+    public _$dropdownType: "collapse" | "group";
 
     protected _updateViewData(): void {
         const data = (this.data as ArrayCollection<SelectOption>).toJSON();
@@ -751,7 +754,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         if (!this.data) {
             return null;
         }
-        // 如果是基础类型，则也不用trackItemBy 
+        // 如果是基础类型，则也不用trackItemBy
         if (typeof this.data[0] != "object" || this.data[0] == null) {
             return null;
         }

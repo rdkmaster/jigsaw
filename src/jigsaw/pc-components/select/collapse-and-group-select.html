@@ -34,23 +34,22 @@
                 </div>
             </div>
             <jigsaw-collapse #contentList [ngStyle]="{'max-height': _$listHeight}" arrowPosition="right"
-                [ngClass]="{'jigsaw-group-select-option-cntr': _$type == 'group',
-                            'jigsaw-collapse-select-option-cntr': _$type =='collapse'}"
+                [ngClass]="{'jigsaw-group-select-option-cntr': _$dropdownType == 'group',
+                            'jigsaw-collapse-select-option-cntr': _$dropdownType =='collapse'}"
                 [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
                 <jigsaw-collapse-pane *ngFor="let group of _$viewData; let i = index; let last = last"
-                    [isActive]="_$showSelected || _$type == 'group' ? true : !_$collapseStatus[i]"
-                    (isActiveChange)="!_$showSelected && _$collapseStatus[i] = !$event"
+                    [isActive]="_$showSelected || _$dropdownType == 'group' ? true : !_$collapseStatus[i]"
+                    (isActiveChange)="!_$showSelected && (_$collapseStatus[i] = !$event)"
                     [ngClass]="{'jigsaw-collapse-select-option-last': last}"
                     [frozen]="_$getCollapseFrozen(last)">
-                    <div j-title class="jigsaw-select-option-title"
-                        title="{{ (_$getCollapseFrozen(last) ? 'select.preventCollapse' : '') | translate}}">
+                    <div j-title class="jigsaw-select-option-title" title="{{ (_$getCollapseFrozen(last) ? 'select.preventCollapse' : '') | translate}}">
                         {{group[0][groupField]}}
                     </div>
                     <div j-body>
-                        <span *ngIf="!group || group.length === 0" class="jigsaw-select-option-no-data">
+                        <span *ngIf="group?.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
                         </span>
-                        <jigsaw-list *ngIf="group.length > 0" width="100%" [trackItemBy]="trackItemBy"
+                        <jigsaw-list *ngIf="group?.length > 0" width="100%" [trackItemBy]="trackItemBy"
                             [(selectedItems)]="_$selectedItems" (selectedItemsChange)="_$handleSelectChange($event)"
                             [multipleSelect]="multipleSelect" [autoRemoveInvalidValue]="false">
                             <jigsaw-list-option #listItem *ngFor="let item of group" [value]="item" [disabled]="item.disabled"
@@ -72,8 +71,7 @@
             </div>
         </div>
     </ng-template>
-    <div *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics"
-         [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
+    <div *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.allSelected' | translate}}
     </div>
     <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
