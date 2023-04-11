@@ -739,7 +739,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         (this._data as InfiniteScrollLocalPageableArray<SelectOption>).pagingInfo.pageSize = Infinity;
     }
 
-    private _originalData;
+    private _originalData: ArrayCollection<GroupSelectOption>;
     private _removeOriginalOnRefresh: Function;
 
     /**
@@ -839,5 +839,15 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         filterKey = filterKey ? filterKey.trim() : '';
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField, this.groupField]);
         this._$collapseStatus = [];
+    }
+
+    /**
+    * @internal
+    */
+    public _$handleHeaderClick(check: boolean) {
+        if (!check) {
+            return;
+        }
+        JigsawToast.showWarn(this._translateService.instant('select.preventCollapse'));
     }
 }

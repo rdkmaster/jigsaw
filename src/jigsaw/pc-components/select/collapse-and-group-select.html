@@ -42,7 +42,11 @@
                     (isActiveChange)="!_$showSelected && _$collapseStatus[i] = !$event"
                     [ngClass]="{'jigsaw-collapse-select-option-last': _$infiniteScroll && last}"
                     [disabled]="!_$showSelected && _$infiniteScroll && last">
-                    <div j-title class="jigsaw-select-option-title" title="{{ (!_$showSelected && last ? 'select.preventCollapse' : '') | translate}}">{{group[0][groupField]}}</div>
+                    <div j-title class="jigsaw-select-option-title"
+                        title="{{ (!_$showSelected && last ? 'select.preventCollapse' : '') | translate}}"
+                        (click)="_$handleHeaderClick(!_$showSelected && last)">
+                        {{group[0][groupField]}}
+                    </div>
                     <div j-body>
                         <span *ngIf="!group || group.length === 0" class="jigsaw-select-option-no-data">
                             {{'select.groupNoData' | translate}}
