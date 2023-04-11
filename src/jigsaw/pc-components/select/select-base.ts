@@ -841,13 +841,11 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._$collapseStatus = [];
     }
 
-    /**
-    * @internal
-    */
-    public _$handleHeaderClick(check: boolean) {
-        if (!check) {
-            return;
+    public _$getCollapseDisabled(last: boolean) {
+        if (!this._$infiniteScroll || !last || this._$showSelected) {
+            return false;
         }
-        JigsawToast.showWarn(this._translateService.instant('select.preventCollapse'));
+        const pagingInfo = this.data['pagingInfo'];
+        return pagingInfo.currentPage != pagingInfo.totalPage;
     }
 }
