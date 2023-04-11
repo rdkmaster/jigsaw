@@ -10,7 +10,6 @@ import { CheckBoxStatus } from "../checkbox/typings";
 import { JigsawComboSelect } from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
-import { JigsawToast } from "../toast/toast";
 import { TranslateService } from "@ngx-translate/core";
 
 export type SelectOption = {
@@ -539,6 +538,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     private _contentList: JigsawList | JigsawCollapse;
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
+    @ViewChild('comboSelect')
+    private _comboSelect: JigsawComboSelect;
 
     /**
      * @internal
@@ -576,7 +577,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._onTouched();
         if (openState) {
             this._$showSelected = false;
-            this.runAfterMicrotasks(() => this._setInfiniteScroll());
+            const removeListener = this._renderer.listen(this._comboSelect._jigsawFloat.popupElement, 'animationend', () => {
+                removeListener();
+                this._setInfiniteScroll()
+            })
         }
         if (openState || !this.searchable) {
             return;
@@ -660,9 +664,6 @@ export type GroupSelectOption = {
 }
 @Directive()
 export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
-    @ViewChild('comboSelect')
-    private _comboSelect: JigsawComboSelect;
-
     /**
      * 设置组名的显示字段
      *
