@@ -77,6 +77,11 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
     @RequireMarkForCheck()
     public title: string;
 
+    /**
+    * 禁用
+    *
+    * @NoMarkForCheckRequired
+    */
     @Input()
     public disabled: boolean;
 
