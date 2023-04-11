@@ -415,16 +415,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$showAllStatistics(validData?: SelectOption[]): boolean {
-        // if (this._$infiniteScroll) {
-        //     const data = <InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data;
-        //     console.log(this._value?.length == data.pagingInfo.totalPage)
-        //     return this._value?.length == data.pagingInfo.totalPage;
-        // }
-        console.log(this.data['pagingInfo'])
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
         validData = validData || this._getValidData();
+        if (this._$infiniteScroll) {
+            return this._$selectedItems.length === this.data['pagingInfo'].totalRecord;
+        }
         if (this.searchable) {
             return this._$selectedItems.length === validData.length && !this._searchKey;
         } else {
