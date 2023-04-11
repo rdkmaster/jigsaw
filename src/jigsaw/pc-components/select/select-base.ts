@@ -11,6 +11,7 @@ import { JigsawComboSelect } from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
 import { JigsawToast } from "../toast/toast";
+import { TranslateService } from "@ngx-translate/core";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -24,7 +25,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         protected _changeDetector: ChangeDetectorRef,
         protected _injector: Injector,
         protected _renderer: Renderer2,
-        protected _zone?: NgZone,
+        protected _translateService: TranslateService,
+        protected _zone?: NgZone
     ) {
         super(_zone);
     }
@@ -843,6 +845,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         if (!check) {
             return;
         }
-        JigsawToast.showWarn('数据未完全加载，暂时无法折叠');
+        JigsawToast.showWarn(this._translateService.instant('select.preventCollapse'));
+        
     }
 }

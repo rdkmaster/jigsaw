@@ -1,4 +1,4 @@
-import { Component, Renderer2, ViewChild } from "@angular/core";
+import { ChangeDetectorRef, Component, Renderer2, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { InfiniteScrollPageableArray, SortAs, SortOrder } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
@@ -16,7 +16,7 @@ export class InfiniteScrollPageableArrayDemoComponent {
     @ViewChild("contentScrollbar", { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    constructor(public http: HttpClient, private _renderer: Renderer2) {
+    constructor(public http: HttpClient, private _renderer: Renderer2, private _changeDetector: ChangeDetectorRef) {
         this.psa = new InfiniteScrollPageableArray(http, {
             url: "mock-data/hr-list-full",
             params: { aa: 11, bb: 22 },
@@ -87,6 +87,7 @@ export class InfiniteScrollPageableArrayDemoComponent {
             }
             console.log($event);
             this.psa.nextPage();
+            this._changeDetector.markForCheck();
         });
     }
     // ====================================================================

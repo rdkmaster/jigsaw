@@ -38,7 +38,8 @@ export class JigsawSelectModule {
                 selected: "已选择 {{ num }} 项",
                 noData: "暂无数据",
                 loading: "数据加载中...",
-                groupNoData: "无数据"
+                groupNoData: "无数据",
+                preventCollapse: "数据未完全加载，暂时无法折叠"
             },
             en: {
                 selectAll: "All",
@@ -48,7 +49,8 @@ export class JigsawSelectModule {
                 selected: "Selected {{ num }} item(s)",
                 noData: "No Data",
                 loading: "Loading...",
-                groupNoData: "No Data"
+                groupNoData: "No Data",
+                preventCollapse: "Data is not fully loaded, cannot be folded temporarily"
             }
         });
     }
