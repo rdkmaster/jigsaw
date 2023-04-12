@@ -761,6 +761,10 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         return CommonUtils.isDefined(this._trackItemBy) ? this._trackItemBy : [this.labelField, this.groupField];
     }
 
+    public set trackItemBy(value: string | string[]) {
+        this._trackItemBy = typeof value === 'string' ? value.split(/\s*,\s*/g) : value;
+    }
+
     private _updateOutputValue() {
         if (CommonUtils.isUndefined(this._value)) {
             this._outputValue = this._value;
