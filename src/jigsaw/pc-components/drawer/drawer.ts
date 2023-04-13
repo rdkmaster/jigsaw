@@ -388,7 +388,6 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _$toggleOpen(e) {
-        console.log(this.hideHandle)
         e.preventDefault();
         e.stopPropagation();
         this.open = !this.open;
