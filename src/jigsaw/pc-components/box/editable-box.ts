@@ -121,6 +121,9 @@ export class JigsawEditableBox extends JigsawBox {
     @Input()
     public resizeStep: number = 8;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public isEditing: boolean = true;
 
