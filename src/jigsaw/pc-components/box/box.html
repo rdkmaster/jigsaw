@@ -1,4 +1,4 @@
-<i class="jigsaw-box-relative" #resizeLineParent *ngIf="_$showResizeLine">
+<i class="jigsaw-box-resize-line-wrapper" #resizeLineParent *ngIf="_$showResizeLine">
     <b #resizeLine
        class="jigsaw-box-resize-line"
        [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
@@ -11,6 +11,7 @@
        (resizeEnd)="_$handleResizeEnd()"
        (mousedown)="_$handleResizeStart($event)"></b>
 </i>
+<ng-container #renderPoint></ng-container>
 <ng-content></ng-content>
 
 

@@ -86,49 +86,11 @@ export class JigsawEditableBox extends JigsawBox {
         this._gap = CommonUtils.getCssValue(value);
     }
 
-    private _margin: string;
-    /**
-     * @NoMarkForCheckRequired
-     * 设置当前box的外边距
-     */
-    @Input()
-    public get margin(): string {
-        return this._margin;
-    }
-
-    public set margin(value: string) {
-        this._margin = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
-        this.element.style.margin = this._margin;
-    }
-
-    private _padding: string;
-    /**
-     * @NoMarkForCheckRequired
-     * 设置当前box的内边距
-     */
-    @Input()
-    public get padding(): string {
-        return this._padding;
-    }
-
-    public set padding(value: string) {
-        this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
-    }
-
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public resizeStep: number = 8;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public isEditing: boolean = true;
-
-    @ViewChild("renderPoint", {read: ViewContainerRef})
-    public renderPoint: ViewContainerRef;
 
     /**
      * @internal
@@ -178,9 +140,7 @@ export class JigsawEditableBox extends JigsawBox {
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             this._supportSetSize(box, this);
-            // 非编辑状态下的固定尺寸box需要隐藏resize line
-            const isFixedBoxForDisplay = !box.isEditing && (box._isFixedSize || this._$childrenBox?.[index - 1]?._isFixedSize);
-            if (this.resizable && index != 0 && !isFixedBoxForDisplay) {
+            if (this.resizable && index != 0) {
                 // 第一个child box没有resize line
                 // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
                 // 异步消除变更检查报错
@@ -204,18 +164,6 @@ export class JigsawEditableBox extends JigsawBox {
                 box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` :
                     this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
             });
-    }
-
-    private _setResizeLineOffset(box: JigsawEditableBox, index: number): void {
-        const resizeLineWidth = 3;
-        const parentBox = box.parent;
-        const prevBox = parentBox._$childrenBox[index - 1];
-        const offsetParam = parentBox.direction == 'column' ? 'top' : 'left';
-        const prevGapParam = parentBox.direction == 'column' ? 'marginBottom' : 'marginRight';
-        const curGapParam = parentBox.direction == 'column' ? 'marginTop' : 'marginLeft';
-        const gapSize = this._pxToNumber(getComputedStyle(prevBox.element)[prevGapParam]) +
-            this._pxToNumber(getComputedStyle(box.element)[curGapParam]);
-        box._resizeLineParent.nativeElement.style[offsetParam] = - (gapSize + resizeLineWidth) / 2 + 'px';
     }
 
     protected _computeResizeLineWidth() {
