@@ -217,6 +217,16 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
     @Input()
     public emphasisHandler : boolean = true;
 
+    /**
+     * 代表了抽屉是否隐藏把手。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = drawer/basic
+     */
+    @Input()
+    public hideHandle: boolean = false;
+
     @ViewChild('drawer')
     private _drawerEl: ElementRef;
 
@@ -378,6 +388,7 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      * @internal
      */
     public _$toggleOpen(e) {
+        console.log(this.hideHandle)
         e.preventDefault();
         e.stopPropagation();
         this.open = !this.open;
