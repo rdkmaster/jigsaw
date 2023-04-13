@@ -121,6 +121,9 @@ export class JigsawEditableBox extends JigsawBox {
     @Input()
     public resizeStep: number = 8;
 
+    @Input()
+    public isEditing: boolean = true;
+
     @ViewChild("renderPoint", {read: ViewContainerRef})
     public renderPoint: ViewContainerRef;
 
@@ -172,7 +175,9 @@ export class JigsawEditableBox extends JigsawBox {
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             this._supportSetSize(box, this);
-            if (this.resizable && index != 0) {
+            // 非编辑状态下的固定尺寸box需要隐藏resize line
+            const isFixedBoxForDisplay = !box.isEditing && (box._isFixedSize || this._$childrenBox?.[index - 1]?._isFixedSize);
+            if (this.resizable && index != 0 && !isFixedBoxForDisplay) {
                 // 第一个child box没有resize line
                 // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
                 // 异步消除变更检查报错
