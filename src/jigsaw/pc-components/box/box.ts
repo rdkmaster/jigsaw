@@ -112,8 +112,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     @ViewChild('resizeLineParent')
     protected _resizeLineParent: ElementRef;
 
+    /**
+     * @internal
+     */
     @ViewChild("renderPoint", {read: ViewContainerRef})
-    public renderPoint: ViewContainerRef;
+    public _renderPoint: ViewContainerRef;
 
     /**
      * @internal
