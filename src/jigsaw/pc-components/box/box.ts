@@ -11,11 +11,12 @@ import {
     OnDestroy,
     QueryList,
     Renderer2,
-    ViewChild
+    ViewChild,
+    ViewContainerRef
 } from "@angular/core";
 import {Subscription} from "rxjs";
 import {JigsawResizableBoxBase} from "./common-box";
-import {CallbackRemoval} from "../../common/core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 
 @Component({
     selector: 'jigsaw-box, j-box',
@@ -26,6 +27,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
         '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.padding]': 'padding'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -47,6 +49,35 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     @Input()
     public resizable: boolean;
+
+    private _margin: string;
+    /**
+     * @NoMarkForCheckRequired
+     * 设置当前box的外边距
+     */
+    @Input()
+    public get margin(): string {
+        return this._margin;
+    }
+
+    public set margin(value: string) {
+        this._margin = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
+        this.element.style.margin = this._margin;
+    }
+
+    private _padding: string;
+    /**
+     * @NoMarkForCheckRequired
+     * 设置当前box的内边距
+     */
+    @Input()
+    public get padding(): string {
+        return this._padding;
+    }
+
+    public set padding(value: string) {
+        this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
+    }
 
     /**
      * @internal
@@ -80,6 +111,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
     @ViewChild('resizeLineParent')
     protected _resizeLineParent: ElementRef;
+
+    /**
+     * @internal
+     */
+    @ViewChild("renderPoint", {read: ViewContainerRef})
+    public _renderPoint: ViewContainerRef;
 
     /**
      * @internal
@@ -191,8 +228,24 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                     box.showResizeLine = true;
                     box._cdr.markForCheck();
                 });
+                this.runAfterMicrotasks(() => {
+                    this._setResizeLineOffset(box, index);
+                    this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
+                })
             }
         });
+    }
+
+    protected _setResizeLineOffset(box: JigsawBox, index: number): void {
+        const resizeLineWidth = 3;
+        const parentBox = box.parent;
+        const prevBox = parentBox._$childrenBox[index - 1];
+        const offsetParam = parentBox.direction == 'column' ? 'top' : 'left';
+        const prevGapParam = parentBox.direction == 'column' ? 'marginBottom' : 'marginRight';
+        const curGapParam = parentBox.direction == 'column' ? 'marginTop' : 'marginLeft';
+        const gapSize = this._pxToNumber(getComputedStyle(prevBox.element)[prevGapParam]) +
+            this._pxToNumber(getComputedStyle(box.element)[curGapParam]);
+        box._resizeLineParent.nativeElement.style[offsetParam] = - (gapSize + resizeLineWidth) / 2 + 'px';
     }
 
     /**
