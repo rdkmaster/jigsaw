@@ -2,11 +2,13 @@ import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
-import {writeFileSync} from 'fs-extra';
+import {writeFileSync, unlinkSync} from 'fs-extra';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
 import {copyFiles} from "../util/copy-files";
+import {sync as glob} from 'glob';
+import {createOpenedTheme, createWrappedTheme} from "../util/create-wrapped-theme";
 
 const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
@@ -34,11 +36,12 @@ export function createTask(packageName: string) {
     });
 
     task(`:build:${packageName}-styles`, [
-        `:build:${packageName}-all-theme-file`,
-        `:build:${packageName}-bundle-theming-scss`,
+        //`:build:${packageName}-all-theme-file`,
+        `:build:${packageName}-all-wrapped-theme`,
+        /*`:build:${packageName}-bundle-theming-scss`,
         `:build:${packageName}-copy-prebuilt-theme-settings`,
         `:build:${packageName}-copy-theming-api`,
-        `:build:${packageName}-all-component-styles`
+        `:build:${packageName}-all-component-styles`*/
     ]);
 
     task(`:build:${packageName}-all-theme-file`, function () {
@@ -49,6 +52,41 @@ export function createTask(packageName: string) {
             }))
             .pipe(gulpCleanCss())
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
+    });
+
+    task(`:build:${packageName}-all-wrapped-theme`, function () {
+        const wrappedThemeHome = join(releasePath, 'prebuilt-themes', 'wrapped-theme');
+        const wrappedThemeScssHome = join(wrappedThemeHome, 'scss');
+        const wrappedThemeCommonHome = join(wrappedThemeScssHome, 'common');
+        const wrappedThemeComponentHome = join(wrappedThemeScssHome, packageName == 'jigsaw' ? 'pc-components' : 'mobile-components');
+        copyFiles(jigsawCommonPath, '**/*scss', wrappedThemeCommonHome);
+        copyFiles(jigsawPath, '**/*scss', wrappedThemeComponentHome);
+
+        const wrappedSelector = '.jigsaw-wrapped-theme';
+        const allWrappedThemingPrebuiltHome = join(wrappedThemeComponentHome, 'theming/prebuilt/');
+        const allWrappedScssGlob = join(wrappedThemeScssHome, '**/*.scss');
+        glob('*.scss', {cwd: allWrappedThemingPrebuiltHome}).forEach(async filePath => {
+            const result = await new Bundler().Bundle(join(allWrappedThemingPrebuiltHome, filePath), [allWrappedScssGlob]);
+            writeFileSync(join(wrappedThemeScssHome, filePath), `
+                ${wrappedSelector} {
+                    ${result.bundledContent}
+                }
+            `);
+            src(join(wrappedThemeScssHome, filePath))
+                .pipe(gulpSass().on('error', (err: any) => {
+                    console.error('Failed to build theme, detail:\n', err.stack);
+                    throw err;
+                }))
+                //.pipe(gulpCleanCss())
+                .pipe(dest(wrappedThemeHome))
+                .on('end', function () {
+                    const rawCssFile = filePath.replace(/\.scss$/, '.css');
+                    console.log(rawCssFile);
+                    createWrappedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
+                    createOpenedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
+                    unlinkSync(join(wrappedThemeHome, rawCssFile));
+                });
+        });
     });
 
     task(`:build:${packageName}-bundle-theming-scss`, () => {
@@ -107,13 +145,13 @@ export function createTask(packageName: string) {
         }));
 
     task(`build:${packageName}`, sequenceTask(
-        ':extract-theme-variables',
+        /*':extract-theme-variables',
         ':create-component-wings-theme',
-        `:build:${packageName}-package`,
+        `:build:${packageName}-package`,*/
         `:build:${packageName}-styles`,
-        `:build:${packageName}-copy-files`,
+        /*`:build:${packageName}-copy-files`,
         'build:novice-guide',
-        'build:unified-paging',
+        'build:unified-paging',*/
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(
