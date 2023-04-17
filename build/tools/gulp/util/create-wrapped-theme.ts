@@ -34,9 +34,12 @@ export function createOpenedTheme(wrappedSelector: string, wrappedThemeHome: str
     let themeContent = readFileSync(rawCssThemePath).toString();
     const wrappedBlockNameReg = wrappedSelector.replace(/\./g, '\\.');
     const bodyReg = new RegExp(`${wrappedBlockNameReg}\\s+body\\b`, 'g');
+    const selectorReg = new RegExp(`${wrappedBlockNameReg}\\b`, 'g');
     const cssVarReg = new RegExp(`${wrappedBlockNameReg}\\s+:root`, 'g');
-    // 替换body标签和css变量
+    // 替换body标签、wrapped选择器和css变量
     themeContent = themeContent.replace(bodyReg, openedSelector)
+        // wrapped选择器替换成opened选择器
+        .replace(selectorReg, openedSelector)
         // opened theme 的css变量还原成 :root 变量
         .replace(cssVarReg, ':root');
     writeFileSync(targetCssThemePath, themeContent);

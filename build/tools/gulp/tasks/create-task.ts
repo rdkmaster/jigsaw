@@ -3,11 +3,11 @@ import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
 import {writeFileSync, unlinkSync} from 'fs-extra';
+import {sync as glob} from 'glob';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
-import {copyFiles} from "../util/copy-files";
-import {sync as glob} from 'glob';
+import {copyFiles, deleteFolderRecursive} from "../util/copy-files";
 import {createOpenedTheme, createWrappedTheme} from "../util/create-wrapped-theme";
 
 const {buildCandidatePackage} = require("../../build-candidate-package.js");
@@ -54,40 +54,63 @@ export function createTask(packageName: string) {
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });
 
-    task(`:build:${packageName}-all-wrapped-theme`, function () {
+    task(`:build:${packageName}-all-wrapped-theme`, sequenceTask(
+        `:${packageName}-copy-and-bundle-scss`,
+        `:${packageName}-create-wrapped-theme`,
+        `:${packageName}-remove-tmp-files`
+    ));
+
+    task(`:${packageName}-copy-and-bundle-scss`, async function () {
         const wrappedThemeHome = join(releasePath, 'prebuilt-themes', 'wrapped-theme');
         const wrappedThemeScssHome = join(wrappedThemeHome, 'scss');
         const wrappedThemeCommonHome = join(wrappedThemeScssHome, 'common');
         const wrappedThemeComponentHome = join(wrappedThemeScssHome, packageName == 'jigsaw' ? 'pc-components' : 'mobile-components');
         copyFiles(jigsawCommonPath, '**/*scss', wrappedThemeCommonHome);
         copyFiles(jigsawPath, '**/*scss', wrappedThemeComponentHome);
-
         const wrappedSelector = '.jigsaw-wrapped-theme';
         const allWrappedThemingPrebuiltHome = join(wrappedThemeComponentHome, 'theming/prebuilt/');
         const allWrappedScssGlob = join(wrappedThemeScssHome, '**/*.scss');
-        glob('*.scss', {cwd: allWrappedThemingPrebuiltHome}).forEach(async filePath => {
+        const files = glob('*.scss', {cwd: allWrappedThemingPrebuiltHome});
+        for (const filePath of files) {
             const result = await new Bundler().Bundle(join(allWrappedThemingPrebuiltHome, filePath), [allWrappedScssGlob]);
             writeFileSync(join(wrappedThemeScssHome, filePath), `
                 ${wrappedSelector} {
                     ${result.bundledContent}
                 }
             `);
-            src(join(wrappedThemeScssHome, filePath))
-                .pipe(gulpSass().on('error', (err: any) => {
-                    console.error('Failed to build theme, detail:\n', err.stack);
-                    throw err;
-                }))
-                //.pipe(gulpCleanCss())
-                .pipe(dest(wrappedThemeHome))
-                .on('end', function () {
-                    const rawCssFile = filePath.replace(/\.scss$/, '.css');
-                    console.log(rawCssFile);
-                    createWrappedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
-                    createOpenedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
-                    unlinkSync(join(wrappedThemeHome, rawCssFile));
-                });
-        });
+        }
     });
+
+    task(`:${packageName}-create-wrapped-theme`, async function () {
+        const wrappedThemeHome = join(releasePath, 'prebuilt-themes', 'wrapped-theme');
+        const wrappedThemeScssHome = join(wrappedThemeHome, 'scss');
+        const wrappedSelector = '.jigsaw-wrapped-theme';
+        const files = glob('*.scss', {cwd: wrappedThemeScssHome});
+        for (const filePath of files) {
+            await new Promise(resolve => {
+                src(join(wrappedThemeScssHome, filePath))
+                    .pipe(gulpSass().on('error', (err: any) => {
+                        console.error('Failed to build theme, detail:\n', err.stack);
+                        throw err;
+                    }))
+                    //.pipe(gulpCleanCss())
+                    .pipe(dest(wrappedThemeHome))
+                    .on('end', function () {
+                        const rawCssFile = filePath.replace(/\.scss$/, '.css');
+                        createWrappedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
+                        createOpenedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
+                        unlinkSync(join(wrappedThemeHome, rawCssFile));
+                        resolve();
+                    });
+            })
+        }
+    })
+
+    task(`:${packageName}-remove-tmp-files`, function () {
+        const wrappedThemeHome = join(releasePath, 'prebuilt-themes', 'wrapped-theme');
+        const wrappedThemeScssHome = join(wrappedThemeHome, 'scss');
+        deleteFolderRecursive(wrappedThemeScssHome);
+    })
 
     task(`:build:${packageName}-bundle-theming-scss`, () => {
         return new Bundler().Bundle(themingEntryPointPath, [allScssGlob]).then(result => {
@@ -134,15 +157,15 @@ export function createTask(packageName: string) {
     });
 
     task('build:novice-guide', buildCandidatePackage.bind({
-            packageName: "novice-guide",
-            entryPath: "src/jigsaw/common/novice-guide/exports.ts",
-            rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
-        }));
+        packageName: "novice-guide",
+        entryPath: "src/jigsaw/common/novice-guide/exports.ts",
+        rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+    }));
     task('build:unified-paging', buildCandidatePackage.bind({
-            packageName: "unified-paging",
-            entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
-            rollupTo: "",
-        }));
+        packageName: "unified-paging",
+        entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
+        rollupTo: "",
+    }));
 
     task(`build:${packageName}`, sequenceTask(
         /*':extract-theme-variables',
