@@ -25,7 +25,14 @@ import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
 
 declare const echarts: any;
-declare const ResizeObserver: any;
+
+declare class ResizeObserver {
+    constructor(cb);
+
+    disconnect();
+
+    observe(el);
+}
 
 // 某些情况，需要把Jigsaw在服务端一起编译，直接使用window对象，会导致后端编译失败
 declare const window: any;
@@ -206,11 +213,16 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _parentSizeChangeSubscription: Subscription;
+    private _resizeObserver: ResizeObserver;
 
     private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
             const parentSizeChange = new EventEmitter();
-            const ro = new ResizeObserver(entries => {
+            if (this._resizeObserver) {
+                this._resizeObserver.disconnect();
+                this._resizeObserver = null;
+            }
+            this._resizeObserver = new ResizeObserver(entries => {
                 if (!this._graphContainer) {
                     return;
                 }
@@ -218,7 +230,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
                 this._graphContainer.style.overflow = 'hidden';
                 parentSizeChange.emit(entries[0]);
             });
-            ro.observe(this._graphContainer);
+            this._resizeObserver.observe(this._graphContainer);
 
             if (this._parentSizeChangeSubscription) {
                 this._parentSizeChangeSubscription.unsubscribe();
@@ -275,6 +287,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this._parentSizeChangeSubscription) {
             this._parentSizeChangeSubscription.unsubscribe();
             this._parentSizeChangeSubscription = null;
+        }
+
+        if (this._resizeObserver) {
+            this._resizeObserver.disconnect();
+            this._resizeObserver = null;
         }
     }
 
