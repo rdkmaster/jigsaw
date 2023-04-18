@@ -211,6 +211,11 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
             const ro = new ResizeObserver(() => {
+                if (!this._graphContainer) {
+                    return;
+                }
+                // 父级尺寸发生变化，图形不变，可能会使html撑出滚动条，需要临时改成溢出隐藏
+                this._graphContainer.style.overflow = 'hidden';
                 this._parentSizeChange.emit();
             });
             ro.observe(this._graphContainer);
@@ -225,6 +230,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
                     return;
                 }
                 this.resize();
+                this._graphContainer.style.overflow = 'visible';
             });
         })
     }
