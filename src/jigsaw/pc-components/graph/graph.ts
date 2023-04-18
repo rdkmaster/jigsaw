@@ -205,31 +205,37 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    private _parentSizeChange = new EventEmitter();
-    private _unsubscribeParentSizeChange: Subscription;
+    private _parentSizeChangeSubscription: Subscription;
 
     private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
-            const ro = new ResizeObserver(() => {
+            const parentSizeChange = new EventEmitter();
+            const ro = new ResizeObserver(entries => {
                 if (!this._graphContainer) {
                     return;
                 }
                 // 父级尺寸发生变化，图形不变，可能会使html撑出滚动条，需要临时改成溢出隐藏
                 this._graphContainer.style.overflow = 'hidden';
-                this._parentSizeChange.emit();
+                parentSizeChange.emit(entries[0]);
             });
             ro.observe(this._graphContainer);
 
-            if (this._unsubscribeParentSizeChange) {
-                this._unsubscribeParentSizeChange.unsubscribe();
-                this._unsubscribeParentSizeChange = null;
+            if (this._parentSizeChangeSubscription) {
+                this._parentSizeChangeSubscription.unsubscribe();
+                this._parentSizeChangeSubscription = null;
             }
 
-            this._unsubscribeParentSizeChange = this._parentSizeChange.pipe(debounceTime(300)).subscribe(() => {
-                if (!this._graphContainer) {
+            this._parentSizeChangeSubscription = parentSizeChange.pipe(debounceTime(300)).subscribe((entry) => {
+                if (!this._graphContainer || !entry || !entry.contentRect) {
                     return;
                 }
-                this.resize();
+                const canvasEl = this._graphContainer.querySelector('canvas');
+                if (!canvasEl) {
+                    return;
+                }
+                if (Math.round(entry.contentRect.width) != canvasEl.offsetWidth || Math.round(entry.contentRect.height) != canvasEl.offsetHeight) {
+                    this.resize();
+                }
                 this._graphContainer.style.overflow = 'visible';
             });
         })
@@ -266,9 +272,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             this._graph = null;
         }
 
-        if (this._unsubscribeParentSizeChange) {
-            this._unsubscribeParentSizeChange.unsubscribe();
-            this._unsubscribeParentSizeChange = null;
+        if (this._parentSizeChangeSubscription) {
+            this._parentSizeChangeSubscription.unsubscribe();
+            this._parentSizeChangeSubscription = null;
         }
     }
 
