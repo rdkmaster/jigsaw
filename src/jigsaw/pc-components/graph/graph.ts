@@ -15,14 +15,14 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
+import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
-import {debounceTime} from 'rxjs/operators';
-import {Subscription} from 'rxjs';
 
 declare const echarts: any;
 declare const ResizeObserver: any;
@@ -210,10 +210,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
-            const ro = new ResizeObserver(entries => {
-                for (let entry of entries) {
-                    this._parentSizeChange.emit();
-                }
+            const ro = new ResizeObserver(() => {
+                this._parentSizeChange.emit();
             });
             ro.observe(this._graphContainer);
 
