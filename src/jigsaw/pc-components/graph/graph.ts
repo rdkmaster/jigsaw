@@ -21,14 +21,17 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawTheme} from "../../common/core/theming/theme";
+import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 declare const echarts: any;
+declare const ResizeObserver: any;
 
 // 某些情况，需要把Jigsaw在服务端一起编译，直接使用window对象，会导致后端编译失败
 declare const window: any;
 try {
     window.echarts = window.echarts || echarts;
-} catch(e) {
+} catch (e) {
 }
 
 @WingsTheme('graph.scss')
@@ -111,10 +114,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'width', this._width);
-        if (this.initialized) {
-            this.resize();
-            this._listenWindowResize();
-        }
     }
 
     /**
@@ -128,10 +127,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'height', this._height);
-        if (this.initialized) {
-            this.resize();
-            this._listenWindowResize();
-        }
     }
 
     /**
@@ -210,23 +205,30 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    private _resizeEventRemoval: Function;
+    private _parentSizeChange = new EventEmitter();
+    private _unsubscribeParentSizeChange: Subscription;
 
-    private _listenWindowResize(): void {
-        if (!this._needListenWindowResize() || this._resizeEventRemoval) {
-            return;
-        }
+    private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
-            // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-            this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
+            const ro = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    this._parentSizeChange.emit();
+                }
+            });
+            ro.observe(this._graphContainer);
+
+            if (this._unsubscribeParentSizeChange) {
+                this._unsubscribeParentSizeChange.unsubscribe();
+                this._unsubscribeParentSizeChange = null;
+            }
+
+            this._unsubscribeParentSizeChange = this._parentSizeChange.pipe(debounceTime(300)).subscribe(() => {
+                if (!this._graphContainer) {
+                    return;
+                }
                 this.resize();
             });
-        });
-    }
-
-    private _needListenWindowResize(): boolean {
-        return ((this.width && this.width[this.width.length - 1] == '%') ||
-            (this.height && this.height[this.height.length - 1] == '%') || !this.width);
+        })
     }
 
     private _host: HTMLElement;
@@ -248,21 +250,21 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             this._graph = echarts.init(this._graphContainer);
             this._graph._theme = this.globalTheme;
         });
-        this._listenWindowResize();
         if (this.data) {
             this.setOption(this.data.options);
         }
+        this._listenParentSizeChange();
     }
 
     ngOnDestroy() {
-        if (this._resizeEventRemoval) {
-            this._resizeEventRemoval();
-            this._resizeEventRemoval = null;
-        }
-
         if (this._graph) {
             this._graph.dispose();
             this._graph = null;
+        }
+
+        if (this._unsubscribeParentSizeChange) {
+            this._unsubscribeParentSizeChange.unsubscribe();
+            this._unsubscribeParentSizeChange = null;
         }
     }
 
