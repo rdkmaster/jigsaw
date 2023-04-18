@@ -8,6 +8,7 @@ $jigsaw-graph: #{$jigsaw-prefix}-graph;
 
     .#{$jigsaw-graph} {
         height: 100%;
+        overflow: hidden;
     }
 
 }
