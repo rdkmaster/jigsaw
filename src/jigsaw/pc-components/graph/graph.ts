@@ -15,6 +15,8 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
+import {debounceTime} from 'rxjs/operators';
+import {Subscription} from 'rxjs';
 
 import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
@@ -24,11 +26,19 @@ import {JigsawTheme} from "../../common/core/theming/theme";
 
 declare const echarts: any;
 
+declare class ResizeObserver {
+    constructor(cb);
+
+    disconnect();
+
+    observe(el);
+}
+
 // 某些情况，需要把Jigsaw在服务端一起编译，直接使用window对象，会导致后端编译失败
 declare const window: any;
 try {
     window.echarts = window.echarts || echarts;
-} catch(e) {
+} catch (e) {
 }
 
 @WingsTheme('graph.scss')
@@ -111,10 +121,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set width(value: string) {
         this._width = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'width', this._width);
-        if (this.initialized) {
-            this.resize();
-            this._listenWindowResize();
-        }
     }
 
     /**
@@ -128,10 +134,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set height(value: string) {
         this._height = CommonUtils.getCssValue(value);
         this._renderer.setStyle(this._host, 'height', this._height);
-        if (this.initialized) {
-            this.resize();
-            this._listenWindowResize();
-        }
     }
 
     /**
@@ -210,23 +212,45 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         });
     }
 
-    private _resizeEventRemoval: Function;
+    private _parentSizeChangeSubscription: Subscription;
+    private _resizeObserver: ResizeObserver;
 
-    private _listenWindowResize(): void {
-        if (!this._needListenWindowResize() || this._resizeEventRemoval) {
-            return;
-        }
+    private _listenParentSizeChange() {
         this._zone.runOutsideAngular(() => {
-            // 所有的全局事件应该放到zone外面，不一致会导致removeEvent失效，见#286
-            this._resizeEventRemoval = this._renderer.listen("window", "resize", () => {
-                this.resize();
+            const parentSizeChange = new EventEmitter();
+            if (this._resizeObserver) {
+                this._resizeObserver.disconnect();
+                this._resizeObserver = null;
+            }
+            this._resizeObserver = new ResizeObserver(entries => {
+                if (!this._graphContainer) {
+                    return;
+                }
+                // 父级尺寸发生变化，图形不变，可能会使html撑出滚动条，需要临时改成溢出隐藏
+                this._graphContainer.style.overflow = 'hidden';
+                parentSizeChange.emit(entries[0]);
             });
-        });
-    }
+            this._resizeObserver.observe(this._graphContainer);
 
-    private _needListenWindowResize(): boolean {
-        return ((this.width && this.width[this.width.length - 1] == '%') ||
-            (this.height && this.height[this.height.length - 1] == '%') || !this.width);
+            if (this._parentSizeChangeSubscription) {
+                this._parentSizeChangeSubscription.unsubscribe();
+                this._parentSizeChangeSubscription = null;
+            }
+
+            this._parentSizeChangeSubscription = parentSizeChange.pipe(debounceTime(300)).subscribe((entry) => {
+                if (!this._graphContainer || !entry || !entry.contentRect) {
+                    return;
+                }
+                const canvasEl = this._graphContainer.querySelector('canvas');
+                if (!canvasEl) {
+                    return;
+                }
+                if (Math.round(entry.contentRect.width) != canvasEl.offsetWidth || Math.round(entry.contentRect.height) != canvasEl.offsetHeight) {
+                    this.resize();
+                }
+                this._graphContainer.style.overflow = 'visible';
+            });
+        })
     }
 
     private _host: HTMLElement;
@@ -248,21 +272,26 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
             this._graph = echarts.init(this._graphContainer);
             this._graph._theme = this.globalTheme;
         });
-        this._listenWindowResize();
         if (this.data) {
             this.setOption(this.data.options);
         }
+        this._listenParentSizeChange();
     }
 
     ngOnDestroy() {
-        if (this._resizeEventRemoval) {
-            this._resizeEventRemoval();
-            this._resizeEventRemoval = null;
-        }
-
         if (this._graph) {
             this._graph.dispose();
             this._graph = null;
+        }
+
+        if (this._parentSizeChangeSubscription) {
+            this._parentSizeChangeSubscription.unsubscribe();
+            this._parentSizeChangeSubscription = null;
+        }
+
+        if (this._resizeObserver) {
+            this._resizeObserver.disconnect();
+            this._resizeObserver = null;
         }
     }
 
