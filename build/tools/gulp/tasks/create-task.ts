@@ -36,12 +36,12 @@ export function createTask(packageName: string) {
     });
 
     task(`:build:${packageName}-styles`, [
-        //`:build:${packageName}-all-theme-file`,
+        `:build:${packageName}-all-theme-file`,
         `:build:${packageName}-all-wrapped-theme`,
-        /*`:build:${packageName}-bundle-theming-scss`,
+        `:build:${packageName}-bundle-theming-scss`,
         `:build:${packageName}-copy-prebuilt-theme-settings`,
         `:build:${packageName}-copy-theming-api`,
-        `:build:${packageName}-all-component-styles`*/
+        `:build:${packageName}-all-component-styles`
     ]);
 
     task(`:build:${packageName}-all-theme-file`, function () {
@@ -54,6 +54,11 @@ export function createTask(packageName: string) {
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });
 
+    /**
+     * 只在root上添加.jigsaw-wrapped-theme，在canvas上添加.jigsaw-opened-theme
+     * :is(.jigsaw-wrapped-theme) :not(.jigsaw-opened-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除opened-theme下的元素，body使用.jigsaw-wrapped-them替换
+     * :where(.jigsaw-opened-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-opened-them替换
+     */
     task(`:build:${packageName}-all-wrapped-theme`, sequenceTask(
         `:${packageName}-copy-and-bundle-scss`,
         `:${packageName}-create-wrapped-theme`,
@@ -168,13 +173,13 @@ export function createTask(packageName: string) {
     }));
 
     task(`build:${packageName}`, sequenceTask(
-        /*':extract-theme-variables',
+        ':extract-theme-variables',
         ':create-component-wings-theme',
-        `:build:${packageName}-package`,*/
+        `:build:${packageName}-package`,
         `:build:${packageName}-styles`,
-        /*`:build:${packageName}-copy-files`,
+        `:build:${packageName}-copy-files`,
         'build:novice-guide',
-        'build:unified-paging',*/
+        'build:unified-paging',
     ));
 
     task(`build:${packageName}:clean`, sequenceTask(

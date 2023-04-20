@@ -16,17 +16,10 @@ export class JigsawTheme {
     private static _majorStyle: MajorStyle = null;
     private static _usingTheme: SupportedTheme;
 
-    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
-        majorStyle = majorStyle || this.majorStyle;
-        if (majorStyle != this.majorStyle) {
-            this.majorStyle = majorStyle;
-        }
-        this._usingTheme = theme;
-
+    private static _loadCss(linkId: string, cssHref: string): HTMLLinkElement {
         const head = document.getElementsByTagName("head")[0];
-        const linkId = 'jigsaw-theme';
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
-        const cssHref = `themes/${theme}-${majorStyle}.css`;
+
         if (themeLink && themeLink.href.endsWith(cssHref)) {
             return;
         }
@@ -39,7 +32,47 @@ export class JigsawTheme {
         style.rel = "stylesheet";
         style.href = cssHref;
         head.appendChild(style);
+        return style;
+    }
 
+    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        majorStyle = majorStyle || this.majorStyle;
+        if (majorStyle != this.majorStyle) {
+            this.majorStyle = majorStyle;
+        }
+        this._usingTheme = theme;
+
+        const style= this._loadCss('jigsaw-theme', `themes/${theme}-${majorStyle}.css`);
+        style.onload = () => {
+            this._themeProperties.splice(0, this._themeProperties.length);
+            this._readThemeProperties();
+            this.themeChange.emit({ usingTheme: this._usingTheme, majorStyle: this._majorStyle });
+            style.onload = null;
+        };
+    }
+
+    /**
+     * 封装皮肤不改变弹框背景、图形基础皮肤、css变量
+     * @param theme
+     * @param majorStyle
+     */
+    public static changeWrappedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        this._loadCss('jigsaw-wrapped-theme', `themes/wrapped-theme/${theme}-${majorStyle}-wrapped.css`);
+    }
+
+    /**
+     * 防止影响封装样式而生成的样式，也是全局样式，但不对封装样式产生影响
+     * @param theme
+     * @param majorStyle
+     */
+    public static changeOpenedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        majorStyle = majorStyle || this.majorStyle;
+        if (majorStyle != this.majorStyle) {
+            this.majorStyle = majorStyle;
+        }
+        this._usingTheme = theme;
+
+        const style = this._loadCss('jigsaw-opened-theme', `themes/wrapped-theme/${theme}-${majorStyle}-opened.css`);
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
             this._readThemeProperties();
