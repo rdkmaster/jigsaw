@@ -1,17 +1,53 @@
 import {join} from 'path';
 import {writeFileSync, readFileSync} from 'fs-extra';
+import {sync as glob} from 'glob';
+import {Bundler} from 'scss-bundle';
 
-export function createWrappedTheme(wrappedSelector: string, wrappedThemeHome: string, cssFile: string) {
+type WrappedType = 'outer' | 'inner';
+
+export const jigsawWrappedClass = {outer: '.jigsaw-outer-theme', inner: '.jigsaw-inner-theme'};
+
+export async function bundleWrappedScss(type: WrappedType, themingPrebuiltHome: string, scssHome: string) {
+    const allWrappedScssGlob = join(scssHome, '**/*.scss');
+    const files = glob('*.scss', {cwd: themingPrebuiltHome});
+    for (const filePath of files) {
+        const result = await new Bundler().Bundle(join(themingPrebuiltHome, filePath), [allWrappedScssGlob]);
+        const targetScssThemePath = join(scssHome, filePath.replace(/(.+)\.scss$/, `$1-${type}.scss`));
+        writeFileSync(targetScssThemePath, `
+                ${_getWrappedSelector(type)} {
+                    ${result.bundledContent}
+                }
+            `);
+    }
+}
+
+/**
+ * 只在root上添加.jigsaw-outer-theme，在canvas上添加.jigsaw-inner-theme
+ * :is(.jigsaw-outer-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除inner-theme下的元素，body使用.jigsaw-outer-them替换
+ * :where(.jigsaw-inner-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-inner-them替换
+ * @param type
+ */
+function _getWrappedSelector(type: WrappedType): string {
+    const {outer, inner} = jigsawWrappedClass;
+    return type == 'outer' ? `:is(${outer})` : `:where(${inner})`;
+}
+
+export function createWrappedTheme(wrappedThemeHome: string, cssFile: string) {
+    const wrappedType = cssFile.endsWith('-outer.css') ? 'outer' : 'inner';
+    const wrappedClass = jigsawWrappedClass[wrappedType];
+    const wrappedSelector = _getWrappedSelector(wrappedType);
     const rawCssThemePath = join(wrappedThemeHome, cssFile);
-    const targetCssThemePath = join(wrappedThemeHome, cssFile.replace(/(.+)\.css$/, `$1-wrapped.css`));
     let themeContent = readFileSync(rawCssThemePath).toString();
-    const wrappedBlockNameReg = wrappedSelector.replace(/\./g, '\\.');
+    const wrappedBlockNameReg = wrappedSelector.replace(/([.()])/g, '\\$1');
     const bodyReg = new RegExp(`${wrappedBlockNameReg}\\s+body\\b`, 'g');
-    const cssVarReg = new RegExp(`${wrappedBlockNameReg}\\s+:root\\s*{([^}]+)}`, 'g');
+
     // 替换body标签和css变量
-    themeContent = themeContent.replace(bodyReg, wrappedSelector)
+    // wrapped body要替换成wrapped-class，不能替换成wrapped-selector，防止伪类class匹配非body元素
+    themeContent = themeContent.replace(bodyReg, wrappedClass);
+    if (wrappedType == 'outer') {
         // css变量名后面添加-wrapped来区分:root下的变量
-        .replace(cssVarReg, function (found, match) {
+        const cssVarReg = new RegExp(`${wrappedBlockNameReg}\\s+:root\\s*{([^}]+)}`, 'g');
+        themeContent = themeContent.replace(cssVarReg, function (found, match) {
             const wrappedVar = match.split(';')
                 .map((m: string) => m.trim())
                 .filter((m: string) => !!m)
@@ -21,29 +57,13 @@ export function createWrappedTheme(wrappedSelector: string, wrappedThemeHome: st
                     }
                     return m.replace(/^--(.+)/, '--wrapped-$1');
                 }).join(';')
-            return `${wrappedSelector} {${wrappedVar}}`
+            return `${wrappedClass} {${wrappedVar}}`
         });
-    writeFileSync(targetCssThemePath, themeContent);
-}
-
-export function createOpenedTheme(wrappedSelector: string, wrappedThemeHome: string, cssFile: string) {
-    const rawCssThemePath = join(wrappedThemeHome, cssFile);
-    const targetCssThemePath = join(wrappedThemeHome, cssFile.replace(/(.+)\.css$/, `$1-opened.css`));
-    // 为了比wings-theme权重低需要加:where
-    const openedSelector = `:where(body :not(${wrappedSelector}))`;
-    let themeContent = readFileSync(rawCssThemePath).toString();
-    const wrappedBlockNameReg = wrappedSelector.replace(/\./g, '\\.');
-    const bodyReg = new RegExp(`${wrappedBlockNameReg}\\s+body\\b`, 'g');
-    const selectorReg = new RegExp(`${wrappedBlockNameReg}\\b`, 'g');
-    const cssVarReg = new RegExp(`${wrappedBlockNameReg}\\s+:root`, 'g');
-    // 替换body标签、wrapped选择器和css变量
-    themeContent = themeContent
-        // body先替换成tmp-selector，防止后面误替换
-        .replace(bodyReg, 'tmp-selector')
-        // opened theme 的css变量还原成 :root 变量
-        .replace(cssVarReg, ':root')
-        // wrapped选择器替换成opened选择器
-        .replace(selectorReg, openedSelector)
-        .replace(/tmp-selector/g, openedSelector);
-    writeFileSync(targetCssThemePath, themeContent);
+    }
+    if (wrappedType == 'inner') {
+        // inner theme 的css变量还原成 :root 变量
+        const cssVarReg = new RegExp(`${wrappedBlockNameReg}\\s+:root`, 'g');
+        themeContent = themeContent.replace(cssVarReg, ':root');
+    }
+    writeFileSync(rawCssThemePath, themeContent);
 }

@@ -1,7 +1,7 @@
 import { EventEmitter } from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
-export type SupportedTheme = 'paletx-pro' | 'vmax-pro';
+export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
 export type MajorStyle = "dark" | "light";
 export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 
@@ -56,8 +56,8 @@ export class JigsawTheme {
      * @param theme
      * @param majorStyle
      */
-    public static changeWrappedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
-        this._loadCss('jigsaw-wrapped-theme', `themes/wrapped-theme/${theme}-${majorStyle}-wrapped.css`);
+    public static changeOuterTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        this._loadCss('jigsaw-outer-theme', `themes/wrapped-theme/${theme}-${majorStyle}-outer.css`);
     }
 
     /**
@@ -65,14 +65,14 @@ export class JigsawTheme {
      * @param theme
      * @param majorStyle
      */
-    public static changeOpenedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+    public static changeInnerTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
             this.majorStyle = majorStyle;
         }
         this._usingTheme = theme;
 
-        const style = this._loadCss('jigsaw-opened-theme', `themes/wrapped-theme/${theme}-${majorStyle}-opened.css`);
+        const style = this._loadCss('jigsaw-inner-theme', `themes/wrapped-theme/${theme}-${majorStyle}-inner.css`);
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
             this._readThemeProperties();

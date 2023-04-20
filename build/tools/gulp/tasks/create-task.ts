@@ -2,13 +2,13 @@ import {dest, src, task} from 'gulp';
 import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
-import {writeFileSync, unlinkSync} from 'fs-extra';
+import {writeFileSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
 import {copyFiles, deleteFolderRecursive} from "../util/copy-files";
-import {createOpenedTheme, createWrappedTheme} from "../util/create-wrapped-theme";
+import {bundleWrappedScss, createWrappedTheme} from "../util/create-wrapped-theme";
 
 const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
@@ -54,11 +54,6 @@ export function createTask(packageName: string) {
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });
 
-    /**
-     * 只在root上添加.jigsaw-wrapped-theme，在canvas上添加.jigsaw-opened-theme
-     * :is(.jigsaw-wrapped-theme) :not(.jigsaw-opened-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除opened-theme下的元素，body使用.jigsaw-wrapped-them替换
-     * :where(.jigsaw-opened-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-opened-them替换
-     */
     task(`:build:${packageName}-all-wrapped-theme`, sequenceTask(
         `:${packageName}-copy-and-bundle-scss`,
         `:${packageName}-create-wrapped-theme`,
@@ -72,24 +67,14 @@ export function createTask(packageName: string) {
         const wrappedThemeComponentHome = join(wrappedThemeScssHome, packageName == 'jigsaw' ? 'pc-components' : 'mobile-components');
         copyFiles(jigsawCommonPath, '**/*scss', wrappedThemeCommonHome);
         copyFiles(jigsawPath, '**/*scss', wrappedThemeComponentHome);
-        const wrappedSelector = '.jigsaw-wrapped-theme';
         const allWrappedThemingPrebuiltHome = join(wrappedThemeComponentHome, 'theming/prebuilt/');
-        const allWrappedScssGlob = join(wrappedThemeScssHome, '**/*.scss');
-        const files = glob('*.scss', {cwd: allWrappedThemingPrebuiltHome});
-        for (const filePath of files) {
-            const result = await new Bundler().Bundle(join(allWrappedThemingPrebuiltHome, filePath), [allWrappedScssGlob]);
-            writeFileSync(join(wrappedThemeScssHome, filePath), `
-                ${wrappedSelector} {
-                    ${result.bundledContent}
-                }
-            `);
-        }
+        await bundleWrappedScss('outer', allWrappedThemingPrebuiltHome, wrappedThemeScssHome);
+        await bundleWrappedScss('inner', allWrappedThemingPrebuiltHome, wrappedThemeScssHome);
     });
 
     task(`:${packageName}-create-wrapped-theme`, async function () {
         const wrappedThemeHome = join(releasePath, 'prebuilt-themes', 'wrapped-theme');
         const wrappedThemeScssHome = join(wrappedThemeHome, 'scss');
-        const wrappedSelector = '.jigsaw-wrapped-theme';
         const files = glob('*.scss', {cwd: wrappedThemeScssHome});
         for (const filePath of files) {
             await new Promise(resolve => {
@@ -102,9 +87,7 @@ export function createTask(packageName: string) {
                     .pipe(dest(wrappedThemeHome))
                     .on('end', function () {
                         const rawCssFile = filePath.replace(/\.scss$/, '.css');
-                        createWrappedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
-                        createOpenedTheme(wrappedSelector, wrappedThemeHome, rawCssFile);
-                        unlinkSync(join(wrappedThemeHome, rawCssFile));
+                        createWrappedTheme(wrappedThemeHome, rawCssFile);
                         resolve();
                     });
             })
