@@ -524,29 +524,32 @@ export class InfiniteScrollPageableArray extends PageableArray {
         this._busy = true;
         this.ajaxStartHandler();
 
-        this._fixAjaxOptionsByMethod(options);
+        this._fixAjaxOptions(options);
 
-        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
-
-        this.http.request(options.method, pagingService, options)
+        this.http.request(options.method, this._pagingServerUrl, options)
             .pipe(
                 map(res => this.reviseData(res)),
                 map(data => {
                     this._updatePagingInfo(data);
 
-                    let arrayData = [];
-                    if (data && data.hasOwnProperty('data') && data.data instanceof Array) {
-                        arrayData = data.data;
+                    if (data?.data instanceof Array) {
+                        return data.data;
                     } else {
                         console.error('invalid data format, requires an object contains a data property which value is an array.');
                     }
-                    return arrayData;
+                    return [];
                 }))
             .subscribe(
                 arrayData => this.ajaxSuccessHandler(arrayData),
                 error => this.ajaxErrorHandler(error),
                 () => this.ajaxCompleteHandler()
             );
+    }
+
+    protected _pagingServerUrl: string;
+    protected _fixAjaxOptions(options: HttpClientOptions): void {
+        this._fixAjaxOptionsByMethod(options);
+        this._pagingServerUrl = this.pagingServerUrl || PagingInfo.pagingServerUrl;
     }
 
     protected ajaxSuccessHandler(data: any): void {
@@ -583,39 +586,8 @@ export class InfiniteScrollPageableArray extends PageableArray {
 }
 
 export class InfiniteScrollDirectPageableArray extends InfiniteScrollPageableArray {
-    protected _ajax(): void {
-        if (this._busy) {
-            this.ajaxErrorHandler(null);
-            return;
-        }
-        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
-        if (!options) {
-            console.error('invalid source request options, use updateDataSource() to reset the option.');
-            return;
-        }
-
-        this._busy = true;
-        this.ajaxStartHandler();
-
-        this.http.request(options.method, options.url, options)
-            .pipe(
-                map(res => this.reviseData(res)),
-                map(data => {
-                    this._updatePagingInfo(data);
-
-                    let arrayData = [];
-                    if (data && data.hasOwnProperty('data') && data.data instanceof Array) {
-                        arrayData = data.data;
-                    } else {
-                        console.error('invalid data format, requires an object contains a data property which value is an array.');
-                    }
-                    return arrayData;
-                }))
-            .subscribe(
-                arrayData => this.ajaxSuccessHandler(arrayData),
-                error => this.ajaxErrorHandler(error),
-                () => this.ajaxCompleteHandler()
-            );
+    protected _fixAjaxOptions(options: HttpClientOptions): void {
+        this._pagingServerUrl = options.url;
     }
 }
 

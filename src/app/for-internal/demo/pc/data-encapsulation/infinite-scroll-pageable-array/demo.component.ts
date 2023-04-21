@@ -74,6 +74,10 @@ export class InfiniteScrollPageableArrayDemoComponent {
         this.contentScrollbar.scrollToTop(0, 1);
     }
 
+    public _$handleNext() {
+        this.psa.nextPage();
+    }
+
     onAjaxSuccess(data): void {
         console.log(data);
     }
