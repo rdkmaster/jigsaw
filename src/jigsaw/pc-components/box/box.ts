@@ -344,5 +344,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     ngOnDestroy() {
         super.ngOnDestroy();
         this._removeAllResizeLineListener();
+        if (this._resizeLineParent) {
+            this._resizeLineParent.nativeElement.remove();
+        }
     }
 }

@@ -448,11 +448,4 @@ export class JigsawEditableBox extends JigsawBox {
     public manualUpdateChildren() {
         this._setChildrenBox();
     }
-
-    ngOnDestroy() {
-        super.ngOnDestroy();
-        if (this._resizeLineParent) {
-            this._resizeLineParent.nativeElement.remove();
-        }
-    }
 }
