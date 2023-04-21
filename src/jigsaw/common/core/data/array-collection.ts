@@ -347,7 +347,7 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._ajax();
     }
 
-    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+    protected _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
 
     protected _ajax(): void {
         if (this._busy) {
@@ -363,7 +363,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._busy = true;
         this.ajaxStartHandler();
 
-        console.log(options);
         this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
@@ -511,9 +510,48 @@ export class InfiniteScrollPageableArray extends PageableArray {
         this._isAppend = true;
     }
 
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this._fixAjaxOptionsByMethod(options);
+
+        const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+
+        this.http.request(options.method, pagingService, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    let arrayData = [];
+                    if (data && data.hasOwnProperty('data') && data.data instanceof Array) {
+                        arrayData = data.data;
+                    } else {
+                        console.error('invalid data format, requires an object contains a data property which value is an array.');
+                    }
+                    return arrayData;
+                }))
+            .subscribe(
+                arrayData => this.ajaxSuccessHandler(arrayData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
+
     protected ajaxSuccessHandler(data: any): void {
         console.log("get data from paging server success!!");
-        if (_fromArray(this, data.toArray(), this._isAppend)) {
+        if (_fromArray(this, data, this._isAppend)) {
             this.refresh();
             if (this._dataSourceChanged) {
                 this.componentDataHelper.invokeChangeCallback();
@@ -541,6 +579,43 @@ export class InfiniteScrollPageableArray extends PageableArray {
             this.pagingInfo['_currentPage'] = 1;
             this._ajax();
         });
+    }
+}
+
+export class InfiniteScrollDirectPageableArray extends InfiniteScrollPageableArray {
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this.http.request(options.method, options.url, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    let arrayData = [];
+                    if (data && data.hasOwnProperty('data') && data.data instanceof Array) {
+                        arrayData = data.data;
+                    } else {
+                        console.error('invalid data format, requires an object contains a data property which value is an array.');
+                    }
+                    return arrayData;
+                }))
+            .subscribe(
+                arrayData => this.ajaxSuccessHandler(arrayData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
     }
 }
 

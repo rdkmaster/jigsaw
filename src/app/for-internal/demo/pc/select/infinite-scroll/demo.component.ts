@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray } from "jigsaw/public_api";
+import { InfiniteScrollLocalPageableArray, InfiniteScrollPageableArray, TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -41,6 +41,9 @@ export class SelectInfiniteScrollDemoComponent {
         });
         this.data.pagingInfo.pageSize = 20;
         this.data.fromAjax();
+        this.data.dataReviser = (td) => {
+            return { data: TableData.toArray(td), paging : td.paging };
+        };
     }
 
     public _$resetData() {
@@ -61,6 +64,9 @@ export class SelectInfiniteScrollDemoComponent {
         });
         this.data.pagingInfo.pageSize = 20;
         this.data.fromAjax();
+        this.data.dataReviser = (td) => {
+            return { data: TableData.toArray(td), paging : td.paging };
+        };
     }
 
     public _$switchData() {
