@@ -13,6 +13,7 @@ import { JigsawCollapse } from "../collapse/collapse";
 import { TranslateService } from "@ngx-translate/core";
 
 export type SelectOption = {
+    
     disabled?: boolean;
     label?: string;
     [field: string]: string | boolean | SelectOption[];
