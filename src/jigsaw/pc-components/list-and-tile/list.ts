@@ -92,7 +92,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     }
 
     public set selected(value: boolean) {
-        if (this._selected === value || this.disabled) {
+        if (this._selected === value) {
             return;
         }
         this._selected = value;

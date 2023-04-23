@@ -223,7 +223,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
                 background: none;
                 color: $brand-default;
 
-                &:hover {
+                &:not(.#{$jigsaw-list-option}-disabled):hover {
                     background: $bg-hover;
                 }
             }

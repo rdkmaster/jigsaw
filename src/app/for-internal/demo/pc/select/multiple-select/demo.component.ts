@@ -69,9 +69,10 @@ export class MultipleSelectDemoComponent {
         { label: "文本选项11" }
     ]
 
-    selectedArrayData = [{ label: "文本选项1" }];
+    selectedArrayData = [{ label: "文本选项1" }, { label: "文本选项2" }, { label: "禁用选项3", disabled: true }];
     selectedArrayData1 = null;
     selectedArrayData2 = undefined;
+    selectedArrayData3 = [{ label: "禁用选项3", disabled: true }, { label: "禁用选项7", disabled: true }]
 
     clearSelection() {
         this.selectedArrayData = null;
