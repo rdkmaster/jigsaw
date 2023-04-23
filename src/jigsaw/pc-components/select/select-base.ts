@@ -13,7 +13,6 @@ import { JigsawCollapse } from "../collapse/collapse";
 import { TranslateService } from "@ngx-translate/core";
 
 export type SelectOption = {
-    
     disabled?: boolean;
     label?: string;
     [field: string]: string | boolean | SelectOption[];
@@ -384,7 +383,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 全选按钮只考虑可选内容，不考虑disabled
      * 会存在当前已选不在当期列表中的情况(已选项默认disabled)
      */
-    protected _allSelectCheck() {
+    protected _allSelectCheck(): boolean {
         const validData = this._getValidData();
         if (!this._$selectedItems || !validData.length) {
             return false;
@@ -396,7 +395,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * 判断已选内容是否全为disabled项
      */
-    private _allDisabledCheck() {
+    private _allDisabledCheck(): boolean {
         const disabledData = this._getDisabledData();
         if (!this._$selectedItems || !disabledData.length) {
             return false;
