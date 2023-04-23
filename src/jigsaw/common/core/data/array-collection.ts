@@ -16,6 +16,7 @@ import {
     IServerSidePageable,
     ISortable,
     PagingInfo,
+    PreparedHttpClientOptions,
     serializeFilterFunction,
     SortAs,
     SortOrder
@@ -347,7 +348,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._ajax();
     }
 
-    protected _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+    protected _fixAjaxOptionsByMethod(options: PreparedHttpClientOptions) {
+        fixAjaxOptionsByMethod.call(this, options);
+    }
 
     protected _ajax(): void {
         if (this._busy) {
@@ -524,7 +527,7 @@ export class InfiniteScrollPageableArray extends PageableArray {
         this._busy = true;
         this.ajaxStartHandler();
 
-        this._fixAjaxOptions(options);
+        this._fixAjaxOptionsByMethod(options);
 
         this.http.request(options.method, this._pagingServerUrl, options)
             .pipe(
@@ -547,8 +550,9 @@ export class InfiniteScrollPageableArray extends PageableArray {
     }
 
     protected _pagingServerUrl: string;
-    protected _fixAjaxOptions(options: HttpClientOptions): void {
-        this._fixAjaxOptionsByMethod(options);
+
+    protected _fixAjaxOptionsByMethod(options: HttpClientOptions): void {
+        super._fixAjaxOptionsByMethod(options);
         this._pagingServerUrl = this.pagingServerUrl || PagingInfo.pagingServerUrl;
     }
 
@@ -586,7 +590,7 @@ export class InfiniteScrollPageableArray extends PageableArray {
 }
 
 export class InfiniteScrollDirectPageableArray extends InfiniteScrollPageableArray {
-    protected _fixAjaxOptions(options: HttpClientOptions): void {
+    protected _fixAjaxOptionsByMethod(options: HttpClientOptions): void {
         this._pagingServerUrl = options.url;
     }
 }
