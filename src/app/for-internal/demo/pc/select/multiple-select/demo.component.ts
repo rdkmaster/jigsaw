@@ -82,6 +82,10 @@ export class MultipleSelectDemoComponent {
         this.fullSelectedOption = null;
     }
 
+    toggleDisabled() {
+        this.dataList.forEach(i => i.disabled = !i.disabled);
+    }
+
     valueChange($event) {
         console.log($event);
     }

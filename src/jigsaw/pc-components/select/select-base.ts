@@ -347,7 +347,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$selectAll() {
-        const disabledSelectedItems = this._getDisabledSelectedItems();
+        const disabledSelectedItems = this._$selectedItems.concat().filter(item => item.disabled);
         if (this._allSelectCheck()) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
@@ -396,13 +396,16 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 判断已选内容是否全为disabled项
      */
     private _allDisabledCheck(): boolean {
-        const disabledData = this._getDisabledData();
-        if (!this._$selectedItems || !disabledData.length) {
+        if (!this._$selectedItems) {
+            return false;
+        }
+        const disabledData = this._data.concat().filter(item => item.disabled);
+        if (!disabledData.length) {
             return false;
         }
         return this._$selectedItems.every(
             selectedItem => !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy))
-        )
+        );
     }
 
     /**
@@ -511,14 +514,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     protected _getValidData(): SelectOption[] {
         // 不能直接使用this.data.filter，data可能是LocalPageableArray或者PageableArray，filter api不一样
         return this._data.concat().filter(item => !item.disabled);
-    }
-
-    private _getDisabledData(): SelectOption[] {
-        return this._data.concat().filter(item => item.disabled);
-    }
-
-    private _getDisabledSelectedItems() {
-        return this._$selectedItems.concat().filter(item => item.disabled);
     }
 
     protected _updateViewData(): void { }
