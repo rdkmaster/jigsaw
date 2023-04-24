@@ -16,6 +16,7 @@ import {
     IServerSidePageable,
     ISortable,
     PagingInfo,
+    PreparedHttpClientOptions,
     serializeFilterFunction,
     SortAs,
     SortOrder
@@ -347,7 +348,9 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._ajax();
     }
 
-    private _fixAjaxOptionsByMethod = fixAjaxOptionsByMethod.bind(this);
+    protected _fixAjaxOptionsByMethod(options: PreparedHttpClientOptions) {
+        fixAjaxOptionsByMethod.call(this, options);
+    }
 
     protected _ajax(): void {
         if (this._busy) {
@@ -363,7 +366,6 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
         this._busy = true;
         this.ajaxStartHandler();
 
-        console.log(options);
         this._fixAjaxOptionsByMethod(options);
 
         const pagingService = this.pagingServerUrl || PagingInfo.pagingServerUrl;
@@ -452,22 +454,16 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public changePage(currentPage, pageSize?: number): void {
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
-        let needRefresh: boolean = false;
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
-            needRefresh = true;
         } else {
             console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
         if (pi.pageSize > 0) {
             this.pagingInfo.pageSize = pi.pageSize;
-            needRefresh = true;
         } else {
             console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-        }
-        if (needRefresh) {
-            this._ajax();
         }
     }
 
@@ -511,9 +507,52 @@ export class InfiniteScrollPageableArray extends PageableArray {
         this._isAppend = true;
     }
 
+    protected _ajax(): void {
+        if (this._busy) {
+            this.ajaxErrorHandler(null);
+            return;
+        }
+        const options = HttpClientOptions.prepare(this.sourceRequestOptions);
+        if (!options) {
+            console.error('invalid source request options, use updateDataSource() to reset the option.');
+            return;
+        }
+
+        this._busy = true;
+        this.ajaxStartHandler();
+
+        this._fixAjaxOptionsByMethod(options);
+
+        this.http.request(options.method, this._pagingServerUrl, options)
+            .pipe(
+                map(res => this.reviseData(res)),
+                map(data => {
+                    this._updatePagingInfo(data);
+
+                    if (data?.data instanceof Array) {
+                        return data.data;
+                    } else {
+                        console.error('invalid data format, requires an object contains a data property which value is an array.');
+                    }
+                    return [];
+                }))
+            .subscribe(
+                arrayData => this.ajaxSuccessHandler(arrayData),
+                error => this.ajaxErrorHandler(error),
+                () => this.ajaxCompleteHandler()
+            );
+    }
+
+    protected _pagingServerUrl: string;
+
+    protected _fixAjaxOptionsByMethod(options: HttpClientOptions): void {
+        super._fixAjaxOptionsByMethod(options);
+        this._pagingServerUrl = this.pagingServerUrl || PagingInfo.pagingServerUrl;
+    }
+
     protected ajaxSuccessHandler(data: any): void {
         console.log("get data from paging server success!!");
-        if (_fromArray(this, data.toArray(), this._isAppend)) {
+        if (_fromArray(this, data, this._isAppend)) {
             this.refresh();
             if (this._dataSourceChanged) {
                 this.componentDataHelper.invokeChangeCallback();
@@ -541,6 +580,12 @@ export class InfiniteScrollPageableArray extends PageableArray {
             this.pagingInfo['_currentPage'] = 1;
             this._ajax();
         });
+    }
+}
+
+export class InfiniteScrollDirectPageableArray extends InfiniteScrollPageableArray {
+    protected _fixAjaxOptionsByMethod(options: HttpClientOptions): void {
+        this._pagingServerUrl = options.url;
     }
 }
 

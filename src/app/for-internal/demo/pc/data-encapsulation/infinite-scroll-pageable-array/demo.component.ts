@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Renderer2, ViewChild } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import { InfiniteScrollPageableArray, SortAs, SortOrder } from "jigsaw/public_api";
+import { InfiniteScrollPageableArray, SortAs, SortOrder, TableData } from "jigsaw/public_api";
 import { PerfectScrollbarDirective } from "ngx-perfect-scrollbar";
 
 @Component({
@@ -25,6 +25,9 @@ export class InfiniteScrollPageableArrayDemoComponent {
         this.psa.onAjaxError(this.onAjaxError, this);
         this.psa.pagingInfo.pageSize = 20;
         this.psa.fromAjax();
+        this.psa.dataReviser = (td) => {
+            return { data: TableData.toArray(td), paging : td.paging };
+        };
     }
 
     public _$handleSearching(filterKey?: string) {
@@ -51,6 +54,9 @@ export class InfiniteScrollPageableArrayDemoComponent {
         });
         this.psa.pagingInfo.pageSize = 20;
         this.psa.fromAjax();
+        this.psa.dataReviser = (td) => {
+            return { data: TableData.toArray(td), paging : td.paging };
+        };
         this.contentScrollbar.scrollToTop(0, 1);
     }
 
@@ -62,7 +68,14 @@ export class InfiniteScrollPageableArrayDemoComponent {
         });
         this.psa.pagingInfo.pageSize = 20;
         this.psa.fromAjax();
+        this.psa.dataReviser = (td) => {
+            return { data: TableData.toArray(td), paging : td.paging };
+        };
         this.contentScrollbar.scrollToTop(0, 1);
+    }
+
+    public _$handleNext() {
+        this.psa.nextPage();
     }
 
     onAjaxSuccess(data): void {

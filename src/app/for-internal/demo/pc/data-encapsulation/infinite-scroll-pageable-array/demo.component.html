@@ -24,16 +24,22 @@
             </jigsaw-radio-option>
         </jigsaw-radios>
     </li>
+    <li class="demo-options-item">
+        <span>动作：</span>
+        <jigsaw-button (click)="_$handleNext()">手动触发下一页</jigsaw-button>
+    </li>
 </ul>
 
 <jigsaw-header>无限滚动</jigsaw-header>
 <div class="demo-cntr">
     <ul class="demo-list" #contentScrollbar
         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-        <li *ngFor="let item of psa; index as i" class="demo-list-item">
-            <span>{{i + "." + item.name}}</span>
-            <span>{{item.gender}}</span>
-        </li>
+        <div>
+            <li *ngFor="let item of psa; index as i" class="demo-list-item">
+                <span>{{i + "." + item.name}}</span>
+                <span>{{item.gender}}</span>
+            </li>
+        </div>
     </ul>
     <div *ngIf="psa['busy']" class="demo-list-loading">
         <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
