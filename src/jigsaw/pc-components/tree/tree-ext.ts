@@ -325,6 +325,8 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         if (!this._setting || !this.data || !$) {
             return;
         }
+        console.log(this.data);
+        console.log(this.data.nodes);
         this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this.data.nodes);
         this._setZTreeIcon()
     }

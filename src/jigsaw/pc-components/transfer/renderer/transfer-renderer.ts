@@ -423,7 +423,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
 
     private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
         for (let i = 0, length = nodes.length; i < length; i++) {
-            if (!nodes[i].nodes) {
+            if (nodes[i].nodes) {
                 result = this._getLeafNodes(nodes[i].nodes, result);
                 continue;
             }
@@ -452,6 +452,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         if (!tree || !tree.length) {
             return [];
         }
+        console.log(tree);
         for (let i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
                 let newNode = {...tree[i], nodes: [{isTransferTreeParentNode: '', isHidden: true}]};
