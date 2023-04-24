@@ -454,22 +454,16 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     public changePage(currentPage, pageSize?: number): void {
         pageSize = isNaN(+pageSize) ? this.pagingInfo.pageSize : pageSize;
         const pi: PagingInfo = currentPage instanceof PagingInfo ? currentPage : new PagingInfo(currentPage, +pageSize);
-        let needRefresh: boolean = false;
 
         if (pi.currentPage >= 1 && pi.currentPage <= this.pagingInfo.totalPage) {
             this.pagingInfo.currentPage = pi.currentPage;
-            needRefresh = true;
         } else {
             console.error(`invalid currentPage[${pi.currentPage}], it should be between in [1, ${this.pagingInfo.totalPage}]`);
         }
         if (pi.pageSize > 0) {
             this.pagingInfo.pageSize = pi.pageSize;
-            needRefresh = true;
         } else {
             console.error(`invalid pageSize[${pi.pageSize}], it should be greater than 0`);
-        }
-        if (needRefresh) {
-            this._ajax();
         }
     }
 

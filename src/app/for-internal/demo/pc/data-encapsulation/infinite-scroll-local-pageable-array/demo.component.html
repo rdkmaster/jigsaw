@@ -34,8 +34,10 @@
 <jigsaw-header>无限滚动</jigsaw-header>
 <ul class="demo-list" #contentScrollbar
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-    <li *ngFor="let item of lpsa" class="demo-list-item">
-        <span>{{item.label}}</span>
-        <span>{{item.groupName}}</span>
-    </li>
+    <div>
+        <li *ngFor="let item of lpsa" class="demo-list-item">
+            <span>{{item.label}}</span>
+            <span>{{item.groupName}}</span>
+        </li>
+    </div>
 </ul>

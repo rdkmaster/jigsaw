@@ -34,10 +34,12 @@
 <div class="demo-cntr">
     <ul class="demo-list" #contentScrollbar
         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
-        <li *ngFor="let item of psa; index as i" class="demo-list-item">
-            <span>{{i + "." + item.name}}</span>
-            <span>{{item.gender}}</span>
-        </li>
+        <div>
+            <li *ngFor="let item of psa; index as i" class="demo-list-item">
+                <span>{{i + "." + item.name}}</span>
+                <span>{{item.gender}}</span>
+            </li>
+        </div>
     </ul>
     <div *ngIf="psa['busy']" class="demo-list-loading">
         <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>

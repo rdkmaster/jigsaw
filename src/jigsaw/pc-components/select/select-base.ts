@@ -714,6 +714,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
     }
 
     protected _setData(value: ArrayCollection<GroupSelectOption> | GroupSelectOption[] | InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray) {
+        this._viewData = undefined;
         if (value instanceof InfiniteScrollLocalPageableArray || value instanceof InfiniteScrollPageableArray) {
             this._data = value;
             return;
