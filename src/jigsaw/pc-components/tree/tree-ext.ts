@@ -4,6 +4,7 @@ import {InternalUtils} from "../../common/core/utils/internal-utils";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {ZTreeIconSuit, ZTreeSettings} from "./ztree-types";
 import {toClassName, rxIconUrl, SimpleTreeData, TreeData} from "../../common/core/data/tree-data";
+import { SimpleNode } from '../../common/core/data/tree-data';
 
 declare const $;
 
@@ -331,16 +332,38 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         if (zTreeIconStyle) {
             document.head.removeChild(zTreeIconStyle);
         }
+        this._nodeStates  = {};
     }
 
     private _updateTree() {
         if (!this._setting || !this.data || !$) {
             return;
         }
-        console.log(this.data);
-        console.log(this.data.nodes);
+        this._updateNodesStatus(this.data.nodes);
         this.ztree = $.fn.zTree.init($("#" + this._$uniqueId), this._setting, this.data.nodes);
         this._setZTreeIcon()
+    }
+
+    private _nodeStates  = {};
+    private _updateNodesStatus(data) {
+        data.forEach(node => {
+            if (CommonUtils.isDefined(node[this.trackItemBy])) {
+                const status = this._nodeStates[node[this.trackItemBy]];
+                if (CommonUtils.isDefined(status)) {
+                    node['open'] = status == 'expanded';
+                }
+            }
+            if (node.nodes?.length > 0) {
+                this._updateNodesStatus(node.nodes);
+            }
+        });
+    }
+
+    private _saveNodeStatus(treeNode: SimpleNode, status: string) {
+        if (!this.saveOpenStatus || CommonUtils.isUndefined(treeNode[this.trackItemBy])) {
+            return;
+        }
+        this._nodeStates[String(treeNode[this.trackItemBy])] = status;
     }
 
     public selectNodes(key: string, value: any, parentNode: any) {
@@ -624,6 +647,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             event.stopPropagation();
             that._setTreeEvent.call(that, "onCollapse", treeId, treeNode, event);
             that._callCustomCallbackEvent("onCollapse", event, treeId, treeNode);
+            that._saveNodeStatus(treeNode, "collapsed");
         }
 
         function on_dblclick(event, treeId, treeNode) {
@@ -654,6 +678,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             event.stopPropagation();
             that._setTreeEvent.call(that, "onExpand", treeId, treeNode, event);
             that._callCustomCallbackEvent("onExpand", event, treeId, treeNode);
+            that._saveNodeStatus(treeNode, "expanded");
         }
 
         function on_mouseDown(event, treeId, treeNode) {
