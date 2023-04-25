@@ -347,11 +347,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$selectAll() {
+        const disabledSelectedItems = this._$selectedItems.concat().filter(item => item.disabled);
         if (this._allSelectCheck()) {
-            this._$selectedItems = new ArrayCollection([]);
+            this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = new ArrayCollection(this._getValidData());
+            this._$selectedItems = new ArrayCollection(this._getValidData().concat(disabledSelectedItems));
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
@@ -365,71 +366,64 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$checkSelectAll() {
         this._changeDetector.markForCheck();
-        if (!this._$selectedItems || this._$selectedItems.length === 0 || this._validDataAllNotSelected()) {
+        if (!this._$selectedItems || this._$selectedItems.length === 0) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
         if (this._allSelectCheck()) {
             this._$selectAllChecked = CheckBoxStatus.checked;
+        } else if (this._allDisabledCheck()) {
+            this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             this._$selectAllChecked = CheckBoxStatus.indeterminate;
         }
     }
 
     /**
-     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
+     * 全选按钮只考虑可选内容，不考虑disabled
+     * 会存在当前已选不在当期列表中的情况(已选项默认disabled)
      */
-    private _validDataAllNotSelected(): boolean {
+    protected _allSelectCheck(): boolean {
         const validData = this._getValidData();
         if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return this.searchable && this._$selectedItems.every(
-            item => !validData.find(data => CommonUtils.compareValue(item, data, this.trackItemBy)))
-    }
-
-    /**
-     * 搜索过滤的时候会存在当前已选不在当期列表中的情况
-     */
-    protected _validDataAllSelected(): boolean {
-        const validData = this._getValidData();
-        if (!this._$selectedItems || !validData.length) {
-            return false;
-        }
-        return this.searchable && validData.every(
+        return validData.every(
             data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
     }
 
-    protected _allSelectCheck() {
-        const validData = this._getValidData();
-        if (!this._$selectedItems || !validData.length) {
+    /**
+     * 判断已选内容是否全为disabled项
+     */
+    private _allDisabledCheck(): boolean {
+        if (!this._$selectedItems) {
             return false;
         }
-        if (this.searchable) {
-            return this._validDataAllSelected();
-        } else {
-            return this._$selectedItems.length === validData.length;
+        const disabledData = this._data.concat().filter(item => item.disabled);
+        if (!disabledData.length) {
+            return false;
         }
+        return this._$selectedItems.every(
+            selectedItem => !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy))
+        );
     }
 
     /**
      * @internal
      */
-    public _$showAllStatistics(validData?: SelectOption[]): boolean {
+    public _$showAllStatistics(): boolean {
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false
         }
-        validData = validData || this._getValidData();
         if (this._$infiniteScroll) {
             // this._$infiniteScroll为真就确保是滚动分页数据类型了
             const data = <InfiniteScrollLocalPageableArray<SelectOption> | InfiniteScrollPageableArray>this.data;
             return this._$selectedItems.length === data.pagingInfo.totalRecord;
         }
-        if (this.searchable) {
-            return this._$selectedItems.length === validData.length && !this._searchKey;
-        } else {
-            return this._$selectedItems.length === validData.length;
+        if (!this.data.length) {
+            return false;
         }
+        return this._$selectedItems.length === this.data.length;
     }
 
     /**
@@ -439,11 +433,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!this.multipleSelect || !this.useStatistics || !this._$selectedItems || !this._$selectedItems.length) {
             return false;
         }
-        const validData = this._getValidData();
-        if (!validData.length) {
+        if (!this.data.length) {
             return false;
         }
-        return !this._$showAllStatistics(validData);
+        return !this._$showAllStatistics();
     }
 
     /**
