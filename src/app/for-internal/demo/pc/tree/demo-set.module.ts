@@ -20,6 +20,8 @@ import { ZtreeSizeComponent } from './size/demo.component';
 import { TreeSizeDemoModule } from './size/demo.module';
 import { ZtreeSelectDemoModule } from "./select/demo.module";
 import { ZtreeSelectDemoComponent } from "./select/demo.component";
+import { TreeSaveOpenStatusDemoComponent } from "./save-open-status/demo.component";
+import { TreeSaveOpenStatusDemoModule } from "./save-open-status/demo.module";
 
 export const routerConfig = [
     {
@@ -51,6 +53,9 @@ export const routerConfig = [
     },
     {
         path: 'select', component: ZtreeSelectDemoComponent
+    },
+    {
+        path: 'save-open-status', component: TreeSaveOpenStatusDemoComponent
     }
 ];
 
@@ -59,7 +64,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
         TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeFuzzySearchDemoModule, TreeSizeDemoModule,
-        ZtreeSelectDemoModule
+        ZtreeSelectDemoModule, TreeSaveOpenStatusDemoModule
     ],
     exports: [
     ],

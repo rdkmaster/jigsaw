@@ -108,6 +108,18 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     @Input()
     public size: "default" | "medium" | "large" = "default";
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public trackItemBy: string = "label";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public saveOpenStatus: boolean = false;
+
     private _iconSuit: ZTreeIconSuit = {
         edit: "e166",
         remove: "e179",
