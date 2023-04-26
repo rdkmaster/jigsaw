@@ -454,7 +454,6 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         for (let i = 0; i < tree.length; i++) {
             if (tree[i].nodes) {
                 let newNode = {...tree[i], nodes: [{isTransferTreeParentNode: '', isHidden: true}]};
-                // newNode['open'] = true;
                 arr.push(newNode);
                 this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
             } else {
