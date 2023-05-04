@@ -538,12 +538,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    private _selectedItems: ArrayCollection<ListOption> | any[] = new ArrayCollection([]);
+    public _$selectedItems: LocalPageableArray<ListOption> | any[] = new LocalPageableArray([]);
 
     @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<ListOption> | any[] {
-        return this._selectedItems;
+        return this._$selectedItems['_bakData'];
     }
 
     public set selectedItems(value: ArrayCollection<ListOption> | any[]) {
@@ -551,11 +551,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return;
         }
 
-        if (value instanceof Array) {
-            value = new ArrayCollection(value);
-        }
-
-        this._selectedItems = value;
+        this._$selectedItems = new LocalPageableArray<ListOption>();
+        this._$selectedItems.pagingInfo.pageSize = Infinity;
+        this._$selectedItems.fromArray(value as any[]);
 
         if (this.destComponent) {
             this.destComponent.data = value;
@@ -568,7 +566,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeSelectedItemsChangeListener = null;
         }
 
-        this._removeSelectedItemsChangeListener = (<ArrayCollection<ListOption>>this._selectedItems).onRefresh(() => {
+        this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.destComponent.reset();
             this._checkDestSelectAll();
