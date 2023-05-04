@@ -6,6 +6,7 @@ import {
     EventEmitter,
     Injector,
     Input,
+    NgZone,
     Output,
     ViewChild,
     ViewEncapsulation
@@ -339,7 +340,8 @@ export class TransferListDestRenderer extends TransferListRendererBase {
 export abstract class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector,
+        protected _zone: NgZone) {
         super();
     }
 
@@ -421,21 +423,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
-    private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
-        for (let i = 0, length = nodes.length; i < length; i++) {
-            if (nodes[i].nodes) {
-                result = this._getLeafNodes(nodes[i].nodes, result);
-                continue;
-            }
-            if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
-                result.push(nodes[i]);
-            }
-        }
-        return result;
-    }
-
     public update(): void {
-        this.validData = new ArrayCollection(this._getLeafNodes([this.data]));
         this.currentSelectedItems = this.selectedItems;
     }
 
@@ -467,17 +455,59 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         return arr;
     }
 
-    public dataFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>): Array<any> {
+    public dataFilter(selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
         const keyMap = selectedItems.map(item => item[this.trackItemBy]);
-        const result = [];
-        return this._filterTree(data.nodes, keyMap, result, '');
+        setTimeout(() => {
+            if (!this.treeExt) {
+                return
+            }
+
+            const needClose = [];
+            keyMap.forEach(key => {
+                const node = this.treeExt.ztree.getNodeByParam(this.trackItemBy, key);
+                if (!node || node.isHidden) {
+                    return;
+                }
+                needClose.push(node);
+            })
+            this.treeExt.ztree.hideNodes(needClose);
+
+            const hiddenNodes = this.treeExt.ztree.getNodesByParam('isHidden', true);
+            const needOpen = hiddenNodes.filter(node => {
+                if (this._searchKey.length > 0) {
+                    return !keyMap.some(key => node[this.trackItemBy] == key) || !node[this.labelField].includes(this._searchKey)
+                }
+                return !keyMap.some(key => node[this.trackItemBy] == key)
+            });
+            this.treeExt.ztree.showNodes(needOpen);
+
+            if (this._searchKey.length > 0) {
+                const leafOpenNodes = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => node.isHidden == false);
+                if (!leafOpenNodes.length) {
+                    return;
+                }
+                const needClose = [];
+                leafOpenNodes.forEach(node => {
+                    if (node[this.labelField].includes(this._searchKey)) {
+                        return;
+                    }
+                    needClose.push(node);
+                })
+                this.treeExt.ztree.hideNodes(needClose);
+            }
+
+            this.treeExt.ztree.checkAllNodes(false);
+
+            this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => node.isHidden == false);
+            changeDetectorRef.markForCheck();
+
+        }, 0);
     }
 
-    public searchFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, $event: string) {
-        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
-        const result = [];
-        const searchKey = $event.length > 0 ? $event.trim() : "";
-        return this._filterTree(data.nodes, keyMap, result, searchKey);
+    private _searchKey: string = "";
+    public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string) {
+        this._searchKey = $event.length > 0 ? $event.trim() : "";
+        this.dataFilter(selectedItems);
     }
 
     ngAfterViewInit() {

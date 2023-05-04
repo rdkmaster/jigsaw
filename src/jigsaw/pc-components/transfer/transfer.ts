@@ -345,6 +345,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     console.error("输入的数据结构与渲染器不匹配")
                 }
             } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
+                
                 if (value instanceof SimpleTreeData) {
                     this._data = value;
                     if (this._removeOnChangeListener) {
@@ -356,6 +357,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.reset();
                     })
                     this._refreshForTreeData(value);
+                    this.sourceComponent.reset();
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
                 }
@@ -520,8 +522,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForTreeData(value: SimpleTreeData): void {
-        this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
+        this.sourceComponent.data = value;
         this.sourceComponent.update();
+        this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef)
         this.destComponent.data = this.selectedItems;
     }
 
@@ -791,7 +794,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
+            this.sourceComponent.searchFilter(this.selectedItems, $event);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
@@ -822,7 +825,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
@@ -853,7 +856,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         });
         this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
         if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
