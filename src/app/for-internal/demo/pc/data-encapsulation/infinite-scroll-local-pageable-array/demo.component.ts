@@ -66,6 +66,10 @@ export class InfiniteScrollLocalPageableArrayDemoComponent {
         }
     }
 
+    public _$handleNext() {
+        this.lpsa.nextPage();
+    }
+
     ngAfterViewInit() {
         const el = this.contentScrollbar.elementRef.nativeElement;
         this._renderer.listen(el, "ps-y-reach-end", ($event) => {
