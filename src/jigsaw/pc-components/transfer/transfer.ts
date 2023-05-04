@@ -345,7 +345,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     console.error("输入的数据结构与渲染器不匹配")
                 }
             } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-                
                 if (value instanceof SimpleTreeData) {
                     this._data = value;
                     if (this._removeOnChangeListener) {
@@ -794,7 +793,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.searchFilter(this.selectedItems, $event);
+            this.sourceComponent.searchFilter(this.selectedItems, $event, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)

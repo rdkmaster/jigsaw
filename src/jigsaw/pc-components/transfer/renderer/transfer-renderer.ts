@@ -6,7 +6,6 @@ import {
     EventEmitter,
     Injector,
     Input,
-    NgZone,
     Output,
     ViewChild,
     ViewEncapsulation
@@ -340,8 +339,7 @@ export class TransferListDestRenderer extends TransferListRendererBase {
 export abstract class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector,
-        protected _zone: NgZone) {
+        protected _injector: Injector) {
         super();
     }
 
@@ -505,9 +503,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 
     private _searchKey: string = "";
-    public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string) {
+    public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string, changeDetectorRef: ChangeDetectorRef) {
         this._searchKey = $event.length > 0 ? $event.trim() : "";
-        this.dataFilter(selectedItems);
+        this.dataFilter(selectedItems, changeDetectorRef);
     }
 
     ngAfterViewInit() {
