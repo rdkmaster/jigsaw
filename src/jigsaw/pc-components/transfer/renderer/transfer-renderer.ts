@@ -6,20 +6,22 @@ import {
     EventEmitter,
     Injector,
     Input,
+    NgZone,
     Output,
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
+import {take} from "rxjs/operators";
 import {ArrayCollection, LocalPageableArray, PageableArray} from '../../../common/core/data/array-collection';
 import {CommonUtils} from '../../../common/core/utils/common-utils';
-import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
-import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
-import {JigsawTable} from '../../../pc-components/table/table';
-import {LocalPageableTableData, PageableTableData, TableData} from '../../../common/core/data/table-data';
-import {SimpleNode, SimpleTreeData} from '../../../common/core/data/tree-data';
-import {JigsawTransfer} from "../transfer";
 import {TableDataMatrix, TableMatrixRow} from "../../../common/core/data/unified-paging/paging";
+import {LocalPageableTableData, PageableTableData, TableData} from '../../../common/core/data/table-data';
+import {SimpleTreeData} from '../../../common/core/data/tree-data';
+import {JigsawTreeExt} from '../../tree/tree-ext';
+import {AdditionalColumnDefine, AdditionalTableData} from '../../table/table-typings';
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../table/table-renderer';
+import {JigsawTable} from '../../table/table';
+import {JigsawTransfer} from "../transfer";
 
 export type ListOption = {
     disabled?: boolean;
@@ -339,7 +341,8 @@ export class TransferListDestRenderer extends TransferListRendererBase {
 export abstract class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector,
+        private _zone: NgZone) {
         super();
     }
 
@@ -430,32 +433,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
-    /**
-     * @internal
-     */
-    public _filterTree(tree: SimpleNode[], keyMap: Array<string>, arr: Array<any>, searchKey: string) {
-        if (!tree || !tree.length) {
-            return [];
-        }
-        for (let i = 0; i < tree.length; i++) {
-            if (tree[i].nodes) {
-                let newNode = {...tree[i], nodes: [{isTransferTreeParentNode: '', isHidden: true}]};
-                arr.push(newNode);
-                this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
-            } else {
-                if (!keyMap.includes(tree[i][this.trackItemBy])) {
-                    if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || searchKey.length == 0) {
-                        arr.push({...tree[i]});
-                    }
-                }
-            }
-        }
-        return arr;
-    }
-
     public dataFilter(selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
         const keyMap = selectedItems.map(item => item[this.trackItemBy]);
-        setTimeout(() => {
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             if (!this.treeExt) {
                 return
             }
@@ -473,14 +453,14 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
             const hiddenNodes = this.treeExt.ztree.getNodesByParam('isHidden', true);
             const needOpen = hiddenNodes.filter(node => {
                 if (this._searchKey.length > 0) {
-                    return !keyMap.some(key => node[this.trackItemBy] == key) || !node[this.labelField].includes(this._searchKey)
+                    return !keyMap.some(key => node[this.trackItemBy] == key) || !node[this.labelField].includes(this._searchKey);
                 }
-                return !keyMap.some(key => node[this.trackItemBy] == key)
+                return !keyMap.some(key => node[this.trackItemBy] == key);
             });
             this.treeExt.ztree.showNodes(needOpen);
 
             if (this._searchKey.length > 0) {
-                const leafOpenNodes = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => node.isHidden == false);
+                const leafOpenNodes = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
                 if (!leafOpenNodes.length) {
                     return;
                 }
@@ -496,10 +476,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
 
             this.treeExt.ztree.checkAllNodes(false);
 
-            this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => node.isHidden == false);
+            this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
             changeDetectorRef.markForCheck();
-
-        }, 0);
+        });
     }
 
     private _searchKey: string = "";
