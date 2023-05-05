@@ -356,6 +356,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                         this.sourceComponent.reset();
                     })
                     this._refreshForTreeData(value);
+                    this.sourceComponent.reset();
                 } else {
                     console.error("输入的数据结构与渲染器不匹配")
                 }
@@ -520,8 +521,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForTreeData(value: SimpleTreeData): void {
-        this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(value, this.selectedItems));
+        this.sourceComponent.data = value;
         this.sourceComponent.update();
+        this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
         this.destComponent.data = this.selectedItems;
     }
 
@@ -560,7 +562,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.destComponent) {
             this.destComponent.data = value;
             this.destComponent.reset();
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
 
         if (this._removeSelectedItemsChangeListener) {
@@ -569,7 +571,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
 
         this._removeSelectedItemsChangeListener = (<ArrayCollection<ListOption>>this._selectedItems).onRefresh(() => {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
             this.destComponent.reset();
             this._checkDestSelectAll();
         })
@@ -791,7 +793,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false));
+            this.sourceComponent.searchFilter(this.selectedItems, $event, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
@@ -820,12 +822,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this.selectedItems.push(...this.sourceComponent.selectedItems);
         if (this.sourceRenderer === TransferListSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
             this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();
         }
@@ -853,7 +855,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         });
         this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
         if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.data.fromObject(this.sourceComponent.dataFilter(this.data, this.selectedItems));
+            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
