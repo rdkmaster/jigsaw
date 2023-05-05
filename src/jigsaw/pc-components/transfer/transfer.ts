@@ -553,12 +553,27 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return;
         }
 
+        if (value instanceof ArrayCollection) {
+            if (this._removeOnValueRefreshListener) {
+                this._removeOnValueRefreshListener();
+                this._removeOnValueRefreshListener = null;
+            }
+            this._removeOnValueRefreshListener = value.onRefresh(() => {
+                this._refreshForSelectedItems(value);
+                this.sourceComponent.reset();
+            })
+        }
+        
+        this._refreshForSelectedItems(value);
+    }
+
+    private _refreshForSelectedItems(value: ArrayCollection<ListOption> | any[]): void {
         this._$selectedItems = new LocalPageableArray<ListOption>();
-        this._$selectedItems.pagingInfo.pageSize = Infinity;
+        this._$selectedItems.pagingInfo.pageSize = this.isPageable ? this.data.pagingInfo.pageSize : Infinity;
         this._$selectedItems.fromArray(value as any[]);
 
         if (this.destComponent) {
-            this.destComponent.data = value;
+            this.destComponent.data = this._$selectedItems;
             this.destComponent.reset();
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         }
@@ -869,6 +884,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     private _removeOnChangeListener: CallbackRemoval;
     private _removeOnRefreshListener: CallbackRemoval;
+    private _removeOnValueRefreshListener: CallbackRemoval;
     private _removeSelectedItemsChangeListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
@@ -882,6 +898,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
             this._removeOnRefreshListener = null;
+        }
+        if (this._removeOnValueRefreshListener) {
+            this._removeOnValueRefreshListener();
+            this._removeOnValueRefreshListener = null;
         }
         if (this._removeFilterSubscriber) {
             this._removeFilterSubscriber.unsubscribe();
