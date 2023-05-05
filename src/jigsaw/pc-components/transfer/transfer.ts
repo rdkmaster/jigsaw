@@ -542,6 +542,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
+    /**
+     * @internal
+     */
     public _$selectedItems: LocalPageableArray<ListOption> = new LocalPageableArray([]);
 
     @RequireMarkForCheck()
