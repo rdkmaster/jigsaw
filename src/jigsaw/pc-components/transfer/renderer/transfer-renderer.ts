@@ -242,8 +242,8 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
             return;
         }
 
-        this.validData = this.data.filter(item => !item.disabled);
-        this.currentSelectedItems = this.data.filter(item => {
+        this.validData = this.data.concat().filter(item => !item.disabled);
+        this.currentSelectedItems = this.data.concat().filter(item => {
             return this.selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
         });
     }

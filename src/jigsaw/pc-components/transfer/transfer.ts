@@ -329,6 +329,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     this.sourceComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', false);
                     this.destComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', true);
                     this._data = value;
+                    this._$selectedItems.pagingInfo.pageSize = value.pagingInfo.pageSize;
                     if (this._removeOnChangeListener) {
                         this._removeOnChangeListener();
                         this._removeOnChangeListener = null;
@@ -363,6 +364,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('table', value instanceof PageableTableData ? 'server' : 'local', false);
                     this._data = value;
+                    this._$selectedItems.pagingInfo.pageSize = value.pagingInfo.pageSize;
                     if (this._removeOnChangeListener) {
                         this._removeOnChangeListener();
                         this._removeOnChangeListener = null;
@@ -469,8 +471,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = data.onRefresh(() => {
-            this.sourceComponent.data = new ArrayCollection(data)
-            this.destComponent.data = this.selectedItems;
+            this.sourceComponent.data = new ArrayCollection(data);
+            this.destComponent.data = this._$selectedItems;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
@@ -538,7 +540,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    public _$selectedItems: LocalPageableArray<ListOption> | any[] = new LocalPageableArray([]);
+    public _$selectedItems: LocalPageableArray<ListOption> = new LocalPageableArray([]);
 
     @RequireMarkForCheck()
     @Input()
@@ -828,6 +830,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.additionalData.refresh();
         }
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
+        this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
@@ -856,6 +859,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
+        this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
