@@ -347,7 +347,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$selectAll() {
-        const disabledSelectedItems = this._$selectedItems.concat().filter(item => item.disabled);
+        let disabledSelectedItems = [];
+        if (this._$selectedItems?.length > 0) {
+            disabledSelectedItems = this._$selectedItems.filter(item => item.disabled);
+        }
         if (this._allSelectCheck()) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
