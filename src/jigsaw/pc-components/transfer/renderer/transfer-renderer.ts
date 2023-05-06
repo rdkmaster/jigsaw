@@ -243,7 +243,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
         if (CommonUtils.isUndefined(this.data)) {
             return;
         }
-
+        // 不能直接使用this.data.filter，data可能是LocalPageableArray
         this.validData = this.data.concat().filter(item => !item.disabled);
         this.currentSelectedItems = this.data.concat().filter(item => {
             return this.selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));

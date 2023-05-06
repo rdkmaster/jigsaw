@@ -550,7 +550,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<ListOption> | any[] {
-        return this._$selectedItems['_bakData'];
+        return this._$selectedItems.source;
     }
 
     public set selectedItems(value: ArrayCollection<ListOption> | any[]) {
