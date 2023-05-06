@@ -52,9 +52,12 @@
                 </jigsaw-search-input>
             </div>
         </div>
-        <div class="jigsaw-transfer-body">
+        <div class="jigsaw-transfer-body" [ngClass]="{'jigsaw-transfer-body-short': isPageable}">
             <ng-template #transferDestRendererHost></ng-template>
         </div>
-        <div class="jigsaw-transfer-footer"></div>
+        <div class="jigsaw-transfer-footer" *ngIf="isPageable">
+            <jigsaw-pagination [theme]="theme" [size]="'small'" [data]="_$selectedItems" mode="simple">
+            </jigsaw-pagination>
+        </div>
     </div>
 </div>

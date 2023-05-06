@@ -329,6 +329,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                     this.sourceComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', false);
                     this.destComponent.filterFunction = this._getFilterFunction('list', value instanceof PageableArray ? 'server' : 'local', true);
                     this._data = value;
+                    this._$selectedItems.pagingInfo.pageSize = value.pagingInfo.pageSize;
                     if (this._removeOnChangeListener) {
                         this._removeOnChangeListener();
                         this._removeOnChangeListener = null;
@@ -364,6 +365,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
                 if (value instanceof LocalPageableTableData || value instanceof PageableTableData) {
                     this.sourceComponent.filterFunction = this._getFilterFunction('table', value instanceof PageableTableData ? 'server' : 'local', false);
                     this._data = value;
+                    this._$selectedItems.pagingInfo.pageSize = value.pagingInfo.pageSize;
                     if (this._removeOnChangeListener) {
                         this._removeOnChangeListener();
                         this._removeOnChangeListener = null;
@@ -470,8 +472,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeOnRefreshListener = null;
         }
         this._removeOnRefreshListener = data.onRefresh(() => {
-            this.sourceComponent.data = new ArrayCollection(data)
-            this.destComponent.data = this.selectedItems;
+            this.sourceComponent.data = new ArrayCollection(data);
+            this.destComponent.data = this._$selectedItems;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
@@ -540,12 +542,15 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         return null;
     }
 
-    private _selectedItems: ArrayCollection<ListOption> | any[] = new ArrayCollection([]);
+    /**
+     * @internal
+     */
+    public _$selectedItems: LocalPageableArray<ListOption> = new LocalPageableArray([]);
 
     @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<ListOption> | any[] {
-        return this._selectedItems;
+        return this._$selectedItems.source;
     }
 
     public set selectedItems(value: ArrayCollection<ListOption> | any[]) {
@@ -553,14 +558,27 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             return;
         }
 
-        if (value instanceof Array) {
-            value = new ArrayCollection(value);
+        if (value instanceof ArrayCollection) {
+            if (this._removeOnValueRefreshListener) {
+                this._removeOnValueRefreshListener();
+                this._removeOnValueRefreshListener = null;
+            }
+            this._removeOnValueRefreshListener = value.onRefresh(() => {
+                this._refreshForSelectedItems(value);
+                this.sourceComponent.reset();
+            })
         }
+        
+        this._refreshForSelectedItems(value);
+    }
 
-        this._selectedItems = value;
+    private _refreshForSelectedItems(value: ArrayCollection<ListOption> | any[]): void {
+        this._$selectedItems = new LocalPageableArray<ListOption>();
+        this._$selectedItems.pagingInfo.pageSize = this.isPageable ? this.data.pagingInfo.pageSize : Infinity;
+        this._$selectedItems.fromArray(value as any[]);
 
         if (this.destComponent) {
-            this.destComponent.data = value;
+            this.destComponent.data = this._$selectedItems;
             this.destComponent.reset();
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
@@ -570,8 +588,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this._removeSelectedItemsChangeListener = null;
         }
 
-        this._removeSelectedItemsChangeListener = (<ArrayCollection<ListOption>>this._selectedItems).onRefresh(() => {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.destComponent.reset();
             this._checkDestSelectAll();
         })
@@ -832,6 +850,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.additionalData.refresh();
         }
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
+        this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
@@ -860,6 +879,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
+        this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
@@ -869,6 +889,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
 
     private _removeOnChangeListener: CallbackRemoval;
     private _removeOnRefreshListener: CallbackRemoval;
+    private _removeOnValueRefreshListener: CallbackRemoval;
     private _removeSelectedItemsChangeListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
@@ -882,6 +903,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         if (this._removeOnRefreshListener) {
             this._removeOnRefreshListener();
             this._removeOnRefreshListener = null;
+        }
+        if (this._removeOnValueRefreshListener) {
+            this._removeOnValueRefreshListener();
+            this._removeOnValueRefreshListener = null;
         }
         if (this._removeFilterSubscriber) {
             this._removeFilterSubscriber.unsubscribe();

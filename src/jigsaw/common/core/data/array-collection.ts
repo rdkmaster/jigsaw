@@ -659,6 +659,10 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
         }
     }
 
+    public get source(): T[] {
+        return this._bakData;
+    }
+
     private _dataSourceChanged: boolean = false;
 
     constructor(source?: T[]) {
