@@ -1,6 +1,6 @@
-import {Component} from "@angular/core";
-import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer} from "jigsaw/public_api";
-import {HttpClient} from '@angular/common/http';
+import { Component } from "@angular/core";
+import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -9,11 +9,14 @@ import {HttpClient} from '@angular/common/http';
 export class TransferListDemoComponent {
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
-    public data: ArrayCollection<any>;
-    public selectedItems: ArrayCollection<any>;
+    public data: any; // ArrayCollection<any> | any[]
+    public selectedItems: any; // ArrayCollection<any> | any[]
     public labelField = 'name';
     public subLabelField = 'remark'
     public trackItemBy = 'id';
+    public isArray = false;
+    public dataType = [{ label: 'ArrayCollection', id: 1 }, { label: 'Array', id: 2 }];
+    public selectedDataType = [{ label: 'ArrayCollection', id: 1 }];
 
     public allData = [
         {
@@ -129,12 +132,20 @@ export class TransferListDemoComponent {
             id: id,
             name: "添加元素", remark: "副属信息"
         });
+        if (this.isArray) {
+            this.data = JSON.parse(JSON.stringify(this.data));
+            return;
+        }
         this.data.refresh();
     }
 
     removeItem() {
         this.data.pop();
         this.selectedItems.length = 0;
+        if (this.isArray) {
+            this.data = JSON.parse(JSON.stringify(this.data));
+            return;
+        }
         this.data.refresh();
     }
 
@@ -150,6 +161,10 @@ export class TransferListDemoComponent {
     }
 
     resetInputData() {
+        if (this.isArray) {
+            this.data = JSON.parse(JSON.stringify(this.allData));
+            return;
+        }
         this.data = new ArrayCollection(this.allData);
     }
 
@@ -158,9 +173,20 @@ export class TransferListDemoComponent {
     }
 
     resetSelectedData() {
-        this.selectedItems = new ArrayCollection(this.allData.filter((item, i) => {
+        const selectedData = this.allData.filter((item, i) => {
             return i < 3
-        }));
+        })
+        if (this.isArray) {
+            this.selectedItems = selectedData;
+            return;
+        }
+        this.selectedItems = new ArrayCollection(selectedData);
+    }
+
+    public switchData() {
+        this.isArray = !this.isArray;
+        this.resetInputData();
+        this.resetSelectedData();
     }
 
     // ====================================================================

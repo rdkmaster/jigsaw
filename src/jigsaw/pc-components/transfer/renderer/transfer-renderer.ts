@@ -6,20 +6,22 @@ import {
     EventEmitter,
     Injector,
     Input,
+    NgZone,
     Output,
     ViewChild,
     ViewEncapsulation
 } from "@angular/core";
+import {take} from "rxjs/operators";
 import {ArrayCollection, LocalPageableArray, PageableArray} from '../../../common/core/data/array-collection';
 import {CommonUtils} from '../../../common/core/utils/common-utils';
-import {JigsawTreeExt} from '../../../pc-components/tree/tree-ext';
-import {AdditionalColumnDefine, AdditionalTableData} from '../../../pc-components/table/table-typings';
-import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../../pc-components/table/table-renderer';
-import {JigsawTable} from '../../../pc-components/table/table';
-import {LocalPageableTableData, PageableTableData, TableData} from '../../../common/core/data/table-data';
-import {SimpleNode, SimpleTreeData} from '../../../common/core/data/tree-data';
-import {JigsawTransfer} from "../transfer";
 import {TableDataMatrix, TableMatrixRow} from "../../../common/core/data/unified-paging/paging";
+import {LocalPageableTableData, PageableTableData, TableData} from '../../../common/core/data/table-data';
+import {SimpleTreeData} from '../../../common/core/data/tree-data';
+import {JigsawTreeExt} from '../../tree/tree-ext';
+import {AdditionalColumnDefine, AdditionalTableData} from '../../table/table-typings';
+import {TableCellCheckboxRenderer, TableHeadCheckboxRenderer} from '../../table/table-renderer';
+import {JigsawTable} from '../../table/table';
+import {JigsawTransfer} from "../transfer";
 
 export type ListOption = {
     disabled?: boolean;
@@ -241,9 +243,9 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
         if (CommonUtils.isUndefined(this.data)) {
             return;
         }
-
-        this.validData = this.data.filter(item => !item.disabled);
-        this.currentSelectedItems = this.data.filter(item => {
+        // 不能直接使用this.data.filter，data可能是LocalPageableArray
+        this.validData = this.data.concat().filter(item => !item.disabled);
+        this.currentSelectedItems = this.data.concat().filter(item => {
             return this.selectedItems.some(selectedItem => CommonUtils.compareValue(item, selectedItem, this.trackItemBy));
         });
     }
@@ -339,7 +341,8 @@ export class TransferListDestRenderer extends TransferListRendererBase {
 export abstract class TransferTreeRendererBase extends AbstractTransferRendererBase implements AfterViewInit {
     constructor(
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector) {
+        protected _injector: Injector,
+        private _zone: NgZone) {
         super();
     }
 
@@ -421,21 +424,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
-    private _getLeafNodes(nodes: Array<any>, result = []): Array<any> {
-        for (let i = 0, length = nodes.length; i < length; i++) {
-            if (!nodes[i].nodes) {
-                result = this._getLeafNodes(nodes[i].nodes, result);
-                continue;
-            }
-            if (CommonUtils.isUndefined(nodes[i].isTransferTreeParentNode)) {
-                result.push(nodes[i]);
-            }
-        }
-        return result;
-    }
-
     public update(): void {
-        this.validData = new ArrayCollection(this._getLeafNodes([this.data]));
         this.currentSelectedItems = this.selectedItems;
     }
 
@@ -444,41 +433,58 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
-    /**
-     * @internal
-     */
-    public _filterTree(tree: SimpleNode[], keyMap: Array<string>, arr: Array<any>, searchKey: string) {
-        if (!tree || !tree.length) {
-            return [];
-        }
-        for (let i = 0; i < tree.length; i++) {
-            if (tree[i].nodes) {
-                let newNode = {...tree[i], nodes: [{isTransferTreeParentNode: '', isHidden: true}]};
-                newNode['open'] = true;
-                arr.push(newNode);
-                this._filterTree(tree[i].nodes, keyMap, newNode.nodes, searchKey);
-            } else {
-                if (!keyMap.includes(tree[i][this.trackItemBy])) {
-                    if (searchKey.length > 0 && tree[i][this.labelField].includes(searchKey) || searchKey.length == 0) {
-                        arr.push({...tree[i]});
-                    }
-                }
+    public dataFilter(selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
+        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            if (!this.treeExt) {
+                return
             }
-        }
-        return arr;
+
+            const needClose = [];
+            keyMap.forEach(key => {
+                const node = this.treeExt.ztree.getNodeByParam(this.trackItemBy, key);
+                if (!node || node.isHidden) {
+                    return;
+                }
+                needClose.push(node);
+            })
+            this.treeExt.ztree.hideNodes(needClose);
+
+            const hiddenNodes = this.treeExt.ztree.getNodesByParam('isHidden', true);
+            const needOpen = hiddenNodes.filter(node => {
+                if (this._searchKey.length > 0) {
+                    return !keyMap.some(key => node[this.trackItemBy] == key) || !node[this.labelField].includes(this._searchKey);
+                }
+                return !keyMap.some(key => node[this.trackItemBy] == key);
+            });
+            this.treeExt.ztree.showNodes(needOpen);
+
+            if (this._searchKey.length > 0) {
+                const leafOpenNodes = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
+                if (!leafOpenNodes.length) {
+                    return;
+                }
+                const needClose = [];
+                leafOpenNodes.forEach(node => {
+                    if (node[this.labelField].includes(this._searchKey)) {
+                        return;
+                    }
+                    needClose.push(node);
+                })
+                this.treeExt.ztree.hideNodes(needClose);
+            }
+
+            this.treeExt.ztree.checkAllNodes(false);
+
+            this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
+            changeDetectorRef.markForCheck();
+        });
     }
 
-    public dataFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>): Array<any> {
-        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
-        const result = [];
-        return this._filterTree(data.nodes, keyMap, result, '');
-    }
-
-    public searchFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, $event: string) {
-        const keyMap = selectedItems.map(item => item[this.trackItemBy]);
-        const result = [];
-        const searchKey = $event.length > 0 ? $event.trim() : "";
-        return this._filterTree(data.nodes, keyMap, result, searchKey);
+    private _searchKey: string = "";
+    public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string, changeDetectorRef: ChangeDetectorRef) {
+        this._searchKey = $event.length > 0 ? $event.trim() : "";
+        this.dataFilter(selectedItems, changeDetectorRef);
     }
 
     ngAfterViewInit() {

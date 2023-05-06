@@ -78,6 +78,7 @@ export class MultipleSelectDemoComponent {
         this.selectedArrayData = null;
         this.selectedArrayData1 = null;
         this.selectedArrayData2 = null;
+        this.selectedArrayData3 = null;
         this.selectedOption = null;
         this.fullSelectedOption = null;
     }
