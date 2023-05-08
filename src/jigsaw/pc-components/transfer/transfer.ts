@@ -12,7 +12,8 @@ import {
     EventEmitter,
     ChangeDetectionStrategy,
     ComponentFactory,
-    ComponentRef
+    ComponentRef,
+    OnInit
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { animate, keyframes, style, transition, trigger } from "@angular/animations"
@@ -287,7 +288,7 @@ const animations = [
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy {
+export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, OnDestroy {
     constructor(
         protected changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
@@ -545,12 +546,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     /**
      * @internal
      */
-    public _$selectedItems: LocalPageableArray<ListOption> = new LocalPageableArray([]);
+    public _$selectedItems: LocalPageableArray<ListOption>;
 
     @RequireMarkForCheck()
     @Input()
     public get selectedItems(): ArrayCollection<ListOption> | any[] {
-        return this._$selectedItems.source;
+        return this._$selectedItems?.source;
     }
 
     public set selectedItems(value: ArrayCollection<ListOption> | any[]) {
@@ -573,15 +574,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     }
 
     private _refreshForSelectedItems(value: ArrayCollection<ListOption> | any[]): void {
-        this._$selectedItems = new LocalPageableArray<ListOption>();
+        if (!this._$selectedItems) {
+            this._$selectedItems = new LocalPageableArray<ListOption>();
+        }
         this._$selectedItems.pagingInfo.pageSize = this.isPageable ? this.data.pagingInfo.pageSize : Infinity;
         this._$selectedItems.fromArray(value as any[]);
-
-        if (this.destComponent) {
-            this.destComponent.data = this._$selectedItems;
-            this.destComponent.reset();
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
-        }
 
         if (this._removeSelectedItemsChangeListener) {
             this._removeSelectedItemsChangeListener();
@@ -589,9 +586,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
 
         this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems)
             this.destComponent.reset();
-            this._checkDestSelectAll();
         })
 
         this.changeDetectorRef.markForCheck();
@@ -851,12 +846,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
-        // 等待_$selectedItems更新，是一次性操作
-        const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
-            selectedItemsRefreshListener();
-            this._updateStatus();
-            this.selectedItemsChange.emit(this.selectedItems)
-        });
+        
+        this._updateStatus();
+        this.selectedItemsChange.emit(this.selectedItems)
     }
 
     /**
@@ -881,12 +873,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
-        // 等待_$selectedItems更新，是一次性操作
-        const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
-            selectedItemsRefreshListener();
-            this._updateStatus();
-            this.selectedItemsChange.emit(this.selectedItems);
-        });
+
+        this._updateStatus();
+        this.selectedItemsChange.emit(this.selectedItems)
     }
 
     private _updateStatus() {
@@ -902,6 +891,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
     private _removeSelectedItemsChangeListener: CallbackRemoval;
     private _removeInputDataChangeListener: CallbackRemoval;
     private _removeFilterSubscriber: Subscription;
+
+    ngOnInit(): void {
+        if (this.selectedItems) {
+            return;
+        }
+        this._refreshForSelectedItems([]);
+    }
 
     ngOnDestroy() {
         super.ngOnDestroy();
