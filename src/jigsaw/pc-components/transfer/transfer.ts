@@ -851,6 +851,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
+        // 等待_$selectedItems更新，是一次性操作
         const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
             selectedItemsRefreshListener();
             this._updateStatus();
@@ -880,6 +881,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
+        // 等待_$selectedItems更新，是一次性操作
         const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
             selectedItemsRefreshListener();
             this._updateStatus();
