@@ -851,11 +851,11 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
         }
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
-        this._checkSourceSelectAll();
-        this._checkDestSelectAll();
-        this._$sourceSearchKey = '';
-        this._$destSearchKey = '';
-        this.selectedItemsChange.emit(this.selectedItems)
+        const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
+            selectedItemsRefreshListener();
+            this._updateStatus();
+            this.selectedItemsChange.emit(this.selectedItems)
+        });
     }
 
     /**
@@ -880,11 +880,18 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnDestroy
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         }
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
+        const selectedItemsRefreshListener = this._$selectedItems.onRefresh(() => {
+            selectedItemsRefreshListener();
+            this._updateStatus();
+            this.selectedItemsChange.emit(this.selectedItems);
+        });
+    }
+
+    private _updateStatus() {
         this._checkSourceSelectAll();
         this._checkDestSelectAll();
         this._$sourceSearchKey = '';
         this._$destSearchKey = '';
-        this.selectedItemsChange.emit(this.selectedItems)
     }
 
     private _removeOnChangeListener: CallbackRemoval;
