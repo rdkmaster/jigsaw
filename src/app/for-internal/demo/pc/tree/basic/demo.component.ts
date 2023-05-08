@@ -19,7 +19,7 @@ export class ZtreeDemoComponent implements AfterViewInit {
                     {
                         label: "父节点11 - 折叠",
                         nodes: [
-                            {label: "叶子节点111"},
+                            {label: "叶子节点111", chkDisabled: true},
                             {label: "叶子节点112"},
                             {label: "叶子节点113"},
                             {label: "叶子节点114"}

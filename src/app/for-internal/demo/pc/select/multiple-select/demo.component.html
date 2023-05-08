@@ -5,12 +5,17 @@
 <a (click)="clearSelection()">清除选中</a>
 <a (click)="toggleDisabled()" style="margin-left: 24px;">切换所有条目disabled</a>
 
-<jigsaw-header>多选下拉选择</jigsaw-header>
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-select [data]="dataList" [multipleSelect]="true" placeholder="请选择" width="160px"
+    (valueChange)="valueChange($event)">
+</jigsaw-select>
+
+<jigsaw-header>初始已选</jigsaw-header>
 <jigsaw-select [data]="dataList" [(value)]="selectedArrayData" [multipleSelect]="true" placeholder="请选择" width="160px"
     (valueChange)="valueChange($event)">
 </jigsaw-select>
 
-<jigsaw-header>多选下拉选择(初始已选项禁用)</jigsaw-header>
+<jigsaw-header>初始已选（有选项禁用）</jigsaw-header>
 <jigsaw-select [data]="dataList" [(value)]="selectedArrayData3" [multipleSelect]="true" placeholder="请选择" width="160px"
     (valueChange)="valueChange($event)">
 </jigsaw-select>

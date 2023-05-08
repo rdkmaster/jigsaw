@@ -180,7 +180,7 @@ export const lightGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: 'rgb(255,255,255,0.15)',
+                color: '#ddd',
                 width: 1,
                 type: 'solid'
             }
@@ -235,7 +235,7 @@ export const lightGraphTheme = {
         axisLine: { // 坐标轴线
             show: true, // 默认显示，属性show控制显示与否
             lineStyle: { // 属性lineStyle控制线条样式
-                color: 'rgb(255,255,255,0.15)',
+                color: '#ddd',
                 width: 1,
                 type: 'solid'
             }
