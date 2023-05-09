@@ -321,6 +321,10 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
+        if (this.data instanceof LocalPageableArray) {
+            this.data.filter(filterKey, [this.labelField]);
+            return;
+        }
         this.data = new ArrayCollection(selectedItems.filter(
             item => {
                 let value: string = '';
