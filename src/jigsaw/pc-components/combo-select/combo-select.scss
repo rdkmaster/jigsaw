@@ -7,7 +7,60 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     min-width: 240px;
     max-width: 100%;
     color: $font-color-default;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-default;
     border-radius: $border-radius-base;
+
+    &:hover {
+        border-color: $brand-default;
+    }
+
+    &:active {
+        border-color: $brand-active;
+    }
+
+    &.#{$jigsaw-combo-select}-disabled {
+        background: $bg-disabled;
+        color: $font-color-disabled-spec;
+        border-color: $border-color-disabled;
+
+        .#{$jigsaw-combo-select}-selection {
+            .#{$jigsaw-combo-select}-selection-rendered {
+                .#{$jigsaw-combo-select}-placeholder {
+                    color: $font-color-disabled;
+                }
+
+                .#{$jigsaw-tag}-host {
+                    color: $font-color-disabled;
+                    pointer-events: none;
+                }
+            }
+        }
+
+        .iconfont {
+            color: $icon-color-disabled;
+            line-height: 1;
+            pointer-events: none;
+        }
+    }
+
+    &.#{$jigsaw-combo-select}-error {
+        border-color: $error-default;
+
+        &:hover {
+            border-color: $error-default;
+        }
+    }
+
+    &.#{$jigsaw-combo-select}-open {
+        border-color: $brand-default;
+
+        
+        .#{$jigsaw-combo-select}-arrow-rotate {
+            @include prefixer(transform, translateY(-50%) rotate(180deg));
+        }
+    }
 
     .#{$jigsaw-combo-select} {
         position: relative;
@@ -20,32 +73,12 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             transition: transform 0.3s ease-in-out;
         }
 
-        &[ng-reflect-jigsaw-float-open="true"] &-selection {
-            border-color: $brand-default;
-        }
 
-        &[ng-reflect-jigsaw-float-open="true"] {
-            .#{$jigsaw-combo-select}-arrow-rotate {
-                @include prefixer(transform, translateY(-50%) rotate(180deg));
-            }
-        }
 
         &-selection {
             min-height: $height-base;
             padding: 0 30px 0 8px;
             background: $bg-transparent;
-            border-width: 1px;
-            border-style: solid;
-            border-color: $border-color-default;
-            border-radius: $border-radius-base;
-
-            &:hover {
-                border-color: $brand-default;
-            }
-
-            &:active {
-                border-color: $brand-active;
-            }
         }
 
         &-selection-rendered {
@@ -66,9 +99,11 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             .#{$jigsaw-input}-host {
                 height: $height-base - 8;
                 line-height: $height-base - 8;
+
                 .#{$jigsaw-input}-wrapper {
                     border: none !important;
                 }
+
                 input {
                     padding: 0 !important;
                     font-size: $font-size-text-base;
@@ -87,48 +122,6 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             white-space: nowrap;
         }
 
-        &-disabled {
-            background: $bg-disabled;
-            color: $font-color-disabled-spec;
-
-            .#{$jigsaw-combo-select}-selection {
-                border-color: $border-color-disabled;
-
-                .#{$jigsaw-combo-select}-selection-rendered {
-                    .#{$jigsaw-combo-select}-placeholder{
-                        color: $font-color-disabled;
-                    }
-
-                    .jigsaw-tag-host {
-                        color: $font-color-disabled;
-                        pointer-events: none;
-                    }
-                }
-            }
-
-            .iconfont {
-                color: $icon-color-disabled;
-                line-height: 1;
-                pointer-events: none;
-            }
-        }
-
-        &-disabled &-placeholder {
-            color: $font-color-disabled-spec;
-        }
-
-        &-disabled &-selection {
-            background-color: $bg-disabled;
-            cursor: not-allowed;
-
-            &:hover,
-            &:active,
-            &:focus {
-                border-color: $border-color-disabled;
-                box-shadow: none;
-            }
-        }
-
         &-opened &-arrow {
             @include prefixer(transform, rotate(180deg));
         }
@@ -140,6 +133,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             font-size: $icon-size-sm;
             color: $icon-color-stress;
             transform: translateY(-50%);
+
             &:hover {
                 color: $brand-default;
             }
@@ -151,25 +145,9 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             transform: translateY(-50%);
             font-size: $icon-size-sm;
             color: $icon-color-default;
+
             &:hover {
                 color: $brand-default;
-            }
-        }
-
-        &-disabled &-clear {
-            color: $icon-color-disabled;
-            &:hover {
-                color: $icon-color-disabled;
-            }
-        }
-    }
-
-    &.#{$jigsaw-combo-select}-error {
-        .#{$jigsaw-combo-select}-selection {
-            border-color: $error-default;
-
-            &:hover {
-                border-color: $error-default;
             }
         }
     }

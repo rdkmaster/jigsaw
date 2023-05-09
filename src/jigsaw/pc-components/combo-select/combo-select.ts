@@ -46,9 +46,11 @@ const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
     host: {
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
+        '[class.jigsaw-combo-select-disabled]': 'disabled',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid',
-        '[class.jigsaw-combo-select-hide-text-tag]': '!textTag'
+        '[class.jigsaw-combo-select-hide-text-tag]': '!textTag',
+        '[class.jigsaw-combo-select-open]': '_$opened',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawComboSelect), multi: true},
