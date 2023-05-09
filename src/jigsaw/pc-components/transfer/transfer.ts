@@ -383,7 +383,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
                 }
             } else {
                 this.sourceComponent.data = value;
-                this.destComponent.data = this.selectedItems;
+                this.destComponent.data = this._$selectedItems;
             }
 
             if (this.sourceComponent) {
@@ -450,7 +450,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             }
             this._removeFilterSubscriber = this.data.pagingInfo.subscribe(() => {
                 this.sourceComponent.data = new ArrayCollection(this.data)
-                this.destComponent.data = this.selectedItems;
+                this.destComponent.data = this._$selectedItems;
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
@@ -489,7 +489,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
                 this.sourceComponent.data = new TableData();
             }
             this.sourceComponent.data.fromObject({ data: data.data, field: data.field, header: data.header })
-            this.destComponent.data = this.selectedItems;
+            this.destComponent.data = this._$selectedItems;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems);
     }
@@ -510,7 +510,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
                     this.sourceComponent.data = new TableData();
                 }
                 this.sourceComponent.data.fromObject({ data: this.data.data, field: this.data.field, header: this.data.header })
-                this.destComponent.data = this.selectedItems;
+                this.destComponent.data = this._$selectedItems;
             })
             this.sourceComponent.dataFilter(this.data, this.selectedItems)
         });
@@ -526,8 +526,8 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     private _refreshForTreeData(value: SimpleTreeData): void {
         this.sourceComponent.data = value;
         this.sourceComponent.update();
-        this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
-        this.destComponent.data = this.selectedItems;
+        this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
+        this.destComponent.data = this._$selectedItems;
     }
 
     private _getFilterFunction(rendererType: 'list' | 'table' | 'tree', pagingType: 'local' | 'server', isDest: boolean): (item: any) => boolean {
@@ -586,7 +586,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         }
 
         this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+            this._updateSourceComponent();
             this.destComponent.reset();
         })
 
@@ -811,7 +811,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, this.changeDetectorRef);
+            this.sourceComponent.searchFilter(this.selectedItems, $event, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
@@ -839,19 +839,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             return
         }
         this.selectedItems.push(...this.sourceComponent.selectedItems);
-        if (this.sourceRenderer === TransferListSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
-        } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
-            this.sourceComponent.update();
-        } else if (this.sourceRenderer === TransferTableSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
-            this.sourceComponent.additionalData.reset();
-            this.sourceComponent.additionalData.refresh();
-        }
+        // this._updateSourceComponent();
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
-        
         this._updateStatus();
         this.selectedItemsChange.emit(this.selectedItems)
     }
@@ -871,16 +861,27 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             });
         });
         this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length);
-        if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
-            this.sourceComponent.update();
-        } else {
-            this.sourceComponent.dataFilter(this.data, this.selectedItems);
-        }
+        // this._updateSourceComponent();
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
 
         this._updateStatus();
         this.selectedItemsChange.emit(this.selectedItems)
+    }
+
+    private _updateSourceComponent() {
+        if (this.sourceRenderer === TransferListSourceRenderer) {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+        } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
+            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
+            this.sourceComponent.update();
+        } else if (this.sourceRenderer === TransferTableSourceRenderer) {
+            this.sourceComponent.dataFilter(this.data, this.selectedItems);
+            if (CommonUtils.isUndefined(this.sourceComponent.additionalData)) {
+                return;
+            }
+            this.sourceComponent.additionalData.reset();
+            this.sourceComponent.additionalData.refresh();
+        }
     }
 
     private _updateStatus() {
@@ -898,6 +899,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     private _removeFilterSubscriber: Subscription;
 
     ngOnInit(): void {
+        super.ngOnInit()
         if (this.selectedItems) {
             return;
         }
