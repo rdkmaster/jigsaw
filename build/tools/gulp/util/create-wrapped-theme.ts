@@ -22,7 +22,7 @@ export async function bundleWrappedScss(type: WrappedType, themingPrebuiltHome: 
 }
 
 /**
- * 只在root上添加.jigsaw-outer-theme，在canvas上添加.jigsaw-inner-theme
+ * 在canvas上添加.jigsaw-inner-theme，在canvas外的地方添加.jigsaw-outer-theme
  * :is(.jigsaw-outer-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除inner-theme下的元素，body使用.jigsaw-outer-them替换
  * :where(.jigsaw-inner-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-inner-them替换
  * @param type

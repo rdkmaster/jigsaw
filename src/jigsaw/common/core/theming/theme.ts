@@ -52,7 +52,7 @@ export class JigsawTheme {
     }
 
     /**
-     * 封装皮肤不改变弹框背景、图形基础皮肤、css变量
+     * 外部封装皮肤不改变全局的majorStyle，弹框背景、图形基础皮肤、css变量
      * @param theme
      * @param majorStyle
      */
@@ -61,18 +61,23 @@ export class JigsawTheme {
     }
 
     /**
-     * 防止影响封装样式而生成的样式，也是全局样式，但不对封装样式产生影响
+     * 内部封装样式，影响全局的majorStyle，弹框背景、图形基础皮肤、css变量
      * @param theme
      * @param majorStyle
      */
     public static changeInnerTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
+            // innerTheme影响全局的majorStyle
             this.majorStyle = majorStyle;
         }
         this._usingTheme = theme;
 
         const style = this._loadCss('jigsaw-inner-theme', `themes/wrapped-theme/${theme}-${majorStyle}-inner.css`);
+        if (!style) {
+            // 已经是当前要切换的皮肤
+            return;
+        }
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
             this._readThemeProperties();

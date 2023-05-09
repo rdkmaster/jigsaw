@@ -9,6 +9,7 @@ import {
     Optional,
     TemplateRef,
     Type,
+    ViewContainerRef,
 } from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {filter, map, take} from 'rxjs/operators';
@@ -292,6 +293,16 @@ export class PopupService {
             });
     }
 
+    private static _viewContainerRef: ViewContainerRef;
+
+    public static get viewContainerRef(): ViewContainerRef {
+        return this._viewContainerRef || InternalUtils.viewContainerRef;
+    }
+
+    public static set viewContainerRef(value: ViewContainerRef) {
+        this._viewContainerRef = value;
+    }
+
     /**
      * 打开弹框
      * @param what
@@ -302,7 +313,7 @@ export class PopupService {
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup<T = any>(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        if (!InternalUtils.viewContainerRef || !InternalUtils.renderer) {
+        if (!(this.constructor as any).viewContainerRef || !InternalUtils.renderer) {
             console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
         }
@@ -432,10 +443,10 @@ export class PopupService {
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
         if (what instanceof TemplateRef) {
-            return InternalUtils.viewContainerRef.createEmbeddedView(what);
+            return (this.constructor as any).viewContainerRef.createEmbeddedView(what);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
-            return InternalUtils.viewContainerRef.createComponent(factory);
+            return (this.constructor as any).viewContainerRef.createComponent(factory);
         }
     }
 
