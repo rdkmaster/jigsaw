@@ -57,7 +57,7 @@ export class JigsawTheme {
      * @param majorStyle
      */
     public static changeOuterTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
-        this._loadCss('jigsaw-outer-theme', `themes/wrapped-theme/${theme}-${majorStyle}-outer.css`);
+        this._loadCss('jigsaw-outer-theme', `themes/scoped-theme/${theme}-${majorStyle}-outer.css`);
     }
 
     /**
@@ -65,15 +65,15 @@ export class JigsawTheme {
      * @param theme
      * @param majorStyle
      */
-    public static changeInnerTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+    public static changeScopedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
-            // innerTheme影响全局的majorStyle
+            // scopedTheme影响全局的majorStyle
             this.majorStyle = majorStyle;
         }
         this._usingTheme = theme;
 
-        const style = this._loadCss('jigsaw-inner-theme', `themes/wrapped-theme/${theme}-${majorStyle}-inner.css`);
+        const style = this._loadCss('jigsaw-scoped-theme', `themes/scoped-theme/${theme}-${majorStyle}-scoped.css`);
         if (!style) {
             // 已经是当前要切换的皮肤
             return;
