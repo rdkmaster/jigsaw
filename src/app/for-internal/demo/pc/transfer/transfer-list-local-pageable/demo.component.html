@@ -17,7 +17,7 @@
         <div class="demo-options-item">
             <span>数据重置：</span>
             <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
-            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+            <jigsaw-button [disabled]="!hasDefault" (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
         </div>
 
         <div class="demo-options-item">

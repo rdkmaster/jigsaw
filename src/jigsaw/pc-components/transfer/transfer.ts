@@ -589,6 +589,10 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             this.destComponent.reset();
         })
 
+        if (this.destComponent) {
+            this.destComponent.data = this._$selectedItems;
+        }
+
         this.changeDetectorRef.markForCheck();
     }
 
