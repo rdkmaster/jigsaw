@@ -126,7 +126,8 @@ export class TreeTableDemoComponent {
             "header": {
                 "text": "",
                 "alignment": "left",
-                "noPadding": false
+                "noPadding": false,
+                "sortable": true
             },
             "cell": {
                 "renderer": TreeTableCellRenderer,

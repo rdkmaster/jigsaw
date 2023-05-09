@@ -169,6 +169,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         this.jigsawFloatInitData.height = this.jigsawCascadingMenuHeight;
         this.jigsawFloatInitData.maxHeight = this.jigsawCascadingMenuMaxHeight;
         this.jigsawFloatInitData.options = this.jigsawFloatOptions;
+        console.log(this.jigsawFloatInitData.options)
         if (!this.jigsawFloatInitData.select) {
             this.jigsawFloatInitData.select = this.jigsawCascadingMenuSelect;
         } else {

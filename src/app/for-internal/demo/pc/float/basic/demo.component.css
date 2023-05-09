@@ -1,0 +1,27 @@
+.jigsawFloatArea {
+    width: 150px;
+    height: 60px;
+    background: orange;
+    color: #fff;
+    text-align: center;
+    line-height: 60px;
+}
+
+.target-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    background: cyan;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.target-text {
+    padding: 0 5px;
+    height: 40px;
+    cursor: pointer;
+}

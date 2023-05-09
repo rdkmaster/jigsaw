@@ -4,8 +4,15 @@
 
 
 <!-- start to learn the demo from here -->
-<span class="iconfont iconfont-e9d8" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea" [jigsawFloatOptions]="{useCustomizedBackground: true}"> hover me!
+<jigsaw-header>文本目标</jigsaw-header>
+<span class="iconfont iconfont-e9d8 target-text" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea"
+    [jigsawFloatOptions]="{useCustomizedBackground: true}"> Hover Me!
 </span>
+
+<jigsaw-header>容器目标</jigsaw-header>
+<div class="target-box" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea"
+    [jigsawFloatOptions]="{useCustomizedBackground: true}">Hover Me!</div>
+
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
         dropdown placeholder
