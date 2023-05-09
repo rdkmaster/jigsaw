@@ -839,7 +839,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             return
         }
         this.selectedItems.push(...this.sourceComponent.selectedItems);
-        // this._updateSourceComponent();
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._updateStatus();
@@ -861,9 +860,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             });
         });
         this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length);
-        // this._updateSourceComponent();
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
-
         this._updateStatus();
         this.selectedItemsChange.emit(this.selectedItems)
     }
