@@ -6,31 +6,7 @@ import {
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .menu {
-            margin: 16px 0 8px 216px;
-            border: 1px solid #999;
-            padding: 2px 10px;
-            border-radius: 3px;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .context-menu {
-            width: 500px;
-            height: 100px;
-            background-color: var(--bg-container);
-        }
-
-        .context-menu p {
-            text-align: center;
-            padding-top: 40px;
-        }
-
-        .message {
-            margin-bottom: 8px;
-        }
-    `]
+    styleUrls: ['./demo.component.css']
 })
 export class MenuOptionsDemo {
 

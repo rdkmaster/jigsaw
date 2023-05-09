@@ -1,7 +1,3 @@
-.iconfont-e9d8 {
-    margin: 20px 100px;
-}
-
 .jigsawFloatArea {
     width: 150px;
     height: 60px;
@@ -11,6 +7,21 @@
     line-height: 60px;
 }
 
-.target-cntr{
-    width: 100px;
+.target-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 400px;
+    height: 200px;
+    background: cyan;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.target-text {
+    padding: 0 5px;
+    height: 40px;
+    cursor: pointer;
 }
