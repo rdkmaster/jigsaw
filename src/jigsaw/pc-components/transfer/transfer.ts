@@ -569,7 +569,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
                 this.sourceComponent.reset();
             })
         }
-        
+
         this._refreshForSelectedItems(value);
     }
 
