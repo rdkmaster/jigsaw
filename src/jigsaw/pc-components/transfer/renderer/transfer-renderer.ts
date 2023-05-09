@@ -437,7 +437,10 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
         this.selectedItemsChange.emit(this.selectedItems);
     }
 
-    public dataFilter(selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
+    public dataFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
+        if (!selectedItems) {
+            return
+        }
         const keyMap = selectedItems.map(item => item[this.trackItemBy]);
         this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             if (!this.treeExt) {
@@ -481,14 +484,16 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
             this.treeExt.ztree.checkAllNodes(false);
 
             this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
-            changeDetectorRef.markForCheck();
+            if (changeDetectorRef) {
+                changeDetectorRef.markForCheck();
+            }
         });
     }
 
     private _searchKey: string = "";
-    public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string, changeDetectorRef: ChangeDetectorRef) {
+    public searchFilter(data: SimpleTreeData, selectedItems: ArrayCollection<ListOption>, $event: string, changeDetectorRef: ChangeDetectorRef) {
         this._searchKey = $event.length > 0 ? $event.trim() : "";
-        this.dataFilter(selectedItems, changeDetectorRef);
+        this.dataFilter(data, selectedItems, changeDetectorRef);
     }
 
     ngAfterViewInit() {

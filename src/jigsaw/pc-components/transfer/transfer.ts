@@ -526,7 +526,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     private _refreshForTreeData(value: SimpleTreeData): void {
         this.sourceComponent.data = value;
         this.sourceComponent.update();
-        this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
+        this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
         this.destComponent.data = this.selectedItems;
     }
 
@@ -811,7 +811,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.searchFilter(this.selectedItems, $event, this.changeDetectorRef);
+            this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.searchFilter(this.data, this.selectedItems, $event, false)
@@ -842,7 +842,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         if (this.sourceRenderer === TransferListSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
+            this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
@@ -870,9 +870,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
                 }
             });
         });
-        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
+        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length);
         if (this.sourceRenderer === TransferTreeSourceRenderer) {
-            this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
+            this.sourceComponent.dataFilter(this.data, this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else {
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
