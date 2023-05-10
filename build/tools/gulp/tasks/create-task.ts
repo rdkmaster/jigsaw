@@ -68,7 +68,7 @@ export function createTask(packageName: string) {
         copyFiles(jigsawCommonPath, '**/*scss', scopedThemeCommonHome);
         copyFiles(jigsawPath, '**/*scss', scopedThemeComponentHome);
         const allScopedThemingPrebuiltHome = join(scopedThemeComponentHome, 'theming/prebuilt/');
-        await bundleScopedScss('outer', allScopedThemingPrebuiltHome, scopedThemeScssHome);
+        await bundleScopedScss('weight', allScopedThemingPrebuiltHome, scopedThemeScssHome);
         await bundleScopedScss('scoped', allScopedThemingPrebuiltHome, scopedThemeScssHome);
     });
 
