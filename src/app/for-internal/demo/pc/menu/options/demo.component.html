@@ -2,7 +2,6 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
 <jigsaw-header>可用配置项</jigsaw-header>
 <ul class="demo-options">
@@ -41,6 +40,7 @@
     </p>
     <p class="target-button flex long" jigsaw-cascading-menu [jigsawCascadingMenuData]="data"
         [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width" [jigsawCascadingMenuTheme]='theme[0]'
+        [jigsawCascadingMenuOptions]="{size:{minWidth:null}}"
         (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
     </p>

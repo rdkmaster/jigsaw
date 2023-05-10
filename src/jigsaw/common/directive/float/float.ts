@@ -538,6 +538,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
         };
         Object.assign(option, calc);
+        console.log(this.jigsawFloatOptions)
         if (this.jigsawFloatOptions) {
             Object.assign(option, this.jigsawFloatOptions);
             if (CommonUtils.isDefined(this.jigsawFloatOptions.modal)) {
@@ -556,6 +557,7 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
                 };
             }
         }
+        console.log(option);
         return option;
     }
 
