@@ -1,4 +1,4 @@
-import { EventEmitter } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 
 export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
@@ -10,10 +10,11 @@ declare const document;
 export type ThemeProperty = {name: string, value: string};
 export type ThemeInfo = {usingTheme: string, majorStyle: string};
 
+// @deprecated
 // @dynamic
 export class JigsawTheme {
-    private static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
-    private static _majorStyle: MajorStyle = null;
+    protected static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
+    protected static _majorStyle: MajorStyle = null;
     private static _usingTheme: SupportedTheme;
 
     private static _loadCss(linkId: string, cssHref: string): HTMLLinkElement {
@@ -114,7 +115,7 @@ export class JigsawTheme {
         return this._popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
     }
 
-    private static _themeProperties: ThemeProperty[] = [];
+    protected static _themeProperties: ThemeProperty[] = [];
 
     private static _readThemeProperties(): void {
         const styleSheet = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === "jigsaw-theme");
@@ -139,4 +140,52 @@ export class JigsawTheme {
     }
 
     public static themeChange = new EventEmitter<ThemeInfo>();
+}
+
+// @dynamic
+@Injectable()
+export class JigsawThemeService extends JigsawTheme{
+    public changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        (this.constructor as typeof JigsawThemeService).changeTheme(theme, majorStyle);
+    }
+
+    public changeOuterTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        (this.constructor as typeof JigsawThemeService).changeOuterTheme(theme, majorStyle);
+    }
+
+    public changeScopedTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+        (this.constructor as typeof JigsawThemeService).changeScopedTheme(theme, majorStyle);
+    }
+
+    public get majorStyle(): MajorStyle {
+        return (this.constructor as typeof JigsawThemeService).majorStyle;
+    }
+x
+    public set majorStyle(value: MajorStyle) {
+        (this.constructor as typeof JigsawThemeService).majorStyle = value;
+    }
+
+    public get popupBackgroundColor(): PopupBackgroundColor {
+        return (this.constructor as typeof JigsawThemeService)._popupBackgroundColor;
+    }
+
+    public getGraphTheme(theme?: 'light' | 'dark' | string): any {
+        if (theme) {
+            return theme == 'dark' ? darkGraphTheme : lightGraphTheme;
+        }
+        return this.popupBackgroundColor == "#ffffff" ? lightGraphTheme : darkGraphTheme;
+    }
+
+    public getProperty(prop: string): string {
+        const data = (this.constructor as typeof JigsawThemeService)._themeProperties.find(p => p.name == prop);
+        return data?.value;
+    }
+
+    public getProperties(): ThemeProperty[] {
+        return [...(this.constructor as typeof JigsawThemeService)._themeProperties];
+    }
+
+    public get themeChange() {
+        return (this.constructor as typeof JigsawThemeService).themeChange;
+    }
 }

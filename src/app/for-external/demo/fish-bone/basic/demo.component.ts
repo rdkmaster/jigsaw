@@ -1,6 +1,6 @@
 import {Component, ViewEncapsulation, NgZone, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import {JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
+import {JigsawThemeService, SimpleTreeData} from "jigsaw/public_api";
 import { AsyncDescription } from '../../../template/demo-template/demo-template';
 
 @Component({
@@ -13,7 +13,7 @@ export class FishBoneBasicComponent extends AsyncDescription {
 
 
     data: SimpleTreeData;
-    constructor(public http: HttpClient, public _zone: NgZone, el: ElementRef) {
+    constructor(public http: HttpClient, public _zone: NgZone, el: ElementRef, private _themeService: JigsawThemeService) {
         super(http, el);
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
@@ -77,7 +77,7 @@ export class FishBoneBasicComponent extends AsyncDescription {
                                     },
                                     {
                                         label: `
-                                                <div class="jigsaw-table-host" style="width: 300px;${JigsawTheme.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
+                                                <div class="jigsaw-table-host" style="width: 300px;${this._themeService.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
                                                     <tbody>

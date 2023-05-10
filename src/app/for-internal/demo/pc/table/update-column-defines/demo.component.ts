@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {ColumnDefine, JigsawTheme, TableData} from "jigsaw/public_api";
+import {ColumnDefine, JigsawThemeService, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -7,7 +7,7 @@ import {ColumnDefine, JigsawTheme, TableData} from "jigsaw/public_api";
 export class TableUpdateColumnDefinesDemoComponent {
     tableData: TableData;
 
-    constructor() {
+    constructor(private _themeService: JigsawThemeService) {
         this.tableData = new TableData(
             [
                 [
@@ -32,7 +32,7 @@ export class TableUpdateColumnDefinesDemoComponent {
     }
 
     // 这里为了能让demo同时适配深浅色系才做的这么复杂，如果应用没有深浅色系前的需求，则无需搞这么复杂
-    optionStyle = `background-color: ${JigsawTheme.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
+    optionStyle = `background-color: ${this._themeService.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
     columnDefines: ColumnDefine[];
 
     changeColumnDefine() {

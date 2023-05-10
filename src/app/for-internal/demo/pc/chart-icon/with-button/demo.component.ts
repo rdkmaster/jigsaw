@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {InternalUtils, JigsawTheme} from "jigsaw/public_api";
+import {InternalUtils, JigsawThemeService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,7 +11,7 @@ import {InternalUtils, JigsawTheme} from "jigsaw/public_api";
 })
 export class ChartIconButtonDemoComponent {
     public disabled: boolean = false;
-    public colors: string[] = JigsawTheme.getGraphTheme().color;
+    public colors: string[] = this._themeService.getGraphTheme().color;
     public longData = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2, 9, 7, 7, 3, 5, 2, 3, 5, 2];
     public shortData = [5, 3, 9, 6];
     public fill = '#ebca0f';
@@ -26,7 +26,7 @@ export class ChartIconButtonDemoComponent {
             this.stroke = '#eee';
         } else {
             this._startUpdating();
-            this.colors = JigsawTheme.getGraphTheme().color;
+            this.colors = this._themeService.getGraphTheme().color;
             this.fill = '#ebca0f';
             this.stroke = '#2b8ae3';
         }
@@ -40,7 +40,7 @@ export class ChartIconButtonDemoComponent {
         }, 1000);
     }
 
-    constructor() {
+    constructor(private _themeService: JigsawThemeService) {
         this._startUpdating();
     }
 

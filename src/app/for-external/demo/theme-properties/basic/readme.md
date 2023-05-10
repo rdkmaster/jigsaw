@@ -10,7 +10,7 @@
 
 #### 在Js中使用皮肤属性
 
-在JS中可以使用`JigsawTheme.getProperty(property)`来读取`property`当前皮肤的各个属性值。
+在JS中可以使用`JigsawThemeService.getProperty(property)`来读取`property`当前皮肤的各个属性值。
 虽然多数情况下在CSS里使用样式皮肤就足够了，但是在一些特殊情况下需要通过JS操作DOM节点时，就需要用到这个API了。注意观察这段文字中的`code`标签的用法：
 
 ```
@@ -21,6 +21,6 @@
 
 // TS代码：
 public get codeTagBg(): string {
-    return JigsawTheme.getProperty('--blue-2');
+    return JigsawThemeService.getProperty('--blue-2');
 }
 ```

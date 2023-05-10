@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
-import { JigsawTheme, PopupPositionType } from "jigsaw/public_api";
+import { PopupPositionType } from "jigsaw/public_api";
 import { ThemeService } from "../service/theme-service";
 
 @Component({
@@ -11,7 +11,7 @@ import { ThemeService } from "../service/theme-service";
     encapsulation: ViewEncapsulation.None,
 })
 export class TopMenuComponent implements OnInit, AfterContentInit {
-    public logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+    public logoPath = `app/for-external/assets/img/logo-${this._themeService.service.majorStyle}.png`;
     public positionType = PopupPositionType.fixed;
     public showThemeSelect: boolean = false;
     public themeData = [
@@ -73,7 +73,7 @@ export class TopMenuComponent implements OnInit, AfterContentInit {
 
     ngOnInit(): void {
         this._themeService.themeChange.subscribe(() => {
-            this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+            this.logoPath = `app/for-external/assets/img/logo-${this._themeService.service.majorStyle}.png`;
         })
     }
 

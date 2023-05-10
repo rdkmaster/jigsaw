@@ -1,11 +1,15 @@
-import { Output } from "@angular/core";
-import { JigsawTheme } from "jigsaw/public_api";
+import { Output, Injectable } from "@angular/core";
+import {JigsawThemeService} from "jigsaw/public_api";
 import { EventEmitter } from "@angular/core";
 
+@Injectable()
 export class ThemeService {
+    constructor(public service: JigsawThemeService) {
+    }
+
     public changeTheme(themeName, majorStyle) {
-        JigsawTheme.changeTheme(themeName, majorStyle);
-        
+        this.service.changeTheme(themeName, majorStyle);
+
         const head = document.getElementsByTagName("head")[0];
         const linkId = 'prism-theme';
         const themeLink = document.getElementById(linkId) as HTMLLinkElement;
@@ -23,9 +27,9 @@ export class ThemeService {
         style.href = cssHref;
         head.appendChild(style);
 
-        this.themeChange.emit(JigsawTheme);
+        this.themeChange.emit(this.service);
     }
 
     @Output()
-    public themeChange: EventEmitter<JigsawTheme> = new EventEmitter<JigsawTheme>();
+    public themeChange: EventEmitter<JigsawThemeService> = new EventEmitter<JigsawThemeService>();
 }

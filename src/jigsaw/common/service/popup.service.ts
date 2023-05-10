@@ -18,7 +18,7 @@ import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-import { JigsawTheme } from '../core/theming/theme';
+import {JigsawThemeService} from '../core/theming/theme';
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -268,7 +268,7 @@ export class PopupService {
     constructor(private _cfr: ComponentFactoryResolver,
                 private _zone: NgZone,
                 @Optional() private _router: Router,
-                @Optional() private _activatedRoute: ActivatedRoute) {
+                @Optional() private _activatedRoute: ActivatedRoute, private _themeService: JigsawThemeService) {
         PopupService._instance = PopupService._instance || this;
     }
 
@@ -360,7 +360,7 @@ export class PopupService {
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
             if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
-                const backgroundColor = JigsawTheme.getPopupBackgroundColor();
+                const backgroundColor = this._themeService.popupBackgroundColor;
                 if (backgroundColor) {
                     InternalUtils.renderer.setStyle(element, 'background', backgroundColor);
                 }

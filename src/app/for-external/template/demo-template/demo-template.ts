@@ -101,7 +101,7 @@ const descriptionLoadedEvent: EventEmitter<string> = new EventEmitter<string>();
 
 @Directive()
 export class AsyncDescription implements OnDestroy {
-    constructor(private _http: HttpClient, private _element: ElementRef) {
+    constructor(protected _http: HttpClient, protected _element: ElementRef) {
         const onScroll = this._onScroll.bind(this);
         document.addEventListener('scroll', onScroll);
         setTimeout(onScroll, 100);

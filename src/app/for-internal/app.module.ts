@@ -8,14 +8,13 @@ import {
     JigsawFloatModule,
     JigsawListLiteModule,
     JigsawRootModule,
-    JigsawTheme,
     JigsawTreeExtModule,
     JigsawButtonBarModule,
     SupportedTheme,
-    JigsawCheckBoxModule, 
+    JigsawCheckBoxModule,
     JigsawNumericInputModule,
     JigsawSelectModule,
-    MajorStyle
+    MajorStyle, JigsawThemeService
 } from "jigsaw/public_api";
 import {AppComponent} from './app.component';
 import {AjaxInterceptor} from '../libs/app.interceptor';
@@ -51,12 +50,13 @@ import {DemoCodeComponent} from "./demo-code.component";
             useClass: AjaxInterceptor,
             multi: true,
         },
-        TranslateService
+        TranslateService,
+        JigsawThemeService
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
-    constructor() {
+    constructor(private _themeService: JigsawThemeService) {
         let themeName: SupportedTheme, majorStyle: MajorStyle;
         const themeString = localStorage.getItem("jigsawDemoTheme");
         if (themeString === null) {
@@ -67,6 +67,6 @@ export class AppModule {
             themeName = themeData.name;
             majorStyle = themeData.majorStyle;
         }
-        JigsawTheme.changeTheme(themeName, majorStyle);
+        this._themeService.changeTheme(themeName, majorStyle);
     }
 }

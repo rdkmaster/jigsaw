@@ -50,7 +50,7 @@ import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
-import { JigsawTheme } from "../../common/core/theming/theme";
+import {JigsawThemeService} from "../../common/core/theming/theme";
 
 
 @WingsTheme('table.scss')
@@ -74,7 +74,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
+                private _injector: Injector, private _themeService: JigsawThemeService) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -722,7 +722,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
 
         this._themeChangeSubscription?.unsubscribe();
-        this._themeChangeSubscription = JigsawTheme.themeChange.subscribe(() => {
+        this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
         });
     }
@@ -1101,7 +1101,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.warn('Download table data failed!')
             return;
         }
-        
+
         const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
         const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
             + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");

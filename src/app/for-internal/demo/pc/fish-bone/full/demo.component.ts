@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, ViewEncapsulation, NgZone} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {take} from 'rxjs/operators';
-import {ChartIconFactory, ChartType, JigsawTheme, SimpleTreeData} from "jigsaw/public_api";
+import {ChartIconFactory, ChartType, JigsawThemeService, SimpleTreeData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,7 +10,7 @@ import {ChartIconFactory, ChartType, JigsawTheme, SimpleTreeData} from "jigsaw/p
 })
 export class FishBoneFullComponent implements AfterViewInit {
 
-    constructor(public http: HttpClient, public _zone: NgZone) {
+    constructor(public http: HttpClient, public _zone: NgZone, private _themeService: JigsawThemeService) {
         this.data = new SimpleTreeData();
         this.data.label = '<span class="orange">目标标题</span>';
         this.data.fromObject([
@@ -73,7 +73,7 @@ export class FishBoneFullComponent implements AfterViewInit {
                                     },
                                     {
                                         label: `
-                                                <div class="jigsaw-table-host" style="width: 300px;${JigsawTheme.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
+                                                <div class="jigsaw-table-host" style="width: 300px;${this._themeService.majorStyle == 'dark' ? 'background: #0f111a' : ''}">
                                                 <table>
                                                     <thead><tr><td>ID</td><td>name</td><td>gender</td><td>city</td></tr></thead>
                                                     <tbody>

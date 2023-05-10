@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { JigsawTheme } from 'jigsaw/public_api';
 import { ThemeService } from '../service/theme-service';
 
 @Component({
@@ -15,13 +14,13 @@ export class IntroduceComponent {
     this.router.navigate(['/components/quick-start']);
   }
 
-  public paletxProPath = `app/for-external/assets/img/paletx-pro-${JigsawTheme.majorStyle}.svg`;
-  public logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+  public paletxProPath = `app/for-external/assets/img/paletx-pro-${this._themeService.service.majorStyle}.svg`;
+  public logoPath = `app/for-external/assets/img/logo-${this._themeService.service.majorStyle}.png`;
 
   ngOnInit(): void {
     this._themeService.themeChange.subscribe(() => {
-      this.paletxProPath = `app/for-external/assets/img/paletx-pro-${JigsawTheme.majorStyle}.svg`;
-      this.logoPath = `app/for-external/assets/img/logo-${JigsawTheme.majorStyle}.png`;
+      this.paletxProPath = `app/for-external/assets/img/paletx-pro-${this._themeService.service.majorStyle}.svg`;
+      this.logoPath = `app/for-external/assets/img/logo-${this._themeService.service.majorStyle}.png`;
     })
   }
 }
