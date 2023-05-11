@@ -313,7 +313,7 @@ export class PopupService {
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup<T = any>(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        if (!(this.constructor as any).viewContainerRef || !InternalUtils.renderer) {
+        if (!(this.constructor as typeof PopupService).viewContainerRef || !InternalUtils.renderer) {
             console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
         }
@@ -442,11 +442,12 @@ export class PopupService {
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
+        const classDefine = this.constructor as typeof PopupService;
         if (what instanceof TemplateRef) {
-            return (this.constructor as any).viewContainerRef.createEmbeddedView(what);
+            return classDefine.viewContainerRef.createEmbeddedView(what);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
-            return (this.constructor as any).viewContainerRef.createComponent(factory);
+            return classDefine.viewContainerRef.createComponent(factory);
         }
     }
 

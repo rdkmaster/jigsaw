@@ -32,8 +32,8 @@ export class ScopedThemeUtils {
         return `.${this.getThemeClass(themeName)}`;
     }
 
-    public static getCssVariableSelector(themeClass: string): string {
-        const themeSelector = this.getThemeSelector(themeClass);
+    public static getCssVariableSelector(themeName: string): string {
+        const themeSelector = this.getThemeSelector(themeName);
         // css变量改成themeSelector, themeSelector-variable下的变量
         // 设定两个范围，一个用于隔离皮肤里的组件，一个用于外部使用变量，但又不需要隔离皮肤的组件
         return `${themeSelector}, ${themeSelector}-variable`;
@@ -49,7 +49,7 @@ export class ScopedThemeUtils {
                 break;
             default:
                 styleId = this.getThemeClass(scopedThemeInfo.name);
-                selector = this.getCssVariableSelector(styleId);
+                selector = this.getCssVariableSelector(scopedThemeInfo.name);
         }
         return {styleId, selector};
     }
