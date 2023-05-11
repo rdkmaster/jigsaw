@@ -22,7 +22,7 @@ export * from "./common/core/utils/common-utils";
 export * from "./common/core/utils/data-collection-utils";
 export * from "./common/core/utils/internal-utils";
 export * from "./common/core/utils/translate-helper";
-export * from "./common/core/utils/theme-utils";
+export * from "./common/core/utils/scoped-theme-utils";
 export * from "./common/directive/dragdrop/index";
 export * from "./common/directive/dragdrop/types";
 export * from "./common/directive/float/float";

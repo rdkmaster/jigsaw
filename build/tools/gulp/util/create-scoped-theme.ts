@@ -3,19 +3,17 @@ import {writeFileSync, readFileSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 import {Bundler} from 'scss-bundle';
 import {
-    ThemeUtils,
-    JigsawScopedThemeClass,
-    JigsawScopedThemeType
-} from "../../../../src/jigsaw/common/core/utils/theme-utils";
+    ScopedThemeUtils, JigsawScopedThemeInfo, defaultScopedThemesConfig
+} from "../../../../src/jigsaw/common/core/utils/scoped-theme-utils";
 
-export async function bundleScopedScss(type: JigsawScopedThemeType, themingPrebuiltHome: string, scssHome: string) {
+export async function bundleScopedScss(themeInfo: JigsawScopedThemeInfo, themingPrebuiltHome: string, scssHome: string) {
     const allScopedScssGlob = join(scssHome, '**/*.scss');
     const files = glob('*.scss', {cwd: themingPrebuiltHome});
     for (const filePath of files) {
         const result = await new Bundler().Bundle(join(themingPrebuiltHome, filePath), [allScopedScssGlob]);
-        const targetScssThemePath = join(scssHome, filePath.replace(/(.+)\.scss$/, `$1-${type}.scss`));
+        const targetScssThemePath = join(scssHome, filePath.replace(/(.+)\.scss$/, `$1-${themeInfo.name}.scss`));
         writeFileSync(targetScssThemePath, `
-                ${ThemeUtils.getScopedSelector(type)} {
+                ${ScopedThemeUtils.getScopedSelector(themeInfo)} {
                     ${result.bundledContent}
                 }
             `);
@@ -23,9 +21,9 @@ export async function bundleScopedScss(type: JigsawScopedThemeType, themingPrebu
 }
 
 export function createScopedTheme(ScopedThemeHome: string, cssFile: string) {
-    const scopedType: JigsawScopedThemeType = cssFile.endsWith('-weight.css') ? 'weight' : 'scoped';
-    const themeClass = JigsawScopedThemeClass[scopedType];
-    const scopedSelector = ThemeUtils.getScopedSelector(scopedType);
+    const scopedThemesConfig = getScopedThemesConfig();
+    const {type: scopedType, name: themeName} = scopedThemesConfig.find(themeInfo => cssFile.endsWith(`-${themeInfo.name}.css`));
+    const scopedSelector = ScopedThemeUtils.getScopedSelector({type: scopedType, name: themeName});
     const rawCssThemePath = join(ScopedThemeHome, cssFile);
     let themeContent = readFileSync(rawCssThemePath).toString();
     const scopedBlockNameReg = scopedSelector.replace(/([.()])/g, '\\$1');
@@ -34,7 +32,29 @@ export function createScopedTheme(ScopedThemeHome: string, cssFile: string) {
 
     // 替换body标签和css变量
     // scoped body要替换成theme-selector，不能替换成:is(theme-selector)，防止伪类class匹配非body元素
-    themeContent = themeContent.replace(bodyReg, ThemeUtils.getThemeSelector(themeClass))
-        .replace(cssVarReg, ThemeUtils.getCssVariableSelector(themeClass));
+    themeContent = themeContent.replace(bodyReg, ScopedThemeUtils.getThemeSelector(themeName))
+        .replace(cssVarReg, ScopedThemeUtils.getCssVariableSelector(themeName));
     writeFileSync(rawCssThemePath, themeContent);
+}
+
+export function getScopedThemesConfig(): JigsawScopedThemeInfo[] {
+    const args = process.argv.slice(3);
+    const params: any = {};
+    // 解析参数为键值对
+    args.forEach(arg => {
+        const [key, value] = arg.split('=');
+        params[key.replace('--', '')] = value;
+    });
+    if (!params.hasOwnProperty('scopedThemes')) {
+        // 没有配置scopedThemes
+        return defaultScopedThemesConfig;
+    }
+    let scopedThemesConfig: JigsawScopedThemeInfo[];
+    try {
+        scopedThemesConfig = eval(params.scopedThemes);
+    } catch {
+        console.error('parse scoped theme config error!');
+        scopedThemesConfig = defaultScopedThemesConfig;
+    }
+    return scopedThemesConfig;
 }

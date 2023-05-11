@@ -8,7 +8,7 @@ import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
 import {copyFiles, deleteFolderRecursive} from "../util/copy-files";
-import {bundleScopedScss, createScopedTheme} from "../util/create-scoped-theme";
+import {bundleScopedScss, createScopedTheme, getScopedThemesConfig} from "../util/create-scoped-theme";
 
 const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
@@ -68,8 +68,10 @@ export function createTask(packageName: string) {
         copyFiles(jigsawCommonPath, '**/*scss', scopedThemeCommonHome);
         copyFiles(jigsawPath, '**/*scss', scopedThemeComponentHome);
         const allScopedThemingPrebuiltHome = join(scopedThemeComponentHome, 'theming/prebuilt/');
-        await bundleScopedScss('weight', allScopedThemingPrebuiltHome, scopedThemeScssHome);
-        await bundleScopedScss('scoped', allScopedThemingPrebuiltHome, scopedThemeScssHome);
+        const scopedThemesConfig = getScopedThemesConfig();
+        for (const themeInfo of scopedThemesConfig) {
+            await bundleScopedScss(themeInfo, allScopedThemingPrebuiltHome, scopedThemeScssHome);
+        }
     });
 
     task(`:${packageName}-create-scoped-theme`, async function () {

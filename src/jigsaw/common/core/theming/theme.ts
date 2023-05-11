@@ -1,6 +1,6 @@
-import { EventEmitter, Injectable } from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
-import {ThemeUtils, JigsawScopedThemeClass, JigsawScopedThemeType, JigsawThemeType} from "../utils/theme-utils";
+import {ScopedThemeUtils, JigsawScopedThemeInfo} from "../utils/scoped-theme-utils";
 
 export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
 export type MajorStyle = "dark" | "light";
@@ -8,8 +8,8 @@ export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
 
 declare const document;
 
-export type ThemeProperty = {name: string, value: string};
-export type ThemeInfo = {usingTheme: string, majorStyle: string};
+export type ThemeProperty = { name: string, value: string };
+export type ThemeInfo = { usingTheme: string, majorStyle: string };
 
 // @dynamic
 export class JigsawTheme {
@@ -36,36 +36,29 @@ export class JigsawTheme {
         return style;
     }
 
-    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
+    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: JigsawScopedThemeInfo) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
             this.majorStyle = majorStyle;
         }
         this._usingTheme = theme;
 
-        const style= this._loadCss('jigsaw-theme', `themes/${theme}-${majorStyle}.css`);
-        style.onload = () => {
-            this._themeProperties.splice(0, this._themeProperties.length);
-            this._readThemeProperties();
-            this.themeChange.emit({ usingTheme: this._usingTheme, majorStyle: this._majorStyle });
-            style.onload = null;
-        };
-    }
-
-    public static changeScopedTheme(theme: SupportedTheme, majorStyle: MajorStyle, scopedType: JigsawScopedThemeType) {
-        this.majorStyle = majorStyle;
-        this._usingTheme = theme;
-        const themeClass = JigsawScopedThemeClass[scopedType];
-        const cssFile = `${theme}-${majorStyle}-${scopedType}.css`;
-        const style = this._loadCss(themeClass, `themes/scoped-theme/${cssFile}`);
+        let style;
+        if(scopedThemeInfo) {
+            const themeClass = ScopedThemeUtils.getThemeClass(scopedThemeInfo.name);
+            const cssFile = `${theme}-${majorStyle}-${scopedThemeInfo.name}.css`;
+            style = this._loadCss(themeClass, `themes/scoped-theme/${cssFile}`);
+        } else {
+            style = this._loadCss('jigsaw-theme', `themes/${theme}-${majorStyle}.css`);
+        }
         if (!style) {
             // 已经是当前要切换的皮肤
             return;
         }
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
-            this._readThemeProperties(scopedType);
-            this.themeChange.emit({ usingTheme: this._usingTheme, majorStyle: this._majorStyle });
+            this._readThemeProperties(scopedThemeInfo);
+            this.themeChange.emit({usingTheme: this._usingTheme, majorStyle: this._majorStyle});
             style.onload = null;
         };
     }
@@ -100,9 +93,9 @@ export class JigsawTheme {
 
     protected static _themeProperties: ThemeProperty[] = [];
 
-    private static _readThemeProperties(themeType: JigsawThemeType = 'global'): void {
-        const {styleId, selector} = ThemeUtils.getStyleInfo(themeType);
-        const styleSheet  = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === styleId);
+    private static _readThemeProperties(scopedThemeInfo?: JigsawScopedThemeInfo): void {
+        const {styleId, selector} = ScopedThemeUtils.getStyleInfo(scopedThemeInfo);
+        const styleSheet = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === styleId);
         if (!styleSheet) {
             return;
         }
@@ -129,13 +122,9 @@ export class JigsawTheme {
 
 // @dynamic
 @Injectable()
-export class JigsawThemeService extends JigsawTheme{
-    public changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle) {
-        (this.constructor as typeof JigsawThemeService).changeTheme(theme, majorStyle);
-    }
-
-    public changeScopedTheme(theme: SupportedTheme, majorStyle: MajorStyle, scopedType: JigsawScopedThemeType) {
-        (this.constructor as typeof JigsawThemeService).changeScopedTheme(theme, majorStyle, scopedType);
+export class JigsawThemeService extends JigsawTheme {
+    public changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: JigsawScopedThemeInfo) {
+        (this.constructor as typeof JigsawThemeService).changeTheme(theme, majorStyle, scopedThemeInfo);
     }
 
     public get majorStyle(): MajorStyle {
@@ -166,7 +155,7 @@ export class JigsawThemeService extends JigsawTheme{
         return [...(this.constructor as typeof JigsawThemeService)._themeProperties];
     }
 
-    public get themeChange() {
+    public get themeChange(): EventEmitter<ThemeInfo> {
         return (this.constructor as typeof JigsawThemeService).themeChange;
     }
 }
