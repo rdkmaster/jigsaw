@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
+import {ThemeUtils, JigsawScopedThemeClass, JigsawScopedThemeType, JigsawThemeType} from "../utils/theme-utils";
 
 export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
 export type MajorStyle = "dark" | "light";
@@ -10,15 +11,6 @@ declare const document;
 export type ThemeProperty = {name: string, value: string};
 export type ThemeInfo = {usingTheme: string, majorStyle: string};
 
-export type JigsawThemeType = 'global' | JigsawScopedThemeType;
-
-export type JigsawScopedThemeType = 'scoped' | 'weight';
-
-export enum JigsawScopedThemeClass {
-    scoped = '.jigsaw-scoped-theme', weight = '.jigsaw-weight-theme'
-}
-
-// @deprecated
 // @dynamic
 export class JigsawTheme {
     protected static _popupBackgroundColor: PopupBackgroundColor = "#ffffff";
@@ -63,9 +55,9 @@ export class JigsawTheme {
     public static changeScopedTheme(theme: SupportedTheme, majorStyle: MajorStyle, scopedType: JigsawScopedThemeType) {
         this.majorStyle = majorStyle;
         this._usingTheme = theme;
-        const selector = JigsawScopedThemeClass[scopedType];
+        const themeClass = JigsawScopedThemeClass[scopedType];
         const cssFile = `${theme}-${majorStyle}-${scopedType}.css`;
-        const style = this._loadCss(this._getScopedStyleId(selector), `themes/scoped-theme/${cssFile}`);
+        const style = this._loadCss(themeClass, `themes/scoped-theme/${cssFile}`);
         if (!style) {
             // 已经是当前要切换的皮肤
             return;
@@ -108,27 +100,8 @@ export class JigsawTheme {
 
     protected static _themeProperties: ThemeProperty[] = [];
 
-    private static _getStyleInfo(themeType: JigsawThemeType) {
-        let styleId, selector;
-        switch (themeType) {
-            case "global":
-                styleId = "jigsaw-theme";
-                selector = ':root';
-                break;
-            case "scoped":
-            case "weight":
-                selector = JigsawScopedThemeClass[themeType];
-                styleId = this._getScopedStyleId(selector);
-        }
-        return {styleId, selector};
-    }
-
-    private static _getScopedStyleId(selector: string) {
-        return selector.replace(/^\./, '');
-    }
-
     private static _readThemeProperties(themeType: JigsawThemeType = 'global'): void {
-        const {styleId, selector} = this._getStyleInfo(themeType);
+        const {styleId, selector} = ThemeUtils.getStyleInfo(themeType);
         const styleSheet  = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === styleId);
         if (!styleSheet) {
             return;
