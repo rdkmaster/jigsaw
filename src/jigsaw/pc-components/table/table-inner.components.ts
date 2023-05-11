@@ -326,6 +326,7 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
             "jigsaw-table-asc": sortOrder == SortOrder.asc,
             "jigsaw-table-des": sortOrder == SortOrder.desc,
         };
+        this.changeDetector.markForCheck();
     }
 
     private _defaultSortOrder: SortOrder;
