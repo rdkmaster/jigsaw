@@ -1,7 +1,7 @@
 <div *ngIf="disabled" class="jigsaw-transfer-disabled">
 </div>
 <div class="jigsaw-transfer-cntr">
-    <div *ngIf="data?.busy" class="jigsaw-transfer-loading" @loading>
+    <div *ngIf="_$loading || data?.busy" class="jigsaw-transfer-loading" @loading>
         <jigsaw-circle-loading [theme]="theme" [size]="'small'"></jigsaw-circle-loading>
     </div>
     <div class="jigsaw-transfer-item-cntr jigsaw-transfer-source">

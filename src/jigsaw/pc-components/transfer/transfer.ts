@@ -465,6 +465,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             this.sourceComponent.reset();
             this._checkSourceSelectAll();
         });
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
+        }
+        this._removeOnRefreshListener = data.onRefresh(() => {
+            this._$loading = false;
+        });
     }
 
     private _refreshForPageableArray(data: LocalPageableArray<any> | PageableArray): void {
@@ -475,6 +482,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._removeOnRefreshListener = data.onRefresh(() => {
             this.sourceComponent.data = new ArrayCollection(data);
             this.destComponent.data = this._$selectedItems;
+            this._$loading = false;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems)
     }
@@ -490,6 +498,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             }
             this.sourceComponent.data.fromObject({ data: data.data, field: data.field, header: data.header })
             this.destComponent.data = this._$selectedItems;
+            this._$loading = false;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems);
     }
@@ -520,6 +529,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
             this.sourceComponent.additionalData.reset();
             this.sourceComponent.additionalData.refresh();
+        });
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
+        }
+        this._removeOnRefreshListener = data.onRefresh(() => {
+            this._$loading = false;
         });
     }
 
@@ -656,6 +672,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public set disabled(value: boolean) {
         this._disabled = value;
     }
+
+    @RequireMarkForCheck()
+    public _$loading: boolean = false;
 
     /**
      * @internal
@@ -836,7 +855,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
      */
     public _$sourceTransfer(): void {
         if (!this._$sourceButton) {
-            return
+            return;
         }
         this.selectedItems.push(...this.sourceComponent.selectedItems);
         this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length);
@@ -867,11 +886,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
 
     private _updateSourceComponent() {
         if (this.sourceRenderer === TransferListSourceRenderer) {
+            this._$loading = true;
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
         } else if (this.sourceRenderer === TransferTreeSourceRenderer) {
             this.sourceComponent.dataFilter(this.selectedItems, this.changeDetectorRef);
             this.sourceComponent.update();
         } else if (this.sourceRenderer === TransferTableSourceRenderer) {
+            this._$loading = true;
             this.sourceComponent.dataFilter(this.data, this.selectedItems);
             if (CommonUtils.isUndefined(this.sourceComponent.additionalData)) {
                 return;
