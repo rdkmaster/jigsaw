@@ -1,0 +1,44 @@
+.demo-options .demo-options-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.demo-options .demo-options-item>span:not(:first-of-type),
+.demo-options .demo-options-item>jigsaw-button:not(:first-of-type) {
+    margin-left: 5px;
+}
+
+.flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.target-button {
+    height: 32px;
+    border: 1px solid var(--border-color-default);
+    border-radius: 3px;
+}
+
+.target-button.normal {
+    width: 100px;
+}
+
+.target-button.long {
+    width: 300px;
+}
+
+.target-box {
+    width: 500px;
+    height: 100px;
+    background-color: var(--bg-container);
+}
+
+.target-cntr {
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 500px;
+    height: 100px;
+}
