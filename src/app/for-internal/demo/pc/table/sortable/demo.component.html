@@ -2,26 +2,26 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
+<jigsaw-button (click)="resetSort()"> 手动重置排序 </jigsaw-button>
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
     <jigsaw-header [level]="1">Sortable</jigsaw-header>
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">TableData fromAjax</jigsaw-header>
         <j-button colorType="primary" (click)="changeData1()">改变数据</j-button>
-        <jigsaw-table [data]="tableDataFromAjax" [columnDefines]="columns" height="300"></jigsaw-table>
+        <jigsaw-table #tableCmp1 [data]="tableDataFromAjax" [columnDefines]="columns" height="300"></jigsaw-table>
     </div>
 
     <div class="demo-2 live-demo">
         <jigsaw-header [level]="2">TableData fromObject</jigsaw-header>
         <j-button colorType="primary" (click)="changeData2()">改变数据</j-button>
-        <jigsaw-table [data]="tableDataFromObject" [columnDefines]="columns" height="300"></jigsaw-table>
+        <jigsaw-table #tableCmp2 [data]="tableDataFromObject" [columnDefines]="columns" height="300"></jigsaw-table>
     </div>
 
     <div class="demo-3 live-demo">
         <jigsaw-header [level]="2">LocalPageableTableData</jigsaw-header>
         <j-button colorType="primary" (click)="changeData3()">改变数据</j-button>
-        <jigsaw-table [data]="localPageable" [columnDefines]="columns"></jigsaw-table>
+        <jigsaw-table #tableCmp3 [data]="localPageable" [columnDefines]="columns"></jigsaw-table>
         <jigsaw-pagination
             [data]="localPageable"
             [pageSizeOptions]="[5, 10, 20]"
@@ -34,7 +34,7 @@
 
     <div class="demo-4 live-demo">
         <jigsaw-header [level]="2">PageableTableData</jigsaw-header>
-        <jigsaw-table style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+        <jigsaw-table #tableCmp4 style="margin-bottom: 10px;" maxHeight="400px" [data]="pageable" [columnDefines]="columns"></jigsaw-table>
         <jigsaw-pagination
             [data]="pageable"
             [pageSizeOptions]="[5, 10, 20]"

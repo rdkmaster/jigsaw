@@ -10,12 +10,23 @@ import {
     templateUrl: './demo.component.html'
 })
 export class TableSetHeaderSortDemoComponent {
-    @ViewChild(JigsawTable) table: JigsawTable;
+    @ViewChild('tableCmp1')
+    public tableCmp1: JigsawTable;
+    @ViewChild('tableCmp2')
+    public tableCmp2: JigsawTable;
+    @ViewChild('tableCmp3')
+    public tableCmp3: JigsawTable;
+    @ViewChild('tableCmp4')
+    public tableCmp4: JigsawTable;
 
     tableDataFromAjax: TableData;
     tableDataFromObject: TableData;
     localPageable: LocalPageableTableData;
     pageable: PageableTableData;
+
+    public resetSort(){
+        this.tableCmp1.resetSort();
+    }
 
     tableJsonLong = {
         data: [
