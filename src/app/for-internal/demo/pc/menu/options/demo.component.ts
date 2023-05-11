@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import { Component } from "@angular/core";
 import {
     JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
     PopupService
@@ -15,8 +15,11 @@ export class MenuOptionsDemo {
     public dataType: string[] = ['normal'];
     public width: number = 150;
     public height: number = 0;
+    public options = {};
+    public units = ['px', '%'];
+    public unit = 'px';
 
-    constructor( private ps: PopupService) {
+    constructor(private ps: PopupService) {
         this.data = new SimpleTreeData();
         this.changeData('normal');
     }
@@ -96,6 +99,15 @@ export class MenuOptionsDemo {
         }
     }
 
+    public autoTargetWidth: boolean = true;
+
+    public autoTargetWidthChange() {
+        this.options = this.autoTargetWidth ? {} : { size: { minWidth: null } }
+    }
+
+    public unitChange($event){
+        this.unit = $event;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

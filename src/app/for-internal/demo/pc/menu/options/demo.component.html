@@ -12,7 +12,7 @@
     </li>
     <li class="demo-options-item">
         <span>宽度：</span>
-        <jigsaw-numeric-input [(value)]="width" [step]="10"></jigsaw-numeric-input>
+        <jigsaw-numeric-input [(value)]="width" [step]="10" [suffix]="units" (suffixChange)="unitChange($event)"></jigsaw-numeric-input>
     </li>
     <li class="demo-options-item">
         <span>高度：</span>
@@ -24,6 +24,11 @@
             (selectedItemsChange)="changeData($event)">
         </jigsaw-button-bar>
     </li>
+    <li class="demo-options-item">
+        <span>弹出区域自适应宿主宽度：</span>
+        <jigsaw-switch [(checked)]="autoTargetWidth" (checkedChange)="autoTargetWidthChange()">
+        </jigsaw-switch>
+    </li>
     <li class="demo-desc">
         关于高度说明：<br>
         菜单高度默认是由菜单项自动撑出来的，一个层级下有多少菜单项，该级菜单就有多高。
@@ -34,14 +39,13 @@
 <jigsaw-header>Menu菜单</jigsaw-header>
 <div class="target-cntr flex">
     <p class="target-button flex normal" jigsaw-cascading-menu [jigsawCascadingMenuData]="data"
-        [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width" [jigsawCascadingMenuTheme]='theme[0]'
-        (jigsawCascadingMenuSelect)="menuSelect($event)">
+        [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width + unit" [jigsawCascadingMenuTheme]='theme[0]'
+        [jigsawCascadingMenuOptions]="options" (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
     </p>
     <p class="target-button flex long" jigsaw-cascading-menu [jigsawCascadingMenuData]="data"
-        [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width" [jigsawCascadingMenuTheme]='theme[0]'
-        [jigsawCascadingMenuOptions]="{size:{minWidth:null}}"
-        (jigsawCascadingMenuSelect)="menuSelect($event)">
+        [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width + unit" [jigsawCascadingMenuTheme]='theme[0]'
+        [jigsawCascadingMenuOptions]="options" (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
     </p>
 </div>

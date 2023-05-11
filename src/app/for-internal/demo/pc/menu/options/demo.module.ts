@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawMenuModule, JigsawButtonBarModule, JigsawNumericInputModule, JigsawHeaderModule} from "jigsaw/public_api";
+import {JigsawMenuModule, JigsawButtonBarModule, JigsawNumericInputModule, JigsawHeaderModule, JigsawSwitchModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
 import {MenuOptionsDemo} from "./demo.component";
 
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule, JigsawButtonBarModule,
-        JigsawNumericInputModule, JigsawHeaderModule
+        JigsawNumericInputModule, JigsawHeaderModule, JigsawSwitchModule
     ],
     declarations: [MenuOptionsDemo],
     exports: [MenuOptionsDemo]
