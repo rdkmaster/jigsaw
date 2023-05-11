@@ -85,7 +85,7 @@ export function createTask(packageName: string) {
                         console.error('Failed to build theme, detail:\n', err.stack);
                         throw err;
                     }))
-                    //.pipe(gulpCleanCss())
+                    .pipe(gulpCleanCss())
                     .pipe(dest(scopedThemeHome))
                     .on('end', function () {
                         const rawCssFile = filePath.replace(/\.scss$/, '.css');
