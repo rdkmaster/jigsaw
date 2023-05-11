@@ -1,3 +1,7 @@
+/**
+ * overridable 表示这套皮肤使用时，它的样式是有预期会被覆盖的
+ * unoverridable 则相反，表示这套皮肤的样式不能被覆盖
+ */
 export type JigsawScopedThemeType = 'overridable' | 'unoverridable';
 
 export type JigsawScopedThemeInfo = {

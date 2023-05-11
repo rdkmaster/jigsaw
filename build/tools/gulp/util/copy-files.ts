@@ -16,18 +16,18 @@ export function copyFiles(fromPath: string, fileGlob: string, outDir: string) {
  * @param path
  */
 export function deleteFolderRecursive(path: string) {
-    if (existsSync(path)) {
-        readdirSync(path).forEach(file => {
-            const curPath = path + '/' + file;
-            if (lstatSync(curPath).isDirectory()) {
-                // 递归删除子目录
-                deleteFolderRecursive(curPath);
-            } else {
-                // 删除文件
-                unlinkSync(curPath);
-            }
-        });
-        // 删除目录
-        rmdirSync(path);
+    if (!existsSync(path)) {
+        return;
     }
+    readdirSync(path).forEach(file => {
+        const curPath = path + '/' + file;
+        if (lstatSync(curPath).isDirectory()) {
+            // 递归删除子目录
+            deleteFolderRecursive(curPath);
+        } else {
+            // 删除文件
+            unlinkSync(curPath);
+        }
+    });
+    rmdirSync(path);
 }

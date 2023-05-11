@@ -18,7 +18,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     constructor(protected _renderer: Renderer2,
                 protected _elementRef: ElementRef,
                 protected _popupService: PopupService,
-                protected _zone: NgZone, private _themeService: JigsawThemeService) {
+                protected _zone: NgZone,
+                private _themeService: JigsawThemeService) {
         super(_renderer, _elementRef, _popupService, _zone);
     }
 

@@ -267,8 +267,11 @@ export class PopupService {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _zone: NgZone,
-                @Optional() private _router: Router,
-                @Optional() private _activatedRoute: ActivatedRoute, private _themeService: JigsawThemeService) {
+                @Optional()
+                private _router: Router,
+                @Optional()
+                private _activatedRoute: ActivatedRoute,
+                private _themeService: JigsawThemeService) {
         PopupService._instance = PopupService._instance || this;
     }
 
