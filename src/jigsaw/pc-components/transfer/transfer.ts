@@ -588,13 +588,12 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
             this._updateSourceComponent();
             this.destComponent.reset();
+            this.changeDetectorRef.markForCheck();
         })
 
         if (this.destComponent) {
             this.destComponent.data = this._$selectedItems;
         }
-
-        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -784,6 +783,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         } else {
             this._$destSelectAllChecked = CheckBoxStatus.indeterminate;
         }
+        this.changeDetectorRef.markForCheck();
     }
 
     /**
@@ -827,7 +827,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
      */
     public _$destSearching($event: string): void {
         this.destComponent.searchFilter(this.selectedItems, $event);
-        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length)
+        this.destComponent.selectedItems.splice(0, this.destComponent.selectedItems.length);
         this._checkDestSelectAll();
     }
 
@@ -839,7 +839,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             return
         }
         this.selectedItems.push(...this.sourceComponent.selectedItems);
-        this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length)
+        this.sourceComponent.selectedItems.splice(0, this.sourceComponent.selectedItems.length);
         this._$selectedItems.fromArray(this.selectedItems as ListOption[]);
         this._updateStatus();
         this.selectedItemsChange.emit(this.selectedItems)
