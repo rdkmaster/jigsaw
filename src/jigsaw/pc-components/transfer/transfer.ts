@@ -673,6 +673,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._disabled = value;
     }
 
+    /**
+     * @internal
+     */
     @RequireMarkForCheck()
     public _$loading: boolean = false;
 
