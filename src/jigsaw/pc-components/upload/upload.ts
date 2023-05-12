@@ -65,7 +65,7 @@ export class JigsawUpload extends JigsawUploadBase {
     private _uploadResultEle: JigsawUploadResult;
 
     public get files(): UploadFileInfo[] {
-        return this._$uploader.files;
+        return this._$uploader?.files;
     }
 
     protected _width: string = "400px";
