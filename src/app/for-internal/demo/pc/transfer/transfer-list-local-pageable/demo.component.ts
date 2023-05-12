@@ -7,12 +7,40 @@ import { ArrayCollection, LocalPageableArray, TableData, TransferListSourceRende
     styleUrls: ['./demo.component.css']
 })
 export class TransferListLocalPageableDemoComponent {
+    constructor(public _http: HttpClient) {
+        this.data = new LocalPageableArray();
+        this.data.http = _http;
+        this.data.pagingInfo.pageSize = 15;
+        this.data.pagingInfo.currentPage = undefined;
+        this.data.pagingInfo.itemHeight = undefined;
+        this.data.pagingInfo.autoPageSizing = false;
+        this.data.fromAjax('mock-data/countries');
+        this.data.dataReviser = (td: TableData) => TableData.toArray(td);
+
+        this.selectedData = new ArrayCollection([
+            {
+                enName: "andorra",
+                shortName: "and",
+                zhName: "安道尔"
+            },
+            {
+                enName: 'belize',
+                zhName: '伯里兹',
+                shortName: 'blz'
+            }]);
+    }
+
+    public data: LocalPageableArray<any>;
+    public selectedData: ArrayCollection<any>;
+
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
     public labelField = 'zhName';
     public subLabelField = 'enName';
     public trackItemBy = 'shortName';
+
+    public hasDefault = localStorage.getItem('JigsawDemoCookie_hasDefault') == 'true';
 
     public dataArray = [
         {
@@ -77,38 +105,11 @@ export class TransferListLocalPageableDemoComponent {
         }
     ];
 
-    constructor(public _http: HttpClient) {
-        this.data = new LocalPageableArray();
-        this.data.http = _http;
-        this.data.pagingInfo.pageSize = 15;
-        this.data.pagingInfo.currentPage = undefined;
-        this.data.pagingInfo.itemHeight = undefined;
-        this.data.pagingInfo.autoPageSizing = false;
-        this.data.fromAjax('mock-data/countries');
-        this.data.dataReviser = (td: TableData) => TableData.toArray(td);
-
-        this.selectedData = new ArrayCollection([
-            {
-                enName: "andorra",
-                shortName: "and",
-                zhName: "安道尔"
-            },
-            {
-                enName: 'belize',
-                zhName: '伯里兹',
-                shortName: 'blz'
-            }]);
-    }
-
-    ngOnInit() {
-
-    }
-
-    changeDataFromArray() {
+    public changeDataFromArray() {
         this.data.fromArray(this.dataArray);
     }
 
-    resetInputData() {
+    public resetInputData() {
         this.data = new LocalPageableArray();
         this.data.http = this._http;
         this.data.pagingInfo.pageSize = 15;
@@ -119,7 +120,7 @@ export class TransferListLocalPageableDemoComponent {
         this.data.dataReviser = (td: TableData) => TableData.toArray(td);
     }
 
-    resetSelectedData() {
+    public resetSelectedData() {
         this.selectedData = new ArrayCollection([
             {
                 enName: "andorra",
@@ -133,13 +134,16 @@ export class TransferListLocalPageableDemoComponent {
             }]);
     }
 
-    selectedItemsChange($event) {
+    public selectedItemsChange($event) {
         console.log($event)
     }
 
-    data: LocalPageableArray<any>;
-    selectedData: ArrayCollection<any>;
 
+
+    public updateHasDefault() {
+        localStorage.setItem('JigsawDemoCookie_hasDefault', String(this.hasDefault));
+        setTimeout(() => location.reload(), 300);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

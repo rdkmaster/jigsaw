@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Component } from "@angular/core";
-import { TableData, TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, TransferTableDestRenderer, LocalPageableTableData } from "jigsaw/public_api";
+import { TransferTableSourceRenderer, TransferListDestRenderer, ArrayCollection, ListOption, TransferTableDestRenderer, LocalPageableTableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',

@@ -45,6 +45,7 @@ export class TransferArrayDemoComponent {
         this.data.push(newLabel);
         this.data.refresh();
         this.selectedItems.push(newLabel);
+        this.selectedItems.refresh();
     }
 
     removeSelectedItem() {

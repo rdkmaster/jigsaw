@@ -8,22 +8,32 @@
 
 <jigsaw-header [level]="2">本地分页数据</jigsaw-header>
 <ul>
-    <li class="demo-item">
-        <div class="item-buttons">
+    <li class="demo-options">
+        <div class="demo-options-item">
             <span>输入数据：</span>
             <jigsaw-button (click)="changeDataFromArray()">通过fromArray()更新</jigsaw-button>
         </div>
 
-        <div class="item-buttons">
+        <div class="demo-options-item">
             <span>数据重置：</span>
             <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
-            <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+            <jigsaw-button [disabled]="!hasDefault" (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+        </div>
+
+        <div class="demo-options-item">
+            <span>初始已选项：</span>
+            <jigsaw-switch [(checked)]="hasDefault" (checkedChange)="updateHasDefault()"></jigsaw-switch>
         </div>
     </li>
-    <li class="demo-item">
-        <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
-                    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
-                    [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"
-                    (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
-    </li>
 </ul>
+<div *ngIf="hasDefault">
+    <j-transfer width="100%" height="500" [data]="data" [selectedItems]="selectedData"
+    [sourceRenderer]="sourceRenderer" [destRenderer]="targetRenderer" [labelField]="labelField"
+    [subLabelField]="subLabelField" [trackItemBy]="trackItemBy"
+    (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+</div>
+<div *ngIf="!hasDefault">
+    <j-transfer width="100%" height="500" [data]="data" [sourceRenderer]="sourceRenderer"
+        [destRenderer]="targetRenderer" [labelField]="labelField" [subLabelField]="subLabelField"
+        [trackItemBy]="trackItemBy" (selectedItemsChange)="selectedItemsChange($event)"></j-transfer>
+</div>

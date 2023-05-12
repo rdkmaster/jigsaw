@@ -141,7 +141,7 @@ export class TransferListDemoComponent {
 
     removeItem() {
         this.data.pop();
-        this.selectedItems.length = 0;
+        this.selectedItems = this.isArray ? [] : new ArrayCollection([]);
         if (this.isArray) {
             this.data = JSON.parse(JSON.stringify(this.data));
             return;

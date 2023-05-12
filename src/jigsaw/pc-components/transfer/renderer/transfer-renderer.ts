@@ -141,7 +141,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
         super();
     }
 
-    private _data: ArrayCollection<ListOption>;
+    private _data: ArrayCollection<ListOption> | LocalPageableArray<ListOption>;
 
     /**
      * 渲染器数据
@@ -149,11 +149,11 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get data(): ArrayCollection<ListOption> {
+    public get data(): ArrayCollection<ListOption> | LocalPageableArray<ListOption> {
         return this._data;
     }
 
-    public set data(value: ArrayCollection<ListOption>) {
+    public set data(value: ArrayCollection<ListOption> | LocalPageableArray<ListOption>) {
         this._data = value;
         this.update();
         this._changeDetectorRef.markForCheck();
@@ -321,16 +321,7 @@ export class TransferListSourceRenderer extends TransferListRendererBase {
 export class TransferListDestRenderer extends TransferListRendererBase {
     public searchFilter(selectedItems: ArrayCollection<ListOption>, filterKey: string) {
         filterKey = filterKey ? filterKey.trim() : '';
-        this.data = new ArrayCollection(selectedItems.filter(
-            item => {
-                let value: string = '';
-                if (typeof item === 'string') {
-                    value = item;
-                } else if (this.labelField) {
-                    value = !item || item[this.labelField] === undefined || item[this.labelField] === null ? '' : item[this.labelField].toString();
-                }
-                return value.toLowerCase().includes(filterKey.toLowerCase())
-            }));
+        (this.data as LocalPageableArray<ListOption>).filter(filterKey, [this.labelField]);
     }
 
     public dataFilter(...args): void {
@@ -434,6 +425,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     }
 
     public dataFilter(selectedItems: ArrayCollection<ListOption>, changeDetectorRef: ChangeDetectorRef) {
+        if (!selectedItems) {
+            return
+        }
         const keyMap = selectedItems.map(item => item[this.trackItemBy]);
         this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
             if (!this.treeExt) {
@@ -477,7 +471,9 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
             this.treeExt.ztree.checkAllNodes(false);
 
             this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
-            changeDetectorRef.markForCheck();
+            if (changeDetectorRef) {
+                changeDetectorRef.markForCheck();
+            }
         });
     }
 
