@@ -3,7 +3,6 @@ import {
     JigsawMenu, MenuTheme, SimpleNode, SimpleTreeData,
     PopupService,
     BreadcrumbNode,
-    JigsawTheme
 } from "jigsaw/public_api";
 
 @Component({

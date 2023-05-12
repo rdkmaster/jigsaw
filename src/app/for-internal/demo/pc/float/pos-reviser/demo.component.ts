@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, ElementRef, Renderer2, ViewChild} from "@angular/core";
-import {JigsawTheme, PopupOptions, PopupPositionValue} from "jigsaw/public_api";
+import {JigsawThemeService, PopupOptions, PopupPositionValue} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -10,7 +10,7 @@ export class FloatPosReviserDemo implements AfterViewInit {
     public mover: ElementRef;
     public position;
 
-    constructor(private _renderer: Renderer2) {
+    constructor(private _renderer: Renderer2, private _themeService: JigsawThemeService) {
         this.position = "bottomLeft";
     }
 
@@ -26,7 +26,7 @@ export class FloatPosReviserDemo implements AfterViewInit {
     };
 
     ngAfterViewInit(): void {
-        const bg = JigsawTheme.majorStyle == 'light' ? '#eee' : '#333';
+        const bg = this._themeService.majorStyle == 'light' ? '#eee' : '#333';
         this._renderer.setStyle(this.mover.nativeElement, 'background-color', bg);
     }
 

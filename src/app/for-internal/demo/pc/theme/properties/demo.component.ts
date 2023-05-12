@@ -1,15 +1,19 @@
 import { Component } from "@angular/core";
-import {JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils} from "jigsaw/public_api";
+import {JigsawNotification, ThemeProperty, CommonUtils, JigsawThemeService} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ["./demo.component.css"]
 })
 export class ThemePropertiesDemoComponent {
+    constructor(private _themeService: JigsawThemeService) {
+
+    }
+
     public get properties(): ThemeProperty[][] {
         // API给的数据是一个数组，直接平铺出来不好看，这里给归归类
-        const classified: { [type: string]: ThemeProperty[] } = {}, types = [], bg = JigsawTheme.getProperty('--bg-active');
-        JigsawTheme.getProperties().forEach(prop => {
+        const classified: { [type: string]: ThemeProperty[] } = {}, types = [], bg = this._themeService.getProperty('--bg-active');
+        this._themeService.getProperties().forEach(prop => {
             let type = prop.name.split('-')[2];
             type = type == 'splitline' ? 'border' : type;
             classified[type] = classified[type] || [];
@@ -45,7 +49,7 @@ export class ThemePropertiesDemoComponent {
     }
 
     public get codeTagBg(): string {
-        return JigsawTheme.getProperty('--blue-2');
+        return this._themeService.getProperty('--blue-2');
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

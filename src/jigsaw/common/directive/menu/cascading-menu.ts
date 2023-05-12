@@ -1,10 +1,10 @@
-import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output} from "@angular/core";
+import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ElementRef, NgZone} from "@angular/core";
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
 import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 import {CommonUtils} from "../../core/utils/common-utils";
-import {JigsawTheme} from "../../core/theming/theme";
+import {JigsawThemeService} from "../../core/theming/theme";
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -15,13 +15,21 @@ import {JigsawTheme} from "../../core/theming/theme";
     }
 })
 export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, AfterViewInit, OnDestroy {
+    constructor(protected _renderer: Renderer2,
+                protected _elementRef: ElementRef,
+                protected _popupService: PopupService,
+                protected _zone: NgZone,
+                private _themeService: JigsawThemeService) {
+        super(_renderer, _elementRef, _popupService, _zone);
+    }
+
     private _jigsawCascadingMenuData: SimpleTreeData;
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: MenuTheme = JigsawTheme.majorStyle;
+    private _jigsawCascadingMenuTheme: MenuTheme = this._themeService.majorStyle;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
 
     @Input('jigsawCascadingMenuOptions')

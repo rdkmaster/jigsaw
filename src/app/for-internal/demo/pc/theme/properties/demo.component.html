@@ -13,7 +13,7 @@
 </p>
 <jigsaw-header>在Js中使用皮肤属性</jigsaw-header>
 <p class="inline-message">
-    在JS中可以使用 <code [ngStyle]="{background: codeTagBg}">JigsawTheme.getProperty(property)</code> 来读取
+    在JS中可以使用 <code [ngStyle]="{background: codeTagBg}">JigsawThemeService.getProperty(property)</code> 来读取
     <code [ngStyle]="{background: codeTagBg}">property</code> 当前皮肤的各个属性值。
     虽然多数情况下在CSS里使用样式皮肤就足够了，但是在一些特殊情况下需要通过JS操作DOM节点时，就需要用到这个API了。注意观察这段文字中的
     <code [ngStyle]="{background: codeTagBg}">code</code> 标签的用法：
@@ -25,7 +25,7 @@
 
 // TS代码：
 public get codeTagBg(): string &#123;
-    return JigsawTheme.getProperty('--blue-2');
+    return JigsawThemeService.getProperty('--blue-2');
 &#125;</code></pre>
 <jigsaw-header>所有可用皮肤属性</jigsaw-header>
 <ul class="public-variables-demo-ul">

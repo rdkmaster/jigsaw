@@ -3,10 +3,12 @@ import {join} from 'path';
 import {Bundler} from 'scss-bundle';
 import {green, red} from 'chalk';
 import {writeFileSync} from 'fs-extra';
+import {sync as glob} from 'glob';
 import {sequenceTask} from "../util/task_helpers";
 import {checkReleasePackage} from "./validate-release";
 import {publishPackage} from './publish';
-import {copyFiles} from "../util/copy-files";
+import {copyFiles, deleteFolderRecursive} from "../util/copy-files";
+import {bundleScopedScss, createScopedTheme, getScopedThemesConfig} from "../util/create-scoped-theme";
 
 const {buildCandidatePackage} = require("../../build-candidate-package.js");
 const gulpSass = require('gulp-sass');
@@ -35,6 +37,7 @@ export function createTask(packageName: string) {
 
     task(`:build:${packageName}-styles`, [
         `:build:${packageName}-all-theme-file`,
+        `:build:${packageName}-all-scoped-theme`,
         `:build:${packageName}-bundle-theming-scss`,
         `:build:${packageName}-copy-prebuilt-theme-settings`,
         `:build:${packageName}-copy-theming-api`,
@@ -50,6 +53,54 @@ export function createTask(packageName: string) {
             .pipe(gulpCleanCss())
             .pipe(dest(join(releasePath, 'prebuilt-themes')));
     });
+
+    task(`:build:${packageName}-all-scoped-theme`, sequenceTask(
+        `:${packageName}-copy-and-bundle-scss`,
+        `:${packageName}-create-scoped-theme`,
+        `:${packageName}-remove-tmp-files`
+    ));
+
+    task(`:${packageName}-copy-and-bundle-scss`, async function () {
+        const scopedThemeHome = join(releasePath, 'prebuilt-themes', 'scoped-theme');
+        const scopedThemeScssHome = join(scopedThemeHome, 'scss');
+        const scopedThemeCommonHome = join(scopedThemeScssHome, 'common');
+        const scopedThemeComponentHome = join(scopedThemeScssHome, packageName == 'jigsaw' ? 'pc-components' : 'mobile-components');
+        copyFiles(jigsawCommonPath, '**/*scss', scopedThemeCommonHome);
+        copyFiles(jigsawPath, '**/*scss', scopedThemeComponentHome);
+        const allScopedThemingPrebuiltHome = join(scopedThemeComponentHome, 'theming/prebuilt/');
+        const scopedThemesConfig = getScopedThemesConfig();
+        for (const themeInfo of scopedThemesConfig) {
+            await bundleScopedScss(themeInfo, allScopedThemingPrebuiltHome, scopedThemeScssHome);
+        }
+    });
+
+    task(`:${packageName}-create-scoped-theme`, async function () {
+        const scopedThemeHome = join(releasePath, 'prebuilt-themes', 'scoped-theme');
+        const scopedThemeScssHome = join(scopedThemeHome, 'scss');
+        const files = glob('*.scss', {cwd: scopedThemeScssHome});
+        for (const filePath of files) {
+            await new Promise(resolve => {
+                src(join(scopedThemeScssHome, filePath))
+                    .pipe(gulpSass().on('error', (err: any) => {
+                        console.error('Failed to build theme, detail:\n', err.stack);
+                        throw err;
+                    }))
+                    .pipe(gulpCleanCss())
+                    .pipe(dest(scopedThemeHome))
+                    .on('end', function () {
+                        const rawCssFile = filePath.replace(/\.scss$/, '.css');
+                        createScopedTheme(scopedThemeHome, rawCssFile);
+                        resolve();
+                    });
+            })
+        }
+    })
+
+    task(`:${packageName}-remove-tmp-files`, function () {
+        const scopedThemeHome = join(releasePath, 'prebuilt-themes', 'scoped-theme');
+        const scopedThemeScssHome = join(scopedThemeHome, 'scss');
+        deleteFolderRecursive(scopedThemeScssHome);
+    })
 
     task(`:build:${packageName}-bundle-theming-scss`, () => {
         return new Bundler().Bundle(themingEntryPointPath, [allScssGlob]).then(result => {
@@ -96,15 +147,15 @@ export function createTask(packageName: string) {
     });
 
     task('build:novice-guide', buildCandidatePackage.bind({
-            packageName: "novice-guide",
-            entryPath: "src/jigsaw/common/novice-guide/exports.ts",
-            rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
-        }));
+        packageName: "novice-guide",
+        entryPath: "src/jigsaw/common/novice-guide/exports.ts",
+        rollupTo: "window.jigsaw=window.jigsaw||{};window.jigsaw",
+    }));
     task('build:unified-paging', buildCandidatePackage.bind({
-            packageName: "unified-paging",
-            entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
-            rollupTo: "",
-        }));
+        packageName: "unified-paging",
+        entryPath: "src/jigsaw/common/core/data/unified-paging/exports.ts",
+        rollupTo: "",
+    }));
 
     task(`build:${packageName}`, sequenceTask(
         ':extract-theme-variables',

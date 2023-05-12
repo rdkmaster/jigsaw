@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { JigsawTheme } from 'jigsaw/public_api';
 import { ThemeService } from './service/theme-service';
 
 @Component({
@@ -8,14 +7,14 @@ import { ThemeService } from './service/theme-service';
   providers: [ThemeService],
 })
 export class HomeComponent implements OnInit {
-  public bgPath = `app/for-external/assets/img/home-bg-${JigsawTheme.majorStyle}.png`;
+  public bgPath = `app/for-external/assets/img/home-bg-${this._themeService.service.majorStyle}.png`;
 
   constructor(private _themeService: ThemeService) {
   }
-  
+
   ngOnInit(): void {
     this._themeService.themeChange.subscribe(() => {
-      this.bgPath = `app/for-external/assets/img/home-bg-${JigsawTheme.majorStyle}.png`;
+      this.bgPath = `app/for-external/assets/img/home-bg-${this._themeService.service.majorStyle}.png`;
     })
   }
 }

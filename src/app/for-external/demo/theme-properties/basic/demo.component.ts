@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
-import { JigsawTheme, JigsawNotification, ThemeProperty, CommonUtils } from "jigsaw/public_api";
+import { Component, ElementRef } from "@angular/core";
+import {JigsawNotification, ThemeProperty, CommonUtils, JigsawThemeService} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
+import { HttpClient } from '@angular/common/http';
 
 @Component({
     selector: "theme-properties-basic",
@@ -8,12 +9,16 @@ import {AsyncDescription} from "../../../template/demo-template/demo-template";
     styleUrls: ["./demo.component.css"]
 })
 export class ThemePropertiesBasicDemoComponent extends AsyncDescription {
+    constructor(public http: HttpClient, el: ElementRef, private _themeService: JigsawThemeService) {
+        super(http, el);
+    }
+
     public demoPath = "demo/theme-properties/basic";
 
     public get properties(): ThemeProperty[][] {
         // API给的数据是一个数组，直接平铺出来不好看，这里给归归类
-        const classified: { [type: string]: ThemeProperty[] } = {}, types = [], bg = JigsawTheme.getProperty('--bg-active');
-        JigsawTheme.getProperties().forEach(prop => {
+        const classified: { [type: string]: ThemeProperty[] } = {}, types = [], bg = this._themeService.getProperty('--bg-active');
+        this._themeService.getProperties().forEach(prop => {
             let type = prop.name.split('-')[2];
             type = type == 'splitline' ? 'border' : type;
             classified[type] = classified[type] || [];
@@ -49,6 +54,6 @@ export class ThemePropertiesBasicDemoComponent extends AsyncDescription {
     }
 
     public get codeTagBg(): string {
-        return JigsawTheme.getProperty('--blue-2');
+        return this._themeService.getProperty('--blue-2');
     }
 }

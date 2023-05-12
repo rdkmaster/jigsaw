@@ -1,6 +1,6 @@
 import {Component, ElementRef} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
-import { InternalUtils, JigsawTheme } from "jigsaw/public_api";
+import {InternalUtils, JigsawThemeService} from "jigsaw/public_api";
 import {AsyncDescription} from "../../../template/demo-template/demo-template";
 
 @Component({
@@ -11,7 +11,7 @@ export class ChartIconButtonDemoComponent extends AsyncDescription {
     public demoPath = "demo/chart-icon/with-button";
 
     public disabled: boolean = false;
-    public colors: string[] = JigsawTheme.getGraphTheme().color;
+    public colors: string[] = this._themeService.getGraphTheme().color;
     public longData = [5, 3, 9, 6, 5, 9, 7, 3, 5, 2, 9, 7, 7, 3, 5, 2, 3, 5, 2];
     public shortData = [5, 3, 9, 6];
     public fill = '#ebca0f';
@@ -26,7 +26,7 @@ export class ChartIconButtonDemoComponent extends AsyncDescription {
             this.stroke = '#eee';
         } else {
             this._startUpdating();
-            this.colors = JigsawTheme.getGraphTheme().color;
+            this.colors = this._themeService.getGraphTheme().color;
             this.fill = '#ebca0f';
             this.stroke = '#2b8ae3';
         }
@@ -40,7 +40,7 @@ export class ChartIconButtonDemoComponent extends AsyncDescription {
         }, 1000);
     }
 
-    constructor(http: HttpClient, el: ElementRef) {
+    constructor(http: HttpClient, el: ElementRef, private _themeService: JigsawThemeService) {
         super(http, el);
         this._startUpdating();
     }

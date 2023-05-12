@@ -1,7 +1,15 @@
 import { AfterContentInit, Component, Input, NgModule, OnInit } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
-import { CommonUtils, JigsawFloatModule, ArrayCollection, TranslateHelper, JigsawNotification, JigsawTheme, JigsawButtonBarModule } from "jigsaw/public_api";
+import {
+    CommonUtils,
+    JigsawFloatModule,
+    ArrayCollection,
+    TranslateHelper,
+    JigsawNotification,
+    JigsawButtonBarModule,
+    JigsawThemeService
+} from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
 import { MockData } from "../../libs/app.interceptor";
 
@@ -92,7 +100,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' }
     ]);
 
-    constructor(private _translateService: TranslateService) {
+    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService) {
     }
 
     ngAfterContentInit() {
@@ -111,7 +119,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     themeSelectChange(themeArr: ArrayCollection<any>) {
         const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
         localStorage.setItem("jigsawDemoTheme", JSON.stringify({name: themeName, majorStyle: majorStyle}));
-        JigsawTheme.changeTheme(themeName, majorStyle);
+        this._themeService.changeTheme(themeName, majorStyle);
     }
 
     themeInit() {
@@ -121,7 +129,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         } else {
             const themeData = JSON.parse(themeString);
             this.selectedTheme = [themeData];
-            JigsawTheme.changeTheme(themeData.name, themeData.majorStyle);
+            this._themeService.changeTheme(themeData.name, themeData.majorStyle);
         }
     }
 

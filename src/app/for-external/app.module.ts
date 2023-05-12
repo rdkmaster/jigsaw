@@ -8,7 +8,6 @@ import {
     JigsawFloatModule,
     JigsawListLiteModule,
     JigsawRootModule,
-    JigsawTheme,
     JigsawTreeExtModule,
     JigsawButtonBarModule,
     SupportedTheme,
@@ -17,7 +16,7 @@ import {
     JigsawSelectModule,
     MajorStyle,
     JigsawButtonModule,
-    JigsawSearchInputModule,
+    JigsawSearchInputModule, JigsawThemeService,
 } from "jigsaw/public_api";
 import { AppComponent } from "./app.component";
 import { AjaxInterceptor } from "../libs/app.interceptor";
@@ -217,11 +216,12 @@ import { TranslateDemoModule } from "./demo/translate/demo.module";
             multi: true,
         },
         TranslateService,
+        JigsawThemeService
     ],
     bootstrap: [AppComponent],
 })
 export class AppModule {
-    constructor() {
+    constructor(private _themeService: JigsawThemeService) {
         let themeName: SupportedTheme, majorStyle: MajorStyle;
         const themeString = localStorage.getItem("jigsawDemoTheme");
         if (themeString === null) {
@@ -232,6 +232,6 @@ export class AppModule {
             themeName = themeData.name;
             majorStyle = themeData.majorStyle;
         }
-        JigsawTheme.changeTheme(themeName, majorStyle);
+        this._themeService.changeTheme(themeName, majorStyle);
     }
 }

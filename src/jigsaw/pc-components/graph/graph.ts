@@ -22,7 +22,7 @@ import {AbstractGraphData} from "../../common/core/data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
-import {JigsawTheme} from "../../common/core/theming/theme";
+import {JigsawThemeService} from "../../common/core/theming/theme";
 
 declare const echarts: any;
 
@@ -147,7 +147,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public set theme(theme: 'light' | 'dark' | string) {
         this._wingsTheme(theme);
         if (this._graph) {
-            this._graph._theme = JigsawTheme.getGraphTheme(theme);
+            this._graph._theme = this._themeService.getGraphTheme(theme);
             this.data.refresh();
         }
     }
@@ -160,7 +160,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     @Input()
     public get globalTheme() {
         // this._globalTheme用于保存用户自定义echart全局皮肤，jigsaw自带的皮肤不保存在this._globalTheme里
-        return this._globalTheme || JigsawTheme.getGraphTheme(this.theme);
+        return this._globalTheme || this._themeService.getGraphTheme(this.theme);
     };
 
     public set globalTheme(value) {
@@ -173,7 +173,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
-                private _changeDetectorRef: ChangeDetectorRef) {
+                private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {
         super();
         this._host = this._elementRef.nativeElement;
     }

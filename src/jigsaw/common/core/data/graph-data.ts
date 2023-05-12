@@ -4,7 +4,7 @@ import {CommonUtils} from "../utils/common-utils";
 import {Type} from "@angular/core";
 
 declare const echarts: any;
-import {JigsawTheme} from "../theming/theme";
+import {JigsawThemeService} from "../theming/theme";
 
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
@@ -549,7 +549,7 @@ export class DoughnutRateGraphData extends AbstractNormalGraphData {
                 },
                 textStyle: {
                     baseline: 'bottom',
-                    color: JigsawTheme.majorStyle == 'dark' ? '#fff' : '#333',
+                    color: JigsawThemeService.majorStyle == 'dark' ? '#fff' : '#333',
                     fontFamily: 'Arial'
                 }
             },

@@ -9,6 +9,7 @@ import {
     Optional,
     TemplateRef,
     Type,
+    ViewContainerRef,
 } from "@angular/core";
 import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 import {filter, map, take} from 'rxjs/operators';
@@ -17,7 +18,7 @@ import {CommonUtils} from "../core/utils/common-utils";
 import {AffixUtils, ElementEventHelper, InternalUtils} from "../core/utils/internal-utils";
 import {JigsawBlock} from "../components/block/block";
 import {IDynamicInstantiatable} from "../common";
-import { JigsawTheme } from '../core/theming/theme';
+import {JigsawThemeService} from '../core/theming/theme';
 
 export enum PopupEffect {
     fadeIn, fadeOut, bubbleIn, bubbleOut
@@ -266,8 +267,11 @@ export class PopupService {
 
     constructor(private _cfr: ComponentFactoryResolver,
                 private _zone: NgZone,
-                @Optional() private _router: Router,
-                @Optional() private _activatedRoute: ActivatedRoute) {
+                @Optional()
+                private _router: Router,
+                @Optional()
+                private _activatedRoute: ActivatedRoute,
+                private _themeService: JigsawThemeService) {
         PopupService._instance = PopupService._instance || this;
     }
 
@@ -292,6 +296,16 @@ export class PopupService {
             });
     }
 
+    private static _viewContainerRef: ViewContainerRef;
+
+    public static get viewContainerRef(): ViewContainerRef {
+        return this._viewContainerRef || InternalUtils.viewContainerRef;
+    }
+
+    public static set viewContainerRef(value: ViewContainerRef) {
+        this._viewContainerRef = value;
+    }
+
     /**
      * 打开弹框
      * @param what
@@ -302,7 +316,7 @@ export class PopupService {
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>>, options?: PopupOptions, initData?: any): PopupInfo;
     public popup<T = any>(what: TemplateRef<any>, options?: PopupOptions): PopupInfo;
     public popup<T = ButtonInfo>(what: Type<IPopupable<T>> | TemplateRef<any>, options?: PopupOptions, initData?: any): PopupInfo {
-        if (!InternalUtils.viewContainerRef || !InternalUtils.renderer) {
+        if (!(this.constructor as typeof PopupService).viewContainerRef || !InternalUtils.renderer) {
             console.error("please use 'jigsaw-root' or 'jigsaw-mobile-root' element as the root of your root component");
             return;
         }
@@ -349,7 +363,7 @@ export class PopupService {
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
             if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
-                const backgroundColor = JigsawTheme.getPopupBackgroundColor();
+                const backgroundColor = this._themeService.popupBackgroundColor;
                 if (backgroundColor) {
                     InternalUtils.renderer.setStyle(element, 'background', backgroundColor);
                 }
@@ -431,11 +445,12 @@ export class PopupService {
     }
 
     private _createPopup(what: Type<IPopupable> | TemplateRef<any>) {
+        const classDefine = this.constructor as typeof PopupService;
         if (what instanceof TemplateRef) {
-            return InternalUtils.viewContainerRef.createEmbeddedView(what);
+            return classDefine.viewContainerRef.createEmbeddedView(what);
         } else {
             const factory = this._cfr.resolveComponentFactory(what);
-            return InternalUtils.viewContainerRef.createComponent(factory);
+            return classDefine.viewContainerRef.createComponent(factory);
         }
     }
 

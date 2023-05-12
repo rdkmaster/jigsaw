@@ -7,13 +7,13 @@ import {
     ChartIconPie,
     ChartType
 } from "./chart-icon-factory";
-import {AbstractJigsawViewBase, WingsTheme} from "../../common/common";
+import {AbstractJigsawViewBase} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {JigsawTheme} from "../../common/core/theming/theme";
+import {JigsawThemeService} from "../../common/core/theming/theme";
 
 @Directive()
 export abstract class JigsawChartIconBase extends AbstractJigsawViewBase implements OnInit {
-    constructor(protected _elementRef: ElementRef, protected _injector: Injector, protected _zone: NgZone) {
+    constructor(protected _elementRef: ElementRef, protected _injector: Injector, protected _zone: NgZone, protected _themeService: JigsawThemeService) {
         super(_zone);
     }
 
@@ -95,7 +95,7 @@ export class JigsawPieChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string[] | ((...any) => string) = JigsawTheme.getGraphTheme().color;
+    public fill: string[] | ((...any) => string) = this._themeService.getGraphTheme().color;
 
     /**
      * @NoMarkForCheckRequired
@@ -126,7 +126,7 @@ export class JigsawDonutChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string[] = JigsawTheme.getGraphTheme().color;
+    public fill: string[] = this._themeService.getGraphTheme().color;
 
     /**
      * @NoMarkForCheckRequired
@@ -167,7 +167,7 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string = JigsawTheme.getGraphTheme().color[3];
+    public fill: string = this._themeService.getGraphTheme().color[3];
 
     /**
      * @NoMarkForCheckRequired
@@ -197,7 +197,7 @@ export class JigsawLineChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public stroke: string = JigsawTheme.getGraphTheme().color[0];
+    public stroke: string = this._themeService.getGraphTheme().color[0];
 
     /**
      * @NoMarkForCheckRequired
@@ -230,7 +230,7 @@ export class JigsawBarChartIcon extends JigsawChartIconBase {
      * @NoMarkForCheckRequired
      */
     @Input()
-    public fill: string[] = JigsawTheme.getGraphTheme().color;
+    public fill: string[] = this._themeService.getGraphTheme().color;
 
     /**
      * @NoMarkForCheckRequired

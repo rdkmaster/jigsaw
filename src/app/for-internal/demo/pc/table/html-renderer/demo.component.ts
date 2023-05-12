@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {
     RawTableData, TableData, AdditionalColumnDefine, ColumnDefine,
-    CommonUtils, SortAs, SortOrder, JigsawTheme
+    CommonUtils, SortAs, SortOrder, JigsawThemeService
 } from "jigsaw/public_api";
 
 @Component({
@@ -11,7 +11,7 @@ import {
 export class TableHtmlRendererDemoComponent {
     tableData: TableData;
 
-    constructor(http: HttpClient) {
+    constructor(http: HttpClient, private _themeService: JigsawThemeService) {
         this.tableData = new TableData();
         this.tableData.http = http;
         this.tableData.fromAjax('mock-data/hr-list');
@@ -28,7 +28,7 @@ export class TableHtmlRendererDemoComponent {
     }
 
     // 这里为了能让demo同时适配深浅色系才做的这么复杂，如果应用没有深浅色系前的需求，则无需搞这么复杂
-    readonly optionStyle = `background-color: ${JigsawTheme.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
+    readonly optionStyle = `background-color: ${this._themeService.majorStyle == 'dark' ? '#0f111a' : '#fff'}`;
 
     columns: ColumnDefine[] = [
         {
