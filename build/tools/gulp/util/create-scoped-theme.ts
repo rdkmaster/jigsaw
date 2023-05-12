@@ -3,10 +3,10 @@ import {writeFileSync, readFileSync} from 'fs-extra';
 import {sync as glob} from 'glob';
 import {Bundler} from 'scss-bundle';
 import {
-    ScopedThemeUtils, JigsawScopedThemeInfo, defaultScopedThemesConfig
+    ScopedThemeUtils, ScopedThemeInfo, defaultScopedThemesConfig
 } from "../../../../src/jigsaw/common/core/utils/scoped-theme-utils";
 
-export async function bundleScopedScss(themeInfo: JigsawScopedThemeInfo, themingPrebuiltHome: string, scssHome: string) {
+export async function bundleScopedScss(themeInfo: ScopedThemeInfo, themingPrebuiltHome: string, scssHome: string) {
     const allScopedScssGlob = join(scssHome, '**/*.scss');
     const files = glob('*.scss', {cwd: themingPrebuiltHome});
     for (const filePath of files) {
@@ -37,7 +37,7 @@ export function createScopedTheme(ScopedThemeHome: string, cssFile: string) {
     writeFileSync(rawCssThemePath, themeContent);
 }
 
-export function getScopedThemesConfig(): JigsawScopedThemeInfo[] {
+export function getScopedThemesConfig(): ScopedThemeInfo[] {
     const args = process.argv.slice(3);
     const params: any = {};
     // 解析参数为键值对
@@ -49,7 +49,7 @@ export function getScopedThemesConfig(): JigsawScopedThemeInfo[] {
         // 没有配置scopedThemes
         return defaultScopedThemesConfig;
     }
-    let scopedThemesConfig: JigsawScopedThemeInfo[];
+    let scopedThemesConfig: ScopedThemeInfo[];
     try {
         scopedThemesConfig = eval(params.scopedThemes);
     } catch {

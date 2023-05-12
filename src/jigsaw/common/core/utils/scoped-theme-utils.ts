@@ -2,15 +2,15 @@
  * overridable 表示这套皮肤使用时，它的样式是有预期会被覆盖的
  * unoverridable 则相反，表示这套皮肤的样式不能被覆盖
  */
-export type JigsawScopedThemeType = 'overridable' | 'unoverridable';
+export type ScopedThemeType = 'overridable' | 'unoverridable';
 
-export type JigsawScopedThemeInfo = {
-    type: JigsawScopedThemeType,
+export type ScopedThemeInfo = {
+    type: ScopedThemeType,
     // name作为唯一标识
     name: string
 }
 
-export const defaultScopedThemesConfig: JigsawScopedThemeInfo[] = [
+export const defaultScopedThemesConfig: ScopedThemeInfo[] = [
     {type: 'overridable', name: 'overridable'},
     {type: 'unoverridable', name: 'unoverridable'},
 ]
@@ -22,7 +22,7 @@ export class ScopedThemeUtils {
      * :is(.jigsaw-unoverridable-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除scoped-theme下的元素，body使用.jigsaw-unoverridable-theme替换
      * :where(.jigsaw-overridable-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-overridable-theme替换
      */
-    public static getScopedSelector(themeInfo: JigsawScopedThemeInfo): string {
+    public static getScopedSelector(themeInfo: ScopedThemeInfo): string {
         const selector = this.getThemeSelector(themeInfo.name);
         return themeInfo.type == 'unoverridable' ? `:is(${selector})`
             : `:where(${selector})`;
@@ -43,7 +43,7 @@ export class ScopedThemeUtils {
         return `${themeSelector}, ${themeSelector}-variable`;
     }
 
-    public static getStyleInfo(scopedThemeInfo?: JigsawScopedThemeInfo): { styleId: string, selector: string } {
+    public static getStyleInfo(scopedThemeInfo?: ScopedThemeInfo): { styleId: string, selector: string } {
         const themeType = scopedThemeInfo ? scopedThemeInfo.type : 'global';
         let styleId, selector;
         switch (themeType) {

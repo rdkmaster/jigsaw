@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
-import {ScopedThemeUtils, JigsawScopedThemeInfo} from "../utils/scoped-theme-utils";
+import {ScopedThemeUtils, ScopedThemeInfo} from "../utils/scoped-theme-utils";
 
 export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
 export type MajorStyle = "dark" | "light";
@@ -36,7 +36,7 @@ export class JigsawTheme {
         return style;
     }
 
-    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: JigsawScopedThemeInfo) {
+    public static changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: ScopedThemeInfo) {
         majorStyle = majorStyle || this.majorStyle;
         if (majorStyle != this.majorStyle) {
             this.majorStyle = majorStyle;
@@ -93,7 +93,7 @@ export class JigsawTheme {
 
     protected static _themeProperties: ThemeProperty[] = [];
 
-    private static _readThemeProperties(scopedThemeInfo?: JigsawScopedThemeInfo): void {
+    private static _readThemeProperties(scopedThemeInfo?: ScopedThemeInfo): void {
         const {styleId, selector} = ScopedThemeUtils.getStyleInfo(scopedThemeInfo);
         const styleSheet = [...document.styleSheets].find(styleSheet => styleSheet.ownerNode.id === styleId);
         if (!styleSheet) {
@@ -123,7 +123,7 @@ export class JigsawTheme {
 // @dynamic
 @Injectable()
 export class JigsawThemeService extends JigsawTheme {
-    public changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: JigsawScopedThemeInfo) {
+    public changeTheme(theme: SupportedTheme, majorStyle?: MajorStyle, scopedThemeInfo?: ScopedThemeInfo) {
         (this.constructor as typeof JigsawThemeService).changeTheme(theme, majorStyle, scopedThemeInfo);
     }
 
