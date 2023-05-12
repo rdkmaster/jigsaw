@@ -18,8 +18,7 @@ export const defaultScopedThemesConfig: ScopedThemeInfo[] = [
 // @dynamic
 export class ScopedThemeUtils {
     /**
-     * 在canvas上添加.jigsaw-overridable-theme，在canvas外的地方添加.jigsaw-unoverridable-theme
-     * :is(.jigsaw-unoverridable-theme) xxxx 权重要比wings-theme大，要比用户写的css大，要排除scoped-theme下的元素，body使用.jigsaw-unoverridable-theme替换
+     * :is(.jigsaw-unoverridable-theme) xxxx 权重要比wings-theme大，要比用户写的css大，body使用.jigsaw-unoverridable-theme替换
      * :where(.jigsaw-overridable-theme) xxxx 权重要比wings-theme小，要比用户写的css小，body使用.jigsaw-overridable-theme替换
      */
     public static getScopedSelector(themeInfo: ScopedThemeInfo): string {
