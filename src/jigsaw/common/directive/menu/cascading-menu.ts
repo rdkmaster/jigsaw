@@ -1,11 +1,11 @@
 import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ElementRef, NgZone} from "@angular/core";
+import { Subscription } from 'rxjs';
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
 import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawThemeService} from "../../core/theming/theme";
-import { Subscription } from 'rxjs';
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -220,6 +220,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._removeBodyNodeRemovedHandler) {
             this._removeBodyNodeRemovedHandler();
             this._removeBodyNodeRemovedHandler = null;
+        }
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
     }
 

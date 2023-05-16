@@ -263,7 +263,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         })
     }
 
-    private _host: HTMLElement;
+    private readonly _host: HTMLElement;
     private _graphContainer: HTMLElement;
 
     ngOnInit() {
