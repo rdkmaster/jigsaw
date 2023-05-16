@@ -141,7 +141,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public get theme(): 'light' | 'dark' | string {
-        return this._theme;
+        return this._theme || this._themeService.majorStyle;
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
@@ -172,10 +172,20 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    private _themeChangeSubscription: Subscription;
+
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {
         super();
         this._host = this._elementRef.nativeElement;
+        this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (!this._graph || this._theme || this._globalTheme) {
+                // 用户配置了theme或者globalTheme属性的无需跟随工程皮肤切换
+                return;
+            }
+            this._graph._theme = this._themeService.getGraphTheme(themeInfo.majorStyle);
+            this.data.refresh();
+        })
     }
 
     /**
@@ -253,7 +263,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         })
     }
 
-    private _host: HTMLElement;
+    private readonly _host: HTMLElement;
     private _graphContainer: HTMLElement;
 
     ngOnInit() {
@@ -292,6 +302,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this._resizeObserver) {
             this._resizeObserver.disconnect();
             this._resizeObserver = null;
+        }
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
     }
 

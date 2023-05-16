@@ -1,4 +1,5 @@
 import {AfterViewInit, Directive, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2, ElementRef, NgZone} from "@angular/core";
+import { Subscription } from 'rxjs';
 import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
@@ -21,6 +22,13 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
                 protected _zone: NgZone,
                 private _themeService: JigsawThemeService) {
         super(_renderer, _elementRef, _popupService, _zone);
+        this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (this._jigsawCascadingMenuTheme) {
+                // 用户配置了jigsawCascadingMenuTheme属性的无需跟随工程皮肤切换
+                return;
+            }
+            this.jigsawFloatInitData.theme = themeInfo.majorStyle;
+        })
     }
 
     private _jigsawCascadingMenuData: SimpleTreeData;
@@ -29,8 +37,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: MenuTheme = this._themeService.majorStyle;
+    private _jigsawCascadingMenuTheme: MenuTheme;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
+    private _themeChangeSubscription: Subscription;
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -110,7 +119,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     @Input()
     get jigsawCascadingMenuTheme(): MenuTheme {
-        return this._jigsawCascadingMenuTheme;
+        return this._jigsawCascadingMenuTheme || this._themeService.majorStyle;
     }
 
     set jigsawCascadingMenuTheme(value: MenuTheme) {
@@ -211,6 +220,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._removeBodyNodeRemovedHandler) {
             this._removeBodyNodeRemovedHandler();
             this._removeBodyNodeRemovedHandler = null;
+        }
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
     }
 
