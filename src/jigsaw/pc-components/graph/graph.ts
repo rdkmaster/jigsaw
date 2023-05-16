@@ -141,7 +141,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public get theme(): 'light' | 'dark' | string {
-        return this._theme;
+        return this._theme || this._themeService.majorStyle;
     }
 
     public set theme(theme: 'light' | 'dark' | string) {
@@ -179,7 +179,8 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
-            if (!this._graph) {
+            if (!this._graph || this._theme || this._globalTheme) {
+                // 用户配置了theme或者globalTheme属性的无需跟随工程皮肤切换
                 return;
             }
             this._graph._theme = this._themeService.getGraphTheme(themeInfo.majorStyle);

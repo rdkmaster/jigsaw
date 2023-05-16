@@ -5,6 +5,7 @@ import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
 import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
 import {CommonUtils} from "../../core/utils/common-utils";
 import {JigsawThemeService} from "../../core/theming/theme";
+import { Subscription } from 'rxjs';
 
 @Directive({
     selector: '[jigsaw-cascading-menu],[j-cascading-menu],[jigsawCascadingMenu]',
@@ -21,6 +22,13 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
                 protected _zone: NgZone,
                 private _themeService: JigsawThemeService) {
         super(_renderer, _elementRef, _popupService, _zone);
+        this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (this._jigsawCascadingMenuTheme) {
+                // 用户配置了jigsawCascadingMenuTheme属性的无需跟随工程皮肤切换
+                return;
+            }
+            this.jigsawFloatInitData.theme = themeInfo.majorStyle;
+        })
     }
 
     private _jigsawCascadingMenuData: SimpleTreeData;
@@ -29,8 +37,9 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuMaxHeight: string | number;
     private _jigsawFloatOptions: PopupOptions;
     private _jigsawCascadingMenuShowBorder: boolean;
-    private _jigsawCascadingMenuTheme: MenuTheme = this._themeService.majorStyle;
+    private _jigsawCascadingMenuTheme: MenuTheme;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
+    private _themeChangeSubscription: Subscription;
 
     @Input('jigsawCascadingMenuOptions')
     get jigsawFloatOptions(): PopupOptions {
@@ -110,7 +119,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     @Input()
     get jigsawCascadingMenuTheme(): MenuTheme {
-        return this._jigsawCascadingMenuTheme;
+        return this._jigsawCascadingMenuTheme || this._themeService.majorStyle;
     }
 
     set jigsawCascadingMenuTheme(value: MenuTheme) {
