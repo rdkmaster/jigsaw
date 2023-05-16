@@ -627,7 +627,7 @@ export class PopupService {
             InternalUtils.renderer.setStyle(element, "box-shadow", shadowValue);
         }
         if (options && options.showBorder) {
-            const borderColor = options.borderColor ? options.borderColor : 'var($border-color-default, #dcdcdc)';
+            const borderColor = options.borderColor ? options.borderColor : 'var(--border-color-default, #dcdcdc)';
             InternalUtils.renderer.setStyle(element, "border-width", "1px");
             InternalUtils.renderer.setStyle(element, "border-style", "solid");
             InternalUtils.renderer.setStyle(element, "border-color", borderColor);

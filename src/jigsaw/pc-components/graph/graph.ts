@@ -172,10 +172,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
     }
 
+    private _themeChangeSubscription: Subscription;
+
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {
         super();
         this._host = this._elementRef.nativeElement;
+        this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (!this._graph) {
+                return;
+            }
+            this._graph._theme = this._themeService.getGraphTheme(themeInfo.majorStyle);
+            this.data.refresh();
+        })
     }
 
     /**
@@ -292,6 +301,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this._resizeObserver) {
             this._resizeObserver.disconnect();
             this._resizeObserver = null;
+        }
+        if (this._themeChangeSubscription) {
+            this._themeChangeSubscription.unsubscribe();
+            this._themeChangeSubscription = null;
         }
     }
 
