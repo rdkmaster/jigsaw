@@ -336,9 +336,9 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                         seriesData['type'] = dim.shade;
                     }
                     seriesData['yAxisIndex'] = dim.yAxisIndex;
-                    seriesData['stack'] = dim.stack;
-                    seriesData['color'] = dim.color;
-                    seriesData['barWidth'] = dim.barWidth;
+                    seriesData['stack'] = dim.stack ? dim.stack : seriesData['stack'];
+                    seriesData['color'] = dim.color ? dim.color : seriesData['color'];
+                    seriesData['barWidth'] = dim.barWidth ? dim.barWidth : seriesData['barWidth'];
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
                     this._autoRange(seriesData, options);
