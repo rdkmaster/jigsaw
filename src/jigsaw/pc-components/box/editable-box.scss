@@ -30,24 +30,24 @@ $editable-box-prefix-cls: #{$jigsaw-prefix}-editable-box;
         left: 0;
         top: 0;
          border: {
-             left: 3px dashed transparent;
+             left: 2px dashed transparent;
              top: none;
          }
         z-index: $zindex-ui-level-1;
         &:hover, &.#{$box-prefix-cls}-resizing {
             cursor: e-resize;
-            border-left-color: rgba(0, 0, 0, .2);
+            border-left-color: $border-color-default;
         }
         &-column {
             width: 100%;
             height: 3px;
             border: {
                 left: none;
-                top: 3px dashed transparent;
+                top: 2px dashed transparent;
             }
             &:hover, &.#{$box-prefix-cls}-resizing {
                 cursor: n-resize !important;
-                border-top-color: rgba(0, 0, 0, .2);
+                border-top-color: $border-color-default;
             }
         }
     }
