@@ -8,29 +8,13 @@
     <jigsaw-header [level]="1">Box</jigsaw-header>
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">布局</jigsaw-header>
-        <j-box direction="v" [resizable]="true" height="400" width="800">
-            <j-box>
-                <div class="box-content">
-                    <div class="border-content"></div>
-                </div>
+        <j-box direction="v" [resizable]="true" height="400" width="800" gap="8">
+            <j-box class="border-box"></j-box>
+            <j-box [resizable]="true" grow="4" gap="8">
+                <j-box class="border-box"></j-box>
+                <j-box class="border-box" grow="4"></j-box>
             </j-box>
-            <j-box [resizable]="true" grow="4">
-                <j-box>
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
-                </j-box>
-                <j-box grow="4">
-                    <div class="box-content">
-                        <div class="border-content"></div>
-                    </div>
-                </j-box>
-            </j-box>
-            <j-box>
-                <div class="box-content">
-                    <div class="border-content"></div>
-                </div>
-            </j-box>
+            <j-box class="border-box"></j-box>
         </j-box>
     </div>
 </div>

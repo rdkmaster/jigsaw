@@ -72,20 +72,6 @@ export class JigsawEditableBox extends JigsawBox {
     @Input()
     public resizable: boolean = true;
 
-    private _gap: string;
-    /**
-     * @NoMarkForCheckRequired
-     * 设置内容box的间隙
-     */
-    @Input()
-    public get gap(): string {
-        return this._gap;
-    }
-
-    public set gap(value: string) {
-        this._gap = CommonUtils.getCssValue(value);
-    }
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -133,37 +119,13 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public _$childrenBox: JigsawEditableBox[];
 
-    protected _setChildrenBox() {
-        if (!this._$childrenBox) {
+    protected _setResizeLine(box: JigsawEditableBox, index: number) {
+        if (!this.resizable || index == 0) {
+            // 第一个child box没有resize line
+            // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
             return;
         }
-        this._$childrenBox.forEach((box, index) => {
-            box.parent = this;
-            this._supportSetSize(box, this);
-            if (this.resizable && index != 0) {
-                // 第一个child box没有resize line
-                // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
-                // 异步消除变更检查报错
-                this.runMicrotask(() => {
-                    box.showResizeLine = true;
-                    box._cdr.markForCheck();
-                });
-                this.runAfterMicrotasks(() => {
-                    this._setResizeLineOffset(box, index);
-                    this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
-                })
-            }
-        });
-        if (!this._$childrenBox || !this.gap) {
-            return;
-        }
-        this._$childrenBox
-            // 自身通过输入属性设置过margin，就不通过gap设置
-            .filter(box => !box.margin)
-            .forEach((box, index) => {
-                box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` :
-                    this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
-            });
+        this._asyncToSetResizeLine(box, index);
     }
 
     protected _computeResizeLineWidth() {

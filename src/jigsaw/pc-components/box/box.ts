@@ -79,6 +79,20 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
     }
 
+    private _gap: string;
+    /**
+     * @NoMarkForCheckRequired
+     * 设置内容box的间隙
+     */
+    @Input()
+    public get gap(): string {
+        return this._gap;
+    }
+
+    public set gap(value: string) {
+        this._gap = CommonUtils.getCssValue(value);
+    }
+
     private _hidden: boolean = false;
     /**
      * 在需要控制box的dom节点的显示隐藏时，请尽量使用这个属性，或者使用ngIf来控制，
@@ -253,21 +267,44 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._$childrenBox.forEach((box, index) => {
             box.parent = this;
             this._supportSetSize(box, this);
-            if (this.resizable && index != 0 && !box._isFixedSize && !this._$childrenBox[index - 1]._isFixedSize) {
-                // 第一个child box没有resize line
-                // 设置了尺寸的box没有resize line
-                // 异步消除变更检查报错
-                this.runMicrotask(() => {
-                    box.showResizeLine = true;
-                    box._cdr.markForCheck();
-                });
-                this.runAfterMicrotasks(() => {
-                    this._setResizeLineOffset(box, index);
-                    this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
-                    box._toggleHidden();
-                })
-            }
+            this._setResizeLine(box, index);
         });
+        this._setGapForChildren();
+    }
+
+    protected _setResizeLine(box: JigsawBox, index: number) {
+        if (!this.resizable || index == 0 || box._isFixedSize || this._$childrenBox[index - 1]._isFixedSize) {
+            // 第一个child box没有resize line
+            // 设置了尺寸的box没有resize line
+            return;
+        }
+        this._asyncToSetResizeLine(box, index);
+    }
+
+    protected _asyncToSetResizeLine(box: JigsawBox, index: number) {
+        // 异步消除变更检查报错
+        this.runMicrotask(() => {
+            box.showResizeLine = true;
+            box._cdr.markForCheck();
+        });
+        this.runAfterMicrotasks(() => {
+            this._setResizeLineOffset(box, index);
+            this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
+            box._toggleHidden();
+        })
+    }
+
+    private _setGapForChildren() {
+        if (!this._$childrenBox || !this.gap) {
+            return;
+        }
+        this._$childrenBox
+            // 自身通过输入属性设置过margin，就不通过gap设置
+            .filter(box => !box.margin)
+            .forEach((box, index) => {
+                box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` :
+                    this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
+            });
     }
 
     protected _setResizeLineOffset(box: JigsawBox, index: number): void {
