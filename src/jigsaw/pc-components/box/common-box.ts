@@ -196,8 +196,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
 export interface BoxSizes extends Array<number> {
     toRatios(): number[];
-    parentBoundingClientRect: any;
-    sizeProperty: string;
+    totalSize: number;
 }
 
 @Directive()
@@ -305,10 +304,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         });
 
         function toRatios() {
-            return this.map(size => size / this.parentBoundingClientRect[this.sizeProperty] * 100);
+            return this.map(size => size / this.totalSize * 100);
         }
-        sizes.parentBoundingClientRect = this.parent.element.getBoundingClientRect();
-        sizes.sizeProperty = sizeProp;
+        sizes.totalSize = this.parent.element.getBoundingClientRect()[sizeProp];
         sizes.toRatios = toRatios.bind(sizes);
 
         return sizes;
