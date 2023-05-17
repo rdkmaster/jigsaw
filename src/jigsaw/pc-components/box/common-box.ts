@@ -194,6 +194,11 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 }
 
+export interface BoxSizes extends Array<number> {
+    toRatios(): number[];
+    totalSize: number;
+}
+
 @Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
@@ -241,7 +246,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         if (!this.parent) return;
 
         const sizeProp = this._getPropertyByDirection()[1];
-        const sizeRatios = this._computeSizeRatios(sizeProp, offset);
+        const sizeRatios = this._computeBoxSizes(sizeProp, offset).toRatios();
         this.parent.childrenBox.forEach((box, index) => {
             if (box._isFixedSize) return;
             box.grow = sizeRatios[index];
@@ -260,27 +265,49 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         }
     }
 
-    protected _computeSizeRatios(sizeProp: string, updateOffset: number): number[] {
+    protected _computeBoxSizes(sizeProp: string, updateOffset: number): BoxSizes {
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
-        const sizes = this._rawOffsets.reduce((ss, offset, index) => {
+        const sizes: BoxSizes = this._rawOffsets.reduce((ss, offset, index) => {
             if (index > 0) {
                 ss.push(offset - this._rawOffsets[index - 1])
             }
             return ss;
-        }, []);
-
-        const fixedSize = sizes.reduce((fs, size, index) => {
-            const box = this.parent.childrenBox instanceof QueryList ?
-                this.parent.childrenBox.toArray()[index] : this.parent.childrenBox[index];
-            if (box._isFixedSize) {
-                fs += size;
+        }, []) as BoxSizes;
+        // 根据padding/gap/border纠正尺寸
+        const length = this.parent._$childrenBox.length;
+        const parentStyle = getComputedStyle(this.parent.element);
+        const parentPaddingTop = this._pxToNumber(parentStyle.paddingTop) + this._pxToNumber(parentStyle.borderTopWidth);
+        const parentPaddingBottom = this._pxToNumber(parentStyle.paddingBottom) + this._pxToNumber(parentStyle.borderBottomWidth);
+        const parentPaddingLeft = this._pxToNumber(parentStyle.paddingLeft) + this._pxToNumber(parentStyle.borderLeftWidth);
+        const parentPaddingRight = this._pxToNumber(parentStyle.paddingRight) + this._pxToNumber(parentStyle.borderRightWidth);
+        const globalScale = CommonUtils.getScale(this.element);
+        this.parent._$childrenBox.forEach((box, index) => {
+            let paddingSize: number, marginSize: number, borderSize: number, parentPaddingSize: number;
+            const boxStyle = getComputedStyle(box.element);
+            if (this.parent.direction == 'column') {
+                parentPaddingSize = index == 0 ? parentPaddingTop : index == length - 1 ? parentPaddingBottom : 0;
+                paddingSize = this._pxToNumber(boxStyle.paddingTop) + this._pxToNumber(boxStyle.paddingBottom);
+                marginSize = this._pxToNumber(boxStyle.marginTop) + this._pxToNumber(boxStyle.marginBottom);
+                borderSize = this._pxToNumber(boxStyle.borderTopWidth) + this._pxToNumber(boxStyle.borderBottomWidth);
+            } else {
+                parentPaddingSize = index == 0 ? parentPaddingLeft : index == length - 1 ? parentPaddingRight : 0;
+                paddingSize = this._pxToNumber(boxStyle.paddingLeft) + this._pxToNumber(boxStyle.paddingRight);
+                marginSize = this._pxToNumber(boxStyle.marginLeft) + this._pxToNumber(boxStyle.marginRight);
+                borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
             }
-            return fs;
-        }, 0);
+            // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
+            sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * globalScale;
+        });
 
-        return sizes.map(size => size / (this.parent.element.getBoundingClientRect()[sizeProp] - fixedSize) * 100);
+        function toRatios() {
+            return this.map(size => size / this.totalSize * 100);
+        }
+        sizes.totalSize = this.parent.element.getBoundingClientRect()[sizeProp];
+        sizes.toRatios = toRatios.bind(sizes);
+
+        return sizes;
     }
 
     /**

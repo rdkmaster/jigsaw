@@ -10,10 +10,10 @@ import {
     ViewChild,
     Injector,
     Input,
-    ViewContainerRef
 } from '@angular/core';
 import {JigsawBox} from "./box";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {BoxSizes} from "./common-box";
 
 export type BoxInsertPosition = { parent: JigsawEditableBox, before?: JigsawEditableBox, reverse?: 'before' | 'after' };
 
@@ -72,20 +72,6 @@ export class JigsawEditableBox extends JigsawBox {
     @Input()
     public resizable: boolean = true;
 
-    private _gap: string;
-    /**
-     * @NoMarkForCheckRequired
-     * 设置内容box的间隙
-     */
-    @Input()
-    public get gap(): string {
-        return this._gap;
-    }
-
-    public set gap(value: string) {
-        this._gap = CommonUtils.getCssValue(value);
-    }
-
     /**
      * @NoMarkForCheckRequired
      */
@@ -133,37 +119,13 @@ export class JigsawEditableBox extends JigsawBox {
      */
     public _$childrenBox: JigsawEditableBox[];
 
-    protected _setChildrenBox() {
-        if (!this._$childrenBox) {
+    protected _setResizeLine(box: JigsawEditableBox, index: number) {
+        if (!this.resizable || index == 0) {
+            // 第一个child box没有resize line
+            // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
             return;
         }
-        this._$childrenBox.forEach((box, index) => {
-            box.parent = this;
-            this._supportSetSize(box, this);
-            if (this.resizable && index != 0) {
-                // 第一个child box没有resize line
-                // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
-                // 异步消除变更检查报错
-                this.runMicrotask(() => {
-                    box.showResizeLine = true;
-                    box._cdr.markForCheck();
-                });
-                this.runAfterMicrotasks(() => {
-                    this._setResizeLineOffset(box, index);
-                    this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
-                })
-            }
-        });
-        if (!this._$childrenBox || !this.gap) {
-            return;
-        }
-        this._$childrenBox
-            // 自身通过输入属性设置过margin，就不通过gap设置
-            .filter(box => !box.margin)
-            .forEach((box, index) => {
-                box.element.style.margin = index == this._$childrenBox.length - 1 ? `0` :
-                    this.direction == 'column' ? `0 0 ${this.gap} 0` : `0 ${this.gap} 0 0`;
-            });
+        this._setResizeLineAsync(box, index);
     }
 
     protected _computeResizeLineWidth() {
@@ -330,44 +292,6 @@ export class JigsawEditableBox extends JigsawBox {
         }
     }
 
-    private _computeSizeRatios2(sizeProp: string, updateOffset: number): [number[], number[]] {
-        const curIndex = this._getCurrentIndex();
-        this._rawOffsets.splice(curIndex, 1, updateOffset);
-
-        const sizes = this._rawOffsets.reduce((ss, offset, index) => {
-            if (index > 0) {
-                ss.push(offset - this._rawOffsets[index - 1])
-            }
-            return ss;
-        }, []);
-        // 根据padding/gap/border纠正尺寸
-        const length = this.parent._$childrenBox.length;
-        const parentStyle = getComputedStyle(this.parent.element);
-        const parentPaddingTop = this._pxToNumber(parentStyle.paddingTop) + this._pxToNumber(parentStyle.borderTopWidth);
-        const parentPaddingBottom = this._pxToNumber(parentStyle.paddingBottom) + this._pxToNumber(parentStyle.borderBottomWidth);
-        const parentPaddingLeft = this._pxToNumber(parentStyle.paddingLeft) + this._pxToNumber(parentStyle.borderLeftWidth);
-        const parentPaddingRight = this._pxToNumber(parentStyle.paddingRight) + this._pxToNumber(parentStyle.borderRightWidth);
-        const globalScale = CommonUtils.getScale(this.element);
-        this.parent._$childrenBox.forEach((box, index) => {
-            let paddingSize: number, marginSize: number, borderSize: number, parentPaddingSize: number;
-            const boxStyle = getComputedStyle(box.element);
-            if (this.parent.direction == 'column') {
-                parentPaddingSize = index == 0 ? parentPaddingTop : index == length - 1 ? parentPaddingBottom : 0;
-                paddingSize = this._pxToNumber(boxStyle.paddingTop) + this._pxToNumber(boxStyle.paddingBottom);
-                marginSize = this._pxToNumber(boxStyle.marginTop) + this._pxToNumber(boxStyle.marginBottom);
-                borderSize = this._pxToNumber(boxStyle.borderTopWidth) + this._pxToNumber(boxStyle.borderBottomWidth);
-            } else {
-                parentPaddingSize = index == 0 ? parentPaddingLeft : index == length - 1 ? parentPaddingRight : 0;
-                paddingSize = this._pxToNumber(boxStyle.paddingLeft) + this._pxToNumber(boxStyle.paddingRight);
-                marginSize = this._pxToNumber(boxStyle.marginLeft) + this._pxToNumber(boxStyle.marginRight);
-                borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
-            }
-            // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
-            sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * globalScale;
-        });
-        return [sizes, sizes.map(size => size / this.parent.element.getBoundingClientRect()[sizeProp] * 100)];
-    }
-
     /**
      * @internal
      * @param offset
@@ -380,7 +304,8 @@ export class JigsawEditableBox extends JigsawBox {
         }
 
         const sizeProp = this._getPropertyByDirection()[1];
-        const [sizes, sizeRatios] = this._computeSizeRatios2(sizeProp, offset);
+        const sizes: BoxSizes = this._computeBoxSizes(sizeProp, offset);
+        const sizeRatios = sizes.toRatios();
         const globalScale = CommonUtils.getScale(this.element);
         this.parent._$childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
@@ -431,7 +356,7 @@ export class JigsawEditableBox extends JigsawBox {
         this._isFixedSize = false;
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
-        const [, sizeRatios] = this._computeSizeRatios2(this._getPropertyByDirection()[1], this._rawOffsets[this._getCurrentIndex()]);
+        const sizeRatios = this._computeBoxSizes(this._getPropertyByDirection()[1], this._rawOffsets[this._getCurrentIndex()]).toRatios();
         this.parent?._$childrenBox?.forEach((box, index) => {
             const grow = sizeRatios[index];
             box.grow = grow;
