@@ -85,6 +85,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * 差异是hidden隐藏后box内的视图不销毁，而ngIf隐藏后，box内的视图被销毁。
      * 注意：不可使用display来显示隐藏box，因为如果此box是resizeable box的子box，并且resizeable box有多于两个子box，
      * 此时用display无法隐藏素有dom节点，导致界面异常。
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get hidden(): boolean {
