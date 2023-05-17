@@ -98,10 +98,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._toggleHidden();
     }
 
-    /**
-     * @internal
-     */
-    public _toggleHidden() {
+    private _toggleHidden() {
         const hiddenClass = 'jigsaw-box-hidden';
         if (this.hidden) {
             this.element.classList.add(hiddenClass);
