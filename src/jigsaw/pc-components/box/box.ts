@@ -278,10 +278,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             // 设置了尺寸的box没有resize line
             return;
         }
-        this._asyncToSetResizeLine(box, index);
+        this._setResizeLineAsync(box, index);
     }
 
-    protected _asyncToSetResizeLine(box: JigsawBox, index: number) {
+    protected _setResizeLineAsync(box: JigsawBox, index: number) {
         // 异步消除变更检查报错
         this.runMicrotask(() => {
             box.showResizeLine = true;
@@ -307,7 +307,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             });
     }
 
-    protected _setResizeLineOffset(box: JigsawBox, index: number): void {
+    private _setResizeLineOffset(box: JigsawBox, index: number): void {
         const resizeLineWidth = 3;
         const parentBox = box.parent;
         const prevBox = parentBox._$childrenBox[index - 1];

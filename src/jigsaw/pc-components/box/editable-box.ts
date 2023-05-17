@@ -10,7 +10,6 @@ import {
     ViewChild,
     Injector,
     Input,
-    ViewContainerRef
 } from '@angular/core';
 import {JigsawBox} from "./box";
 import {CommonUtils} from "../../common/core/utils/common-utils";
@@ -125,7 +124,7 @@ export class JigsawEditableBox extends JigsawBox {
             // 设置了尺寸的editable box也是需要resize line，用于调整尺寸
             return;
         }
-        this._asyncToSetResizeLine(box, index);
+        this._setResizeLineAsync(box, index);
     }
 
     protected _computeResizeLineWidth() {
