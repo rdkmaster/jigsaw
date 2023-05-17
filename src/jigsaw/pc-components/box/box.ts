@@ -80,6 +80,11 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     }
 
     private _hidden: boolean = false;
+    /**
+     * hidden用于控制box的dom节点的显示隐藏
+     * 如果此box是resizeable box的子box，并且resizeable box有多于两个子box，隐藏后resize功能会出现问题，
+     * 这种情况请使用ngIf控制box的显示隐藏
+     */
     @Input()
     public get hidden(): boolean {
         return this._hidden;
