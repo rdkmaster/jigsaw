@@ -2,3 +2,11 @@
 .jigsaw-box {
     border: 1px solid #ddd;
 }
+
+jigsaw-header {
+    margin-top: 24px;
+}
+
+.live-demo-wrap {
+    font-size: 24px;
+}

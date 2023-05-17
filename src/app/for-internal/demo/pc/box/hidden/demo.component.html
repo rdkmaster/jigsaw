@@ -5,18 +5,23 @@
 
 <!-- start to learn the demo from here -->
 <div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Box</jigsaw-header>
-    <div class="demo-1 live-demo">
-        <jigsaw-header [level]="2">NgIf & NgFor</jigsaw-header>
-        <j-button (click)="showBox = !showBox">显示/隐藏box</j-button>
-        <j-box [resizable]="true" height="400">
-            <j-box [resizable]="true">
-                <j-box></j-box>
-                <j-box></j-box>
-            </j-box>
-            <j-box [hidden]="!showBox"></j-box>
+    <j-button (click)="showBox = !showBox">显示/隐藏box</j-button>
+    <jigsaw-header [level]="2">正确方式（使用hidden属性）</jigsaw-header>
+    <j-box [resizable]="true" height="200">
+        <j-box [resizable]="true">
+            <j-box>Box1</j-box>
+            <j-box>Box2</j-box>
         </j-box>
-    </div>
+        <j-box [hidden]="!showBox">Box3</j-box>
+    </j-box>
+    <jigsaw-header [level]="2">错误方式（使用display）</jigsaw-header>
+    <j-box [resizable]="true" height="200">
+        <j-box [resizable]="true">
+            <j-box>Box1</j-box>
+            <j-box>Box2</j-box>
+        </j-box>
+        <j-box [ngStyle]="{display: showBox ? '' : 'none'}">Box3</j-box>
+    </j-box>
 </div>
 
 
