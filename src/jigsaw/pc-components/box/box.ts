@@ -79,6 +79,35 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
     }
 
+    private _hidden: boolean = false;
+    @Input()
+    public get hidden(): boolean {
+        return this._hidden;
+    }
+
+    public set hidden(value: boolean) {
+        if (this._hidden == value) {
+            return;
+        }
+        this._hidden = value;
+        this._toggleHidden();
+    }
+
+    /**
+     * @internal
+     */
+    public _toggleHidden() {
+        const hiddenClass = 'jigsaw-box-hidden';
+        if (this.hidden) {
+            this.element.classList.add(hiddenClass);
+            this._resizeLineParent?.nativeElement.classList.add(hiddenClass);
+        } else {
+            this.element.classList.remove(hiddenClass);
+            this._resizeLineParent?.nativeElement.classList.remove(hiddenClass);
+        }
+        this._computeResizeLineWidth();
+    }
+
     /**
      * @internal
      */
@@ -231,6 +260,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 this.runAfterMicrotasks(() => {
                     this._setResizeLineOffset(box, index);
                     this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
+                    box._toggleHidden();
                 })
             }
         });
