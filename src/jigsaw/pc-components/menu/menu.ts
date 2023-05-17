@@ -53,6 +53,7 @@ export function closeAllContextMenu(popups: PopupInfo[]): void {
              [jigsawCascadingMenuOptions]="initData?.options"
              [jigsawCascadingMenuWidth]="initData?.width"
              [jigsawCascadingMenuHeight]="initData?.height"
+             [jigsawCascadingMenuMaxHeight]="initData?.maxHeight"
              [jigsawCascadingMenuShowBorder]="initData?.showBorder"
              [jigsawCascadingMenuData]="initData?.data"
              [jigsawCascadingMenuTheme]="initData?.theme"

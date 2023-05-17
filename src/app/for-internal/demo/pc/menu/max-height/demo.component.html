@@ -10,9 +10,12 @@
         (jigsawCascadingMenuSelect)="menuSelect($event)">
         弹出菜单（未设最大高度）
     </a>
-    <a jigsawCascadingMenu [jigsawCascadingMenuData]="menuData" jigsawCascadingMenuWidth="220"
+    <a style="margin-right: 16px" jigsawCascadingMenu [jigsawCascadingMenuData]="menuData" jigsawCascadingMenuWidth="220"
         jigsawCascadingMenuMaxHeight="250" jigsawCascadingMenuTheme="light"
         (jigsawCascadingMenuSelect)="menuSelect($event)">
         弹出菜单（设置最大高度）
+    </a>
+    <a (click)="useApi($event)">
+        弹出菜单（API & 设置最大高度）
     </a>
 </p>

@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { SimpleTreeData } from "jigsaw/public_api";
+import { JigsawMenu, SimpleTreeData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -44,6 +44,10 @@ export class MenuMaxHeightDemo {
 
     public menuSelect(node: SimpleTreeData) {
         console.log(`${node.label} 被点击了!!!`);
+    }
+
+    public useApi($event) {
+        JigsawMenu.show($event, { data: this.menuData, width: 250, maxHeight: 250 });
     }
 
     // ====================================================================
