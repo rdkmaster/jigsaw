@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import {JigsawBox} from "./box";
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {BoxSizes} from "./common-box";
 
 export type BoxInsertPosition = { parent: JigsawEditableBox, before?: JigsawEditableBox, reverse?: 'before' | 'after' };
 
@@ -303,7 +304,8 @@ export class JigsawEditableBox extends JigsawBox {
         }
 
         const sizeProp = this._getPropertyByDirection()[1];
-        const [sizes, sizeRatios] = this._computeSizeRatios(sizeProp, offset);
+        const sizes: BoxSizes = this._computeBoxSizes(sizeProp, offset);
+        const sizeRatios = sizes.toRatios();
         const globalScale = CommonUtils.getScale(this.element);
         this.parent._$childrenBox.forEach((box, index) => {
             if (box._isFixedSize) {
@@ -354,7 +356,7 @@ export class JigsawEditableBox extends JigsawBox {
         this._isFixedSize = false;
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
-        const [, sizeRatios] = this._computeSizeRatios(this._getPropertyByDirection()[1], this._rawOffsets[this._getCurrentIndex()]);
+        const sizeRatios = this._computeBoxSizes(this._getPropertyByDirection()[1], this._rawOffsets[this._getCurrentIndex()]).toRatios();
         this.parent?._$childrenBox?.forEach((box, index) => {
             const grow = sizeRatios[index];
             box.grow = grow;

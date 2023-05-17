@@ -194,6 +194,12 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
     }
 }
 
+export interface BoxSizes extends Array<number> {
+    toRatios(): number[];
+    parentBoundingClientRect: any;
+    sizeProperty: string;
+}
+
 @Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
     public parent: any;
@@ -243,7 +249,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         if (!this.parent) return;
 
         const sizeProp = this._getPropertyByDirection()[1];
-        const [, sizeRatios] = this._computeSizeRatios(sizeProp, offset);
+        const sizeRatios = this._computeBoxSizes(sizeProp, offset).toRatios();
         this.parent.childrenBox.forEach((box, index) => {
             if (box._isFixedSize) return;
             box.grow = sizeRatios[index];
@@ -262,16 +268,16 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         }
     }
 
-    protected _computeSizeRatios(sizeProp: string, updateOffset: number): [number[], number[]] {
+    protected _computeBoxSizes(sizeProp: string, updateOffset: number): BoxSizes {
         const curIndex = this._getCurrentIndex();
         this._rawOffsets.splice(curIndex, 1, updateOffset);
 
-        const sizes = this._rawOffsets.reduce((ss, offset, index) => {
+        const sizes: BoxSizes = this._rawOffsets.reduce((ss, offset, index) => {
             if (index > 0) {
                 ss.push(offset - this._rawOffsets[index - 1])
             }
             return ss;
-        }, []);
+        }, []) as BoxSizes;
         // 根据padding/gap/border纠正尺寸
         const length = this.parent._$childrenBox.length;
         const parentStyle = getComputedStyle(this.parent.element);
@@ -297,7 +303,15 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             // 计算grow或basis要剔除边框、内边距、外边距的尺寸才能计算准确
             sizes[index] = sizes[index] - (parentPaddingSize + paddingSize + marginSize + borderSize) * globalScale;
         });
-        return [sizes, sizes.map(size => size / this.parent.element.getBoundingClientRect()[sizeProp] * 100)];
+
+        function toRatios() {
+            return this.map(size => size / this.parentBoundingClientRect[this.sizeProperty] * 100);
+        }
+        sizes.parentBoundingClientRect = this.parent.element.getBoundingClientRect();
+        sizes.sizeProperty = sizeProp;
+        sizes.toRatios = toRatios.bind(sizes);
+
+        return sizes;
     }
 
     /**
