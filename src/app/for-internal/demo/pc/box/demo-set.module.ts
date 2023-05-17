@@ -16,6 +16,8 @@ import {BoxPerformanceDemoComponent} from "./performance/demo.component";
 import {BoxPerformanceDemoModule} from "./performance/demo.module";
 import {BoxNgIfNgForDemoComponent} from "./ng-if-ng-for/demo.component";
 import {BoxNgIfNgForDemoModule} from "./ng-if-ng-for/demo.module";
+import {BoxHiddenDemoComponent} from "./hidden/demo.component";
+import {BoxHiddenDemoModule} from "./hidden/demo.module";
 import {BoxLayoutInteractionDemoComponent} from "./layout-interaction/demo.component";
 import {BoxLayoutInteractionDemoModule} from "./layout-interaction/demo.module";
 
@@ -45,6 +47,9 @@ export const routerConfig = [
         path: 'ng-if-ng-for', component: BoxNgIfNgForDemoComponent
     },
     {
+        path: 'hidden', component: BoxHiddenDemoComponent
+    },
+    {
         path: 'layout-interaction', component: BoxLayoutInteractionDemoComponent
     },
 ];
@@ -60,6 +65,7 @@ export const routerConfig = [
         BoxViewInitDemoModule,
         BoxPerformanceDemoModule,
         BoxNgIfNgForDemoModule,
+        BoxHiddenDemoModule,
         BoxLayoutInteractionDemoModule
     ]
 })

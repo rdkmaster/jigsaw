@@ -1,0 +1,28 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <j-button (click)="showBox = !showBox">显示/隐藏box</j-button>
+    <jigsaw-header [level]="2">正确方式（使用hidden属性）</jigsaw-header>
+    <j-box [resizable]="true" height="200">
+        <j-box [resizable]="true">
+            <j-box>Box1</j-box>
+            <j-box>Box2</j-box>
+        </j-box>
+        <j-box [hidden]="!showBox">Box3</j-box>
+    </j-box>
+    <jigsaw-header [level]="2">错误方式（使用display）</jigsaw-header>
+    <j-box [resizable]="true" height="200">
+        <j-box [resizable]="true">
+            <j-box>Box1</j-box>
+            <j-box>Box2</j-box>
+        </j-box>
+        <j-box [ngStyle]="{display: showBox ? '' : 'none'}">Box3</j-box>
+    </j-box>
+</div>
+
+
+

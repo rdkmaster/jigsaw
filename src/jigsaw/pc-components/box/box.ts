@@ -79,6 +79,39 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         this._padding = String(value).split(/\s+/).map(m => CommonUtils.getCssValue(m)).join(' ');
     }
 
+    private _hidden: boolean = false;
+    /**
+     * 在需要控制box的dom节点的显示隐藏时，请尽量使用这个属性，或者使用ngIf来控制，
+     * 差异是hidden隐藏后box内的视图不销毁，而ngIf隐藏后，box内的视图被销毁。
+     * 注意：不可使用display来显示隐藏box，因为如果此box是resizeable box的子box，并且resizeable box有多于两个子box，
+     * 此时用display无法隐藏素有dom节点，导致界面异常。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get hidden(): boolean {
+        return this._hidden;
+    }
+
+    public set hidden(value: boolean) {
+        if (this._hidden == value) {
+            return;
+        }
+        this._hidden = value;
+        this._toggleHidden();
+    }
+
+    private _toggleHidden() {
+        const hiddenClass = 'jigsaw-box-hidden';
+        if (this.hidden) {
+            this.element.classList.add(hiddenClass);
+            this._resizeLineParent?.nativeElement.classList.add(hiddenClass);
+        } else {
+            this.element.classList.remove(hiddenClass);
+            this._resizeLineParent?.nativeElement.classList.remove(hiddenClass);
+        }
+        this._computeResizeLineWidth();
+    }
+
     /**
      * @internal
      */
@@ -231,6 +264,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 this.runAfterMicrotasks(() => {
                     this._setResizeLineOffset(box, index);
                     this.element.insertBefore(box._resizeLineParent.nativeElement, box.element);
+                    box._toggleHidden();
                 })
             }
         });
