@@ -205,8 +205,6 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      */
     public _isFixedSize: boolean;
 
-    protected removeElementScrollEvent: CallbackRemoval;
-
     /**
      * @internal
      */
