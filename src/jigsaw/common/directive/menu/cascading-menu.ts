@@ -47,15 +47,12 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     set jigsawFloatOptions(value: PopupOptions) {
+        if (value) {
+            value.size = value.size || { minWidth: null };
+            value.size.minWidth = value.size.minWidth || null;
+        }
         this._jigsawFloatOptions = value;
         this.jigsawFloatInitData.options = value;
-        if (value && !value.size) {
-            this.jigsawFloatInitData.options.size = { minWidth: null };
-            return;
-        }
-        if (value && value.size && !CommonUtils.isDefined(value.size.minWidth)) {
-            this.jigsawFloatInitData.options.size.minWidth = null;
-        }
     }
 
     @Input()
