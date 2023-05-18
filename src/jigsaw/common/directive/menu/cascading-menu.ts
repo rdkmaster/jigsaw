@@ -35,7 +35,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     private _jigsawCascadingMenuWidth: string | number;
     private _jigsawCascadingMenuHeight: string | number;
     private _jigsawCascadingMenuMaxHeight: string | number;
-    private _jigsawFloatOptions: PopupOptions;
+    private _jigsawFloatOptions: PopupOptions = { size: { minWidth: null } };
     private _jigsawCascadingMenuShowBorder: boolean;
     private _jigsawCascadingMenuTheme: MenuTheme;
     private _jigsawCascadingMenuPosition: FloatPosition = 'bottomLeft';
@@ -47,9 +47,14 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     set jigsawFloatOptions(value: PopupOptions) {
-        if (this._jigsawFloatOptions != value) {
-            this._jigsawFloatOptions = value;
-            this.jigsawFloatInitData.options = value;
+        this._jigsawFloatOptions = value;
+        this.jigsawFloatInitData.options = value;
+        if (value && !value.size) {
+            this.jigsawFloatInitData.options.size = { minWidth: null };
+            return;
+        }
+        if (value && value.size && !CommonUtils.isDefined(value.size.minWidth)) {
+            this.jigsawFloatInitData.options.size.minWidth = null;
         }
     }
 
