@@ -25,9 +25,11 @@
         </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
-        <span>弹出区域自适应宿主宽度：</span>
-        <jigsaw-switch [(checked)]="autoTargetWidth" (checkedChange)="autoTargetWidthChange()">
+        <span>设置options</span>
+        <jigsaw-switch [(checked)]="setMenuOptions" (checkedChange)="setMenuOptionsChange()">
         </jigsaw-switch>
+        <jigsaw-icon></jigsaw-icon>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="用于测试能否正确手动修改jigsawCascadingMenuOptions"></jigsaw-icon>
     </li>
     <li class="demo-desc">
         关于高度说明：<br>

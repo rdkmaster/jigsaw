@@ -99,10 +99,10 @@ export class MenuOptionsDemo {
         }
     }
 
-    public autoTargetWidth: boolean = true;
+    public setMenuOptions: boolean = false;
 
-    public autoTargetWidthChange() {
-        this.options = this.autoTargetWidth ? {} : { size: { minWidth: null } }
+    public setMenuOptionsChange() {
+        this.options = this.setMenuOptions ? { size: { minWidth: 500 } } : {}
     }
 
     public unitChange($event){
