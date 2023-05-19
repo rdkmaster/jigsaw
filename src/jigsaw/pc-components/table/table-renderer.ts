@@ -612,7 +612,7 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
 @Component({
     template: `
         <j-switch [theme]="theme" [checked]="checked" [readonly]="_$readonly" [disabled]="_$disabled" [valid]="_$valid"
-                  [onLabel]="_$onLabel" [offLabel]="_$offLabel" (checkedChange)="onChange($event)">
+                  [onLabel]="_$onLabel" [offLabel]="_$offLabel" [size]="_$size" (checkedChange)="onChange($event)">
         </j-switch>`,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -641,6 +641,13 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
      */
     public get _$offLabel(): string {
         return this._initDataJson?.hasOwnProperty('offLabel') ? this._initDataJson.offLabel : '';
+    }
+
+    /**
+     * @internal
+     */
+    public get _$size(): 'default' | 'small' | 'medium' {
+        return this._initDataJson?.hasOwnProperty('size') ? this._initDataJson.size : 'default';
     }
 }
 
