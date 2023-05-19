@@ -66,6 +66,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
         .#{$jigsaw-tabs}-nav-container {
             position: relative;
+            display: flex;
             font-size: $font-size-lg;
             line-height: 1.5;
             white-space: nowrap;
@@ -123,7 +124,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         transition: color 0.3s $ease-in-out;
                         cursor: pointer;
                         text-decoration: none;
-                        
+
                         &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
                             background: $brand-lighten;
                         }
@@ -221,15 +222,14 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
             }
 
             .#{$jigsaw-tabs}-overflow-button {
-                position: absolute;
-                top: 0;
-                right: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 width: 40px;
                 height: 100%;
                 background-color: var(--jigsaw-nav-background, $bg-component);
                 font-size: 24px;
                 color: $icon-color-default;
-                text-align: center;
                 cursor: pointer;
 
                 &:hover {
@@ -261,24 +261,6 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
             &:hover {
                 color: $brand-default;
-            }
-        }
-
-        .#{$jigsaw-tabs}-overflow-button {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 40px;
-            height: 100%;
-            background-color: var(--jigsaw-nav-background, $bg-component);
-            font-size: 24px;
-            color: $icon-color-default;
-            text-align: center;
-            cursor: pointer;
-
-            &:hover {
-                background-color: $brand-default;
-                color: $font-color-white;
             }
         }
     }
