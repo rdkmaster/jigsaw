@@ -230,7 +230,6 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                 background-color: var(--jigsaw-nav-background, $bg-component);
                 font-size: 24px;
                 color: $icon-color-default;
-                text-align: center;
                 cursor: pointer;
 
                 &:hover {
