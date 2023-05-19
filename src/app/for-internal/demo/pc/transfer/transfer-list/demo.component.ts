@@ -168,6 +168,15 @@ export class TransferListDemoComponent {
         this.data = new ArrayCollection(this.allData);
     }
 
+    clearData() {
+        // resetInputData()类似，但是清空数据
+        if (this.isArray) {
+            this.data = [];
+            return;
+        }
+        this.data = new ArrayCollection([]);
+    }
+
     selectedItemsChange($event) {
         console.log($event)
     }

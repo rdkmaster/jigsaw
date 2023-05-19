@@ -20,6 +20,7 @@
         <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
         <jigsaw-button [(disabled)]="isArray" (click)="changeDataFromArray()">通过fromArray()更新</jigsaw-button>
         <jigsaw-button [(disabled)]="isArray" (click)="changeDataFromAjax()">通过fromAjax()更新</jigsaw-button>
+        <jigsaw-button (click)="clearData()">通过fromAjax()更新</jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>数据重置：</span>
