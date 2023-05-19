@@ -54,7 +54,7 @@ export class TableSwitchRendererDemoComponent {
                 target: 'marriage',
                 cell: {
                     renderer: TableCellSwitchRenderer,
-                    rendererInitData: { readonly: readonly, onLabel: '已婚', offLabel: '未婚', size: 'default' }
+                    rendererInitData: { readonly: readonly, onLabel: '已婚', offLabel: '未婚', size: 'small' }
                 }
             },
             {target: 'position', visible: false}, {target: 'salary', visible: false},
