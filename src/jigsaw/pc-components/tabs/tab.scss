@@ -66,11 +66,11 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
 
         .#{$jigsaw-tabs}-nav-container {
             position: relative;
+            display: flex;
             font-size: $font-size-lg;
             line-height: 1.5;
             white-space: nowrap;
             box-sizing: border-box;
-            display: flex;
 
             .#{$jigsaw-tabs}-ink-bar {
                 position: absolute;
