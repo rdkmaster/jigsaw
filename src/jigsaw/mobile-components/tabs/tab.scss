@@ -38,9 +38,9 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
     }
 
     &-overflow-button {
-        position: absolute;
-        top: 0;
-        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         font-size: 24px;
         color: $text-color-secondary;
@@ -79,6 +79,7 @@ $tab-prefix: #{$jigsaw-prefix}-tabs;
         box-sizing: border-box;
         position: relative;
         white-space: nowrap;
+        display: flex;
 
         .#{$tab-prefix}-ink-bar {
             position: absolute;
