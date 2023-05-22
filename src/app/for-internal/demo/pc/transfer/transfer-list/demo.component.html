@@ -20,12 +20,14 @@
         <jigsaw-button (click)="removeItem()">删除最后一个元素</jigsaw-button>
         <jigsaw-button [(disabled)]="isArray" (click)="changeDataFromArray()">通过fromArray()更新</jigsaw-button>
         <jigsaw-button [(disabled)]="isArray" (click)="changeDataFromAjax()">通过fromAjax()更新</jigsaw-button>
-        <jigsaw-button (click)="clearData()">通过fromAjax()更新</jigsaw-button>
+        <jigsaw-button (click)="clearData()">清空数据</jigsaw-button>
+        <jigsaw-button (click)="setSingleItemData()">设置单个数据</jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>数据重置：</span>
         <jigsaw-button (click)="resetInputData()">重置输入数据</jigsaw-button>
         <jigsaw-button (click)="resetSelectedData()">重置已穿梭数据</jigsaw-button>
+        <jigsaw-button (click)="clearSelectedData()">清空已穿梭数据</jigsaw-button>
     </li>
 </ul>
 

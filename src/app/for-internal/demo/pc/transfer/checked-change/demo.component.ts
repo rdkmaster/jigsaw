@@ -7,23 +7,67 @@ import {ArrayCollection, ListOption, TransferListDestRenderer, TransferListSourc
 })
 export class TransferCheckedChangeDemoComponent {
     constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        // this.data = [{ zhName: "北京" }, { zhName: "上海" }, { zhName: "南京" }, { zhName: "深圳" }, { zhName: "长沙" }, { zhName: "西安" }];
+        this.data = [{ zhName: "北京" }];
+        this.selectedItems = new ArrayCollection(this.data.filter(item => item.selected));
     }
 
-    data: ArrayCollection<any>;
+    public data: ListOption[];
+    public selectedItems: ArrayCollection<ListOption>
 
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
     public labelField = 'zhName';
     public subLabelField = 'enName';
-    public trackItemBy = 'shortName';
+    public trackItemBy = 'zhName';
     public sourceCheckedItems: string;
     public destCheckedItems: string;
 
     public sourceChecked($event: ArrayCollection<ListOption>): void {
         console.log("source checked change: ", $event);
         this.sourceCheckedItems = $event.join(", ");
+        // this.selectedItems.refresh();
+
+        const selectedItems = this.selectedItems.concat(...$event);
+        if (selectedItems.length == this.data.length) {
+            // 点击全选的CheckBox
+            const groups = this.groupPlugins(
+                this.data
+                    .filter(item => this.selectedItems.every(selected => selected[this.trackItemBy] != item[this.trackItemBy]))
+            );
+            
+            // 只保留同一组中首个插件，其它的禁掉
+            Object.keys(groups).forEach(groupName => groups[groupName].forEach((item, index) => item.disabled = (index != 0)));
+            while (this.selectedItems.some(item => item.disabled)) {
+                const index = this.selectedItems.findIndex(item => item.disabled);
+                this.selectedItems.splice(index, 1);
+            }
+            this.selectedItems.refresh();
+            return;
+        }
+
+        const unselectedItems = this.data
+            .filter(item => selectedItems.every(selected => selected[this.trackItemBy] != item[this.trackItemBy]));
+        unselectedItems.forEach(item => item.disabled = false);
+        unselectedItems
+            .filter(unselected => !!unselected.group)
+            .filter(unselected => selectedItems.some(selected => unselected.group.name == selected.group?.name))
+            .forEach(item => item.disabled = true);
+    }
+
+    public groupPlugins(plugins, required?: boolean) {
+        plugins = plugins.filter(item => !!item.group).filter(item => required ? item.group.require : true);
+        const groups = {};
+        plugins.forEach(item => {
+            const groupName = item.group.name;
+            if (groups[groupName]) {
+                groups[groupName].push(item);
+            } else {
+                groups[groupName] = [item];
+            }
+        });
+        return groups;
     }
 
     public destinationChecked($event: ArrayCollection<ListOption>): void {
