@@ -7,17 +7,18 @@ import {ArrayCollection, ListOption, TransferListDestRenderer, TransferListSourc
 })
 export class TransferCheckedChangeDemoComponent {
     constructor(private _http: HttpClient) {
-        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
+        this.data = [{ zhName: "北京" }, { zhName: "上海" }, { zhName: "南京" }, { zhName: "深圳" }, { zhName: "长沙" }, { zhName: "西安" }];
     }
 
-    data: ArrayCollection<any>;
+    public data: ListOption[];
+    public selectedItems: ArrayCollection<ListOption>
 
     public sourceRenderer = TransferListSourceRenderer;
     public targetRenderer = TransferListDestRenderer;
 
     public labelField = 'zhName';
     public subLabelField = 'enName';
-    public trackItemBy = 'shortName';
+    public trackItemBy = 'zhName';
     public sourceCheckedItems: string;
     public destCheckedItems: string;
 

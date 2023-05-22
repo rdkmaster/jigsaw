@@ -251,6 +251,9 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     }
 
     public reset(): void {
+        if (this.selectedItems.length === 0) {
+            return;
+        }
         this.selectedItems.splice(0, this.selectedItems.length);
         this.selectedItemsChange.emit(this.selectedItems);
     }

@@ -582,7 +582,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
             }
             this._removeOnValueRefreshListener = value.onRefresh(() => {
                 this._refreshForSelectedItems(value);
-                this.sourceComponent.reset();
             })
         }
 

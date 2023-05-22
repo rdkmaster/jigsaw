@@ -168,6 +168,34 @@ export class TransferListDemoComponent {
         this.data = new ArrayCollection(this.allData);
     }
 
+    clearData() {
+        if (this.isArray) {
+            this.data = [];
+            this.selectedItems = [];
+            return;
+        }
+        this.data = new ArrayCollection([]);
+        this.selectedItems = new ArrayCollection([]);
+    }
+
+    clearSelectedData() {
+        if (this.isArray) {
+            this.selectedItems = [];
+            return;
+        }
+        this.selectedItems = new ArrayCollection([]);
+    }
+
+    setSingleItemData() {
+        if (this.isArray) {
+            this.data = [this.allData[0]];
+            this.selectedItems = [this.allData[0]];
+            return;
+        }
+        this.data = new ArrayCollection([this.allData[0]]);
+        this.selectedItems = new ArrayCollection([this.allData[0]]);
+    }
+
     selectedItemsChange($event) {
         console.log($event)
     }
