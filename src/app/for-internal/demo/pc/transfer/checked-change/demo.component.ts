@@ -34,7 +34,7 @@ export class TransferCheckedChangeDemoComponent {
 
     public selectedItemsChange(): void {
         this.sourceCheckedItems = "";
-        this.destCheckedItems = "";        
+        this.destCheckedItems = "";
     }
 
     // ====================================================================
