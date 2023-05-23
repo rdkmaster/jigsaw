@@ -45,7 +45,8 @@ export class FormlyFieldSelectCollapse extends FormlyFieldType<JigsawSelectColla
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,
-            groupField: "groupName"
+            groupField: "groupName",
+            optionHeight: 32
         },
     };
 

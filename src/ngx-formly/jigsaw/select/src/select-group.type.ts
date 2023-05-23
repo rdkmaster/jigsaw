@@ -45,7 +45,8 @@ export class FormlyFieldSelectGroup extends FormlyFieldType<JigsawSelectGroup> {
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,
-            groupField: "groupName"
+            groupField: "groupName",
+            optionHeight: 32
         },
     };
 
