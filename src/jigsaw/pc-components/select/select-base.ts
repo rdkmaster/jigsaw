@@ -359,7 +359,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
-        this._propagateChange(this.value);
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
@@ -547,7 +546,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return;
         }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
-        this._propagateChange(this.value);
         this._valueChange(this.value);
         if (this._$showSelected && this.value.length == 0) {
             this._$showSelected = false;
@@ -562,7 +560,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleClearable() {
         this._value = this.multipleSelect ? new ArrayCollection([]) : "";
         this._$selectAllChecked = CheckBoxStatus.unchecked;
-        this._propagateChange(this.value);
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
@@ -595,7 +592,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
-        this._propagateChange(this.value);
         this._valueChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();
@@ -655,6 +651,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _valueChange(value): void {
         this.valueChange.emit(value);
+        this._propagateChange(value);
     }
 }
 
@@ -817,10 +814,12 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         this._updateViewValue();
         if (this._$infiniteScroll) {
             this.valueChange.emit(value);
+            this._propagateChange(value);
             return;
         }
         this._updateOutputValue();
         this.valueChange.emit(this._outputValue);
+        this._propagateChange(this._outputValue);
     }
 
     private _getFlatData(value: GroupSelectOption[]): SelectOption[] {
