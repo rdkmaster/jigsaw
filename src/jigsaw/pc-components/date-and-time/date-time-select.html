@@ -3,7 +3,7 @@
     [width]="width ? width : '150'" [textTag]="false" [clearable]="clearable" (openChange)="_$onComboOpenChange($event)"
     (clear)="clear()" selectIcon="iconfont iconfont-e177">
     <ng-template>
-        <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
+        <jigsaw-date-time-picker #dateTimePicker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                  (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton" [limitStart]="limitStart"
                                  [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
                                  [firstWeekMustContains]="firstWeekMustContains"

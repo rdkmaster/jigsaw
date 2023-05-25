@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">date-picker</jigsaw-header>
+
+<jigsaw-header [level]="2">相关配置</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>clearable</span>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>动作：</span>
+        <jigsaw-button (click)="clear()">clear</jigsaw-button>
+    </li>
+</ul>
+<jigsaw-date-picker [(date)]="date"></jigsaw-date-picker>
+<br><br><br>
+选择的时间是：{{date}}

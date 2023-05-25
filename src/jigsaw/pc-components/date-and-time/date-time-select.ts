@@ -27,6 +27,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {DateTimeCellType, GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
+import { JigsawDateTimePicker } from './date-time-picker';
 
 @WingsTheme('date-time-select.scss')
 @Component({
@@ -58,6 +59,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;
+
+    @ViewChild('dateTimePicker')
+    private _dateTimePicker: JigsawDateTimePicker;
 
     /**
      * @internal
@@ -225,8 +229,10 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
     public clear() {
-        
-        this.writeValue("");
+        if (this._dateTimePicker) {
+            this._dateTimePicker.clear();
+        }
+        this.writeValue(undefined);
         // this._comboSelect.close();
     }
 

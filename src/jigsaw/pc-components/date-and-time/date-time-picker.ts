@@ -458,6 +458,10 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
     }
 
+    public clear() {
+        this.writeValue(undefined);
+    }
+
     public writeValue(date: WeekTime): void {
         if (this._isDateSame(date, this._date)) {
             return;

@@ -11,7 +11,22 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         max-width: none;
     }
 
+    .#{$jigsaw-combo-select}-clear {
+        display: none;
+    }
+
     &.#{$jigsaw-date-time-select}-clearable {
-        background-color: red;
+        &:hover {
+            .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select} {
+                .#{$jigsaw-combo-select}-arrow {
+                    display: none;
+                }
+
+                .#{$jigsaw-combo-select}-clear {
+                    display: flex;
+                    right: 7px !important;
+                }
+            }
+        }
     }
 }

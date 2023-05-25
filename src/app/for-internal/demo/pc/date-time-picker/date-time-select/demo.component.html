@@ -107,10 +107,7 @@
         <jigsaw-header [level]="2">clearable</jigsaw-header>
         <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
         <br><br>
-        <jigsaw-date-time-select [clearable]="clearable"></jigsaw-date-time-select>
+        <jigsaw-date-time-select [clearable]="clearable" gr="second" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <span></span>
     </div>
 </div>
-
-
-
-
