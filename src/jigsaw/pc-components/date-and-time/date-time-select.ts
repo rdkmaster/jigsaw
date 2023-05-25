@@ -36,6 +36,7 @@ import {TimeStep} from "./time-picker";
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-date-time-select-host]': 'true',
+        '[class.jigsaw-date-time-select-clearable]': 'clearable && date',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimeSelect), multi: true},
@@ -212,9 +213,22 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public showConfirmButton: boolean = false;
 
     /**
+     * 是否可清除
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearable: boolean = false;
+
+    /**
      * @internal
      */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
+
+    public clear() {
+        
+        this.writeValue("");
+        // this._comboSelect.close();
+    }
 
     /**
      * @internal

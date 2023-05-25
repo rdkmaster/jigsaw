@@ -32,6 +32,7 @@ export class DateTimeSelectDemoComponent {
     ];
 
     disabled = true;
+    clearable = true;
 
     valid = false;
 

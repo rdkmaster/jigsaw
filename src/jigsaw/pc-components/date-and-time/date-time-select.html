@@ -1,7 +1,7 @@
 <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder"
     [disabled]="disabled" [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
-    [width]="width ? width : '150'" [textTag]="false" (openChange)="_$onComboOpenChange($event)"
-    selectIcon="iconfont iconfont-e177">
+    [width]="width ? width : '150'" [textTag]="false" [clearable]="clearable" (openChange)="_$onComboOpenChange($event)"
+    (clear)="clear()" selectIcon="iconfont iconfont-e177">
     <ng-template>
         <jigsaw-date-time-picker [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                  (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton" [limitStart]="limitStart"
