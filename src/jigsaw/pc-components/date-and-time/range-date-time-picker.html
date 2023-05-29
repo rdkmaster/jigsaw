@@ -4,7 +4,7 @@
                              (dateChange)="_$dateChange('beginDate',$event)" (grChange)="_$grChange($event)" [rangeDate]="endDate"
                              [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains" class="jigsaw-range-date-time-picker-startTime">
     </jigsaw-date-time-picker>
-    <jigsaw-date-time-picker [theme]="theme" [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate || _$limitStart"
+    <jigsaw-date-time-picker #timeEnd [theme]="theme" [date]="endDate" [(gr)]="_$gr" [limitStart]="beginDate || _$limitStart"
                              [showConfirmButton]="showConfirmButton" (confirm)="_$updateBeginDate()"
                              [limitEnd]="_$endTimeLimitEnd" [markDates]="markDates" [grItems]="grItems" [rangeDate]="beginDate"
                              (dateChange)="_$dateChange('endDate',$event)" [step]="step" [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"

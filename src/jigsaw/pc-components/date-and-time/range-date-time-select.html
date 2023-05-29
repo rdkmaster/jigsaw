@@ -1,0 +1,12 @@
+<jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder"
+    [disabled]="disabled" [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
+    [width]="width ? width : 200" [textTag]="false" [clearable]="clearable" (clear)="clearDate()" (openChange)="_$onComboOpenChange($event)"
+    selectIcon="iconfont iconfont-e177">
+    <ng-template>
+        <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr"
+            [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
+            [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
+            [showConfirmButton]="showConfirmButton" (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
+        </jigsaw-range-date-time-picker>
+    </ng-template>
+</jigsaw-combo-select>
