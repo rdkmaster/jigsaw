@@ -13,7 +13,7 @@
         <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
 </ul>
-<jigsaw-date-picker #datePicker [(date)]="date" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+<jigsaw-date-time-picker #dateTimePicker [(date)]="date" gr="second" (dateChange)="dateChange($event)"></jigsaw-date-time-picker >
 <div>
     <span>选择的时间是：{{date}}</span>
 </div>

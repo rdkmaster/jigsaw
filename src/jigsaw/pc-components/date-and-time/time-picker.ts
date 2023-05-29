@@ -709,6 +709,14 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         this.disabled = disabled;
     }
 
+    public clearTime() {
+        if (this.value == '00:00:00') {
+            return;
+        }
+        let value = this._calValueByGr('00', '00', '00');
+        this.writeValue(value);
+    }
+
     ngOnInit() {
         super.ngOnInit();
         if (this._isValueOutOfLimit(this.value)) {

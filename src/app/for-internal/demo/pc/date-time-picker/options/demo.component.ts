@@ -5,20 +5,20 @@ import { JigsawDatePicker } from "jigsaw/public_api";
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class DatePickerOptionsDemoComponent {
+export class DatePickerTimeOptionsDemoComponent {
     public date;
 
-    @ViewChild('datePicker')
-    private _datePicker: JigsawDatePicker;
+    @ViewChild('dateTimePicker')
+    private _dateTimePicker: JigsawDatePicker;
 
     public clearable = false;
 
     public clear() {
-        this._datePicker.clearDate();
+        this._dateTimePicker.clearDate();
     };
 
     public console() {
-        console.log(this._datePicker.date);
+        console.log(this._dateTimePicker.date);
     }
 
     public dateChange($event) {

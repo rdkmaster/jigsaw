@@ -10,10 +10,10 @@
     <li class="demo-options-item">
         <span>动作：</span>
         <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
-        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
+        <jigsaw-button (click)="console()">打印当前time</jigsaw-button>
     </li>
 </ul>
-<jigsaw-date-picker #datePicker [(date)]="date" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+<jigsaw-time-picker #timePicker [(value)]="time" (valueChange)="valueChange($event)"></jigsaw-time-picker >
 <div>
-    <span>选择的时间是：{{date}}</span>
+    <span>选择的时间是：{{time}}</span>
 </div>

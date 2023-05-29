@@ -458,10 +458,6 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
         }
     }
 
-    public clear() {
-        this.writeValue(undefined);
-    }
-
     public writeValue(date: WeekTime): void {
         if (this._isDateSame(date, this._date)) {
             return;
@@ -506,6 +502,11 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public _$confirm() {
         this._updateValueCombine.emit();
         this.confirm.emit();
+    }
+
+    public clearDate() {
+        this._$datePicker.clearDate();
+        this._$timePicker && this._$timePicker.clearTime();
     }
 
     ngOnInit() {

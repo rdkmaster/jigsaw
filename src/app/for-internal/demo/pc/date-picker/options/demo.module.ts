@@ -1,13 +1,13 @@
 import {NgModule} from "@angular/core";
-import {JigsawButtonModule, JigsawDatePickerModule, JigsawSwitchModule} from "jigsaw/public_api";
+import {JigsawButtonModule, JigsawDatePickerModule, JigsawHeaderModule, JigsawSwitchModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
-import {DatePickerBasicDemoComponent} from "./demo.component";
+import {DatePickerOptionsDemoComponent} from "./demo.component";
 
 @NgModule({
-    declarations: [DatePickerBasicDemoComponent],
-    exports: [ DatePickerBasicDemoComponent ],
-    imports: [JigsawDatePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule]
+    declarations: [DatePickerOptionsDemoComponent],
+    exports: [ DatePickerOptionsDemoComponent ],
+    imports: [JigsawDatePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule, JigsawHeaderModule                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ]
 })
-export class DatePickerBasicDemoModule{
+export class DatePickerOptionsDemoModule{
 
 }

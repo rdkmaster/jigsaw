@@ -495,6 +495,9 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     }
 
     public clearDate() {
+        if (this._date == "") {
+            return;
+        }
         let [year, month] = [this._$curYear, this._$curMonth.month];
         this._date = "";
         this.runMicrotask(() => {
