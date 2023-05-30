@@ -1,5 +1,5 @@
-import {Component} from "@angular/core";
-import {GrItem, RangeTimeDataRanges, Shortcut, TimeGr} from "jigsaw/public_api";
+import {Component, ViewChild} from "@angular/core";
+import {GrItem, JigsawRangeDateTimeSelect, RangeTimeDataRanges, Shortcut, TimeGr} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -11,6 +11,12 @@ import {GrItem, RangeTimeDataRanges, Shortcut, TimeGr} from "jigsaw/public_api";
     `]
 })
 export class RangeDateTimeSelectComponent {
+    @ViewChild('select8')
+    public rangeDateTimeSelect8: JigsawRangeDateTimeSelect;
+
+    @ViewChild('select9')
+    public rangeDateTimeSelect9: JigsawRangeDateTimeSelect;
+
     date = {beginDate: 'now-1d', endDate: 'now'};
     gr = ['date'];
 
@@ -40,6 +46,10 @@ export class RangeDateTimeSelectComponent {
 
     date7 = {beginDate: 'now-1D', endDate: 'now'};
 
+    date8;
+
+    date9 = {beginDate: 'now-1D', endDate: 'now'};
+
     public clearable = true;
 
     changeProp($event) {
@@ -66,6 +76,9 @@ export class RangeDateTimeSelectComponent {
         console.log($event)
     }
 
+    public showDate(rangeDateTimeSelect) {
+        console.log(rangeDateTimeSelect.date);
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
