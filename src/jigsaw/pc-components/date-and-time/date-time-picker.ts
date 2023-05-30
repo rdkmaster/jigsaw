@@ -505,8 +505,8 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     }
 
     public clearDate() {
-        this._$datePicker.clearDate();
-        this._$timePicker && this._$timePicker.clearTime();
+        this._$datePicker?.clearDate();
+        this._$timePicker?.clearTime();
     }
 
     ngOnInit() {

@@ -303,6 +303,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
         if (this._rangeDateTimePicker) {
             this._rangeDateTimePicker.clearDate();
         }
+        this.writeValue({ beginDate: '', endDate: '' });
     }
 
     ngOnInit() {
