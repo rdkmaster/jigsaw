@@ -12,7 +12,10 @@ import {GrItem, JigsawRangeDateTimeSelect, RangeTimeDataRanges, Shortcut, TimeGr
 })
 export class RangeDateTimeSelectComponent {
     @ViewChild('select8')
-    public rangeDateTimeSelect8: JigsawRangeDateTimeSelect;;
+    public rangeDateTimeSelect8: JigsawRangeDateTimeSelect;
+
+    @ViewChild('select9')
+    public rangeDateTimeSelect9: JigsawRangeDateTimeSelect;
 
     date = {beginDate: 'now-1d', endDate: 'now'};
     gr = ['date'];
@@ -44,6 +47,8 @@ export class RangeDateTimeSelectComponent {
     date7 = {beginDate: 'now-1D', endDate: 'now'};
 
     date8;
+
+    date9 = {beginDate: 'now-1D', endDate: 'now'};
 
     public clearable = true;
 

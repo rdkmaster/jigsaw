@@ -84,13 +84,23 @@
     </div>
 
     <div class="demo-8 live-demo">
-        <jigsaw-header [level]="2">可清除</jigsaw-header>
+        <jigsaw-header [level]="2">可清除（没有初始值）</jigsaw-header>
         <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
         <jigsaw-button (click)="showDate(rangeDateTimeSelect8)">打印当前组件值</jigsaw-button>
         <br>
         <jigsaw-range-date-time-select #select8 [(date)]="date8" [clearable]="clearable" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
         <p class="message">{{date8 | json}}</p>
+    </div>
+
+    <div class="demo-9 live-demo">
+        <jigsaw-header [level]="2">可清除（有初始值）</jigsaw-header>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+        <jigsaw-button (click)="showDate(rangeDateTimeSelect9)">打印当前组件值</jigsaw-button>
+        <br>
+        <jigsaw-range-date-time-select #select9 [(date)]="date9" [clearable]="clearable" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date9 | json}}</p>
     </div>
 </div>
 
