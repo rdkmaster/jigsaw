@@ -86,10 +86,11 @@
     <div class="demo-8 live-demo">
         <jigsaw-header [level]="2">可清除</jigsaw-header>
         <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+        <jigsaw-button (click)="showDate(rangeDateTimeSelect8)">打印当前组件值</jigsaw-button>
         <br>
-        <jigsaw-range-date-time-select [(date)]="date7" [clearable]="clearable" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <jigsaw-range-date-time-select #select8 [(date)]="date8" [clearable]="clearable" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
         <br>
-        <p class="message">{{date7 | json}}</p>
+        <p class="message">{{date8 | json}}</p>
     </div>
 </div>
 
