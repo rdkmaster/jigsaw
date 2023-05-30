@@ -23,13 +23,18 @@ export class TransferCheckedChangeDemoComponent {
     public destCheckedItems: string;
 
     public sourceChecked($event: ArrayCollection<ListOption>): void {
+        if ($event.length > 3) {
+            $event.splice($event.length - 1, 1);
+        }
         console.log("source checked change: ", $event);
-        this.sourceCheckedItems = $event.join(", ");
+        const items = $event.map(item => item.zhName);
+        this.sourceCheckedItems = items.join(", ");
     }
 
     public destinationChecked($event: ArrayCollection<ListOption>): void {
         console.log("dest checked change: ", $event);
-        this.destCheckedItems = $event.join(", ");
+        const items = $event.map(item => item.zhName);
+        this.destCheckedItems = items.join(", ");
     }
 
     public selectedItemsChange(): void {
