@@ -261,7 +261,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public writeValue(date: RangeDate): void {
-        if (date.beginDate == this._$beginDate && date.endDate == this._$endDate){
+        if (date.beginDate == this._date.beginDate && date.endDate == this._date.endDate){
             return;
         }
         this._date = date;
