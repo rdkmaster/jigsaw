@@ -24,7 +24,7 @@ import {DropDownTrigger} from "../../common/directive/float/float";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import { CommonUtils } from '../../common/core/utils/common-utils';
-import {JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
+import {JigsawRangeDateTimePicker, JigsawRangeDateTimePickerModule} from "./range-date-time-picker";
 import {GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
 
@@ -33,24 +33,12 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
 @WingsTheme('range-date-time-select.scss')
 @Component({
     selector: 'jigsaw-range-date-time-select, j-range-date-time-select',
-    template: `
-        <jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder" [disabled]="disabled" [valid]="valid"
-                             [openTrigger]="openTrigger" [closeTrigger]="closeTrigger" [width]="width ? width : 200" [textTag]="false"
-                             (openChange)="_$onComboOpenChange($event)" selectIcon="iconfont iconfont-e177">
-            <ng-template>
-                <jigsaw-range-date-time-picker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr" [limitStart]="limitStart"
-                                               [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
-                                               [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
-                                               [showConfirmButton]="showConfirmButton"
-                                               (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
-                </jigsaw-range-date-time-picker>
-            </ng-template>
-        </jigsaw-combo-select>
-    `,
+    templateUrl: 'range-date-time-select.html',
     host: {
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-range-date-time-select-host]': 'true',
+        '[class.jigsaw-range-date-time-select-clearable]': 'clearable && _$dateComboValue'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawRangeDateTimeSelect), multi: true},
@@ -74,6 +62,9 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;
+
+    @ViewChild('rangeDateTimePicker')
+    private _rangeDateTimePicker: JigsawRangeDateTimePicker;
 
     @Input()
     @RequireMarkForCheck()
@@ -270,13 +261,18 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public writeValue(date: RangeDate): void {
+        if (date.beginDate == this._$beginDate && date.endDate == this._$endDate){
+            return;
+        }
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange(this._date);
     }
 
     private _changeRangeDateByGr() {
-        if (!this._isRangeDate(this.date)) return;
+        if (!this._isRangeDate(this.date)) {
+            return
+        };
         this._$beginDate = TimeService.getDateByGr(this.date.beginDate, this._gr);
         this._$endDate = TimeService.getDateByGr(this.date.endDate, this._gr);
         let convertDate = {
@@ -294,6 +290,22 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
 
     private _isRangeDate(date: any) {
         return date && date.beginDate && date.endDate;
+    }
+
+    /**
+     * 是否可清除
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearable: boolean = false;
+
+    public clearDate() {
+        if (this._rangeDateTimePicker) {
+            this._rangeDateTimePicker.clearDate();
+        }
+        this._$beginDate = '';
+        this._$endDate = '';
+        this.writeValue({ beginDate: '', endDate: '' });
     }
 
     ngOnInit() {

@@ -102,8 +102,11 @@
         <jigsaw-date-time-select [(date)]="date11" [gr]="'week'" (dateChange)="onDateChange($event)" width="250"></jigsaw-date-time-select>
         <p class="message">选择的时间是：{{date11 | json}}</p>
     </div>
+
+    <div class="demo-12 live-demo">
+        <jigsaw-header [level]="2">clearable</jigsaw-header>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+        <div></div>
+        <jigsaw-date-time-select [clearable]="clearable" gr="second" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+    </div>
 </div>
-
-
-
-

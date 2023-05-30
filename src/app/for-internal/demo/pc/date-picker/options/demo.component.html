@@ -1,0 +1,19 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">date-picker</jigsaw-header>
+
+<jigsaw-header [level]="2">相关配置</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>动作：</span>
+        <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
+        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
+    </li>
+</ul>
+<jigsaw-date-picker #datePicker [(date)]="date" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+<div>
+    <span>选择的时间是：{{date}}</span>
+</div>

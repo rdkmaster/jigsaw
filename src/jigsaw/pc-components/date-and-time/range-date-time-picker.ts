@@ -503,6 +503,12 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * @internal
      */
+    @ViewChild('timeEnd')
+    public _$timeEnd: JigsawDateTimePicker;
+
+    /**
+     * @internal
+     */
     public _$updateBeginDate() {
         if (!this.showConfirmButton || !this._$timeStart) {
             return;
@@ -544,6 +550,12 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     public setDisabledState(disabled: boolean): void {
         this.disabled = disabled;
+    }
+
+    public clearDate() {
+        this._$timeStart.clearDate();
+        this._$timeEnd.clearDate();
+        this.writeValue({ beginDate: '', endDate: '' });
     }
 
     ngOnInit() {

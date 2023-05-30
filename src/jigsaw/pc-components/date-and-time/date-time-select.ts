@@ -27,6 +27,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawDateTimePickerModule} from "./date-time-picker";
 import {DateTimeCellType, GrItem, MarkDate} from "./date-picker";
 import {TimeStep} from "./time-picker";
+import { JigsawDateTimePicker } from './date-time-picker';
 
 @WingsTheme('date-time-select.scss')
 @Component({
@@ -36,6 +37,7 @@ import {TimeStep} from "./time-picker";
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-date-time-select-host]': 'true',
+        '[class.jigsaw-date-time-select-clearable]': 'clearable && date',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDateTimeSelect), multi: true},
@@ -57,6 +59,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;
+
+    @ViewChild('dateTimePicker')
+    private _dateTimePicker: JigsawDateTimePicker;
 
     /**
      * @internal
@@ -212,9 +217,23 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public showConfirmButton: boolean = false;
 
     /**
+     * 是否可清除
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearable: boolean = false;
+
+    /**
      * @internal
      */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
+
+    public clearDate() {
+        if (this._dateTimePicker) {
+            this._dateTimePicker.clearDate();
+        }
+        this.writeValue('');
+    }
 
     /**
      * @internal
@@ -258,6 +277,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     public writeValue(date: WeekTime): void {
+        if (this._isDateSame(date, this._date)) {
+            return;
+        }
         this._date = date;
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);

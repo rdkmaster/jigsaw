@@ -83,5 +83,13 @@
         <p class="message">{{date7 | json}}</p>
     </div>
 
+    <div class="demo-8 live-demo">
+        <jigsaw-header [level]="2">可清除</jigsaw-header>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+        <br>
+        <jigsaw-range-date-time-select [(date)]="date7" [clearable]="clearable" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date7 | json}}</p>
+    </div>
 </div>
 
