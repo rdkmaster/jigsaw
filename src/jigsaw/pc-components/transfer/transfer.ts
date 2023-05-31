@@ -805,10 +805,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     private _checkDestSelectAll(): void {
         this._$destButton = this.destComponent.selectedItems.length > 0;
         this.destComponent.update();
-        this._updateDestSelectAllStatus();
-    }
-
-    private _updateDestSelectAllStatus(): void {
         if (CommonUtils.isUndefined(this.destComponent.currentSelectedItems)) {
             this._$destSelectAllChecked = CheckBoxStatus.unchecked;
             return;
