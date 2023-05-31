@@ -3,7 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {ArrayCollection, ListOption, TransferListDestRenderer, TransferListSourceRenderer} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class TransferCheckedChangeDemoComponent {
     constructor(private _http: HttpClient) {
@@ -22,9 +23,11 @@ export class TransferCheckedChangeDemoComponent {
     public sourceCheckedItems: string;
     public destCheckedItems: string;
 
+    public checked = true;
+
     public sourceChecked($event: ArrayCollection<ListOption>): void {
         if ($event.length > 3) {
-            $event.splice($event.length - 1, 1);
+            $event.splice(3, $event.length - 3);
         }
         console.log("source checked change: ", $event);
         const items = $event.map(item => item.zhName);
