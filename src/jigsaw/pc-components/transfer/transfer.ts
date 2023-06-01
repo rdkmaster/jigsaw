@@ -745,17 +745,19 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public _$destSearchKey: string;
 
     public get getSourceTitle(): string {
-        if (!this.sourceComponent || !this.sourceComponent.validData) {
-            return;
-        }
+        return this._returnTitle(this.sourceComponent);
+    }
 
-        if (this.isPageable) {
-            const selectedItemsCount = this.sourceComponent.currentSelectedItems ? this.sourceComponent.currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-        } else {
-            const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
+    public get getDestTitle(): string {
+        return this._returnTitle(this.destComponent);
+    }
+
+    private _returnTitle(component: AbstractTransferRendererBase): string {
+        if (!component || !component.validData) {
+            return
         }
+        const count = this.isPageable ? component.currentSelectedItems?.length || 0 : component.selectedItems?.length || 0;
+        return `${count} / ${component.validData.length} ${this._translateService.instant('transfer.items')}`;
     }
 
     public get getSourceSubTitle(): string {
@@ -764,19 +766,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         }
         const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
         return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this._translateService.instant('transfer.items')}`
-    }
-
-    public get getDestTitle(): string {
-        if (!this.destComponent || !this.destComponent.validData) {
-            return
-        }
-        if (this.isPageable) {
-            const selectedItemsCount = this.destComponent.currentSelectedItems ? this.destComponent.currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-        } else {
-            const selectedItemsCount = this.destComponent.selectedItems ? this.destComponent.selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-        }
     }
 
     private _checkSourceSelectAll(): void {

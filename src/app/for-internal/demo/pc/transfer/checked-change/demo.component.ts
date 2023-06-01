@@ -26,7 +26,7 @@ export class TransferCheckedChangeDemoComponent {
     public checked = true;
 
     public sourceChecked($event: ArrayCollection<ListOption>): void {
-        if ($event.length > 3) {
+        if (this.checked && $event.length > 3) {
             $event.splice(3, $event.length - 3);
         }
         console.log("source checked change: ", $event);
