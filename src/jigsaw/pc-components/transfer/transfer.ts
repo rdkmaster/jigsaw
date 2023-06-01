@@ -482,6 +482,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._removeOnRefreshListener = data.onRefresh(() => {
             this.sourceComponent.data = new ArrayCollection(data);
             this.destComponent.data = this._$selectedItems;
+            this._updateSourceSelectAllStatus();
             this._$loading = false;
         });
         this.sourceComponent.dataFilter(data, this.selectedItems)
@@ -602,8 +603,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
 
         this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
             this._updateSourceComponent();
-            this.destComponent.reset();
-            this.changeDetectorRef.markForCheck();
+            this._checkDestSelectAll();
         })
 
         if (this.destComponent) {
@@ -745,17 +745,19 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public _$destSearchKey: string;
 
     public get getSourceTitle(): string {
-        if (!this.sourceComponent || !this.sourceComponent.validData) {
+        return this._getTitle(this.sourceComponent);
+    }
+
+    public get getDestTitle(): string {
+        return this._getTitle(this.destComponent);
+    }
+
+    private _getTitle(component: AbstractTransferRendererBase): string {
+        if (!component || !component.validData) {
             return;
         }
-
-        if (this.isPageable) {
-            const selectedItemsCount = this.sourceComponent.currentSelectedItems ? this.sourceComponent.currentSelectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-        } else {
-            const selectedItemsCount = this.sourceComponent.selectedItems ? this.sourceComponent.selectedItems.length : 0;
-            return `${selectedItemsCount} / ${this.sourceComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-        }
+        const count = this.isPageable ? component.currentSelectedItems?.length || 0 : component.selectedItems?.length || 0;
+        return `${count} / ${component.validData.length} ${this._translateService.instant('transfer.items')}`;
     }
 
     public get getSourceSubTitle(): string {
@@ -766,17 +768,13 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         return `${selectedItemsCount} / ${this.data.pagingInfo.totalRecord} ${this._translateService.instant('transfer.items')}`
     }
 
-    public get getDestTitle(): string {
-        if (!this.destComponent || !this.destComponent.validData) {
-            return
-        }
-        const selectedItemsCount = this.destComponent.selectedItems ? this.destComponent.selectedItems.length : 0;
-        return `${selectedItemsCount} / ${this.destComponent.validData.length} ${this._translateService.instant('transfer.items')}`
-    }
-
     private _checkSourceSelectAll(): void {
         this._$sourceButton = this.sourceComponent.selectedItems.length > 0;
         this.sourceComponent.update();
+        this._updateSourceSelectAllStatus();
+    }
+
+    private _updateSourceSelectAllStatus(): void {
         if (CommonUtils.isUndefined(this.sourceComponent.currentSelectedItems)) {
             this._$sourceSelectAllChecked = CheckBoxStatus.unchecked;
             return;
@@ -790,16 +788,21 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         } else {
             this._$sourceSelectAllChecked = CheckBoxStatus.indeterminate;
         }
+        this.changeDetectorRef.markForCheck();
     }
 
     private _checkDestSelectAll(): void {
         this._$destButton = this.destComponent.selectedItems.length > 0;
         this.destComponent.update();
-        if (!this.destComponent.selectedItems || this.destComponent.selectedItems.length === 0) {
+        if (CommonUtils.isUndefined(this.destComponent.currentSelectedItems)) {
             this._$destSelectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this.destComponent.selectedItems.length === this.destComponent.validData.length) {
+        if (this.destComponent.currentSelectedItems.length === 0) {
+            this._$destSelectAllChecked = CheckBoxStatus.unchecked;
+            return;
+        }
+        if (this.destComponent.currentSelectedItems.length === this.destComponent.validData.length) {
             this._$destSelectAllChecked = CheckBoxStatus.checked;
         } else {
             this._$destSelectAllChecked = CheckBoxStatus.indeterminate;
