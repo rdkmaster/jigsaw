@@ -20,6 +20,8 @@ import { ZtreeSizeComponent } from './size/demo.component';
 import { TreeSizeDemoModule } from './size/demo.module';
 import { ZtreeSelectDemoModule } from "./select/demo.module";
 import { ZtreeSelectDemoComponent } from "./select/demo.component";
+import { TreeBigDataDemoModule } from "./big-data/demo.module";
+import { ZtreeBigDataDemoComponent } from "./big-data/demo.component";
 
 export const routerConfig = [
     {
@@ -51,6 +53,9 @@ export const routerConfig = [
     },
     {
         path: 'select', component: ZtreeSelectDemoComponent
+    },
+    {
+        path: 'big-data', component: ZtreeBigDataDemoComponent
     }
 ];
 
@@ -59,7 +64,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         ZTreeAsyncDemoModule, TreeBasicDemoModule, TreeAjaxDataDemoModule, TreeEditableDemoModule,
         TreeCustomSettingCallbackDemoModule, TreeXMLDataDemoModule, ZTreeIconDemoModule, TreeFuzzySearchDemoModule, TreeSizeDemoModule,
-        ZtreeSelectDemoModule
+        ZtreeSelectDemoModule, TreeBigDataDemoModule
     ],
     exports: [
     ],
