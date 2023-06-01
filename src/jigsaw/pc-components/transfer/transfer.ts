@@ -745,16 +745,16 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public _$destSearchKey: string;
 
     public get getSourceTitle(): string {
-        return this._returnTitle(this.sourceComponent);
+        return this._getTitle(this.sourceComponent);
     }
 
     public get getDestTitle(): string {
-        return this._returnTitle(this.destComponent);
+        return this._getTitle(this.destComponent);
     }
 
-    private _returnTitle(component: AbstractTransferRendererBase): string {
+    private _getTitle(component: AbstractTransferRendererBase): string {
         if (!component || !component.validData) {
-            return
+            return;
         }
         const count = this.isPageable ? component.currentSelectedItems?.length || 0 : component.selectedItems?.length || 0;
         return `${count} / ${component.validData.length} ${this._translateService.instant('transfer.items')}`;
