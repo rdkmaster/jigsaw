@@ -48,7 +48,7 @@ $jigsaw-rate: #{$jigsaw-prefix}-rate;
             margin: 0 4px 0 0;
             position: relative;
             transition: all 0.3s;
-            color: $border-color-default;
+            color: $icon-color-disabled;
             cursor: pointer;
 
             .#{$jigsaw-rate}-star-first,
