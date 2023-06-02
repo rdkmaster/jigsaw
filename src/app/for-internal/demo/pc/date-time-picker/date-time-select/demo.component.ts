@@ -1,8 +1,9 @@
-import {Component} from "@angular/core";
-import {GrItem, MarkDate, TimeGr} from "jigsaw/public_api";
+import {Component, ViewChild} from "@angular/core";
+import {GrItem, JigsawDateTimeSelect, MarkDate, TimeGr} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class DateTimeSelectDemoComponent {
     date1='now';
@@ -51,7 +52,7 @@ export class DateTimeSelectDemoComponent {
     date11='2021-08-23';
 
     onDateChange($event) {
-        console.log($event);
+        console.log('dateChange=>', $event);
     }
 
     changeProp($event) {
@@ -74,7 +75,18 @@ export class DateTimeSelectDemoComponent {
         }
     }
 
+    @ViewChild("dateTimeSelect12")
+    public dateTimeSelect12: JigsawDateTimeSelect;
+
+    public clearDate() {
+        this.dateTimeSelect12.clearDate();
+    }
+
+    public date13;
+
     ngOnInit() {
+        this.date13 = '2023-05-20';
+
         setTimeout(() => {
             this.date10 = '2020-03-24'
         })

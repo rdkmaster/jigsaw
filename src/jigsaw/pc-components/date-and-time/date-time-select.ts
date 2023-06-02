@@ -229,8 +229,12 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;
 
     public clearDate() {
+        if (this._date == '' || CommonUtils.isUndefined(this._date)) {
+            return;
+        }
         if (this._dateTimePicker) {
             this._dateTimePicker.clearDate();
+            return;
         }
         this.writeValue('');
     }
@@ -277,9 +281,6 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     public writeValue(date: WeekTime): void {
-        if (this._isDateSame(date, this._date)) {
-            return;
-        }
         this._date = date;
         this.dateChange.emit(date);
         this._$setComboValue(<string | TimeWeekDay>date);

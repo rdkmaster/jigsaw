@@ -2,6 +2,7 @@ import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {
     JigsawButtonBarModule,
+    JigsawButtonModule,
     JigsawDateTimeSelectModule,
     JigsawRadioModule,
     JigsawSelectModule,
@@ -15,7 +16,8 @@ import {JigsawHeaderModule} from "jigsaw/public_api";
 @NgModule({
     declarations: [DateTimeSelectDemoComponent],
     exports: [ DateTimeSelectDemoComponent ],
-    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawDateTimeSelectModule, JigsawButtonBarModule, JigsawRadioModule, JigsawSwitchModule, JigsawSelectModule, JigsawHeaderModule]
+    imports: [CommonModule, JigsawDemoDescriptionModule, JigsawDateTimeSelectModule, JigsawButtonBarModule,
+        JigsawRadioModule, JigsawSwitchModule, JigsawSelectModule, JigsawHeaderModule, JigsawButtonModule]
 })
 export class DateTimeSelectDemoModule{
 

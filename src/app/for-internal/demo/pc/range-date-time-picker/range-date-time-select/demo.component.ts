@@ -3,12 +3,7 @@ import {GrItem, JigsawRangeDateTimeSelect, RangeTimeDataRanges, Shortcut, TimeGr
 
 @Component({
     templateUrl: './demo.component.html',
-    styles: [`
-        .message {
-            font-size: 14px;
-            margin: 10px 0 20px 0
-        }
-    `]
+    styleUrls: ['./demo.component.css', './../../assets/demo.common.css']
 })
 export class RangeDateTimeSelectComponent {
     @ViewChild('select8')
@@ -73,11 +68,21 @@ export class RangeDateTimeSelectComponent {
     }
 
     dateChange($event) {
-        console.log($event)
+        console.log('dateChange=>', $event)
     }
 
     public showDate(rangeDateTimeSelect) {
         console.log(rangeDateTimeSelect.date);
+    }
+
+    public clearDate(rangeDateTimeSelect) {
+        rangeDateTimeSelect.clearDate();
+    }
+
+    public date10;
+
+    ngOnInit() {
+        this.date10 = { beginDate: '2020-02-10', endDate: '2020-03-10' };
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

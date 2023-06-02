@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {debounceTime} from 'rxjs/operators';
+import {debounceTime, retry} from 'rxjs/operators';
 import {ComboSelectValue, JigsawComboSelectModule, JigsawComboSelect} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
@@ -261,9 +261,6 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     }
 
     public writeValue(date: RangeDate): void {
-        if (date?.beginDate == this._date?.beginDate && date?.endDate == this._date?.endDate){
-            return;
-        }
         this._date = date;
         this.dateChange.emit(date);
         this._propagateChange(this._date);
@@ -300,8 +297,17 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
     public clearable: boolean = false;
 
     public clearDate() {
+        if (CommonUtils.isUndefined(this._date)) {
+            return;
+        }
+
+        if (this._date.beginDate == '' && this._date.endDate == '') {
+            return;
+        }
+
         if (this._rangeDateTimePicker) {
             this._rangeDateTimePicker.clearDate();
+            return;
         }
         this._$beginDate = '';
         this._$endDate = '';
