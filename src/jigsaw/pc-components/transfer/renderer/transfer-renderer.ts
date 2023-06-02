@@ -474,6 +474,7 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
             this.treeExt.ztree.checkAllNodes(false);
 
             this.validData = this.treeExt.ztree.getNodesByParam('isParent', false).filter(node => !node.isHidden);
+
             if (changeDetectorRef) {
                 changeDetectorRef.markForCheck();
             }
@@ -484,6 +485,13 @@ export abstract class TransferTreeRendererBase extends AbstractTransferRendererB
     public searchFilter(selectedItems: ArrayCollection<ListOption>, $event: string, changeDetectorRef: ChangeDetectorRef) {
         this._searchKey = $event.length > 0 ? $event.trim() : "";
         this.dataFilter(selectedItems, changeDetectorRef);
+        this._zone.onStable.asObservable().pipe(take(1)).subscribe(() => {
+            const shownNodes = this.treeExt.ztree.getNodesByParam('isHidden', false);
+            if (shownNodes.length > 2000) {
+                return
+            }
+            this.treeExt.ztree.expandAll(true);
+        })
     }
 
     ngAfterViewInit() {

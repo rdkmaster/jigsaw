@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>Big Data</jigsaw-header>
+<ul>
+    <li class="demo-options">
+        <div class="demo-options-item">
+            <span>父节点个数：</span>
+            <jigsaw-numeric-input [(value)]="parent" min="10" step="10" placeholder="父节点个数">
+            </jigsaw-numeric-input>
+        </div>
+
+        <div class="demo-options-item">
+            <span>子节点个数：</span>
+            <jigsaw-numeric-input [(value)]="child" min="10" step="10" placeholder="子节点个数">
+            </jigsaw-numeric-input>
+        </div>
+
+        <div class="demo-options-item">
+            <span>操作：</span>
+            <jigsaw-button (click)="updateData()">更新数据</jigsaw-button>
+            <jigsaw-button (click)="expandAll()">展开所有节点</jigsaw-button>
+            <jigsaw-button (click)="collapseAll()">折叠所有节点</jigsaw-button>
+        </div>
+    </li>
+</ul>
+
+<jigsaw-tree-ext [(data)]="data"></jigsaw-tree-ext>
