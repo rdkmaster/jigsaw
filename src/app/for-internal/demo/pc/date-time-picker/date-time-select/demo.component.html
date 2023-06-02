@@ -105,8 +105,24 @@
 
     <div class="demo-12 live-demo">
         <jigsaw-header [level]="2">clearable</jigsaw-header>
-        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+        <ul>
+            <li class="demo-options">
+                <div class="demo-options-item">
+                    <span>是否可清空：</span>
+                    <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+                </div>
+                <div class="demo-options-item">
+                    <span>API：</span>
+                    <jigsaw-button (click)="clearDate()">清空数据</jigsaw-button>
+                </div>
+            </li>
+        </ul>
+        <jigsaw-date-time-select #dateTimeSelect12 [clearable]="clearable" gr="second" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+    </div>
+
+    <div class="demo-13 live-demo">
+        <jigsaw-header [level]="2">初始化时设置默认值</jigsaw-header>
         <div></div>
-        <jigsaw-date-time-select [clearable]="clearable" gr="second" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
+        <jigsaw-date-time-select [(date)]="date13" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
     </div>
 </div>
