@@ -5,7 +5,7 @@
                 'icon-position-bottom':iconPosition=='bottom'}"
     [href]="_$secureUrl" [target]="target" [title]="title">
     <i [ngClass]="icon" [ngStyle]="{'font-size.px':iconSize, 'color':iconColor}"></i>
-    <span
+    <span *ngIf="!!text"
         [ngClass]="{'text-padding-left':iconPosition=='left',
                     'text-padding-top':iconPosition=='top',
                     'text-padding-right':iconPosition=='right',
@@ -19,7 +19,7 @@
                 'icon-position-bottom':iconPosition=='bottom'}"
     [title]="title">
     <i [ngClass]="icon" [ngStyle]="{'font-size.px':iconSize, 'color':iconColor}"></i>
-    <span
+    <span *ngIf="!!text"
         [ngClass]="{'text-padding-left':iconPosition=='left',
                     'text-padding-top':iconPosition=='top',
                     'text-padding-right':iconPosition=='right',
