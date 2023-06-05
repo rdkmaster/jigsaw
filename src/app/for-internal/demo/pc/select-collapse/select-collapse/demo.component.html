@@ -2,183 +2,103 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"></jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-checkbox [(checked)]="disabled">是否禁止访问</jigsaw-checkbox>
-<jigsaw-checkbox [(checked)]="valid">是否有效</jigsaw-checkbox>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>是否禁止访问：</span>
+        <jigsaw-switch [(checked)]="disabled">是否禁止访问</jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>是否有效：</span>
+        <jigsaw-switch [(checked)]="valid">是否禁止访问</jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>打开方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="openTrigger" [data]="openTriggers">
+        </jigsaw-button-bar>
+    </li>
+    <li class="demo-options-item">
+        <span>关闭方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="closeTrigger" [data]="closeTriggers">
+        </jigsaw-button-bar>
+    </li>
+</ul>
 
 <jigsaw-header>折叠下拉（单选）</jigsaw-header>
 <jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled"
-                        placeholder="请选择" width="160px" optionCount="8" (valueChange)="valueChange($event)">
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" optionCount="8"
+    (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
-<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList"
-                        placeholder="请选择" width="160px" optionCount="8" (valueChange)="valueChange($event)">
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [openTrigger]="openTrigger[0]"
+    [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" optionCount="8"
+    (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 <jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [value]="singleSelectedOption"
-                        placeholder="请选择" width="160px" optionWidth="320px" (valueChange)="valueChange($event)">
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" optionWidth="320px"
+    (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
 <jigsaw-header>含有空字符串的选项</jigsaw-header>
-<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList1"
-                        placeholder="请选择" width="160px" optionCount="8" (valueChange)="valueChange($event)">
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList1" [openTrigger]="openTrigger[0]"
+    [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" optionCount="8"
+    (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 <jigsaw-header>折叠下拉（多选）</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="160px"
-    optionCount="6"
-    [useStatistics]="true"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled" [multipleSelect]="true"
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" optionCount="6"
+    [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
 <jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true"
-                        placeholder="请选择" width="160px" (valueChange)="valueChange($event)">
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px"
+    (valueChange)="valueChange($event)">
 </jigsaw-collapse-select>
 
 <jigsaw-header>展开选中条目 + 动态高度</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [multipleSelect]="true"
-    [useStatistics]="false"
-    placeholder="请选择"
-    width="160px"
-    height="32px"
-    optionCount="6"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataList"
-    [multipleSelect]="true"
-    [useStatistics]="false"
-    placeholder="请选择"
-    width="160px"
-    optionWidth="320px"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled" [multipleSelect]="true"
+    [useStatistics]="false" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择"
+    width="160px" height="32px" optionCount="6" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true"
+    [useStatistics]="false" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择"
+    width="160px" optionWidth="320px" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
 
 <jigsaw-header>展开选中条目 + 固定高度 + 滚动条</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [value]="selectedOption"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="160px"
-    maxHeight="32px"
-    optionCount="6"
-    [useStatistics]="false"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="160px"
-    maxHeight="58px"
-    optionWidth="320px"
-    [useStatistics]="false"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled" [value]="selectedOption"
+    [multipleSelect]="true" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择"
+    width="160px" maxHeight="32px" optionCount="6" [useStatistics]="false"
+    (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled" [multipleSelect]="true"
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="160px" maxHeight="58px"
+    optionWidth="320px" [useStatistics]="false" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
 
 <jigsaw-header>自定义宽度</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataList"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="240px"
-    optionCount="6"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataList"
-    [multipleSelect]="true"
-    [useStatistics]="false"
-    placeholder="请选择"
-    minWidth="150px"
-    maxWidth="480px"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true"
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择" width="240px" optionCount="6"
+    (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true"
+    [useStatistics]="false" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择"
+    minWidth="150px" maxWidth="480px" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
 
 <jigsaw-header>初始全选/半选</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [value]="fullSelectedOption"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="160px"
-    [useStatistics]="true"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithoutDisabled"
-    [value]="selectedOption"
-    [multipleSelect]="true"
-    placeholder="请选择"
-    width="160px"
-    [useStatistics]="true"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled"
+    [value]="fullSelectedOption" [multipleSelect]="true" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]"
+    placeholder="请选择" width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled" [value]="selectedOption"
+    [multipleSelect]="true" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="请选择"
+    width="160px" [useStatistics]="true" (valueChange)="valueChange($event)"></jigsaw-collapse-select>
 
 <jigsaw-header>无数据/异常数据</jigsaw-header>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    placeholder="无数据（单选）"
-    width="130px"
-    [useStatistics]="true"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [multipleSelect]="true"
-    placeholder="无数据（多选）"
-    width="130px"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="foreverBusyArray"
-    placeholder="数据获取中..."
-    width="130px"
-    [useStatistics]="true"
-    (valueChange)="valueChange($event)"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="dataListWithEmptyGroup"
-    placeholder="数据不完整"
-    width="130px"
-    [useStatistics]="true"
-></jigsaw-collapse-select>
-<jigsaw-collapse-select
-    [disabled]="disabled"
-    [valid]="valid"
-    [data]="[
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [openTrigger]="openTrigger[0]"
+    [closeTrigger]="closeTrigger[0]" placeholder="无数据（单选）" width="130px" [useStatistics]="true"
+    (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [multipleSelect]="true" [openTrigger]="openTrigger[0]"
+    [closeTrigger]="closeTrigger[0]" placeholder="无数据（多选）" width="130px"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="foreverBusyArray" [openTrigger]="openTrigger[0]"
+    [closeTrigger]="closeTrigger[0]" placeholder="数据获取中..." width="130px" [useStatistics]="true"
+    (valueChange)="valueChange($event)"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="dataListWithEmptyGroup"
+    [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]" placeholder="数据不完整" width="130px"
+    [useStatistics]="true"></jigsaw-collapse-select>
+<jigsaw-collapse-select [disabled]="disabled" [valid]="valid" [data]="[
             { groupName: '分组标题1' },
             { groupName: '分组标题2', data: [] },
             { groupName: '分组标题3', data: [{ label: '文本选项1', disabled: true }, { label: '文本选项2', disabled: true }] }
-        ]"
-    [multipleSelect]="true"
-    placeholder="普通JSON对象"
-    width="130px"
-    [useStatistics]="true"
-></jigsaw-collapse-select>
-
+        ]" [multipleSelect]="true" [openTrigger]="openTrigger[0]" [closeTrigger]="closeTrigger[0]"
+    placeholder="普通JSON对象" width="130px" [useStatistics]="true"></jigsaw-collapse-select>
