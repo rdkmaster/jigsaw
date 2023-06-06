@@ -604,6 +604,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._removeSelectedItemsChangeListener = this._$selectedItems.onRefresh(() => {
             this._updateSourceComponent();
             this._checkDestSelectAll();
+            this.changeDetectorRef.markForCheck();
         })
 
         if (this.destComponent) {
