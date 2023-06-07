@@ -223,16 +223,17 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     }
 
     protected _setGrowLockStyle(element) {
-        const width = element.offsetWidth;
-        this.renderer.setStyle(element, 'width', Number(width) + 'px');
-        this.renderer.setStyle(element, 'flex-basis', Number(width) + 'px');
+        const width = Number(element.offsetWidth) + 'px';
+        this.renderer.setStyle(element, 'width', width);
+        this.renderer.setStyle(element, 'flex-basis', width);
         this.renderer.setStyle(element, 'flex-grow', 0);
     }
 
-    protected _resetGrowLockStyle(element, grow) {
+    protected _resetGrowLockStyle(element, grow: number) {
         this.renderer.removeStyle(element, 'width');
         this.renderer.removeStyle(element, 'flex-basis');
-        this.renderer.setStyle(element, 'flex-grow', Number(grow ? grow : 1));
+        grow = Number(grow);
+        this.renderer.setStyle(element, 'flex-grow', isNaN(grow) ? 1 : grow);
     }
 
     public parent: any;
