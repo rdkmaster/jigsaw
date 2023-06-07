@@ -3,6 +3,7 @@ import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
+import { JigsawBox } from "./box";
 
 @Directive()
 export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy {
@@ -213,28 +214,28 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     public set growLock(value: boolean) {
         this._growLock = value;
-        this.runAfterMicrotasks(() => {
-            if (value) {
-                this._setGrowLockStyle(this.element);
-            } else {
-                this._resetGrowLockStyle(this.element, this.grow);
-            }
-        });
+        // this.runAfterMicrotasks(() => {
+        //     if (value) {
+        //         this._setGrowLockStyle(this.element);
+        //     } else {
+        //         this._resetGrowLockStyle(this.element, this.grow);
+        //     }
+        // });
     }
 
-    protected _setGrowLockStyle(element: HTMLElement) {
-        const width = Number(element.offsetWidth) + 'px';
-        this.renderer.setStyle(element, 'width', width);
-        this.renderer.setStyle(element, 'flex-basis', width);
-        this.renderer.setStyle(element, 'flex-grow', 0);
-    }
+    // protected _setGrowLockStyle(element: HTMLElement) {
+    //     const width = Number(element.offsetWidth) + 'px';
+    //     this.renderer.setStyle(element, 'width', width);
+    //     this.renderer.setStyle(element, 'flex-basis', width);
+    //     this.renderer.setStyle(element, 'flex-grow', 0);
+    // }
 
-    protected _resetGrowLockStyle(element: HTMLElement, grow: number) {
-        this.renderer.removeStyle(element, 'width');
-        this.renderer.removeStyle(element, 'flex-basis');
-        grow = Number(grow);
-        this.renderer.setStyle(element, 'flex-grow', isNaN(grow) ? 1 : grow);
-    }
+    // protected _resetGrowLockStyle(element: HTMLElement, grow: number) {
+    //     this.renderer.removeStyle(element, 'width');
+    //     this.renderer.removeStyle(element, 'flex-basis');
+    //     grow = Number(grow);
+    //     this.renderer.setStyle(element, 'flex-grow', isNaN(grow) ? 1 : grow);
+    // }
 
     public parent: any;
 
@@ -352,7 +353,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      *
      */
     protected _getOffsets(offsetProp: string, sizeProp: string): number[] {
-        const offsets = this.parent.childrenBox.reduce((arr, box, index) => {
+        const offsets = this.parent._$shownChildrenBox.reduce((arr: number[], box: JigsawBox, index: number) => {
             if (index == 0) {
                 arr.push(0);
             } else {
@@ -375,6 +376,10 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         return index;
     }
 
+    protected _getCurrentShownBoxIndex(): number {
+        return this.parent._$shownChildrenBox.findIndex(box => box == this);;
+    }
+
     protected _getPropertyByDirection(): string[] {
         return [this.parent.direction == 'column' ? 'top' : 'left',
             this.parent.direction == 'column' ? 'height' : 'width']
@@ -382,8 +387,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
-        const curIndex = this._getCurrentIndex();
-        const childrenBox = this.parent.childrenBox.toArray();
+        console.log(this._rawOffsets);
+        const curIndex = this._getCurrentShownBoxIndex();
+        const childrenBox = this.parent._$shownChildrenBox;
         const prevBox = childrenBox[curIndex - 1], curBox = childrenBox[curIndex];
         const scale = CommonUtils.getScale(this.element);
         return [
@@ -424,6 +430,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     private _updateResizeRange() {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
+        console.log(offsetProp, sizeProp);
         this._$resizeRange = this._getResizeRange(offsetProp, sizeProp);
+        console.log(this._$resizeRange);
+        console.log(this._rawOffsets);
     };
 }

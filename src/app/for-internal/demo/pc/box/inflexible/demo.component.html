@@ -5,7 +5,7 @@
 <!-- start to learn the demo from here -->
 <ul class="demo-options">
     <li class="demo-options-item">
-        <span>是否可见：</span>
+        <span>是否显示：</span>
         <jigsaw-switch [(checked)]="showBox1" onLabel="Box1" offLabel="Box1"></jigsaw-switch>
         <jigsaw-switch [(checked)]="showBox2" onLabel="Box2" offLabel="Box2"></jigsaw-switch>
         <jigsaw-switch [(checked)]="showBox3" onLabel="Box3" offLabel="Box3"></jigsaw-switch>
@@ -19,13 +19,13 @@
 </ul>
 
 <jigsaw-box [resizable]="true" class="box-parent" height="40vh" width="80vw" gap="8">
-    <jigsaw-box class="box-child" [ngStyle]="{display: showBox1 ? '' : 'none'}" [growLock]="growLock1">
+    <jigsaw-box class="box-child" [hidden]="!showBox1" [growLock]="growLock1">
         <div>Box1</div>
     </jigsaw-box>
-    <jigsaw-box class="box-child" [ngStyle]="{display: showBox2 ? '' : 'none'}" [growLock]="growLock2" grow="4">
+    <jigsaw-box class="box-child" [hidden]="!showBox2" [growLock]="growLock2" grow="4">
         <div>Box2</div>
     </jigsaw-box>
-    <jigsaw-box class="box-child" [ngStyle]="{display: showBox3 ? '' : 'none'}" [growLock]="growLock3">
+    <jigsaw-box class="box-child" [hidden]="!showBox3" [growLock]="growLock3">
         <div>Box3</div>
     </jigsaw-box>
 </jigsaw-box>

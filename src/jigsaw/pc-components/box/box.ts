@@ -176,6 +176,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$childrenBox: JigsawBox[];
 
+    public get _$shownChildrenBox(): JigsawBox[] {
+        return this._$childrenBox.filter(box => !box.hidden);
+    }
+
     private _removeResizeStartListener: Subscription;
     private _removeResizeEndListener: Subscription;
     private _removeWindowResizeListener: CallbackRemoval;
@@ -204,9 +208,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this.parent.childrenBox.filter(item => item.growLock).forEach(item => {
-            this._resetGrowLockStyle(item.element, item.grow);
-        });
+        // this.parent.childrenBox.filter(item => item.growLock).forEach(item => {
+        //     this._resetGrowLockStyle(item.element, item.grow);
+        // });
         this._isCurrentResizingBox = true;
         JigsawBox.resizeStart.emit();
         this._emitResizeEvent('resizeStart');
@@ -216,9 +220,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * @internal
      */
     public _$handleResizeEnd() {
-        this.parent.childrenBox.filter(item => item.growLock).forEach(item => {
-            this._setGrowLockStyle(item.element);
-        });
+        // this.parent.childrenBox.filter(item => item.growLock).forEach(item => {
+        //     this._setGrowLockStyle(item.element);
+        // });
         JigsawBox.resizeEnd.emit();
         this._isCurrentResizingBox = false;
         this._emitResizeEvent('resize');

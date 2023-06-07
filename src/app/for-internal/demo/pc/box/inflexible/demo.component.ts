@@ -9,7 +9,7 @@ export class BoxInflexibleDemoComponent {
     public showBox2 = true;
     public showBox3 = true;
 
-    public growLock1 = true;
+    public growLock1 = false;
     public growLock2 = false;
     public growLock3 = false;
 
