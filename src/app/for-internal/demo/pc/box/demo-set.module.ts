@@ -20,6 +20,8 @@ import {BoxHiddenDemoComponent} from "./hidden/demo.component";
 import {BoxHiddenDemoModule} from "./hidden/demo.module";
 import {BoxLayoutInteractionDemoComponent} from "./layout-interaction/demo.component";
 import {BoxLayoutInteractionDemoModule} from "./layout-interaction/demo.module";
+import { BoxInflexibleDemoComponent } from "./inflexible/demo.component";
+import { BoxInflexibleDemoModule } from "./inflexible/demo.module";
 
 export const routerConfig = [
     {
@@ -52,6 +54,9 @@ export const routerConfig = [
     {
         path: 'layout-interaction', component: BoxLayoutInteractionDemoComponent
     },
+    {
+        path: 'inflexible', component: BoxInflexibleDemoComponent
+    },
 ];
 
 @NgModule({
@@ -66,7 +71,8 @@ export const routerConfig = [
         BoxPerformanceDemoModule,
         BoxNgIfNgForDemoModule,
         BoxHiddenDemoModule,
-        BoxLayoutInteractionDemoModule
+        BoxLayoutInteractionDemoModule,
+        BoxInflexibleDemoModule
     ]
 })
 export class BoxDemoModule {

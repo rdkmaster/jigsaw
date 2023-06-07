@@ -110,7 +110,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     /* flex item property */
     private _order: number;
-    private _grow: number;
+    protected _grow: number;
     private _shrink: number;
 
     /**
@@ -201,6 +201,40 @@ export interface BoxSizes extends Array<number> {
 
 @Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
+    private _growLock: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get growLock(): boolean {
+        return this._growLock;
+    }
+
+    public set growLock(value: boolean) {
+        this._growLock = value;
+        this.runAfterMicrotasks(() => {
+            if (value) {
+                this._setGrowLockStyle(this.element);
+            } else {
+                this._resetGrowLockStyle(this.element, this.grow);
+            }
+        });
+    }
+
+    protected _setGrowLockStyle(element) {
+        const width = element.offsetWidth;
+        this.renderer.setStyle(element, 'width', Number(width) + 'px');
+        this.renderer.setStyle(element, 'flex-basis', Number(width) + 'px');
+        this.renderer.setStyle(element, 'flex-grow', 0);
+    }
+
+    protected _resetGrowLockStyle(element, grow) {
+        this.renderer.removeStyle(element, 'width');
+        this.renderer.removeStyle(element, 'flex-basis');
+        this.renderer.setStyle(element, 'flex-grow', Number(grow ? grow : 1));
+    }
+
     public parent: any;
 
     protected _rawOffsets: number[];
@@ -244,7 +278,6 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      */
     public _$handleResize(offset: number, emitEvent: boolean = false) {
         if (!this.parent) return;
-
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeBoxSizes(sizeProp, offset).toRatios();
         this.parent.childrenBox.forEach((box, index) => {

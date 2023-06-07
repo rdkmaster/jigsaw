@@ -204,6 +204,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
+        this.parent.childrenBox.toArray().forEach(item => {
+            if (!item.growLock) {
+                return;
+            }
+            this._resetGrowLockStyle(item.element, item.grow);
+        })
         this._isCurrentResizingBox = true;
         JigsawBox.resizeStart.emit();
         this._emitResizeEvent('resizeStart');
@@ -213,6 +219,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * @internal
      */
     public _$handleResizeEnd() {
+        this.parent.childrenBox.toArray().forEach(item => {
+            if (!item.growLock) {
+                return;
+            }
+            this._setGrowLockStyle(item.element);
+        })
         JigsawBox.resizeEnd.emit();
         this._isCurrentResizingBox = false;
         this._emitResizeEvent('resize');
@@ -361,6 +373,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
             this._computeResizeLineWidth();
+            console.log('111111')
+            console.log(this);
             if (!this._resizeLineParent) {
                 return;
             }
