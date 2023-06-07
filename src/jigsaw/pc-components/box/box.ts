@@ -373,8 +373,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
 
         this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
             this._computeResizeLineWidth();
-            console.log('111111')
-            console.log(this);
             if (!this._resizeLineParent) {
                 return;
             }
