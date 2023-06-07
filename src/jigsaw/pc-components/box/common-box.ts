@@ -222,14 +222,14 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         });
     }
 
-    protected _setGrowLockStyle(element) {
+    protected _setGrowLockStyle(element: HTMLElement) {
         const width = Number(element.offsetWidth) + 'px';
         this.renderer.setStyle(element, 'width', width);
         this.renderer.setStyle(element, 'flex-basis', width);
         this.renderer.setStyle(element, 'flex-grow', 0);
     }
 
-    protected _resetGrowLockStyle(element, grow: number) {
+    protected _resetGrowLockStyle(element: HTMLElement, grow: number) {
         this.renderer.removeStyle(element, 'width');
         this.renderer.removeStyle(element, 'flex-basis');
         grow = Number(grow);
