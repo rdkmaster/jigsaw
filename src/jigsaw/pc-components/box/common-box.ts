@@ -215,6 +215,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     public set disableGrow(value: boolean) {
         this._disableGrow = value;
         this.runAfterMicrotasks(() => {
+            if (this._isFixedSize) {
+                return;
+            }
             if (value) {
                 this._setDisableGrowStyle(this.element);
             } else {
@@ -224,9 +227,18 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     }
 
     protected _setDisableGrowStyle(element: HTMLElement) {
-        const width = Number(element.offsetWidth) + 'px';
-        this.renderer.setStyle(element, 'width', width);
-        this.renderer.setStyle(element, 'flex-basis', width);
+        let sizeParam: 'offsetHeight' | 'offsetWidth';
+        let sizeProp: 'height' | 'width';
+        if (this.parent.direction == 'column') {
+            sizeParam = 'offsetHeight';
+            sizeProp = 'height'
+        } else {
+            sizeParam = 'offsetWidth';
+            sizeProp = 'width'
+        }
+        const size = Number(element[sizeParam]) + 'px';
+        this.renderer.setStyle(element, sizeProp, size);
+        this.renderer.setStyle(element, 'flex-basis', size);
         this.renderer.setStyle(element, 'flex-grow', 0);
     }
 
@@ -241,12 +253,12 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             this.zone.runOutsideAngular(() => {
                 this.renderer.setStyle(box.element, 'flex-grow', Number(sizeRatios[index]));
                 if (box.disableGrow) {
-                    this.renderer.removeStyle(box.element, 'width');
+                    this.renderer.removeStyle(box.element, sizeProp);
                     this.renderer.removeStyle(box.element, 'flex-basis');
                 }
             });
         });
-        this.renderer.removeStyle(element, 'width');
+        this.renderer.removeStyle(element, sizeProp);
         this.renderer.removeStyle(element, 'flex-basis');
     }
 
