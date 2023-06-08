@@ -209,7 +209,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
         this.parent.childrenBox.filter(item => item.growLock).forEach(item => {
-            this._resetGrowLockStyle(item.element, item.grow);
+            this._resetGrowLockStyle(item.element);
         });
         this._isCurrentResizingBox = true;
         JigsawBox.resizeStart.emit();
