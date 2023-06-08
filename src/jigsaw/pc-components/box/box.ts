@@ -172,12 +172,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     protected childrenBox: QueryList<JigsawBox>;
 
     /**
+     * 在awade里有用到，不能删除，不能修改访问访问修饰符
      * @internal
      */
     public _$childrenBox: JigsawBox[];
 
-    public get _$shownChildrenBox(): JigsawBox[] {
-        return this._$childrenBox.filter(box => !box.hidden);
+    public getShownChildrenBox(): JigsawBox[] {
+        return this._$childrenBox?.filter(box => !box.hidden) || [];
     }
 
     private _removeResizeStartListener: Subscription;
@@ -208,7 +209,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
             this._resetDisableGrowStyle(item.element);
         });
         this._isCurrentResizingBox = true;
@@ -220,7 +221,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * @internal
      */
     public _$handleResizeEnd() {
-        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
             this._setDisableGrowStyle(item.element);
         });
         JigsawBox.resizeEnd.emit();
@@ -348,10 +349,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     }
 
     public setDisableGrowBoxStyle(): void {
-        if (!this.parent._$shownChildrenBox) {
-            return;
-        }
-        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
             this._setDisableGrowStyle(item.element);
         });
     }

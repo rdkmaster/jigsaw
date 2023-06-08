@@ -1,7 +1,7 @@
 import {ElementRef, EventEmitter, Input, NgZone, OnDestroy, Output, QueryList, Renderer2, Directive} from "@angular/core";
 import {Subscription} from "rxjs";
 import {AbstractJigsawComponent} from "../../common/common";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
+import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import { JigsawBox } from "./box";
 
@@ -251,10 +251,10 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         const sizeRatios = this._computeBoxSizes(sizeProp).toRatios();
         this.renderer.removeStyle(element, sizeProp);
         this.renderer.removeStyle(element, 'flex-basis');
-        this.parent._$shownChildrenBox.forEach((box: JigsawBox, index: number) => {
+        this.parent.getShownChildrenBox().forEach((box: JigsawBox, index: number) => {
             if (box._isFixedSize) {
                 return;
-            };
+            }
             this.zone.runOutsideAngular(() => {
                 if (selfOnly) {
                     if (!box.disableGrow) {
@@ -316,10 +316,10 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         if (!this.parent) return;
         const sizeProp = this._getPropertyByDirection()[1];
         const sizeRatios = this._computeBoxSizes(sizeProp, offset).toRatios();
-        this.parent._$shownChildrenBox.forEach((box, index) => {
+        this.parent.getShownChildrenBox().forEach((box, index) => {
             if (box._isFixedSize) {
                 return;
-            };
+            }
             box.grow = sizeRatios[index];
             if (emitEvent) {
                 box.growChange.emit(sizeRatios[index]);
@@ -349,23 +349,23 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             return ss;
         }, []) as BoxSizes;
         // 根据padding/gap/border纠正尺寸
-        const length = this.parent._$shownChildrenBox.length;
         const parentStyle = getComputedStyle(this.parent.element);
         const parentPaddingTop = this._pxToNumber(parentStyle.paddingTop) + this._pxToNumber(parentStyle.borderTopWidth);
         const parentPaddingBottom = this._pxToNumber(parentStyle.paddingBottom) + this._pxToNumber(parentStyle.borderBottomWidth);
         const parentPaddingLeft = this._pxToNumber(parentStyle.paddingLeft) + this._pxToNumber(parentStyle.borderLeftWidth);
         const parentPaddingRight = this._pxToNumber(parentStyle.paddingRight) + this._pxToNumber(parentStyle.borderRightWidth);
         const globalScale = CommonUtils.getScale(this.element);
-        this.parent._$shownChildrenBox.forEach((box, index) => {
+        const shownBox = this.parent.getShownChildrenBox();
+        shownBox.forEach((box, index) => {
             let paddingSize: number, marginSize: number, borderSize: number, parentPaddingSize: number;
             const boxStyle = getComputedStyle(box.element);
             if (this.parent.direction == 'column') {
-                parentPaddingSize = index == 0 ? parentPaddingTop : index == length - 1 ? parentPaddingBottom : 0;
+                parentPaddingSize = index == 0 ? parentPaddingTop : index == shownBox.length - 1 ? parentPaddingBottom : 0;
                 paddingSize = this._pxToNumber(boxStyle.paddingTop) + this._pxToNumber(boxStyle.paddingBottom);
                 marginSize = this._pxToNumber(boxStyle.marginTop) + this._pxToNumber(boxStyle.marginBottom);
                 borderSize = this._pxToNumber(boxStyle.borderTopWidth) + this._pxToNumber(boxStyle.borderBottomWidth);
             } else {
-                parentPaddingSize = index == 0 ? parentPaddingLeft : index == length - 1 ? parentPaddingRight : 0;
+                parentPaddingSize = index == 0 ? parentPaddingLeft : index == shownBox.length - 1 ? parentPaddingRight : 0;
                 paddingSize = this._pxToNumber(boxStyle.paddingLeft) + this._pxToNumber(boxStyle.paddingRight);
                 marginSize = this._pxToNumber(boxStyle.marginLeft) + this._pxToNumber(boxStyle.marginRight);
                 borderSize = this._pxToNumber(boxStyle.borderLeftWidth) + this._pxToNumber(boxStyle.borderRightWidth);
@@ -391,7 +391,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
      *
      */
     protected _getOffsets(offsetProp: string, sizeProp: string): number[] {
-        const offsets = this.parent._$shownChildrenBox.reduce((arr: number[], box: JigsawBox, index: number) => {
+        const offsets = this.parent.getShownChildrenBox().reduce((arr: number[], box: JigsawBox, index: number) => {
             if (index == 0) {
                 arr.push(0);
             } else {
@@ -415,7 +415,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     }
 
     protected _getCurrentShownBoxIndex(): number {
-        return this.parent._$shownChildrenBox.findIndex(box => box == this);;
+        return this.parent.getShownChildrenBox().findIndex(box => box == this);
     }
 
     protected _getPropertyByDirection(): string[] {
@@ -426,7 +426,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
     private _getResizeRange(offsetProp: string, sizeProp: string): number[] {
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const curIndex = this._getCurrentShownBoxIndex();
-        const childrenBox = this.parent._$shownChildrenBox;
+        const childrenBox = this.parent.getShownChildrenBox();
         const prevBox = childrenBox[curIndex - 1], curBox = childrenBox[curIndex];
         const scale = CommonUtils.getScale(this.element);
         return [

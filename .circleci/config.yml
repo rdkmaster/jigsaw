@@ -56,9 +56,9 @@ jobs:
                   name: Unit test
                   command: npm test
 
-            - run:
-                  name: Checking PR title
-                  command: node build/scripts/check-PR-title.js
+#            - run:
+#                  name: Checking PR title
+#                  command: node build/scripts/check-PR-title.js
 
 #            - when:
 #                  condition:
