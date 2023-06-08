@@ -12,20 +12,20 @@
     </li>
     <li class="demo-options-item">
         <span>是否锁定grow：</span>
-        <jigsaw-switch [(checked)]="growLock1" onLabel="Box1" offLabel="Box1"></jigsaw-switch>
-        <jigsaw-switch [(checked)]="growLock2" onLabel="Box2" offLabel="Box2"></jigsaw-switch>
-        <jigsaw-switch [(checked)]="growLock3" onLabel="Box3" offLabel="Box3"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow1" onLabel="Box1" offLabel="Box1"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow2" onLabel="Box2" offLabel="Box2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow3" onLabel="Box3" offLabel="Box3"></jigsaw-switch>
     </li>
 </ul>
 
 <jigsaw-box [resizable]="true" class="box-parent" height="40vh" width="80vw" gap="8">
-    <jigsaw-box class="box-child" [hidden]="!showBox1" [growLock]="growLock1">
+    <jigsaw-box class="box-child" [hidden]="!showBox1" [disableGrow]="disableGrow1">
         <div>Box1</div>
     </jigsaw-box>
-    <jigsaw-box class="box-child" [hidden]="!showBox2" [growLock]="growLock2" grow="4">
+    <jigsaw-box class="box-child" [hidden]="!showBox2" [disableGrow]="disableGrow2" grow="4">
         <div>Box2</div>
     </jigsaw-box>
-    <jigsaw-box class="box-child" [hidden]="!showBox3" [growLock]="growLock3">
+    <jigsaw-box class="box-child" [hidden]="!showBox3" [disableGrow]="disableGrow3">
         <div>Box3</div>
     </jigsaw-box>
 </jigsaw-box>

@@ -111,7 +111,7 @@ export class JigsawBoxBase extends AbstractJigsawComponent implements OnDestroy 
 
     /* flex item property */
     private _order: number;
-    protected _grow: number;
+    private _grow: number;
     private _shrink: number;
 
     /**
@@ -202,47 +202,48 @@ export interface BoxSizes extends Array<number> {
 
 @Directive()
 export class JigsawResizableBoxBase extends JigsawBoxBase {
-    private _growLock: boolean;
+    private _disableGrow: boolean;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get growLock(): boolean {
-        return this._growLock;
+    public get disableGrow(): boolean {
+        return this._disableGrow;
     }
 
-    public set growLock(value: boolean) {
-        this._growLock = value;
+    public set disableGrow(value: boolean) {
+        this._disableGrow = value;
         this.runAfterMicrotasks(() => {
             if (value) {
-                this._setGrowLockStyle(this.element);
+                this._setDisableGrowStyle(this.element);
             } else {
-                this._resetGrowLockStyle(this.element);
+                this._resetDisableGrowStyle(this.element);
             }
         });
     }
 
-    protected _setGrowLockStyle(element: HTMLElement) {
+    protected _setDisableGrowStyle(element: HTMLElement) {
         const width = Number(element.offsetWidth) + 'px';
         this.renderer.setStyle(element, 'width', width);
         this.renderer.setStyle(element, 'flex-basis', width);
         this.renderer.setStyle(element, 'flex-grow', 0);
     }
 
-    protected _resetGrowLockStyle(element: HTMLElement) {
+    protected _resetDisableGrowStyle(element: HTMLElement) {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
-        if (!this._rawOffsets) {
-            this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
-        }
-
+        this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const sizeRatios = this._computeBoxSizes(sizeProp).toRatios();
-        this.parent._$shownChildrenBox.forEach((box, index) => {
+        this.parent._$shownChildrenBox.forEach((box: JigsawBox, index: number) => {
             if (box._isFixedSize) {
                 return;
             };
             this.zone.runOutsideAngular(() => {
                 this.renderer.setStyle(box.element, 'flex-grow', Number(sizeRatios[index]));
+                if (box.disableGrow) {
+                    this.renderer.removeStyle(box.element, 'width');
+                    this.renderer.removeStyle(box.element, 'flex-basis');
+                }
             });
         });
         this.renderer.removeStyle(element, 'width');

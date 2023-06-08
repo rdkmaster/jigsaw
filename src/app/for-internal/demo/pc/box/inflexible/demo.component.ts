@@ -9,9 +9,9 @@ export class BoxInflexibleDemoComponent {
     public showBox2 = true;
     public showBox3 = true;
 
-    public growLock1 = false;
-    public growLock2 = false;
-    public growLock3 = false;
+    public disableGrow1 = false;
+    public disableGrow2 = false;
+    public disableGrow3 = false;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
