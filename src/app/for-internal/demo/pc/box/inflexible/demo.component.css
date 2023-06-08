@@ -17,8 +17,7 @@
 }
 
 .box-parent:nth-of-type(1) .box-child:nth-of-type(1),
-.box-parent:nth-of-type(3) .box-child:nth-of-type(3),
-.box-parent:nth-of-type(3) .box-child:nth-of-type(4) {
+.box-parent:nth-of-type(3) .box-child:nth-of-type(3) {
     background: #7fe3de;
 }
 
@@ -32,7 +31,8 @@
     background: #ffaaa6;
 }
 
-.box-parent:nth-of-type(2) .box-child:nth-of-type(1) {
+.box-parent:nth-of-type(2) .box-child:nth-of-type(1),
+.box-parent:nth-of-type(3) .box-child:nth-of-type(4) {
     background: #acb9fa;
 }
 
