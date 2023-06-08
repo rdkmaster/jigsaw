@@ -224,7 +224,7 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
             if (value) {
                 this._setDisableGrowStyle(this.element);
             } else {
-                this._resetDisableGrowStyle(this.element);
+                this._resetDisableGrowStyle(this.element, true);
             }
         });
     }
@@ -245,24 +245,30 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
         this.renderer.setStyle(element, 'flex-grow', 0);
     }
 
-    protected _resetDisableGrowStyle(element: HTMLElement) {
+    protected _resetDisableGrowStyle(element: HTMLElement, selfOnly?: boolean) {
         const [offsetProp, sizeProp] = this._getPropertyByDirection();
         this._rawOffsets = this._getOffsets(offsetProp, sizeProp);
         const sizeRatios = this._computeBoxSizes(sizeProp).toRatios();
+        this.renderer.removeStyle(element, sizeProp);
+        this.renderer.removeStyle(element, 'flex-basis');
         this.parent._$shownChildrenBox.forEach((box: JigsawBox, index: number) => {
             if (box._isFixedSize) {
                 return;
             };
             this.zone.runOutsideAngular(() => {
-                this.renderer.setStyle(box.element, 'flex-grow', Number(sizeRatios[index]));
-                if (box.disableGrow) {
-                    this.renderer.removeStyle(box.element, sizeProp);
-                    this.renderer.removeStyle(box.element, 'flex-basis');
+                if (selfOnly) {
+                    if (!box.disableGrow) {
+                        this.renderer.setStyle(box.element, 'flex-grow', Number(sizeRatios[index]));
+                    }
+                } else {
+                    this.renderer.setStyle(box.element, 'flex-grow', Number(sizeRatios[index]));
+                    if (box.disableGrow) {
+                        this.renderer.removeStyle(box.element, sizeProp);
+                        this.renderer.removeStyle(box.element, 'flex-basis');
+                    }
                 }
             });
         });
-        this.renderer.removeStyle(element, sizeProp);
-        this.renderer.removeStyle(element, 'flex-basis');
     }
 
     public parent: any;
