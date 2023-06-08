@@ -3,9 +3,17 @@
 }
 
 .box-child {
+    position: relative;
     border: 1px dashed var(--border-color-default);
     font-size: 20px;
     font-weight: bold;
+}
+
+.box-child .box-hidden {
+    position: absolute;
+    top: 0;
+    right: 3px;
+    cursor: pointer;
 }
 
 .box-parent:nth-of-type(1) .box-child:nth-of-type(1),

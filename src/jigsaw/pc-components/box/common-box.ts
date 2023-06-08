@@ -214,6 +214,9 @@ export class JigsawResizableBoxBase extends JigsawBoxBase {
 
     public set disableGrow(value: boolean) {
         this._disableGrow = value;
+        if (!this.parent) {
+            return;
+        }
         this.runAfterMicrotasks(() => {
             if (this._isFixedSize) {
                 return;

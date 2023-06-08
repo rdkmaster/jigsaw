@@ -33,6 +33,11 @@ export class BoxInflexibleDemoComponent {
     public disableParentGrow2 = false;
     public disableParentGrow3 = false;
 
+    public scale = 1;
+
+    public resetScale() {
+        this.scale = 1;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

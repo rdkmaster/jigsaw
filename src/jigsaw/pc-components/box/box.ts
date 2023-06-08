@@ -208,7 +208,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
-        this.parent.childrenBox.filter(item => item.disableGrow).forEach(item => {
+        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
             this._resetDisableGrowStyle(item.element);
         });
         this._isCurrentResizingBox = true;
@@ -220,7 +220,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * @internal
      */
     public _$handleResizeEnd() {
-        this.parent.childrenBox.filter(item => item.disableGrow).forEach(item => {
+        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
             this._setDisableGrowStyle(item.element);
         });
         JigsawBox.resizeEnd.emit();
@@ -252,6 +252,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (!this.parent) {
                     this.setResizeLineSize();
+                } else {
+                    this.setDisableGrowBoxStyle();
                 }
             });
         });
@@ -264,6 +266,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                     this.runAfterMicrotasks(() => {
                         this.setResizeLineSize();
                     });
+                } else {
+                    this.setDisableGrowBoxStyle();
                 }
                 this._cdr.markForCheck();
             });
@@ -340,6 +344,15 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
         this._$childrenBox.forEach(box => {
             box.setResizeLineSize();
+        });
+    }
+
+    public setDisableGrowBoxStyle(): void {
+        if (!this.parent._$shownChildrenBox) {
+            return;
+        }
+        this.parent._$shownChildrenBox.filter(item => item.disableGrow).forEach(item => {
+            this._setDisableGrowStyle(item.element);
         });
     }
 
