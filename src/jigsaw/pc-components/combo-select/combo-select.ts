@@ -247,7 +247,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     @Input()
     public set positionType(value: PopupPositionType) {
         this._positionType = value;
-        this._$options.posType = PopupPositionType.fixed;
+        this._$options.posType = this._positionType;
     }
 
     public get positionType(): PopupPositionType {

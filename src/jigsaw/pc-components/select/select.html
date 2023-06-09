@@ -35,7 +35,7 @@
                          [trackItemBy]="trackItemBy"
                          [(selectedItems)]="_$selectedItems"
                          (selectedItemsChange)="_$handleSelectChange($event)"
-                         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
+                         [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}"
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">

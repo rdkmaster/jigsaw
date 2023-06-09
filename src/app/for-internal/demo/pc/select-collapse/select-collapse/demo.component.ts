@@ -7,7 +7,7 @@ class ForeverBusyArrayCollection extends ArrayCollection<any> {
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["./demo.component.css", "./../../assets/demo.common.css"]
 })
 export class SelectCollapseDemoComponent {
     foreverBusyArray = new ForeverBusyArrayCollection();
@@ -62,6 +62,12 @@ export class SelectCollapseDemoComponent {
     valueChange($event) {
         console.log($event);
     }
+
+    public openTriggers = ["click","mouseenter","none"];
+    public openTrigger = ["mouseenter"];
+    
+    public closeTriggers = ["click","mouseleave","none"];
+    public closeTrigger = ["mouseleave"];
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

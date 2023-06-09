@@ -36,7 +36,7 @@
             <jigsaw-collapse #contentList [ngStyle]="{'max-height': _$listHeight}" arrowPosition="right"
                 [ngClass]="{'jigsaw-group-select-option-cntr': _$dropdownType == 'group',
                             'jigsaw-collapse-select-option-cntr': _$dropdownType =='collapse'}"
-                [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+                [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}">
                 <jigsaw-collapse-pane *ngFor="let group of _$viewData; let i = index; let last = last"
                     [isActive]="_$showSelected || _$dropdownType == 'group' ? true : !_$collapseStatus[i]"
                     (isActiveChange)="!_$showSelected && (_$collapseStatus[i] = !$event)"
