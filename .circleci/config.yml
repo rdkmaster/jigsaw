@@ -41,9 +41,6 @@ jobs:
                     node build/scripts/generate-external-demo-info.js
                     node build/scripts/generate-external-navigation-info.js
                     ./node_modules/.bin/gulp build:novice-guide
-            - run:
-                name: Generate doc
-                command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
 # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
 #            - run:
 #                name: Building jigsaw lib
@@ -57,8 +54,12 @@ jobs:
                   command: npm test
 
             - run:
-                  name: Checking PR title
-                  command: node build/scripts/check-PR-title.js
+                  name: Generate doc
+                  command: sh build/scripts/doc-generator/generate.sh ./temp/doc/
+
+#            - run:
+#                  name: Checking PR title
+#                  command: node build/scripts/check-PR-title.js
 
 #            - when:
 #                  condition:

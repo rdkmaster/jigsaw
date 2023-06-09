@@ -172,9 +172,14 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     protected childrenBox: QueryList<JigsawBox>;
 
     /**
+     * 在awade里有用到，不能删除，不能修改访问访问修饰符
      * @internal
      */
     public _$childrenBox: JigsawBox[];
+
+    public getShownChildrenBox(): JigsawBox[] {
+        return this._$childrenBox?.filter(box => !box.hidden) || [];
+    }
 
     private _removeResizeStartListener: Subscription;
     private _removeResizeEndListener: Subscription;
@@ -204,6 +209,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      */
     public _$handleResizeStart(event) {
         super._$handleResizeStart(event);
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
+            this._resetDisableGrowStyle(item.element);
+        });
         this._isCurrentResizingBox = true;
         JigsawBox.resizeStart.emit();
         this._emitResizeEvent('resizeStart');
@@ -213,6 +221,9 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
      * @internal
      */
     public _$handleResizeEnd() {
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
+            this._setDisableGrowStyle(item.element);
+        });
         JigsawBox.resizeEnd.emit();
         this._isCurrentResizingBox = false;
         this._emitResizeEvent('resize');
@@ -242,6 +253,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (!this.parent) {
                     this.setResizeLineSize();
+                } else {
+                    this.setDisableGrowBoxStyle();
                 }
             });
         });
@@ -254,6 +267,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                     this.runAfterMicrotasks(() => {
                         this.setResizeLineSize();
                     });
+                } else {
+                    this.setDisableGrowBoxStyle();
                 }
                 this._cdr.markForCheck();
             });
@@ -330,6 +345,12 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
         this._$childrenBox.forEach(box => {
             box.setResizeLineSize();
+        });
+    }
+
+    public setDisableGrowBoxStyle(): void {
+        this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
+            this._setDisableGrowStyle(item.element);
         });
     }
 

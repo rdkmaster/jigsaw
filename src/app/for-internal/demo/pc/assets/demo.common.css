@@ -5,6 +5,7 @@
 }
 
 .demo-options .demo-options-item>span:not(:first-of-type),
-.demo-options .demo-options-item>jigsaw-button:not(:first-of-type) {
+.demo-options .demo-options-item>jigsaw-button:not(:first-of-type),
+.demo-options .demo-options-item>jigsaw-switch:not(:first-of-type) {
     margin-left: 5px;
 }

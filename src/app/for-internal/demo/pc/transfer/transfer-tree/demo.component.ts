@@ -80,7 +80,7 @@ export class TransferTreeDemoComponent {
                             label: "父节点11",
                             open: true,
                             nodes: [
-                                { label: "叶子节点111", id: 1 },
+                                { label: "叶子节点111", id: 1, chkDisabled: true, checked: true },
                                 { label: "叶子节点112", id: 2 },
                                 { label: "叶子节点113", id: 3 },
                                 { label: "叶子节点114", id: 4 }

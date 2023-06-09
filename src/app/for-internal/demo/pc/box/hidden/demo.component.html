@@ -14,6 +14,15 @@
         </j-box>
         <j-box [hidden]="!showBox">Box3</j-box>
     </j-box>
+
+    <br/>
+
+    <j-box [resizable]="true" height="200">
+        <j-box>Box1</j-box>
+        <j-box grow="4">Box2</j-box>
+        <j-box [hidden]="!showBox">Box3</j-box>
+    </j-box>
+
     <jigsaw-header [level]="2">错误方式（使用display）</jigsaw-header>
     <j-box [resizable]="true" height="200">
         <j-box [resizable]="true">

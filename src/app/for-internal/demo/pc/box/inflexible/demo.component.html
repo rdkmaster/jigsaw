@@ -1,0 +1,97 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>Parent是否显示：</span>
+        <jigsaw-switch [(checked)]="showParentBox1" onLabel="Parent1" offLabel="Parent1"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showParentBox2" onLabel="Parent2" offLabel="Parent2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showParentBox3" onLabel="Parent3" offLabel="Parent3"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>Parent是否禁用grow：</span>
+        <jigsaw-switch [(checked)]="disableParentGrow1" onLabel="Parent1" offLabel="Parent1"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableParentGrow2" onLabel="Parent2" offLabel="Parent2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableParentGrow3" onLabel="Parent3" offLabel="Parent3"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>Box是否显示：</span>
+        <jigsaw-switch [(checked)]="showBox1" onLabel="Box1" offLabel="Box1"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox2" onLabel="Box2" offLabel="Box2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox3" onLabel="Box3" offLabel="Box3"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox4" onLabel="Box4" offLabel="Box4"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox5" onLabel="Box5" offLabel="Box5"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox6" onLabel="Box6" offLabel="Box6"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox7" onLabel="Box7" offLabel="Box7"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox8" onLabel="Box8" offLabel="Box8"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showBox9" onLabel="Box9" offLabel="Box9"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>Box是否禁用grow：</span>
+        <jigsaw-switch [(checked)]="disableGrow1" onLabel="Box1" offLabel="Box1"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow2" onLabel="Box2" offLabel="Box2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow3" onLabel="Box3" offLabel="Box3"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow4" onLabel="Box4" offLabel="Box4"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow5" onLabel="Box5" offLabel="Box5"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow6" onLabel="Box6" offLabel="Box6"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow7" onLabel="Box7" offLabel="Box7"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow8" onLabel="Box8" offLabel="Box8"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disableGrow9" onLabel="Box9" offLabel="Box9"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>scale</span>
+        <jigsaw-slider [(value)]="scale" min="0.1" max="2" step="0.1" width="400"></jigsaw-slider>
+        <a (click)="resetScale()">重置</a>
+    </li>
+</ul>
+
+<jigsaw-box class="box-cntr" [resizable]="true" direction="v" gap="8" width="100%" height="75vh"
+    [ngStyle]="{ 'transform': 'scale(' + scale + ')' }">
+    <jigsaw-box class="box-parent" [resizable]="true" [hidden]="!showParentBox1" [disableGrow]="disableParentGrow1"
+        width="100%" gap="8" grow="3">
+        <jigsaw-box class="box-child" [hidden]="!showBox1" [disableGrow]="disableGrow1">
+            <div>Box1</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox1 = !showBox1"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox2" [disableGrow]="disableGrow2" grow="4">
+            <div>Box2</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox2 = !showBox2"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox3" [disableGrow]="disableGrow3">
+            <div>Box3</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox3 = !showBox3"></i>
+        </jigsaw-box>
+    </jigsaw-box>
+    <jigsaw-box class="box-parent" [resizable]="true" [hidden]="!showParentBox2" [disableGrow]="disableParentGrow2"
+        gap="8">
+        <jigsaw-box class="box-child" [hidden]="!showBox4" [disableGrow]="disableGrow4">
+            <div>Box4</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox4 = !showBox4"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox5" [disableGrow]="disableGrow5" grow="2">
+            <div>Box5</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox5 = !showBox5"></i>
+        </jigsaw-box>
+    </jigsaw-box>
+    <jigsaw-box class="box-parent" [resizable]="true" [hidden]="!showParentBox3" [disableGrow]="disableParentGrow3"
+        gap="8">
+        <jigsaw-box class="box-child" [hidden]="!showBox6" [disableGrow]="disableGrow6" width="200">
+            <div>Box6(FixedSize)</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox6 = !showBox6"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox7" [disableGrow]="disableGrow7">
+            <div>Box7</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox7 = !showBox7"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox8" [disableGrow]="disableGrow8">
+            <div>Box8</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox8 = !showBox8"></i>
+        </jigsaw-box>
+        <jigsaw-box class="box-child" [hidden]="!showBox9" [disableGrow]="disableGrow9">
+            <div>Box9</div>
+            <i class="box-hidden iconfont iconfont-e14b" (click)="showBox9 = !showBox9"></i>
+        </jigsaw-box>
+    </jigsaw-box>
+</jigsaw-box>
