@@ -209,7 +209,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
             // 同步dropdown宽度
             this._autoWidth();
             if (this._editor) {
-                this._editor.select();
+                this._editor.focus();
             }
         }
         this._onTouched();
@@ -425,7 +425,6 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
         this.open = true;
     }
-
 
     /**
      * @internal

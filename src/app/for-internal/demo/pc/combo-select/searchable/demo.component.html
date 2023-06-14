@@ -1,18 +1,29 @@
 <!-- ignore the following lines, they are not important to this demo -->
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
+
 <ul class="demo-options">
-    <li>
+    <li class="demo-options-item">
         <span>disabled</span>
         <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
     </li>
-    <li>
+    <li class="demo-options-item">
         <span>searching</span>
         <jigsaw-switch [(checked)]="searching"></jigsaw-switch>
     </li>
-    <li>
+    <li class="demo-options-item">
         <span>searchKeyword</span>
         <jigsaw-input [(value)]="searchKeyword"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>打开方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="openTrigger" [data]="openTriggers">
+        </jigsaw-button-bar>
+    </li>
+    <li class="demo-options-item">
+        <span>关闭方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="closeTrigger" [data]="closeTriggers">
+        </jigsaw-button-bar>
     </li>
 </ul>
 
@@ -28,6 +39,8 @@
                         [disabled]="disabled"
                         [searching]="searching"
                         [searchKeyword]="searchKeyword"
+                        [openTrigger]="openTrigger[0]"
+                        [closeTrigger]="closeTrigger[0]"
                         placeholder="search a country..."
                         (openChange)="onLocalSearchOpen($event)"
                         (searchKeywordChange)="handleSearching($event, lpaCountries)">
@@ -54,6 +67,8 @@
                         [searching]="spaCountries.busy"
                         [disabled]="disabled"
                         [searchKeyword]="searchKeyword"
+                        [openTrigger]="openTrigger[0]"
+                        [closeTrigger]="closeTrigger[0]"
                         placeholder="输入中文也行"
                         (openChange)="onServerSearchOpen($event)"
                         (searchKeywordChange)="handleSearching($event, spaCountries)">
@@ -77,6 +92,8 @@
                         [clearable]="true"
                         [disabled]="disabled"
                         [searching]="searching"
+                        [openTrigger]="openTrigger[0]"
+                        [closeTrigger]="closeTrigger[0]"
                         labelField="enName"
                         placeholder="search a country..."
                         (openChange)="onLocalSearchOpen($event)">
