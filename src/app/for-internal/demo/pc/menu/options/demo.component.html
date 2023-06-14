@@ -25,6 +25,16 @@
         </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
+        <span>打开方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="openTrigger" [data]="openTriggers">
+        </jigsaw-button-bar>
+    </li>
+    <li class="demo-options-item">
+        <span>关闭方式：</span>
+        <jigsaw-button-bar [(selectedItems)]="closeTrigger" [data]="closeTriggers">
+        </jigsaw-button-bar>
+    </li>
+    <li class="demo-options-item">
         <span>设置options</span>
         <jigsaw-switch [(checked)]="setMenuOptions" (checkedChange)="setMenuOptionsChange()">
         </jigsaw-switch>
@@ -42,12 +52,14 @@
 <div class="target-cntr flex">
     <p class="target-button flex normal" jigsaw-cascading-menu [jigsawCascadingMenuData]="data"
         [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width + unit" [jigsawCascadingMenuTheme]='theme[0]'
-        [jigsawCascadingMenuOptions]="options" (jigsawCascadingMenuSelect)="menuSelect($event)">
+        [jigsawCascadingMenuOptions]="options" [jigsawCascadingMenuOpenTrigger]="openTrigger[0]"
+        [jigsawCascadingMenuCloseTrigger]="closeTrigger[0]" (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
     </p>
     <p class="target-button flex long" jigsaw-cascading-menu [jigsawCascadingMenuData]="data"
         [jigsawCascadingMenuHeight]="height" [jigsawCascadingMenuWidth]="width + unit" [jigsawCascadingMenuTheme]='theme[0]'
-        [jigsawCascadingMenuOptions]="options" (jigsawCascadingMenuSelect)="menuSelect($event)">
+        [jigsawCascadingMenuOptions]="options" [jigsawCascadingMenuOpenTrigger]="openTrigger[0]"
+        [jigsawCascadingMenuCloseTrigger]="closeTrigger[0]"  (jigsawCascadingMenuSelect)="menuSelect($event)">
         菜单弹出
     </p>
 </div>

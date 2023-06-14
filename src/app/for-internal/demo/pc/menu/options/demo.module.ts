@@ -7,7 +7,7 @@ import {MenuOptionsDemo} from "./demo.component";
 @NgModule({
     imports: [
         CommonModule, JigsawDemoDescriptionModule, JigsawMenuModule, JigsawButtonBarModule,
-        JigsawNumericInputModule, JigsawHeaderModule, JigsawSwitchModule, JigsawIconModule
+        JigsawNumericInputModule, JigsawHeaderModule, JigsawSwitchModule, JigsawIconModule, JigsawButtonBarModule
     ],
     declarations: [MenuOptionsDemo],
     exports: [MenuOptionsDemo]
