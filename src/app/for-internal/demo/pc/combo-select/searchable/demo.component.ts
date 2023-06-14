@@ -7,7 +7,7 @@ import {
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css'],
+    styleUrls: ['./demo.component.css', "./../../assets/demo.common.css"],
 })
 export class ComboSelectAutoCompleteDemo {
     public disabled: boolean;
@@ -44,7 +44,8 @@ export class ComboSelectAutoCompleteDemo {
         this.spaCountries.pagingInfo.pageSize = 1000;
     }
 
-    onLocalSearchOpen(open) {
+    public onLocalSearchOpen(open) {
+        console.log("openChange=>", open);
         if (!open) {
             return;
         }
@@ -52,7 +53,8 @@ export class ComboSelectAutoCompleteDemo {
         this.lpaCountries.filter('', ['enName', 'zhName']);
     }
 
-    onServerSearchOpen(open: boolean) {
+    public onServerSearchOpen(open: boolean) {
+        console.log("openChange=>", open);
         if (!open || this.spaCountries.busy) {
             return;
         }
@@ -79,10 +81,17 @@ export class ComboSelectAutoCompleteDemo {
         }
     }
 
-    handleSearching(filterKey, data) {
+    public handleSearching(filterKey, data) {
+        console.log('handleSearching=>', filterKey)
         filterKey = filterKey ? filterKey.trim() : '';
         data.filter(filterKey, ['enName', 'zhName']);
     }
+
+    public openTriggers = ["click", "mouseenter", "none"];
+    public openTrigger = ["mouseenter"];
+
+    public closeTriggers = ["click", "mouseleave", "none"];
+    public closeTrigger = ["mouseleave"];
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

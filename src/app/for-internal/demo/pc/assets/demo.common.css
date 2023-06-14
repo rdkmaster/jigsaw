@@ -4,7 +4,10 @@
     margin-bottom: 5px;
 }
 
-.demo-options .demo-options-item>span:not(:first-of-type),
+.demo-options .demo-options-item>span:first-of-type {
+    margin-right: 5px;
+}
+
 .demo-options .demo-options-item>jigsaw-button:not(:first-of-type),
 .demo-options .demo-options-item>jigsaw-switch:not(:first-of-type) {
     margin-left: 5px;

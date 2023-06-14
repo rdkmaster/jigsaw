@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {CommonModule} from "@angular/common";
-import {JigsawTileSelectModule, JigsawComboSelectModule, JigsawInputModule, JigsawSwitchModule} from "jigsaw/public_api";
+import {JigsawTileSelectModule, JigsawComboSelectModule, JigsawInputModule, JigsawSwitchModule, JigsawButtonBarModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
 import {ComboSelectAutoCompleteDemo} from "./demo.component";
 
@@ -11,7 +11,7 @@ import {JigsawHeaderModule} from "jigsaw/public_api";
     exports: [ComboSelectAutoCompleteDemo],
     imports: [
         JigsawComboSelectModule, JigsawTileSelectModule, CommonModule, JigsawDemoDescriptionModule, JigsawInputModule
-    , JigsawHeaderModule, JigsawSwitchModule],
+    , JigsawHeaderModule, JigsawSwitchModule, JigsawButtonBarModule],
 })
 export class ComboSelectAutoCompleteDemoModule {
 
