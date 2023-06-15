@@ -12,17 +12,17 @@
     </li>
     <li class="demo-options-item">
         <span>数据：</span>
-        <jigsaw-button (click)="_$changeData()">修改</jigsaw-button>
-        <jigsaw-button (click)="_$resetData()">重置</jigsaw-button>
-        <jigsaw-button (click)="_$clearValue()">清空已选</jigsaw-button>
+        <jigsaw-button (click)="_$changeData()" [disabled]="_$getDisabledStatus()">修改</jigsaw-button>
+        <jigsaw-button (click)="_$resetData()" [disabled]="_$getDisabledStatus()">重置</jigsaw-button>
+        <jigsaw-button (click)="_$clearValue()" [disabled]="_$getDisabledStatus()">清空已选</jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>搜索：</span>
-        <jigsaw-switch [(checked)]="searchable"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="searchable" [disabled]="_$getDisabledStatus()"></jigsaw-switch>
         <span>禁用：</span>
-        <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="disabled" [disabled]="_$getDisabledStatus()"></jigsaw-switch>
         <span>多选：</span>
-        <jigsaw-switch [(checked)]="multipleSelect" (checkedChange)="_$clearValue()"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="multipleSelect" [disabled]="_$getDisabledStatus()" (checkedChange)="_$clearValue()"></jigsaw-switch>
     </li>
     <li class="demo-options-item">
         <span>选项条数：</span>
