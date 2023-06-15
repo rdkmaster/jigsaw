@@ -290,4 +290,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
         });
         return info;
     }
+
+    public update(){
+        this._changeDetectorRef.detectChanges();
+    }
 }
