@@ -3,11 +3,21 @@ import { JigsawRangeDateTimePicker } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class RangeDatePickerTimeOptionsDemoComponent {
     public beginDate;
     public endDate;
+
+    public grList = ['second', 'minute', 'hour', 'date', 'week', 'month'];
+    public gr = ['date'];
+
+    public limitStartList = ['now', 'now-5d', 'now-10d'];
+    public limitEndList = ['now', 'now+5d', 'now+10d'];
+    public limitStart = 'now-5d';
+    public limitEnd = 'now+5d';
+
+    public limitRange:number;
 
     @ViewChild('rangeDateTimePicker')
     private _rangeDateTimePicker: JigsawRangeDateTimePicker;
@@ -24,6 +34,10 @@ export class RangeDatePickerTimeOptionsDemoComponent {
 
     public change($event) {
         console.log('change=>', $event);
+    }
+
+    public grChange($event) {
+        console.log('grChange=>', $event);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

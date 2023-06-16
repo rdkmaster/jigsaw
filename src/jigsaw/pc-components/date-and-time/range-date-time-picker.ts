@@ -188,15 +188,50 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     /**
      * @internal
      */
+    public _$beginDateLimitStart: WeekTime;
+
+    /**
+     * @internal
+     */
+    public _$beginDateLimitEnd: WeekTime;
+
+    private _getBeginDateLimit(){
+        // if (this._$beginDateLimitEnd == this._$limitStart){
+        //     this._$beginDateLimitEnd != this.
+        // }
+        this._$beginDateLimitStart = this._$limitStart;
+        this._$endDateLimitStart = this._$limitStart;
+        this._$beginDateLimitEnd = this._$limitEnd;
+        this._$endDateLimitEnd = this._$limitEnd;
+    }
+
+    /**
+     * @internal
+     */
+    public _$endDateLimitStart: WeekTime;
+
+    /**
+     * @internal
+     */
+    public _$endDateLimitEnd: WeekTime;
+
+    private _getEndDateLimit(){
+        this._$beginDateLimitStart = this._$limitStart;
+        this._$endDateLimitStart = this._$limitStart;
+        this._$beginDateLimitEnd = this._$limitEnd;
+        this._$endDateLimitEnd = this._$limitEnd;
+    }
+
+    /**
+     * @internal
+     */
     public _$limitStart: WeekTime;
 
     /**
      * 参考`JigsawDateTimePicker.limitStart`
-     *
-     * @NoMarkForCheckRequired
-     *
      * $demo = range-date-time-picker/limit
      */
+    @RequireMarkForCheck()
     @Input()
     public get limitStart(): WeekTime {
         return this._$limitStart;
@@ -205,7 +240,11 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public set limitStart(value: WeekTime) {
         if (value) {
             this._$limitStart = value;
+        } else {
+            this._$limitStart = null;
         }
+        this._getBeginDateLimit();
+        console.log(this.initialized,value);
     }
 
     /**
@@ -228,7 +267,32 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public set limitEnd(value: WeekTime) {
         if (value) {
             this._$limitEnd = value;
-            this._$endTimeLimitEnd = this._calculateLimitEnd();
+            // this._$endTimeLimitEnd = this._calculateLimitEnd();
+        } else {
+            this._$limitEnd = null;
+        }
+        this._getEndDateLimit();
+    }
+
+    /**
+     * @internal
+     */
+        public _$limitRange: WeekTime;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get limitRange(): WeekTime {
+        return this._$limitRange;
+    }
+
+    public set limitRange(value: WeekTime) {
+        console.log(value);
+        if (value) {
+            this._$limitRange = value;
+        } else {
+            this._$limitRange = null;
         }
     }
 

@@ -15,7 +15,7 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {debounceTime, retry} from 'rxjs/operators';
+import {debounceTime} from 'rxjs/operators';
 import {ComboSelectValue, JigsawComboSelectModule, JigsawComboSelect} from "../combo-select/index";
 import {TimeGr, TimeService, TimeWeekStart} from "../../common/service/time.service";
 import {ArrayCollection} from "../../common/core/data/array-collection";
@@ -135,6 +135,12 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
      */
     @Input()
     public limitEnd: Time;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public limitRange: number;
 
     /**
      * @NoMarkForCheckRequired

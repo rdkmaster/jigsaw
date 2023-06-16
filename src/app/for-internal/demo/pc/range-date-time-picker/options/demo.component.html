@@ -8,13 +8,38 @@
 <jigsaw-header [level]="2">相关配置</jigsaw-header>
 <ul class="demo-options">
     <li class="demo-options-item">
+        <span>gr：</span>
+        <jigsaw-button-bar [data]="grList" [(selectedItems)]="gr[0]">
+        </jigsaw-button-bar>
+    </li>
+    <li class="demo-options-item">
         <span>动作：</span>
         <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
         <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>limitStart：</span>
+        <jigsaw-date-time-select [(date)]="limitStart" [gr]="gr[0]"></jigsaw-date-time-select>
+        <jigsaw-button colorType="none" (click)="limitStart = 'now'">now</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitStart = 'now-5d'">now-5d</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitStart = 'now-10d'">now-10d</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitStart = ''">清空</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>limitEnd：</span>
+        <jigsaw-date-time-select [(date)]="limitEnd" [gr]="gr[0]"></jigsaw-date-time-select>
+        <jigsaw-button colorType="none" (click)="limitEnd = 'now'">now</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitEnd = 'now+5d'">now+5d</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitEnd = 'now+10d'">now+10d</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitEnd = ''">清空</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>limitRange：</span>
+        <jigsaw-numeric-input [(value)]="limitRange"></jigsaw-numeric-input>
+    </li>
 </ul>
-<jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" gr="second"
-    (change)="change($event)">
+<jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
+    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange" (change)="change($event)" (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>
     <span>起始时间是：{{beginDate}}</span>
