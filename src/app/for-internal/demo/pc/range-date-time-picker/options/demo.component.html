@@ -52,6 +52,10 @@
     <li class="demo-options-item">
         <span>limitRange：</span>
         <jigsaw-numeric-input [(value)]="limitRange"></jigsaw-numeric-input>
+        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange * 24">x 24</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange * 60">x 60</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange / 24">÷ 60</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange / 60">÷ 60</jigsaw-button>
     </li>
 </ul>
 <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
