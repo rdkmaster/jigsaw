@@ -128,9 +128,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public _$dateChange(key: string, value: WeekTime) {
         if (key == 'beginDate') {
             this._beginDate = value;
-            this._$endTimeLimitEnd = this._calculateLimitEnd();
+            this._updateEndDateLimit();
         } else if (key == 'endDate') {
             this._endDate = value;
+            this._updateBeginDateLimit();
         }
         this._updateValue.emit();
         this._cdr.markForCheck();
@@ -149,12 +150,16 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set beginDate(value: WeekTime) {
-        if (!value || value == this._beginDate) return;
+        if (!value || value == this._beginDate) {
+            return;
+        }
         if (this.initialized) {
             let date = TimeService.getDateByGr(value, this._$gr);
-            if (date == this._beginDate) return;
+            if (date == this._beginDate) {
+                return;
+            } 
             this._beginDate = date;
-            this._$endTimeLimitEnd = this._calculateLimitEnd();
+            this._updateEndDateLimit();
             this._updateValue.emit();
         } else {
             this._beginDate = value;
@@ -179,6 +184,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             let date = TimeService.getDateByGr(value, this._$gr);
             if (date == this._endDate) return;
             this._endDate = date;
+            this._updateBeginDateLimit();
             this._updateValue.emit();
         } else {
             this._endDate = value;
@@ -195,16 +201,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      */
     public _$beginDateLimitEnd: WeekTime;
 
-    private _getBeginDateLimit(){
-        // if (this._$beginDateLimitEnd == this._$limitStart){
-        //     this._$beginDateLimitEnd != this.
-        // }
-        this._$beginDateLimitStart = this._$limitStart;
-        this._$endDateLimitStart = this._$limitStart;
-        this._$beginDateLimitEnd = this._$limitEnd;
-        this._$endDateLimitEnd = this._$limitEnd;
-    }
-
     /**
      * @internal
      */
@@ -215,13 +211,6 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      */
     public _$endDateLimitEnd: WeekTime;
 
-    private _getEndDateLimit(){
-        this._$beginDateLimitStart = this._$limitStart;
-        this._$endDateLimitStart = this._$limitStart;
-        this._$beginDateLimitEnd = this._$limitEnd;
-        this._$endDateLimitEnd = this._$limitEnd;
-    }
-
     /**
      * @internal
      */
@@ -229,9 +218,11 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     /**
      * 参考`JigsawDateTimePicker.limitStart`
+     *
+     * @NoMarkForCheckRequired
+     *
      * $demo = range-date-time-picker/limit
      */
-    @RequireMarkForCheck()
     @Input()
     public get limitStart(): WeekTime {
         return this._$limitStart;
@@ -243,8 +234,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         } else {
             this._$limitStart = null;
         }
-        this._getBeginDateLimit();
-        console.log(this.initialized,value);
+        if (this.initialized) {
+            this. _updateLimits();
+        }
     }
 
     /**
@@ -267,32 +259,108 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     public set limitEnd(value: WeekTime) {
         if (value) {
             this._$limitEnd = value;
-            // this._$endTimeLimitEnd = this._calculateLimitEnd();
         } else {
             this._$limitEnd = null;
         }
-        this._getEndDateLimit();
+        if (this.initialized){
+            this. _updateLimits();
+        }
     }
 
     /**
      * @internal
      */
-        public _$limitRange: WeekTime;
+    private _limitRange: number;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get limitRange(): WeekTime {
-        return this._$limitRange;
+    public get limitRange(): number {
+        return this._limitRange;
     }
 
-    public set limitRange(value: WeekTime) {
-        console.log(value);
-        if (value) {
-            this._$limitRange = value;
+    public set limitRange(value: number) {
+        if (value && value > 0) {
+            this._limitRange = value;
         } else {
-            this._$limitRange = null;
+            this._limitRange = null;
+        }
+        if (this.initialized) {
+            this. _updateLimits();
+        }
+    }
+
+    private _updateLimits() {
+        this._updateBeginDateLimit();
+        this._updateEndDateLimit();
+    }
+
+    private _updateBeginDateLimit() {
+        let startTime: WeekTime = null;
+        let endTime: WeekTime = null;
+
+        if (this._$limitStart) {
+            startTime = TimeService.getDate(TimeService.convertValue(this._$limitStart, this._$gr), this._$gr);
+        }
+
+        if (this._$limitEnd) {
+            endTime = TimeService.getDate(TimeService.convertValue(this._$limitEnd, this._$gr), this._$gr);
+        }
+
+        if (this.endDate) {
+            if (this._limitRange && startTime) {
+                const calcStartTime = TimeService.addDate(TimeService.convertValue(this.endDate, this._$gr), 0 - this._limitRange, TimeService.getUnit(this._$gr));
+                if (startTime < calcStartTime) {
+                    startTime = calcStartTime;
+                }
+            }
+
+            const calcEndTime = TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr);
+            if (!endTime || endTime > calcEndTime) {
+                endTime = calcEndTime;
+            }
+        }
+
+        if (this._$beginDateLimitEnd != startTime) {
+            this._$beginDateLimitStart = startTime;
+        }
+        if (this._$beginDateLimitEnd != endTime) {
+            this._$beginDateLimitEnd = endTime;
+        }
+    }
+
+    private _updateEndDateLimit() {
+        let startTime: WeekTime = null;
+        let endTime: WeekTime = null;
+
+        if (this._$limitStart) {
+            startTime = TimeService.getDate(TimeService.convertValue(this._$limitStart, this._$gr), this._$gr);
+        }
+
+        if (this._$limitEnd) {
+            endTime = TimeService.getDate(TimeService.convertValue(this._$limitEnd, this._$gr), this._$gr);
+        }
+
+        if (this.beginDate) {
+            let calcStartTime = TimeService.getDate(TimeService.convertValue(this.beginDate, this._$gr), this._$gr)
+            if (!startTime || startTime < calcStartTime) {
+                startTime = calcStartTime;
+            }
+
+            if (this._limitRange && endTime) {
+                const calcEndTime = TimeService.addDate(TimeService.convertValue(this.beginDate, this._$gr), this._limitRange, TimeService.getUnit(this._$gr));
+                if (endTime > calcEndTime) {
+                    endTime = calcEndTime;
+                }
+            }
+        }
+
+        if (this._$endDateLimitStart != startTime) {
+            this._$endDateLimitStart = startTime;
+        }
+        if (this._$endDateLimitEnd != endTime) {
+            this._$endDateLimitEnd = endTime;
         }
     }
 
@@ -423,7 +491,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             }
         }
         this._$shortcuts = this._getShortcuts();
-        this._$endTimeLimitEnd = this._calculateLimitEnd();
+        this._updateLimits();
+        // this._$endTimeLimitEnd = this._calculateLimitEnd();
 
         if (this._endDate < this._beginDate) {
             this._endDate = this._beginDate;

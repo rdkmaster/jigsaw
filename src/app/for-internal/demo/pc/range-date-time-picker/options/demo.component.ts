@@ -9,11 +9,14 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     public beginDate;
     public endDate;
 
-    public grList = ['second', 'minute', 'hour', 'date', 'week', 'month'];
+    public beginDatePicker;
+    public endDatePicker;
+    public limitStartPicker;
+    public limitEndPicker;
+
+    public grList = ['second', 'minute', 'hour', 'date', 'week', 'month', 'time'];
     public gr = ['date'];
 
-    public limitStartList = ['now', 'now-5d', 'now-10d'];
-    public limitEndList = ['now', 'now+5d', 'now+10d'];
     public limitStart = 'now-5d';
     public limitEnd = 'now+5d';
 

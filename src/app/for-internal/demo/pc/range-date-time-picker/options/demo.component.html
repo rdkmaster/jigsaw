@@ -8,8 +8,20 @@
 <jigsaw-header [level]="2">相关配置</jigsaw-header>
 <ul class="demo-options">
     <li class="demo-options-item">
+        <span>beginDate:</span>
+        <jigsaw-date-time-select [(date)]="beginDatePicker" [gr]="gr[0]" [clearable]="true"
+            (dateChange)="beginDate = beginDatePicker"></jigsaw-date-time-select>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
+    </li>
+    <li class="demo-options-item">
+        <span>endDate:</span>
+        <jigsaw-date-time-select [(date)]="endDatePicker" [gr]="gr[0]" [clearable]="true"
+            (dateChange)="beginDate = endDatePicker"></jigsaw-date-time-select>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
+    </li>
+    <li class="demo-options-item">
         <span>gr：</span>
-        <jigsaw-button-bar [data]="grList" [(selectedItems)]="gr[0]">
+        <jigsaw-button-bar [data]="grList" [(selectedItems)]="gr">
         </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
@@ -19,19 +31,23 @@
     </li>
     <li class="demo-options-item">
         <span>limitStart：</span>
-        <jigsaw-date-time-select [(date)]="limitStart" [gr]="gr[0]"></jigsaw-date-time-select>
+        <jigsaw-date-time-select [(date)]="limitStartPicker" [clearable]="true"
+            (dateChange)="limitStart = limitStartPicker"></jigsaw-date-time-select>
         <jigsaw-button colorType="none" (click)="limitStart = 'now'">now</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitStart = 'now-5d'">now-5d</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitStart = 'now-10d'">now-10d</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitStart = ''">清空</jigsaw-button>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
     </li>
     <li class="demo-options-item">
         <span>limitEnd：</span>
-        <jigsaw-date-time-select [(date)]="limitEnd" [gr]="gr[0]"></jigsaw-date-time-select>
+        <jigsaw-date-time-select [(date)]="limitEndPicker" [clearable]="true"
+            (dateChange)="limitEnd = limitEndPicker"></jigsaw-date-time-select>
         <jigsaw-button colorType="none" (click)="limitEnd = 'now'">now</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitEnd = 'now+5d'">now+5d</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitEnd = 'now+10d'">now+10d</jigsaw-button>
         <jigsaw-button colorType="none" (click)="limitEnd = ''">清空</jigsaw-button>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
     </li>
     <li class="demo-options-item">
         <span>limitRange：</span>
@@ -39,7 +55,8 @@
     </li>
 </ul>
 <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
-    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange" (change)="change($event)" (grChange)="grChange($event)">
+    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange" (change)="change($event)"
+    (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>
     <span>起始时间是：{{beginDate}}</span>

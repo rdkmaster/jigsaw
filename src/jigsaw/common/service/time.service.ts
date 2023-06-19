@@ -397,6 +397,49 @@ export class TimeService {
         return result;
     }
 
+    /**
+     * 根据粒度获取单位
+     *
+     * @param gr
+     *
+     */
+    public static getUnit(gr: TimeGr): TimeUnit {
+        let unit: TimeUnit;
+        switch (gr) {
+            case TimeGr.second:
+                unit = TimeUnit.s;
+                break;
+            case TimeGr.minute:
+                unit = TimeUnit.m;
+                break;
+            case TimeGr.hour:
+                unit = TimeUnit.h;
+                break;
+            case TimeGr.date:
+                unit = TimeUnit.d;
+                break;
+            case TimeGr.week:
+                unit = TimeUnit.w;
+                break;
+            case TimeGr.month:
+                unit = TimeUnit.M;
+                break;
+            case TimeGr.time_hour:
+                unit = TimeUnit.h;
+                break;
+            case TimeGr.time_hour_minute:
+                unit = TimeUnit.m;
+                break;
+            case TimeGr.time_minute_second:
+                unit = TimeUnit.s;
+                break;
+            default:
+                unit = TimeUnit.d;
+                break;
+        }
+        return unit;
+    }
+
     // @ignoring-i18n-check-start
     public static deFineZhLocale() {
         moment.defineLocale('zh', {
