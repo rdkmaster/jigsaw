@@ -7,7 +7,7 @@ import { RangeDatePickerTimeOptionsDemoComponent } from "./demo.component";
     declarations: [RangeDatePickerTimeOptionsDemoComponent],
     exports: [RangeDatePickerTimeOptionsDemoComponent],
     imports: [JigsawRangeDateTimePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule, JigsawHeaderModule,
-        JigsawButtonBarModule, JigsawDateTimeSelectModule, JigsawNumericInputModule, JigsawIconModule]
+        JigsawButtonBarModule, JigsawDateTimeSelectModule, JigsawNumericInputModule, JigsawIconModule, JigsawSwitchModule]
 })
 export class RangeDateTimePickerOptionsDemoModule {
 

@@ -25,9 +25,8 @@
         </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
-        <span>动作：</span>
-        <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
-        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
+        <span>grItems：</span>
+        <jigsaw-switch [(checked)]="showGrItems"></jigsaw-switch>
     </li>
     <li class="demo-options-item">
         <span>limitStart：</span>
@@ -51,16 +50,26 @@
     </li>
     <li class="demo-options-item">
         <span>limitRange：</span>
-        <jigsaw-numeric-input [(value)]="limitRange"></jigsaw-numeric-input>
-        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange * 24">x 24</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange * 60">x 60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange / 24">÷ 60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRange" colorType="none" (click)="limitRange = limitRange / 60">÷ 60</jigsaw-button>
+        <jigsaw-numeric-input [(value)]="limitRangeInput" [suffix]="units" min="0" suffixWidth="60"
+            (suffixChange)="unitChange($event)" (valueChange)="limitRangeInputChange($event)"></jigsaw-numeric-input>
+        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput * 24">x
+            24</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput * 60">x
+            60</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput / 24">÷
+            60</jigsaw-button>
+        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput / 60">÷
+            60</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>动作：</span>
+        <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
+        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
 </ul>
 <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
-    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange" (change)="change($event)"
-    (grChange)="grChange($event)">
+    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange"
+    [grItems]="showGrItems ? grItems : undefined" (change)="change($event)" (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>
     <span>起始时间是：{{beginDate}}</span>

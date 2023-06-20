@@ -1,5 +1,5 @@
 import { Component, ViewChild } from "@angular/core";
-import { JigsawRangeDateTimePicker } from "jigsaw/public_api";
+import { GrItem, JigsawRangeDateTimePicker, TimeGr } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -14,13 +14,23 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     public limitStartPicker;
     public limitEndPicker;
 
-    public grList = ['second', 'minute', 'hour', 'date', 'week', 'month', 'time'];
+    public grList = ['second', 'minute', 'hour', 'date', 'week', 'month'];
+    public units = ['无', 's', 'm', 'h', 'd', 'w', 'M', 'y'];
+    public unit = '';
+    public limitRangeInput: number;
     public gr = ['date'];
+    public showGrItems = false;
+
+    public grItems: GrItem[] = [
+        { label: "Day", value: TimeGr.date },
+        { label: "Week", value: TimeGr.week },
+        { label: "Month", value: TimeGr.month }
+    ];
 
     public limitStart = 'now-5d';
     public limitEnd = 'now+5d';
 
-    public limitRange:number;
+    public limitRange: number | string;
 
     @ViewChild('rangeDateTimePicker')
     private _rangeDateTimePicker: JigsawRangeDateTimePicker;
@@ -41,6 +51,15 @@ export class RangeDatePickerTimeOptionsDemoComponent {
 
     public grChange($event) {
         console.log('grChange=>', $event);
+    }
+
+    public limitRangeInputChange($event) {
+        this.limitRange = this.limitRangeInput + this.unit;
+    }
+
+    public unitChange($event) {
+        this.unit = $event == '无' ? '' : $event;
+        this.limitRange = this.limitRangeInput + this.unit;
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
