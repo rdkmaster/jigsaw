@@ -641,7 +641,6 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.date) {
             this.writeValue(this.date);
         } else {
-            console.log(111);
             this._createCalendar();
         }
     }
