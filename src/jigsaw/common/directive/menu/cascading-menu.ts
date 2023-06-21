@@ -67,10 +67,7 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
                 this._removeOnRefreshListener = null;
             }
             this._removeOnRefreshListener = value.onRefresh(() => {
-                if (this._popupService.popups.length == 0) {
-                    return;
-                }
-                if (!(this._popupService.popups[0].instance instanceof JigsawMenu)) {
+                if (!(this._popupService.popups[0]?.instance instanceof JigsawMenu)) {
                     return;
                 }
                 this._popupService.popups[0].instance.update();
