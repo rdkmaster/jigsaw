@@ -74,6 +74,6 @@
     [grItems]="showGrItems ? grItems : undefined" (change)="change($event)" (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>
-    <span>起始时间是：{{ gr[0] != 'week' ? beginDate : (beginDate.week + "周") }}</span>
-    <span>结束时间是：{{ gr[0] != 'week' ? endDate : (endDate.week + "周") }}</span>
+    <span>起始时间是：{{ gr[0] != 'week' ? beginDate : (beginDate?.week + "周") }}</span>
+    <span>结束时间是：{{ gr[0] != 'week' ? endDate : (endDate?.week + "周") }}</span>
 </div>
