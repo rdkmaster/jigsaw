@@ -4,7 +4,7 @@ import {SimpleNode, SimpleTreeData} from "../../core/data/tree-data";
 import {PopupInfo, PopupOptions, PopupService} from "../../service/popup.service";
 import {DropDownTrigger, FloatPosition, JigsawFloatBase} from "../float/float";
 import {cascadingMenuFlag, closeAllContextMenu, JigsawMenu, MenuTheme} from "../../../pc-components/menu/menu";
-import {CommonUtils} from "../../core/utils/common-utils";
+import {CallbackRemoval, CommonUtils} from "../../core/utils/common-utils";
 import {JigsawThemeService} from "../../core/theming/theme";
 
 @Directive({
@@ -61,6 +61,14 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     }
 
     set jigsawCascadingMenuData(value: SimpleTreeData) {
+        if (value instanceof SimpleTreeData) {
+            this._removeOnRefreshListener?.();
+            this._removeOnRefreshListener = value.onRefresh(() => {
+                if (this._popupService.popups[0]?.instance instanceof JigsawMenu) {
+                    this._popupService.popups[0].instance.update();
+                }
+            })
+        }
         if (this._jigsawCascadingMenuData != value) {
             this._jigsawCascadingMenuData = value;
             this.jigsawFloatInitData.data = value;
@@ -179,6 +187,8 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
     @Output()
     public jigsawCascadingMenuClose = new EventEmitter<void>();
 
+    private _removeOnRefreshListener: CallbackRemoval;
+
     ngOnInit() {
         super.ngOnInit();
         const data = this.jigsawCascadingMenuData;
@@ -226,6 +236,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
         if (this._themeChangeSubscription) {
             this._themeChangeSubscription.unsubscribe();
             this._themeChangeSubscription = null;
+        }
+        if (this._removeOnRefreshListener) {
+            this._removeOnRefreshListener();
+            this._removeOnRefreshListener = null;
         }
     }
 

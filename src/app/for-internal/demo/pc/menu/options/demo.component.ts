@@ -108,6 +108,12 @@ export class MenuOptionsDemo {
     public unitChange($event){
         this.unit = $event;
     }
+
+    public openTriggers = ["click","mouseenter","none"];
+    public openTrigger = ["mouseenter"];
+    
+    public closeTriggers = ["click","mouseleave","none"];
+    public closeTrigger = ["mouseleave"];
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
