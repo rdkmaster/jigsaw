@@ -62,15 +62,11 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
 
     set jigsawCascadingMenuData(value: SimpleTreeData) {
         if (value instanceof SimpleTreeData) {
-            if (this._removeOnRefreshListener) {
-                this._removeOnRefreshListener();
-                this._removeOnRefreshListener = null;
-            }
+            this._removeOnRefreshListener?.();
             this._removeOnRefreshListener = value.onRefresh(() => {
-                if (!(this._popupService.popups[0]?.instance instanceof JigsawMenu)) {
-                    return;
+                if (this._popupService.popups[0]?.instance instanceof JigsawMenu) {
+                    this._popupService.popups[0].instance.update();
                 }
-                this._popupService.popups[0].instance.update();
             })
         }
         if (this._jigsawCascadingMenuData != value) {
