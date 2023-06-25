@@ -49,18 +49,18 @@
         <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
     </li>
     <li class="demo-options-item">
-        <span>limitRange：</span>
-        <jigsaw-numeric-input [(value)]="limitRangeInput" [suffix]="units" min="0" suffixWidth="60"
-            (suffixChange)="unitChange($event)" (valueChange)="limitRangeInputChange($event)"></jigsaw-numeric-input>
-        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput * 24">x
+        <span>limitSpan：</span>
+        <jigsaw-numeric-input [(value)]="limitSpanInput" [suffix]="units" min="0" suffixWidth="60"
+            (suffixChange)="unitChange($event)" (valueChange)="limitSpanInputChange($event)"></jigsaw-numeric-input>
+        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput * 24">x
             24</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput * 60">x
+        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput * 60">x
             60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput / 24">÷
+        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput / 24">÷
             60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput / 60">÷
+        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput / 60">÷
             60</jigsaw-button>
-        <jigsaw-button colorType="none" (click)="limitRangeInput = 0">清空</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="clearLimitSpanInput()">清空</jigsaw-button>
         <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
     </li>
     <li class="demo-options-item">
@@ -70,10 +70,10 @@
     </li>
 </ul>
 <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="beginDate" [(endDate)]="endDate" [gr]="gr[0]"
-    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitRange]="limitRange"
+    [limitStart]="limitStart" [limitEnd]="limitEnd" [limitSpan]="limitSpan"
     [grItems]="showGrItems ? grItems : undefined" (change)="change($event)" (grChange)="grChange($event)">
 </jigsaw-range-date-time-picker>
 <div>
-    <span>起始时间是：{{beginDate}}</span>
-    <span>结束时间是：{{endDate}}</span>
+    <span>起始时间是：{{ gr[0] != 'week' ? beginDate : (beginDate.week + "周") }}</span>
+    <span>结束时间是：{{ gr[0] != 'week' ? endDate : (endDate.week + "周") }}</span>
 </div>

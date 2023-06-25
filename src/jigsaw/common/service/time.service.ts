@@ -462,7 +462,7 @@ export class TimeService {
         }
 
         if (!units[unit] || !units[newUnit]) {
-            return null; // 如果输入的单位无效，则返回 null 或其他你认为合适的值
+            return NaN; // 如果输入的单位无效，则返回 NaN 或其他你认为合适的值
         }
 
         const seconds = number * units[unit];

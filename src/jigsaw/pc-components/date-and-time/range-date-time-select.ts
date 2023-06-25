@@ -140,7 +140,7 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public limitRange: number | string;
+    public limitSpan: number | string;
 
     /**
      * @NoMarkForCheckRequired
