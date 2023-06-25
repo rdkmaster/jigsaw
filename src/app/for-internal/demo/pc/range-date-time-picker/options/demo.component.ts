@@ -27,8 +27,8 @@ export class RangeDatePickerTimeOptionsDemoComponent {
         { label: "Month", value: TimeGr.month }
     ];
 
-    public limitStart = 'now-5d';
-    public limitEnd = 'now+5d';
+    public limitStart;
+    public limitEnd;
 
     public limitRange: number | string;
 

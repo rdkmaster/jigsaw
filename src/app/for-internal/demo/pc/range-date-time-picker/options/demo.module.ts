@@ -1,5 +1,5 @@
 import { NgModule } from "@angular/core";
-import { JigsawButtonBarModule, JigsawButtonModule, JigsawDateTimeSelectModule, JigsawHeaderModule, JigsawIconModule, JigsawNumericInputModule, JigsawRadioModule, JigsawRangeDateTimePickerModule, JigsawSwitchModule } from "jigsaw/public_api";
+import { JigsawButtonBarModule, JigsawButtonModule, JigsawDateTimeSelectModule, JigsawHeaderModule, JigsawIconModule, JigsawNumericInputModule, JigsawRangeDateTimePickerModule, JigsawRangeDateTimeSelectModule, JigsawSwitchModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/for-internal/description/demo-description";
 import { RangeDatePickerTimeOptionsDemoComponent } from "./demo.component";
 

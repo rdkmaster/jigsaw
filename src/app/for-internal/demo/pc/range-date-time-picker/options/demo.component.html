@@ -60,6 +60,8 @@
             60</jigsaw-button>
         <jigsaw-button [disabled]="!limitRangeInput" colorType="none" (click)="limitRangeInput = limitRangeInput / 60">÷
             60</jigsaw-button>
+        <jigsaw-button colorType="none" (click)="limitRangeInput = 0">清空</jigsaw-button>
+        <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>
     </li>
     <li class="demo-options-item">
         <span>动作：</span>
