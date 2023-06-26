@@ -309,20 +309,16 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         }
 
         if (this.endDate) {
-            let caclEndWeekNum = -1;
-
             if (CommonUtils.isDefined(this.limitSpan)) {
                 const [number, unit] = this._getLimitSpanAndUnit();
                 const calcStartTime = number == 0 ? TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr)
                     : TimeService.addDate(TimeService.convertValue(this.endDate, this._$gr), 0 - number, unit);
                 startTime = startTime ? (startTime < calcStartTime ? calcStartTime : startTime) : calcStartTime;
-
-                caclEndWeekNum = this._$gr == TimeGr.week && number == 0 ? 6 : -1;
             }
 
             let calcEndTime = TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr);
             if (this._$gr == TimeGr.week) {
-                calcEndTime = TimeService.addDate(calcEndTime, caclEndWeekNum, TimeUnit.d);
+                calcEndTime = TimeService.addDate(calcEndTime, 6, TimeUnit.d);
             }
             endTime = endTime ? (endTime > calcEndTime ? calcEndTime : endTime) : calcEndTime;
         }
