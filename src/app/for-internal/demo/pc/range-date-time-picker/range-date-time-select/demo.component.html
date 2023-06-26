@@ -129,6 +129,16 @@
         <br>
         <p class="message">{{date10 | json}}</p>
     </div>
-    
+
+    <div class="demo-11 live-demo">
+        <jigsaw-header [level]="2">limitSpan</jigsaw-header>
+        <jigsaw-header [level]="3">limitSpan="3"</jigsaw-header>
+        <jigsaw-range-date-time-select limitSpan="3" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <jigsaw-header [level]="3">limitSpan="5d"</jigsaw-header>
+        <jigsaw-range-date-time-select limitSpan="5d" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <jigsaw-header [level]="3">limitSpan="5d" && limitStart="now-10d" && limitEnd="now+10d"</jigsaw-header>
+        <jigsaw-range-date-time-select limitSpan="5d" limitStart="now-10d" limitEnd="now+10d"
+            (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+    </div>
 </div>
 

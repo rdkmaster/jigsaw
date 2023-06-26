@@ -1,4 +1,4 @@
-import {Time, Moment, WeekTime, TimeWeekDay} from "./time.types";
+import {Moment, Time, TimeWeekDay, WeekTime} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
 declare const moment: any;
@@ -82,16 +82,10 @@ export class TimeService {
             return this.getFormatDate(<Time>date, gr);
         }
         date = this.getDateFromYearAndWeek(date["year"], date["week"]);
-        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
-        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
-        let [weekStartDate, weekEndDate] = [this.addDate(date, -dateIndex, TimeUnit.d),
-            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
-        let [weekStartMonth, weekEndMonth] = [this.getMonth(weekStartDate), this.getMonth(weekEndDate)];
-        if (weekStartMonth == weekEndMonth) {
-            return this.getFormatDate(weekStartDate, gr);
-        } else {
-            return this.getFormatDate(`${this.getYear(weekEndDate)}-${weekEndMonth}-01`, gr);
-        }
+        const [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
+        const dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
+        const weekStartDate = this.addDate(date, -dateIndex, TimeUnit.d);
+        return this.getFormatDate(weekStartDate, gr);
     }
 
     private static _timeFormatterConvert(formatter: TimeFormatters): string {
@@ -395,6 +389,78 @@ export class TimeService {
             }
         }
         return result;
+    }
+
+    /**
+     * 根据粒度获取单位
+     *
+     * @param gr
+     */
+    public static getUnitByGr(gr: TimeGr): TimeUnit {
+        let unit: TimeUnit;
+        switch (gr) {
+            case TimeGr.second:
+                unit = TimeUnit.s;
+                break;
+            case TimeGr.minute:
+                unit = TimeUnit.m;
+                break;
+            case TimeGr.hour:
+                unit = TimeUnit.h;
+                break;
+            case TimeGr.date:
+                unit = TimeUnit.d;
+                break;
+            case TimeGr.week:
+                unit = TimeUnit.w;
+                break;
+            case TimeGr.month:
+                unit = TimeUnit.M;
+                break;
+            case TimeGr.time_hour:
+                unit = TimeUnit.h;
+                break;
+            case TimeGr.time_hour_minute:
+                unit = TimeUnit.m;
+                break;
+            case TimeGr.time_minute_second:
+                unit = TimeUnit.s;
+                break;
+            default:
+                unit = TimeUnit.d;
+                break;
+        }
+        return unit;
+    }
+
+    /**
+     * 转换时间单位
+     *
+     * @param number
+     * @param unit
+     * @param newUnit
+     */
+    public static convertTimeUnit(number: number, unit: TimeUnit, newUnit: TimeUnit): number {
+        const units = {
+            [TimeUnit.s]: 1,
+            [TimeUnit.m]: 60,
+            [TimeUnit.h]: 3600,
+            [TimeUnit.d]: 86400,
+            [TimeUnit.w]: 604800,
+            [TimeUnit.M]: 2629800,
+            [TimeUnit.y]: 31557600
+        };
+
+        if (unit == newUnit) {
+            return Math.ceil(number); // 向上取整
+        }
+
+        if (!units[unit] || !units[newUnit]) {
+            return NaN; // 如果输入的单位无效，则返回 NaN 或其他你认为合适的值
+        }
+
+        const seconds = number * units[unit];
+        return Math.floor(seconds / units[newUnit]);
     }
 
     // @ignoring-i18n-check-start

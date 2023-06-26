@@ -4,7 +4,7 @@
     selectIcon="iconfont iconfont-e177">
     <ng-template>
         <jigsaw-range-date-time-picker #rangeDateTimePicker [(beginDate)]="_$beginDate" [(endDate)]="_$endDate" [gr]="gr"
-            [limitStart]="limitStart" [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step"
+            [limitStart]="limitStart" [limitEnd]="limitEnd" [limitSpan]="limitSpan" [grItems]="grItems" [markDates]="markDates" [step]="step"
             [weekStart]="weekStart" [firstWeekMustContains]="firstWeekMustContains"
             [showConfirmButton]="showConfirmButton" (change)="_$dateItemChange.emit()" (grChange)="_$grChange($event)">
         </jigsaw-range-date-time-picker>
