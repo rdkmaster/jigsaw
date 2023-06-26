@@ -221,6 +221,7 @@ export class JigsawAlphabeticalIndex extends AbstractJigsawComponent implements 
             return;
         }
         this._dataElementRefs.nativeElement.scrollTop = this._titleElementRefs.toArray()[i].nativeElement.offsetTop;
+        this._cdr.markForCheck();
     }
 
     private _setCurrent(i: number): void {

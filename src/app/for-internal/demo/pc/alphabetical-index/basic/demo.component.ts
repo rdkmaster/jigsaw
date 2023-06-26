@@ -18,7 +18,7 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         "咯": "G", "哦": "E", "喏": "R", "喔": "O", "嗄": "A", "嗌": "A", "圈": "J", "坏": "P",
         "壳": "Q", "夹": "G", "奇": "J", "姥": "M", "宿": "X", "尿": "S", "峙": "S", "幢": "C"
     };
-    public data: ArrayCollection<string>;
+    public data: ArrayCollection<string> | string[];
 
     changeDataType(type: string) {
         if (type == 'blank') {
@@ -51,6 +51,10 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
             source.push(this._getRandomString(minEnLen, maxEnLen, minZhLen, maxZhLen));
         }
         this.data = new ArrayCollection(source);
+    }
+
+    changeData(){
+        this.data = ['A测试简单数组'];
     }
 
     private _getRandomString(minEnLen, maxEnLen, minZhLen, maxZhLen): string {
