@@ -82,10 +82,9 @@ export class TimeService {
             return this.getFormatDate(<Time>date, gr);
         }
         date = this.getDateFromYearAndWeek(date["year"], date["week"]);
-        let [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
-        let dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
-        let [weekStartDate, weekEndDate] = [this.addDate(date, -dateIndex, TimeUnit.d),
-            this.addDate(date, 6 - dateIndex, TimeUnit.d)];
+        const [dateWeekNum, weekStartNum] = [new Date(date).getDay(), this.getWeekStart()];
+        const dateIndex = dateWeekNum - weekStartNum >= 0 ? dateWeekNum - weekStartNum : dateWeekNum - weekStartNum + 7;
+        const weekStartDate = this.addDate(date, -dateIndex, TimeUnit.d);
         return this.getFormatDate(weekStartDate, gr);
     }
 
