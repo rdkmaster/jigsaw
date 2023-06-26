@@ -50,7 +50,7 @@
     </li>
     <li class="demo-options-item">
         <span>limitSpan：</span>
-        <jigsaw-numeric-input [(value)]="limitSpanInput" [suffix]="units" min="0" suffixWidth="60"
+        <jigsaw-numeric-input [(value)]="limitSpanInput" [suffix]="units" min="-1" suffixWidth="60"
             (suffixChange)="unitChange($event)" (valueChange)="limitSpanInputChange($event)"></jigsaw-numeric-input>
         <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput * 24">x
             24</jigsaw-button>

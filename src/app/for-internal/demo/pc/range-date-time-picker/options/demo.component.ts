@@ -17,7 +17,7 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     public grList = ['second', 'minute', 'hour', 'date', 'week', 'month'];
     public units = ['无', 's', 'm', 'h', 'd', 'w', 'M', 'y'];
     public unit = '';
-    public limitSpanInput: number;
+    public limitSpanInput: number = 3;
     public gr = ['date'];
     public showGrItems = false;
 
@@ -30,7 +30,7 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     public limitStart;
     public limitEnd;
 
-    public limitSpan: number | string;
+    public limitSpan: number | string = this.limitSpanInput;
 
     @ViewChild('rangeDateTimePicker')
     private _rangeDateTimePicker: JigsawRangeDateTimePicker;

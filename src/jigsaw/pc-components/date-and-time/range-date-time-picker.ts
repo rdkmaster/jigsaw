@@ -157,7 +157,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             let date = TimeService.getDateByGr(value, this._$gr);
             if (date == this._beginDate) {
                 return;
-            } 
+            }
             this._beginDate = date;
             this._updateEndDateLimit();
             this._updateValue.emit();
@@ -267,9 +267,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         }
     }
 
-    /**
-     * @internal
-     */
+    private _limitSpanValue: {value: number, unit: TimeUnit};
     private _limitSpan: number | string;
 
     /**
@@ -281,13 +279,10 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     public set limitSpan(value: number | string) {
-        if (CommonUtils.isDefined(value)) {
-            this._limitSpan = value;
-        } else {
-            this._limitSpan = null;
-        }
+        this._limitSpan = value;
+        this._limitSpanValue = this._parseLimitSpanValue(value);
         if (this.initialized) {
-            this. _updateLimits();
+            this._updateLimits();
         }
     }
 
@@ -309,8 +304,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         }
 
         if (this.endDate) {
-            if (CommonUtils.isDefined(this.limitSpan)) {
-                const [number, unit] = this._getLimitSpanAndUnit();
+            if (this._limitSpanValue?.value >= 0) {
+                const number = this._limitSpanValue.value;
+                const unit = this._limitSpanValue.unit;
                 const calcStartTime = number == 0 ? TimeService.getDate(TimeService.convertValue(this.endDate, this._$gr), this._$gr)
                     : TimeService.addDate(TimeService.convertValue(this.endDate, this._$gr), 0 - number, unit);
                 startTime = startTime ? (startTime < calcStartTime ? calcStartTime : startTime) : calcStartTime;
@@ -349,8 +345,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
                 startTime = calcStartTime;
             }
 
-            if (CommonUtils.isDefined(this.limitSpan)) {
-                const [number, unit] = this._getLimitSpanAndUnit();
+            if (this._limitSpanValue?.value >= 0) {
+                const number = this._limitSpanValue.value;
+                const unit = this._limitSpanValue.unit;
                 let calcEndTime = number == 0 ? TimeService.getDate(TimeService.convertValue(this.beginDate, this._$gr), this._$gr)
                     : TimeService.addDate(TimeService.convertValue(this.beginDate, this._$gr), number, unit);
                 if (this._$gr == TimeGr.week) {
@@ -368,16 +365,21 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         }
     }
 
-    private _getLimitSpanAndUnit(): [number, TimeUnit] {
-        const regex = /^(\d+)\s*([smhdwMy])$/;
-        const match = String(this.limitSpan).match(regex);
-        const newUnit = TimeService.getUnitByGr(this._$gr);
-        if (match) {
-            const number = parseInt(match[1]);
-            const unit = match[2];
-            return [TimeService.convertTimeUnit(number, TimeUnit[unit], newUnit), newUnit];
+    private _parseLimitSpanValue(limitSpan: number | string): {value: number, unit: TimeUnit} {
+        const unit = TimeService.getUnitByGr(this._$gr);
+        if (!limitSpan) {
+            return {value: -1, unit};
         }
-        return [Number(this.limitSpan), newUnit];
+        if (typeof limitSpan == 'number') {
+            return {value: limitSpan, unit};
+        }
+        const match = String(limitSpan).match(/^(\d+)\s*([smhdwMy])$/);
+        if (!match) {
+            return {value: Number(limitSpan), unit};
+        }
+        const number = parseInt(match[1]);
+        const newUnit = match[2];
+        return {value: TimeService.convertTimeUnit(number, TimeUnit[newUnit], unit), unit};
     }
 
     /**
