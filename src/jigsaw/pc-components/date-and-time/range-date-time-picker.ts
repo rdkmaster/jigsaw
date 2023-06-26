@@ -113,6 +113,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             this._$gr = <TimeGr>value;
             this.grChange.emit(this._$gr);
         }
+        this._limitSpanValue = this._parseLimitSpanValue(this.limitSpan);
     }
 
     /**
@@ -235,7 +236,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             this._$limitStart = null;
         }
         if (this.initialized) {
-            this. _updateLimits();
+            this._updateLimits();
         }
     }
 
@@ -263,7 +264,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
             this._$limitEnd = null;
         }
         if (this.initialized){
-            this. _updateLimits();
+            this._updateLimits();
         }
     }
 
