@@ -79,7 +79,9 @@ export class JigsawIndexBasicDemoComponent implements OnInit {
         if (this.inputStr) {
             this.data.push(this.inputStr);
             this.inputStr = '';
-            this.data.refresh();
+            if (this.data instanceof ArrayCollection) {
+                this.data.refresh();
+            }
         }
     }
 
