@@ -54,7 +54,11 @@ export class RangeDatePickerTimeOptionsDemoComponent {
     }
 
     public limitSpanInputChange($event) {
-        this.limitSpan = CommonUtils.isDefined(this.limitSpanInput) ? this.limitSpanInput + this.unit : undefined;
+        if (this.unit == '') {
+            this.limitSpan = this.limitSpanInput;
+        } else {
+            this.limitSpan = CommonUtils.isDefined(this.limitSpanInput) ? this.limitSpanInput + this.unit : undefined;
+        }
     }
 
     public unitChange($event) {

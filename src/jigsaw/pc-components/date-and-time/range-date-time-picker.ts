@@ -362,8 +362,8 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
 
     private _parseLimitSpanValue(limitSpan: number | string): {value: number, unit: TimeUnit} {
         const unit = TimeService.getUnitByGr(this._$gr);
-        if (!limitSpan) {
-            return {value: -1, unit};
+        if (CommonUtils.isUndefined(limitSpan)) {
+            return { value: -1, unit };
         }
         if (typeof limitSpan == 'number') {
             return {value: limitSpan, unit};
