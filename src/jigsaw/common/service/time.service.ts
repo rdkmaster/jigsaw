@@ -1,4 +1,4 @@
-import {Time, Moment, WeekTime, TimeWeekDay} from "./time.types";
+import {Moment, Time, TimeWeekDay, WeekTime} from "./time.types";
 import {CommonUtils} from "../core/utils/common-utils";
 
 declare const moment: any;
@@ -460,8 +460,7 @@ export class TimeService {
         }
 
         const seconds = number * units[unit];
-        const convertedNumber = Math.ceil(seconds / units[newUnit]);
-        return convertedNumber;
+        return Math.floor(seconds / units[newUnit]);
     }
 
     // @ignoring-i18n-check-start

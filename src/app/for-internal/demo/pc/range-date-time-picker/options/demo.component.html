@@ -52,13 +52,13 @@
         <span>limitSpan：</span>
         <jigsaw-numeric-input [(value)]="limitSpanInput" [suffix]="units" min="-1" suffixWidth="60"
             (suffixChange)="unitChange($event)" (valueChange)="limitSpanInputChange($event)"></jigsaw-numeric-input>
-        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput * 24">x
+        <jigsaw-button [disabled]="limitSpanInput < 0" colorType="none" (click)="limitSpanInput = limitSpanInput * 24">x
             24</jigsaw-button>
-        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput * 60">x
+        <jigsaw-button [disabled]="limitSpanInput < 0" colorType="none" (click)="limitSpanInput = limitSpanInput * 60">x
             60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput / 24">÷
+        <jigsaw-button [disabled]="limitSpanInput < 0" colorType="none" (click)="limitSpanInput = limitSpanInput / 24">÷
             60</jigsaw-button>
-        <jigsaw-button [disabled]="!limitSpanInput" colorType="none" (click)="limitSpanInput = limitSpanInput / 60">÷
+        <jigsaw-button [disabled]="limitSpanInput < 0" colorType="none" (click)="limitSpanInput = limitSpanInput / 60">÷
             60</jigsaw-button>
         <jigsaw-button colorType="none" (click)="clearLimitSpanInput()">清空</jigsaw-button>
         <jigsaw-icon [icon]="'iconfont iconfont-e23f'" [iconSize]="20" title="这里均为修改操作，没有做绑定"></jigsaw-icon>

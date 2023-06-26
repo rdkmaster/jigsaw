@@ -291,17 +291,20 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
         this._updateEndDateLimit();
     }
 
-    private _updateBeginDateLimit() {
+    private _calcStartAndEndTime(): {startTime: WeekTime, endTime: WeekTime} {
         let startTime: WeekTime = null;
         let endTime: WeekTime = null;
-
         if (this._$limitStart) {
             startTime = TimeService.getDate(TimeService.convertValue(this._$limitStart, this._$gr), this._$gr);
         }
-
         if (this._$limitEnd) {
             endTime = TimeService.getDate(TimeService.convertValue(this._$limitEnd, this._$gr), this._$gr);
         }
+        return {startTime, endTime};
+    }
+
+    private _updateBeginDateLimit() {
+        let {startTime, endTime} = this._calcStartAndEndTime();
 
         if (this.endDate) {
             if (this._limitSpanValue?.value >= 0) {
@@ -328,16 +331,7 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
     }
 
     private _updateEndDateLimit() {
-        let startTime: WeekTime = null;
-        let endTime: WeekTime = null;
-
-        if (this._$limitStart) {
-            startTime = TimeService.getDate(TimeService.convertValue(this._$limitStart, this._$gr), this._$gr);
-        }
-
-        if (this._$limitEnd) {
-            endTime = TimeService.getDate(TimeService.convertValue(this._$limitEnd, this._$gr), this._$gr);
-        }
+        let {startTime, endTime} = this._calcStartAndEndTime();
 
         if (this.beginDate) {
             let calcStartTime = TimeService.getDate(TimeService.convertValue(this.beginDate, this._$gr), this._$gr)
