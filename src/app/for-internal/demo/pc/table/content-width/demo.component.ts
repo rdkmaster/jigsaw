@@ -62,7 +62,7 @@ export class TableContentWidthDemoComponent {
                 "duration"
             ],
             [
-                "时间带超长长长长长长长长表格头文本",
+                "时间带超长长长长长长长长长长长长长长表格头文本",
                 "接口",
                 "接入网",
                 "小区ID",
