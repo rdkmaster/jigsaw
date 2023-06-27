@@ -33,6 +33,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     &.#{$jigsaw-table}-header-cell-sortable,
                     &.#{$jigsaw-table}-header-cell-filterable {
                         padding: 0 12px 0 8px;
+
+                        .iconfont {
+                            margin-right: 0px;
+                        }
                     }
 
                     &.#{$jigsaw-table}-header-cell-sortable.#{$jigsaw-table}-header-cell-filterable {
