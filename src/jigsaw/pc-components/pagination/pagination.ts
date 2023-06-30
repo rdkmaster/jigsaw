@@ -81,6 +81,13 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * @internal
      */
+    public get _$totalPage(): number {
+        return CommonUtils.isDefined(this._totalPage) ? this._totalPage : 0;
+    }
+
+    /**
+     * @internal
+     */
     public _$prevDisabled: boolean = false;
 
     /**
@@ -150,12 +157,20 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     @RequireMarkForCheck()
     @Input()
     public searchable: boolean = false;
+
     /**
      * 是否可以快速跳转至某页
      */
     @RequireMarkForCheck()
     @Input()
     public showQuickJumper: boolean = false;
+
+    /**
+     * 是否显示总页数
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public showTotalPage: boolean = false;
 
     /**
      * 当为「simple」时，是小尺寸分页
@@ -636,12 +651,14 @@ export class JigsawPaginationModule {
             zh: {
                 page: "页",
                 goto: "前往",
-                page2: "页"
+                page2: "页",
+                showTotalPage: "共 {{ page }} 页"
             },
             en: {
                 page: "Page",
                 goto: "Goto page",
-                page2: ""
+                page2: "",
+                showTotalPage: "Toal {{ page }} Page"
             }
         });
     }

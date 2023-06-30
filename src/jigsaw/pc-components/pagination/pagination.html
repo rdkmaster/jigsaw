@@ -1,5 +1,6 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchDefault>
+        <div *ngIf="showTotalPage" class="jigsaw-paging-total">{{'pagination.showTotalPage' | translate:{page: _$totalPage} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="160"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
                              [autoSearch]="autoSearch">
@@ -39,6 +40,7 @@
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="'simple'">
+     <div *ngIf="showTotalPage" class="jigsaw-paging-total">{{'pagination.showTotalPage' | translate:{page: _$totalPage} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="100"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
                              [autoSearch]="autoSearch">

@@ -108,6 +108,10 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         }
     }
 
+    .#{$jigsaw-paging}-total {
+        margin-right: 8px;
+    }
+
     .#{$jigsaw-paging}-page-size {
         height: var(--height-paging);
         .#{$jigsaw-prefix}-combo-select-host {
