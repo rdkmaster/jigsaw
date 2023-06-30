@@ -282,6 +282,10 @@ export const routerConfigPC = [
     {   
         path: "pc/chart-icon",
         loadChildren: () => import('./demo/pc/chart-icon/demo-set.module').then(m => m.ChartIconDemoModule),
+    },
+    {   
+        path: "pc/insight",
+        loadChildren: () => import('./demo/pc/insight/demo-set.module').then(m => m.InsightDemoModule),
     }
 ];
 export const routerConfigMobile = [

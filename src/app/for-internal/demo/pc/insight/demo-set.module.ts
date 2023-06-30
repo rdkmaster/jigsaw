@@ -10,4 +10,4 @@ export const routerConfig = [
 @NgModule({
     imports: [RouterModule.forChild(routerConfig), JigsawInsightBasicDemoModule]
 })
-export class HeaderDemoModule {}
+export class InsightDemoModule {}

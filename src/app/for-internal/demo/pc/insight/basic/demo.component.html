@@ -2,4 +2,36 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<jigsaw-header>页面信息</jigsaw-header>
+<ul>
+    <li>
+        <span>页面索引：</span>
+        <span>{{pageIndex}}</span>
+    </li>
+    <li>
+        <span>页面名称：</span>
+        <span>{{pageName}}</span>
+    </li>
+</ul>
 
+<div class="layers-cntr">
+    <div>
+        <jigsaw-header>layerName 共{{layers?.length}}项</jigsaw-header>
+        <ul>
+            <li *ngFor="let layer of layers; let i = index">
+                <span>{{i}}.</span>
+                <span>{{layer.name}}</span>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+        <jigsaw-header>plx 共{{plxLayers?.length}}项</jigsaw-header>
+        <ul>
+            <li *ngFor="let layer of plxLayers; let i = index">
+                <span>{{i}}.</span>
+                <span>{{layer.name}}</span>
+            </li>
+        </ul>
+    </div>
+</div>

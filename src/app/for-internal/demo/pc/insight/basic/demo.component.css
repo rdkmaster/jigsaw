@@ -1,0 +1,7 @@
+.layers-cntr {
+    display: flex;
+}
+
+.layers-cntr>div {
+    flex: 1;
+}
