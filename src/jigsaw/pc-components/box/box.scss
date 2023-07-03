@@ -49,8 +49,6 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
                 border-top-color: $border-color-default;
             }
             &::before {
-                content: "";
-                position: absolute;
                 top: -5px;
                 bottom: -5px;
                 right: 1px;
