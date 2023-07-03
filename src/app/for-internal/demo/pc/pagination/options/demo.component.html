@@ -1,0 +1,83 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Pagination</jigsaw-header>
+
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>显示搜索框：</span>
+            <jigsaw-switch [(checked)]="searchable"> </jigsaw-switch>
+        </li>
+        <li class="demo-options-item">
+            <span>显示单页数：</span>
+            <jigsaw-switch [checked]="!!pageSizeOptions"
+                (checkedChange)="pageSizeOptions = !!pageSizeOptions ? null : getPageSizeOptions()">
+            </jigsaw-switch>
+            <span *ngIf="!!pageSizeOptions">最大页数</span>
+            <jigsaw-button-bar *ngIf="!!pageSizeOptions" [data]="[99, 999, 9999, 99999]" [(selectedItems)]="maxPageSize"
+                (selectedItemsChange)="pageSizeOptions = getPageSizeOptions()">
+            </jigsaw-button-bar>
+        </li>
+        <li class="demo-options-item">
+            <span>显示跳转框：</span>
+            <jigsaw-switch [(checked)]="showQuickJumper"> </jigsaw-switch>
+        </li>
+        <li class="demo-options-item">
+            <span>显示总页数：</span>
+            <jigsaw-switch [(checked)]="showTotalPage"> </jigsaw-switch>
+        </li>
+        <li class="demo-options-item">
+            <span>动作：</span>
+            <j-button (click)="changeCurrentPage(6)">跳转到第6页</j-button>
+            <j-button (click)="resetData()">数据重置</j-button>
+        </li>
+    </ul>
+
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="2">默认模式</jigsaw-header>
+        <jigsaw-pagination [data]="pageable"
+                           [pageSizeOptions]="pageSizeOptions"
+                           [searchable]="searchable"
+                           [showQuickJumper]="showQuickJumper"
+                           [showTotalPage]="showTotalPage"
+                            mode="complex"
+                           (currentChange)="getCurrentPage($event)"
+                           (pageSizeChange)="getPageSize($event)"
+                           widh="710px"
+                           [size]="'large'">
+        </jigsaw-pagination>
+        <p class="message">当前第{{pageable?.pagingInfo.currentPage}}页</p>
+    </div>
+
+    <div class="demo-3 live-demo">
+        <jigsaw-header [level]="2">默认模式（折叠）</jigsaw-header>
+        <jigsaw-pagination [data]="pageable"
+                           [pageSizeOptions]="pageSizeOptions"
+                           [searchable]="searchable"
+                           [showQuickJumper]="showQuickJumper"
+                           [showTotalPage]="showTotalPage"
+                           mode="folding"
+                           (currentChange)="getCurrentPage($event)"
+                           (pageSizeChange)="getPageSize($event)"
+                           widh="710px">
+        </jigsaw-pagination>
+        <p class="message">当前第{{pageable?.pagingInfo.currentPage}}页</p>
+    </div>
+
+    <div class="demo-2 live-demo">
+        <jigsaw-header [level]="2">简约模式</jigsaw-header>
+        <jigsaw-pagination [data]="pageableForSimple"
+                           (currentChange)="getCurrentPage($event)"
+                           mode="simple"
+                           [searchable]="searchable"
+                           [showTotalPage]="showTotalPage"
+                           [pageSizeOptions]="pageSizeOptions">
+        </jigsaw-pagination>
+        <p class="message">当前第{{pageableForSimple?.pagingInfo.currentPage}}页</p>
+    </div>
+
+</div>

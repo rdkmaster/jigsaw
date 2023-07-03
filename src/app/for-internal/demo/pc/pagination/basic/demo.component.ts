@@ -6,12 +6,8 @@ import {LocalPageableTableData} from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class PaginationBasicDemoComponent {
-    searchable: boolean = false;
     pageable: LocalPageableTableData;
-    pageableForSimple: LocalPageableTableData;
-    maxPageSize: number[] = [99];
-    pageSizeOptions = null;
-    showQuickJumper = true;
+    pageableForSimple: LocalPageableTableData
 
     constructor(http: HttpClient) {
         this.pageable = new LocalPageableTableData();
@@ -26,23 +22,8 @@ export class PaginationBasicDemoComponent {
         this.pageableForSimple.fromAjax('mock-data/hr-list-full');
     }
 
-    getPageSizeOptions(): number[] {
-        const options = [];
-        let max = (this.maxPageSize[0] + 1) / 10;
-        while (max >= 100) {
-            options.unshift(max);
-            max /= 10;
-        }
-        options.unshift(5, 10, 20);
-        return options;
-    }
-
     getCurrentPage(message: any) {
         console.log("current page is: " + message);
-    }
-
-    getPageSize(message: any) {
-        console.log("page size is: " + message);
     }
 
     changeCurrentPage(number) {

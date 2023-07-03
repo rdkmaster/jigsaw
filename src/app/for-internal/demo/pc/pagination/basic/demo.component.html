@@ -7,62 +7,23 @@
 <div class="live-demo-wrap">
     <jigsaw-header [level]="1">Pagination</jigsaw-header>
 
-    <span>显示搜索框</span>
-    <jigsaw-switch style="margin-right: 20px" [(checked)]="searchable">
-    </jigsaw-switch>
-
-    <span>显示单页数</span>
-    <jigsaw-switch [checked]="!!pageSizeOptions" (checkedChange)="pageSizeOptions = !!pageSizeOptions ? null : getPageSizeOptions()">
-    </jigsaw-switch>
-    <span *ngIf="!!pageSizeOptions">最大页数</span>
-    <jigsaw-button-bar *ngIf="!!pageSizeOptions" [data]="[99, 999, 9999, 99999]" [(selectedItems)]="maxPageSize"
-                       (selectedItemsChange)="pageSizeOptions = getPageSizeOptions()">
-    </jigsaw-button-bar>
-
-    <span style="margin-left: 20px">显示跳转框</span>
-    <jigsaw-switch style="margin-right: 20px" [(checked)]="showQuickJumper">
-    </jigsaw-switch>
-    <br>
-
-    <j-button style="margin: 10px 0" (click)="changeCurrentPage(6)">跳转到第6页</j-button>
-    <br><br>
-
     <div class="demo-1 live-demo">
         <jigsaw-header [level]="2">默认模式</jigsaw-header>
-        <jigsaw-pagination [data]="pageable"
-                           [pageSizeOptions]="pageSizeOptions"
-                           [searchable]="searchable"
-                           [showQuickJumper]="showQuickJumper"
-                            mode="complex"
-                           (currentChange)="getCurrentPage($event)"
-                           (pageSizeChange)="getPageSize($event)"
-                           widh="710px"
-                           [size]="'large'">
+        <jigsaw-pagination [data]="pageable" mode="complex" (currentChange)="getCurrentPage($event)" [size]="'large'">
         </jigsaw-pagination>
         <p class="message">当前第{{pageable.pagingInfo.currentPage}}页</p>
     </div>
 
     <div class="demo-3 live-demo">
         <jigsaw-header [level]="2">默认模式（折叠）</jigsaw-header>
-        <jigsaw-pagination [data]="pageable"
-                           [pageSizeOptions]="pageSizeOptions"
-                           [searchable]="searchable"
-                           [showQuickJumper]="showQuickJumper"
-                           mode="folding"
-                           (currentChange)="getCurrentPage($event)"
-                           (pageSizeChange)="getPageSize($event)"
-                           widh="710px">
+        <jigsaw-pagination [data]="pageable" mode="folding" (currentChange)="getCurrentPage($event)">
         </jigsaw-pagination>
         <p class="message">当前第{{pageable.pagingInfo.currentPage}}页</p>
     </div>
 
     <div class="demo-2 live-demo">
         <jigsaw-header [level]="2">简约模式</jigsaw-header>
-        <jigsaw-pagination [data]="pageableForSimple"
-                           (currentChange)="getCurrentPage($event)"
-                           mode="simple"
-                           [searchable]="searchable"
-                           [pageSizeOptions]="pageSizeOptions">
+        <jigsaw-pagination [data]="pageableForSimple" (currentChange)="getCurrentPage($event)" mode="simple">
         </jigsaw-pagination>
         <p class="message">当前第{{pageableForSimple.pagingInfo.currentPage}}页</p>
     </div>

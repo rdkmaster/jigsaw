@@ -10,6 +10,8 @@ import {PaginationBigDataDemoComponent} from "./big-data/demo.component";
 import {PaginationBigDataDemoModule} from "./big-data/demo.module";
 import { PaginationNoDataDemoComponent } from './no-data/demo.component';
 import { PaginationNoDataDemoModule } from './no-data/demo.module';
+import { PaginationOptionsDemoModule } from "./options/demo.module";
+import { PaginationOptionsDemoComponent } from "./options/demo.component";
 
 export const routerConfig = [
     {
@@ -31,6 +33,10 @@ export const routerConfig = [
     {
         path: 'no-data', 
         component: PaginationNoDataDemoComponent
+    },
+    {
+        path: 'options', 
+        component: PaginationOptionsDemoComponent
     }
 ];
 
@@ -41,7 +47,8 @@ export const routerConfig = [
         WithPagingInfoDemoModule,
         PaginationSizeDemoModule,
         PaginationBigDataDemoModule,
-        PaginationNoDataDemoModule
+        PaginationNoDataDemoModule,
+        PaginationOptionsDemoModule
     ]
 })
 export class PaginationDemoModule {}
