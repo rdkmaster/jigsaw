@@ -10,15 +10,15 @@
     </li>
     <li>
         <span>页面名称：</span>
-        <span>{{pageName}}</span>
+        <span>{{data?.artboards[pageIndex].name}}</span>
     </li>
 </ul>
 
 <div class="layers-cntr">
     <div>
         <jigsaw-header>layerName 共{{layers?.length}}项</jigsaw-header>
-        <ul>
-            <li *ngFor="let layer of layers; let i = index">
+        <ul class="layers-list" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+            <li *ngFor="let layer of data?.layers[pageIndex]; let i = index" (click)="_$showLayersData(layer)">
                 <span>{{i}}.</span>
                 <span>{{layer.name}}</span>
             </li>
@@ -27,8 +27,8 @@
 
     <div>
         <jigsaw-header>plx 共{{plxLayers?.length}}项</jigsaw-header>
-        <ul>
-            <li *ngFor="let layer of plxLayers; let i = index">
+        <ul class="layers-list" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+            <li *ngFor="let layer of data?.markedLayers[pageIndex]; let i = index" (click)="_$showLayersData(layer)">
                 <span>{{i}}.</span>
                 <span>{{layer.name}}</span>
             </li>

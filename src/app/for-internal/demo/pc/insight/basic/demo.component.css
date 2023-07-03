@@ -5,3 +5,15 @@
 .layers-cntr>div {
     flex: 1;
 }
+
+.layers-cntr .layers-list {
+    height: 60vh;
+}
+
+.layers-cntr .layers-list>li{
+    cursor: pointer;
+}
+
+.layers-cntr .layers-list>li:hover {
+    background: var(--bg-hover);
+}
