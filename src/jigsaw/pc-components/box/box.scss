@@ -49,6 +49,7 @@ $flex-prefix-cls: #{$jigsaw-prefix}-flex;
                 border-top-color: $border-color-default;
             }
             &::before {
+                /*上面的是伪元素必须的不能删，这里的&::before是要对上面进行样式覆盖*/
                 top: -5px;
                 bottom: -5px;
                 right: 1px;
