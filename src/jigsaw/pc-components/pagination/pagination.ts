@@ -658,7 +658,7 @@ export class JigsawPaginationModule {
                 page: "Page",
                 goto: "Goto page",
                 page2: "",
-                showTotalPage: "Toal {{ page }} Page"
+                showTotalPage: "Total {{ page }} page(s)"
             }
         });
     }
