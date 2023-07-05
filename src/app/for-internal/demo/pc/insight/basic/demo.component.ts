@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ArtboardToCode } from "../insight";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -10,11 +11,14 @@ export class JigsawInsightBasicDemoComponent implements OnInit {
 
 
     public pageIndex = 0;
-    public data: any;
+    public data: any[] = [];
 
     ngOnInit() {
+        const artboards = JSON.parse(this.input).artboards;;
+        artboards.forEach(artboard => {
+            this.data.push(new ArtboardToCode(artboard));
+        })
 
-        this.data = new DesignToCode(this.input)
         console.log(this.data);
     }
 
@@ -27,46 +31,4 @@ export class JigsawInsightBasicDemoComponent implements OnInit {
     // ====================================================================
     summary: string = "";
     description: string = "";
-}
-
-
-function uuidv4() {
-    return '';
-}
-
-export class DesignToCode {
-    constructor(uxData: string) {
-        this.originUx = JSON.parse(uxData);
-        this.artboards = this.originUx.artboards;
-        this.artboards.forEach((artboard, index) => {
-            this.layers[index] = artboard.layers;
-            const matchPlx = /^plx:\d{2}-/;
-            this.markedLayers[index] = artboard.layers.filter(layer => matchPlx.test(layer.name));
-        })
-
-        const result = {
-            selector: "awade-layout",
-            agentId: uuidv4(),
-            id: "root",
-            config: {
-                moduleType: "common",
-                routeParam: "",
-                version: "v10.9.71",
-            },
-            state: [
-                {
-                    "label": "default",
-                    "styles": {
-                        "autoFlex": true
-                    }
-                }
-            ],
-            children: [],
-        };
-    }
-    public originUx: any;
-    public artboards: any;
-
-    public layers: any[] = [];
-    public markedLayers: any[] = [];
 }
