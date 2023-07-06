@@ -81,13 +81,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * @internal
      */
-    public get _$totalPage(): number {
-        return CommonUtils.isDefined(this._totalPage) ? this._totalPage : 0;
-    }
-
-    /**
-     * @internal
-     */
     public get _$totalRecord(): number {
         return CommonUtils.isDefined(this._totalRecord) ? this._totalRecord : 0;
     }
