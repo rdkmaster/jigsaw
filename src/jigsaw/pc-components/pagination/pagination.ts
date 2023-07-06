@@ -81,8 +81,8 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     /**
      * @internal
      */
-    public get _$totalPage(): number {
-        return CommonUtils.isDefined(this._totalPage) ? this._totalPage : 0;
+    public get _$totalRecord(): number {
+        return CommonUtils.isDefined(this._totalRecord) ? this._totalRecord : 0;
     }
 
     /**
@@ -166,11 +166,11 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public showQuickJumper: boolean = false;
 
     /**
-     * 是否显示总页数
+     * 是否显示数据总数
      */
     @RequireMarkForCheck()
     @Input()
-    public showTotalPage: boolean = false;
+    public showTotalRecord: boolean = false;
 
     /**
      * 当为「simple」时，是小尺寸分页
@@ -652,13 +652,13 @@ export class JigsawPaginationModule {
                 page: "页",
                 goto: "前往",
                 page2: "页",
-                showTotalPage: "共 {{ page }} 页"
+                showTotalRecord: "共 {{ number }} 条"
             },
             en: {
                 page: "Page",
                 goto: "Goto page",
                 page2: "",
-                showTotalPage: "Total {{ page }} page(s)"
+                showTotalRecord: "Total {{ number }} record(s)",
             }
         });
     }
