@@ -31,6 +31,10 @@
             <jigsaw-switch [(checked)]="showTotalPage"> </jigsaw-switch>
         </li>
         <li class="demo-options-item">
+            <span>显示总条数：</span>
+            <jigsaw-switch [(checked)]="showTotalRecord"> </jigsaw-switch>
+        </li>
+        <li class="demo-options-item">
             <span>动作：</span>
             <j-button (click)="changeCurrentPage(6)">跳转到第6页</j-button>
             <j-button (click)="resetData()">数据重置</j-button>
@@ -44,6 +48,7 @@
                            [searchable]="searchable"
                            [showQuickJumper]="showQuickJumper"
                            [showTotalPage]="showTotalPage"
+                           [showTotalRecord]="showTotalRecord"
                             mode="complex"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"
@@ -60,6 +65,7 @@
                            [searchable]="searchable"
                            [showQuickJumper]="showQuickJumper"
                            [showTotalPage]="showTotalPage"
+                           [showTotalRecord]="showTotalRecord"
                            mode="folding"
                            (currentChange)="getCurrentPage($event)"
                            (pageSizeChange)="getPageSize($event)"
@@ -75,6 +81,7 @@
                            mode="simple"
                            [searchable]="searchable"
                            [showTotalPage]="showTotalPage"
+                           [showTotalRecord]="showTotalRecord"
                            [pageSizeOptions]="pageSizeOptions">
         </jigsaw-pagination>
         <p class="message">当前第{{pageableForSimple?.pagingInfo.currentPage}}页</p>

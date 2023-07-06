@@ -14,6 +14,7 @@ export class PaginationOptionsDemoComponent {
     pageSizeOptions = null;
     showQuickJumper = true;
     showTotalPage = false;
+    showTotalRecord = false;
 
     constructor(public http: HttpClient) {
         this.resetData();

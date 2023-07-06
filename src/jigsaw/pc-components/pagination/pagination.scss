@@ -108,7 +108,8 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
         }
     }
 
-    .#{$jigsaw-paging}-total {
+    .#{$jigsaw-paging}-total-page,
+    .#{$jigsaw-paging}-total-record {
         margin-right: 8px;
     }
 

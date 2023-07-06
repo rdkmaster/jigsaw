@@ -1,6 +1,7 @@
 <ng-container [ngSwitch]="mode">
     <ng-container *ngSwitchDefault>
-        <div *ngIf="showTotalPage" class="jigsaw-paging-total">{{'pagination.showTotalPage' | translate:{page: _$totalPage} }}</div>
+        <div *ngIf="showTotalPage" class="jigsaw-paging-total-page">{{'pagination.showTotalPage' | translate:{number: _$totalPage} }}</div>
+        <div *ngIf="showTotalRecord" class="jigsaw-paging-total-record">{{'pagination.showTotalRecord' | translate:{number: _$totalRecord} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="160"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
                              [autoSearch]="autoSearch">
@@ -40,7 +41,8 @@
         </div>
     </ng-container>
     <ng-container *ngSwitchCase="'simple'">
-     <div *ngIf="showTotalPage" class="jigsaw-paging-total">{{'pagination.showTotalPage' | translate:{page: _$totalPage} }}</div>
+     <div *ngIf="showTotalPage" class="jigsaw-paging-total-page">{{'pagination.showTotalPage' | translate:{number: _$totalPage} }}</div>
+        <div *ngIf="showTotalRecord" class="jigsaw-paging-total-record">{{'pagination.showTotalRecord' | translate:{number: _$totalRecord} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="100"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
                              [autoSearch]="autoSearch">
