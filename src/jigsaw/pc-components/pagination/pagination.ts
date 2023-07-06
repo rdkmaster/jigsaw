@@ -666,14 +666,12 @@ export class JigsawPaginationModule {
                 page: "页",
                 goto: "前往",
                 page2: "页",
-                showTotalPage: "共 {{ number }} 页",
                 showTotalRecord: "共 {{ number }} 条"
             },
             en: {
                 page: "Page",
                 goto: "Goto page",
                 page2: "",
-                showTotalPage: "Total {{ number }} page(s)",
                 showTotalRecord: "Total {{ number }} record(s)",
             }
         });

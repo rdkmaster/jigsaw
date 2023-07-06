@@ -13,7 +13,6 @@ export class PaginationOptionsDemoComponent {
     maxPageSize: number[] = [99];
     pageSizeOptions = null;
     showQuickJumper = true;
-    showTotalPage = false;
     showTotalRecord = false;
 
     constructor(public http: HttpClient) {
