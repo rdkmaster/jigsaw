@@ -166,13 +166,6 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public showQuickJumper: boolean = false;
 
     /**
-     * 是否显示总页数
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public showTotalPage: boolean = false;
-
-    /**
      * 是否显示数据总数
      */
     @RequireMarkForCheck()
