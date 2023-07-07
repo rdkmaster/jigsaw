@@ -50,7 +50,7 @@ export type TabBarData = {
      * 显示在文本前面的图标
      */
     icon?: string,
-    renderer?: IJigsawTabTitleRenderer
+    renderer?: Type<IJigsawTabTitleRenderer>
 }
 
 @Directive()
