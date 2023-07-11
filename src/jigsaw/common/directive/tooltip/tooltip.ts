@@ -49,7 +49,7 @@ export class JigsawTooltipComponent implements IPopupable {
         if (!this.initData?.tooltip && typeof this.initData?.tooltip != 'number') {
             return this._$tooltip;
         }
-        this._$tooltip = String(this.initData.tooltip);
+        this._$tooltip = String(this.initData.tooltip.trim());
         if (this.initData.renderAs !== 'html') {
             this._$tooltip = this._$tooltip.replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
