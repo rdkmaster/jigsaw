@@ -24,10 +24,12 @@ export type TooltipRenderAs = 'plain-text' | 'html';
  */
 @Component({
     template: `
-        <div class="jigsaw-tooltip"
+        <div class="jigsaw-tooltip" [style.display]="tooltip ? 'block' : 'none'"
             [ngClass]="{'jigsaw-tooltip-light':initData?.theme == 'light',
                         'jigsaw-tooltip-dark':initData?.theme == 'dark'}">
-            <div [trustedHtml]="tooltip" [trustedHtmlContext]="initData?.context" [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"></div>
+            <div [trustedHtml]="_$tooltip" [trustedHtmlContext]="initData?.context"
+                 [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+            </div>
         </div>
     `,
     encapsulation: ViewEncapsulation.None,
@@ -40,17 +42,20 @@ export class JigsawTooltipComponent implements IPopupable {
     constructor(public changeDetector: ChangeDetectorRef) {
     }
 
+    public _$tooltip: string;
+
     public get tooltip(): string {
-        if (!this.initData || CommonUtils.isUndefined(this.initData.tooltip)) {
-            return '...';
+        this._$tooltip = null;
+        if (!this.initData?.tooltip && typeof this.initData?.tooltip != 'number') {
+            return this._$tooltip;
         }
-        let tooltip = this.initData.tooltip.toString();
+        this._$tooltip = String(this.initData.tooltip);
         if (this.initData.renderAs !== 'html') {
-            tooltip = tooltip.replace(/&/g, '&amp;')
+            this._$tooltip = this._$tooltip.replace(/&/g, '&amp;')
                 .replace(/</g, '&lt;')
                 .replace(/>/g, '&gt;');
         }
-        return tooltip;
+        return this._$tooltip;
     }
 }
 
