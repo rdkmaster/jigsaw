@@ -35,3 +35,12 @@
         </ul>
     </div>
 </div>
+<jigsaw-header>subLayers</jigsaw-header>
+<div>
+    <ul [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
+        <li *ngFor="let layer of subLayers; let i = index">
+            <span>{{i}}.</span>
+            <span>{{layer.name}}</span>
+        </li>
+    </ul>
+</div>
