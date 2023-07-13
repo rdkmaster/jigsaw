@@ -12,6 +12,10 @@
         <span>页面名称：</span>
         <span>{{data[pageIndex].name}}</span>
     </li>
+    <li>
+        <jigsaw-input [(value)]="searchTextValue"></jigsaw-input>
+        <jigsaw-button (click)="searchText()">查询</jigsaw-button>
+    </li>
 </ul>
 
 <div class="layers-cntr">
