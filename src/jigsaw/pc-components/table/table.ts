@@ -960,7 +960,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _setVerticalScrollbarOffset() {
+        return;
         if (this._yScrollbarElement) {
+            
             this._renderer.setStyle(this._yScrollbarElement, 'left',
                 this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
         }

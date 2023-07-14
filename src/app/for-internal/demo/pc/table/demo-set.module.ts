@@ -127,6 +127,8 @@ import { HideColumnDividersDemoComponent } from "./hide-column-dividers/demo.com
 import { HideColumnDividersDemoModule } from "./hide-column-dividers/demo.module";
 import { TableDownloadDemoComponent } from "./download/demo.component";
 import { TableDownloadDemoModule } from "./download/demo.module";
+import { TableFreezeColumnDemoModule } from "./freeze-column/demo.module";
+import { TableFreezeColumnDemoComponent } from "./freeze-column/demo.component";
 
 export const routerConfig = [
     {
@@ -319,6 +321,9 @@ export const routerConfig = [
         path: 'download', component: TableDownloadDemoComponent
     },
     {
+        path: 'freeze-column', component: TableFreezeColumnDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -339,7 +344,7 @@ export const routerConfig = [
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
-        TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule
+        TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule, TableFreezeColumnDemoModule
     ]
 })
 export class TableDemoModule {
