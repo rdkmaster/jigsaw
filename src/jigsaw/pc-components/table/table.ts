@@ -838,7 +838,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tBodyColGroup = host.querySelectorAll('.jigsaw-table-body > colgroup col');
         const tHeadTds = host.querySelectorAll('.jigsaw-table-header > thead td');
         const tBodyTds = host.querySelectorAll('.jigsaw-table-body > thead td');
-        if (!tHeadColGroup || !tHeadColGroup.length) return;
+        if (!tHeadColGroup || !tHeadColGroup.length) {
+            return;
+        }
 
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'auto');

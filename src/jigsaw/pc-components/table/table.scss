@@ -176,6 +176,13 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         z-index: $zindex-level-1;
     }
 
+    .#{$jigsaw-table}-header-range {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: inherit;
+    }
+
     .#{$jigsaw-table}-range {
         height: 100%;
         padding-top: 32px;
