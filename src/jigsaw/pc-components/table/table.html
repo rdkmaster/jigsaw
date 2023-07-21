@@ -1,4 +1,4 @@
-<div class="jigsaw-table-range" #contentScrollbar
+<div class="jigsaw-table-range"
     [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
     <div #headerScrollbar class="jigsaw-table-header-range"
         [perfectScrollbar]="{suppressScrollY: true, wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
@@ -27,7 +27,7 @@
             </thead>
         </table>
     </div>
-    <div #bodyScrollbar class="jigsaw-table-body-range" style="width:100%"
+    <div #contentScrollbar class="jigsaw-table-body-range" style="width:100%"
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
