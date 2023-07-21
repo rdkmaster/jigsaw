@@ -10,6 +10,7 @@ export class SelectInfiniteScrollDemoComponent {
     public data: InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray;
     public value;
     public searchable = true;
+    public clearable = false;
     public disabled = false;
     public multipleSelect = false;
     public optionCount = 5;
@@ -42,7 +43,7 @@ export class SelectInfiniteScrollDemoComponent {
         this.data.pagingInfo.pageSize = 20;
         this.data.fromAjax();
         this.data.dataReviser = (td) => {
-            return { data: TableData.toArray(td), paging : td.paging };
+            return { data: TableData.toArray(td), paging: td.paging };
         };
     }
 
@@ -65,7 +66,7 @@ export class SelectInfiniteScrollDemoComponent {
         this.data.pagingInfo.pageSize = 20;
         this.data.fromAjax();
         this.data.dataReviser = (td) => {
-            return { data: TableData.toArray(td), paging : td.paging };
+            return { data: TableData.toArray(td), paging: td.paging };
         };
     }
 
@@ -76,6 +77,11 @@ export class SelectInfiniteScrollDemoComponent {
 
     public _$clearValue() {
         this.value = undefined;
+    }
+
+    public _$changeValue() {
+        console.log(this.value);
+        this.value = { name: '修改后的选项' };
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
