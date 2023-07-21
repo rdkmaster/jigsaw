@@ -733,9 +733,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._currentPageChangeSubscription = data.pagingInfo.subscribe(() => {
-            // 这里需要等待页数切换后表格数据更新完毕后更新滚动条
+            if (this.data instanceof LocalPageableTableData) {
+                this._bodyScrollbar.scrollToTop();
+                return;
+            }
+            // 这里如果不是本地分页需要等待表格数据更新完毕后更新滚动条
             this.data.onAjaxComplete(() => {
-                this._bodyScrollbar.elementRef.nativeElement.scrollTop = 0;
+                if (this._bodyScrollbar.elementRef.nativeElement.scrollTop == 0) {
+                    return;
+                }
+                this._bodyScrollbar.scrollToTop();
             })
         })
     }
