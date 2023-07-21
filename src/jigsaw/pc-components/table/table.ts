@@ -17,14 +17,14 @@
     ViewChild,
     ViewChildren
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {Subscription} from "rxjs";
-import {TranslateModule} from "@ngx-translate/core";
-import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
-import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
-import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
-import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
-import {AffixUtils} from "../../common/core/utils/internal-utils";
+import { CommonModule } from "@angular/common";
+import { Subscription } from "rxjs";
+import { TranslateModule } from "@ngx-translate/core";
+import { PerfectScrollbarDirective, PerfectScrollbarModule } from "ngx-perfect-scrollbar";
+import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
+import { JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox } from "./table-inner.components";
+import { LocalPageableTableData, TableData } from "../../common/core/data/table-data";
+import { AffixUtils } from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -36,21 +36,21 @@ import {
     TableDataChangeEvent,
     TableHeadSetting, TableRowExpandOptions
 } from "./table-typings";
-import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
-import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
-import {JigsawTrustedHtmlModule, TrustedHtmlHelper} from "../../common/directive/trusted-html/trusted-html";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer} from "./table-renderer";
-import {TableUtils} from "./table-utils";
+import { CallbackRemoval, CommonUtils } from "../../common/core/utils/common-utils";
+import { IPageable, PagingInfo, SortOrder } from "../../common/core/data/component-data";
+import { JigsawTrustedHtmlModule, TrustedHtmlHelper } from "../../common/directive/trusted-html/trusted-html";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { DefaultCellRenderer, JigsawTableRendererModule, TableCellTextEditorRenderer } from "./table-renderer";
+import { TableUtils } from "./table-utils";
 import { JigsawFloatModule } from "../../common/directive/float/float";
 import { JigsawButtonModule } from "../button/button";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawSearchInputModule } from "../input/search-input";
-import {TranslateHelper} from "../../common/core/utils/translate-helper";
+import { TranslateHelper } from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
-import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
-import {JigsawThemeService} from "../../common/core/theming/theme";
+import { HeaderFilter } from "../../common/core/data/unified-paging/paging";
+import { JigsawThemeService } from "../../common/core/theming/theme";
 
 
 @WingsTheme('table.scss')
@@ -72,9 +72,9 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
 export class JigsawTable extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
 
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
-                protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector, private _themeService: JigsawThemeService) {
+        protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector, private _themeService: JigsawThemeService) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -204,7 +204,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChild('tableHeader')
     private _tableHeader: ElementRef;
 
-    @ViewChildren('tableHeaderCell', {read: ElementRef})
+    @ViewChildren('tableHeaderCell', { read: ElementRef })
     private _tableHeaderCell: QueryList<ElementRef>;
 
     /**
@@ -408,7 +408,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$blankRow:string[] = [];
+    public _$blankRow: string[] = [];
 
     private _updateFillUpBlankRow(): void {
         this._$blankRow = [];
@@ -481,7 +481,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 cd = <ColumnDefine>CommonUtils.shallowCopy(cd);
                 cd.target = field;
             }
-            columnDefines.push(cd ? cd : {target: field});
+            columnDefines.push(cd ? cd : { target: field });
         });
 
         if (this._additionalColumnDefines) {
@@ -652,7 +652,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.doubleClick.emit(rowIndex);
     }
 
-    @ViewChildren('tableRow', {read: ElementRef})
+    @ViewChildren('tableRow', { read: ElementRef })
     private _rowElementRefs: QueryList<ElementRef>;
 
     public scrollRowIntoView(rowIndex: number, autoSelect: boolean = true): void {
@@ -661,7 +661,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             console.warn('unable to find row element by index', rowIndex);
             return;
         }
-        row.nativeElement.scrollIntoView({block: "center", inline: "nearest"});
+        row.nativeElement.scrollIntoView({ block: "center", inline: "nearest" });
         if (autoSelect) {
             this.selectedRow = rowIndex;
         }
@@ -816,10 +816,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         })
     }
 
-    @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('contentScrollbar', { read: PerfectScrollbarDirective })
     public contentScrollbar: PerfectScrollbarDirective;
 
-    @ViewChild('bodyScrollbar', {read: PerfectScrollbarDirective})
+    @ViewChild('bodyScrollbar', { read: PerfectScrollbarDirective })
     private _bodyScrollbar: PerfectScrollbarDirective;
 
     /**
@@ -894,10 +894,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'fixed');
         });
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
+        // this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
+        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
+        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', this.contentWidth == 'auto' ? '100%' : this.contentWidth);
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', this.contentWidth == 'auto' ? '100%' : this.contentWidth);
+        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
     }
 
     private _getElementWidth(el: Element): number {
@@ -927,23 +930,27 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tableHeader = host.querySelector('table.jigsaw-table-header');
         const tableBody = host.querySelector('table.jigsaw-table-body');
         const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
+        const tableHeaderRange = host.querySelector('.jigsaw-table-header-range');
         const tableRange = host.querySelector('.jigsaw-table-range');
 
         if (this._$cellSettings.length || this._$headerSettings.length) {
-            // table body's width is always not less than the host component
-            if (host.offsetWidth > tableBody.offsetWidth) {
-                this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+            // // table body's width is always not less than the host component
+            // if (host.offsetWidth > tableBody.offsetWidth) {
+            //     this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+            // }
+
+            if (tableBodyRange.offsetWidth != host.offsetWidth) {
+                this._renderer.setStyle(tableBodyRange, 'width', host.offsetWidth + 'px');
             }
 
-            // table body range's width is always equal to table body's
-            if (tableBodyRange.offsetWidth != tableBody.offsetWidth) {
-                this._renderer.setStyle(tableBodyRange, 'width', tableBody.offsetWidth + 'px');
+            if (tableHeaderRange.offsetWidth != host.offsetWidth) {
+                this._renderer.setStyle(tableHeaderRange, 'width', host.offsetWidth + 'px');
             }
 
-            // table header's width is always equal to table body's
-            if (tableHeader.offsetWidth != tableBody.offsetWidth) {
-                this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
-            }
+            // // table header's width is always equal to table body's
+            // if (tableHeader.offsetWidth != tableBody.offsetWidth) {
+            //     this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
+            // }
         }
 
         // 根据表头的高度，设置表体的padding-top
@@ -962,9 +969,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _setVerticalScrollbarOffset() {
-        return;
         if (this._yScrollbarElement) {
-            
             this._renderer.setStyle(this._yScrollbarElement, 'left',
                 this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
         }
@@ -1108,7 +1113,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
         const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
-            + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
+            + data.map(e => e.map(i => `"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
 
         const link = document.createElement("a");
         link.setAttribute("href", csvContent);
