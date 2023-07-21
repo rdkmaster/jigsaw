@@ -7,7 +7,7 @@
 <jigsaw-button (click)="changeData()">change data</jigsaw-button>
 <br>
 <br>
-<jigsaw-table [data]="pageable" [columnDefines]="columns"></jigsaw-table>
+<jigsaw-table [data]="pageable" [columnDefines]="columns" maxHeight="400px"></jigsaw-table>
 <jigsaw-pagination style="margin-top: 8px"
     [data]="pageable"
     [pageSizeOptions]="[5, 10, 20]"
