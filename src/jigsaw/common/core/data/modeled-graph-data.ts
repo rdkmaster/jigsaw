@@ -517,6 +517,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
 export class PieSeries extends SeriesBase {
     public radius: number[];
     public center: number[];
+    public roseType?: boolean | 'radius' | 'area';
 }
 
 export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
@@ -639,6 +640,7 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                 seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
                 seriesItem.radius = seriesData.radius.map(r => r + '%');
                 seriesItem.center = seriesData.center.map(r => r + '%');
+                seriesItem.roseType = seriesData.roseType;
                 return seriesItem;
             });
         CommonUtils.extendObject(options, this.template.optionPatch);
