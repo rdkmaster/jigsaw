@@ -4,6 +4,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     @include inline-block;
     position: relative;
     width: 100%;
+
     table {
         width: 100%;
         text-align: center;
@@ -58,6 +59,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
 
                 &.jigsaw-cell-align-left {
+
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: flex-start;
@@ -70,6 +72,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
 
                 &.jigsaw-cell-align-center {
+
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: center;
@@ -82,6 +85,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
 
                 &.jigsaw-cell-align-right {
+
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         justify-content: flex-end;
@@ -94,6 +98,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
 
                 &.jigsaw-cell-no-padding {
+
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
                         padding: 0px;
@@ -105,6 +110,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         thead {
             color: $font-color-heading-bold;
             font-weight: bold;
+
             tr {
                 height: 32px;
 
@@ -119,6 +125,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 }
             }
         }
+
         tbody {
             .#{$jigsaw-table}-line-ellipsis {
                 .#{$jigsaw-table}-cell-content {
@@ -129,11 +136,14 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
             }
+
             tr {
                 height: 32px;
+
                 &:nth-child(2n) {
                     background: $bg-transparent;
                 }
+
                 &:nth-child(2n-1) {
                     background: $bg-transparent;
                 }
@@ -176,23 +186,28 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         z-index: $zindex-level-1;
     }
 
-    .#{$jigsaw-table}-header-range {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: inherit;
-    }
-
     .#{$jigsaw-table}-range {
         height: 100%;
         padding-top: 32px;
+        background: green;
+
         &.#{$jigsaw-table}-hide-head {
             padding-top: 0 !important;
         }
     }
 
+    .#{$jigsaw-table}-header-range {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: inherit;
+        background: red;
+    }
+
     .#{$jigsaw-table}-body-range {
         height: 100%;
+        background: blue;
+
         &.#{$jigsaw-table}-no-data {
             height: 160px;
             border: 1px solid $border-color-default;
@@ -205,6 +220,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     }
 
     .#{$jigsaw-table}-auto-width {
+
         .#{$jigsaw-table}-cell-content,
         jigsaw-table-header {
             white-space: nowrap;
@@ -226,11 +242,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     }
 
     .#{$jigsaw-table}-body {
-        > thead {
+        >thead {
             tr {
                 height: 0 !important;
             }
-            
+
             td {
                 height: 0 !important;
                 border: none;
@@ -297,7 +313,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         table tbody tr td,
         table tbody tr.jigsaw-table-row-expansion,
         .jigsaw-table-body-range.jigsaw-table-no-data,
-        &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range{
+        &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range {
             border-right: none;
             border-left: none;
         }
