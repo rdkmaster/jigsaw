@@ -108,6 +108,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 &.jigsaw-cell-freeze {
                     position: sticky;
                     background: red;
+                    z-index: 1;
                 }
             }
         }
