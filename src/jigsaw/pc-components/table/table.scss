@@ -104,6 +104,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                         padding: 0px;
                     }
                 }
+
+                &.jigsaw-cell-freeze {
+                    position: sticky;
+                    background: red;
+                }
             }
         }
 
@@ -189,7 +194,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-range {
         height: 100%;
         padding-top: 32px;
-        background: green;
 
         &.#{$jigsaw-table}-hide-head {
             padding-top: 0 !important;
@@ -201,12 +205,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         top: 0;
         width: 100%;
         height: inherit;
-        background: red;
+        overflow: hidden;
     }
 
     .#{$jigsaw-table}-body-range {
         height: 100%;
-        background: blue;
 
         &.#{$jigsaw-table}-no-data {
             height: 160px;

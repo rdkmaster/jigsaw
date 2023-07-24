@@ -467,6 +467,27 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
+    private _updateFreezeColumn() {
+        const headers = this._headerRowElementRefs.toArray()[0].nativeElement.querySelectorAll('td');
+        this._setCellsFreeze(headers);
+
+        this._rowElementRefs.toArray().forEach(row => {
+            const tds = row.nativeElement.querySelectorAll('td');
+            this._setCellsFreeze(tds);
+        })
+    }
+
+    private _setCellsFreeze(tds) {
+        let leftOffset = 0;
+        for (let i = 0; i < tds.length; i++) {
+            if (i >= this.freezeColumn) {
+                break;
+            }
+            tds[i].style.left = leftOffset + 'px';
+            leftOffset += tds[i].offsetWidth;
+        }
+    }
+
     /**
      * 生成混合后的列定义序列
      */
@@ -524,6 +545,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._handleScrollBar();
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
+            // 设置冻结列
+            this._updateFreezeColumn();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -655,6 +678,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChildren('tableRow', {read: ElementRef})
     private _rowElementRefs: QueryList<ElementRef>;
 
+    @ViewChildren('headerRow', {read: ElementRef})
+    private _headerRowElementRefs: QueryList<ElementRef>;
+
     public scrollRowIntoView(rowIndex: number, autoSelect: boolean = true): void {
         const row = this._rowElementRefs?.find((_, idx) => idx == rowIndex);
         if (!row) {
@@ -701,6 +727,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     @Input()
     public floatingHeader: boolean = false;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public freezeColumn: number = 3;
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
@@ -819,6 +851,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
 
+    @ViewChild('headerScrollbar', { read: ElementRef })
+    public headerScrollbar: ElementRef;
+
     /**
      * @internal
      */
@@ -891,13 +926,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         host.querySelectorAll('table').forEach(table => {
             this._renderer.setStyle(table, 'table-layout', 'fixed');
         });
-        // this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', '100%');
-        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', '100%');
-        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', this.contentWidth == 'auto' ? '100%' :  this.contentWidth);
+        const width = this.contentWidth == 'auto' || this.contentWidth == '_inner_auto_' ? '100%' : this.contentWidth;
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', width);
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'normal');
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', this.contentWidth == 'auto' ? '100%' :  this.contentWidth);
-        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', this.contentWidth);
+        this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', width);
     }
 
     private _getElementWidth(el: Element): number {
@@ -931,11 +963,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const tableRange = host.querySelector('.jigsaw-table-range');
 
         if (this._$cellSettings.length || this._$headerSettings.length) {
-            // // table body's width is always not less than the host component
-            // if (host.offsetWidth > tableBody.offsetWidth) {
-            //     this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
-            // }
-
             if (tableBodyRange.offsetWidth != host.offsetWidth) {
                 this._renderer.setStyle(tableBodyRange, 'width', host.offsetWidth + 'px');
             }
@@ -944,10 +971,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 this._renderer.setStyle(tableHeaderRange, 'width', host.offsetWidth + 'px');
             }
 
-            // // table header's width is always equal to table body's
-            // if (tableHeader.offsetWidth != tableBody.offsetWidth) {
-            //     this._renderer.setStyle(tableHeader, 'width', tableBody.offsetWidth + 'px');
-            // }
+            if (host.offsetWidth > tableBody.offsetWidth) {
+                this._renderer.setStyle(tableHeader, 'width', host.offsetWidth + 'px');
+                this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');
+            }
         }
 
         // 根据表头的高度，设置表体的padding-top
@@ -967,10 +994,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     private _setVerticalScrollbarOffset() {
         if (this._yScrollbarElement) {
-            
             this._renderer.setStyle(this._yScrollbarElement, 'left',
                 this._elementRef.nativeElement.offsetWidth + this.contentScrollbar.geometry().x - 15 + 'px');
         }
+    }
+
+    /**
+     * 设置表头滚动
+     *
+     */
+    private _setHeaderScrollLeft() {
+        if (!this.headerScrollbar || !this.contentScrollbar) {
+            return;
+        }
+
+        this.headerScrollbar.nativeElement.scrollLeft = this.contentScrollbar.elementRef.nativeElement.scrollLeft;
     }
 
     /**
@@ -1004,7 +1042,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeHorizontalScrollListener: Function;
 
     /**
-     * 监听横向滚动事件，更新纵向滚动条的位置
+     * 监听横向滚动事件，更新纵向滚动条的位置，更新表头滚动
      *
      */
     private _listenHorizontalScroll() {
@@ -1014,7 +1052,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._zone.runOutsideAngular(() => {
             const el = this.contentScrollbar.elementRef.nativeElement;
             this._removeHorizontalScrollListener = this._renderer.listen(
-                el, 'ps-scroll-x', () => this._setVerticalScrollbarOffset());
+                el, 'ps-scroll-x', () => {
+                    this._setVerticalScrollbarOffset();
+                    this._setHeaderScrollLeft();
+                });
         });
     }
 
