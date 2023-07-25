@@ -108,6 +108,26 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 &.jigsaw-cell-freeze {
                     position: sticky;
                     z-index: 1;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        right: -1px;
+                        width: 1px;
+                        height: 100%;
+                        background: $border-color-default;
+                    }
+
+                    &:first-of-type::after {
+                        content: "";
+                        position: absolute;
+                        top: 0;
+                        left: -1px;
+                        width: 1px;
+                        height: 100%;
+                        background: $border-color-default;
+                    }
                 }
             }
         }
@@ -218,6 +238,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         &.#{$jigsaw-table}-no-data {
             height: 160px;
             border: 1px solid $border-color-default;
+        }
+
+        .ps__rail-x {
+            z-index: 2;
         }
     }
 
