@@ -107,7 +107,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 &.jigsaw-cell-freeze {
                     position: sticky;
-                    background: red;
                     z-index: 1;
                 }
             }
@@ -177,6 +176,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 &:last-of-type.jigsaw-table-row-expansion {
                     border-bottom: 1px solid $border-color-default;
+                }
+
+                td.jigsaw-cell-freeze {
+                    background: $bg-body;
                 }
             }
         }
