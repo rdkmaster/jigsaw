@@ -150,9 +150,21 @@ export class SeriesBase {
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
     public name?: string;
+    public more?: any;
 
     constructor(name?: string) {
         this.name = name;
+    }
+
+    public static extend(seriesOption: EchartSeriesItem, seriesData: SeriesBase, index: number) {
+        const seriesDataBak = <PieSeries>CommonUtils.deepCopy(seriesData);
+        delete seriesDataBak.dimensionField;
+        delete seriesDataBak.dimensions;
+        delete seriesDataBak.usingAllDimensions;
+        delete seriesDataBak.indicators;
+        delete seriesDataBak.more;
+        Object.assign(seriesOption, seriesDataBak);
+        seriesOption.name = seriesOption.name ? seriesOption.name : 'series' + index;
     }
 }
 
@@ -518,6 +530,7 @@ export class PieSeries extends SeriesBase {
     public radius: number[];
     public center: number[];
     public roseType?: boolean | 'radius' | 'area';
+    public label?: any;
 }
 
 export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
@@ -637,10 +650,9 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
-                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
-                seriesItem.radius = seriesData.radius.map(r => r + '%');
-                seriesItem.center = seriesData.center.map(r => r + '%');
-                seriesItem.roseType = seriesData.roseType;
+                SeriesBase.extend(seriesItem, seriesData, idx);
+                seriesItem.radius = seriesData.radius ? seriesItem.radius.map(r => r + '%') : seriesData.radius;
+                seriesItem.center = seriesItem.center ? seriesItem.center.map(r => r + '%') : seriesItem.center;
                 return seriesItem;
             });
         CommonUtils.extendObject(options, this.template.optionPatch);
@@ -668,9 +680,6 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
 export class GaugeSeries extends SeriesBase {
     public dimensions: Dimension[] = [new Dimension('')];
     public usingAllDimensions: boolean = false;
-
-    public model?: any[];
-    public more?: any;
 
     public center?: number[] = [50, 50];
     public radius?: number = 90;
@@ -787,21 +796,9 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
-                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
-                if (seriesData.radius) {
-                    seriesItem.radius = seriesData.radius + '%';
-                }
-                if (seriesData.center) {
-                    seriesItem.center = seriesData.center.map(r => r + '%');
-                }
-
-                let extendParam = ['startAngle', 'endAngle', 'min', 'max', 'splitNumber', 'axisLine', 'axisTick', 'axisLabel', 'splitLine', 'pointer', 'title', 'detail'];
-
-                extendParam.forEach(param => {
-                    if (CommonUtils.isDefined(seriesData[param])) {
-                        seriesItem[param] = seriesData[param];
-                    }
-                });
+                SeriesBase.extend(seriesItem, seriesData, idx);
+                seriesItem.radius = seriesData.radius ? seriesData.radius + '%' : seriesData.radius;
+                seriesItem.center = seriesData.center ? seriesData.center.map(r => r + '%') : seriesData.center;
 
                 return seriesItem;
             });
@@ -1102,9 +1099,6 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 轮廓图相关数据对象
 export class MapSeries extends SeriesBase {
-    public model?: any[];
-    public more?: any;
-
     public mapType?: string = '';
     public label?: string;
     public itemStyle?: string;
@@ -1202,18 +1196,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                 seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
                     .map(row => ({name: row[0], value: row[1]}));
 
-                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
-                seriesItem.mapType = seriesData.mapType;
-                seriesItem.roam = seriesData.roam;
-
-                let extendParam = ['label', 'itemStyle', 'animation'];
-
-                extendParam.forEach(param => {
-                    if (CommonUtils.isDefined(seriesData[param])) {
-                        seriesItem[param] = seriesData[param];
-                    }
-                });
-
+                SeriesBase.extend(seriesItem, seriesData, idx);
                 return seriesItem;
             });
         CommonUtils.extendObject(options, this.template.optionPatch);
