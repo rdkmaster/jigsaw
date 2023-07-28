@@ -1,0 +1,9 @@
+.component-cntr {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.component-cntr>* {
+    margin-right: 8px;
+}

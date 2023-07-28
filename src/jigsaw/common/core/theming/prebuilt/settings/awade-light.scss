@@ -1,36 +1,36 @@
-/* paletx-pro-light */
-$blue-1: mix(#fff, #41addc, 90%);
-$blue-2: mix(#fff, #41addc, 80%);
-$blue-3: mix(#fff, #41addc, 60%);
-$blue-4: mix(#fff, #41addc, 40%);
-$blue-5: mix(#fff, #41addc, 20%);
-$blue-6: #41addc;
-$blue-7: mix(#000, #41addc, 10%);
-$blue-8: mix(#000, #41addc, 20%);
-$blue-9: mix(#000, #41addc, 30%);
-$blue-10: mix(#000, #41addc, 40%);
+/* awade-light */
+$blue-1: #e6f5ff;
+$blue-2: #bde4ff;
+$blue-3: #94d2ff;
+$blue-4: #6bbfff;
+$blue-5: #42aaff;
+$blue-6: #1a93ff;
+$blue-7: #1178d9;
+$blue-8: #0b5fb3;
+$blue-9: #06478c;
+$blue-10: #023166;
 
-$cyan-1: mix(#fff, #01c5c2, 90%);
-$cyan-2: mix(#fff, #01c5c2, 80%);
-$cyan-3: mix(#fff, #01c5c2, 60%);
-$cyan-4: mix(#fff, #01c5c2, 40%);
-$cyan-5: mix(#fff, #01c5c2, 20%);
-$cyan-6: #01c5c2;
-$cyan-7: mix(#000, #01c5c2, 10%);
-$cyan-8: mix(#000, #01c5c2, 20%);
-$cyan-9: mix(#000, #01c5c2, 30%);
-$cyan-10: mix(#000, #01c5c2, 40%);
+$cyan-1: #e0fffc;
+$cyan-2: #b0f5f0;
+$cyan-3: #7fe3de;
+$cyan-4: #54d1cd;
+$cyan-5: #2ebfbd;
+$cyan-6: #0eaeae;
+$cyan-7: #099294;
+$cyan-8: #05767a;
+$cyan-9: #025c61;
+$cyan-10: #004347;
 
-$green-1: mix(#fff, #87d068, 90%);
-$green-2: mix(#fff, #87d068, 80%);
-$green-3: mix(#fff, #87d068, 60%);
-$green-4: mix(#fff, #87d068, 40%);
-$green-5: mix(#fff, #87d068, 20%);
-$green-6: #87d068;
-$green-7: mix(#000, #87d068, 10%);
-$green-8: mix(#000, #87d068, 20%);
-$green-9: mix(#000, #87d068, 30%);
-$green-10: mix(#000, #87d068, 40%);
+$green-1: #e8ffe9;
+$green-2: #c3fac7;
+$green-3: #97e89e;
+$green-4: #6fd67a;
+$green-5: #4dc45b;
+$green-6: #2eb240;
+$green-7: #219633;
+$green-8: #167a27;
+$green-9: #0d5e1c;
+$green-10: #074213;
 
 $lime-1: #f7ffe0;
 $lime-2: #e0f2b3;
@@ -54,27 +54,27 @@ $yellow-8: #a38607;
 $yellow-9: #806704;
 $yellow-10: #5c4802;
 
-$orange-1: mix(#fff, #e78f4e, 90%);
-$orange-2: mix(#fff, #e78f4e, 80%);
-$orange-3: mix(#fff, #e78f4e, 60%);
-$orange-4: mix(#fff, #e78f4e, 40%);
-$orange-5: mix(#fff, #e78f4e, 20%);
-$orange-6: #e78f4e;
-$orange-7: mix(#000, #e78f4e, 10%);
-$orange-8: mix(#000, #e78f4e, 20%);
-$orange-9: mix(#000, #e78f4e, 30%);
-$orange-10: mix(#000, #e78f4e, 40%);
+$orange-1: #fff3e3;
+$orange-2: #ffe1ba;
+$orange-3: #ffce91;
+$orange-4: #fab566;
+$orange-5: #f59c3d;
+$orange-6: #f08316;
+$orange-7: #cc6a0e;
+$orange-8: #a85308;
+$orange-9: #853e04;
+$orange-10: #612b01;
 
-$red-1: mix(#fff, #ec6d6d, 90%);
-$red-2: mix(#fff, #ec6d6d, 80%);
-$red-3: mix(#fff, #ec6d6d, 60%);
-$red-4: mix(#fff, #ec6d6d, 40%);
-$red-5: mix(#fff, #ec6d6d, 20%);
-$red-6: #ec6d6d;
-$red-7: mix(#000, #ec6d6d, 10%);
-$red-8: mix(#000, #ec6d6d, 20%);
-$red-9: mix(#000, #ec6d6d, 30%);
-$red-10: mix(#000, #ec6d6d, 40%);
+$red-1: #ffe5e3;
+$red-2: #ffc8c4;
+$red-3: #ffaaa6;
+$red-4: #fa8884;
+$red-5: #f56764;
+$red-6: #f04646;
+$red-7: #cc3134;
+$red-8: #a82025;
+$red-9: #851318;
+$red-10: #61090f;
 
 $magenta-1: #ffe6f4;
 $magenta-2: #ffc4e8;
@@ -110,15 +110,15 @@ $navy-9: #171e80;
 $navy-10: #0b0f5e;
 
 $gray-1: #ffffff;
-$gray-2: #e9e9e9;
-$gray-3: #dcdcdc;
-$gray-4: #bfbfbf;
-$gray-5: #999999;
-$gray-6: #777777;
-$gray-7: #666666;
-$gray-8: #444444;
-$gray-9: #333333;
-$gray-10: #222222;
+$gray-2: #f5f5f5;
+$gray-3: #f0f0f0;
+$gray-4: #eeeeee;
+$gray-5: #e5e5e5;
+$gray-6: #cccccc;
+$gray-7: #8a8a8a;
+$gray-8: #737373;
+$gray-9: #4d4d4d;
+$gray-10: #333333;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -178,10 +178,10 @@ $status-error: $red-6;
 /*@public*/ $success-disabled: $green-2;
 
 /* 功能色-warning */
-/*@public*/ $warning-default: $orange-6;
-/*@public*/ $warning-hover: $orange-7;
-/*@public*/ $warning-active: $orange-8;
-/*@public*/ $warning-disabled: $orange-2;
+/*@public*/ $warning-default: $yellow-6;
+/*@public*/ $warning-hover: $yellow-7;
+/*@public*/ $warning-active: $yellow-8;
+/*@public*/ $warning-disabled: $yellow-2;
 
 /* 功能色-error */
 /*@public*/ $error-default: $red-6;
@@ -190,10 +190,10 @@ $status-error: $red-6;
 /*@public*/ $error-disabled: $red-2;
 
 /* 功能色-danger */
-/*@public*/ $danger-default: $yellow-6;
-/*@public*/ $danger-hover: $yellow-7;
-/*@public*/ $danger-active: $yellow-8;
-/*@public*/ $danger-disabled: $yellow-2;
+/*@public*/ $danger-default: $orange-6;
+/*@public*/ $danger-hover: $orange-7;
+/*@public*/ $danger-active: $orange-8;
+/*@public*/ $danger-disabled: $orange-2;
 
 /* 功能色-process */
 /*@public*/ $process-default: $navy-6;
@@ -203,8 +203,8 @@ $status-error: $red-6;
 
 /* brand 品牌色 */
 /*@public*/ $brand-default: $blue-6;
-/*@public*/ $brand-hover: $blue-5;
-/*@public*/ $brand-active: $blue-7;
+/*@public*/ $brand-hover: $blue-7;
+/*@public*/ $brand-active: $blue-8;
 /*@public*/ $brand-disabled: $blue-2;
 $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
@@ -212,10 +212,10 @@ $brand-active-lighten: $blue-2;
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #f1f2f6;
-/*@public*/ $bg-container: #f7f7f7;
+/*@public*/ $bg-container: $gray-1;
 /*@public*/ $bg-component: $gray-1;
-/*@public*/ $bg-component-darken: #f7f7f7;
-/*@public*/ $bg-disabled: #f7f7f7;
+/*@public*/ $bg-component-darken: $gray-2;
+/*@public*/ $bg-disabled: $gray-2;
 /*@public*/ $bg-hover: $blue-1;
 /*@public*/ $bg-active: $blue-2;
 $bg-transparent: transparent;
@@ -226,44 +226,44 @@ $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;
 
 /* font 字体颜色 */
-/*@public*/ $font-color-default: $gray-7;
-/*@public*/ $font-color-disabled: $gray-4;
-/*@public*/ $font-color-heading: $gray-9;
-$font-color-disabled-spec: $gray-4;
-/*@public*/ $font-color-hint: $gray-5;
-$font-color-watermark: $gray-5;
-$font-color-heading-bold: $gray-10;
+/*@public*/ $font-color-default: $gray-9;
+/*@public*/ $font-color-disabled: $gray-6;
+/*@public*/ $font-color-heading: $gray-10;
+$font-color-disabled-spec: $gray-6;
+/*@public*/ $font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading-bold: $gray-9;
 $font-color-heading-bold-lighten: $gray-9;
-$font-color-tag: $gray-5;
+$font-color-tag: $gray-8;
 $font-color-white: hsl(0, 0%, 100%);
-$font-color-white-darken: $gray-3;
+$font-color-white-darken: $gray-6;
 $font-color-brand: $brand-default;
 $font-color-brand-hover: $brand-hover;
 
 /* border 边框 */
-/*@public*/ $border-color-default: $gray-3;
-/*@public*/ $border-color-disabled: $gray-2;
-$border-color-popup: $gray-2;
+/*@public*/ $border-color-default: $gray-6;
+/*@public*/ $border-color-disabled: $gray-4;
+$border-color-popup: $gray-4;
 $border-color-shadow-cntr: transparent;
 
 /* split line 分割线 */
-/*@public*/ $splitline-default: $gray-2;
+/*@public*/ $splitline-default: $gray-4;
 
 /* icon 图标 */
-/*@public*/ $icon-color-default: $gray-7;
+/*@public*/ $icon-color-default: $gray-6;
 /*@public*/ $icon-color-disabled: $gray-4;
-/*@public*/ $icon-color-stress: $gray-9;
+/*@public*/ $icon-color-stress: $gray-8;
 $icon-color-inactive: $gray-4;
 
 /* box-shadow 阴影（基于altitude）*/
 /*@public*/ $box-shadow-lv0: none;
-/*@public*/ $box-shadow-lv1: 0px 1px 6px hsla(0, 0%, 0%, 0.2);
+/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
 /*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
 
 /* 导航色 */
-/*@public*/ $nav-header: #0096e7;
-$nav-navigation: $gray-2;
+/*@public*/ $nav-header: #0254F2;
+$nav-navigation: $gray-5;
 $nav-navigation-darken: $gray-3;
 $nav-hover: $blue-1;
 $nav-active: $gray-1;
@@ -274,3 +274,17 @@ $nav-border: $border-color-default;
 
 /* 蒙版色 */
 $mask-default: rgba(#000, 0.3);
+
+
+$blu:#0254F2;
+
+$gray-100:#ffffff; // tab选中  组件背景  侧边导航选中 collapse体
+$gray-96:#f5f5f5 ; // 左侧tab背景  侧边栏导航背景
+$gray-94:#f0f0f0 ; // 图标文字  底部菜单选中
+$gray-93:#eeeeee ; // tag背景
+$gray-90:#e5e5e5;//tab 背景   collapse头
+$gray-80:#cccccc; // 边框
+$gray-54:#8a8a8a ; // placeholder文字
+$gray-45:#737373 ; // 提示文本
+$gray-30:#4d4d4d ; // tab文字 collapse头文字
+

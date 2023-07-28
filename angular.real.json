@@ -68,6 +68,16 @@
                 "input": "src/jigsaw/common/core/theming/themes/zjcm-light.scss",
                 "bundleName": "themes/zjcm-light",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/awade-light.scss",
+                "bundleName": "themes/awade-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/awade-dark.scss",
+                "bundleName": "themes/awade-dark",
+                "inject": false
               }
             ],
             "scripts": [

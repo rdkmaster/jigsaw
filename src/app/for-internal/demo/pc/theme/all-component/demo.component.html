@@ -1,0 +1,73 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<j-switch [(checked)]="disabled" onLabel="禁用" offLabel="非禁用"></j-switch>
+
+<j-header>All Component</j-header>
+
+<div class="component-cntr">
+    <j-input [disabled]="disabled" placeholder="请输入文本"></j-input>
+    <j-numeric-input [showOption]="true" [disabled]="disabled" placeholder="请输入数字"></j-numeric-input>
+    <j-search-input [autoSearch]="false" [disabled]="disabled"></j-search-input>
+    <j-search-input [autoSearch]="true" [disabled]="disabled"></j-search-input>
+    <j-auto-complete-input placeholder="请输入自动补全文本" [data]="cityListText" [disabled]="disabled">
+    </j-auto-complete-input>
+</div>
+
+<div class="component-cntr">
+    <j-textarea placeholder="请输入文本"></j-textarea>
+</div>
+
+<div class="component-cntr">
+    <j-select [data]="cityList" [disabled]="disabled" placeholder="请选择城市"></j-select>
+    <j-collapse-select [disabled]="disabled" [data]="groupList" placeholder="请选择">
+    </j-collapse-select>
+    <j-group-select [disabled]="disabled" [data]="groupList" placeholder="请选择">
+    </j-group-select>
+</div>
+
+<div class="component-cntr">
+    <j-button colorType="default" [disabled]="disabled"> 普通按钮 </j-button>
+    <j-button colorType="primary" [disabled]="disabled"> 主导按钮 </j-button>
+    <j-button colorType="error" [disabled]="disabled"> 错误按钮 </j-button>
+    <j-button colorType="warning" [disabled]="disabled"> 警告按钮 </j-button>
+    <j-button colorType="primary" icon="iconfont iconfont-e0a1" [disabled]="disabled"> 关键按钮 </j-button>
+    <j-button colorType="default" icon="iconfont iconfont-e0a1" [disabled]="disabled"> 次级按钮 </j-button>
+    <j-button colorType="default" icon="iconfont iconfont-e35b" [disabled]="disabled"></j-button>
+    <j-button colorType="none" [disabled]="disabled"> 文字按钮 </j-button>
+</div>
+
+<div class="component-cntr">
+    <j-checkbox [enableIndeterminate]="true" [disabled]="disabled">Check Me</j-checkbox>
+    <j-switch [disabled]="disabled"></j-switch>
+    <j-radios-lite [data]="cityList" [disabled]="disabled"></j-radios-lite>
+</div>
+
+<div class="component-cntr">
+    <j-tag color="preset-gray" size="medium">灰色标签</j-tag>
+    <j-tag color="preset-blue" size="medium">蓝色标签</j-tag>
+    <j-tag color="preset-cyan" size="medium">青色标签</j-tag>
+    <j-tag color="preset-green" size="medium">绿色标签</j-tag>
+    <j-tag color="preset-magenta" size="medium">洋红标签</j-tag>
+    <j-tag color="preset-orange" size="medium">橘色标签</j-tag>
+    <j-tag color="preset-red" size="medium">红色标签</j-tag>
+    <j-tag color="preset-purple" size="medium">紫色标签</j-tag>
+</div>
+
+<div class="component-cntr">
+    <j-tabs-bar [data]="cityList"></j-tabs-bar>
+</div>
+
+<div class="component-cntr">
+    <j-navigation-menu [data]="navData"></j-navigation-menu>
+</div>
+
+<div class="component-cntr">
+    <j-tree-ext [(data)]="treeData"></j-tree-ext>
+</div>
+
+<div class="component-cntr">
+    <j-steps [data]="stepData"></j-steps>
+</div>

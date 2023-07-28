@@ -1,4 +1,4 @@
-/* paletx-pro-light */
+/* vmax-pro-light */
 $blue-1: #E6F5FE;
 $blue-2: #B3E2FC;
 $blue-3: #9AD8FC;
@@ -209,28 +209,7 @@ $status-error: $red-6;
 $brand-lighten: $blue-1;
 $brand-active-lighten: $blue-2;
 
-/* background 背景色
-    @大面积背景
-    $bg-body => 大面积背景色，用于页面背景
-    $bg-container => 大面积背景色，用于容器背景（卡片）
-
-    @组件背景
-    $bg-component => 组件背景
-    $bg-component-darken => 组件背景（偏灰）（date-picker）
-    $bg-transparent => 透明背景
-    $bg-popup => 弹框背景（dialog、notification、toast）
-    $bg-gray => 灰色背景（tag、表头）
-    $bg-gray-spec => 特殊的灰色背景，亮色下为白色，深色下为亮灰色（switch）
-
-    @状态
-    $bg-disabled => 禁用背景
-    $bg-hover => 悬停背景
-    $bg-active => 点击背景
-
-    @其他背景
-    $bg-scrollbar => 滚动条
-    $bg-scrollbar-lighten => 滚动条（偏浅）
-*/
+/* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #f1f2f6;
 /*@public*/ $bg-container: $gray-2;
@@ -246,17 +225,7 @@ $bg-gray-spec: $gray-1;
 $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;
 
-/* font 字体颜色
-    $font-color-default => 正文
-    $font-color-disabled => 禁用文字
-    $font-color-hint => 提示
-    $font-color-watermark => 水印文字
-    $font-color-heading => 非加粗标题
-    $font-color-heading-bold => 加粗标题
-    $font-color-tag => 标签文字
-    $font-color-white => 深底白字，纯白色（此变量色值不会变）
-    $font-color-white-darken => 深底白字，暗白色
-*/
+/* font 字体颜色 */
 /*@public*/ $font-color-default: $gray-9;
 /*@public*/ $font-color-disabled: $gray-6;
 /*@public*/ $font-color-heading: $gray-10;
@@ -271,10 +240,7 @@ $font-color-white-darken: $gray-6;
 $font-color-brand: $brand-default;
 $font-color-brand-hover: $brand-hover;
 
-/* border 边框
-    $border-color-default => 边框颜色
-    $border-color-disabled => 边框禁用
-*/
+/* border 边框 */
 /*@public*/ $border-color-default: $gray-5;
 /*@public*/ $border-color-disabled: $gray-4;
 $border-color-popup: $gray-4;
@@ -289,12 +255,7 @@ $border-color-shadow-cntr: transparent;
 /*@public*/ $icon-color-stress: $gray-8;
 $icon-color-inactive: $gray-4;
 
-/* box-shadow 阴影（基于altitude）
-    $box-shadow-lv0 => 背景
-    $box-shadow-lv1 => 页内卡片
-    $box-shadow-lv2 => Tooltip、浮动按钮、卡片hover、popover、抽屉、下拉框、级联框 、datepicker
-    $box-shadow-lv3 => 及时消息、模态弹框、alert
-*/
+/* box-shadow 阴影（基于altitude）*/
 /*@public*/ $box-shadow-lv0: none;
 /*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.2);
 /*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.15);

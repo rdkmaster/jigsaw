@@ -40,7 +40,7 @@ export class JigsawSelectGroup extends JigsawSelectGroupBase implements OnInit {
 
 @WingsTheme('select.scss')
 @Component({
-    selector: "jigsaw-collapse-select, j-select-collapse",
+    selector: "jigsaw-collapse-select, j-collapse-select",
     templateUrl: "collapse-and-group-select.html",
     host: {
         "[class.jigsaw-collapse-select-host]": "true",

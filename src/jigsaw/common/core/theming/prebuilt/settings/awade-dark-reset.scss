@@ -1,0 +1,44 @@
+.jigsaw-input-host .jigsaw-input-wrapper {
+    background: $bg-component;
+    border-color: $bg-component;
+}
+
+.jigsaw-numeric-input-host .jigsaw-numeric-input-wrapper {
+    background: $bg-component;
+    border-color: $bg-component;
+}
+
+.jigsaw-combo-select-host .jigsaw-combo-select .jigsaw-combo-select-selection {
+    background: $bg-component;
+    border-color: $bg-component;
+}
+
+.jigsaw-search-input-host .jigsaw-search-input .jigsaw-search-input-button {
+    background: $gray-3;
+    border-color: $bg-component;
+}
+
+.jigsaw-button-host {
+    background: $gray-3;
+
+    &.jigsaw-button-color-none {
+        background: transparent;
+    }
+}
+
+.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab {
+    color: $font-color-default;
+}
+
+.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab.jigsaw-tabs-tab-active {
+    background: $gray-4;
+    color: $font-color-default;
+}
+
+.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
+    background: $gray-4;
+}
+
+.jigsaw-tag-host.jigsaw-tag-preset-gray {
+    color: $font-color-default;
+}

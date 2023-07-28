@@ -1,14 +1,14 @@
-/* paletx-pro-dark */
-$blue-1: #192738;
-$blue-2: #1e3a59;
-$blue-3: #1f4b7a;
-$blue-4: #1c5c9c;
-$blue-5: #196dbd;
-$blue-6: #1681de;
-$blue-7: #3c99e6;
-$blue-8: #64b2ed;
-$blue-9: #8ecaf5;
-$blue-10: #bbe2fc;
+/* awade-dark */
+$blue-1: #011b51;
+$blue-2: #012774;
+$blue-3: #023497;
+$blue-4: #023eb6;
+$blue-5: #0348d4;
+$blue-6: #0254F2;
+$blue-7: #266efd;
+$blue-8: #538cfd;
+$blue-9: #86aefe;
+$blue-10: #b8d0fe;
 
 $cyan-1: #102426;
 $cyan-2: #143a3d;
@@ -109,16 +109,16 @@ $navy-8: #8290e0;
 $navy-9: #a4b0ed;
 $navy-10: #c8d1fa;
 
-$gray-1: #0f111a;
-$gray-2: #1b1d26;
-$gray-3: #22242e;
-$gray-4: #2a2c38;
-$gray-5: #323543;
-$gray-6: #474a59;
-$gray-7: #7b7e8c;
-$gray-8: #a4a7b3;
-$gray-9: #d9d9d9;
-$gray-10: #e5e5e5;
+$gray-1: #1c1c1c;
+$gray-2: #242424;
+$gray-3: #292929;
+$gray-4: #363636;
+$gray-5: #474747;
+$gray-6: #5b5b5b;
+$gray-7: #686868;
+$gray-8: #7b7b7b;
+$gray-9: #999999;
+$gray-10: #cccccc;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -212,12 +212,12 @@ $brand-active-lighten: $blue-2;
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #12131C;
-/*@public*/ $bg-container: $gray-2;
-/*@public*/ $bg-component: $gray-1;
+/*@public*/ $bg-container: $gray-4;
+/*@public*/ $bg-component: $gray-2;
 /*@public*/ $bg-component-darken: $gray-4;
-/*@public*/ $bg-disabled: $gray-6;
-/*@public*/ $bg-hover: $gray-4;
-/*@public*/ $bg-active: $gray-5;
+/*@public*/ $bg-disabled: $gray-7;
+/*@public*/ $bg-hover: $gray-5;
+/*@public*/ $bg-active: $gray-6;
 $bg-transparent: transparent;
 $bg-popup: $gray-2;
 $bg-gray: $gray-3;
@@ -226,9 +226,9 @@ $bg-scrollbar: $gray-5;
 $bg-scrollbar-lighten: $gray-7;
 
 /* font 字体颜色 */
-/*@public*/ $font-color-default: $gray-9;
+/*@public*/ $font-color-default: hsl(0, 0%, 100%);
 /*@public*/ $font-color-disabled: $gray-6;
-/*@public*/ $font-color-heading: $gray-10;
+/*@public*/ $font-color-heading: hsl(0, 0%, 100%);
 $font-color-disabled-spec: $gray-7;
 /*@public*/ $font-color-hint: $gray-7;
 $font-color-watermark: $gray-7;
@@ -250,9 +250,9 @@ $border-color-shadow-cntr: $gray-5;
 /*@public*/ $splitline-default: $gray-4;
 
 /* icon 图标 */
-/*@public*/ $icon-color-default: $gray-7;
-/*@public*/ $icon-color-disabled: $gray-4;
-/*@public*/ $icon-color-stress: $gray-10;
+/*@public*/ $icon-color-default: $gray-9;
+/*@public*/ $icon-color-disabled: $gray-10;
+/*@public*/ $icon-color-stress: $gray-9;
 $icon-color-inactive: $gray-4;
 
 /* box-shadow 阴影（基于altitude）*/
@@ -261,12 +261,12 @@ $icon-color-inactive: $gray-4;
 /*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.08);
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);
 
-/* 导航色 */
-/*@public*/ $nav-header: $gray-2;
-$nav-navigation: $gray-2;
-$nav-navigation-darken: $gray-3;
-$nav-hover: $gray-5;
-$nav-active: $gray-4;
+/* nav 导航色 */
+/*@public*/ $nav-header: $gray-3;
+$nav-navigation: $gray-3;
+$nav-navigation-darken: $gray-4;
+$nav-hover: $gray-6;
+$nav-active: $gray-5;
 $nav-color: $font-color-default;
 $nav-color-disabled: $font-color-disabled;
 $nav-color-active: $brand-default;
@@ -274,3 +274,32 @@ $nav-border: $border-color-default;
 
 /* 蒙版色 */
 $mask-default: rgba(#fff, 0.6);
+
+$color-hover:#454647;// tab-bar 选中， 左侧面板header
+
+$color-7: #121212; // 画布尺
+$color-9: #171717; // 底部操作栏已选
+$color-10: #191919; // 画布背景
+$color-11: #1c1c1c; // tab-bar 背景（tab-bar可能为透明）  / 画布背景
+$color-12: #1e1e1e; //代码黑框
+$color-14: #242424; // 组件背景
+$color-15:#262626; // 画布弹框
+$color-16:#292929; //顶部导航，侧边导航，右侧tab
+$color-16-1:#282828;
+$color-17: #2b2b2b; // 底部操作栏 右侧折叠header
+$color-18: #2e2e2e; // 左侧面板body
+$color-19: #303030; // 某个下拉框  右侧弹出面板内容器
+$color-21: #363636; // 底部操作栏弹出  侧边导航body  右侧弹出面板背景 左侧弹出面板背景
+$color-25: #404040; // 右侧折叠body  右侧弹出 tab选中
+$color-28:#474747; //组件操作框背景，侧边导航选中 ， 侧边导航body
+$color-30: #4d4d4d; // tooltip
+$color-30-1: #4c4c4c; // 底部操作栏输入
+$color-36: #5b5b5b; // 图标按钮背景  按钮背景
+$color-37: #5f5f5f; // 右侧面板按钮  画布弹框输入框
+$color-41: #686868; // border
+$color-48: #7b7b7b; // disabled
+$color-59: #979797; // 画布里的边框
+$color-60: #999999; // icon
+$color-67: #aaaaaa; // icon
+
+$blu :#0254F2;
