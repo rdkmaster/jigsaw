@@ -1,0 +1,48 @@
+$big-number-prefix-cls: #{$jigsaw-prefix}-big-number;
+
+.#{$big-number-prefix-cls}-host {
+    display: inline-flex;
+    color: $font-color-default;
+    line-height: 1;
+    overflow: hidden;
+}
+
+.leadingUnit, .suffixUnit, .big-number{
+    display: flex;
+    align-items: center;
+}
+
+.big-number {
+    .data_updateable {
+        display: flex;
+        height: inherit;
+        flex-direction: row;
+        justify-content: flex-end;
+        .dataWrapper {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            .dot {
+                display: inline-block;
+                height: 100%;
+                line-height: 100%;
+                vertical-align: top;
+                transform: translateY(25%);
+            }
+            .numberItem {
+                position: relative;
+                display: inline-block;
+                height: 100%;
+                overflow: hidden;
+                .numberSlider {
+                    position: absolute;
+                    writing-mode: vertical-rl;
+                    text-orientation: upright;
+                    left: 50%;
+                    transform: translate(-50%, 0);
+                    transition: transform 2s ease-in-out;
+                }
+            }
+        }
+    }
+}

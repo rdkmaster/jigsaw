@@ -1,0 +1,17 @@
+.boxes {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.boxes p {
+    padding-bottom: 12px;
+}
+
+.box {
+    display: inline-block;
+    width: 200px;
+    height: 100px;
+    border: 1px solid #eeeeee;
+    padding: 6px;
+    margin:6px;
+}

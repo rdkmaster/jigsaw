@@ -279,9 +279,13 @@ export const routerConfigPC = [
         path: "pc/novice-guide",
         loadChildren: () => import('./demo/pc/novice-guide/demo-set.module').then(m => m.NoviceGuideDemoModule),
     },
-    {   
+    {
         path: "pc/chart-icon",
         loadChildren: () => import('./demo/pc/chart-icon/demo-set.module').then(m => m.ChartIconDemoModule),
+    },
+    {
+        path: "pc/big-number",
+        loadChildren: () => import('./demo/pc/big-number/demo-set.module').then(m => m.BigNumberDemoModule),
     }
 ];
 export const routerConfigMobile = [

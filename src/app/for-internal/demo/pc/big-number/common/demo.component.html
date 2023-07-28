@@ -1,0 +1,67 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+<jigsaw-button (click)="_$changeValue()">点击改变值</jigsaw-button>
+
+
+<div class="boxes">
+    <div class="box">
+        <p>精度3，有动画时间默认：5000ms</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="fractionDigits" height="50px"
+                           [useRawValue]="useRawValue"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度2，有动画: 500ms</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="2" [useRawValue]="useRawValue"
+                           [animationDuration]="500"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度1，有动画时间500ms</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="1" [useRawValue]="useRawValue" [enableAnimation]="true"
+                           [animationDuration]="500"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度0，没动画</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="0" [useRawValue]="useRawValue"
+                           [enableAnimation]="false"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度{{fractionDigits}}，有动画，有前后置单位</p>
+        <hr>
+        <jigsaw-big-number
+            [value]="value" [fractionDigits]="fractionDigits"
+            [useRawValue]="useRawValue" [unit]="unit" [leadingUnit]="leadingUnit"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>图标在左，文字在右</p>
+        <hr>
+        <jigsaw-big-number
+            [value]="'iconfont iconfont-ea39'" [fractionDigits]="fractionDigits"
+            [useRawValue]="useRawValue" [unit]="unit" [leadingUnit]="leadingUnit"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>有valueMap情况</p>
+        <hr>
+        <jigsaw-big-number
+            [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="'天气状况'"
+            [useRawValue]="false" [valueMap]="valueMap"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>有valueMap情况且为图标</p>
+        <hr>
+        <jigsaw-big-number
+            [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="'状态'"
+            [useRawValue]="false" [valueMap]="valueMap1"></jigsaw-big-number>
+    </div>
+</div>
