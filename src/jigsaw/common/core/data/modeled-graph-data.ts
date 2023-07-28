@@ -165,20 +165,22 @@ export class SeriesBase {
     public indicators: Indicator[] = [];
     public name?: string;
     public more?: any;
+    public data?: any;
 
     constructor(name?: string) {
         this.name = name;
     }
 
-    public static extend(seriesOption: EchartSeriesItem, seriesData: SeriesBase, index: number) {
-        const seriesDataBak = <PieSeries>CommonUtils.deepCopy(seriesData);
+    public static extend(seriesItem: EchartSeriesItem, seriesData: SeriesBase, index: number) {
+        const seriesDataBak = <SeriesBase>CommonUtils.deepCopy(seriesData);
         delete seriesDataBak.dimensionField;
         delete seriesDataBak.dimensions;
         delete seriesDataBak.usingAllDimensions;
         delete seriesDataBak.indicators;
         delete seriesDataBak.more;
-        Object.assign(seriesOption, seriesDataBak);
-        seriesOption.name = seriesOption.name ? seriesOption.name : 'series' + index;
+        delete seriesDataBak.data;
+        Object.assign(seriesItem, seriesDataBak);
+        seriesItem.name = seriesItem.name ? seriesItem.name : 'series' + index;
     }
 }
 
