@@ -1,0 +1,33 @@
+<div class="leadingUnit">
+    <span *ngIf="!!leadingUnit" [ngStyle]="{'color':'red'}">{{leadingUnit}}</span>
+</div>
+<div class="big-number" [ngSwitch]="_$getCondition()">
+    <ng-container *ngSwitchCase="'number'">
+        <span class="data_updateable">
+            <span *ngFor="let item of valueList;" [ngSwitch]="item" class="dataWrapper">
+                    <span *ngSwitchCase="'.'" class="dot">{{item}}</span>
+                    <span *ngSwitchDefault class="numberItem" [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
+                        <span style="visibility: hidden">{{item}}</span>
+                        <span #numberInfo class="numberSlider" [ngStyle]="{'font-size': _$fontSize}">01234567890123456789</span>
+                    </span>
+            </span>
+        </span>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'icon'">
+        <div [ngClass]="{'icon-position-left':true}">
+            <i [ngClass]="value"></i>
+        </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'picture'">
+        <div></div>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+        <span [ngStyle]="{'font-size': _$fontSize}">{{value}}</span>
+    </ng-container>
+</div>
+<div class="suffixUnit">
+    <span *ngIf="!!unit" [ngStyle]="{'color':'red'}">{{unit}}</span>
+</div>
