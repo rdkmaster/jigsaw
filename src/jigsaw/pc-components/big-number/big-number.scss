@@ -7,9 +7,10 @@ $big-number-prefix-cls: #{$jigsaw-prefix}-big-number;
     overflow: hidden;
 }
 
-.leadingUnit, .suffixUnit, .big-number{
+.leading-unit, .suffix-unit, .big-number, .trend-container{
     display: flex;
     align-items: center;
+    margin: 4px;
 }
 
 .big-number {

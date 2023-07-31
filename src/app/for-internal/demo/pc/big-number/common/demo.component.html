@@ -1,7 +1,9 @@
 <!-- ignore the following lines, they are not important to this demo -->
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
-<jigsaw-button (click)="_$changeValue()">点击改变值</jigsaw-button>
+<jigsaw-button (click)="_$changeValue()">值变大</jigsaw-button>
+<jigsaw-button (click)="_$changeValue1()">值变小</jigsaw-button>
+<jigsaw-button (click)="_$changeValue2()">值不变</jigsaw-button>
 
 
 <div class="boxes">
@@ -42,7 +44,7 @@
     </div>
 
     <div class="box">
-        <p>图标在左，文字在右</p>
+        <p>值为图标</p>
         <hr>
         <jigsaw-big-number
             [value]="'iconfont iconfont-ea39'" [fractionDigits]="fractionDigits"
@@ -63,5 +65,19 @@
         <jigsaw-big-number
             [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="'状态'"
             [useRawValue]="false" [valueMap]="valueMap1"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度2，有动画: 500ms， 有趋势</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="2" [useRawValue]="useRawValue"
+                           [animationDuration]="500" [trend]="true"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>精度3，有动画: 500ms， 有趋势, 有变化百分比</p>
+        <hr>
+        <jigsaw-big-number [value]="value" [fractionDigits]="3" [useRawValue]="useRawValue"
+                           [animationDuration]="500" [trend]="'percentage'"></jigsaw-big-number>
     </div>
 </div>

@@ -13,6 +13,7 @@ import {
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 
+type TrendDirection = {trend: string, percentage: string};
 @WingsTheme('big-number.scss')
 @Component({
     selector: 'jigsaw-big-number',
@@ -33,6 +34,9 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
     }
 
     public set value(value: number | string) {
+        if (typeof this._value == 'number' && typeof value == 'number') {
+            this._setTrend({previousValue: this._value, currentValue: value});
+        }
         this._value = value;
     }
 
@@ -65,7 +69,7 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
         }
         this._animationDuration = animationDuration;
     }
-    @ViewChildren('numberInfo') numberInfo!: QueryList<ElementRef>;
+    @ViewChildren('numberInfo') numberInfo: QueryList<ElementRef>;
 
     @Input()
     public unit: string = '';
@@ -75,6 +79,8 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
 
     @Input()
     public trend: boolean | 'percentage' = false;
+
+    public _$trendMap: TrendDirection = {trend: '', percentage: ''};
 
     public valueList: string[] = [];
 
@@ -145,6 +151,15 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
                 element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index])* 5 + 50}%)`;
             });
         })
+    }
+
+    private _setTrend(value:{previousValue: number, currentValue: number}) {
+        if (!value.previousValue || !value.currentValue) {
+            return;
+        }
+        const change = value.currentValue - value.previousValue;
+        this._$trendMap.trend = change == 0 ? "unchanged" : change > 0 ? "ascending" : "descending";
+        this._$trendMap.percentage = Math.abs(change/value.previousValue * 100).toFixed(1);
     }
 
     ngOnInit(): void {
