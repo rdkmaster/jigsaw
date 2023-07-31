@@ -8,6 +8,8 @@ export class BigNumberCommonDemoComponent {
 
     value: number = 100.11112211;
 
+    value1: string = '特别差';
+
 
     fractionDigits: number = 3;
 
@@ -18,7 +20,7 @@ export class BigNumberCommonDemoComponent {
     unit: string = "亿";
 
     valueMap = {
-        '特别差':[-Number.MAX_VALUE, -1],'差': [0, 3000], '中': [3001, 5000], '良': [5001, 10000],'优': [10000, Number.MAX_VALUE]
+        '特别差':[-10000, -1],'差': [0, 3000], '中': [3001, 5000], '良': [5001, 10000],'优': [10000, 100000]
     }
 
     valueMap1 = {
@@ -35,6 +37,12 @@ export class BigNumberCommonDemoComponent {
 
     _$changeValue2() {
         this.value = Number(this.value.toFixed(3));
+    }
+
+    _$changeValue3() {
+        const valueArray = ["特别差", "差", "中", "良", "优"];
+        const randomIndex = Math.floor(Math.random() * valueArray.length);
+        this.value1 = valueArray[randomIndex];
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

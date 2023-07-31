@@ -4,6 +4,7 @@
 <jigsaw-button (click)="_$changeValue()">值变大</jigsaw-button>
 <jigsaw-button (click)="_$changeValue1()">值变小</jigsaw-button>
 <jigsaw-button (click)="_$changeValue2()">值不变</jigsaw-button>
+<jigsaw-button (click)="_$changeValue3()">ValueMap的值改变</jigsaw-button>
 
 
 <div class="boxes">
@@ -78,6 +79,13 @@
         <p>精度3，有动画: 500ms， 有趋势, 有变化百分比</p>
         <hr>
         <jigsaw-big-number [value]="value" [fractionDigits]="3" [useRawValue]="useRawValue"
+                           [animationDuration]="500" [unit]="unit" [trend]="'percentage'"></jigsaw-big-number>
+    </div>
+
+    <div class="box">
+        <p>值有对应的valueMap，但是要显示趋势趋势, 有变化百分比</p>
+        <hr>
+        <jigsaw-big-number [value]="value1" [fractionDigits]="3" [useRawValue]="useRawValue" [valueMap]="valueMap" [leadingUnit]="'学习情况：'"
                            [animationDuration]="500" [trend]="'percentage'"></jigsaw-big-number>
     </div>
 </div>
