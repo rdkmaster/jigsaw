@@ -468,6 +468,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _updateFreezeColumn() {
+        if (CommonUtils.isUndefined(this.freezeColumn)) {
+            return;
+        }
+
+        const content = this.contentScrollbar.elementRef.nativeElement;
+        if (content.scrollWidth <= content.clientWidth) {
+            return;
+        }
+
         const headers = this._headerRowElementRefs.toArray()[0].nativeElement.querySelectorAll('td');
         this._setCellsFreeze(headers);
 
@@ -732,7 +741,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public freezeColumn: number = 3;
+    public freezeColumn: number;
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
@@ -765,6 +774,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._setVerticalScrollbarOffset();
         this._updateFillUpBlankRow();
         this._updateAutoPageSizing();
+        this._updateFreezeColumn();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -882,7 +892,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
-        this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
+        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
         const widthStorage = [];
 
@@ -954,23 +964,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * 校正表头表体的宽度
      */
     private _calibrateTable() {
-
         const host = this._elementRef.nativeElement;
         const tableHeader = host.querySelector('table.jigsaw-table-header');
         const tableBody = host.querySelector('table.jigsaw-table-body');
-        const tableBodyRange = host.querySelector('.jigsaw-table-body-range');
-        const tableHeaderRange = host.querySelector('.jigsaw-table-header-range');
         const tableRange = host.querySelector('.jigsaw-table-range');
 
         if (this._$cellSettings.length || this._$headerSettings.length) {
-            if (tableBodyRange.offsetWidth != host.offsetWidth) {
-                this._renderer.setStyle(tableBodyRange, 'width', host.offsetWidth + 'px');
-            }
-            
-            if (tableHeaderRange.offsetWidth != host.offsetWidth) {
-                this._renderer.setStyle(tableHeaderRange, 'width', host.offsetWidth + 'px');
-            }
-
             if (host.offsetWidth > tableBody.offsetWidth) {
                 this._renderer.setStyle(tableHeader, 'width', host.offsetWidth + 'px');
                 this._renderer.setStyle(tableBody, 'width', host.offsetWidth + 'px');

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
-import { JigsawTableModule } from "jigsaw/public_api";
+import { JigsawButtonBarModule, JigsawNumericInputModule, JigsawTableModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/for-internal/description/demo-description";
 import { TableFreezeColumnDemoComponent } from './demo.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawDemoDescriptionModule, PerfectScrollbarModule],
+    imports: [JigsawTableModule, JigsawDemoDescriptionModule, PerfectScrollbarModule, JigsawNumericInputModule,
+        JigsawButtonBarModule],
     declarations: [TableFreezeColumnDemoComponent],
     exports: [TableFreezeColumnDemoComponent]
 })
