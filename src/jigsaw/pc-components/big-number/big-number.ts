@@ -49,6 +49,10 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
         this._value = value;
     }
 
+    public _$iconClass: string = null;
+
+    public _$imgPath: string = null;
+
     /**
      * value值为number时的数字精度，默认值是3
      */
@@ -164,9 +168,11 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
             return 'number';
         }
         if (/.+\.(jpe?g|png|webp|gif|svg)\s*$/i.test(this._value)) {
+            this._$imgPath = this._value;
             return 'picture';
         }
         if (/^iconfont iconfont-/.test(this._value)) {
+            this._$iconClass = this._value;
             return 'icon';
         }
     }
