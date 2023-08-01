@@ -435,7 +435,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         });
     }
 
-    protected transitionEndHandler(event) {
+    // 这里需要在addEventListener中使用，要使用箭头函数避免this指向event
+    protected transitionEndHandler = (event) => {
+        event.stopPropagation();
         if (event.target === event.currentTarget) {
             this.animationEnd.emit(this.open);
         }
@@ -449,12 +451,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
-            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler.bind(this));
+            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler);
         });
     }
 
     ngOnDestroy() {
-        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler.bind(this));
+        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler);
     }
 }
 
