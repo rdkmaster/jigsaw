@@ -99,17 +99,17 @@ export class TableSetCellEditableDemoComponent {
         },
         {
             target: 'position',
-            width: '20%',
+            width: '250',
             cell: {
                 editable: true,
                 editorRenderer: TableCellAutoCompleteEditorRenderer,
-                editorRendererInitData: ()=>{
+                editorRendererInitData: (td, row, col) => {
                     return {
+                        data: ["Developer", "System Architect", "Test Engineer"],
                         placeholder: "Try to edit...",
-                        data: ["Developer", "System Architect", "Test Engineer"]
-                    }
+                        disabled: false
+                    };
                 }
-
             }
         },
         {

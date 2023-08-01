@@ -748,7 +748,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public freezeColumn: number = 2;
+    public freezeColumn: number;
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
@@ -899,7 +899,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'width', 'auto');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-header'), 'white-space', 'nowrap');
         this._renderer.setStyle(host.querySelector('.jigsaw-table-body'), 'width', 'auto');
-        // this._renderer.setStyle(host.querySelector('.jigsaw-table-body-range'), 'width', '100%');
 
         const widthStorage = [];
 
@@ -989,7 +988,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         } else {
             this._renderer.setStyle(tableRange, 'padding-top', tableHeader.offsetHeight + 'px');
         }
-
     }
 
     private _yScrollbarElement: HTMLElement;
