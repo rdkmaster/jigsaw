@@ -9,7 +9,7 @@ import {
     ViewChild,
     HostBinding,
     ChangeDetectionStrategy,
-    ChangeDetectorRef, OnDestroy
+    ChangeDetectorRef, OnDestroy, AfterViewInit
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, AfterViewInit, OnDestroy {
     constructor(private _elementRef: ElementRef,
                 private _changeDetector: ChangeDetectorRef) {
         super();
@@ -404,7 +404,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
     }
 
     private _setContainer() {
-        if (!this.initialized || !this.container || !this.floating) return;
+        if (!this.initialized || !this.container || !this.floating) {
+            return;
+        }
         const containerEl = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, this.container);
         if (containerEl) {
             const containerStyle = getComputedStyle(containerEl);
@@ -451,12 +453,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
-            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler);
         });
     }
 
+    ngAfterViewInit() {
+        this._drawerEl?.nativeElement.addEventListener('transitionend', this.transitionEndHandler);
+    }
+
     ngOnDestroy() {
-        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler);
+        this._drawerEl?.nativeElement.removeEventListener('transitionend', this.transitionEndHandler);
     }
 }
 
