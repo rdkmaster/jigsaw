@@ -10,3 +10,9 @@
     margin: 36px;
     text-align: center;
 }
+
+.box-complete {
+    height: 100px;
+    width: 100%;
+    background-color: red;
+}
