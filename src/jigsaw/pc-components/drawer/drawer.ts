@@ -91,13 +91,13 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
-     * 但抽屉完全打开时，Jigsaw发出此事件
+     * 在打开和关闭的动画结束之后，发出此事件
      *
      * $demo = drawer/basic
      *
      */
     @Output()
-    public openCompleteChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public animationEnd: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
@@ -435,9 +435,9 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
         });
     }
 
-    protected transitionEndHandler = (event) => {
+    protected transitionEndHandler(event) {
         if (event.target === event.currentTarget) {
-            this.openCompleteChange.emit(this.open);
+            this.animationEnd.emit(this.open);
         }
     }
 
@@ -449,12 +449,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnD
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
-            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler)
+            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler.bind(this));
         });
     }
 
     ngOnDestroy() {
-        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler)
+        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler.bind(this));
     }
 }
 

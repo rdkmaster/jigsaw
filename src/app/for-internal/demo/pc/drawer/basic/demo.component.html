@@ -25,7 +25,7 @@
     <span *ngIf="touched">太棒了！你{{isOpen ? '打开' : '关闭'}}了抽屉！</span>
 </div>
 
-<j-drawer [(open)]="isOpen" (openChange)="touched = true" (openCompleteChange)="fullyOpened($event)" [position]="selectedPosition"
+<j-drawer [(open)]="isOpen" (openChange)="touched = true" (animationEnd)="fullyOpened($event)" [position]="selectedPosition"
           [width]="width" [height]="height" [emphasisHandler]="emphasisHandler" [hideHandle]="hideHandle">
     <div class="drawer-content">
         这是一个展示内容的box
