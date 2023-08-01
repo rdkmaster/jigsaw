@@ -9,7 +9,7 @@ import {
     ViewChild,
     HostBinding,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef, OnDestroy
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
@@ -33,7 +33,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
+export class JigsawDrawer extends AbstractJigsawComponent implements OnInit, OnDestroy {
     constructor(private _elementRef: ElementRef,
                 private _changeDetector: ChangeDetectorRef) {
         super();
@@ -89,6 +89,15 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
      */
     @Output()
     public openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    /**
+     * 但抽屉完全打开时，Jigsaw发出此事件
+     *
+     * $demo = drawer/basic
+     *
+     */
+    @Output()
+    public openCompleteChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     /**
      * 容器的selector，支持'.className'、'#id'、'[attr]'、'tagName'
@@ -426,6 +435,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
         });
     }
 
+    protected transitionEndHandler = (event) => {
+        if (event.target === event.currentTarget) {
+            this.openCompleteChange.emit(this.open);
+        }
+    }
+
     ngOnInit() {
         super.ngOnInit();
         this._update();
@@ -434,7 +449,12 @@ export class JigsawDrawer extends AbstractJigsawComponent implements OnInit {
             this._setContainer();
             // 异步添加动画，为了初始化时没有拉伸的动作
             this._$onAnimation = true;
+            this._drawerEl.nativeElement.addEventListener('transitionend', this.transitionEndHandler)
         });
+    }
+
+    ngOnDestroy() {
+        this._drawerEl.nativeElement.removeEventListener('transitionend', this.transitionEndHandler)
     }
 }
 

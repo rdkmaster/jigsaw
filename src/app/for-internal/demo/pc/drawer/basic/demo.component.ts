@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ElementRef, ViewChild} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -8,14 +8,27 @@ export class DrawerBasicDemoComponent {
     isOpen: boolean = false;
     selectedPosition = 'left';
     touched = false;
-    width: string = '30%';
+    width: string = '50%';
     height: string = '100%';
     emphasisHandler: boolean = false;
     public hideHandle: boolean = false;
 
+    fullOpened: boolean = false;
+
     toggle() {
         this.isOpen = !this.isOpen;
         this.touched = true;
+    }
+
+    fullyOpened(event: boolean) {
+        if (event) {
+            console.log('fullyOpened');
+            console.log('transitionEnd event is not from a child element.');
+            this.fullOpened = true;
+            return;
+        }
+        console.log('fullyClosed');
+        this.fullOpened = false;
     }
 
     onPosChange(pos) {
