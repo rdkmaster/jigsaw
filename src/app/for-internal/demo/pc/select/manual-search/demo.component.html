@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>手动搜索：</span>
+        <jigsaw-switch [(checked)]="manualSearch"></jigsaw-switch>
+    </li>
+</ul>
+
+<jigsaw-header>手动搜索</jigsaw-header>
+<jigsaw-select placeholder="请选择城市" [data]="cityList" [(value)]="value" [searchable]="true" [manualSearch]="manualSearch"
+    (valueChange)="valueChange($event)" (searchKeywordChange)="searchKeywordChange($event)">
+</jigsaw-select>
