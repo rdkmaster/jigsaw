@@ -100,7 +100,6 @@ export class TableSetCellEditableDemoComponent {
         {
             target: 'position',
             width: '20%',
-            group: true,
             cell: {
                 editable: true,
                 editorRenderer: TableCellAutoCompleteEditorRenderer,

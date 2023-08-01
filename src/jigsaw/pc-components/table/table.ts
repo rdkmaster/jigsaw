@@ -23,7 +23,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
-import {LocalPageableTableData, TableData} from "../../common/core/data/table-data";
+import {BigTableData, LocalPageableTableData, TableData} from "../../common/core/data/table-data";
 import {AffixUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
@@ -468,7 +468,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _updateFreezeColumn() {
-        if (CommonUtils.isUndefined(this.freezeColumn)) {
+        if (CommonUtils.isUndefined(this.freezeColumn) || this.freezeColumn == 0) {
+            return;
+        }
+
+        // BigTableData的实现原理不适用于此冻结列功能
+        if (this.data instanceof BigTableData) {
+            this.freezeColumn = 0;
+            this._changeDetectorRef.detectChanges();
             return;
         }
 
@@ -741,7 +748,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public freezeColumn: number;
+    public freezeColumn: number = 2;
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
