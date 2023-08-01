@@ -598,9 +598,27 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     /**
+     * 阻止下拉框自带的搜索行为
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public manualSearch: boolean = false;
+
+    /**
+     * 搜索框的值发生改变时，向外发出事件
+     */
+    @Output()
+    public searchKeywordChange: EventEmitter<any> = new EventEmitter<any>();
+
+    /**
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
+        if (this.manualSearch && CommonUtils.isDefined(filterKey)) {
+            this.searchKeywordChange.emit({ searchKey: filterKey, data: this.data, instance: this })
+            return;
+        }
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
         if (this.data instanceof InfiniteScrollLocalPageableArray || this.data instanceof InfiniteScrollPageableArray) {
@@ -621,6 +639,10 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField]);
+        this.resetScrollbar();
+    }
+
+    public resetScrollbar() {
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
