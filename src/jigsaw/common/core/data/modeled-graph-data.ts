@@ -567,6 +567,7 @@ export class GaugeSeries extends SeriesBase {
     public splitLine?: any;
     public pointer?: any;
     public title?: any;
+    public autoAxisLineColor?: boolean;
 }
 
 export class ModeledGaugeGraphData extends AbstractModeledGraphData {
@@ -635,6 +636,10 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                 SeriesBase.extend(seriesItem, seriesData, idx);
                 seriesItem.radius = seriesData.radius ? seriesData.radius + '%' : seriesData.radius;
                 seriesItem.center = seriesData.center ? seriesData.center.map(r => r + '%') : seriesData.center;
+
+                if (seriesItem.autoAxisLineColor && seriesItem.axisLine?.lineStyle?.color?.[0]?.length && seriesItem.data?.[0]) {
+                    seriesItem.axisLine.lineStyle.color[0][0] = Number(seriesItem.data[0].value) / (Number(seriesItem.max) || 100);
+                }
 
                 return seriesItem;
             });
