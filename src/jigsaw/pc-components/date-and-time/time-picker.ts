@@ -224,7 +224,6 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (value == this._limitEnd || (value && !TimeService.isMacro(value) && !this._checkLimitValid(value))) {
             return;
         }
-        console.log(value);
         this._limitEnd = this._timeFormatter(value);
         if (this.initialized) {
             this.value = this._calValueByLimit(this.value);
