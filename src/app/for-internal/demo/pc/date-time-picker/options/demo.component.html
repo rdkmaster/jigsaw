@@ -13,11 +13,6 @@
         </jigsaw-button-bar>
     </li>
     <li class="demo-options-item">
-        <span>动作：</span>
-        <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
-        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
-    </li>
-    <li class="demo-options-item">
         <span>limitStart: </span>
         <j-radios [(value)]="limitStart">
             <j-radio-option *ngFor="let item of limitStartList" [value]="item">{{item}}</j-radio-option>
@@ -28,6 +23,11 @@
         <j-radios [(value)]="limitEnd">
             <j-radio-option *ngFor="let item of limitEndList" [value]="item">{{item}}</j-radio-option>
         </j-radios>
+    </li>
+    <li class="demo-options-item">
+        <span>动作：</span>
+        <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
+        <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
 </ul>
 <jigsaw-date-time-picker #dateTimePicker [(date)]="date" [gr]="gr[0]" [limitStart]="limitStart" [limitEnd]="limitEnd"

@@ -24,6 +24,13 @@ export class TimePickerOptionsDemoComponent {
     public valueChange($event) {
         console.log('valueChange=>', $event);
     }
+
+    public gr = ['time'];
+
+    public limitStartList = ['now-1h', 'now-5h', 'now-10h'];
+    public limitEndList = ['now+1h', 'now+5h', 'now+10h'];
+    public limitStart = 'now-5h';
+    public limitEnd = 'now+5h';
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
