@@ -38,7 +38,7 @@ export enum TimeUnit {
  * 常用时间格式，`TimeService.format`可以支持任何格式，我们做这个枚举只是他们太常用了，使用这个枚举+IDE提示，你可以少敲很多次键盘。
  */
 export enum TimeFormatters {
-    yyyy_mm_dd_hh_mm_ss, yyyy_mm_dd_hh_mm, yyyy_mm_dd_hh, yyyy_mm_dd, yyyy_mm, hh_mm_ss, hh_mm, mm_ss
+    yyyy_mm_dd_hh_mm_ss, yyyy_mm_dd_hh_mm, yyyy_mm_dd_hh, yyyy_mm_dd, yyyy_mm, hh_mm_ss, hh_mm, mm_ss, hh
 }
 
 /**
@@ -106,6 +106,8 @@ export class TimeService {
                 return "HH:mm";
             case TimeFormatters.mm_ss :
                 return "mm:ss";
+            case TimeFormatters.hh :
+                return "HH";
         }
     }
 
@@ -119,6 +121,7 @@ export class TimeService {
         [TimeGr.time, TimeService._timeFormatterConvert(TimeFormatters.hh_mm_ss)],
         [TimeGr.time_hour_minute, TimeService._timeFormatterConvert(TimeFormatters.hh_mm)],
         [TimeGr.time_minute_second, TimeService._timeFormatterConvert(TimeFormatters.mm_ss)],
+        [TimeGr.time_hour, TimeService._timeFormatterConvert(TimeFormatters.hh)],
     ]);
 
     /**

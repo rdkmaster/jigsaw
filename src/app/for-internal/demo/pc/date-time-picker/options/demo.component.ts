@@ -24,6 +24,13 @@ export class DatePickerTimeOptionsDemoComponent {
     public dateChange($event) {
         console.log('dateChange=>', $event);
     }
+
+    public gr = ['second'];
+
+    public limitStartList = ['now-1d', 'now-5d', 'now-10d', 'now-3h'];
+    public limitEndList = ['now', 'now+5d', 'now+10d', 'now+3h'];
+    public limitStart = 'now-10d';
+    public limitEnd = 'now+5d';
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -32,6 +32,7 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
     }
 
     &.#{$jigsaw-numeric-input}-error {
+
         .#{$jigsaw-numeric-input}-wrapper,
         .#{$jigsaw-numeric-input}-wrapper:hover,
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
@@ -99,6 +100,10 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         flex-direction: column;
     }
 
+    &.#{$jigsaw-numeric-input}-showOption .#{$jigsaw-numeric-input}-option-box {
+        display: flex;
+    }
+
     &:not(.#{$jigsaw-numeric-input}-disabled):hover {
         .#{$jigsaw-numeric-input}-option-box {
             display: flex;
@@ -162,37 +167,35 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
                 color: $font-color-disabled-spec;
             }
         }
+    }
 
-        @at-root .#{$jigsaw-numeric-input}-disabled.#{$jigsaw-numeric-input}-showOption
-                .#{$jigsaw-numeric-input}-option-box
-                .#{$jigsaw-numeric-input}-option-bar {
-            color: $font-color-disabled-spec;
-            border-left-color: $border-color-disabled;
-            pointer-events: none;
+    &.#{$jigsaw-numeric-input}-disabled.#{$jigsaw-numeric-input}-showOption .#{$jigsaw-numeric-input}-option-box .#{$jigsaw-numeric-input}-option-bar {
+        color: $font-color-disabled-spec;
+        border-left-color: $border-color-disabled;
+        pointer-events: none;
 
-            &:first-child {
-                border-bottom-color: $border-color-disabled;
-
-                &:hover {
-                    border-bottom-color: $border-color-disabled;
-                }
-            }
-
-            &:last-child {
-                border-top-color: $border-color-disabled;
-
-                &:hover {
-                    border-top-color: $border-color-disabled;
-                }
-            }
+        &:first-child {
+            border-bottom-color: $border-color-disabled;
 
             &:hover {
-                border-color: $border-color-disabled;
+                border-bottom-color: $border-color-disabled;
             }
+        }
 
-            &:active {
-                border-color: $border-color-disabled;
+        &:last-child {
+            border-top-color: $border-color-disabled;
+
+            &:hover {
+                border-top-color: $border-color-disabled;
             }
+        }
+
+        &:hover {
+            border-color: $border-color-disabled;
+        }
+
+        &:active {
+            border-color: $border-color-disabled;
         }
     }
 
