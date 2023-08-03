@@ -2,7 +2,7 @@ import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
     ElementRef,
-    Input,
+    Input, NgModule,
     OnChanges,
     OnDestroy,
     OnInit,
@@ -11,7 +11,9 @@ import {
     ViewChildren,
 } from '@angular/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
+import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
+import {CommonModule} from "@angular/common";
+import {FormsModule} from "@angular/forms";
 
 type TrendDirection = { trend: string, percentage: string };
 
@@ -248,4 +250,13 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
 
     ngOnDestroy(): void {
     }
+}
+
+@NgModule({
+    imports: [CommonModule, FormsModule, JigsawCommonModule],
+    declarations: [JigsawBigNumberComponent],
+    exports: [JigsawBigNumberComponent],
+})
+export class JigsawBigNumberModule {
+
 }
