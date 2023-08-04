@@ -15,6 +15,7 @@ import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../com
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 
+
 type TrendDirection = { trend: string, percentage: string };
 
 @WingsTheme('big-number.scss')
@@ -53,6 +54,7 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
 
     /**
      * value值为number时的数字精度，默认值是2
+
      */
     @Input()
     public fractionDigits: number = 2;
