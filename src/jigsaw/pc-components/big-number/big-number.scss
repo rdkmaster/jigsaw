@@ -1,47 +1,49 @@
-$big-number-prefix-cls: #{$jigsaw-prefix}-big-number;
+$jigsaw-big-number: #{$jigsaw-prefix}-big-number;
 
-.#{$big-number-prefix-cls}-host {
+.#{$jigsaw-big-number}-host {
     display: inline-flex;
     color: $font-color-default;
     line-height: 1;
     overflow: hidden;
-}
 
-.leading-unit, .suffix-unit, .big-number, .trend-container{
-    display: flex;
-    align-items: center;
-    margin: 4px;
-}
-
-.big-number {
-    .data_updateable {
+    .prefix-leadingUnit, .suffix-unit, .big-number, .trend-container{
         display: flex;
-        height: inherit;
-        flex-direction: row;
-        justify-content: flex-end;
-        .dataWrapper {
+        align-items: center;
+        margin: 4px;
+    }
+
+    .big-number {
+        .data_updateable {
             display: flex;
-            align-items: center;
-            height: 100%;
-            .dot {
-                display: inline-block;
+            height: inherit;
+            flex-direction: row;
+            justify-content: flex-end;
+            .dataWrapper {
+                display: flex;
+                align-items: center;
                 height: 100%;
-                line-height: 100%;
-                vertical-align: top;
-                transform: translateY(25%);
-            }
-            .numberItem {
-                position: relative;
-                display: inline-block;
-                height: 100%;
-                overflow: hidden;
-                .numberSlider {
-                    position: absolute;
-                    writing-mode: vertical-rl;
-                    text-orientation: upright;
-                    left: 50%;
-                    transform: translate(-50%, 0);
-                    transition: transform 2s ease-in-out;
+                .dot {
+                    display: inline-block;
+                    height: 100%;
+                    line-height: 100%;
+                    vertical-align: top;
+                    transform: translateY(25%);
+                    user-select: none;
+                }
+                .numberItem {
+                    position: relative;
+                    display: inline-block;
+                    height: 100%;
+                    overflow: hidden;
+                    .numberSlider {
+                        position: absolute;
+                        writing-mode: vertical-rl;
+                        text-orientation: upright;
+                        user-select: none;
+                        left: 50%;
+                        transform: translate(-50%, 0);
+                        transition: transform 2s ease-in-out;
+                    }
                 }
             }
         }

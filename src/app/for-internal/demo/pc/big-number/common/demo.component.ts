@@ -18,24 +18,17 @@ export class BigNumberCommonDemoComponent {
     leadingUnit: string = "$$$$$$$$$$$$$$$$$";
 
     unit: string = "亿亿亿亿亿亿亿亿亿亿亿亿";
-
-    valueMap = {
-        '特别差':[-10000, -1],'差': [0, 3000], '中': [3001, 5000], '良': [5001, 10000],'优': [10000, 100000]
+    enableAnimation: boolean = true;
+    _$changeValue0() {
+        this.enableAnimation = !this.enableAnimation;
     }
+    valueMap: { [valueEnum: string]: [number, number] } = null;
+    valueMap1: { [valueEnum: string]: [number, number] } = null;
+    valueMap2: { [valueEnum: string]: [number, number] } = null;
 
-    valueMap1 = {
-        'iconfont iconfont-e193':[-Number.MAX_VALUE, -1],'iconfont iconfont-ea39': [0, 3000], 'iconfont iconfont-e877': [3001, 5000], 'iconfont iconfont-e901': [5001, 10000],'iconfont iconfont-e015': [10000, Number.MAX_VALUE]
-    }
-
-    valueMap2 = {
-        '/app/for-internal/demo/pc/big-number/common/assets/Monday.png':[-Number.MAX_VALUE, -1],
-        "/app/for-internal/demo/pc/big-number/common/assets/Tuesday.png": [0, 1000],
-        "/app/for-internal/demo/pc/big-number/common/assets/Wednesday.png": [1001, 2000],
-        '/app/for-internal/demo/pc/big-number/common/assets/Thursday.png': [2001, 3000],
-        '/app/for-internal/demo/pc/big-number/common/assets/Friday.png': [3001, 4000],
-        '/app/for-internal/demo/pc/big-number/common/assets/Saturday.png': [3001, 4000],
-        '/app/for-internal/demo/pc/big-number/common/assets/Sunday.png': [4001, Number.MAX_VALUE]
-    }
+    valueMapEntries = []
+    valueMapEntries1 = []
+    valueMapEntries2 =[]
     _$changeValue() {
         this.value += Math.floor(Math.random() * 1000) + 1;
     }
@@ -52,6 +45,35 @@ export class BigNumberCommonDemoComponent {
         const valueArray = ["特别差", "差", "中", "良", "优"];
         const randomIndex = Math.floor(Math.random() * valueArray.length);
         this.value1 = valueArray[randomIndex];
+    }
+
+    _$changeValue4() {
+        this.valueMap = null;
+        this.valueMap1 = null;
+        this.valueMap2 = null;
+    }
+
+    _$changeValue5() {
+        this.valueMap = {
+            '特别差':[-10000, -1],'差': [0, 3000], '中': [3001, 5000], '良': [5001, 10000],'优': [10000, 100000]
+        }
+        this.valueMapEntries = Object.entries(this.valueMap)
+
+        this.valueMap1 = {
+            'iconfont iconfont-e193':[-Number.MAX_VALUE, -1],'iconfont iconfont-ea39': [0, 3000], 'iconfont iconfont-e877': [3001, 5000], 'iconfont iconfont-e901': [5001, 10000],'iconfont iconfont-e015': [10000, Number.MAX_VALUE]
+        }
+        this.valueMapEntries1 = Object.entries(this.valueMap1)
+
+        this.valueMap2 = {
+            '/app/for-internal/demo/pc/big-number/common/assets/Monday.png':[-Number.MAX_VALUE, -1],
+            "/app/for-internal/demo/pc/big-number/common/assets/Tuesday.png": [0, 1000],
+            "/app/for-internal/demo/pc/big-number/common/assets/Wednesday.png": [1001, 2000],
+            '/app/for-internal/demo/pc/big-number/common/assets/Thursday.png': [2001, 3000],
+            '/app/for-internal/demo/pc/big-number/common/assets/Friday.png': [3001, 4000],
+            '/app/for-internal/demo/pc/big-number/common/assets/Saturday.png': [3001, 4000],
+            '/app/for-internal/demo/pc/big-number/common/assets/Sunday.png': [4001, Number.MAX_VALUE]
+        }
+        this.valueMapEntries2 = Object.entries(this.valueMap2)
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

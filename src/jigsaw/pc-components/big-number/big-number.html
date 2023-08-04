@@ -1,13 +1,13 @@
-<div class="leading-unit" *ngIf="!!leadingUnit">
+<div class="prefix-leadingUnit" *ngIf="!!leadingUnit">
     <span [ngStyle]="{'color':'red'}">{{leadingUnit}}</span>
 </div>
 <div class="big-number" [ngSwitch]="_$getCondition()">
     <ng-container *ngSwitchCase="'number'">
         <span class="data_updateable">
-            <span *ngFor="let item of valueList;" [ngSwitch]="item" class="dataWrapper">
-                     <span *ngSwitchCase="'-'" class="dot">{{item}}</span>
-                    <span *ngSwitchCase="'.'" class="dot">{{item}}</span>
-                    <span *ngSwitchDefault class="numberItem" [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
+            <span class="dataWrapper" *ngFor="let item of _$valueList;" [ngSwitch]="item">
+                     <span class="dot" *ngSwitchCase="'-'">{{item}}</span>
+                    <span class="dot" *ngSwitchCase="'.'">{{item}}</span>
+                    <span class="numberItem"*ngSwitchDefault [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
                         <span style="visibility: hidden">{{item}}</span>
                         <span #numberInfo class="numberSlider" [ngStyle]="{'font-size': _$fontSize}">01234567890123456789</span>
                     </span>
@@ -21,11 +21,11 @@
         </div>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'picture'">
-        <div>
-            <img [src]="_$imgPath" alt="No picture...">
-        </div>
-    </ng-container>
+<!--    <ng-container *ngSwitchCase="'picture'">-->
+<!--        <div>-->
+<!--            <img [src]="_$imgPath" alt="No picture...">-->
+<!--        </div>-->
+<!--    </ng-container>-->
 
     <ng-container *ngSwitchDefault>
         <span [ngStyle]="{'font-size': _$fontSize}">{{value}}</span>
@@ -34,11 +34,11 @@
 <div class="suffix-unit" *ngIf="!!unit">
     <span [ngStyle]="{'color':'red'}">{{unit}}</span>
 </div>
-<div class="trend-container" *ngIf="!!trend">
+<div class="trend-container" *ngIf="trend!='none'">
     <div [ngSwitch]="_$trendMap.trend">
         <i *ngSwitchCase="'ascending'" [ngClass]="'iconfont iconfont-e032'" [ngStyle]="{'color':'green'}"></i>
         <i *ngSwitchCase="'descending'" [ngClass]="'iconfont iconfont-e030'" [ngStyle]="{'color':'red'}"></i>
         <i *ngSwitchCase="'unchanged'" [ngClass]="'iconfont iconfont-e19d'"></i>
     </div>
-    <span *ngIf="trend == 'percentage'&&!!_$trendMap.percentage">{{_$trendMap.percentage}}%</span>
+    <span *ngIf="trend=='percentage'&&!!_$trendMap.percentage">{{_$trendMap.percentage}}%</span>
 </div>

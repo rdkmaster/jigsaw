@@ -9,7 +9,6 @@
 
 .box {
     display: inline-block;
-    width: 200px;
     height: 100px;
     border: 1px solid #eeeeee;
     padding: 6px;

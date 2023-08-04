@@ -31,23 +31,19 @@ type TrendDirection = { trend: string, percentage: string };
 })
 export class JigsawBigNumberComponent extends AbstractJigsawComponent implements OnChanges, OnInit, OnDestroy {
     private _value: number | string;
+
+    /**
+     * 大字组件的值，可以是number或者string类型
+     */
     @Input()
     public get value(): number | string {
         return this._value;
     }
 
-    /**
-     * 大字组件的值，可以是number属性或者string
-     */
     public set value(value: number | string) {
-        if (typeof this._value == 'number' && typeof value == 'number') {
-            this._setTrend({previousValue: this._value, currentValue: value});
-        }
-        if (this.valueMap) {
-            const previousValue = this._translateValueEnum(typeof this._value === "string" ? this._value : "");
-            const currentValue = this._translateValueEnum(typeof value === "string" ? value : "");
-            this._setTrend({previousValue: previousValue, currentValue: currentValue});
-        }
+        const previousValue = this._translateValueEnum(this._value);
+        const currentValue = this._translateValueEnum(value);
+        this._setTrend(previousValue, currentValue);
         this._value = value;
     }
 
@@ -56,13 +52,13 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
     public _$imgPath: string = null;
 
     /**
-     * value值为number时的数字精度，默认值是3
+     * value值为number时的数字精度，默认值是2
      */
     @Input()
     public fractionDigits: number = 2;
 
     /**
-     * 设置组件是否使用原始值，为true时做任何处理，为false时会自动进行valueMap转换
+     * 设置组件是否使用原始值，为true时不做任何处理，为false时会自动进行valueMap转换
      */
     @Input()
     public useRawValue: boolean = true;
@@ -82,11 +78,11 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
     @Input()
     public enableAnimation: boolean = true;
 
+    private _animationDuration: number = 5000;
+
     /**
      * 用于设置数字动画的时间
      */
-    private _animationDuration: number = 5000;
-
     public get animationDuration() {
         return this._animationDuration;
     }
@@ -102,7 +98,8 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
         this._animationDuration = animationDuration;
     }
 
-    @ViewChildren('numberInfo') numberInfo: QueryList<ElementRef>;
+    @ViewChildren('numberInfo')
+    private _numberInfo: QueryList<ElementRef>;
 
 
     /**
@@ -121,15 +118,17 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
      * 用于设置是否显示趋势，percentage时既显示趋势又显示升降比例，比例默认精度1
      */
     @Input()
-    public trend: boolean | 'percentage' = false;
+    public trend: 'none' | 'percentage' | 'normal';
 
     public _$trendMap: TrendDirection = {trend: '', percentage: ''};
 
-    public valueList: string[] = [];
+    public _$valueList: string[] = [];
 
-    public _$fontSize = 16 + 'px';
+    private _condition: string;
 
-    public _$fontWidth = 16 * 0.6 + 'px';
+    public _$fontSize = CommonUtils.getCssValue(16);
+
+    public _$fontWidth = CommonUtils.getCssValue(16 * 0.6);
 
 
     constructor(protected renderer: Renderer2, public _cdr: ChangeDetectorRef) {
@@ -143,7 +142,7 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
         if (typeof this._value == 'number') {
             this._value = this._roundToPrecision(this._value);
             this._translateValue(this._value);
-            this.valueList = this._value.toString().split('');
+            this._$valueList = this._value.toString().split('');
             return;
         }
     }
@@ -163,10 +162,13 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
      * 用于判断当前value值应对应的html
      */
     public _$getCondition(): string {
-        if (this.useRawValue || !this.enableAnimation) {
+        if (this.useRawValue) {
             return "";
         }
         if (typeof this._value == 'number') {
+            if (!this.enableAnimation) {
+                return  '';
+            }
             return 'number';
         }
         if (/.+\.(jpe?g|png|webp|gif|svg)\s*$/i.test(this._value)) {
@@ -200,7 +202,10 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
      * 用于处理valueMap存在时value值的转换
      * valueEnum ==> [number, number][0]的转换，如果为0需要改为1。
      */
-    private _translateValueEnum(value: string): number {
+    private _translateValueEnum(value: string | number): number {
+        if (typeof value === "number") {
+            return value;
+        }
         if (!this.valueMap || !this.valueMap[value]) {
             return;
         }
@@ -211,12 +216,12 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
      * 用于处理value值转换时数字的动画化
      */
     private _setNumberTransform() {
-        if (!this.numberInfo) {
+        if (!this._numberInfo) {
             return;
         }
-        const numberArr = this.valueList.filter((item: string) => !isNaN(Number(item)));
-        setTimeout(() => {
-            this.numberInfo.forEach((element, index) => {
+        const numberArr = this._$valueList.filter((item: string) => !isNaN(Number(item)));
+        requestAnimationFrame(() => {
+            this._numberInfo.forEach((element, index) => {
                 element.nativeElement.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
                 element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index]) * 5 + 50}%)`;
             });
@@ -226,13 +231,16 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
     /**
      * 用于计算趋势
      */
-    private _setTrend(value: { previousValue: number, currentValue: number }) {
-        if (!value.previousValue || !value.currentValue) {
+    private _setTrend(previousValue: number, currentValue: number) {
+        if (this.trend == 'none') {
             return;
         }
-        const change = value.currentValue - value.previousValue;
+        if (!previousValue || !currentValue) {
+            return;
+        }
+        const change = currentValue - previousValue;
         this._$trendMap.trend = change == 0 ? "unchanged" : change > 0 ? "ascending" : "descending";
-        this._$trendMap.percentage = Math.abs(change / value.previousValue * 100).toFixed(1);
+        this._$trendMap.percentage = Math.abs(change / previousValue * 100).toFixed(1);
     }
 
     ngOnInit(): void {
