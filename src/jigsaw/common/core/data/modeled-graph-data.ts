@@ -113,6 +113,7 @@ class DimKpiBase {
     public shade?: 'bar' | 'line' | 'area' = 'bar';
     public barWidth?: any;
     public yAxisIndex?: 0 | 1 = 0;
+    public more?: any;
 
     public static extend(seriesItem: EchartSeriesItem, dimKpi: DimKpiBase) {
         const dimKpiBak = <DimKpiBase>CommonUtils.deepCopy(dimKpi);
