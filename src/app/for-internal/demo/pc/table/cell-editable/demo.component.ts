@@ -85,24 +85,16 @@ export class TableSetCellEditableDemoComponent {
         {
             target: 'salary',
             width: '20%',
+            group: true,
             cell: {
                 editable: true,
                 editorRenderer: TableCellNumericEditorRenderer,
                 editorRendererInitData:
-                {
-                    placeholder: (data, row, cell) => {
-                        return `placeholder${row}`
-                    },
-                    min: (data, row, cell) => {
-                        return (row + 1) * 1000
-                    },
-                    max: (data, row, cell) => {
-                        return (row + 1) * 10000
-                    },
-                    step: (data, row, cell) => {
-                        return 100
+                    {
+                        placeholder: "Type to edit...",
+                        min: 12000,
+                        step: 100
                     }
-                }
             }
         },
         {
