@@ -97,7 +97,7 @@ export * from "./pc-components/color-select/index";
 export * from "./pc-components/process-status/index";
 export * from "./pc-components/toast/toast";
 export * from "./pc-components/chart-icon/chart-icon";
-export * from "./pc-components/big-number/big-number"
+export * from "./pc-components/big-number/large-text"
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";

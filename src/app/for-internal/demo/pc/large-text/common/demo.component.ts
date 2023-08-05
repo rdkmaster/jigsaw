@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, ViewChildren} from '@angular/core';
+import {JigsawLargeTextComponent} from "../../../../../../jigsaw/pc-components/big-number/large-text";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['demo-component.css']
 })
-export class BigNumberCommonDemoComponent {
+export class LargeTextCommonDemoComponent {
 
     value: number = 100.11112211;
 
@@ -19,16 +20,21 @@ export class BigNumberCommonDemoComponent {
 
     unit: string = "亿亿亿亿亿亿亿亿亿亿亿亿";
     enableAnimation: boolean = true;
-    _$changeValue0() {
-        this.enableAnimation = !this.enableAnimation;
-    }
     valueMap: { [valueEnum: string]: [number, number] } = null;
     valueMap1: { [valueEnum: string]: [number, number] } = null;
     valueMap2: { [valueEnum: string]: [number, number] } = null;
 
-    valueMapEntries = []
-    valueMapEntries1 = []
-    valueMapEntries2 =[]
+    valueMapEntries = [];
+    valueMapEntries1 = [];
+    valueMapEntries2 =[];
+
+    @ViewChildren('largeText')
+
+    largeText: JigsawLargeTextComponent;
+
+    _$changeValue0() {
+        this.enableAnimation = !this.enableAnimation;
+    }
     _$changeValue() {
         this.value += Math.floor(Math.random() * 1000) + 1;
     }
@@ -38,7 +44,7 @@ export class BigNumberCommonDemoComponent {
     }
 
     _$changeValue2() {
-        this.value = Number(this.value.toFixed(3));
+        this.largeText.value = "1111"
     }
 
     _$changeValue3() {

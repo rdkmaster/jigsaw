@@ -72,7 +72,7 @@ import {routerConfig as processStatusConfig} from "./demo/pc/process-status/demo
 import {routerConfig as toastConfig} from "./demo/pc/toast/demo-set.module";
 import {routerConfig as noviceGuideConfig} from "./demo/pc/novice-guide/demo-set.module";
 import {routerConfig as chartIconConfig} from "./demo/pc/chart-icon/demo-set.module";
-import {routerConfig as bigNumberConfig} from "./demo/pc/big-number/demo-set.module"
+import {routerConfig as largeTextConfig} from "./demo/pc/large-text/demo-set.module"
 import {routerConfigPC} from "./router-config";
 
 @Component({
@@ -247,7 +247,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'toast', toastConfig);
         this._addRouterConfig(routerConfig, 'novice-guide', noviceGuideConfig);
         this._addRouterConfig(routerConfig, 'chart-icon', chartIconConfig);
-        this._addRouterConfig(routerConfig, 'big-number', bigNumberConfig);
+        this._addRouterConfig(routerConfig, 'large-text', largeTextConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

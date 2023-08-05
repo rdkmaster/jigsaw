@@ -1,16 +1,16 @@
 <div class="prefix-leadingUnit" *ngIf="!!leadingUnit">
     <span [ngStyle]="{'color':'red'}">{{leadingUnit}}</span>
 </div>
-<div class="big-number" [ngSwitch]="_$getCondition()">
+<div class="large-text" [ngSwitch]="_$getCondition()">
     <ng-container *ngSwitchCase="'number'">
-        <span class="data_updateable">
-            <span class="dataWrapper" *ngFor="let item of _$valueList;" [ngSwitch]="item">
-                     <span class="dot" *ngSwitchCase="'-'">{{item}}</span>
-                    <span class="dot" *ngSwitchCase="'.'">{{item}}</span>
-                    <span class="numberItem"*ngSwitchDefault [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
-                        <span style="visibility: hidden">{{item}}</span>
-                        <span #numberInfo class="numberSlider" [ngStyle]="{'font-size': _$fontSize}">01234567890123456789</span>
-                    </span>
+        <span class="data-updatable">
+            <span class="data-wrapper" *ngFor="let item of _$valueList;" [ngSwitch]="item">
+                <span class="dot" *ngSwitchCase="'-'">{{item}}</span>
+                <span class="dot" *ngSwitchCase="'.'">{{item}}</span>
+                <span class="number-item" *ngSwitchDefault [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
+                    <span style="visibility: hidden">{{item}}</span>
+                    <span #numberInfo class="number-slider" [ngStyle]="{'font-size': _$fontSize}">01234567890123456789</span>
+                </span>
             </span>
         </span>
     </ng-container>
@@ -21,11 +21,11 @@
         </div>
     </ng-container>
 
-<!--    <ng-container *ngSwitchCase="'picture'">-->
-<!--        <div>-->
-<!--            <img [src]="_$imgPath" alt="No picture...">-->
-<!--        </div>-->
-<!--    </ng-container>-->
+    <!--    <ng-container *ngSwitchCase="'picture'">-->
+    <!--        <div>-->
+    <!--            <img [src]="_$imgPath" alt="No picture...">-->
+    <!--        </div>-->
+    <!--    </ng-container>-->
 
     <ng-container *ngSwitchDefault>
         <span [ngStyle]="{'font-size': _$fontSize}">{{value}}</span>

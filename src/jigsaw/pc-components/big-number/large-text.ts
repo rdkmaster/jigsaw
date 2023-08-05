@@ -4,7 +4,6 @@ import {
     ElementRef,
     Input, NgModule,
     OnChanges,
-    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -18,19 +17,20 @@ import {FormsModule} from "@angular/forms";
 
 type TrendDirection = { trend: string, percentage: string };
 
-@WingsTheme('big-number.scss')
+@WingsTheme('large-text.scss')
 @Component({
-    selector: 'jigsaw-big-number',
-    templateUrl: './big-number.html',
+    selector: 'jigsaw-large-text',
+    templateUrl: './large-text.html',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
-        '[class.jigsaw-big-number-host]': 'true',
+        '[class.jigsaw-large-text-host]': 'true',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawBigNumberComponent extends AbstractJigsawComponent implements OnChanges, OnInit, OnDestroy {
+export class JigsawLargeTextComponent extends AbstractJigsawComponent implements OnChanges, OnInit {
+
     private _value: number | string;
 
     /**
@@ -120,7 +120,7 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
      * 用于设置是否显示趋势，percentage时既显示趋势又显示升降比例，比例默认精度1
      */
     @Input()
-    public trend: 'none' | 'percentage' | 'normal';
+    public trend: 'none' | 'percentage' | 'normal' = 'none';
 
     public _$trendMap: TrendDirection = {trend: '', percentage: ''};
 
@@ -257,15 +257,12 @@ export class JigsawBigNumberComponent extends AbstractJigsawComponent implements
         this._init();
         this._setNumberTransform();
     }
-
-    ngOnDestroy(): void {
-    }
 }
 
 @NgModule({
     imports: [CommonModule, FormsModule, JigsawCommonModule],
-    declarations: [JigsawBigNumberComponent],
-    exports: [JigsawBigNumberComponent],
+    declarations: [JigsawLargeTextComponent],
+    exports: [JigsawLargeTextComponent],
 })
 export class JigsawBigNumberModule {
 

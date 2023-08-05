@@ -1,24 +1,24 @@
-$jigsaw-big-number: #{$jigsaw-prefix}-big-number;
+$jigsaw-large-text: #{$jigsaw-prefix}-large-text;
 
-.#{$jigsaw-big-number}-host {
+.#{$jigsaw-large-text}-host {
     display: inline-flex;
     color: $font-color-default;
     line-height: 1;
     overflow: hidden;
 
-    .prefix-leadingUnit, .suffix-unit, .big-number, .trend-container{
+    .prefix-leadingUnit, .suffix-unit, .large-text, .trend-container{
         display: flex;
         align-items: center;
         margin: 4px;
     }
 
-    .big-number {
-        .data_updateable {
+    .large-text {
+        .data-updatable {
             display: flex;
             height: inherit;
             flex-direction: row;
             justify-content: flex-end;
-            .dataWrapper {
+            .data-wrapper {
                 display: flex;
                 align-items: center;
                 height: 100%;
@@ -30,12 +30,12 @@ $jigsaw-big-number: #{$jigsaw-prefix}-big-number;
                     transform: translateY(25%);
                     user-select: none;
                 }
-                .numberItem {
+                .number-item {
                     position: relative;
                     display: inline-block;
                     height: 100%;
                     overflow: hidden;
-                    .numberSlider {
+                    .number-slider {
                         position: absolute;
                         writing-mode: vertical-rl;
                         text-orientation: upright;

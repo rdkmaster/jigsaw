@@ -1,3 +1,5 @@
+import {LargeTextDemoModule} from "./demo/pc/large-text/demo-set.module";
+
 export const routerConfigPC = [
     {
         path: "pc/alert",
@@ -284,8 +286,8 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/chart-icon/demo-set.module').then(m => m.ChartIconDemoModule),
     },
     {
-        path: "pc/big-number",
-        loadChildren: () => import('./demo/pc/big-number/demo-set.module').then(m => m.BigNumberDemoModule),
+        path: "pc/large-text",
+        loadChildren: () => import('./demo/pc/large-text/demo-set.module').then(m => m.LargeTextDemoModule),
     }
 ];
 export const routerConfigMobile = [
