@@ -687,7 +687,6 @@ export class GaugeSeries extends SeriesBase {
     public splitLine?: any;
     public pointer?: any;
     public title?: any;
-    public autoAxisLineColor?: boolean;
 }
 
 export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
@@ -803,10 +802,6 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                         seriesItem[param] = seriesData[param];
                     }
                 });
-
-                if (seriesItem.autoAxisLineColor && seriesItem.axisLine?.lineStyle?.color?.[0]?.length && seriesItem.data?.[0]) {
-                    seriesItem.axisLine.lineStyle.color[0][0] = Number(seriesItem.data[0].value) / (Number(seriesItem.max) || 100);
-                }
 
                 return seriesItem;
             });
