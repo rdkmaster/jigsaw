@@ -598,53 +598,29 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     /**
-     * 阻止下拉框自带的搜索行为
-     *
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public manualSearch: boolean = false;
-
-    /**
-     * 搜索框的值发生改变时，向外发出事件
-     */
-    @Output()
-    public searchKeywordChange: EventEmitter<{searchKey: string, data: any, instance: JigsawSelectBase}> = new EventEmitter<any>();
-
-    /**
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
-        if (this.manualSearch && CommonUtils.isDefined(filterKey)) {
-            this.searchKeywordChange.emit({ searchKey: filterKey, data: this.data, instance: this });
-            return;
-        }
-
         // 为了消除统计的闪动，需要先把搜索字段临时存放在bak里面
         this._searchKeyBak = filterKey;
         if (this.data instanceof InfiniteScrollLocalPageableArray || this.data instanceof InfiniteScrollPageableArray) {
             this._filterData(filterKey);
-            return;
+        } else {
+            const data = new LocalPageableArray<SelectOption>();
+            data.pagingInfo.pageSize = Infinity;
+            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+                removeUpdateSubscriber.unsubscribe();
+                this.data = data;
+                this._filterData(filterKey);
+            });
+            data.fromArray(this.data);
         }
-
-        const data = new LocalPageableArray<SelectOption>();
-        data.pagingInfo.pageSize = Infinity;
-        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-            // 在新建data准备好再赋值给组件data，防止出现闪动的情况
-            removeUpdateSubscriber.unsubscribe();
-            this.data = data;
-            this._filterData(filterKey);
-        });
-        data.fromArray(this.data);
     }
 
     protected _filterData(filterKey?: string) {
         filterKey = filterKey ? filterKey.trim() : '';
         (<InfiniteScrollLocalPageableArray<any> | InfiniteScrollPageableArray>this.data).filter(filterKey, [this.labelField]);
-        this.resetScrollbar();
-    }
-
-    public resetScrollbar() {
         this._listScrollbar && this._listScrollbar.scrollToTop();
     }
 
