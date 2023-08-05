@@ -1,6 +1,6 @@
 .option-box {
     position: fixed;
-    left: 70%;
+    left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
@@ -9,11 +9,4 @@
     height: 30vh;
     margin: 36px;
     text-align: center;
-}
-
-.box-complete {
-    height: 100px;
-    width: 100%;
-    background-color: red;
-    color: #000;
 }
