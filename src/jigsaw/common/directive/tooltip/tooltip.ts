@@ -42,9 +42,6 @@ export class JigsawTooltipComponent implements IPopupable {
     constructor(public changeDetector: ChangeDetectorRef) {
     }
 
-    /**
-     * @internal
-     */
     public _$tooltip: string;
 
     public get tooltip(): string {
