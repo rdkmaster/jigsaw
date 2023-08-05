@@ -14,6 +14,14 @@ import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
 
+export abstract class AbstractModeledGraphTemplate {
+    public abstract getInstance(): EchartOptions;
+    public title?: EchartTitle;
+    public tooltip?: EchartTooltip;
+    public toolbox?: EchartToolbox;
+    public legend?: EchartLegend;
+}
+
 export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
@@ -106,55 +114,33 @@ export class CustomModeledGraphTemplate {
     }
 }
 
-class DimKpiBase {
+export class Dimension {
     public name?: string;
+    public yAxisIndex?: 0 | 1 = 0;
     public stack?: string;
     public color?: string;
     public shade?: 'bar' | 'line' | 'area' = 'bar';
     public barWidth?: any;
-    public yAxisIndex?: 0 | 1 = 0;
 
-    public static extend(seriesItem: EchartSeriesItem, dimKpi: DimKpiBase) {
-        const dimKpiBak = <DimKpiBase>CommonUtils.deepCopy(dimKpi);
-        if (dimKpiBak.shade == 'area') {
-            // 面积图
-            seriesItem['type'] = 'line';
-            seriesItem['areaStyle'] = {};
-        } else {
-            seriesItem['type'] = dimKpiBak.shade;
-        }
-        delete dimKpiBak.shade;
-        this._deleteOtherProp(dimKpiBak);
-        Object.assign(seriesItem, dimKpiBak);
-    }
-
-    protected static _deleteOtherProp<T extends DimKpiBase>(dimKpi: T) {
-    }
-}
-
-export class Dimension extends DimKpiBase{
     constructor(name?: string) {
-        super();
         this.name = name;
     }
 }
 
-export class Indicator extends DimKpiBase {
+export class Indicator {
+    public name?: string;
     public field?: string;
     public index?: number = -1;
+    public yAxisIndex?: 0 | 1 = 0;
+    public stack?: string = undefined;
+    public color?: string;
+    public shade?: 'bar' | 'line' | 'area' = 'bar';
     public defaultValue?: number = 0;
     public aggregateBy?: AggregateAlgorithm = 'sum';
+    public barWidth?: any;
 
     constructor(field?: string) {
-        super();
         this.field = field;
-    }
-
-    protected static _deleteOtherProp(dimKpi: Indicator) {
-        delete dimKpi.field;
-        delete dimKpi.index;
-        delete dimKpi.defaultValue;
-        delete dimKpi.aggregateBy;
     }
 }
 
@@ -164,28 +150,92 @@ export class SeriesBase {
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
     public name?: string;
-    public more?: any;
-    public data?: any;
 
     constructor(name?: string) {
         this.name = name;
-    }
-
-    public static extend(seriesItem: EchartSeriesItem, seriesData: SeriesBase, index: number) {
-        const seriesDataBak = <SeriesBase>CommonUtils.deepCopy(seriesData);
-        delete seriesDataBak.dimensionField;
-        delete seriesDataBak.dimensions;
-        delete seriesDataBak.usingAllDimensions;
-        delete seriesDataBak.indicators;
-        delete seriesDataBak.more;
-        delete seriesDataBak.data;
-        Object.assign(seriesItem, seriesDataBak);
-        seriesItem.name = seriesItem.name ? seriesItem.name : 'series' + index;
     }
 }
 
 // ------------------------------------------------------------------------------------------------
 // 直角系图相关数据对象
+
+export abstract class ModeledRectangularTemplate extends AbstractModeledGraphTemplate {
+    xAxis?: EchartXAxis;
+    yAxis1?: EchartYAxis;
+    yAxis2?: EchartYAxis;
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledRectangularTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            xAxis: CommonUtils.extendObjects<EchartXAxis>({}, this.xAxis),
+            yAxis: [
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis1),
+                CommonUtils.extendObjects<EchartYAxis>({}, this.yAxis2)
+            ]
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        },
+        extraCssText: 'z-index: 999'
+    };
+
+    toolbox = {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    };
+
+    legend = {
+        data: null
+    };
+
+    xAxis = {
+        type: 'category',
+        axisPointer: {
+            type: 'shadow'
+        }
+    };
+
+    yAxis1 = {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value}'
+        }
+    };
+
+    yAxis2 = {
+        type: 'value',
+        axisLabel: {
+            formatter: '{value}'
+        }
+    };
+
+    seriesItem = {
+        type: 'bar', data: null
+    };
+}
+
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'rectangular';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
@@ -278,7 +328,17 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
-                    Dimension.extend(seriesData, dim);
+                    if (dim.shade == 'area') {
+                        // 面积图
+                        seriesData['type'] = 'line';
+                        seriesData['areaStyle'] = {};
+                    } else {
+                        seriesData['type'] = dim.shade;
+                    }
+                    seriesData['yAxisIndex'] = dim.yAxisIndex;
+                    seriesData['stack'] = dim.stack ? dim.stack : seriesData['stack'];
+                    seriesData['color'] = dim.color ? dim.color : seriesData['color'];
+                    seriesData['barWidth'] = dim.barWidth ? dim.barWidth : seriesData['barWidth'];
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
                     this._autoRange(seriesData, options);
@@ -425,7 +485,17 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 // 再取用户配置
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
-                    Indicator.extend(seriesData, indicator);
+                    if (indicator.shade == 'area') {
+                        // 面积图
+                        seriesData['type'] = 'line';
+                        seriesData['areaStyle'] = {};
+                    } else {
+                        seriesData['type'] = indicator.shade;
+                    }
+                    seriesData['yAxisIndex'] = indicator.yAxisIndex;
+                    seriesData['stack'] = indicator.stack;
+                    seriesData['color'] = indicator.color;
+                    seriesData['barWidth'] = indicator.barWidth;
                     // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(indicator, options);
                 }
@@ -448,7 +518,53 @@ export class PieSeries extends SeriesBase {
     public radius: number[];
     public center: number[];
     public roseType?: boolean | 'radius' | 'area';
-    public label?: any;
+}
+
+export abstract class ModeledPieTemplate extends AbstractModeledGraphTemplate {
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledPieTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend)
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'item',
+        formatter: "{a} <br/>{b} : {c} ({d}%)",
+        extraCssText: 'z-index: 999'
+    };
+
+    legend = {
+        type: 'scroll',
+        orient: 'vertical',
+        right: 10,
+        top: 20,
+        bottom: 20,
+        data: null
+    };
+
+    seriesItem = {
+        type: 'pie', data: null, name: '', radius: ['0%', '80%'],
+        center: ['50%', '50%'],
+        itemStyle: {
+            emphasis: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    };
 }
 
 export class ModeledPieGraphData extends AbstractModeledGraphData {
@@ -521,9 +637,10 @@ export class ModeledPieGraphData extends AbstractModeledGraphData {
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
-                SeriesBase.extend(seriesItem, seriesData, idx);
-                seriesItem.radius = seriesData.radius ? seriesItem.radius.map(r => r + '%') : seriesData.radius;
-                seriesItem.center = seriesItem.center ? seriesItem.center.map(r => r + '%') : seriesItem.center;
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                seriesItem.radius = seriesData.radius.map(r => r + '%');
+                seriesItem.center = seriesData.center.map(r => r + '%');
+                seriesItem.roseType = seriesData.roseType;
                 return seriesItem;
             });
         CommonUtils.extendObject(options, this.template.optionPatch);
@@ -552,6 +669,9 @@ export class GaugeSeries extends SeriesBase {
     public dimensions: Dimension[] = [new Dimension('')];
     public usingAllDimensions: boolean = false;
 
+    public model?: any[];
+    public more?: any;
+
     public center?: number[] = [50, 50];
     public radius?: number = 90;
     public startAngle?: number = 225;
@@ -568,6 +688,41 @@ export class GaugeSeries extends SeriesBase {
     public pointer?: any;
     public title?: any;
     public autoAxisLineColor?: boolean;
+}
+
+export class BasicModeledGaugeTemplate extends ModeledRectangularTemplate {
+    getInstance(): EchartOptions {
+        return {
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            toolbox: CommonUtils.extendObjects<EchartTitle>({}, this.toolbox),
+        };
+    }
+
+    tooltip = {
+        formatter: "{a} <br/>{b} : {c}%",
+        extraCssText: 'z-index: 999'
+    };
+
+    toolbox = {
+        show: false,
+        feature: {
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    };
+
+    seriesItem = {
+        name: '',
+        type: 'gauge',
+        center: ['50%', '50%'],
+        radius: '90%',
+        startAngle: 225,
+        endAngle: -45,
+        min: 0,
+        max: 100,
+        detail: {formatter: '{value}%'},
+        data: null
+    };
 }
 
 export class ModeledGaugeGraphData extends AbstractModeledGraphData {
@@ -633,9 +788,21 @@ export class ModeledGaugeGraphData extends AbstractModeledGraphData {
                     seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
                 }
 
-                SeriesBase.extend(seriesItem, seriesData, idx);
-                seriesItem.radius = seriesData.radius ? seriesData.radius + '%' : seriesData.radius;
-                seriesItem.center = seriesData.center ? seriesData.center.map(r => r + '%') : seriesData.center;
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                if (seriesData.radius) {
+                    seriesItem.radius = seriesData.radius + '%';
+                }
+                if (seriesData.center) {
+                    seriesItem.center = seriesData.center.map(r => r + '%');
+                }
+
+                let extendParam = ['startAngle', 'endAngle', 'min', 'max', 'splitNumber', 'axisLine', 'axisTick', 'axisLabel', 'splitLine', 'pointer', 'title', 'detail'];
+
+                extendParam.forEach(param => {
+                    if (CommonUtils.isDefined(seriesData[param])) {
+                        seriesItem[param] = seriesData[param];
+                    }
+                });
 
                 if (seriesItem.autoAxisLineColor && seriesItem.axisLine?.lineStyle?.color?.[0]?.length && seriesItem.data?.[0]) {
                     seriesItem.axisLine.lineStyle.color[0][0] = Number(seriesItem.data[0].value) / (Number(seriesItem.max) || 100);
@@ -682,26 +849,50 @@ export class RadarIndicator extends Indicator {
     public max?: number;
     public min?: number;
     public color?: string;
-    public static extend(indicatorItem: EchartSeriesItem, indicator: RadarIndicator) {
-        const indicatorBak = <RadarIndicator>CommonUtils.deepCopy(indicator);
-        indicatorItem.min = indicator.min ? indicator.min : 0;
-        delete indicatorBak.min;
-        delete indicatorBak.field;
-        delete indicatorBak.defaultValue;
-        delete indicatorBak.aggregateBy;
-        Object.assign(indicatorItem, indicatorBak);
-    }
 }
 
 export class RadarDimension extends Dimension {
     public area: boolean; // 是否填充
+}
 
-    public static extend(seriesItem: EchartSeriesItem, dimension: RadarDimension) {
-        const dimensionBak = <RadarDimension>CommonUtils.deepCopy(dimension);
-        seriesItem.areaStyle = dimension.area ? {} : null;
-        delete dimensionBak.area;
-        Object.assign(seriesItem, dimensionBak);
+export abstract class ModeledRadarTemplate extends AbstractModeledGraphTemplate {
+    radarItem?: RadarItem;
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledRadarTemplate extends ModeledRadarTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTooltip>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+            radar: CommonUtils.extendObjects<EchartLegend>({}, this.radarItem),
+        };
     }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        extraCssText: 'z-index: 999'
+    };
+
+    legend = {
+        data: null
+    };
+
+    radarItem: RadarItem = {
+        radius: '70%', //radius 在awade中给数组，不识别
+        center: ['50%', '58%'],
+        indicator: []
+    };
+
+    seriesItem: RadarSeries = {
+        type: 'radar', data: null, name: '', areaStyle: null
+    };
 }
 
 export class ModeledRadarGraphData extends AbstractModeledGraphData {
@@ -749,9 +940,12 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
             options.legend.data = dimensions.map(d => d.name);
         }
         let indicator = this.indicators.map((indicator: RadarIndicator) => {
-            const indicatorItem = {}
-            RadarIndicator.extend(indicatorItem, indicator);
-            return indicatorItem;
+            return {
+                name: indicator.name,
+                max: indicator.max,
+                min: indicator.min ? indicator.min : 0,
+                color: indicator.color
+            }
         });
         options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
@@ -759,11 +953,11 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         series.data = dimensions.map((dimension: RadarDimension) => {
             const records = this.data.filter(row => row[dimIndex] == dimension.name);
             const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
-            const seriesItem = {
-                value: this.indicators.map(i => pruned[i.index])
-            }
-            RadarDimension.extend(seriesItem, dimension);
-            return seriesItem;
+            return {
+                name: dimension.name,
+                value: this.indicators.map(i => pruned[i.index]),
+                areaStyle: dimension.area ? {} : null
+            };
         });
         options.series = [series];
         CommonUtils.extendObject(options, this.template.optionPatch);
@@ -779,12 +973,54 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 
 // ------------------------------------------------------------------------------------------------
 // 散点图相关数据对象
-export class ScatterDimension extends Dimension {
-    public static extend(seriesItem: EchartSeriesItem, dimension: ScatterDimension) {
-        const dimensionBak = <ScatterDimension>CommonUtils.deepCopy(dimension);
-        delete dimensionBak.name;
-        Object.assign(seriesItem, dimensionBak);
+export abstract class ModeledScatterTemplate extends AbstractModeledGraphTemplate {
+    xAxis?: EchartXAxis;
+    yAxis?: EchartYAxis;
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledScatterTemplate extends ModeledScatterTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            legend: CommonUtils.extendObjects<EchartLegend>({}, this.legend),
+        };
     }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            crossStyle: {
+                color: '#999'
+            }
+        },
+        extraCssText: 'z-index: 999'
+    };
+
+    toolbox = {
+        feature: {
+            dataView: {show: true, readOnly: false},
+            magicType: {show: true, type: ['line', 'bar']},
+            restore: {show: true},
+            saveAsImage: {show: true}
+        }
+    };
+
+    legend = {
+        data: null
+    };
+
+    seriesItem = {
+        type: 'scatter', data: null, symbolSize: 20
+    };
 }
 
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
@@ -796,7 +1032,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public xAxisKpiField: {name: string, field: string};
     public yAxisKpiField: {name: string, field: string};
     public dimensionField: string;
-    public dimensions: ScatterDimension[] = [];
+    public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
@@ -846,7 +1082,6 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
                 ]
             });
             seriesItem.name = dim.name ? dim.name : 'series' + idx;
-            ScatterDimension.extend(seriesItem, dim);
             return seriesItem;
         });
         CommonUtils.extendObject(options, this.template.optionPatch);
@@ -872,11 +1107,48 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 轮廓图相关数据对象
 export class MapSeries extends SeriesBase {
+    public model?: any[];
+    public more?: any;
+
     public mapType?: string = '';
     public label?: string;
     public itemStyle?: string;
     public animation?: string;
     public roam?: boolean;
+}
+
+export abstract class ModeledMapTemplate extends AbstractModeledGraphTemplate {
+    seriesItem?: EchartSeriesItem;
+}
+
+export class BasicModeledMapTemplate extends ModeledMapTemplate {
+    getInstance(): EchartOptions {
+        return {
+            title: CommonUtils.extendObjects<EchartTitle>({}, this.title),
+            tooltip: CommonUtils.extendObjects<EchartTooltip>({}, this.tooltip),
+            visualMap: CommonUtils.extendObjects<EchartTooltip>({}, this.visualMap),
+        };
+    }
+
+    title = {
+        x: 'center',
+        textStyle: {},
+        subtextStyle: {}
+    };
+
+    tooltip = {
+        trigger: 'item',
+        formatter: "",
+        extraCssText: 'z-index: 999'
+    };
+
+    visualMap = {more: ''};
+
+    seriesItem = {
+        type: 'map',
+        data: null,
+        mapType: ''
+    };
 }
 
 export class ModeledMapGraphData extends AbstractModeledGraphData {
@@ -935,7 +1207,18 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                 seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
                     .map(row => ({name: row[0], value: row[1]}));
 
-                SeriesBase.extend(seriesItem, seriesData, idx);
+                seriesItem.name = seriesData.name ? seriesData.name : 'series' + idx;
+                seriesItem.mapType = seriesData.mapType;
+                seriesItem.roam = seriesData.roam;
+
+                let extendParam = ['label', 'itemStyle', 'animation'];
+
+                extendParam.forEach(param => {
+                    if (CommonUtils.isDefined(seriesData[param])) {
+                        seriesItem[param] = seriesData[param];
+                    }
+                });
+
                 return seriesItem;
             });
         CommonUtils.extendObject(options, this.template.optionPatch);
