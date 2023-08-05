@@ -65,18 +65,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public useRawValue: boolean = true;
 
-    /**
-     * 值描述关系表，作用
-     * （1）对当前值做自动转换
-     * （2）辅助计算趋势
-     */
     @Input()
     public valueMap: { [valueEnum: string]: [number, number] } = null;
 
-
-    /**
-     * 用于设置是否开启数字的动态变化
-     */
     @Input()
     public enableAnimation: boolean = true;
 
@@ -103,30 +94,18 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @ViewChildren('numberInfo')
     private _numberInfo: QueryList<ElementRef>;
 
-
-    /**
-     * 用于设置后缀单位
-     */
     @Input()
     public unit: string = '';
 
-    /**
-     * 用于设置前导单位
-     */
     @Input()
     public leadingUnit: string = '';
 
-    /**
-     * 用于设置是否显示趋势，percentage时既显示趋势又显示升降比例，比例默认精度1
-     */
     @Input()
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
     public _$trendMap: TrendDirection = {trend: '', percentage: ''};
 
     public _$valueList: string[] = [];
-
-    private _condition: string;
 
     public _$fontSize = CommonUtils.getCssValue(16);
 
@@ -149,20 +128,14 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
     }
 
-    /**
-     * 用于处理fractionDigits对数字精度的方法
-     */
     private _roundToPrecision(value: number): number {
         if (this.fractionDigits == 0 || CommonUtils.isUndefined(this.fractionDigits)) {
-            return Math.round(value);
+            return  Math.round(value);
         }
         const hundredFold = Math.pow(10, this.fractionDigits);
         return Math.round(value * hundredFold) / hundredFold;
     }
 
-    /**
-     * 用于判断当前value值应对应的html
-     */
     public _$getCondition(): string {
         if (this.useRawValue) {
             return "";
@@ -183,11 +156,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
     }
 
-
-    /**
-     * 用于处理valueMap存在时value值的转换
-     * [number, number] ==> valueEnum的转换
-     */
     private _translateValue(value: number): void {
         if (this.useRawValue || !this.valueMap) {
             return;
@@ -225,7 +193,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         requestAnimationFrame(() => {
             this._numberInfo.forEach((element, index) => {
                 element.nativeElement.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
-                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index]) * 5 + 50}%)`;
+                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index])* 5 + 50}%)`;
             });
         })
     }
