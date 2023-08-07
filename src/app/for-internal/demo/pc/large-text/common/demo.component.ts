@@ -1,5 +1,5 @@
 import {Component, ViewChildren} from '@angular/core';
-import {JigsawLargeTextComponent} from "../../../../../../jigsaw/pc-components/large-text/large-text";
+import {JigsawLargeTextComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
