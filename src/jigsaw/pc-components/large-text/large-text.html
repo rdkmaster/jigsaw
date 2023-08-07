@@ -1,7 +1,7 @@
 <div class="prefix-leadingUnit" *ngIf="!!leadingUnit">
     <span [ngStyle]="{'color':'red'}">{{leadingUnit}}</span>
 </div>
-<div class="large-text" [ngSwitch]="_$condition">
+<div class="large-text" [ngSwitch]="_$getCondition()">
     <ng-container *ngSwitchCase="'number'">
         <span class="data-updatable">
             <span class="data-wrapper" *ngFor="let item of _$valueList;" [ngSwitch]="item">

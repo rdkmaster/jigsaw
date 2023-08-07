@@ -11,9 +11,7 @@ import {
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
 import {Subscription} from "rxjs/internal/Subscription";
-
 
 type TrendDirection = { trend: string, percentage: string };
 
@@ -42,6 +40,13 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     }
 
     public set value(value: number | string) {
+        // 如果是实际值为数字的字符串，则给转为数字类型
+        if (typeof value == 'string') {
+            const n = Number(value);
+            if (!isNaN(n)) {
+                value = n;
+            }
+        }
         this._propagateChange(value);
         this._value = value;
         this._updateView();
@@ -55,13 +60,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     private _valueSubscriptHandle: Subscription;
 
-    public _$iconClass: string = null;
-
-    public _$imgPath: string = null;
-
     /**
      * value值为number时的数字精度，默认值是2
-
      */
     @Input()
     public fractionDigits: number = 2;
@@ -95,7 +95,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._updateView();
     }
 
-    private _animationDuration: number = 5000;
+    private _animationDuration: number = 2000;
 
     /**
      * 用于设置数字动画的时间
@@ -127,14 +127,33 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
+    /**
+     * @internal
+     */
+    public _$iconClass: string = null;
+
+    /**
+     * @internal
+     */
+    public _$imgPath: string = null;
+
+    /**
+     * @internal
+     */
     public _$trendMap: TrendDirection = {trend: '', percentage: ''};
 
+    /**
+     * @internal
+     */
     public _$valueList: string[] = [];
-
-    private _originalValueList: string[] = [];
-
+    /**
+     * @internal
+     */
     public _$fontSize = CommonUtils.getCssValue(16);
 
+    /**
+     * @internal
+     */
     public _$fontWidth = CommonUtils.getCssValue(16 * 0.6);
 
 
@@ -143,16 +162,12 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     }
 
     private _init() {
-        if (this.useRawValue) {
+        if (this.useRawValue || typeof this._value != 'number') {
             return;
         }
-        if (typeof this._value == 'number') {
-            this._value = this._roundToPrecision(this._value);
-            this._translateValue(this._value);
-            this._originalValueList = this._$valueList;
-            this._$valueList = this._value.toString().split('');
-            return;
-        }
+        this._value = this._roundToPrecision(this._value);
+        this._translateValue(this._value);
+        this._$valueList = this._value.toString().split('');
     }
 
     private _roundToPrecision(value: number): number {
@@ -163,15 +178,16 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return Math.round(value * hundredFold) / hundredFold;
     }
 
-    public _$condition: string;
-
-    private _getCondition(): string {
+    /**
+     * @internal
+     */
+    public _$getCondition(): 'number' | 'picture' | 'icon' | 'unknown' {
         if (this.useRawValue) {
-            return '';
+            return 'unknown';
         }
         if (typeof this._value == 'number') {
             if (!this.enableAnimation) {
-                return '';
+                return  'unknown';
             }
             return 'number';
         }
@@ -179,7 +195,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
             this._$imgPath = this._value;
             return 'picture';
         }
-        if (/^iconfont iconfont-/.test(this._value)) {
+        if (/^\s*iconfont\s+iconfont-\w+\s*$/.test(this._value)) {
             this._$iconClass = this._value;
             return 'icon';
         }
@@ -205,10 +221,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         if (typeof value === "number") {
             return this._roundToPrecision(value);
         }
-        if (!this.valueMap || !this.valueMap[value]) {
-            return;
-        }
-        return this.valueMap[value][0];
+        const valueRange = this.valueMap?.[value] || [NaN, NaN];
+        return valueRange[0];
     }
 
     /**
@@ -219,11 +233,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
             return;
         }
         const numberArr = this._$valueList.filter((item: string) => !isNaN(Number(item)));
-        const originalArr = this._originalValueList.filter((item: string) => !isNaN(Number(item)));
         requestAnimationFrame(() => {
             this._numberInfo.forEach((element, index) => {
-                element.nativeElement.style.transition = '';
-                element.nativeElement.style.transform = `translate(-50%, -${Number(originalArr[index]) * 5 + 50}%)`;
                 element.nativeElement.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
                 element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index]) * 5 + 50}%)`;
             });
@@ -237,23 +248,26 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         if (this.trend == 'none') {
             return;
         }
-        if (!previousValue || !currentValue) {
+        if (isNaN(previousValue) || isNaN(currentValue)) {
             return;
         }
         const change = currentValue - previousValue;
         this._$trendMap.trend = change == 0 ? "unchanged" : change > 0 ? "ascending" : "descending";
+        const percentage = Math.abs(change / previousValue * 100);
+        if (percentage > 9999.9 || !Number.isFinite(percentage)) {
+            this._$trendMap.percentage = '';
+            return;
+        }
         this._$trendMap.percentage = Math.abs(change / previousValue * 100).toFixed(1);
     }
 
     private _updateView() {
         this._init();
-        this._$condition = this._getCondition();
         this._setNumberTransform();
     }
 
     ngOnInit(): void {
         this._init();
-        this._$condition = this._getCondition();
         if (this._valueSubscriptHandle) {
             this._valueSubscriptHandle.unsubscribe();
             this._valueSubscriptHandle = null;
@@ -272,7 +286,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule, JigsawCommonModule],
+    imports: [CommonModule, JigsawCommonModule],
     declarations: [JigsawLargeTextComponent],
     exports: [JigsawLargeTextComponent],
 })
