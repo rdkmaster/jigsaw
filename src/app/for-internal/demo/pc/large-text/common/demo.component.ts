@@ -48,14 +48,12 @@ export class LargeTextCommonDemoComponent {
     }
 
     _$changeValue2() {
-        this.largeText.valueChange.emit(this.value);
     }
 
     _$changeValue3() {
         const valueArray = ["特别差", "差", "中", "良", "优"];
         const randomIndex = Math.floor(Math.random() * valueArray.length);
         this.value1 = valueArray[randomIndex];
-        this.largeText1.valueChange.emit(this.value1);
     }
 
     _$changeValue4() {

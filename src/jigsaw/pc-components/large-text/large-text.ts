@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
-    ElementRef, EventEmitter,
+    ElementRef,
     Input, NgModule,
-    OnInit, Output,
+    OnInit,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -11,7 +11,6 @@ import {
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
-import {Subscription} from "rxjs/internal/Subscription";
 
 type TrendDirection = { trend: string, percentage: string };
 
@@ -47,18 +46,12 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
                 value = n;
             }
         }
-        this._propagateChange(value);
+        const previousValue = this._translateValueEnum(this._value);
+        const currentValue = this._translateValueEnum(value);
+        this._setTrend(previousValue, currentValue);
         this._value = value;
         this._updateView();
     }
-
-    @Output()
-    public valueChange = new EventEmitter<number | string>();
-    protected _propagateChange: Function = (value: number | string) => {
-        this.valueChange.emit(value);
-    };
-
-    private _valueSubscriptHandle: Subscription;
 
     /**
      * value值为number时的数字精度，默认值是2
@@ -268,16 +261,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     ngOnInit(): void {
         this._init();
-        if (this._valueSubscriptHandle) {
-            this._valueSubscriptHandle.unsubscribe();
-            this._valueSubscriptHandle = null;
-        }
-        this._valueSubscriptHandle = this.valueChange.subscribe((value) => {
-            const previousValue = this._translateValueEnum(this._value);
-            const currentValue = this._translateValueEnum(value);
-            this._setTrend(previousValue, currentValue);
-            this._cdr.detectChanges();
-        })
     }
 
     ngAfterViewInit() {
