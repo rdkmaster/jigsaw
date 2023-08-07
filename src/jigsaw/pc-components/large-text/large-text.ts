@@ -251,7 +251,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
             this._$trendMap.percentage = '';
             return;
         }
-        this._$trendMap.percentage = Math.abs(change / previousValue * 100).toFixed(1);
+        this._$trendMap.percentage = percentage.toFixed(1);
     }
 
     private _updateView() {
