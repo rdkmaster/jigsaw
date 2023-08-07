@@ -1,4 +1,4 @@
-import {Component, ViewChildren} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {JigsawLargeTextComponent} from "jigsaw/public_api";
 
 @Component({
@@ -28,9 +28,11 @@ export class LargeTextCommonDemoComponent {
     valueMapEntries1 = [];
     valueMapEntries2 =[];
 
-    @ViewChildren('largeText')
-
+    @ViewChild('largeText')
     largeText: JigsawLargeTextComponent;
+
+    @ViewChild('largeText1')
+    largeText1: JigsawLargeTextComponent;
 
     _$changeValue0() {
         this.enableAnimation = !this.enableAnimation;
@@ -44,7 +46,6 @@ export class LargeTextCommonDemoComponent {
     }
 
     _$changeValue2() {
-        this.largeText.value = "1111"
     }
 
     _$changeValue3() {
@@ -61,7 +62,7 @@ export class LargeTextCommonDemoComponent {
 
     _$changeValue5() {
         this.valueMap = {
-            '特别差':[-10000, -1],'差': [0, 3000], '中': [3001, 5000], '良': [5001, 10000],'优': [10000, 100000]
+            '特别差':[-10000, -1],'差': [0, 0.00001], '中': [0.00002, 5000], '良': [5001, 10000],'优': [10000, 100000]
         }
         this.valueMapEntries = Object.entries(this.valueMap)
 
@@ -80,6 +81,14 @@ export class LargeTextCommonDemoComponent {
             '/app/for-internal/demo/pc/big-number/common/assets/Sunday.png': [4001, Number.MAX_VALUE]
         }
         this.valueMapEntries2 = Object.entries(this.valueMap2)
+    }
+
+    _$changeValue6() {
+        this.value1 = '差';
+    }
+
+    _$changeValue7() {
+        this.value1 = '中';
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

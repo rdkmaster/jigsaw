@@ -3,7 +3,6 @@ import {
     Component,
     ElementRef,
     Input, NgModule,
-    OnChanges,
     OnInit,
     QueryList,
     Renderer2,
@@ -27,7 +26,7 @@ type TrendDirection = { trend: string, percentage: string };
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawLargeTextComponent extends AbstractJigsawComponent implements OnChanges, OnInit {
+export class JigsawLargeTextComponent extends AbstractJigsawComponent implements OnInit {
 
     private _value: number | string;
 
@@ -51,6 +50,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         const currentValue = this._translateValueEnum(value);
         this._setTrend(previousValue, currentValue);
         this._value = value;
+        this._updateView();
     }
 
     /**
@@ -65,22 +65,39 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public useRawValue: boolean = true;
 
+    private _valueMap: { [valueEnum: string]: [number, number] } = null;
     @Input()
-    public valueMap: { [valueEnum: string]: [number, number] } = null;
+    public get valueMap(): { [valueEnum: string]: [number, number] } {
+        return this._valueMap;
+    }
+
+    public set valueMap(value: { [valueEnum: string]: [number, number] }) {
+        this._valueMap = value;
+        this._updateView();
+    }
+
+    private _enableAnimation: boolean = true;
 
     @Input()
-    public enableAnimation: boolean = true;
+    public get enableAnimation(): boolean {
+        return this._enableAnimation;
+    }
 
-    private _animationDuration: number = 5000;
+    public set enableAnimation(value: boolean) {
+        this._enableAnimation = value;
+        this._updateView();
+    }
+
+    private _animationDuration: number = 2000;
 
     /**
      * 用于设置数字动画的时间
      */
+    @Input()
     public get animationDuration() {
         return this._animationDuration;
     }
 
-    @Input()
     public set animationDuration(animationDuration: number) {
         if (!this.enableAnimation) {
             return;
@@ -122,7 +139,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @internal
      */
     public _$valueList: string[] = [];
-
     /**
      * @internal
      */
@@ -196,7 +212,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      */
     private _translateValueEnum(value: string | number): number {
         if (typeof value === "number") {
-            return value;
+            return this._roundToPrecision(value);
         }
         const valueRange = this.valueMap?.[value] || [NaN, NaN];
         return valueRange[0];
@@ -213,7 +229,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         requestAnimationFrame(() => {
             this._numberInfo.forEach((element, index) => {
                 element.nativeElement.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
-                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index])* 5 + 50}%)`;
+                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index]) * 5 + 50}%)`;
             });
         })
     }
@@ -230,7 +246,17 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
         const change = currentValue - previousValue;
         this._$trendMap.trend = change == 0 ? "unchanged" : change > 0 ? "ascending" : "descending";
-        this._$trendMap.percentage = Math.abs(change / previousValue * 100).toFixed(1);
+        const percentage = Math.abs(change / previousValue * 100);
+        if (percentage > 9999.9 || !Number.isFinite(percentage)) {
+            this._$trendMap.percentage = '';
+            return;
+        }
+        this._$trendMap.percentage = percentage.toFixed(1);
+    }
+
+    private _updateView() {
+        this._init();
+        this._setNumberTransform();
     }
 
     ngOnInit(): void {
@@ -238,11 +264,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     }
 
     ngAfterViewInit() {
-        this._setNumberTransform();
-    }
-
-    ngOnChanges() {
-        this._init();
         this._setNumberTransform();
     }
 }
