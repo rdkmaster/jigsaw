@@ -15,7 +15,12 @@ export class SelectBasicDemoComponent {
         {label: "西安"}
     ]);
 
-    selectedCityForSelect2: string;
+    selectedCityForSelect2: string = '北京';
+
+    changeSelectedCityForSelect2() {
+        this.selectedCityForSelect2 = '北京';
+    }
+
     cityArrayList = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安"]);
 
     selectedCityForSelect4: string;

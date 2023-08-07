@@ -1,4 +1,4 @@
-import {Component, ViewChildren} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {JigsawLargeTextComponent} from "../../../../../../jigsaw/pc-components/large-text/large-text";
 
 @Component({
@@ -28,9 +28,13 @@ export class LargeTextCommonDemoComponent {
     valueMapEntries1 = [];
     valueMapEntries2 =[];
 
-    @ViewChildren('largeText')
+    @ViewChild('largeText')
 
     largeText: JigsawLargeTextComponent;
+
+    @ViewChild('largeText1')
+
+    largeText1: JigsawLargeTextComponent;
 
     _$changeValue0() {
         this.enableAnimation = !this.enableAnimation;
@@ -44,13 +48,14 @@ export class LargeTextCommonDemoComponent {
     }
 
     _$changeValue2() {
-        this.largeText.value = "1111"
+        this.largeText.valueChange.emit(this.value);
     }
 
     _$changeValue3() {
         const valueArray = ["特别差", "差", "中", "良", "优"];
         const randomIndex = Math.floor(Math.random() * valueArray.length);
         this.value1 = valueArray[randomIndex];
+        this.largeText1.valueChange.emit(this.value1);
     }
 
     _$changeValue4() {

@@ -1,10 +1,9 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
-    ElementRef,
+    ElementRef, EventEmitter,
     Input, NgModule,
-    OnChanges,
-    OnInit,
+    OnInit, Output,
     QueryList,
     Renderer2,
     ViewChildren,
@@ -13,6 +12,7 @@ import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {Subscription} from "rxjs/internal/Subscription";
 
 
 type TrendDirection = { trend: string, percentage: string };
@@ -29,7 +29,7 @@ type TrendDirection = { trend: string, percentage: string };
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawLargeTextComponent extends AbstractJigsawComponent implements OnChanges, OnInit {
+export class JigsawLargeTextComponent extends AbstractJigsawComponent implements OnInit {
 
     private _value: number | string;
 
@@ -42,11 +42,18 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     }
 
     public set value(value: number | string) {
-        const previousValue = this._translateValueEnum(this._value);
-        const currentValue = this._translateValueEnum(value);
-        this._setTrend(previousValue, currentValue);
+        this._propagateChange(value);
         this._value = value;
+        this._updateView();
     }
+
+    @Output()
+    public valueChange = new EventEmitter<number | string>();
+    protected _propagateChange: Function = (value: number | string) => {
+        this.valueChange.emit(value);
+    };
+
+    private _valueSubscriptHandle: Subscription;
 
     public _$iconClass: string = null;
 
@@ -65,22 +72,39 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public useRawValue: boolean = true;
 
+    private _valueMap: { [valueEnum: string]: [number, number] } = null;
     @Input()
-    public valueMap: { [valueEnum: string]: [number, number] } = null;
+    public get valueMap(): { [valueEnum: string]: [number, number] } {
+        return this._valueMap;
+    }
+
+    public set valueMap(value: { [valueEnum: string]: [number, number] }) {
+        this._valueMap = value;
+        this._updateView();
+    }
+
+    private _enableAnimation: boolean = true;
 
     @Input()
-    public enableAnimation: boolean = true;
+    public get enableAnimation(): boolean {
+        return this._enableAnimation;
+    }
+
+    public set enableAnimation(value: boolean) {
+        this._enableAnimation = value;
+        this._updateView();
+    }
 
     private _animationDuration: number = 5000;
 
     /**
      * 用于设置数字动画的时间
      */
+    @Input()
     public get animationDuration() {
         return this._animationDuration;
     }
 
-    @Input()
     public set animationDuration(animationDuration: number) {
         if (!this.enableAnimation) {
             return;
@@ -107,12 +131,14 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     public _$valueList: string[] = [];
 
+    private _originalValueList: string[] = [];
+
     public _$fontSize = CommonUtils.getCssValue(16);
 
     public _$fontWidth = CommonUtils.getCssValue(16 * 0.6);
 
 
-    constructor(protected renderer: Renderer2, public _cdr: ChangeDetectorRef) {
+    constructor(protected renderer: Renderer2, private _cdr: ChangeDetectorRef) {
         super();
     }
 
@@ -123,6 +149,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         if (typeof this._value == 'number') {
             this._value = this._roundToPrecision(this._value);
             this._translateValue(this._value);
+            this._originalValueList = this._$valueList;
             this._$valueList = this._value.toString().split('');
             return;
         }
@@ -130,19 +157,21 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     private _roundToPrecision(value: number): number {
         if (this.fractionDigits == 0 || CommonUtils.isUndefined(this.fractionDigits)) {
-            return  Math.round(value);
+            return Math.round(value);
         }
         const hundredFold = Math.pow(10, this.fractionDigits);
         return Math.round(value * hundredFold) / hundredFold;
     }
 
-    public _$getCondition(): string {
+    public _$condition: string;
+
+    private _getCondition(): string {
         if (this.useRawValue) {
-            return "";
+            return '';
         }
         if (typeof this._value == 'number') {
             if (!this.enableAnimation) {
-                return  '';
+                return '';
             }
             return 'number';
         }
@@ -170,16 +199,16 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     /**
      * 用于处理valueMap存在时value值的转换
-     * valueEnum ==> [number, number][0]的转换，如果为0需要改为1。
+     * valueEnum ==> [number, number][0]的转换。
      */
     private _translateValueEnum(value: string | number): number {
         if (typeof value === "number") {
-            return value;
+            return this._roundToPrecision(value);
         }
         if (!this.valueMap || !this.valueMap[value]) {
             return;
         }
-        return this.valueMap[value][0] ? this.valueMap[value][0] : 1;
+        return this.valueMap[value][0];
     }
 
     /**
@@ -190,10 +219,13 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
             return;
         }
         const numberArr = this._$valueList.filter((item: string) => !isNaN(Number(item)));
+        const originalArr = this._originalValueList.filter((item: string) => !isNaN(Number(item)));
         requestAnimationFrame(() => {
             this._numberInfo.forEach((element, index) => {
+                element.nativeElement.style.transition = '';
+                element.nativeElement.style.transform = `translate(-50%, -${Number(originalArr[index]) * 5 + 50}%)`;
                 element.nativeElement.style.transition = `transform ${this.animationDuration}ms ease-in-out`;
-                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index])* 5 + 50}%)`;
+                element.nativeElement.style.transform = `translate(-50%, -${Number(numberArr[index]) * 5 + 50}%)`;
             });
         })
     }
@@ -213,16 +245,28 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._$trendMap.percentage = Math.abs(change / previousValue * 100).toFixed(1);
     }
 
-    ngOnInit(): void {
+    private _updateView() {
         this._init();
-    }
-
-    ngAfterViewInit() {
+        this._$condition = this._getCondition();
         this._setNumberTransform();
     }
 
-    ngOnChanges() {
+    ngOnInit(): void {
         this._init();
+        this._$condition = this._getCondition();
+        if (this._valueSubscriptHandle) {
+            this._valueSubscriptHandle.unsubscribe();
+            this._valueSubscriptHandle = null;
+        }
+        this._valueSubscriptHandle = this.valueChange.subscribe((value) => {
+            const previousValue = this._translateValueEnum(this._value);
+            const currentValue = this._translateValueEnum(value);
+            this._setTrend(previousValue, currentValue);
+            this._cdr.detectChanges();
+        })
+    }
+
+    ngAfterViewInit() {
         this._setNumberTransform();
     }
 }
