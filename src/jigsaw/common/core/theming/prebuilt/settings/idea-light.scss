@@ -235,7 +235,7 @@ $font-color-watermark: $gray-5;
 $font-color-heading-bold: $gray-10;
 $font-color-heading-bold-lighten: $gray-9;
 $font-color-tag: $gray-5;
-$font-color-white: hsl(0, 0%, 100%);
+/*@public*/ $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-3;
 $font-color-brand: $brand-default;
 $font-color-brand-hover: $brand-hover;

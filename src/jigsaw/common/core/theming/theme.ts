@@ -2,9 +2,9 @@ import {EventEmitter, Injectable} from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 import {ScopedThemeUtils, ScopedThemeInfo} from "../utils/scoped-theme-utils";
 
-export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm";
+export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm" | "awade";
 export type MajorStyle = "dark" | "light";
-export type PopupBackgroundColor = "#1b1d26" | "#ffffff";
+export type PopupBackgroundColor = "var(--bg-container)" | "#ffffff";
 
 declare const document;
 
@@ -72,7 +72,7 @@ export class JigsawTheme {
 
         switch (value) {
             case "dark":
-                this._popupBackgroundColor = "#1b1d26";
+                this._popupBackgroundColor = "var(--bg-container)";
                 break;
             case 'light':
             default:
