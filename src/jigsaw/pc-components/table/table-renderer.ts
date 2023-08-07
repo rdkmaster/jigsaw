@@ -347,7 +347,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$disabled(): boolean {
-        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : true;
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
     }
 
     public get _$valid(): boolean {

@@ -114,15 +114,36 @@ export class CustomModeledGraphTemplate {
     }
 }
 
-export class Dimension {
+class DimKpiBase {
     public name?: string;
-    public yAxisIndex?: 0 | 1 = 0;
     public stack?: string;
     public color?: string;
     public shade?: 'bar' | 'line' | 'area' = 'bar';
     public barWidth?: any;
+    public yAxisIndex?: 0 | 1 = 0;
+    public more?: any;
 
+    public static extend(seriesItem: EchartSeriesItem, dimKpi: DimKpiBase) {
+        const dimKpiBak = <DimKpiBase>CommonUtils.deepCopy(dimKpi);
+        if (dimKpiBak.shade == 'area') {
+            // 面积图
+            seriesItem['type'] = 'line';
+            seriesItem['areaStyle'] = {};
+        } else {
+            seriesItem['type'] = dimKpiBak.shade;
+        }
+        delete dimKpiBak.shade;
+        this._deleteOtherProp(dimKpiBak);
+        Object.assign(seriesItem, dimKpiBak);
+    }
+
+    protected static _deleteOtherProp<T extends DimKpiBase>(dimKpi: T) {
+    }
+}
+
+export class Dimension extends DimKpiBase{
     constructor(name?: string) {
+        super();
         this.name = name;
     }
 }
