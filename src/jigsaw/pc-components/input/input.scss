@@ -93,7 +93,7 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
-    &.#{$jigsaw-input}-show-border {
+    &.#{$jigsaw-input}-hide-border {
         .#{$jigsaw-input}-wrapper {
             border-color: $bg-transparent;
         }

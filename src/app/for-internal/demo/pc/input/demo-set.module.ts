@@ -7,7 +7,7 @@ import {InputFocusDemoModule} from "./focus/demo.module";
 import {InputPrefixIconDemoModule} from "./icons/demo.module";
 import {InputFullModule} from "./full/demo.module";
 import {InputDisabledModule} from "./disabled/demo.module";
-import {InputShowBorderModule} from "./show-border/demo.module";
+import {InputHideBorderModule} from "./hide-border/demo.module";
 import {InputValidModule} from "./valid/demo.module";
 import {InputSelectDemoModule} from "./select/demo.module";
 
@@ -18,7 +18,7 @@ import {InputClearableDemoComponent} from "./clearable/demo.component";
 import {InputFocusDemoComponent} from "./focus/demo.component";
 import {InputPrefixIconDemoComponent} from "./icons/demo.component";
 import {InputDisabledComponent} from "./disabled/demo.component";
-import {InputShowBorderComponent} from "./show-border/demo.component";
+import {InputHideBorderComponent} from "./hide-border/demo.component";
 import {InputValidComponent} from "./valid/demo.component";
 import {InputSelectDemoComponent} from "./select/demo.component";
 import {InputPasswordModule} from "./password/demo.module";
@@ -51,7 +51,7 @@ export const routerConfig = [
         path: 'disabled', component: InputDisabledComponent
     },
     {
-        path: 'show-border', component: InputShowBorderComponent
+        path: 'hide-border', component: InputHideBorderComponent
     },
     {
         path: 'valid', component: InputValidComponent
@@ -83,7 +83,7 @@ export const routerConfig = [
         InputPrefixIconDemoModule,
         InputFullModule,
         InputDisabledModule,
-        InputShowBorderModule,
+        InputHideBorderModule,
         InputValidModule,
         InputSelectDemoModule,
         InputPasswordModule,
