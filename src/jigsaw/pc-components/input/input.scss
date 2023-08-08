@@ -93,6 +93,12 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
+    &.#{$jigsaw-input}-show-border {
+        .#{$jigsaw-input}-wrapper {
+            border-color: $bg-transparent;
+        }
+    }
+
     &.#{$jigsaw-input}-error {
         .#{$jigsaw-input}-wrapper,
         .#{$jigsaw-input}-wrapper:hover,

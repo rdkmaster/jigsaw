@@ -71,6 +71,13 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 设置input框边框显隐开关，为true则边框透明，为false则有边框颜色。
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public showBorder: boolean = false;
+
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
 
@@ -326,6 +333,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
         '[class.jigsaw-input-disabled]': 'disabled',
+        '[class.jigsaw-input-show-border]': 'showBorder',
         '[class.jigsaw-input-readonly]': 'readonly',
         '(click)': '_$stopPropagation($event)'
     },
@@ -357,13 +365,6 @@ export class JigsawInput extends JigsawInputBase {
     public get type(): string {
         return this.password ? "password" : "text";
     }
-
-    /**
-     * x
-     */
-    @RequireMarkForCheck()
-    @Input()
-    public xxborder: boolean = true;
 
     @ViewChild('input')
     private _inputElement: ElementRef;
