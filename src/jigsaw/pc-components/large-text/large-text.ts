@@ -8,9 +8,9 @@ import {
     Renderer2,
     ViewChildren,
 } from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
-import {CommonModule} from "@angular/common";
 
 type TrendDirection = { trend: string, percentage: string };
 
@@ -273,6 +273,5 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     declarations: [JigsawLargeTextComponent],
     exports: [JigsawLargeTextComponent],
 })
-export class JigsawBigNumberModule {
-
+export class JigsawLargeTextModule {
 }

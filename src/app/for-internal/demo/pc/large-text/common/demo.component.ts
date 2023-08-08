@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {JigsawLargeTextComponent} from "../../../../../../jigsaw/pc-components/large-text/large-text";
+import {JigsawLargeTextComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -29,11 +29,9 @@ export class LargeTextCommonDemoComponent {
     valueMapEntries2 =[];
 
     @ViewChild('largeText')
-
     largeText: JigsawLargeTextComponent;
 
     @ViewChild('largeText1')
-
     largeText1: JigsawLargeTextComponent;
 
     _$changeValue0() {
