@@ -32,6 +32,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     /**
      * 大字组件的值，可以是number或者string类型
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get value(): number | string {
@@ -55,17 +56,23 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     /**
      * value值为number时的数字精度，默认值是2
+     * @NoMarkForCheckRequired
      */
     @Input()
     public fractionDigits: number = 2;
 
     /**
      * 设置组件是否使用原始值，为true时不做任何处理，为false时会自动进行valueMap转换
+     * @NoMarkForCheckRequired
      */
     @Input()
     public useRawValue: boolean = true;
 
     private _valueMap: { [valueEnum: string]: [number, number] } = null;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get valueMap(): { [valueEnum: string]: [number, number] } {
         return this._valueMap;
@@ -78,6 +85,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     private _enableAnimation: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public get enableAnimation(): boolean {
         return this._enableAnimation;
@@ -92,6 +102,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     /**
      * 用于设置数字动画的时间
+     * @NoMarkForCheckRequired
      */
     @Input()
     public get animationDuration() {
@@ -108,15 +119,21 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._animationDuration = animationDuration;
     }
 
-    @ViewChildren('numberInfo')
-    private _numberInfo: QueryList<ElementRef>;
-
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public unit: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public leadingUnit: string = '';
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
@@ -217,6 +234,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         const valueRange = this.valueMap?.[value] || [NaN, NaN];
         return valueRange[0];
     }
+
+    @ViewChildren('numberInfo')
+    private _numberInfo: QueryList<ElementRef>;
 
     /**
      * 用于处理value值转换时数字的动画化
