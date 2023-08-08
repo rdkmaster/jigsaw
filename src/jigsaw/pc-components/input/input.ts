@@ -358,6 +358,13 @@ export class JigsawInput extends JigsawInputBase {
         return this.password ? "password" : "text";
     }
 
+    /**
+     * xxx
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public xxborder: boolean = true;
+
     @ViewChild('input')
     private _inputElement: ElementRef;
 
