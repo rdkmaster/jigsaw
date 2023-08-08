@@ -359,7 +359,7 @@ export class JigsawInput extends JigsawInputBase {
     }
 
     /**
-     * xxx
+     * x
      */
     @RequireMarkForCheck()
     @Input()
