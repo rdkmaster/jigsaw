@@ -166,7 +166,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      */
     public _$fontWidth = CommonUtils.getCssValue(16 * 0.6);
 
-
     constructor(protected renderer: Renderer2, private _cdr: ChangeDetectorRef) {
         super();
     }
@@ -197,7 +196,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
         if (typeof this._value == 'number') {
             if (!this.enableAnimation) {
-                return  'unknown';
+                return 'unknown';
             }
             return 'number';
         }
