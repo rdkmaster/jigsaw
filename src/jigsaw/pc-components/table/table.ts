@@ -738,10 +738,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
                 return;
             }
             // 这里如果不是本地分页需要等待表格数据更新完毕后更新滚动条
-            this.data.onAjaxComplete(() => {
-                if (this._bodyScrollbar.elementRef.nativeElement.scrollTop == 0) {
-                    return;
-                }
+            const removeAjaxCallback = this.data.onAjaxComplete(() => {
+                removeAjaxCallback();
                 this._bodyScrollbar.scrollToTop();
             })
         })
