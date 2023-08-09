@@ -138,6 +138,7 @@ export class TableCellSetting {
     innerHtmlContext: any;
     alignment: 'left' | 'center' | 'right';
     noPadding: boolean;
+    freeze: boolean;
 }
 
 export class SortChangeEvent {

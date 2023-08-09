@@ -119,7 +119,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                         background: $border-color-default;
                     }
 
-                    &:first-of-type::after {
+                    &::after {
                         content: "";
                         position: absolute;
                         top: 0;

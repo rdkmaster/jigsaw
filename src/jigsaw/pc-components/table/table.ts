@@ -467,14 +467,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
-    private _updateFreezeColumn() {
-        if (CommonUtils.isUndefined(this.freezeColumn) || this.freezeColumn == 0) {
+    private _updateFreezeColumns() {
+        if (!(this.freezeLeftColumns > 0 || this.freezeRightColumns > 0)) {
             return;
         }
 
         // BigTableData的实现原理不适用于此冻结列功能
         if (this.data instanceof BigTableData) {
-            this.freezeColumn = 0;
+            this.freezeLeftColumns = 0;
+            this.freezeRightColumns = 0;
             this._changeDetectorRef.detectChanges();
             return;
         }
@@ -485,8 +486,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
-        const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
-        this._setCellsFreeze(headers);
+        if (!this.hideHeader) {
+            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
+            this._setCellsFreeze(headers);
+        }
 
         this._rowElementRefs.forEach(row => {
             const tds = row.nativeElement.querySelectorAll('td');
@@ -496,13 +499,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _setCellsFreeze(tds) {
         let leftOffset = 0;
-        for (let i = 0; i < tds.length; i++) {
-            if (i >= this.freezeColumn) {
-                break;
-            }
+        const max = Math.min(this.freezeLeftColumns, tds.length);
+        for (let i = 0; i < max; i++) {
             tds[i].style.left = leftOffset + 'px';
             leftOffset += tds[i].offsetWidth;
         }
+
+        let rightOffset = 0;
+        const min = tds.length - 1 - this.freezeRightColumns;
+        for (let i = tds.length - 1; i > min; i--) {
+            tds[i].style.right = rightOffset + 'px';
+            rightOffset += tds[i].offsetWidth;
+        }
+    }
+
+    public _$isCellFreeze(index): boolean {
+        return index < this.freezeLeftColumns || index > this._$headerSettings.length - 1 - this.freezeRightColumns;
     }
 
     /**
@@ -563,7 +575,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 自动再次标记选中行
             this._selectRow(this.selectedRow);
             // 设置冻结列
-            this._updateFreezeColumn();
+            this._updateFreezeColumns();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -749,7 +761,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
      */
     @Input()
-    public freezeColumn: number;
+    public freezeLeftColumns: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public freezeRightColumns: number;
 
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
@@ -782,7 +800,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._setVerticalScrollbarOffset();
         this._updateFillUpBlankRow();
         this._updateAutoPageSizing();
-        this._updateFreezeColumn();
+        this._updateFreezeColumns();
     }
 
     private _tableHeaderElement: HTMLElement;

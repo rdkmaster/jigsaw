@@ -34,12 +34,13 @@ export class TableFreezeColumnDemoComponent {
     @ViewChild('tableCmp')
     public tableCmp: JigsawTable;
 
-    public freezeColumn = 2;
+    public freezeLeftColumns = 2;
+    public freezeRightColumns = 0;
     public contentWidthNum = 2000;
 
     public valueChange() {
         setTimeout(() => {
-            this.tableCmp.update();
+            this.tableCmp.resize();
         }, 0);
     }
 

@@ -6,7 +6,9 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>冻结列：</span>
-        <j-numeric-input [(value)]="freezeColumn" min="0" max="3" (valueChange)="valueChange()">
+        <j-numeric-input [(value)]="freezeLeftColumns" min="0" max="3" (valueChange)="valueChange()">
+        </j-numeric-input>
+        <j-numeric-input [(value)]="freezeRightColumns" min="0" max="3" (valueChange)="valueChange()">
         </j-numeric-input>
     </li>
     <li class="demo-options-item">
@@ -21,5 +23,6 @@
 </ul>
 
 <jigsaw-table #tableCmp maxHeight="400" [data]="tableData" [columnDefines]="columnDefines"
-    [additionalColumnDefines]="additionalColumns" [contentWidth]="contentWidth" [freezeColumn]="freezeColumn">
+    [additionalColumnDefines]="additionalColumns" [contentWidth]="contentWidth" [freezeLeftColumns]="freezeLeftColumns"
+    [freezeRightColumns]="freezeRightColumns">
 </jigsaw-table>

@@ -39,7 +39,7 @@ export class TableUtils {
             settings = {
                 cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, rowSpan: 1,
                 editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null,
-                alwaysShowEditor: false
+                alwaysShowEditor: false, freeze: false
             }
         }
         settings.width = columnDefine.width;
