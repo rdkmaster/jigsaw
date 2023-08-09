@@ -35,6 +35,8 @@ import { SelectInfiniteScrollDemoComponent } from "./infinite-scroll/demo.compon
 import { SelectInfiniteScrollDemoModule } from "./infinite-scroll/demo.module";
 import { SelectManualSearchDemoComponent } from "./manual-search/demo.component";
 import { SelectManualSearchDemoModule } from "./manual-search/demo.module";
+import { SelecthideBorderDownDemoModule } from "./hide-border-down/demo.module";
+import { SelecthideBorderDownDemoComponent } from "./hide-border-down/demo.component";
 
 export const routerConfig = [
     {
@@ -51,6 +53,9 @@ export const routerConfig = [
     },
     {
         path: 'disabled', component: SelectDisabledDemoComponent
+    },
+    {
+        path: 'hide-border-down', component: SelecthideBorderDownDemoComponent
     },
     {
         path: 'line-ellipsis', component: SelectLineEllipsisDemoComponent
@@ -109,7 +114,8 @@ export const routerConfig = [
         SelectValueChangeDemoModule,
         SelectValidDemoModule,
         SelectInfiniteScrollDemoModule,
-        SelectManualSearchDemoModule
+        SelectManualSearchDemoModule,
+        SelecthideBorderDownDemoModule
     ]
 })
 export class SelectDemoModule {

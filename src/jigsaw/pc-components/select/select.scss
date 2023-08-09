@@ -30,6 +30,15 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
+    &.#{$jigsaw-select}-hide-border-down {
+        .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
+            border-color: $bg-transparent;
+        }
+        .#{$jigsaw-combo-select}-arrow {
+            color: $bg-transparent;
+        }
+    } 
+      
     &.#{$jigsaw-select}-multiple-select {
         .#{$jigsaw-combo-select}-host {
             position: relative;
@@ -122,7 +131,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     &.#{$jigsaw-select}-large {
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
             min-height: $height-base;
-
+            
             .#{$jigsaw-combo-select}-selection-rendered {
                 min-height: $height-base - 2;
             }

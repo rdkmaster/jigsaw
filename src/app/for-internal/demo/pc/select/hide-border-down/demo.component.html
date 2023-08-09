@@ -1,0 +1,20 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Select</jigsaw-header>
+    <div class="live-demo">
+        <jigsaw-header [level]="2">隐藏边框和下拉箭头</jigsaw-header>
+        <jigsaw-select [(value)]="selectedCityForSelect"
+                       (valueChange)="selectChange($event)"
+                       placeholder="请选择城市"
+                       [data]="cityListForSelect"
+                       [hideBorderDown]="!hideBorderDown">
+        </jigsaw-select>
+        <jigsaw-switch [(checked)]="hideBorderDown" onLabel="显示" offLabel="隐藏"></jigsaw-switch>
+        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+    </div>
+</div>
