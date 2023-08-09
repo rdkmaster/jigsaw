@@ -6,35 +6,40 @@ $jigsaw-large-text: #{$jigsaw-prefix}-large-text;
     line-height: 1;
     overflow: hidden;
 
-    .prefix-leadingUnit, .suffix-unit, .large-text, .trend-container{
+    .prefix-leadingUnit, .suffix-unit, .trend-container {
         display: flex;
         align-items: center;
-        margin: 4px;
     }
 
     .large-text {
+        display: flex;
+        align-items: center;
+
         .data-updatable {
             display: flex;
             height: inherit;
             flex-direction: row;
             justify-content: flex-end;
+
             .data-wrapper {
                 display: flex;
                 align-items: center;
                 height: 100%;
+
                 .dot {
                     display: inline-block;
                     height: 100%;
                     line-height: 100%;
                     vertical-align: top;
-                    transform: translateY(25%);
                     user-select: none;
                 }
+
                 .number-item {
                     position: relative;
                     display: inline-block;
                     height: 100%;
                     overflow: hidden;
+
                     .number-slider {
                         position: absolute;
                         writing-mode: vertical-rl;

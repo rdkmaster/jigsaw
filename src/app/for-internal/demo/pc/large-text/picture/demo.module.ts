@@ -6,18 +6,18 @@ import {
     JigsawButtonModule,
     JigsawHeaderModule,
     JigsawIconModule,
-    JigsawInputModule, JigsawNumericInputModule, JigsawColorSelectModule
+    JigsawInputModule, JigsawNumericInputModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
-import {LargeTextCommonDemoComponent} from "./demo.component";
+import {LargeTextPictureDemoComponent} from "./demo.component";
 
 @NgModule({
-    declarations: [LargeTextCommonDemoComponent],
+    declarations: [LargeTextPictureDemoComponent],
     imports: [
-        CommonModule, JigsawDemoDescriptionModule, JigsawLargeTextModule, JigsawButtonModule, JigsawColorSelectModule,
+        CommonModule,JigsawDemoDescriptionModule, JigsawLargeTextModule, JigsawButtonModule,
         JigsawBoxModule, JigsawHeaderModule, JigsawIconModule, JigsawInputModule, JigsawNumericInputModule
     ],
-    exports: [LargeTextCommonDemoComponent]
+    exports: [LargeTextPictureDemoComponent]
 })
-export class LargeTextCommonDemoModule {
+export class LargeTextPictureDemoModule {
 }

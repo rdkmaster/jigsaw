@@ -1,0 +1,90 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="wrapper">
+    <h4>数字内容下趋势：</h4>
+
+    <div class="row">
+        <label>内容为数字</label>
+        <j-numeric-input [(value)]="value" [showOption]="false" placeholder="请输入数字"></j-numeric-input>
+        <jigsaw-button (click)="_$changeValue()">value值变大</jigsaw-button>
+        <jigsaw-button (click)="_$changeValue1()">value值变小</jigsaw-button>
+    </div>
+
+    <div class="row">
+        <label>数字精度</label>
+        <j-numeric-input [(value)]="fractionDigits" [showOption]="false" min="0" placeholder="请输入数字精度"></j-numeric-input>
+    </div>
+
+    <div class="row">
+        <label>动画时间</label>
+        <j-numeric-input [(value)]="animationDuration" [showOption]="false" min="0" [suffix]="'ms'" placeholder="请输入动画时间"></j-numeric-input>
+        <jigsaw-button (click)="enableAnimation=!enableAnimation">是否启用动画</jigsaw-button>
+    </div>
+
+    <div class="row">
+        <label>趋势</label>
+        <jigsaw-button (click)="trend='none'" [ngStyle]="{'background': trend==='none'?'#1178d9':''}">none</jigsaw-button>
+        <jigsaw-button (click)="trend='normal'" [ngStyle]="{'background': trend==='normal'?'#1178d9':''}">normal</jigsaw-button>
+        <jigsaw-button (click)="trend='percentage'" [ngStyle]="{'background': trend==='percentage'?'#1178d9':''}">percentage</jigsaw-button>
+        <span style="margin-left: 8px;">趋势的三种情况none不显示，normal只显示趋势，percentage显示升降比例</span>
+    </div>
+    <hr>
+    <h4>字符串内容下趋势（如果要观察趋势需要和valueMap属性搭配）</h4>
+    <div class="row">
+        <label>通过value控制字符串内容的变化</label>
+        <jigsaw-button (click)="_$changeValue2()">设置valueMap</jigsaw-button>
+        <jigsaw-button (click)="_$changeValue4()">清空valueMap</jigsaw-button>
+    </div>
+    <div class="row">
+        <label>直接改变字符串内容</label>
+        <jigsaw-button (click)="_$changeValue3()">改变天气状况观察趋势</jigsaw-button>
+    </div>
+</div>
+
+
+<div class="boxes">
+    <div class="box">
+        <p>精度{{fractionDigits}}，动画时间{{animationDuration}}ms</p>
+        <hr>
+        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="leadingUnit"
+                           [unit]="unit" [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
+                           [trend]="trend" [useRawValue]="useRawValue"></jigsaw-large-text>
+    </div>
+
+    <div class="box" style="margin-left: 100px">
+        <p>value控制改变</p>
+        <hr>
+        <jigsaw-large-text [value]="value" [leadingUnit]="leadingUnit1" [valueMap]="valueMap"
+                           [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
+                           [trend]="trend" [useRawValue]="useRawValue"></jigsaw-large-text>
+    </div>
+
+    <div class="box" style="margin-left: 100px">
+        <p>value控制改变</p>
+        <hr>
+        <jigsaw-large-text [value]="value" [leadingUnit]="leadingUnit1" [valueMap]="valueMap1"
+                           [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
+                           [trend]="trend" [useRawValue]="useRawValue"></jigsaw-large-text>
+    </div>
+
+    <div class="box" style="margin-left: 100px">
+        <p>直接改变字符串</p>
+        <hr>
+        <jigsaw-large-text [value]="stringValue" [leadingUnit]="leadingUnit1" [valueMap]="valueMap"
+                           [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
+                           [trend]="trend" [useRawValue]="useRawValue"></jigsaw-large-text>
+    </div>
+</div>
+<div *ngIf="valueMap">
+    天气状况：<div *ngFor="let item of valueMapEntries">
+    <span>{{ item[0] }}： </span>
+    <span>[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
+</div>
+
+    图标：<div *ngFor="let item of valueMapEntries1">
+    <jigsaw-icon [icon]="item[0]"></jigsaw-icon>
+    <span>：[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
+</div>
+</div>

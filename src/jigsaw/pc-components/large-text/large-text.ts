@@ -14,6 +14,10 @@ import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../com
 
 type TrendDirection = { trend: string, percentage: string };
 
+interface MyStyle {
+    [key: string]: string
+}
+
 @WingsTheme('large-text.scss')
 @Component({
     selector: 'jigsaw-large-text',
@@ -137,6 +141,155 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
+    private _leadingUnitStyle: MyStyle = {'font-size': '16px'};
+
+    /**
+     * 设置前置单位字体样式、布局
+     * {'font-size': 'xx px', 'color': xx, 'align-items': 'center'|'start'|'end'}
+     * @NoMarkForCheckRequired
+     *
+     */
+    @Input()
+    public get leadingUnitStyle() {
+        return this._leadingUnitStyle;
+    }
+
+    public set leadingUnitStyle(style: MyStyle) {
+        this._leadingUnitStyle = style;
+    }
+
+    public _valueStyle: MyStyle = {'font-size': '16px'}
+
+    /**
+     * 设置内容为number时的字体样式
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get valueStyle() {
+        return this._valueStyle;
+    }
+
+    public set valueStyle(style: MyStyle) {
+        this._valueStyle = style;
+        this._setStyle(style);
+    }
+
+    public _unitStyle: MyStyle = {'font-size': '16px'};
+
+    /**
+     * 设置后缀单位字体样式、布局
+     * {'font-size': 'xx px', 'color': xx, 'align-items': 'center'|'start'|'end'}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get unitStyle() {
+        return this._unitStyle;
+    }
+
+    public set unitStyle(style: MyStyle) {
+        this._unitStyle = style;
+    }
+
+    private _basicTrendStyle: MyStyle;
+
+    /**
+     * 设置上升和下降图标的基础样式。布局
+     * 模板：{'font-size': 'xx px'}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get basicTrendStyle() {
+        return this._basicTrendStyle;
+    }
+
+    public set basicTrendStyle(style: MyStyle) {
+        this._basicTrendStyle = style;
+        this._$basicStyle = {'align-items': style['align-items'], "margin": style['margin']}
+        this._$ascendingStyle = {...this._$ascendingStyle, ...style};
+        this._$descendingStyle = {...this._$descendingStyle, ...style};
+    }
+
+    private _ascendingTrendStyle: MyStyle;
+
+    /**
+     * 设置上升趋势所用图标和颜色
+     * 模板：{"ascending-icon": xxx, "ascending-color": xxx}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get ascendingTrendStyle() {
+        return this._ascendingTrendStyle;
+    }
+
+    public set ascendingTrendStyle(style: MyStyle) {
+        this._ascendingTrendStyle = style;
+        const icon = this._ascendingTrendStyle['ascending-icon'];
+        const color = this._ascendingTrendStyle['ascending-color'];
+        this._$ascendingIcon = icon ? icon : 'iconfont iconfont-e032';
+        this._$ascendingStyle = {...this._$ascendingStyle, 'color': color ? color : 'green'};
+    }
+
+    private _descendingTrendStyle: MyStyle;
+
+    /**
+     * 设置下降趋势所使用的图标和图标颜色
+     * 模板：{"descending-icon": xxx, "descending-color": xxx}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get descendingTrendStyle() {
+        return this._ascendingTrendStyle;
+    }
+
+    public set descendingTrendStyle(style: MyStyle) {
+        this._descendingTrendStyle = style;
+        const icon = this._descendingTrendStyle['descending-icon'];
+        const color = this._descendingTrendStyle['descending-color'];
+        this._$descendingIcon = icon ? icon : 'iconfont iconfont-e032';
+        this._$descendingStyle = {...this._$ascendingStyle, 'color': color ? color : 'red'};
+    }
+
+    private _trendValueStyle: MyStyle;
+
+    /**
+     * 设置趋势百分比样式
+     * 模板：{'font-size': 'xx px', 'color': xx}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get trendValueStyle() {
+        return this._trendValueStyle;
+    }
+
+    public set trendValueStyle(style: MyStyle) {
+        this._trendValueStyle = style;
+    }
+
+    /**
+     * @internal
+     */
+    public _$basicStyle: MyStyle;
+
+    /**
+     * @internal
+     */
+    public _$ascendingIcon: string = 'iconfont iconfont-e032';
+
+    /**
+     * @internal
+     */
+    public _$ascendingStyle: MyStyle = {'font-size': '16px', 'color': 'green'};
+
+    /**
+     * @internal
+     */
+    public _$descendingIcon: string = 'iconfont iconfont-e030';
+
+    /**
+     * @internal
+     */
+    public _$descendingStyle: MyStyle = {'font-size': '16px', 'color': 'red'};
+
     /**
      * @internal
      */
@@ -187,6 +340,15 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return Math.round(value * hundredFold) / hundredFold;
     }
 
+    private _setStyle(style: MyStyle) {
+        const fontSize = style['font-size'];
+        if (fontSize && (/^\d+/).test(fontSize)) {
+            this._$fontSize = fontSize;
+            const number = fontSize.match(/^\d+/)[0];
+            this._$fontWidth = fontSize.replace(number, String(Number(number) * 0.6));
+        }
+    }
+
     /**
      * @internal
      */
@@ -229,6 +391,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     private _translateValueEnum(value: string | number): number {
         if (typeof value === "number") {
             return this._roundToPrecision(value);
+        }
+        if (!this.valueMap) {
+            this._$trendMap = {trend: '', percentage: ''};
         }
         const valueRange = this.valueMap?.[value] || [NaN, NaN];
         return valueRange[0];
@@ -280,6 +445,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     ngOnInit(): void {
         this._init();
+        this._setStyle(this.valueStyle);
     }
 
     ngAfterViewInit() {
