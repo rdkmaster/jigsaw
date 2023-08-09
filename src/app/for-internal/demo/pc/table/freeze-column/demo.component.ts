@@ -34,7 +34,7 @@ export class TableFreezeColumnDemoComponent {
     @ViewChild('tableCmp')
     public tableCmp: JigsawTable;
 
-    public freezeColumn = 0;
+    public freezeColumn = 2;
     public contentWidthNum = 2000;
 
     public valueChange() {

@@ -479,15 +479,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
 
+        // 没有滚动条就不需要设置列冻结了
         const content = this.contentScrollbar.elementRef.nativeElement;
         if (content.scrollWidth <= content.clientWidth) {
             return;
         }
 
-        const headers = this._headerRowElementRefs.toArray()[0].nativeElement.querySelectorAll('td');
+        const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
         this._setCellsFreeze(headers);
 
-        this._rowElementRefs.toArray().forEach(row => {
+        this._rowElementRefs.forEach(row => {
             const tds = row.nativeElement.querySelectorAll('td');
             this._setCellsFreeze(tds);
         })
@@ -869,7 +870,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public contentScrollbar: PerfectScrollbarDirective;
 
     @ViewChild('headerScrollbar', { read: ElementRef })
-    public headerScrollbar: ElementRef;
+    private _headerScrollbar: ElementRef;
 
     /**
      * @internal
@@ -1008,11 +1009,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      *
      */
     private _setHeaderScrollLeft() {
-        if (!this.headerScrollbar || !this.contentScrollbar) {
+        if (!this._headerScrollbar || !this.contentScrollbar) {
             return;
         }
 
-        this.headerScrollbar.nativeElement.scrollLeft = this.contentScrollbar.elementRef.nativeElement.scrollLeft;
+        this._headerScrollbar.nativeElement.scrollLeft = this.contentScrollbar.elementRef.nativeElement.scrollLeft;
     }
 
     /**
