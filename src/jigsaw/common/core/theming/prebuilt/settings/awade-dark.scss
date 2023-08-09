@@ -6,7 +6,7 @@ $blue-4: #023eb6;
 $blue-5: #0348d4;
 $blue-6: #0254F2;
 $blue-7: #266efd;
-$blue-8: #538cfd;
+$blue-8: #5c94ff;
 $blue-9: #86aefe;
 $blue-10: #b8d0fe;
 
@@ -113,12 +113,12 @@ $gray-1: #1c1c1c;
 $gray-2: #242424;
 $gray-3: #292929;
 $gray-4: #363636;
-$gray-5: #474747;
-$gray-6: #5b5b5b;
-$gray-7: #686868;
-$gray-8: #7b7b7b;
-$gray-9: #999999;
-$gray-10: #cccccc;
+$gray-5: #404040;
+$gray-6: #474747;
+$gray-7: #5b5b5b;
+$gray-8: #686868;
+$gray-9: #7b7b7b;
+$gray-10: #999999;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -212,48 +212,48 @@ $brand-active-lighten: $blue-2;
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #12131C;
-/*@public*/ $bg-container: $gray-4;
+/*@public*/ $bg-container: $gray-5;
 /*@public*/ $bg-component: $gray-2;
-/*@public*/ $bg-component-darken: $gray-6;
-/*@public*/ $bg-disabled: $gray-7;
-/*@public*/ $bg-hover: $gray-5;
-/*@public*/ $bg-active: $gray-6;
+/*@public*/ $bg-component-darken: $gray-7;
+/*@public*/ $bg-disabled: $gray-8;
+/*@public*/ $bg-hover: $gray-6;
+/*@public*/ $bg-active: $gray-7;
 $bg-transparent: transparent;
-$bg-popup: $gray-2;
+$bg-popup: $gray-5;
 $bg-gray: $gray-3;
 $bg-gray-spec: $gray-9;
-$bg-scrollbar: $gray-5;
-$bg-scrollbar-lighten: $gray-7;
+$bg-scrollbar: $gray-6;
+$bg-scrollbar-lighten: $gray-8;
 
 /* font 字体颜色 */
 /*@public*/ $font-color-default: hsl(0, 0%, 100%);
-/*@public*/ $font-color-disabled: $gray-6;
+/*@public*/ $font-color-disabled: $gray-10;
 /*@public*/ $font-color-heading: hsl(0, 0%, 100%);
-$font-color-disabled-spec: $gray-7;
-/*@public*/ $font-color-hint: $gray-7;
-$font-color-watermark: $gray-7;
-$font-color-heading-bold: $gray-9;
+$font-color-disabled-spec: $gray-10;
+/*@public*/ $font-color-hint: $gray-8;
+$font-color-watermark: $gray-8;
+$font-color-heading-bold: hsl(0, 0%, 100%);
 $font-color-heading-bold-lighten: hsl(0, 0%, 100%);
-$font-color-tag: $gray-8;
+$font-color-tag: $gray-9;
 /*@public*/ $font-color-white: hsl(0, 0%, 100%);
-$font-color-white-darken: $gray-6;
-$font-color-brand: #bfbfbf;
-$font-color-brand-hover: hsl(0, 0%, 100%);
+$font-color-white-darken: $gray-7;
+/*@public*/ $font-color-brand: $blue-8;
+/*@public*/ $font-color-brand-hover: $blue-7;
 
 /* border 边框 */
-/*@public*/ $border-color-default: $gray-6;
-/*@public*/ $border-color-disabled: $gray-5;
-$border-color-popup: $gray-5;
-$border-color-shadow-cntr: $gray-5;
+/*@public*/ $border-color-default: $gray-7;
+/*@public*/ $border-color-disabled: $gray-6;
+$border-color-popup: $gray-6;
+$border-color-shadow-cntr: $gray-6;
 
 /* split line 分割线 */
-/*@public*/ $splitline-default: $gray-4;
+/*@public*/ $splitline-default: $gray-7;
 
 /* icon 图标 */
-/*@public*/ $icon-color-default: $gray-9;
+/*@public*/ $icon-color-default: hsl(0, 0%, 100%);
 /*@public*/ $icon-color-disabled: $gray-10;
-/*@public*/ $icon-color-stress: $gray-9;
-$icon-color-inactive: $gray-4;
+/*@public*/ $icon-color-stress: hsl(0, 0%, 100%);
+$icon-color-inactive: $gray-5;
 
 /* box-shadow 阴影（基于altitude）*/
 /*@public*/ $box-shadow-lv0: none;
@@ -263,10 +263,10 @@ $icon-color-inactive: $gray-4;
 
 /* nav 导航色 */
 /*@public*/ $nav-header: $gray-3;
-$nav-navigation: $gray-3;
-$nav-navigation-darken: $gray-4;
-$nav-hover: $gray-6;
-$nav-active: $gray-5;
+/*@public*/ $nav-navigation: $gray-3;
+/*@public*/ $nav-navigation-darken: $gray-4;
+/*@public*/ $nav-hover: $gray-7;
+/*@public*/ $nav-active: $gray-6;
 $nav-color: $font-color-default;
 $nav-color-disabled: $font-color-disabled;
 $nav-color-active: $brand-default;

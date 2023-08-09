@@ -25,7 +25,7 @@ export const routerConfig = [
         path: 'wings-theme', component: ThemeBuildInThemeDemoComponent
     },
     {
-        path: 'all-theme', component: ThemeAllComponentDemoComponent
+        path: 'all-component', component: ThemeAllComponentDemoComponent
     }
 ];
 

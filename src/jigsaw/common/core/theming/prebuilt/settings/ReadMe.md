@@ -27,10 +27,12 @@
 ### font 字体颜色
 - `$font-color-default` => 正文
 - `$font-color-disabled` => 禁用文字
+- `$font-color-disabled-spec` => 禁用文字（特殊，主要用于在disabled时背景色会发生变化的组件，如**combo-select**、**input**、**select**）
 - `$font-color-hint` => 提示
 - `$font-color-watermark` => 水印文字
 - `$font-color-heading` => 非加粗标题
-- `$font-color-heading-bold` => 加粗标题
+- `$font-color-heading-bold` => 加粗标题（用于alert、collapse、dialog、table）
+- `$font-color-heading-bold-lighten` => 加粗标题（用于面包屑）
 - `$font-color-tag` => 标签文字
 - `$font-color-white` => 深底白字，纯白色（此变量色值不会变）
 - `$font-color-white-darken` => 深底白字，暗白色

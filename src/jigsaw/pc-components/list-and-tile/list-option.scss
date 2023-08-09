@@ -11,7 +11,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     background: $bg-component;
     color: $font-color-default;
 
-    &:hover {
+    &:not(.#{$jigsaw-list-option}-disabled):hover {
         background: $bg-hover;
 
         .#{$jigsaw-list-option}-title-box .#{$jigsaw-list-option}-title {
@@ -33,20 +33,9 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         color: $font-color-disabled;
         cursor: not-allowed;
 
-        &:hover {
-            background: $bg-component;
-        }
-
         .#{$jigsaw-list-option}-title,
         .#{$jigsaw-list-option}-sub-title{
             color: $font-color-disabled;
-        }
-
-        &:hover {
-            .#{$jigsaw-list-option}-title,
-            .#{$jigsaw-list-option}-sub-title{
-                color: $font-color-disabled;
-            } 
         }
     }
 

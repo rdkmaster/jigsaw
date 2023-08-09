@@ -123,8 +123,8 @@ export class JigsawCollapsePane extends AbstractJigsawComponent {
         '[style.width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-collapse-host]': 'true',
-        '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition === "right"',
-        '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition === "left"'
+        '[class.jigsaw-collapse-arrow-position-right]': 'arrowPosition == "right"',
+        '[class.jigsaw-collapse-arrow-position-left]': 'arrowPosition == "left"'
     },
     encapsulation: ViewEncapsulation.None
 })

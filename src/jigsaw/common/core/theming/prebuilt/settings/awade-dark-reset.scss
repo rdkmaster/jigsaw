@@ -1,22 +1,40 @@
-.jigsaw-input-host .jigsaw-input-wrapper {
-    background: $bg-component;
-    border-color: $bg-component;
+.jigsaw-input-host {
+    .jigsaw-input-wrapper {
+        background: $bg-component;
+        border-color: $bg-component;
+    }
 }
 
-.jigsaw-numeric-input-host .jigsaw-numeric-input-wrapper {
-    background: $bg-component;
-    border-color: $bg-component;
+.jigsaw-numeric-input-host {
+    .jigsaw-numeric-input-wrapper {
+        background: $bg-component;
+        border-color: $bg-component;
+    }
 }
 
-.jigsaw-combo-select-host .jigsaw-combo-select .jigsaw-combo-select-selection {
-    background: $bg-component;
-    border-color: $bg-component;
-}
-
-.jigsaw-search-input-host .jigsaw-search-input .jigsaw-search-input-button {
+.jigsaw-prefix-suffix {
     background: $bg-component-darken;
-    border-color: $bg-component;
-    color: $font-color-default;
+    border-color: $bg-component-darken;
+}
+
+.jigsaw-combo-select-host {
+    .jigsaw-combo-select .jigsaw-combo-select-selection {
+        background: $bg-component;
+        border-color: $bg-component;
+    }
+
+    .jigsaw-combo-select-clear:hover,
+    .jigsaw-combo-select-arrow:hover {
+        color: $font-color-brand;
+    }
+}
+
+.jigsaw-search-input-host {
+    .jigsaw-search-input .jigsaw-search-input-button {
+        background: $bg-component-darken;
+        border-color: $bg-component;
+        color: $font-color-default;
+    }
 }
 
 .jigsaw-button-host {
@@ -30,33 +48,52 @@
     &.jigsaw-button-color-none {
         background: transparent;
     }
+
+    &.jigsaw-button-disabled {
+
+        &.jigsaw-button-color-primary,
+        &.jigsaw-button-color-warning,
+        &.jigsaw-button-color-error {
+            color: $font-color-disabled;
+        }
+    }
 }
 
-.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab {
-    color: $font-color-default;
+.jigsaw-tabs-bar-host {
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab {
+        color: $font-color-default;
+    }
+
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab.jigsaw-tabs-tab-active {
+        background: $gray-4;
+        color: $font-color-default;
+    }
+
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
+        background: $gray-4;
+    }
+
+    &.jigsaw-tabs-page .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
+        background: $bg-hover;
+    }
 }
 
-.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab.jigsaw-tabs-tab-active {
-    background: $gray-4;
-    color: $font-color-default;
+.jigsaw-tag-host {
+    &.jigsaw-tag-preset-gray {
+        color: $font-color-default;
+    }
 }
 
-.jigsaw-tabs-bar-host .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
-    background: $gray-4;
-}
+.jigsaw-tree-host {
+    .ztree li a.curSelectedNode {
+        background: $blue-4;
+        border-color: $blue-4;
+        color: $font-color-default;
+    }
 
-.jigsaw-tag-host.jigsaw-tag-preset-gray {
-    color: $font-color-default;
-}
-
-.jigsaw-tree-host .ztree li a.curSelectedNode {
-    background: $blue-4;
-    border-color: $blue-4;
-    color: $font-color-default;
-}
-
-.jigsaw-tree-host .ztree li a.curSelectedNode .node_name {
-    color: $font-color-default;
+    .ztree li a.curSelectedNode .node_name {
+        color: $font-color-default;
+    }
 }
 
 .jigsaw-tree-host {
@@ -103,6 +140,34 @@
     }
 }
 
-.jigsaw-list-option-host.jigsaw-list-option-active {
+.jigsaw-list-option-host {
     color: $font-color-default;
+
+    &.jigsaw-list-option-active {
+        color: $font-color-default;
+    }
+
+    &:not(.jigsaw-list-option-disabled):hover {
+        background: $bg-hover;
+
+        .jigsaw-list-option-title-box .jigsaw-list-option-title {
+            color: $font-color-default;
+        }
+    }
+
+    &.jigsaw-list-option-active {
+        background: $bg-active;
+        color: $font-color-default;
+
+        .jigsaw-list-option-title,
+        .jigsaw-list-option-sub-title {
+            color: $font-color-default;
+        }
+    }
+}
+
+.jigsaw-collapse-host {
+    .jigsaw-collapse .jigsaw-collapse-item .jigsaw-collapse-header:hover {
+        background: $bg-hover;
+    }
 }

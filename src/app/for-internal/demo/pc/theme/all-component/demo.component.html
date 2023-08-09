@@ -9,7 +9,7 @@
 
 <div class="component-cntr">
     <j-input [disabled]="disabled" placeholder="请输入文本"></j-input>
-    <j-numeric-input [showOption]="true" [disabled]="disabled" placeholder="请输入数字"></j-numeric-input>
+    <j-numeric-input [showOption]="true" [disabled]="disabled" placeholder="请输入数字" suffix="单位"></j-numeric-input>
     <j-search-input [autoSearch]="false" [disabled]="disabled"></j-search-input>
     <j-search-input [autoSearch]="true" [disabled]="disabled"></j-search-input>
     <j-auto-complete-input placeholder="请输入自动补全文本" [data]="cityListText" [disabled]="disabled">
@@ -21,6 +21,15 @@
 </div>
 
 <div class="component-cntr">
+    <j-combo-select [(value)]="selectedCity" maxWidth="500" [clearable]="true">
+        <ng-template>
+            <j-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
+                <j-tile-option *ngFor="let city of cityList" [value]="city" width="22.8%">
+                    {{city.label}}
+                </j-tile-option>
+            </j-tile>
+        </ng-template>
+    </j-combo-select>
     <j-select [data]="cityList" [disabled]="disabled" placeholder="请选择城市"></j-select>
     <j-collapse-select [disabled]="disabled" [data]="groupList" placeholder="请选择">
     </j-collapse-select>
@@ -58,16 +67,48 @@
 
 <div class="component-cntr">
     <j-tabs-bar [data]="cityList"></j-tabs-bar>
+    <j-tabs-bar [data]="cityList" tabType="page"></j-tabs-bar>
 </div>
 
 <div class="component-cntr">
     <j-navigation-menu [data]="navData"></j-navigation-menu>
+    <j-collapse width="300">
+        <j-collapse-pane header="测试col">
+            <j-input placeholder="请输入姓名~"></j-input>
+        </j-collapse-pane>
+
+        <j-collapse-pane header="afdafd">
+            姓名:
+            <j-input placeholder="请输入姓名~"></j-input>
+        </j-collapse-pane>
+
+        <j-collapse-pane header="嵌套">
+            <j-collapse mode="accordion">
+                <j-collapse-pane header="测试col">
+                    <j-input placeholder="请输入姓名~"></j-input>
+                </j-collapse-pane>
+
+                <j-collapse-pane header="afdafd">
+                    姓名:
+                    <j-input placeholder="请输入姓名~"></j-input>
+                </j-collapse-pane>
+            </j-collapse>
+        </j-collapse-pane>
+    </j-collapse>
+
+    <j-list-lite width="200" [data]="goodsList" labelField="name" [multipleSelect]="true">
+    </j-list-lite>
 </div>
 
 <div class="component-cntr">
-    <j-tree-ext [(data)]="treeData"></j-tree-ext>
+    <j-tree-ext [data]="treeData"></j-tree-ext>
+    <j-tree-ext [data]="treeData2"></j-tree-ext>
 </div>
 
 <div class="component-cntr">
     <j-steps [data]="stepData"></j-steps>
+</div>
+
+<div class="component-cntr">
+
 </div>

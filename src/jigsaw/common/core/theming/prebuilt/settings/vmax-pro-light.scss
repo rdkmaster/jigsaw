@@ -237,8 +237,8 @@ $font-color-heading-bold-lighten: $gray-9;
 $font-color-tag: $gray-8;
 /*@public*/ $font-color-white: hsl(0, 0%, 100%);
 $font-color-white-darken: $gray-6;
-$font-color-brand: $brand-default;
-$font-color-brand-hover: $brand-hover;
+/*@public*/ $font-color-brand: $brand-default;
+/*@public*/ $font-color-brand-hover: $brand-hover;
 
 /* border 边框 */
 /*@public*/ $border-color-default: $gray-5;
@@ -263,10 +263,10 @@ $icon-color-inactive: $gray-4;
 
 /* 导航色 */
 /*@public*/ $nav-header: #32404e;
-$nav-navigation: #516273;
-$nav-navigation-darken: #3c4c5a;
-$nav-hover: #2a3642;
-$nav-active: #212a33;
+/*@public*/ $nav-navigation: #516273;
+/*@public*/ $nav-navigation-darken: #3c4c5a;
+/*@public*/ $nav-hover: #2a3642;
+/*@public*/ $nav-active: #212a33;
 $nav-color: $font-color-white;
 $nav-color-disabled: #a4a7b3;
 $nav-color-active: $brand-default;
