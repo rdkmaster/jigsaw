@@ -18,9 +18,17 @@
 }
 
 .jigsaw-combo-select-host {
-    .jigsaw-combo-select .jigsaw-combo-select-selection {
-        background: $bg-component;
-        border-color: $bg-component;
+    .jigsaw-combo-select {
+        .jigsaw-combo-select-selection {
+            background: $bg-component;
+            border-color: $bg-component;
+        }
+
+        &.jigsaw-combo-select-disabled {
+            .jigsaw-combo-select-selection {
+                background: $bg-disabled;
+            }
+        }
     }
 
     .jigsaw-combo-select-clear:hover,
@@ -169,5 +177,11 @@
 .jigsaw-collapse-host {
     .jigsaw-collapse .jigsaw-collapse-item .jigsaw-collapse-header:hover {
         background: $bg-hover;
+    }
+}
+
+.jigsaw-drawer-host {
+    .jigsaw-drawer {
+        background: $bg-container;
     }
 }
