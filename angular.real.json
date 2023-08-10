@@ -28,7 +28,7 @@
               "src/app/libs/favicon.ico",
               "src/app/for-internal/demo/pc/tree/icon/assets",
               "src/app/for-internal/demo/pc/navigation-bar/basic/assets",
-              "src/app/for-internal/demo/pc/large-text/picture/assets"
+              "src/app/for-internal/demo/pc/large-text/image-icon/assets"
             ],
             "styles": [
               "node_modules/ztree/css/zTreeStyle/zTreeStyle.css",

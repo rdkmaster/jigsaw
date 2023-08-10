@@ -25,7 +25,7 @@
 
         <div class="row">
             <label>useRawValue</label>
-            <jigsaw-button (click)="useRawValue=!useRawValue">对内容{{useRawValue?'不做':'进行'}}处理</jigsaw-button>
+            <jigsaw-switch [(checked)]="useRawValue"></jigsaw-switch>
             <span style="margin-left: 8px;">注意：此属性默认为false，设置为true时将不对value不作处理</span>
         </div>
 
@@ -36,8 +36,8 @@
 
         <div class="row">
             <label>动画时间</label>
-            <j-numeric-input [(value)]="animationDuration" [showOption]="false" min="0" [suffix]="'ms'" placeholder="请输入动画时间"></j-numeric-input>
-            <jigsaw-button (click)="enableAnimation=!enableAnimation">是否启用动画</jigsaw-button>
+            <jigsaw-switch [(checked)]="enableAnimation"></jigsaw-switch>
+            <j-numeric-input *ngIf="enableAnimation" [(value)]="animationDuration" [showOption]="false" min="0" [suffix]="'ms'" placeholder="请输入动画时间"></j-numeric-input>
         </div>
 
         <div class="row">
@@ -47,6 +47,10 @@
             </jigsaw-input>
             <span style="margin-left: 8px;">例如：iconfont iconfont-e23e <a href="/#/pc/icon/icons">所有可用图标</a></span>
         </div>
+        <div class="row">
+            <label>启用valueMap</label>
+            <jigsaw-switch [(checked)]="valueMapUsed" (checkedChange)="valueMapChecked($event)"></jigsaw-switch>
+        </div>
     </div>
     <div class="wrapper">
         <div class="row">
@@ -54,43 +58,69 @@
             <j-numeric-input [(value)]="leadingFontSize" (valueChange)="setStyle()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入前置单位字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="leadingFontColor" (colorChange)="setStyle()" width="40"></jigsaw-color-select>
-            <jigsaw-button (click)="setTop()">前置单位置顶</jigsaw-button>
-            <jigsaw-button (click)="setCenter()">前置单位居中</jigsaw-button>
-            <jigsaw-button (click)="setBottom()">前置单位沉底</jigsaw-button>
         </div>
 
         <div class="row">
-            <label>中间内容字体样式</label>
+            <label>前置单位字体偏移</label>
+            下移：
+            <j-numeric-input [(value)]="leadingLeft" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            左移：
+            <j-numeric-input [(value)]="leadingBottom" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            上移：
+            <j-numeric-input [(value)]="leadingRight" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="leadingTop" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
+
+        <div class="row">
+            <label>值字体样式</label>
             <j-numeric-input [(value)]="valueFontSize" (valueChange)="setStyle2()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入中间内容字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="valueFontColor" (colorChange)="setStyle2()"  width="40"></jigsaw-color-select>
+            <label style="width: 35px;">图标</label>
+            <j-numeric-input [(value)]="iconFontSize" (valueChange)="setIconStyle()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入图标大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="iconColor" (colorChange)="setIconStyle()"  width="40"></jigsaw-color-select>
         </div>
         <div class="row">
             <label>后缀单位字体样式</label>
             <j-numeric-input [(value)]="unitFontSize" (valueChange)="setStyle1()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入后缀单位字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="unitFontColor" (colorChange)="setStyle1()" width="40"></jigsaw-color-select>
-            <jigsaw-button (click)="setTop1()">后缀单位置顶</jigsaw-button>
-            <jigsaw-button (click)="setCenter1()">后缀单位居中</jigsaw-button>
-            <jigsaw-button (click)="setBottom1()">后缀单位沉底</jigsaw-button>
         </div>
         <div class="row">
-            <label>趋势图标基础样式（大小，位置）</label>
+            <label>后缀单位字体偏移</label>
+            下移：
+            <j-numeric-input [(value)]="unitTop" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            左移：
+            <j-numeric-input [(value)]="unitRight" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80" min="0"></j-numeric-input>
+            上移：
+            <j-numeric-input [(value)]="unitBottom" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="unitLeft" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
+        <div class="row">
+            <label style="width: 200px">趋势图标基础样式（大小，位置）</label>
             <j-numeric-input [(value)]="trendFontSize" (valueChange)="setStyle3()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入后缀单位字体大小"></j-numeric-input>
-            <jigsaw-button (click)="setTop2()">趋势整体置顶</jigsaw-button>
-            <jigsaw-button (click)="setCenter2()">趋势整体居中</jigsaw-button>
-            <jigsaw-button (click)="setBottom2()">趋势整体沉底</jigsaw-button>
         </div>
         <div class="row">
-            <label>上升图标设置（图标，图标颜色）</label>
+            <label style="width: 200px">上升图标设置（图标，图标颜色）</label>
             <jigsaw-input [(value)]="ascendingTrendIcon" placeholder="输入图标（可选）" (valueChange)="setStyle4()"
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="ascendingTrendColor" (colorChange)="setStyle4()"  width="40"></jigsaw-color-select>
         </div>
         <div class="row">
-            <label>下降图标设置（图标，图标颜色）</label>
+            <label style="width: 200px">下降图标设置（图标，图标颜色）</label>
             <jigsaw-input [(value)]="descendingTrendIcon" placeholder="输入图标（可选）" (valueChange)="setStyle5()"
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
@@ -98,10 +128,27 @@
         </div>
 
         <div class="row">
-            <label>变化趋势字体样式</label>
+            <label style="width: 200px">百分比趋势字体样式</label>
             <j-numeric-input [(value)]="trendValueFontSize" (valueChange)="setStyle6()" [showOption]="false"
-                             min="6" [suffix]="'px'" placeholder="请输入变化趋势字体大小"></j-numeric-input>
+                             min="6" [suffix]="'px'" placeholder="请输入百分比趋势字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="trendValueFontColor" (colorChange)="setStyle6()"  width="40"></jigsaw-color-select>
+        </div>
+
+        <div class="row">
+            <label>图标与百分比布局</label>
+            <jigsaw-radios-lite [(value)]="selectedPosition" (valueChange)="radioChange($event)" [data]="positions">
+            </jigsaw-radios-lite>
+            <span>反转</span>
+            <jigsaw-switch [(checked)]="reverse" (checkedChange)="reverseChange($event)"></jigsaw-switch>
+        </div>
+        <div class="row">
+            <label>图标与百分比偏移</label>
+            下移：
+            <j-numeric-input [(value)]="trendTop" (valueChange)="setStyle3()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="trendLeft" (valueChange)="setStyle3()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
         </div>
     </div>
 </div>
@@ -116,12 +163,20 @@
                            [useRawValue]="useRawValue" [trend]="'percentage'" [leadingUnitStyle]="leadingStyle"
                            [unitStyle]="unitStyle" [valueStyle]="valueStyle" [basicTrendStyle]="basicTrendStyle"
                            [ascendingTrendStyle]="ascendingTrendStyle" [descendingTrendStyle]="descendingTrendStyle"
-                           [trendValueStyle]="trendValueStyle"></jigsaw-large-text>
+                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap"></jigsaw-large-text>
     </div>
     <div class="box" style="margin-left: 100px">
         <p>组件内容为图标</p>
         <hr>
-        <jigsaw-large-text [value]="iconValue" [leadingUnit]="leadingUnit"
+        <jigsaw-large-text [value]="iconValue" [leadingUnit]="leadingUnit" [valueStyle]="iconStyle"
                            [unit]="unit" [useRawValue]="useRawValue"></jigsaw-large-text>
+    </div>
+</div>
+
+<div *ngIf="valueMap">
+    <span>valueMap:</span>
+    <div *ngFor="let item of valueMapEntries">
+        <span>{{ item[0] }}： </span>
+        <span>[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
     </div>
 </div>

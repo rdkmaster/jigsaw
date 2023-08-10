@@ -14,9 +14,11 @@ export class LargeTextPictureDemoComponent {
 
     animationDuration: number = 2000;
 
-    leadingUnit: string = "今天天气：";
+    leadingUnit: string = "天气状况：";
 
     trend:'none' | 'percentage' | 'normal' = 'normal';
+
+    trends = ['none' , 'percentage' , 'normal'];
 
     valueMap2: { [valueEnum: string]: [number, number] } = null;
 
@@ -30,21 +32,18 @@ export class LargeTextPictureDemoComponent {
         this.value -= Math.floor(Math.random() * 1000) + 1;
     }
 
-    _$changeValue2() {
-        this.valueMap2 = {
-            '/app/for-internal/demo/pc/large-text/picture/assets/Monday.png':[-Number.MAX_VALUE, -1],
-            "/app/for-internal/demo/pc/large-text/picture/assets/Tuesday.png": [0, 1000],
-            "/app/for-internal/demo/pc/large-text/picture/assets/Wednesday.png": [1001, 2000],
-            '/app/for-internal/demo/pc/large-text/picture/assets/Thursday.png': [2001, 3000],
-            '/app/for-internal/demo/pc/large-text/picture/assets/Friday.png': [3001, 4000],
-            '/app/for-internal/demo/pc/large-text/picture/assets/Saturday.png': [3001, 4000],
-            '/app/for-internal/demo/pc/large-text/picture/assets/Sunday.png': [4001, Number.MAX_VALUE]
-        }
-        this.valueMapEntries2 = Object.entries(this.valueMap2)
-    }
-
-    _$changeValue4() {
-        this.valueMap2 = null;
+    valueMapUsed: boolean = false;
+    valueMapChecked(event) {
+        this.valueMap2 = event ? {
+            '/app/for-internal/demo/pc/large-text/image-icon/assets/Monday.png': [-Number.MAX_VALUE, -1],
+            "/app/for-internal/demo/pc/large-text/image-icon/assets/Tuesday.png": [0, 1000],
+            "/app/for-internal/demo/pc/large-text/image-icon/assets/Wednesday.png": [1001, 2000],
+            '/app/for-internal/demo/pc/large-text/image-icon/assets/Thursday.png': [2001, 3000],
+            '/app/for-internal/demo/pc/large-text/image-icon/assets/Friday.png': [3001, 4000],
+            '/app/for-internal/demo/pc/large-text/image-icon/assets/Saturday.png': [3001, 4000],
+            '/app/for-internal/demo/pc/large-text/image-icon/assets/Sunday.png': [4001, Number.MAX_VALUE]
+        } : null;
+        this.valueMapEntries2 = event ? Object.entries(this.valueMap2) : null;
     }
 
     // ====================================================================

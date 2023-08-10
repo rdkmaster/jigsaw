@@ -22,6 +22,9 @@
 
 .row {
     margin: 6px;
+    display: flex;
+    align-items: center;
+    height: 38px;
 }
 
 .wrapper label {
@@ -38,5 +41,4 @@
 
 .wrapper jigsaw-color-select {
     position: relative;
-    bottom: -12px;
 }

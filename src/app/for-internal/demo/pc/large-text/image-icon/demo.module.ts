@@ -6,7 +6,7 @@ import {
     JigsawButtonModule,
     JigsawHeaderModule,
     JigsawIconModule,
-    JigsawInputModule, JigsawNumericInputModule
+    JigsawInputModule, JigsawNumericInputModule, JigsawSwitchModule, JigsawRadioLiteModule
 } from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
 import {LargeTextPictureDemoComponent} from "./demo.component";
@@ -14,8 +14,8 @@ import {LargeTextPictureDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [LargeTextPictureDemoComponent],
     imports: [
-        CommonModule,JigsawDemoDescriptionModule, JigsawLargeTextModule, JigsawButtonModule,
-        JigsawBoxModule, JigsawHeaderModule, JigsawIconModule, JigsawInputModule, JigsawNumericInputModule
+        CommonModule,JigsawDemoDescriptionModule, JigsawLargeTextModule, JigsawButtonModule,JigsawSwitchModule,
+        JigsawBoxModule, JigsawHeaderModule, JigsawIconModule, JigsawInputModule, JigsawNumericInputModule, JigsawRadioLiteModule
     ],
     exports: [LargeTextPictureDemoComponent]
 })

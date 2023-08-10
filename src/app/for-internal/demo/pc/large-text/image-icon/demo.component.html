@@ -12,18 +12,16 @@
     </div>
 
     <div class="row">
-        <label>趋势</label>
-        <jigsaw-button (click)="trend='none'" [ngStyle]="{'background': trend==='none'?'#1178d9':''}">none</jigsaw-button>
-        <jigsaw-button (click)="trend='normal'" [ngStyle]="{'background': trend==='normal'?'#1178d9':''}">normal</jigsaw-button>
-        <jigsaw-button (click)="trend='percentage'" [ngStyle]="{'background': trend==='percentage'?'#1178d9':''}">percentage</jigsaw-button>
+        <label style="width: 30px">趋势</label>
+        <jigsaw-radios-lite [(value)]="trend" [data]="trends"></jigsaw-radios-lite>
         <span style="margin-left: 8px;">趋势的三种情况none不显示，normal只显示趋势，percentage显示升降比例</span>
     </div>
     <hr>
     <h4>图片内容下趋势（如果要观察趋势需要和valueMap属性搭配）</h4>
     <div class="row">
-        <label>通过value控制图片内容的变化</label>
-        <jigsaw-button (click)="_$changeValue2()">设置valueMap</jigsaw-button>
-        <jigsaw-button (click)="_$changeValue4()">清空valueMap</jigsaw-button>
+        <label>启用valueMap</label>
+        <span *ngIf="valueMapUsed">value控制图片内容的变化</span>
+        <jigsaw-switch [(checked)]="valueMapUsed" (checkedChange)="valueMapChecked($event)"></jigsaw-switch>
     </div>
 </div>
 

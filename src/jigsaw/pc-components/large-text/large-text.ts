@@ -14,8 +14,8 @@ import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../com
 
 type TrendDirection = { trend: string, percentage: string };
 
-interface MyStyle {
-    [key: string]: string
+interface Style {
+    [property: string]: string
 }
 
 @WingsTheme('large-text.scss')
@@ -141,24 +141,15 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     @Input()
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
-    private _leadingUnitStyle: MyStyle = {'font-size': '16px'};
-
     /**
      * 设置前置单位字体样式、布局
      * {'font-size': 'xx px', 'color': xx, 'align-items': 'center'|'start'|'end'}
      * @NoMarkForCheckRequired
-     *
      */
     @Input()
-    public get leadingUnitStyle() {
-        return this._leadingUnitStyle;
-    }
+    public leadingUnitStyle: Style = {'font-size': '16px'};
 
-    public set leadingUnitStyle(style: MyStyle) {
-        this._leadingUnitStyle = style;
-    }
-
-    public _valueStyle: MyStyle = {'font-size': '16px'}
+    public _valueStyle: Style = {'font-size': '16px'}
 
     /**
      * 设置内容为number时的字体样式
@@ -169,12 +160,10 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return this._valueStyle;
     }
 
-    public set valueStyle(style: MyStyle) {
+    public set valueStyle(style: Style) {
         this._valueStyle = style;
         this._setStyle(style);
     }
-
-    public _unitStyle: MyStyle = {'font-size': '16px'};
 
     /**
      * 设置后缀单位字体样式、布局
@@ -182,15 +171,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get unitStyle() {
-        return this._unitStyle;
-    }
+    public unitStyle: Style = {'font-size': '16px'};
 
-    public set unitStyle(style: MyStyle) {
-        this._unitStyle = style;
-    }
-
-    private _basicTrendStyle: MyStyle;
+    private _basicTrendStyle: Style;
 
     /**
      * 设置上升和下降图标的基础样式。布局
@@ -202,14 +185,14 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return this._basicTrendStyle;
     }
 
-    public set basicTrendStyle(style: MyStyle) {
+    public set basicTrendStyle(style: Style) {
         this._basicTrendStyle = style;
-        this._$basicStyle = {'align-items': style['align-items'], "margin": style['margin']}
+        this._$basicStyle = style;
         this._$ascendingStyle = {...this._$ascendingStyle, ...style};
         this._$descendingStyle = {...this._$descendingStyle, ...style};
     }
 
-    private _ascendingTrendStyle: MyStyle;
+    private _ascendingTrendStyle: Style;
 
     /**
      * 设置上升趋势所用图标和颜色
@@ -221,7 +204,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return this._ascendingTrendStyle;
     }
 
-    public set ascendingTrendStyle(style: MyStyle) {
+    public set ascendingTrendStyle(style: Style) {
         this._ascendingTrendStyle = style;
         const icon = this._ascendingTrendStyle['ascending-icon'];
         const color = this._ascendingTrendStyle['ascending-color'];
@@ -229,7 +212,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._$ascendingStyle = {...this._$ascendingStyle, 'color': color ? color : 'green'};
     }
 
-    private _descendingTrendStyle: MyStyle;
+    private _descendingTrendStyle: Style;
 
     /**
      * 设置下降趋势所使用的图标和图标颜色
@@ -241,7 +224,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return this._ascendingTrendStyle;
     }
 
-    public set descendingTrendStyle(style: MyStyle) {
+    public set descendingTrendStyle(style: Style) {
         this._descendingTrendStyle = style;
         const icon = this._descendingTrendStyle['descending-icon'];
         const color = this._descendingTrendStyle['descending-color'];
@@ -249,26 +232,18 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._$descendingStyle = {...this._$ascendingStyle, 'color': color ? color : 'red'};
     }
 
-    private _trendValueStyle: MyStyle;
-
     /**
      * 设置趋势百分比样式
      * 模板：{'font-size': 'xx px', 'color': xx}
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get trendValueStyle() {
-        return this._trendValueStyle;
-    }
-
-    public set trendValueStyle(style: MyStyle) {
-        this._trendValueStyle = style;
-    }
+    public trendValueStyle: Style;
 
     /**
      * @internal
      */
-    public _$basicStyle: MyStyle;
+    public _$basicStyle: Style;
 
     /**
      * @internal
@@ -278,7 +253,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$ascendingStyle: MyStyle = {'font-size': '16px', 'color': 'green'};
+    public _$ascendingStyle: Style = {'font-size': '16px', 'color': 'green'};
 
     /**
      * @internal
@@ -288,7 +263,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$descendingStyle: MyStyle = {'font-size': '16px', 'color': 'red'};
+    public _$descendingStyle: Style = {'font-size': '16px', 'color': 'red'};
 
     /**
      * @internal
@@ -340,11 +315,12 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         return Math.round(value * hundredFold) / hundredFold;
     }
 
-    private _setStyle(style: MyStyle) {
-        const fontSize = style['font-size'];
-        if (fontSize && (/^\d+/).test(fontSize)) {
+    private _setStyle(style: Style) {
+        const fontSize = style?.['font-size'];
+        const match = fontSize?.match(/^\d+/);
+        if (match) {
             this._$fontSize = fontSize;
-            const number = fontSize.match(/^\d+/)[0];
+            const number = match[0];
             this._$fontWidth = fontSize.replace(number, String(Number(number) * 0.6));
         }
     }
@@ -352,7 +328,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$getCondition(): 'number' | 'picture' | 'icon' | 'unknown' {
+    public _$getCondition(): 'number' | 'image-icon' | 'icon' | 'unknown' {
         if (this.useRawValue) {
             return 'unknown';
         }
@@ -364,7 +340,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
         if (/.+\.(jpe?g|png|webp|gif|svg)\s*$/i.test(this._value)) {
             this._$imgPath = this._value;
-            return 'picture';
+            return 'image-icon';
         }
         if (/^\s*iconfont\s+iconfont-\w+\s*$/.test(this._value)) {
             this._$iconClass = this._value;

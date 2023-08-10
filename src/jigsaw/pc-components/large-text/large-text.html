@@ -17,11 +17,11 @@
 
     <ng-container *ngSwitchCase="'icon'">
         <div [ngClass]="{'icon-position-left':true}">
-            <i [ngClass]="_$iconClass"></i>
+            <i [ngClass]="_$iconClass" [ngStyle]="valueStyle"></i>
         </div>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'picture'">
+    <ng-container *ngSwitchCase="'image-icon'">
         <div>
             <img [src]="_$imgPath" alt="No picture...">
         </div>

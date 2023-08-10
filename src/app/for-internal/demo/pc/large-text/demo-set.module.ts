@@ -4,8 +4,8 @@ import {LargeTextCommonDemoComponent} from "./common/demo.component";
 import {LargeTextCommonDemoModule} from "./common/demo.module";
 import {LargeTextTrendDemoComponent} from "./trend/demo.component";
 import {LargeTextTrendDemoModule} from "./trend/demo.module";
-import {LargeTextPictureDemoComponent} from "./picture/demo.component";
-import {LargeTextPictureDemoModule} from "./picture/demo.module";
+import {LargeTextPictureDemoComponent} from "./image-icon/demo.component";
+import {LargeTextPictureDemoModule} from "./image-icon/demo.module";
 
 export const routerConfig = [
     {
@@ -15,7 +15,7 @@ export const routerConfig = [
         path: 'trend', component: LargeTextTrendDemoComponent
     },
     {
-        path: 'picture', component: LargeTextPictureDemoComponent
+        path: 'image-icon', component: LargeTextPictureDemoComponent
     }
 ];
 
