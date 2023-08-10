@@ -68,7 +68,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      */
      @RequireMarkForCheck()
      @Input()
-     public showBorder: boolean = true;
+     public showBorder: boolean = false;
 
     private _resize: "both" | "horizontal" | "vertical" | "none" = "none";
     /**
