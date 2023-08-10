@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<h3>隐藏边框</h3>
+<p class="notes">输入值是：<span>{{inputValue}}</span></p>
+<jigsaw-auto-complete-input  [showBorder]="!showBorder" [(value)]="inputValue" placeholder="auto complete input demo"
+                            [width]="250" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
+</jigsaw-auto-complete-input>
+
+<br><br>
+
+<jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏">

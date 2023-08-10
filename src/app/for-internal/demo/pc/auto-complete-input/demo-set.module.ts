@@ -12,10 +12,15 @@ import {AutoCompleteInputOpenDropdownDemoComponent} from "./open-dropdown/demo.c
 import {AutoCompleteInputOpenDropdownDemoModule} from "./open-dropdown/demo.module";
 import {AutoCompleteInputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
 import {AutoCompleteInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.component";
+import { AutoCompleteInputShowBorderDemoComponent } from "./show-border/demo.component";
+import { AutoCompleteInputShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: AutoCompleteInputBasicDemoComponent
+    },
+    {
+        path: 'show-border', component: AutoCompleteInputShowBorderDemoComponent
     },
     {
         path: 'with-group', component: AutoCompleteInputGroupDemoComponent
@@ -39,7 +44,7 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig), AutoCompleteInputBasicDemoModule,
         AutoCompleteInputGroupDemoModule, AutoCompleteInputNonGroupDemoModule,
         AutoCompleteInputSelectEventDemoModule, AutoCompleteInputOpenDropdownDemoModule,
-        AutoCompleteInputPrefixSuffixDemoModule
+        AutoCompleteInputPrefixSuffixDemoModule, AutoCompleteInputShowBorderDemoModule
     ]
 })
 export class AutoCompleteInputDemoModule {

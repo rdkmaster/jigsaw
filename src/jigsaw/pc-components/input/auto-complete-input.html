@@ -1,4 +1,4 @@
-<j-input #input [placeholder]="placeholder" [(value)]="value" width="100%" [theme]="theme" height="100%"
+<j-input #input [showBorder]="showBorder" [placeholder]="placeholder" [(value)]="value" width="100%" [theme]="theme" height="100%"
     (keydown)="_$onKeyDown($event)" [clearable]="clearable" [disabled]="disabled" [valid]="valid" [preIcon]="_$preIcon"
     [icon]="_$icon" (preIconSelect)="preIconSelect.emit($event)" (iconSelect)="iconSelect.emit($event)"
     (focus)="_$handleFocus($event)" (blur)="_$handleBlur($event)" (select)="_$handleSelect($event)" jigsaw-float
