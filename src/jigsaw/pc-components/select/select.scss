@@ -42,8 +42,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection:hover {
             border-color: $brand-default;
-        }
-        
+        } 
     } 
       
     &.#{$jigsaw-select}-multiple-select {

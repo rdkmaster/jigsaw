@@ -14,10 +14,15 @@ import {TimePickerLimitDemoComponent} from "./limit/demo.component";
 import {TimePickerLimitDemoModule} from "./limit/demo.module";
 import { TimePickerOptionsDemoModule } from "./options/demo.module";
 import { TimePickerOptionsDemoComponent } from "./options/demo.component";
+import { TimePickerShowBorderDemoComponent } from "./show-border/demo.component";
+import { TimePickerShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: TimePickerBasicDemoComponent
+    },
+    {
+        path: 'show-border', component: TimePickerShowBorderDemoComponent
     },
     {
         path: 'step', component: TimePickerStepDemoComponent
@@ -43,6 +48,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TimePickerBasicDemoModule,
+        TimePickerShowBorderDemoModule,
         TimePickerStepDemoModule,
         TimePickerGrDemoModule,
         TimePickerSizeDemoModule,
