@@ -30,13 +30,20 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
-    &.#{$jigsaw-select}-hide-border-down {
+    &.#{$jigsaw-select}-show-border {
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
             border-color: $bg-transparent;
         }
         .#{$jigsaw-combo-select}-arrow {
             color: $bg-transparent;
         }
+        .#{$jigsaw-combo-select}-arrow:hover {
+            color: $brand-default;   
+        }
+        .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection:hover {
+            border-color: $brand-default;
+        }
+        
     } 
       
     &.#{$jigsaw-select}-multiple-select {

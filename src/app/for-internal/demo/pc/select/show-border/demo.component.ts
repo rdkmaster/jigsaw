@@ -4,8 +4,8 @@ import {ArrayCollection} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html',
 })
-export class SelecthideBorderDownDemoComponent {
-    hideBorderDown: boolean;
+export class SelectShowBorderDemoComponent {
+    showBorder: boolean;
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},

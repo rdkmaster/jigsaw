@@ -76,7 +76,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     @RequireMarkForCheck()
     @Input()
-    public hideBorder: boolean = false;
+    public showBorder: boolean = true;
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
@@ -333,7 +333,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
         '[class.jigsaw-input-disabled]': 'disabled',
-        '[class.jigsaw-input-hide-border]': 'hideBorder',
+        '[class.jigsaw-input-show-border]': '!showBorder',
         '[class.jigsaw-input-readonly]': 'readonly',
         '(click)': '_$stopPropagation($event)'
     },

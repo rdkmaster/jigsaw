@@ -610,7 +610,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
       @RequireMarkForCheck()
       @Input()
-      public hideBorderDown: boolean = false;
+      public showBorder: boolean = false;
 
     /**
      * 搜索框的值发生改变时，向外发出事件

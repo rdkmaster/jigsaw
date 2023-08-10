@@ -5,7 +5,7 @@ import {JigsawInput} from "jigsaw/public_api";
     templateUrl: './demo.component.html',
     styleUrls: ['./demo.component.css']
 })
-export class InputHideBorderComponent {
+export class InputShowBorderComponent {
 
     enabled: boolean;
 
