@@ -1,0 +1,44 @@
+.boxes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.boxes p {
+    padding-bottom: 12px;
+}
+
+.box {
+    display: inline-block;
+    border: 1px solid #eeeeee;
+    padding: 6px;
+}
+
+.wrapper {
+    width: 50%;
+    overflow: hidden;
+}
+
+.row {
+    margin: 6px;
+    display: flex;
+    align-items: center;
+    height: 38px;
+}
+
+.wrapper label {
+    width: 100px;
+}
+
+.wrapper jigsaw-input {
+    width: 200px;
+}
+
+.wrapper j-numeric-input {
+    width: 200px;
+}
+
+.wrapper jigsaw-color-select {
+    position: relative;
+}

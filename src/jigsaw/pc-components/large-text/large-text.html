@@ -1,15 +1,15 @@
-<div class="prefix-leadingUnit" *ngIf="!!leadingUnit">
-    <span [ngStyle]="{'color':'red'}">{{leadingUnit}}</span>
+<div class="prefix-leadingUnit" *ngIf="!!leadingUnit" [ngStyle]="leadingUnitStyle">
+    <span>{{leadingUnit}}</span>
 </div>
 <div class="large-text" [ngSwitch]="_$getCondition()">
     <ng-container *ngSwitchCase="'number'">
         <span class="data-updatable">
             <span class="data-wrapper" *ngFor="let item of _$valueList;" [ngSwitch]="item">
-                <span class="dot" *ngSwitchCase="'-'">{{item}}</span>
-                <span class="dot" *ngSwitchCase="'.'">{{item}}</span>
+                <span class="dot" *ngSwitchCase="'-'" [ngStyle]="valueStyle">{{item}}</span>
+                <span class="dot" *ngSwitchCase="'.'" [ngStyle]="valueStyle">{{item}}</span>
                 <span class="number-item" *ngSwitchDefault [ngStyle]="{'width': _$fontWidth, 'height': _$fontSize}">
                     <span style="visibility: hidden">{{item}}</span>
-                    <span #numberInfo class="number-slider" [ngStyle]="{'font-size': _$fontSize}">01234567890123456789</span>
+                    <span #numberInfo class="number-slider" [ngStyle]="valueStyle">01234567890123456789</span>
                 </span>
             </span>
         </span>
@@ -17,28 +17,30 @@
 
     <ng-container *ngSwitchCase="'icon'">
         <div [ngClass]="{'icon-position-left':true}">
-            <i [ngClass]="_$iconClass"></i>
+            <i [ngClass]="_$iconClass" [ngStyle]="valueStyle"></i>
         </div>
     </ng-container>
 
-    <!--    <ng-container *ngSwitchCase="'picture'">-->
-    <!--        <div>-->
-    <!--            <img [src]="_$imgPath" alt="No picture...">-->
-    <!--        </div>-->
-    <!--    </ng-container>-->
+    <ng-container *ngSwitchCase="'image-icon'">
+        <div>
+            <img [src]="_$imgPath" alt="No picture...">
+        </div>
+    </ng-container>
 
     <ng-container *ngSwitchDefault>
-        <span [ngStyle]="{'font-size': _$fontSize}">{{value}}</span>
+        <span [ngStyle]="valueStyle">{{value}}</span>
     </ng-container>
 </div>
-<div class="suffix-unit" *ngIf="!!unit">
-    <span [ngStyle]="{'color':'red'}">{{unit}}</span>
+<div class="suffix-unit" *ngIf="!!unit" [ngStyle]="unitStyle">
+    <span>{{unit}}</span>
 </div>
-<div class="trend-container" *ngIf="trend!='none'">
+<div class="trend-container" *ngIf="trend!='none'" [ngStyle]="_$basicStyle">
     <div [ngSwitch]="_$trendMap.trend">
-        <i *ngSwitchCase="'ascending'" [ngClass]="'iconfont iconfont-e032'" [ngStyle]="{'color':'green'}"></i>
-        <i *ngSwitchCase="'descending'" [ngClass]="'iconfont iconfont-e030'" [ngStyle]="{'color':'red'}"></i>
+        <i *ngSwitchCase="'ascending'" [ngClass]="_$ascendingIcon" [ngStyle]="_$ascendingStyle"></i>
+        <i *ngSwitchCase="'descending'" [ngClass]="_$descendingIcon" [ngStyle]="_$descendingStyle"></i>
         <i *ngSwitchCase="'unchanged'" [ngClass]="'iconfont iconfont-e19d'"></i>
     </div>
-    <span *ngIf="trend=='percentage'&&!!_$trendMap.percentage">{{_$trendMap.percentage}}%</span>
+    <div *ngIf="trend=='percentage'&&!!_$trendMap.percentage" [ngStyle]="trendValueStyle">
+        <span>{{_$trendMap.percentage}}%</span>
+    </div>
 </div>

@@ -1,115 +1,182 @@
 <!-- ignore the following lines, they are not important to this demo -->
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
-<jigsaw-button (click)="_$changeValue0()">是否开启动画</jigsaw-button>
-<jigsaw-button (click)="_$changeValue5()">设置valueMap（字符串情况下观察趋势需要）</jigsaw-button>
-<jigsaw-button (click)="_$changeValue4()">清空valueMap</jigsaw-button>
-<jigsaw-button (click)="_$changeValue()">value值变大</jigsaw-button>
-<jigsaw-button (click)="_$changeValue1()">value值变小</jigsaw-button>
-<jigsaw-button (click)="_$changeValue2()">value值不变</jigsaw-button>
-<jigsaw-button (click)="_$changeValue3()">天气状况的值（string）改变</jigsaw-button>
-<jigsaw-button (click)="_$changeValue6()">天气状况的值为差，检测百分比为Infinity</jigsaw-button>
-<jigsaw-button (click)="_$changeValue7()">天气状况的值为中，检测百分比大于9999.9</jigsaw-button>
 
+<div style="display: flex;">
+    <div class="wrapper">
+        <h4>所有可用选项：</h4>
 
+        <div class="row">
+            <label>内容为数字</label>
+            <j-numeric-input [(value)]="value" [showOption]="false" placeholder="请输入数字"></j-numeric-input>
+            <jigsaw-button (click)="_$changeValue()">value值变大</jigsaw-button>
+            <jigsaw-button (click)="_$changeValue1()">value值变小</jigsaw-button>
+        </div>
+
+        <div class="row">
+            <label>前置单位</label>
+            <jigsaw-input [(value)]="leadingUnit" placeholder="输入前置单位"></jigsaw-input>
+        </div>
+
+        <div class="row">
+            <label>后缀单位</label>
+            <jigsaw-input [(value)]="unit" placeholder="输入后缀单位"></jigsaw-input>
+        </div>
+
+        <div class="row">
+            <label>useRawValue</label>
+            <jigsaw-switch [(checked)]="useRawValue"></jigsaw-switch>
+            <span style="margin-left: 8px;">注意：此属性默认为false，设置为true时将不对value不作处理</span>
+        </div>
+
+        <div class="row">
+            <label>数字精度</label>
+            <j-numeric-input [(value)]="fractionDigits" [showOption]="false" min="0" placeholder="请输入数字精度"></j-numeric-input>
+        </div>
+
+        <div class="row">
+            <label>动画时间</label>
+            <jigsaw-switch [(checked)]="enableAnimation"></jigsaw-switch>
+            <j-numeric-input *ngIf="enableAnimation" [(value)]="animationDuration" [showOption]="false" min="0" [suffix]="'ms'" placeholder="请输入动画时间"></j-numeric-input>
+        </div>
+
+        <div class="row">
+            <label>内容为图标</label>
+            <jigsaw-input [(value)]="iconValue" placeholder="输入图标（可选）"
+                          title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
+            </jigsaw-input>
+            <span style="margin-left: 8px;">例如：iconfont iconfont-e23e <a href="/#/pc/icon/icons">所有可用图标</a></span>
+        </div>
+        <div class="row">
+            <label>启用valueMap</label>
+            <jigsaw-switch [(checked)]="valueMapUsed" (checkedChange)="valueMapChecked($event)"></jigsaw-switch>
+        </div>
+    </div>
+    <div class="wrapper">
+        <div class="row">
+            <label>前置单位字体样式</label>
+            <j-numeric-input [(value)]="leadingFontSize" (valueChange)="setStyle()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入前置单位字体大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="leadingFontColor" (colorChange)="setStyle()" width="40"></jigsaw-color-select>
+        </div>
+
+        <div class="row">
+            <label>前置单位字体偏移</label>
+            下移：
+            <j-numeric-input [(value)]="leadingLeft" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            左移：
+            <j-numeric-input [(value)]="leadingBottom" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            上移：
+            <j-numeric-input [(value)]="leadingRight" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="leadingTop" (valueChange)="setStyle()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
+
+        <div class="row">
+            <label>值字体样式</label>
+            <j-numeric-input [(value)]="valueFontSize" (valueChange)="setStyle2()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入中间内容字体大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="valueFontColor" (colorChange)="setStyle2()"  width="40"></jigsaw-color-select>
+            <label style="width: 35px;">图标</label>
+            <j-numeric-input [(value)]="iconFontSize" (valueChange)="setIconStyle()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入图标大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="iconColor" (colorChange)="setIconStyle()"  width="40"></jigsaw-color-select>
+        </div>
+        <div class="row">
+            <label>后缀单位字体样式</label>
+            <j-numeric-input [(value)]="unitFontSize" (valueChange)="setStyle1()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入后缀单位字体大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="unitFontColor" (colorChange)="setStyle1()" width="40"></jigsaw-color-select>
+        </div>
+        <div class="row">
+            <label>后缀单位字体偏移</label>
+            下移：
+            <j-numeric-input [(value)]="unitTop" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            左移：
+            <j-numeric-input [(value)]="unitRight" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80" min="0"></j-numeric-input>
+            上移：
+            <j-numeric-input [(value)]="unitBottom" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="unitLeft" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
+        <div class="row">
+            <label style="width: 200px">趋势图标基础样式（大小，位置）</label>
+            <j-numeric-input [(value)]="trendFontSize" (valueChange)="setStyle3()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入后缀单位字体大小"></j-numeric-input>
+        </div>
+        <div class="row">
+            <label style="width: 200px">上升图标设置（图标，图标颜色）</label>
+            <jigsaw-input [(value)]="ascendingTrendIcon" placeholder="输入图标（可选）" (valueChange)="setStyle4()"
+                          title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
+            </jigsaw-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="ascendingTrendColor" (colorChange)="setStyle4()"  width="40"></jigsaw-color-select>
+        </div>
+        <div class="row">
+            <label style="width: 200px">下降图标设置（图标，图标颜色）</label>
+            <jigsaw-input [(value)]="descendingTrendIcon" placeholder="输入图标（可选）" (valueChange)="setStyle5()"
+                          title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
+            </jigsaw-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="descendingTrendColor" (colorChange)="setStyle5()"  width="40"></jigsaw-color-select>
+        </div>
+
+        <div class="row">
+            <label style="width: 200px">百分比趋势字体样式</label>
+            <j-numeric-input [(value)]="trendValueFontSize" (valueChange)="setStyle6()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入百分比趋势字体大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="trendValueFontColor" (colorChange)="setStyle6()"  width="40"></jigsaw-color-select>
+        </div>
+
+        <div class="row">
+            <label>图标与百分比布局</label>
+            <jigsaw-radios-lite [(value)]="selectedPosition" (valueChange)="radioChange($event)" [data]="positions">
+            </jigsaw-radios-lite>
+            <span>反转</span>
+            <jigsaw-switch [(checked)]="reverse" (checkedChange)="reverseChange($event)"></jigsaw-switch>
+        </div>
+        <div class="row">
+            <label>图标与百分比偏移</label>
+            下移：
+            <j-numeric-input [(value)]="trendTop" (valueChange)="setStyle3()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            右移：
+            <j-numeric-input [(value)]="trendLeft" (valueChange)="setStyle3()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
+    </div>
+</div>
 
 
 <div class="boxes">
     <div class="box">
-        <p>精度3，有动画时间默认：5000ms</p>
+        <p>精度{{fractionDigits}}，动画时间{{animationDuration}}ms</p>
         <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" height="50px" [enableAnimation]="enableAnimation"
-                           [useRawValue]="useRawValue"></jigsaw-large-text>
+        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="leadingUnit"
+                           [unit]="unit" [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
+                           [useRawValue]="useRawValue" [trend]="'percentage'" [leadingUnitStyle]="leadingStyle"
+                           [unitStyle]="unitStyle" [valueStyle]="valueStyle" [basicTrendStyle]="basicTrendStyle"
+                           [ascendingTrendStyle]="ascendingTrendStyle" [descendingTrendStyle]="descendingTrendStyle"
+                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap"></jigsaw-large-text>
     </div>
-
-    <div class="box">
-        <p>精度2，有动画: 500ms</p>
+    <div class="box" style="margin-left: 100px">
+        <p>组件内容为图标</p>
         <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="2" [useRawValue]="useRawValue" [enableAnimation]="enableAnimation"
-                           [animationDuration]="500"></jigsaw-large-text>
+        <jigsaw-large-text [value]="iconValue" [leadingUnit]="leadingUnit" [valueStyle]="iconStyle"
+                           [unit]="unit" [useRawValue]="useRawValue"></jigsaw-large-text>
     </div>
-
-    <div class="box">
-        <p>精度1，有动画时间500ms</p>
-        <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="1" [useRawValue]="useRawValue" [enableAnimation]="enableAnimation"
-                           [animationDuration]="500"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>精度0，没动画</p>
-        <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="0" [useRawValue]="useRawValue"
-                           [enableAnimation]="enableAnimation"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>精度{{fractionDigits}}，有动画，有前后置单位</p>
-        <hr>
-        <jigsaw-large-text
-            [value]="value" [fractionDigits]="fractionDigits" [enableAnimation]="enableAnimation"
-            [useRawValue]="useRawValue" [unit]="unit" [leadingUnit]="leadingUnit"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>值为图标</p>
-        <hr>
-        <jigsaw-large-text
-            [value]="'iconfont iconfont-ea39'" [fractionDigits]="fractionDigits" [enableAnimation]="enableAnimation"
-            [useRawValue]="useRawValue" [unit]="unit" [leadingUnit]="leadingUnit"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>{{valueMap?'有':'无'}}valueMap，通过改变value值控制</p>
-        <hr>
-        <jigsaw-large-text
-            [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="'天气状况：'" [enableAnimation]="enableAnimation"
-            [useRawValue]="false" [valueMap]="valueMap"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>{{valueMap1?'有':'无'}}valueMap情况且为图标</p>
-        <hr>
-        <jigsaw-large-text
-            [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="'状态'"
-            [useRawValue]="false" [valueMap]="valueMap1" [enableAnimation]="enableAnimation"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>精度2，有动画: 500ms， 有趋势</p>
-        <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="2" [useRawValue]="useRawValue" [enableAnimation]="enableAnimation"
-                           [animationDuration]="500" [trend]="'normal'"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>精度3，有动画: 500ms， 有趋势, 有变化百分比</p>
-        <hr>
-        <jigsaw-large-text #largeText [value]="value" [fractionDigits]="3" [useRawValue]="useRawValue" [enableAnimation]="enableAnimation"
-                           [animationDuration]="500" [unit]="unit" [trend]="'percentage'"></jigsaw-large-text>
-    </div>
-
-    <div class="box">
-        <p>{{valueMap?'有':'无'}}对应的valueMap，值为字符串，改变时有显示趋势, 有变化百分比</p>
-        <hr>
-        <jigsaw-large-text #largeText1 [value]="value1" [useRawValue]="useRawValue" [valueMap]="valueMap" [enableAnimation]="enableAnimation"
-                           [leadingUnit]="'天气状况：'" [trend]="'percentage'"></jigsaw-large-text>
-    </div>
-<!--    <div class="box">-->
-<!--        <p>有valueMap情况且为图片</p>-->
-<!--        <hr>-->
-<!--        <jigsaw-large-text-->
-<!--            [value]="value" [leadingUnit]="'天气：'" [useRawValue]="false" [valueMap]="valueMap2"></jigsaw-large-text>-->
-<!--    </div>-->
 </div>
+
 <div *ngIf="valueMap">
-    天气状况：<div *ngFor="let item of valueMapEntries">
+    <span>valueMap:</span>
+    <div *ngFor="let item of valueMapEntries">
         <span>{{ item[0] }}： </span>
         <span>[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
-    </div>
-
-    图标：<div *ngFor="let item of valueMapEntries1">
-        <jigsaw-icon [icon]="item[0]"></jigsaw-icon>
-        <span>：[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
     </div>
 </div>

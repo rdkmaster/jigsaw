@@ -1,0 +1,42 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="wrapper">
+    <h4>内容为图片的情况：</h4>
+
+    <div class="row">
+        <j-numeric-input [(value)]="value" [showOption]="false" placeholder="请输入数字"></j-numeric-input>
+        <jigsaw-button (click)="_$changeValue()">value值变大</jigsaw-button>
+        <jigsaw-button (click)="_$changeValue1()">value值变小</jigsaw-button>
+    </div>
+
+    <div class="row">
+        <label style="width: 30px">趋势</label>
+        <jigsaw-radios-lite [(value)]="trend" [data]="trends"></jigsaw-radios-lite>
+        <span style="margin-left: 8px;">趋势的三种情况none不显示，normal只显示趋势，percentage显示升降比例</span>
+    </div>
+    <hr>
+    <h4>图片内容下趋势（如果要观察趋势需要和valueMap属性搭配）</h4>
+    <div class="row">
+        <label>启用valueMap</label>
+        <span *ngIf="valueMapUsed">value控制图片内容的变化</span>
+        <jigsaw-switch [(checked)]="valueMapUsed" (checkedChange)="valueMapChecked($event)"></jigsaw-switch>
+    </div>
+</div>
+
+
+<div class="boxes">
+    <div class="box">
+        <p>图片</p>
+        <hr>
+        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="leadingUnit"
+                           [trend]="trend" [useRawValue]="useRawValue" [valueMap]="valueMap2"></jigsaw-large-text>
+    </div>
+</div>
+<div *ngIf="valueMap2">
+    天气状况：<div *ngFor="let item of valueMapEntries2">
+    <img [src]="item[0]" width="30px" alt="No Picture..">
+    <span>[{{ item[1][0] }} ~ {{ item[1][1] }}]</span>
+</div>
+</div>

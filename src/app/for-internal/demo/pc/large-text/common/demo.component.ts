@@ -1,42 +1,116 @@
-import {Component, ViewChild} from '@angular/core';
-import {JigsawLargeTextComponent} from "jigsaw/public_api";
+import {Component} from '@angular/core';
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['demo-component.css']
+    styleUrls: ['../demo-component.css']
 })
 export class LargeTextCommonDemoComponent {
 
-    value: number = 100.11112211;
-
-    value1: string = '特别差';
-
-
-    fractionDigits: number = 3;
+    value: number = 1001.11112211;
 
     useRawValue: boolean = false;
 
-    leadingUnit: string = "$$$$$$$$$$$$$$$$$";
+    fractionDigits: number = 3;
 
-    unit: string = "亿亿亿亿亿亿亿亿亿亿亿亿";
     enableAnimation: boolean = true;
-    valueMap: { [valueEnum: string]: [number, number] } = null;
-    valueMap1: { [valueEnum: string]: [number, number] } = null;
-    valueMap2: { [valueEnum: string]: [number, number] } = null;
 
-    valueMapEntries = [];
-    valueMapEntries1 = [];
-    valueMapEntries2 =[];
+    animationDuration: number = 2000;
 
-    @ViewChild('largeText')
-    largeText: JigsawLargeTextComponent;
+    leadingUnit: string = "股票市值：";
 
-    @ViewChild('largeText1')
-    largeText1: JigsawLargeTextComponent;
+    unit: string = "亿";
 
-    _$changeValue0() {
-        this.enableAnimation = !this.enableAnimation;
+    iconValue: string = 'iconfont iconfont-ea39';
+
+    leadingFontSize = 23;
+    leadingFontColor = "#e43232";
+
+    leadingLeft: number = 12;
+    leadingBottom: number = -65;
+    leadingRight: number = 125;
+    leadingTop: number = 11;
+
+    leadingStyle = {'font-size': this.leadingFontSize + 'px', 'color': '#e43232',
+        'margin': `${this.leadingLeft}px ${this.leadingBottom}px ${this.leadingRight}px ${this.leadingTop}px`}
+
+    setStyle() {
+        this.leadingStyle = {...this.leadingStyle, ...{'font-size': this.leadingFontSize + 'px', 'color': this.leadingFontColor,
+            'margin': `${this.leadingLeft}px ${this.leadingBottom}px ${this.leadingRight}px ${this.leadingTop}px`}};
     }
+
+    unitFontSize = 23;
+
+    unitFontColor = "blue";
+
+    unitLeft: number = 12;
+    unitBottom: number = -21;
+    unitRight: number = 16;
+    unitTop: number = 11;
+
+    unitStyle = {'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
+        'margin': `${this.unitTop}px ${this.unitRight}px ${this.unitBottom}px ${this.unitLeft}px`}
+
+
+    setStyle1() {
+        this.unitStyle = {...this.unitStyle, ...{'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
+                'margin': `${this.unitTop}px ${this.unitRight}px ${this.unitBottom}px ${this.unitLeft}px`}};
+    }
+
+    valueFontSize = 70;
+    valueFontColor = "green";
+
+    valueStyle = {'font-size': this.valueFontSize + 'px', 'color': this.valueFontColor}
+
+    setStyle2() {
+        this.valueStyle = {...this.valueStyle, ...{'font-size': this.valueFontSize + 'px', 'color': this.valueFontColor}};
+    }
+
+    iconFontSize = 80;
+    iconColor = "pink";
+
+    iconStyle = {'font-size': this.iconFontSize + 'px', 'color': this.iconColor}
+
+    setIconStyle() {
+        this.iconStyle = {...this.iconStyle, ...{'font-size': this.iconFontSize + 'px', 'color': this.iconColor}};
+    }
+
+
+    trendFontSize = 20;
+    trendLeft: number = 0;
+    trendBottom: number = 0;
+    trendRight: number = 0;
+    trendTop: number = 38;
+    basicTrendStyle = {'font-size': this.trendFontSize + 'px', "justify-content":"center", "flex-flow": 'row',
+        'margin': `${this.trendTop}px ${this.trendRight}px ${this.trendBottom}px ${this.trendLeft}px`};
+
+    setStyle3() {
+        this.basicTrendStyle = {...this.basicTrendStyle, 'font-size': this.trendFontSize + 'px',
+            'margin': `${this.trendTop}px ${this.trendRight}px ${this.trendBottom}px ${this.trendLeft}px`};
+    }
+
+    ascendingTrendColor = '#56e10d'
+    ascendingTrendIcon = 'iconfont iconfont-e032'
+    ascendingTrendStyle = {"ascending-icon": this.ascendingTrendIcon, "ascending-color": this.ascendingTrendColor}
+    setStyle4() {
+        this.ascendingTrendStyle = {...this.ascendingTrendStyle, 'ascending-color': this.ascendingTrendColor, 'ascending-icon': this.ascendingTrendIcon};
+    }
+
+    descendingTrendColor = '#f0065c'
+    descendingTrendIcon = 'iconfont iconfont-e030'
+    descendingTrendStyle = {"descending-icon": this.descendingTrendIcon, "descending-color": this.descendingTrendColor}
+    setStyle5() {
+        this.descendingTrendStyle = {...this.descendingTrendStyle, 'descending-icon': this.descendingTrendIcon, 'descending-color': this.descendingTrendColor};
+    }
+
+    trendValueFontSize = 16;
+    trendValueFontColor = '#0e0e0e';
+
+    trendValueStyle = {'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}
+
+    setStyle6() {
+        this.trendValueStyle = {...this.trendValueStyle, ...{'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}};
+    }
+
     _$changeValue() {
         this.value += Math.floor(Math.random() * 1000) + 1;
     }
@@ -45,54 +119,40 @@ export class LargeTextCommonDemoComponent {
         this.value -= Math.floor(Math.random() * 1000) + 1;
     }
 
-    _$changeValue2() {
+    valueMap: { [valueEnum: string]: [number, number] } = null;
+    valueMapUsed: boolean = false;
+    valueMapEntries = [];
+
+    valueMapChecked(event: boolean) {
+        this.valueMap = event ? {
+            '特别差': [-1000, -500], '差': [-499, 300], '中': [301, 500], '良': [501, 1000], '优': [1000, 2000]
+        } : null;
+        this.valueMapEntries = event ? Object.entries(this.valueMap) : [];
     }
 
-    _$changeValue3() {
-        const valueArray = ["特别差", "差", "中", "良", "优"];
-        const randomIndex = Math.floor(Math.random() * valueArray.length);
-        this.value1 = valueArray[randomIndex];
+    selectedPosition = '左右布局'
+    positions = ["左右布局", "上下布局"];
+
+    reverse: boolean = false;
+
+
+    radioChange(event) {
+        this.basicTrendStyle = {...this.basicTrendStyle, 'font-size': this.trendFontSize + 'px',
+            "flex-flow": event == "左右布局"?"row":"column" };
     }
 
-    _$changeValue4() {
-        this.valueMap = null;
-        this.valueMap1 = null;
-        this.valueMap2 = null;
-    }
-
-    _$changeValue5() {
-        this.valueMap = {
-            '特别差':[-10000, -1],'差': [0, 0.00001], '中': [0.00002, 5000], '良': [5001, 10000],'优': [10000, 100000]
+    reverseChange(event) {
+        if (!event) {
+            this.radioChange(this.selectedPosition);
+            return
         }
-        this.valueMapEntries = Object.entries(this.valueMap)
-
-        this.valueMap1 = {
-            'iconfont iconfont-e193':[-Number.MAX_VALUE, -1],'iconfont iconfont-ea39': [0, 3000], 'iconfont iconfont-e877': [3001, 5000], 'iconfont iconfont-e901': [5001, 10000],'iconfont iconfont-e015': [10000, Number.MAX_VALUE]
-        }
-        this.valueMapEntries1 = Object.entries(this.valueMap1)
-
-        this.valueMap2 = {
-            '/app/for-internal/demo/pc/big-number/common/assets/Monday.png':[-Number.MAX_VALUE, -1],
-            "/app/for-internal/demo/pc/big-number/common/assets/Tuesday.png": [0, 1000],
-            "/app/for-internal/demo/pc/big-number/common/assets/Wednesday.png": [1001, 2000],
-            '/app/for-internal/demo/pc/big-number/common/assets/Thursday.png': [2001, 3000],
-            '/app/for-internal/demo/pc/big-number/common/assets/Friday.png': [3001, 4000],
-            '/app/for-internal/demo/pc/big-number/common/assets/Saturday.png': [3001, 4000],
-            '/app/for-internal/demo/pc/big-number/common/assets/Sunday.png': [4001, Number.MAX_VALUE]
-        }
-        this.valueMapEntries2 = Object.entries(this.valueMap2)
+        this.basicTrendStyle = {...this.basicTrendStyle, 'font-size': this.trendFontSize + 'px',
+            "flex-flow": this.selectedPosition == "左右布局"?"row-reverse":"column-reverse" }
     }
 
-    _$changeValue6() {
-        this.value1 = '差';
-    }
-
-    _$changeValue7() {
-        this.value1 = '中';
-    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个DEMO演示了大字组件jigsaw-big-number的简单用法。';
+    summary: string = '这个DEMO演示了大字组件jigsaw-large-text的简单用法。';
     description: string = '';
 }
