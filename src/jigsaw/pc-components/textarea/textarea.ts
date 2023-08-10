@@ -31,6 +31,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-textarea-host]': 'true',
+        '[class.jigsaw-textarea-show-border]': '!showBorder',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
         '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',
@@ -62,6 +63,12 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @RequireMarkForCheck()
     public disabled: boolean = false;
 
+    /**
+     * 设置多行文本输入框框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。
+     */
+     @RequireMarkForCheck()
+     @Input()
+     public showBorder: boolean = false;
 
     private _resize: "both" | "horizontal" | "vertical" | "none" = "none";
     /**

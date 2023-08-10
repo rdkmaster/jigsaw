@@ -19,10 +19,15 @@ import {TextareaMaxLengthDemoModule} from "./max-length/demo.module";
 import {TextareaMaxLengthDemoComponent} from "./max-length/demo.component";
 import { TextareaResizeDemoComponent } from './resize/demo.component';
 import { TextareaResizeDemoModule } from './resize/demo.module';
+import { TextareaShowBorderDemoComponent } from "./show-border/demo.component";
+import { TextareaShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: TextareaBasicDemoComponent
+    },
+    {
+        path: 'show-border', component: TextareaShowBorderDemoComponent
     },
     {
         path: 'value-change', component: TextareaValueChangeDemoComponent
@@ -54,6 +59,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         TextareaBasicDemoModule,
+        TextareaShowBorderDemoModule,
         TextareaValueChangeDemoModule,
         TextareaClearableDemoModule,
         TextareaFocusDemoModule,

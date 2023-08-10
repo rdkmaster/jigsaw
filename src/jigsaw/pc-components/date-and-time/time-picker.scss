@@ -2,7 +2,7 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
 
 .#{$jigsaw-time-picker}-show-border {
         border-color: $bg-transparent !important;
-        &:hover{
+        &:hover {
             border-color: $border-color-default !important;
         }
         &.#{$jigsaw-time-picker}-active {
