@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Numeric Input</jigsaw-header>
+
+    <div class="live-demo">
+        <jigsaw-header [level]="2">隐藏边框</jigsaw-header>
+        <j-numeric-input [showBorder]="!showBorder" [(value)]="value" min="-10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)">
+        </j-numeric-input>
+        <jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏"></jigsaw-switch> 
+    </div>
+</div>
+

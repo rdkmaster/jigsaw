@@ -72,7 +72,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
     public valid: boolean = true;
 
     /**
-     * 设置input框边框显隐开关，为true则边框透明，为false则有边框颜色。
+     * 设置input框边框显隐开关，为true则有边框颜色，为false则边框透明。
      */
     @RequireMarkForCheck()
     @Input()

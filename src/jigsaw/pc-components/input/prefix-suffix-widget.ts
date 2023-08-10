@@ -29,7 +29,7 @@ type Styles = {
 @Component({
     selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled}">
+        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-show-border': showBorder}">
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
             <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
@@ -115,6 +115,12 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
      */
     @Input()
     public disabled: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+     @Input()
+     public showBorder: boolean;
 
     /**
      * @internal

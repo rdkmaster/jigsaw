@@ -16,6 +16,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
+import { RequireMarkForCheck } from "jigsaw/common/decorator/mark-for-check";
 
 /**
  * 数字输入框
@@ -36,6 +37,7 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
+        '[class.jigsaw-numeric-input-show-border]': '!showBorder',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
@@ -67,6 +69,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public disabled: boolean = false;
+
+    /**
+     * 设置input框边框显隐开关，为true则有边框颜色，为false则边框透明。
+     */
+     @RequireMarkForCheck()
+     @Input()
+     public showBorder: boolean = true;
 
     /**
      * 输入框的placeholder

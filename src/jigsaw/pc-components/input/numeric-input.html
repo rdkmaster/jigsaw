@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [disabled]="disabled" [data]="suffix"
+    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [showBorder]="!showBorder" [disabled]="disabled" [data]="suffix"
                           [contentWidth]="suffixWidth"
                           [labelField]="suffixLabelField" (change)="suffixChange.emit($event)"></jigsaw-prefix-suffix>
 </div>
