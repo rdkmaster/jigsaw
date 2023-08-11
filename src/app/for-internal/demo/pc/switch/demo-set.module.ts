@@ -5,10 +5,15 @@ import {SwitchBasicDemoModule} from "./basic/demo.module";
 import {SwitchBasicDemoComponent} from "./basic/demo.component";
 import { SwitchSizeDemoComponent } from './size/demo.component';
 import { SwitchSizeDemoModule } from './size/demo.module';
+import { SwitchShowBorderDemoComponent } from "./show-border/demo.component";
+import { SwitchShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: SwitchBasicDemoComponent
+    },
+    {
+        path: 'show-border', component: SwitchShowBorderDemoComponent
     },
     {
         path: 'size', component: SwitchSizeDemoComponent
@@ -19,7 +24,8 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         SwitchBasicDemoModule,
-        SwitchSizeDemoModule
+        SwitchSizeDemoModule,
+        SwitchShowBorderDemoModule
     ]
 })
 export class SwitchDemoModule { }
