@@ -606,11 +606,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public manualSearch: boolean = false;
 
      /**
-     * 设置下拉框框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。
+     * 设置下拉框框边框和下拉箭头显隐开关
      */
       @RequireMarkForCheck()
       @Input()
-      public showBorder: boolean = false;
+      public showBorder: boolean = true;
 
     /**
      * 搜索框的值发生改变时，向外发出事件

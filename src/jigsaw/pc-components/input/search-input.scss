@@ -63,6 +63,19 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
                 }
             }
         }
+
+        .jigsaw-show-border{
+            border-color: $bg-transparent;
+
+            &:hover {
+                color: $brand-default;
+                border-color: $brand-default;
+
+                &::after {
+                    background: $brand-default;
+                }
+            }
+        }
     }
 
     &.#{$jigsaw-search-input}-auto {
