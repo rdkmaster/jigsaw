@@ -21,7 +21,7 @@ export class AutoCompleteInputShowBorderDemoComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '这个DEMO详细演示了`j-auto-complete-input`组件的各个参数的效果以及推荐的用法';
+    summary: string = '这个DEMO详细演示了`j-auto-complete-input`组件的边框显示或隐藏';
     description: string = '';
     public hosts = ['rdk.zte.com.cn', 'jigsaw-zte.gitee.io'];
     public pages = ['/jigsaw/index.html', '/awade/index.html', '/rdk/index.html'];
