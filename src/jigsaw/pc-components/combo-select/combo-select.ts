@@ -48,6 +48,7 @@ const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid',
+        '[class.jigsaw-combo-select-show-border]': '!showBorderLine',
         '[class.jigsaw-combo-select-hide-text-tag]': '!textTag'
     },
     providers: [
@@ -72,6 +73,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     }
 
     private _value: ArrayCollection<ComboSelectValue> = new ArrayCollection();
+
+    /**
+     * 设置下拉框框边框和下拉箭头显隐开关
+     */
+     @RequireMarkForCheck()
+     @Input()
+     public showBorderLine: boolean = true;
 
     /**
      * @NoMarkForCheckRequired

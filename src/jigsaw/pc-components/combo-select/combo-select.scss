@@ -164,6 +164,21 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
         }
     }
 
+    &.#{$jigsaw-combo-select}-show-border {
+        .#{$jigsaw-combo-select}-selection {
+            border-color: $bg-transparent !important;
+        }
+        .#{$jigsaw-combo-select}-arrow {
+            color: $bg-transparent !important;
+        }
+        .#{$jigsaw-combo-select}-arrow:hover {
+            color: $brand-default !important;   
+        }
+        .#{$jigsaw-combo-select}-selection:hover {
+            border-color: $brand-default !important;
+        } 
+    } 
+
     &.#{$jigsaw-combo-select}-error {
         .#{$jigsaw-combo-select}-selection {
             border-color: $error-default;

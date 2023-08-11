@@ -32,16 +32,16 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
     &.#{$jigsaw-select}-show-border {
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
-            border-color: $bg-transparent;
+            border-color: $bg-transparent !important;
         }
         .#{$jigsaw-combo-select}-arrow {
-            color: $bg-transparent;
+            color: $bg-transparent !important;
         }
         .#{$jigsaw-combo-select}-arrow:hover {
-            color: $brand-default;   
+            color: $brand-default !important;   
         }
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection:hover {
-            border-color: $brand-default;
+            border-color: $brand-default !important;
         } 
     } 
       

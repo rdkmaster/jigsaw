@@ -31,6 +31,8 @@ import { ComboSelectValidDemoComponent } from './valid/demo.component';
 import { ComboSelectValidDemoModule } from './valid/demo.module';
 import { ComboSelectTextTagDemoModule } from './text-tag/demo.module';
 import { ComboSelectTextTagDemoComponent } from './text-tag/demo.component';
+import { ComboSelectShowBorderDemoModule } from './show-border/demo.module';
+import { ComboSelectShowBorderDemoComponent } from './show-border/demo.component';
 
 export const routerConfig = [
     {
@@ -76,6 +78,9 @@ export const routerConfig = [
         path: 'valid', component: ComboSelectValidDemoComponent
     },
     {
+        path: 'show-border', component: ComboSelectShowBorderDemoComponent
+    },
+    {
         path: 'text-tag', component: ComboSelectTextTagDemoComponent
     }
 ];
@@ -97,7 +102,8 @@ export const routerConfig = [
         ComboSelectTriggerDemoModule,
         ComboSelectMaxHeightDemoModule,
         ComboSelectValidDemoModule,
-        ComboSelectTextTagDemoModule
+        ComboSelectTextTagDemoModule,
+        ComboSelectShowBorderDemoModule
     ]
 })
 export class ComboSelectDemoModule {
