@@ -12,7 +12,7 @@
                         'jigsaw-cell-align-center': head.alignment === 'center',
                         'jigsaw-cell-align-right': head.alignment === 'right',
                         'jigsaw-cell-no-padding': head.noPadding,
-                        'jigsaw-cell-freeze': _$isCellFreeze(index)}">
+                        'jigsaw-cell-freeze': _$isCellFrozen(index)}">
                         <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
@@ -55,7 +55,7 @@
                                 'jigsaw-cell-align-center': cell.alignment === 'center',
                                 'jigsaw-cell-align-right': cell.alignment === 'right',
                                 'jigsaw-cell-no-padding': cell.noPadding,
-                                'jigsaw-cell-freeze': _$isCellFreeze(tdIndex)}">
+                                'jigsaw-cell-freeze': _$isCellFrozen(tdIndex)}">
                         <ng-container [ngSwitch]="cell.renderer">
                             <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
                                 <span class="jigsaw-table-cell-text"
