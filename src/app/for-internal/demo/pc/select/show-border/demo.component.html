@@ -12,7 +12,7 @@
                        (valueChange)="selectChange($event)"
                        placeholder="请选择城市"
                        [data]="cityListForSelect"
-                       [showBorder]="!showBorder">
+                       [showBorder]="showBorder">
         </jigsaw-select>
         <jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏"></jigsaw-switch>
         <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>

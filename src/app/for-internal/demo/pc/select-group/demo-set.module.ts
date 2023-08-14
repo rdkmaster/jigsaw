@@ -12,6 +12,8 @@ import { SelectGroupSearchableDemoComponent } from "./searchable/demo.component"
 import { SelectGroupSearchableDemoModule } from "./searchable/demo.module";
 import { SelectGroupInfiniteScrollDemoComponent } from "./infinite-scroll/demo.component";
 import { SelectGroupInfiniteScrollDemoModule } from "./infinite-scroll/demo.module";
+import { SelectGroupShowBorderDemoComponent } from "./show-border/demo.component";
+import { SelectGroupShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
@@ -25,6 +27,9 @@ export const routerConfig = [
     },
     {
         path: 'valid', component: SelectGroupValidDemoComponent
+    },
+    {
+        path: 'show-border', component: SelectGroupShowBorderDemoComponent
     },
     {
         path: 'searchable', component: SelectGroupSearchableDemoComponent
@@ -42,7 +47,8 @@ export const routerConfig = [
         SelectGroupCustomizeGroupFieldDemoModule,
         SelectGroupValidDemoModule,
         SelectGroupSearchableDemoModule,
-        SelectGroupInfiniteScrollDemoModule
+        SelectGroupInfiniteScrollDemoModule,
+        SelectGroupShowBorderDemoModule
     ]
 })
 export class SelectGroupDemoSetModule {

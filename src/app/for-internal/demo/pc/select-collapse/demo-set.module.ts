@@ -4,6 +4,8 @@ import { SelectCollapseInfiniteScrollDemoComponent } from "./infinite-scroll/dem
 import { SelectCollapseInfiniteScrollDemoModule } from "./infinite-scroll/demo.module";
 import {SelectCollapseDemoComponent} from "./select-collapse/demo.component";
 import {SelectCollapseDemoModule} from "./select-collapse/demo.module";
+import { SelectCollapseShowBorderDemoComponent } from "./show-border/demo.component";
+import { SelectCollapseShowBorderDemoModule } from "./show-border/demo.module";
 import { SelectCollapseValidDemoComponent } from './valid/demo.component';
 import { SelectCollapseValidDemoModule } from './valid/demo.module';
 
@@ -15,6 +17,9 @@ export const routerConfig = [
         path: 'valid', component: SelectCollapseValidDemoComponent
     },
     {
+        path: 'show-border', component: SelectCollapseShowBorderDemoComponent
+    },
+    {
         path: 'infinite-scroll', component: SelectCollapseInfiniteScrollDemoComponent
     }
 ];
@@ -22,7 +27,7 @@ export const routerConfig = [
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), SelectCollapseDemoModule, SelectCollapseValidDemoModule,
-        SelectCollapseInfiniteScrollDemoModule
+        SelectCollapseInfiniteScrollDemoModule, SelectCollapseShowBorderDemoModule
     ]
 })
 export class SelectCollapseDemoSetModule {

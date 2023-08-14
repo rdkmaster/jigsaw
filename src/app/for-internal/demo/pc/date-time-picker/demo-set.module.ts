@@ -26,6 +26,8 @@ import {DateTimePickerConfirmButtonDemoComponent} from "./confirm-button/demo.co
 import {DateTimePickerConfirmButtonDemoModule} from "./confirm-button/demo.module";
 import { DateTimePickerOptionsDemoModule } from "./options/demo.module";
 import { DatePickerTimeOptionsDemoComponent } from "./options/demo.component";
+import { DateTimeSelectShowBorderDemoComponent } from "./show-border/demo.component";
+import { DateTimeSelectShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
@@ -59,6 +61,9 @@ export const routerConfig = [
         path: 'date-time-select', component: DateTimeSelectDemoComponent
     },
     {
+        path: 'show-border', component: DateTimeSelectShowBorderDemoComponent
+    },
+    {
         path: 'week-start', component: DateTimePickerWeekStartComponent
     },
     {
@@ -84,7 +89,8 @@ export const routerConfig = [
         DateTimeSelectDemoModule,
         DateTimePickerWeekStartDemoModule,
         DateTimePickerConfirmButtonDemoModule,
-        DateTimePickerOptionsDemoModule
+        DateTimePickerOptionsDemoModule,
+        DateTimeSelectShowBorderDemoModule
     ]
 })
 export class DateTimePickerDemoModule {

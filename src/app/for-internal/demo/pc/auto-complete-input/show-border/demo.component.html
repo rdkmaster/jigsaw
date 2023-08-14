@@ -7,46 +7,46 @@
 <h3>隐藏边框</h3>
 <jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏"></jigsaw-switch>
 <p class="notes">输入值是：<span>{{inputValue}}</span></p>
-<jigsaw-auto-complete-input  [showBorder]="!showBorder" [(value)]="inputValue" placeholder="auto complete input demo"
+<jigsaw-auto-complete-input  [showBorder]="showBorder" [(value)]="inputValue" placeholder="auto complete input demo"
                             [width]="250" [data]="_$dropdownData" [filterOnFocus]="filterOnFocus">
 </jigsaw-auto-complete-input>
 
     <label>前后额外信息组合：</label><br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" prefix="https://" width="350">
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" prefix="https://" width="350">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" suffix="/jigsaw/index.html" width="350">
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" suffix="/jigsaw/index.html" width="350">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" suffix="/jigsaw/index.html"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" suffix="/jigsaw/index.html"
                                 prefix="https://" width="350">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" suffix="/jigsaw/index.html"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" suffix="/jigsaw/index.html"
                                 prefix="https://" [disabled]="true" width="350">
     </jigsaw-auto-complete-input>
 
     <br><br>
     <label>额外信息可选：</label><br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" [suffix]="pages" suffixWidth="140"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" [suffix]="pages" suffixWidth="140"
                                 (suffixChange)="onChange($event)" width="400">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" [suffix]="pages" suffixWidth="140"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" [suffix]="pages" suffixWidth="140"
                                 [disabled]="true" width="400">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" [prefix]="protocols" prefixWidth="80"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" [prefix]="protocols" prefixWidth="80"
                                 (prefixChange)="onChange($event)" width="400">
     </jigsaw-auto-complete-input>
     <br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" [prefix]="protocols" prefixWidth="80"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" [prefix]="protocols" prefixWidth="80"
                                 [disabled]="true" width="400">
     </jigsaw-auto-complete-input>
 
     <br><br>
     <label>更多内容：</label><br>
-    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="!showBorder" [data]="hosts" width="400" [prefix]="_$prefixIcons" prefixWidth="100"
+    <jigsaw-auto-complete-input [filterOnFocus]="false" [showBorder]="showBorder" [data]="hosts" width="400" [prefix]="_$prefixIcons" prefixWidth="100"
                                 (prefixChange)="onChange($event)" [prefixLabelField]="'name'" [suffix]="_$icons"
                                 suffixWidth="120" (suffixChange)="onChange($event)" [suffixLabelField]="'name'">
     </jigsaw-auto-complete-input>
