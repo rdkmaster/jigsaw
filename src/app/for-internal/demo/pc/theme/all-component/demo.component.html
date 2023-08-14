@@ -18,6 +18,19 @@
 
 <div class="component-cntr">
     <j-textarea placeholder="请输入文本"></j-textarea>
+
+    <ul>
+        <li>
+            <span style="color: var(--font-color-default)">font-color-default</span>
+            <span style="color: var(--font-color-brand)">font-color-brand</span>
+        </li>
+        <li>
+            <span style="color: var(--error-default)">error-default</span>
+            <span style="color: var(--error-hover)">error-hover</span>
+            <span style="color: var(--error-active)">error-active</span>
+            <span style="color: var(--error-disabled)">error-disabled</span>
+        </li>
+    </ul>
 </div>
 
 <div class="component-cntr">
@@ -49,6 +62,10 @@
 </div>
 
 <div class="component-cntr">
+    <j-button-bar [data]="cityList"></j-button-bar>
+</div>
+
+<div class="component-cntr">
     <j-checkbox [enableIndeterminate]="true" [disabled]="disabled">Check Me</j-checkbox>
     <j-switch [disabled]="disabled"></j-switch>
     <j-radios-lite [data]="cityList" [disabled]="disabled"></j-radios-lite>
@@ -72,6 +89,10 @@
 
 <div class="component-cntr">
     <j-navigation-menu [data]="navData"></j-navigation-menu>
+
+    <j-list-lite width="200" [data]="goodsList" labelField="name" [multipleSelect]="true">
+    </j-list-lite>
+
     <j-collapse width="300">
         <j-collapse-pane header="测试col">
             <j-input placeholder="请输入姓名~"></j-input>
@@ -95,9 +116,6 @@
             </j-collapse>
         </j-collapse-pane>
     </j-collapse>
-
-    <j-list-lite width="200" [data]="goodsList" labelField="name" [multipleSelect]="true">
-    </j-list-lite>
 </div>
 
 <div class="component-cntr">
@@ -107,6 +125,10 @@
 
 <div class="component-cntr">
     <j-steps [data]="stepData"></j-steps>
+</div>
+
+<div class="component-cntr">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
 </div>
 
 <div class="component-cntr">

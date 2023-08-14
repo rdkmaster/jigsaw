@@ -31,20 +31,14 @@ export class ThemeAllComponentDemoComponent {
 
     public groupList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
-        {
-            groupName: "分组标题2",
-            data: [
-                { label: "禁用选项4", disabled: true },
-                { label: "禁用选项5", disabled: true },
-                { label: "文本选项6" }
-            ]
-        },
+        { groupName: "分组标题2", data: [{ label: "禁用选项4", disabled: true }, { label: "禁用选项5", disabled: true }, { label: "文本选项6" }] },
         { groupName: "分组标题3", data: [{ label: "文本选项7" }, { label: "文本选项8" }, { label: "文本选项9" }] }
     ]);
 
     public navData: SimpleTreeData = new SimpleTreeData();
     public treeData: SimpleTreeData = new SimpleTreeData();
     public treeData2: SimpleTreeData = new SimpleTreeData();
+    public tableData: TableData;
 
     public stepData = [
         { title: "目的端配置(1/3)", status: "normal" },
@@ -116,21 +110,11 @@ export class ThemeAllComponentDemoComponent {
                 nodes: [
                     {
                         label: "父节点11 - 折叠",
-                        nodes: [
-                            { label: "叶子节点111", chkDisabled: true },
-                            { label: "叶子节点112" },
-                            { label: "叶子节点113" },
-                            { label: "叶子节点114" }
-                        ]
+                        nodes: [{ label: "叶子节点111", chkDisabled: true }, { label: "叶子节点112" }, { label: "叶子节点113" }, { label: "叶子节点114" }]
                     },
                     {
                         label: "父节点12 - 折叠",
-                        nodes: [
-                            { label: "叶子节点121" },
-                            { label: "叶子节点122" },
-                            { label: "叶子节点123" },
-                            { label: "叶子节点124" }
-                        ]
+                        nodes: [{ label: "叶子节点121" }, { label: "叶子节点122" }, { label: "叶子节点123" }, { label: "叶子节点124" }]
                     },
                     { label: "父节点13 - 没有子节点", isParent: true }
                 ]
@@ -140,40 +124,38 @@ export class ThemeAllComponentDemoComponent {
                 nodes: [
                     {
                         label: "父节点21 - 展开", open: true,
-                        nodes: [
-                            { label: "叶子节点211" },
-                            { label: "叶子节点212" },
-                            { label: "叶子节点213" },
-                            { label: "叶子节点214" }
-                        ]
+                        nodes: [{ label: "叶子节点211" }, { label: "叶子节点212" }, { label: "叶子节点213" }, { label: "叶子节点214" }]
                     },
                     {
                         label: "父节点22 - 折叠",
-                        nodes: [
-                            { label: "叶子节点221" },
-                            { label: "叶子节点222" },
-                            { label: "叶子节点223" },
-                            { label: "叶子节点224" }
-                        ]
+                        nodes: [{ label: "叶子节点221" }, { label: "叶子节点222" }, { label: "叶子节点223" }, { label: "叶子节点224" }]
                     },
                     {
                         label: "父节点23 - 折叠",
-                        nodes: [
-                            { label: "叶子节点231" },
-                            { label: "叶子节点232" },
-                            { label: "叶子节点233" },
-                            { label: "叶子节点234" }
-                        ]
+                        nodes: [{ label: "叶子节点231" }, { label: "叶子节点232" }, { label: "叶子节点233" }, { label: "叶子节点234" }]
                     }
                 ]
             },
             { label: "父节点3 - 没有子节点", isParent: true }
-
-        ])
+        ]);
 
         this.treeData2.fromObject([{
             label: "this"
-        }])
+        }]);
+
+        this.tableData = new TableData(
+            [
+                ["Tiger Nixon1", "System Architect", "$320,00", "2011/04/25", "Edinburgh", "542"],
+                ["Garrett Winters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon2", "System Architect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
+                ["Garrett Winslters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon2", "System Architect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
+                ["Garrett Winters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"],
+                ["Tiger Nixon2", "System Architect", "$320,8000", "2011/04/25", "Edinburgh", "5421"],
+                ["Garrett Winters1", "Accountant", "$170,7", "2011/07/25", "Tokyo", "8422"]
+            ],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

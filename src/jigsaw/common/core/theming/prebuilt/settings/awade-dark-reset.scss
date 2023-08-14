@@ -40,7 +40,7 @@
 .jigsaw-search-input-host {
     .jigsaw-search-input .jigsaw-search-input-button {
         background: $bg-component-darken;
-        border-color: $bg-component;
+        border-color: $bg-component-darken;
         color: $font-color-default;
     }
 }
@@ -51,6 +51,12 @@
 
     &:hover {
         color: $font-color-default;
+        background: $bg-disabled;
+        border-color: $bg-disabled;
+    }
+
+    &.jigsaw-button-color-primary:hover {
+        border-color: $primary-hover;
     }
 
     &.jigsaw-button-color-none {
@@ -183,5 +189,14 @@
 .jigsaw-drawer-host {
     .jigsaw-drawer {
         background: $bg-container;
+    }
+}
+
+.jigsaw-button-bar-host {
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option:not(.jigsaw-tile-option-disabled):hover,
+    &.jigsaw-button-bar-primary .jigsaw-tile-option:not(.jigsaw-tile-option-disabled):hover {
+        background: $bg-hover;
+        color: $font-color-default;
     }
 }
