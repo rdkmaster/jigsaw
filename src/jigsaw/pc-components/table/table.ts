@@ -468,6 +468,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _updateFrozenColumns() {
+        this._clearFreezeStyle();
         this._setHeaderScrollLeft();
         // BigTableData的实现原理不适用于此冻结列功能
         if (this.data instanceof BigTableData) {
@@ -522,6 +523,24 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public _$isCellFrozen(index): boolean {
         return index < this.frozenLeftColumns || index > this._$headerSettings.length - 1 - this.frozenRightColumns;
+    }
+
+    private _clearFreezeStyle() {
+        if (!this.hideHeader) {
+            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
+            headers.forEach(cell => {
+                cell.style.removeProperty('left');
+                cell.style.removeProperty('right');
+            });
+        }
+
+        this._rowElementRefs.forEach(row => {
+            const tds = row.nativeElement.querySelectorAll('td');
+            tds.forEach(cell => {
+                cell.style.removeProperty('left');
+                cell.style.removeProperty('right');
+            });
+        })
     }
 
     /**
