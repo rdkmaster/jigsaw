@@ -37,6 +37,7 @@ export class TableFreezeColumnDemoComponent {
     public freezeLeftColumns = 2;
     public freezeRightColumns = 0;
     public contentWidthNum = 2000;
+    public columnResizable = false;
 
     public valueChange() {
         setTimeout(() => {

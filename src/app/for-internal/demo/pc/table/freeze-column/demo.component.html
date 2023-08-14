@@ -21,10 +21,14 @@
             step="100" (valueChange)="valueChange()">
         </j-numeric-input>
     </li>
+    <li class="demo-options-item">
+        <span>可变列宽：</span>
+        <jigsaw-switch [(checked)]="columnResizable"></jigsaw-switch>
+    </li>
 </ul>
 
 <jigsaw-table #tableCmp maxHeight="400" [data]="tableData" [columnDefines]="columnDefines"
               [additionalColumnDefines]="additionalColumns" [contentWidth]="contentWidth"
-              [frozenLeftColumns]="freezeLeftColumns"
-              [frozenRightColumns]="freezeRightColumns">
+              [frozenLeftColumns]="freezeLeftColumns" [frozenRightColumns]="freezeRightColumns"
+              [columnResizable]="columnResizable">
 </jigsaw-table>

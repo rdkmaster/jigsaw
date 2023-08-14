@@ -201,20 +201,20 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @ViewChild('columnResizeLine')
     private _columnResizeLine: ElementRef;
 
-    @ViewChild('tableHeader')
-    private _tableHeader: ElementRef;
-
     @ViewChildren('tableHeaderCell', {read: ElementRef})
     private _tableHeaderCell: QueryList<ElementRef>;
+    
+    @ViewChild('tableRange')
+    private _tableRange: ElementRef;
 
     /**
      * @internal
      */
     public _$resizeColumn(e: MouseEvent, index: number) {
         this._$resizing = true;
-        const tablePos = this._tableHeader.nativeElement.getBoundingClientRect();
+        const tablePos = this._tableRange.nativeElement.getBoundingClientRect();
         const tableLeft = tablePos.x;
-        const scaleRatio = tablePos.width / this._tableHeader.nativeElement.offsetWidth;
+        const scaleRatio = tablePos.width / this._tableRange.nativeElement.offsetWidth;
         const preCell = this._tableHeaderCell.toArray()[index];
         const nextCell = this._tableHeaderCell.toArray()[index + 1];
         const preCellLeft = preCell.nativeElement.getBoundingClientRect().x;
@@ -468,6 +468,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     private _updateFrozenColumns() {
+        this._setHeaderScrollLeft();
         // BigTableData的实现原理不适用于此冻结列功能
         if (this.data instanceof BigTableData) {
             this.frozenLeftColumns = 0;
