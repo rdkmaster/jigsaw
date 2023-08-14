@@ -38,6 +38,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-range-date-time-select-host]': 'true',
+        '[class.jigsaw-combo-select-show-border]': '!showBorder',
         '[class.jigsaw-range-date-time-select-clearable]': 'clearable && _$dateComboValue'
     },
     providers: [
@@ -59,6 +60,13 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             this._changeRangeDateByGr();
         })
     }
+    
+     /**
+     * 设置时间选择框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。
+     */
+      @RequireMarkForCheck()
+      @Input()
+      public showBorder: boolean = true;
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;

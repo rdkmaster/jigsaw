@@ -1,0 +1,21 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">Range Date Time Select</jigsaw-header>
+    <div class="demo-1 live-demo">
+        <jigsaw-header [level]="2">gr</jigsaw-header>
+        <p class="message">如下粒度（Gr）值支持日期和时间同时选择：</p>
+        <jigsaw-button-bar [data]="['date','week','month', 'hour', 'minute', 'second']"
+                           [(selectedItems)]="gr"></jigsaw-button-bar>
+        <br><br>
+        <jigsaw-range-date-time-select [showBorder]="showBorder" [(date)]="date" [gr]="gr[0]" width="205" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>
+        <br>
+        <p class="message">{{date | json}}</p>
+    </div>
+    <jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏"></jigsaw-switch>
+</div>
+

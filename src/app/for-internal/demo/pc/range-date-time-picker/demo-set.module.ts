@@ -16,6 +16,8 @@ import {RangeDateTimeWeekStartComponent} from "./week-start/demo.component";
 import {RangeDateTimeWeekStartModule} from "./week-start/demo.module";
 import { RangeDateTimePickerOptionsDemoModule } from "./options/demo.module";
 import { RangeDatePickerTimeOptionsDemoComponent } from "./options/demo.component";
+import { RangeDateTimeSelectShowBorderComponent } from "./show-border/demo.component";
+import { RangeDateTimeSelectShowBorderModule } from "./show-border/demo.module";
 
 export const routerConfig: any = [
     {
@@ -37,6 +39,9 @@ export const routerConfig: any = [
         path: 'range-date-time-select', component: RangeDateTimeSelectComponent
     },
     {
+        path: 'show-border', component: RangeDateTimeSelectShowBorderComponent
+    },
+    {
         path: 'week-start', component: RangeDateTimeWeekStartComponent
     },
     {
@@ -54,7 +59,8 @@ export const routerConfig: any = [
         RangeDateTimeStepDemoModule,
         RangeDateTimeSelectModule,
         RangeDateTimeWeekStartModule,
-        RangeDateTimePickerOptionsDemoModule
+        RangeDateTimePickerOptionsDemoModule,
+        RangeDateTimeSelectShowBorderModule
     ]
 })
 export class RangeDateTimeDemoModule {
