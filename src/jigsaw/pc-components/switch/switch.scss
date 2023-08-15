@@ -1,11 +1,5 @@
 $jigsaw-switch: #{$jigsaw-prefix}-switch;
 
-.#{$jigsaw-switch}-show-border {
-    .#{$jigsaw-switch}{
-        border-color: $bg-transparent !important;
-    }
-}
-
 .#{$jigsaw-switch}-host {
     display: inline-flex;
 
