@@ -11,6 +11,7 @@
         <span style="margin-left:24px">冻结右侧侧列数：</span>
         <j-numeric-input [(value)]="freezeRightColumns" (valueChange)="valueChange()">
         </j-numeric-input>
+        <a style="margin-left:24px" (click)="freezeLeftColumns = null; freezeRightColumns = null;">测试无效值</a>
     </li>
     <li class="demo-options-item">
         <span>contentWidth：</span>
