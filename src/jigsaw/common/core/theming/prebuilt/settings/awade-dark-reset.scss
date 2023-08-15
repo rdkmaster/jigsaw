@@ -199,4 +199,8 @@
         background: $bg-hover;
         color: $font-color-default;
     }
+
+    &.jigsaw-button-bar-primary .jigsaw-tile-option.jigsaw-tile-option-active:hover {
+        background: $brand-default;
+    }
 }
