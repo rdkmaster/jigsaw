@@ -9,6 +9,8 @@ import {
     NgModule,
     Output,
     ViewChild,
+    Injector,
+    NgZone
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -51,9 +53,13 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef) {
+
+    public constructor(protected _cdr: ChangeDetectorRef,
+        protected _injector: Injector,
+       ) {
         super();
     }
+
     /**
      * @NoMarkForCheckRequired
      */
