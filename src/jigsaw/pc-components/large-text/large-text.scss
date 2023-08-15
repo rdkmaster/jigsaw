@@ -1,0 +1,56 @@
+$jigsaw-large-text: #{$jigsaw-prefix}-large-text;
+
+.#{$jigsaw-large-text}-host {
+    display: inline-flex;
+    color: $font-color-default;
+    line-height: 1;
+    overflow: hidden;
+
+    .prefix-leadingUnit, .suffix-unit, .trend-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .large-text {
+        display: flex;
+        align-items: center;
+
+        .data-updatable {
+            display: flex;
+            height: inherit;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            .data-wrapper {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                .dot {
+                    display: inline-block;
+                    height: 100%;
+                    line-height: 100%;
+                    vertical-align: top;
+                    user-select: none;
+                }
+
+                .number-item {
+                    position: relative;
+                    display: inline-block;
+                    height: 100%;
+                    overflow: hidden;
+
+                    .number-slider {
+                        position: absolute;
+                        writing-mode: vertical-rl;
+                        text-orientation: upright;
+                        user-select: none;
+                        left: 50%;
+                        transform: translate(-50%, 0);
+                        transition: transform 2s ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}

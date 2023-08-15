@@ -64,26 +64,26 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
     @Output()
     public cellDataChange = new EventEmitter<any>();
 
-    public get _$placeholder(): string {
-        return this.initData && this.initData.placeholder ? this.initData.placeholder : '';
-    }
-
-    protected _calcInitProperty(property: string, defaultValue: boolean): boolean {
+    protected _calcInitProperty<T>(property: string, defaultValue: T): T {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
             return defaultValue;
         }
         if (typeof this.initData[property] == 'function') {
-            return !!this.initData[property](this.tableData, this.row, this.column);
+            return this.initData[property](this.tableData, this.row, this.column);
         }
-        return !!this.initData[property];
+        return this.initData[property];
+    }
+
+    public get _$placeholder(): string {
+        return this._calcInitProperty('placeholder', '');
     }
 
     public get _$disabled(): boolean {
-        return this._calcInitProperty('disabled', false);
+        return !!this._calcInitProperty('disabled', false);
     }
 
     public get _$valid(): boolean {
-        return this._calcInitProperty('valid', true);
+        return !!this._calcInitProperty('valid', true);
     }
 
     /**
@@ -244,30 +244,30 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     private _inputEl: ElementRef;
 
     public get _$icon(): string {
-        return this.initData && this.initData.icon ? this.initData.icon : undefined;
+        return this._calcInitProperty('icon', undefined);
     }
 
     public get _$preIcon(): string {
-        return this.initData && this.initData.preIcon ? this.initData.preIcon : undefined;
+        return this._calcInitProperty('preIcon', undefined);
     }
 
     public get _$password(): boolean {
-        return this.initData && this.initData.hasOwnProperty('password') ? !!this.initData.password : false;
+        return !!this._calcInitProperty('password', false);
     }
 
     public get _$clearable(): boolean {
-        return this.initData && this.initData.hasOwnProperty('clearable') ? !!this.initData.clearable : true;
+        return !!this._calcInitProperty('clearable', true);
     }
 
-    protected _calcInitProperty(property: string, defaultValue: boolean): boolean {
+    protected _calcInitProperty<T>(property: string, defaultValue: T): T {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
             return defaultValue;
         }
         if (typeof this.initData[property] == 'function') {
             const inputVal = CommonUtils.isUndefined(this._input) ? '' : this._input.value;
-            return !!this.initData[property](this.tableData, this.row, this.column, inputVal);
+            return this.initData[property](this.tableData, this.row, this.column, inputVal);
         }
-        return !!this.initData[property];
+        return this.initData[property];
     }
 
     private _removeListener: Function;
@@ -347,7 +347,7 @@ export class TableCellAutoCompleteEditorRenderer extends TableCellRendererBase i
     }
 
     public get _$disabled(): boolean {
-        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : true;
+        return this._initDataJson?.hasOwnProperty('disabled') ? this._initDataJson.disabled : false;
     }
 
     public get _$valid(): boolean {
@@ -379,16 +379,16 @@ export class TableCellNumericEditorRenderer extends TableCellRendererBase implem
     @ViewChild(JigsawNumericInput)
     protected input: JigsawNumericInput;
 
-    public get _$min() {
-        return this.initData && this.initData.hasOwnProperty('min') ? this.initData.min : -Infinity;
+    public get _$min(): number {
+        return this._calcInitProperty('min', -Infinity);
     }
 
-    public get _$max() {
-        return this.initData && this.initData.hasOwnProperty('max') ? this.initData.max : Infinity;
+    public get _$max(): number {
+        return this._calcInitProperty('max', Infinity);
     }
 
-    public get _$step() {
-        return this.initData && this.initData.hasOwnProperty('step') ? this.initData.step : 1;
+    public get _$step(): number {
+        return this._calcInitProperty('step', 1);
     }
 
     ngAfterViewInit() {
@@ -709,15 +709,15 @@ export class TableCellProgressRenderer extends TableCellRendererBase implements 
     public initData: {animate?: boolean, status?: Status, labelPosition?: LabelPosition, statusConfig: ProgressStatusConfig};
 
     public get _$animate(): boolean {
-        return this.initData?.animate || false;
+        return !!this._calcInitProperty('animate', false);
     }
 
     public get _$status() {
-        return this.initData?.status || 'processing';
+        return this._calcInitProperty('status', 'processing');
     }
 
     public get _$labelPosition() {
-        return this.initData?.labelPosition || 'none';
+        return this._calcInitProperty('labelPosition', 'none');
     }
 
     ngAfterViewInit() {
@@ -820,7 +820,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     public get _$valid(): boolean {
-        const valid = this._calcInitProperty('valid', true);
+        const valid = !!this._calcInitProperty('valid', true);
         // 渲染器里的select的边框默认是透明的，这导致valid==false时红色框框无法显示
         // 修改border样式必须要及时，因此只得在这里修改border样式，_setBorderColor已充分考虑了性能问题
         this._setBorderColor(valid ? 'transparent' : '');
@@ -828,7 +828,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     }
 
     public get _$searchable(): boolean {
-        return this.initData?.hasOwnProperty('searchable') ? (this.initData as SelectRendererInitData).searchable : false;
+        return !!this._calcInitProperty('searchable', false);
     }
 
     private _formatData(data: any): { label: string }[] {
@@ -1011,15 +1011,15 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     }
 
     public get _$icon(): string {
-        return this.initData?.icon ? this.initData.icon : "iconfont iconfont-e515";
+        return this._calcInitProperty('icon', 'iconfont iconfont-e515');
     }
 
     public get _$label(): string {
-        return this.initData?.label ? this.initData.label : '';
+        return this._calcInitProperty('label', '');
     }
 
     public get _$title(): string {
-        return this.initData?.title ? this.initData.title : '';
+        return this._calcInitProperty('title', '');
     }
 
     /**

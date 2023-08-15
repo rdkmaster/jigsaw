@@ -29,10 +29,10 @@ export class JigsawTabsModule {
     constructor() {
         TranslateHelper.initI18n("tabs", {
             zh: {
-                add: "添加新页"
+                add: "添加"
             },
             en: {
-                add: "New Tab"
+                add: "New"
             }
         });
     }
