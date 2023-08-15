@@ -203,7 +203,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @ViewChildren('tableHeaderCell', {read: ElementRef})
     private _tableHeaderCell: QueryList<ElementRef>;
-    
+
     @ViewChild('tableRange')
     private _tableRange: ElementRef;
 
@@ -521,6 +521,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    /**
+     * @internal
+     */
     public _$isCellFrozen(index): boolean {
         return index < this.frozenLeftColumns || index > this._$headerSettings.length - 1 - this.frozenRightColumns;
     }
