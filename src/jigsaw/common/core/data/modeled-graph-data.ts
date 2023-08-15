@@ -185,10 +185,12 @@ export class SeriesBase {
     }
 }
 
+export type RectangularSubType = 'bar' | 'line' | 'area';
 // ------------------------------------------------------------------------------------------------
 // 直角系图相关数据对象
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'rectangular';
+    public subType: RectangularSubType = 'bar';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: { field?: string, style?: EchartXAxis } = {};
@@ -275,7 +277,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         const groupedByDim = group(flat(pruned), dimIndex);
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
-            .map(seriesData => {
+            .map((seriesData: EchartSeriesItem) => {
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
@@ -283,11 +285,23 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
                     this._autoRange(seriesData, options);
+                } else {
+                    // 数据自带的维度值
+                    this._setSeriesType(seriesData);
                 }
                 return seriesData;
             });
 
         return options;
+    }
+
+    private _setSeriesType(seriesData: EchartSeriesItem) {
+        if (this.subType == 'area') {
+            seriesData.type = 'line';
+            seriesData.areaStyle = {};
+            return;
+        }
+        seriesData.type = this.subType;
     }
 
     private _correctDoubleYAxis(dimOrKpi: Dimension | Indicator, options: EchartOptions) {
