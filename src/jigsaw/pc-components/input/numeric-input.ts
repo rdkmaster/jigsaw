@@ -16,7 +16,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
-import { RequireMarkForCheck } from "jigsaw/common/decorator/mark-for-check";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 数字输入框
