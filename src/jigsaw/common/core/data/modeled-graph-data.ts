@@ -185,12 +185,12 @@ export class SeriesBase {
     }
 }
 
-export type RectangularSubType = 'bar' | 'line' | 'area';
+export type RectangularSeriesType = 'bar' | 'line' | 'area';
 // ------------------------------------------------------------------------------------------------
 // 直角系图相关数据对象
 export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'rectangular';
-    public subType: RectangularSubType = 'bar';
+    public defaultSeriesType: RectangularSeriesType = 'bar';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: { field?: string, style?: EchartXAxis } = {};
@@ -296,12 +296,12 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     }
 
     private _setSeriesType(seriesData: EchartSeriesItem) {
-        if (this.subType == 'area') {
+        if (this.defaultSeriesType == 'area') {
             seriesData.type = 'line';
             seriesData.areaStyle = {};
             return;
         }
-        seriesData.type = this.subType;
+        seriesData.type = this.defaultSeriesType;
     }
 
     private _correctDoubleYAxis(dimOrKpi: Dimension | Indicator, options: EchartOptions) {
