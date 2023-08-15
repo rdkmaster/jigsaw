@@ -240,7 +240,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
             border: 1px solid $border-color-default;
         }
 
-        .ps__rail-x {
+        .ps__rail-x,
+        .ps__rail-y {
             z-index: 2;
         }
     }
