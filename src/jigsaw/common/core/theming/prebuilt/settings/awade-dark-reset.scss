@@ -92,6 +92,12 @@
     }
 }
 
+.jigsaw-list-host {
+    &.jigsaw-tabs-list .jigsaw-list-option-host.jigsaw-list-option-selected .jigsaw-tabs-bar-list-option {
+        color: $font-color-default;
+    }
+}
+
 .jigsaw-tag-host {
     &.jigsaw-tag-preset-gray {
         color: $font-color-default;
@@ -202,5 +208,13 @@
 
     &.jigsaw-button-bar-primary .jigsaw-tile-option.jigsaw-tile-option-active:hover {
         background: $brand-default;
+    }
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option.jigsaw-tile-option-active {
+        color: $font-color-default;
+    }
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option.jigsaw-tile-option-active:hover {
+        background: $brand-lighten;
     }
 }
