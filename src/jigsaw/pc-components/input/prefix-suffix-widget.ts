@@ -8,6 +8,7 @@ import {
     NgZone,
     Output,
     Renderer2,
+    Injector,
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
@@ -65,7 +66,7 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
 
-    constructor(private _renderer: Renderer2,
+    constructor(private _renderer: Renderer2, protected _injector: Injector,
                 /**
                  * @internal
                  */
