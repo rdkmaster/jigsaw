@@ -333,7 +333,7 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
         '[class.jigsaw-input-error]': '!valid',
         '[class.jigsaw-input-focused]': 'focused',
         '[class.jigsaw-input-disabled]': 'disabled',
-        '[class.jigsaw-input-show-border]': '!showBorder',
+        '[class.jigsaw-input-hide-border]': '!showBorder',
         '[class.jigsaw-input-readonly]': 'readonly',
         '(click)': '_$stopPropagation($event)'
     },

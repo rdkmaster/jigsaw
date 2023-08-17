@@ -3,5 +3,5 @@
         preIcon="iconfont iconfont-e366" [clearable]="clearable" [floatPosition]="floatPosition" (valueChange)="_$valueChange($event)"
         (keydown.enter)="_$enterSearch()" (blur)="_$onBlur()" [maxDropDownHeight]="maxDropDownHeight" [maxDropDownWidth]="maxDropDownWidth">
     </jigsaw-auto-complete-input>
-    <span class="iconfont iconfont-e366 jigsaw-search-input-button" [ngClass]="{'jigsaw-show-border':!showBorder}"(click)="_$searchBtnClicked()"></span>
+    <span class="iconfont iconfont-e366 jigsaw-search-input-button" [ngClass]="{'jigsaw-hide-border':!showBorder}"(click)="_$searchBtnClicked()"></span>
 </div>

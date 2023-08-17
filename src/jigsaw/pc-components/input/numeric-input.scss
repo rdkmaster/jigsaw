@@ -52,16 +52,13 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         }
     }
 
-    &.#{$jigsaw-numeric-input}-show-border {
+    &.#{$jigsaw-numeric-input}-hide-border {
         .#{$jigsaw-numeric-input}-wrapper {
             border-color: $bg-transparent;
         }
         
         .#{$jigsaw-numeric-input}-wrapper:hover,
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
-            @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-            border-width: 1px;
-            border-style: solid;
             border-color: $brand-default;
         }
         

@@ -9,22 +9,6 @@ $jigsaw-collapse: #{$jigsaw-prefix}-collapse;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
 
-&.#{$jigsaw-select}-show-border {
-    .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
-        border-color: $bg-transparent !important;
-    }
-    .#{$jigsaw-combo-select}-arrow {
-        color: $bg-transparent !important;
-    }
-    .#{$jigsaw-combo-select}-arrow:hover {
-        color: $brand-default !important;   
-    }
-    .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection:hover {
-        border-color: $brand-default !important;
-    } 
-} 
-  
-
 .#{$jigsaw-select}-host,
 .#{$jigsaw-group-select}-host,
 .#{$jigsaw-collapse-select}-host {
@@ -45,6 +29,26 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
         }
     }
+
+    &.#{$jigsaw-select}-hide-border {
+        .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
+            border-color: $bg-transparent;
+        }
+
+        .#{$jigsaw-combo-select}-arrow {
+            color: $bg-transparent;
+        }
+        
+        &:hover{
+            .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
+                border-color: $brand-default;
+            }
+    
+            .#{$jigsaw-combo-select}-arrow {
+                color: $brand-default;
+            }
+        } 
+    } 
 
     &.#{$jigsaw-select}-multiple-select {
         .#{$jigsaw-combo-select}-host {
@@ -138,7 +142,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     &.#{$jigsaw-select}-large {
         .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
             min-height: $height-base;
-            
+
             .#{$jigsaw-combo-select}-selection-rendered {
                 min-height: $height-base - 2;
             }

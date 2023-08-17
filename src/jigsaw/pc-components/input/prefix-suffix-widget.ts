@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawListModule} from "../list-and-tile/list";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 
@@ -29,7 +30,7 @@ type Styles = {
 @Component({
     selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-show-border': showBorder}">
+        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-hide-border': showBorder}">
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
             <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
@@ -117,8 +118,9 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     public disabled: boolean;
 
     /**
-     * @NoMarkForCheckRequired
+     * 
      */
+     @RequireMarkForCheck()
      @Input()
      public showBorder: boolean;
 

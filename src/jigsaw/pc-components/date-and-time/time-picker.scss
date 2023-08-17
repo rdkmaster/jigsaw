@@ -1,16 +1,5 @@
 $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
 
-.#{$jigsaw-time-picker}-show-border {
-        border-color: $bg-transparent !important;
-        &:hover {
-            border-color: $brand-default !important;
-        }
-        &.#{$jigsaw-time-picker}-active {
-            @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
-            border-color: $primary-default !important;
-        }
-}
-
 .#{$jigsaw-time-picker}-host {
     @include inline-block();
     position: relative;
@@ -30,6 +19,18 @@ $jigsaw-time-picker: #{$jigsaw-prefix}-time-picker;
     &.#{$jigsaw-time-picker}-active {
         @include prefixer(transition, (border 0.3s $ease-in-out, box-shadow 0.3s $ease-in-out));
         border-color: $primary-default;
+    }
+
+    &.#{$jigsaw-time-picker}-hide-border {
+        border-color: $bg-transparent !important;
+
+        &:hover {
+            border-color: $brand-default !important;
+        }
+        
+        &.#{$jigsaw-time-picker}-active {
+            border-color: $primary-default !important;
+        }
     }
 
     .#{$jigsaw-time-picker}-wrapper {

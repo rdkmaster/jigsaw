@@ -13,7 +13,6 @@ import {
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, WingsTheme} from '../../common/common';
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * @description 开关组件
@@ -28,7 +27,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     host: {
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-switch-host]': 'true',
-        '[class.jigsaw-switch-error]': '!valid',
+        '[class.jigsaw-switch-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSwitch), multi: true},

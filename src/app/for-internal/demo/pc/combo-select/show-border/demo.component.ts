@@ -6,7 +6,7 @@ import { ArrayCollection } from "jigsaw/public_api";
     styleUrls: ['./demo.component.css'],
 })
 export class ComboSelectShowBorderDemoComponent {
-    showBorderLine:boolean;
+    showBorder:boolean;
 
     cities = [
         { label: "北京", closable: false },

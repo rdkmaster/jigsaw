@@ -6,7 +6,7 @@
 <jigsaw-header [level]="1">Combo-Select</jigsaw-header>
 <jigsaw-header [level]="2">show-border</jigsaw-header>
 
-<jigsaw-combo-select [(value)]="selectedCity" [showBorderLine]="showBorderLine">
+<jigsaw-combo-select [(value)]="selectedCity" [showBorder]="showBorder">
     <ng-template>
         <jigsaw-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
             <jigsaw-tile-option *ngFor="let city of cities" [value]="city" width="22.8%">
@@ -17,5 +17,5 @@
 </jigsaw-combo-select>
 
 <div class="demo-setting-wrap">
-    <jigsaw-switch [(checked)]="showBorderLine"  onLabel="显示" offLabel="隐藏"></jigsaw-switch>
+    <jigsaw-switch [(checked)]="showBorder"  onLabel="显示" offLabel="隐藏"></jigsaw-switch>
 </div>
