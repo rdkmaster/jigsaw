@@ -40,5 +40,4 @@ import { WingsTheme } from "../../common/common";
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawSelect), multi: true }],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-// _comboSelect
 export class JigsawSelect extends JigsawSelectBase { }
