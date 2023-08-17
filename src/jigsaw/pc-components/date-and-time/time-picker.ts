@@ -472,18 +472,18 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$handleKeyDown($event) {
-        if ($event.key === 'Enter') {
+        if ($event.key == 'Enter') {
             this._$cancelSelect(this._$selectMode as TimeSelectMode, true);
             this._$floatOpen = false;
-        } else if ($event.keyCode == 39) {
+        } else if ($event.key == 'ArrowRight') {
             this._$handleCtrlBarClick($event, 1);
-        } else if ($event.keyCode == 37) {
+        } else if ($event.key == 'ArrowLeft') {
             this._$handleCtrlBarClick($event, -1);
-        } else if ($event.keyCode == 40) {
+        } else if ($event.key == 'ArrowDown') {
             this._$handleCtrlBarClick($event, this.step == 1 ? 9 : 1);
-        } else if ($event.keyCode == 38) {
+        } else if ($event.key == 'ArrowUp') {
             this._$handleCtrlBarClick($event, this.step == 1 ? -9 : -1);
-        } else if ($event.keyCode == 9) {
+        } else if ($event.key == 'Tab') {
             if ($event.shiftKey) {
                 if (this._$selectMode == 'second') {
                     this._$handleSelectMode('minute', true);
