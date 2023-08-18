@@ -61,10 +61,6 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
             border-color: $brand-default;
         }
-        
-        &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
-            border-color: $brand-active;
-        }
     }
 
     input {

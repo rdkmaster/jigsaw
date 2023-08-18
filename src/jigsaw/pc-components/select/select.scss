@@ -40,10 +40,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
         
         &:hover{
-            .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
-                border-color: $brand-default;
-            }
-    
             .#{$jigsaw-combo-select}-arrow {
                 color: $brand-default;
             }

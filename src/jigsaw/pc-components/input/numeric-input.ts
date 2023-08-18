@@ -38,7 +38,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
-        '[class.jigsaw-numeric-input-hide-border]': '!showBorder',
+        '[class.jigsaw-numeric-input-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',

@@ -9,15 +9,7 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
 
     &.#{$jigsaw-textarea}-hide-border {
         .#{$jigsaw-textarea}-container {
-            border-color: $bg-transparent !important;
-            
-            &:hover{
-                border-color: $brand-default !important;
-            }
-            
-            &.#{$jigsaw-textarea}-focused {
-                border-color: $brand-default !important;
-            }
+            border-color: $bg-transparent;
         }
     }
 

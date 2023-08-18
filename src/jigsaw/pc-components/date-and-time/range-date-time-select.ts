@@ -38,7 +38,7 @@ export type RangeDate = { beginDate: WeekTime, endDate: WeekTime }
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-range-date-time-select-host]': 'true',
-        '[class.jigsaw-combo-select-hide-border]': '!showBorder',
+        '[class.jigsaw-combo-select-hide-border]': '!showBorder && _comboSelect? !_comboSelect._$opened : "false"',
         '[class.jigsaw-range-date-time-select-clearable]': 'clearable && _$dateComboValue'
     },
     providers: [
@@ -60,6 +60,8 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             this._changeRangeDateByGr();
         })
     }
+    // 用于解决在Angular的变更检测周期内，模板表达式的值发生了变化，但是却在变更检测完成后再次发生了变化的报错
+    public ngDoCheck(): void { this._cdr.detectChanges(); }
     
      /**
      * 设置时间选择框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。

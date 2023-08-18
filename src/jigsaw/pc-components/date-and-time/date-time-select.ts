@@ -37,7 +37,7 @@ import { JigsawDateTimePicker } from './date-time-picker';
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-date-time-select-host]': 'true',
-        '[class.jigsaw-combo-select-hide-border]': '!showBorder',
+        '[class.jigsaw-combo-select-hide-border]': '!showBorder && _comboSelect? !_comboSelect._$opened : "false"',
         '[class.jigsaw-date-time-select-clearable]': 'clearable && date',
     },
     providers: [
@@ -57,6 +57,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
             this._changeDateByGr();
         })
     }
+
+    // 用于解决在Angular的变更检测周期内，模板表达式的值发生了变化，但是却在变更检测完成后再次发生了变化的报错
+    public ngDoCheck(): void { this._cdr.detectChanges(); }
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;

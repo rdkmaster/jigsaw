@@ -48,8 +48,7 @@ const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid',
-        '[class.jigsaw-combo-select-hide-border]': '!showBorder',
-        '[class.jigsaw-combo-select-border-active]': '_$opened',
+        '[class.jigsaw-combo-select-hide-border]': '!showBorder && !_$opened',
         '[class.jigsaw-combo-select-hide-text-tag]': '!textTag'
     },
     providers: [
@@ -226,26 +225,19 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     public _$options: PopupOptions = {};
 
-    
-    /**
-     * 设置下拉框框边框和下拉箭头显隐开关
-     */
-     @RequireMarkForCheck()
-     @Input()
-     public showBorder: boolean = true;
-
+    public _showBorder: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public set _showBorder(value: boolean) {
-        this.showBorder = value;
+    public set showBorder(value: boolean) {
+        this._showBorder = value;
         this._$options.showBorder = this.showBorder;
     }
 
-    public get _showBorder(): boolean {
-        return this.showBorder;
+    public get showBorder(): boolean {
+        return this._showBorder;
     }
 
     private _positionType: PopupPositionType;

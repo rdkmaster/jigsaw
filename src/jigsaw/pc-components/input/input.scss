@@ -94,16 +94,12 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
     }
 
     &.#{$jigsaw-input}-hide-border {
-        &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper {
-            border-color: $brand-default;
-        }
-
         .#{$jigsaw-input}-wrapper {
             border-color: $bg-transparent;
 
             .#{$jigsaw-input}-clear-bar{
                 color: $bg-transparent;
-            }
+            } 
 
             &:hover,
             &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper{
