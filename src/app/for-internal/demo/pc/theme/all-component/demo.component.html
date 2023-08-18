@@ -94,6 +94,12 @@
     <j-list-lite width="200" [data]="goodsList" labelField="name" [multipleSelect]="true">
     </j-list-lite>
 
+    <j-list width="200" trackItemBy="label">
+        <j-list-option *ngFor="let city of cityList" [value]="city">
+            {{city.label}}
+        </j-list-option>
+    </j-list>
+
     <j-collapse width="300">
         <j-collapse-pane header="测试col">
             <j-input placeholder="请输入姓名~"></j-input>
