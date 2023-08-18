@@ -48,7 +48,7 @@ $prefix-suffix-cls: #{$jigsaw-prefix}-prefix-suffix;
         border-color: $border-color-disabled;
         cursor: not-allowed;
     }
-    &.#{$prefix-suffix-cls}-show-border {
+    &.#{$prefix-suffix-cls}-hide-border {
         border-color: $bg-transparent;
         
         .jigsaw-prefix-suffix-list-dropdown{

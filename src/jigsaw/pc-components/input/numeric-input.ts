@@ -9,8 +9,7 @@ import {
     NgModule,
     Output,
     ViewChild,
-    Injector,
-    NgZone
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -39,7 +38,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
-        '[class.jigsaw-numeric-input-show-border]': '!showBorder',
+        '[class.jigsaw-numeric-input-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
@@ -54,9 +53,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
 
-    public constructor(protected _cdr: ChangeDetectorRef,
-        protected _injector: Injector,
-       ) {
+    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector) {
         super();
     }
 

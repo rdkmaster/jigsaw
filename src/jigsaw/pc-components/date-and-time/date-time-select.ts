@@ -37,7 +37,7 @@ import { JigsawDateTimePicker } from './date-time-picker';
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-date-time-select-host]': 'true',
-        '[class.jigsaw-combo-select-show-border]': '!showBorder',
+        '[class.jigsaw-combo-select-hide-border]': '!showBorder && _comboSelect? !_comboSelect._$opened : "false"',
         '[class.jigsaw-date-time-select-clearable]': 'clearable && date',
     },
     providers: [
@@ -58,6 +58,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         })
     }
 
+    // 用于解决在Angular的变更检测周期内，模板表达式的值发生了变化，但是却在变更检测完成后再次发生了变化的报错
+    public ngDoCheck(): void { this._cdr.detectChanges(); }
+
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;
 
@@ -77,11 +80,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public valid: boolean = true;
 
     /**
-     * 设置时间选择框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。
+     * 设置时间选择框边框和下拉箭头显隐开关。
      */
-     @RequireMarkForCheck()
-     @Input()
-     public showBorder: boolean = true;
+    @RequireMarkForCheck()
+    @Input()
+    public showBorder: boolean = true;
 
     private _gr: TimeGr = TimeGr.date;
 

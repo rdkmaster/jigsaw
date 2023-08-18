@@ -56,7 +56,7 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
         '[class.jigsaw-time-picker-error]': '!valid',
         '[class.jigsaw-time-picker-disabled]': 'disabled',
-        '[class.jigsaw-time-picker-show-border]': '!showBorder',
+        '[class.jigsaw-time-picker-hide-border]': '!showBorder && !(_$selectMode != "none")',
         '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [

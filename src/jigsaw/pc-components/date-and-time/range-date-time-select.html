@@ -1,4 +1,4 @@
-<jigsaw-combo-select #comboSelect [theme]="theme" [(value)]="_$dateComboValue" [placeholder]="placeholder"
+<jigsaw-combo-select #comboSelect [theme]="theme" [showBorder]="showBorder" [(value)]="_$dateComboValue" [placeholder]="placeholder"
     [disabled]="disabled" [valid]="valid" [openTrigger]="openTrigger" [closeTrigger]="closeTrigger"
     [width]="width ? width : 200" [textTag]="false" [clearable]="clearable" (clear)="clearDate()" (openChange)="_$onComboOpenChange($event)"
     selectIcon="iconfont iconfont-e177">
