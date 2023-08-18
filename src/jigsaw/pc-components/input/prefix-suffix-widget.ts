@@ -118,9 +118,6 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @Input()
     public disabled: boolean;
 
-    /**
-     * 
-     */
      @RequireMarkForCheck()
      @Input()
      public showBorder: boolean;

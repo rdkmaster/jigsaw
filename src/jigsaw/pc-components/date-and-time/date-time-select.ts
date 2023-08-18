@@ -37,7 +37,6 @@ import { JigsawDateTimePicker } from './date-time-picker';
         '[style.min-width]': 'width',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-date-time-select-host]': 'true',
-        '[class.jigsaw-combo-select-hide-border]': '!showBorder && _comboSelect? !_comboSelect._$opened : "false"',
         '[class.jigsaw-date-time-select-clearable]': 'clearable && date',
     },
     providers: [
@@ -58,11 +57,11 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         })
     }
 
-    // 用于解决在Angular的变更检测周期内，模板表达式的值发生了变化，但是却在变更检测完成后再次发生了变化的报错
-    public ngDoCheck(): void { this._cdr.detectChanges(); }
-
     @ViewChild('comboSelect')
-    private _comboSelect: JigsawComboSelect;
+    /**
+     * @internal
+     */
+    public _$comboSelect: JigsawComboSelect;
 
     @ViewChild('dateTimePicker')
     private _dateTimePicker: JigsawDateTimePicker;
@@ -302,7 +301,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$closeComboSelect(cellType: DateTimeCellType) {
-        if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
+        if (!this._$comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             return;
         }
         if ((this.gr == TimeGr.date || this.gr == TimeGr.week) && cellType != 'day') {
@@ -311,7 +310,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         if (this.gr == TimeGr.month && cellType != 'month') {
             return;
         }
-        this._comboSelect.open = false;
+        this._$comboSelect.open = false;
     }
 
     private _changeDateByGr() {
@@ -328,7 +327,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     ngAfterViewInit() {
-        this._comboSelect._$options.size = { "minWidth": 0 };
+        this._$comboSelect._$options.size = { "minWidth": 0 };
     }
 
     ngOnDestroy() {

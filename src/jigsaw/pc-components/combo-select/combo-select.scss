@@ -7,7 +7,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
     min-width: 240px;
     max-width: 100%;
     color: $font-color-default;
-    border-radius: $border-radius-base; 
+    border-radius: $border-radius-base;
 
     .#{$jigsaw-combo-select} {
         position: relative;
@@ -200,6 +200,10 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
                 .#{$jigsaw-combo-select}-arrow {
                     color: $brand-default;   
                 }
+
+                .#{$jigsaw-combo-select}-selection {
+                    border-color: $brand-default;
+                }  
             } 
         }
     } 
