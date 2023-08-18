@@ -31,7 +31,8 @@ type Styles = {
 @Component({
     selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-hide-border': showBorder}">
+        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles"
+             [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-hide-border': !showBorder}">
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
             <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
@@ -47,7 +48,8 @@ type Styles = {
             </div>
         </div>
         <ng-template #dropdownTemplate>
-            <jigsaw-list [width]="_elementRef?.nativeElement.offsetWidth" [selectedItems]="_$selected" (selectedItemsChange)="_$selectedChange($event)">
+            <jigsaw-list [width]="_elementRef?.nativeElement.offsetWidth" [selectedItems]="_$selected"
+                         (selectedItemsChange)="_$selectedChange($event)">
                 <j-list-option *ngFor="let item of data" [value]="item">
                     <p j-title>
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="position: relative; top: 2px;"></span>
@@ -118,9 +120,9 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @Input()
     public disabled: boolean;
 
-     @RequireMarkForCheck()
-     @Input()
-     public showBorder: boolean;
+    @RequireMarkForCheck()
+    @Input()
+    public showBorder: boolean;
 
     /**
      * @internal

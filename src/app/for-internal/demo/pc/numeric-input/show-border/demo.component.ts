@@ -4,12 +4,8 @@ import {Component} from "@angular/core";
     templateUrl: './demo.component.html'
 })
 export class NumericInputShowBorderDemoComponent {
-    value: number;
-    showBorder:boolean;
-
-    valueChange($event) {
-        console.log($event, typeof $event == "number");
-    }
+    showOption: boolean;
+    showBorder: boolean;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

@@ -61,7 +61,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     @ViewChild('comboSelect')
-    public _$comboSelect: JigsawComboSelect;
+    private _comboSelect: JigsawComboSelect;
 
     @ViewChild('dateTimePicker')
     private _dateTimePicker: JigsawDateTimePicker;
@@ -301,7 +301,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$closeComboSelect(cellType: DateTimeCellType) {
-        if (!this._$comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
+        if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             return;
         }
         if ((this.gr == TimeGr.date || this.gr == TimeGr.week) && cellType != 'day') {
@@ -310,7 +310,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         if (this.gr == TimeGr.month && cellType != 'month') {
             return;
         }
-        this._$comboSelect.open = false;
+        this._comboSelect.open = false;
     }
 
     private _changeDateByGr() {
@@ -327,7 +327,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     }
 
     ngAfterViewInit() {
-        this._$comboSelect._$options.size = { "minWidth": 0 };
+        this._comboSelect._$options.size = { "minWidth": 0 };
     }
 
     ngOnDestroy() {

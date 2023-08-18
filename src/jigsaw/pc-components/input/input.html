@@ -1,5 +1,5 @@
 <div class="jigsaw-input-container">
-    <jigsaw-prefix-suffix *ngIf="prefix" position="left" [showBorder]="!showBorder" [disabled]="disabled" [data]="prefix" [contentWidth]="prefixWidth"
+    <jigsaw-prefix-suffix *ngIf="prefix" position="left" [showBorder]="showBorder" [disabled]="disabled" [data]="prefix" [contentWidth]="prefixWidth"
                           [labelField]="prefixLabelField" (change)="prefixChange.emit($event)">
     </jigsaw-prefix-suffix>
 
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [showBorder]="!showBorder" [disabled]="disabled" [data]="suffix" [contentWidth]="suffixWidth"
+    <jigsaw-prefix-suffix *ngIf="suffix" position="right" [showBorder]="showBorder" [disabled]="disabled" [data]="suffix" [contentWidth]="suffixWidth"
                           [labelField]="suffixLabelField" (change)="suffixChange.emit($event)">
     </jigsaw-prefix-suffix>
 </div>

@@ -43,7 +43,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
         '[class.jigsaw-numeric-input-focused]': 'focused',
-        '[class.jigsaw-numeric-input-showOption]': 'showOption',
+        '[class.jigsaw-numeric-input-showOption]': 'showOption && (showBorder || focused)',
         '(click)': '_$stopPropagation($event)'
     },
     providers: [
