@@ -225,24 +225,20 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     public _$options: PopupOptions = {};
 
-    /**
-     * @internal
-     */
-    @Input()
-    @RequireMarkForCheck()
-    public _showBorder: boolean = true;
+    private _showBorder: boolean = true;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
+    @RequireMarkForCheck()
+    public get showBorder(): boolean {
+        return this._showBorder;
+    }
+
     public set showBorder(value: boolean) {
         this._showBorder = value;
         this._$options.showBorder = this.showBorder;
-    }
-
-    public get showBorder(): boolean {
-        return this._showBorder;
     }
 
     private _positionType: PopupPositionType;
