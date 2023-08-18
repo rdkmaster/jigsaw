@@ -30,7 +30,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-textarea-host]': 'true',
-        '[class.jigsaw-textarea-hide-border]': '!showBorder && !_focused',
+        '[class.jigsaw-textarea-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
         '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',

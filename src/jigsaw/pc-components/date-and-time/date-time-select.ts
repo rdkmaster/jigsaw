@@ -57,10 +57,10 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         })
     }
 
-    @ViewChild('comboSelect')
     /**
      * @internal
      */
+    @ViewChild('comboSelect')
     public _$comboSelect: JigsawComboSelect;
 
     @ViewChild('dateTimePicker')
