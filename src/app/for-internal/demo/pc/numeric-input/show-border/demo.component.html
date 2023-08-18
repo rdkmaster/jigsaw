@@ -9,20 +9,23 @@
 
     <div class="live-demo">
         <jigsaw-header [level]="2">隐藏边框</jigsaw-header>
+
+        <jigsaw-switch [(checked)]="showBorder" onLabel="显示边框" offLabel="隐藏边框"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showOption" onLabel="显示箭头" offLabel="隐藏箭头"></jigsaw-switch>
+        <br><br>
+
         <j-numeric-input [showBorder]="showBorder" [showOption]="showOption" [value]="88"  prefix="上行流量" placeholder="请输入数字">
         </j-numeric-input>
-        <br>
+        <br><br>
         <jigsaw-numeric-input [showBorder]="showBorder" [showOption]="showOption" placeholder="unit demo" suffix="单位" width="300"></jigsaw-numeric-input>
-        <br>
+        <br><br>
         <jigsaw-numeric-input [showBorder]="showBorder" [showOption]="showOption" placeholder="unit demo" [suffix]="_$units" suffixWidth="120"
                           (suffixChange)="_$unitChange($event)"  prefix="上行流量" width="300">
         </jigsaw-numeric-input>
-        <br>
+        <br><br>
         <jigsaw-numeric-input [showBorder]="showBorder" [showOption]="showOption" placeholder="unit demo" width="300" suffixWidth="120"
                             [suffix]="_$icons"  prefix="上行流量" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
         </jigsaw-numeric-input>
-        <jigsaw-switch [(checked)]="showBorder" onLabel="显示边框" offLabel="隐藏边框"></jigsaw-switch>
-        <jigsaw-switch [(checked)]="showOption" onLabel="显示箭头" offLabel="隐藏箭头"></jigsaw-switch>
     </div>
 </div>
 
