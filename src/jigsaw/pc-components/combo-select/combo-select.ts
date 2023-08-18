@@ -227,6 +227,7 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     /**
      * 设置边框显隐。
+     * @internal
      */
     @RequireMarkForCheck()
     @Input()
