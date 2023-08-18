@@ -472,15 +472,18 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
      * @internal
      */
     public _$handleKeyDown($event) {
-        if ($event.keyCode == 39) {
+        if ($event.key == 'Enter') {
+            this._$cancelSelect(this._$selectMode as TimeSelectMode, true);
+            this._$floatOpen = false;
+        } else if ($event.key == 'ArrowRight') {
             this._$handleCtrlBarClick($event, 1);
-        } else if ($event.keyCode == 37) {
+        } else if ($event.key == 'ArrowLeft') {
             this._$handleCtrlBarClick($event, -1);
-        } else if ($event.keyCode == 40) {
+        } else if ($event.key == 'ArrowDown') {
             this._$handleCtrlBarClick($event, this.step == 1 ? 9 : 1);
-        } else if ($event.keyCode == 38) {
+        } else if ($event.key == 'ArrowUp') {
             this._$handleCtrlBarClick($event, this.step == 1 ? -9 : -1);
-        } else if ($event.keyCode == 9) {
+        } else if ($event.key == 'Tab') {
             if ($event.shiftKey) {
                 if (this._$selectMode == 'second') {
                     this._$handleSelectMode('minute', true);
@@ -538,7 +541,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('hour', this._hour);
             return false;
         }
-        this._hour = value;
+        this._hour = this._autoZero(value);
         this._updateInputValue('hour', this._hour);
         return true;
     }
@@ -549,7 +552,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('minute', this._minute);
             return false;
         }
-        this._minute = value;
+        this._minute = this._autoZero(value);
         this._updateInputValue('minute', this._minute);
         return true;
     }
@@ -560,7 +563,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('second', this._second);
             return false;
         }
-        this._second = value;
+        this._second = this._autoZero(value);
         this._updateInputValue('second', this._second);
         return true;
     }
