@@ -120,7 +120,10 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @Input()
     public disabled: boolean;
 
-    @RequireMarkForCheck()
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
     @Input()
     public showBorder: boolean;
 

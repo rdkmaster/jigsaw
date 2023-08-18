@@ -227,8 +227,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
 
     private _showBorder: boolean = true;
 
+    /**
+     * @NoMarkForCheckRequired
+     */
     @Input()
-    @RequireMarkForCheck()
     public get showBorder(): boolean {
         return this._showBorder;
     }

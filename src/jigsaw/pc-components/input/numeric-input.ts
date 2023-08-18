@@ -74,11 +74,11 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public disabled: boolean = false;
 
     /**
-     * 设置input框边框显隐开关，为true则有边框颜色，为false则边框透明。
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
      */
-     @RequireMarkForCheck()
-     @Input()
-     public showBorder: boolean = true;
+    @Input()
+    public showBorder: boolean = true;
 
     /**
      * 输入框的placeholder

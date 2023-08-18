@@ -75,11 +75,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
     /**
      * 设置是否显示边框
-     *
      * @NoMarkForCheckRequired
      */
-     @Input()
-     public showBorder: boolean;
+    @Input()
+    public showBorder: boolean;
 
     /**
      * 输入框的placeholder

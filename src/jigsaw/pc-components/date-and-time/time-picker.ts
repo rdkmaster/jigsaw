@@ -83,11 +83,11 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     }
      
     /**
-     * 设置时间选择框边框和下拉箭头显隐开关，为true则边框透明，为false则有边框颜色。
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
      */
-     @RequireMarkForCheck()
-     @Input()
-     public showBorder: boolean = true;
+    @Input()
+    public showBorder: boolean = true;
 
     /**
      * 参考`JigsawDateTimePicker.disabled`

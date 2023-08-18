@@ -80,8 +80,8 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
 
     /**
      * 设置时间选择框边框和下拉箭头显隐开关。
+     * @NoMarkForCheckRequired
      */
-    @RequireMarkForCheck()
     @Input()
     public showBorder: boolean = true;
 
