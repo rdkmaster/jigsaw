@@ -226,10 +226,10 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
     public _$options: PopupOptions = {};
 
     /**
-     * 设置边框显隐。
      * @internal
      */
     @Input()
+    @RequireMarkForCheck()
     public _showBorder: boolean = true;
 
     /**
