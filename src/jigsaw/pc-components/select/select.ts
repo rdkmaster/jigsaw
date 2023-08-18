@@ -29,7 +29,6 @@ import { WingsTheme } from "../../common/common";
         "[class.jigsaw-select-multiple-select]": "multipleSelect",
         "[class.jigsaw-select-show-statistics]": "useStatistics",
         "[class.jigsaw-select-with-max-width]": "!!maxWidth",
-        "[class.jigsaw-select-hide-border]": "!showBorder && _comboSelect? !_comboSelect._$opened : 'false'",
         "[class.jigsaw-select-small]": 'size == "small"',
         "[class.jigsaw-select-medium]": 'size == "medium"',
         "[class.jigsaw-select-large]": 'size == "large"',

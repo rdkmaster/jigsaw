@@ -30,22 +30,6 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
         }
     }
 
-    &.#{$jigsaw-select}-hide-border {
-        .#{$jigsaw-combo-select}-host .#{$jigsaw-combo-select}-selection {
-            border-color: $bg-transparent;
-        }
-
-        .#{$jigsaw-combo-select}-arrow {
-            color: $bg-transparent;
-        }
-        
-        &:hover{
-            .#{$jigsaw-combo-select}-arrow {
-                color: $brand-default;
-            }
-        } 
-    } 
-
     &.#{$jigsaw-select}-multiple-select {
         .#{$jigsaw-combo-select}-host {
             position: relative;
