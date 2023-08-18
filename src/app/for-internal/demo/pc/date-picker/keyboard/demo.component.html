@@ -1,0 +1,27 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>gr：</span>
+        <jigsaw-button-bar [data]="['date','week','month']" [(selectedItems)]="gr">
+        </jigsaw-button-bar>
+    </li>
+</ul>
+<ul class="demo-cntr">
+    <li>
+        <jigsaw-date-picker [(date)]="date" [gr]="gr[0]" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+        <div>选择的时间是：{{date}}</div>
+    </li>
+    <li>
+        <jigsaw-date-picker [(date)]="date2" [gr]="gr[0]" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+        <div>选择的时间是：{{date2}}</div>
+    </li>
+    <li>
+        <jigsaw-date-picker [(date)]="date3" [gr]="gr[0]" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+        <div>选择的时间是：{{date3}}</div>
+    </li>
+</ul>
