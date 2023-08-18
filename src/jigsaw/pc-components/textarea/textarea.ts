@@ -9,7 +9,6 @@ import {
     Input,
     Output,
     ViewChild,
-    OnInit,
     AfterViewInit
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -31,6 +30,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-textarea-host]': 'true',
+        '[class.jigsaw-textarea-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
         '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',
@@ -62,6 +62,12 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @RequireMarkForCheck()
     public disabled: boolean = false;
 
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     private _resize: "both" | "horizontal" | "vertical" | "none" = "none";
     /**

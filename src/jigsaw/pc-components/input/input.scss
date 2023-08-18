@@ -93,6 +93,25 @@ $jigsaw-input: #{$jigsaw-prefix}-input;
         }
     }
 
+    &.#{$jigsaw-input}-hide-border {
+        .#{$jigsaw-input}-wrapper {
+            border-color: $bg-transparent;
+
+            .#{$jigsaw-input}-clear-bar{
+                color: $bg-transparent;
+            } 
+
+            &:hover,
+            &.#{$jigsaw-input}-focused .#{$jigsaw-input}-wrapper{
+                border-color: $brand-default;
+
+                .#{$jigsaw-input}-clear-bar {
+                    color: $icon-color-stress;
+                }
+            }
+        }
+    }
+
     &.#{$jigsaw-input}-error {
         .#{$jigsaw-input}-wrapper,
         .#{$jigsaw-input}-wrapper:hover,

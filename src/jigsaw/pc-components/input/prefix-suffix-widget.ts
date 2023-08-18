@@ -8,12 +8,14 @@ import {
     NgZone,
     Output,
     Renderer2,
+    Injector,
     ViewChild
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawListModule} from "../list-and-tile/list";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 
@@ -29,7 +31,8 @@ type Styles = {
 @Component({
     selector: 'jigsaw-prefix-suffix, j-prefix-suffix',
     template: `
-        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles" [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled}">
+        <div *ngIf="data" class="jigsaw-prefix-suffix" [ngStyle]="_$getStyles"
+             [ngClass]="{'jigsaw-prefix-suffix-disabled': disabled, 'jigsaw-prefix-suffix-hide-border': !showBorder}">
             <span *ngIf="_$isUnique" style="padding: 0 5px;">{{data}}</span>
             <div *ngIf="!_$isUnique" class="jigsaw-prefix-suffix-list" [ngStyle]="{'cursor': disabled ? 'not-allowed' : 'pointer'}"
                  jigsawFloat [jigsawFloatTarget]="dropdownTemplate" [jigsawFloatOptions]="{useCustomizedBackground: true}"
@@ -45,7 +48,8 @@ type Styles = {
             </div>
         </div>
         <ng-template #dropdownTemplate>
-            <jigsaw-list [width]="_elementRef?.nativeElement.offsetWidth" [selectedItems]="_$selected" (selectedItemsChange)="_$selectedChange($event)">
+            <jigsaw-list [width]="_elementRef?.nativeElement.offsetWidth" [selectedItems]="_$selected"
+                         (selectedItemsChange)="_$selectedChange($event)">
                 <j-list-option *ngFor="let item of data" [value]="item">
                     <p j-title>
                         <span *ngIf="item?.icon" class="{{item?.icon}}" style="position: relative; top: 2px;"></span>
@@ -64,7 +68,7 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     @ViewChild(JigsawFloat)
     private _jigsawFloat: JigsawFloat;
 
-    constructor(private _renderer: Renderer2,
+    constructor(private _renderer: Renderer2, protected _injector: Injector,
                 /**
                  * @internal
                  */
@@ -115,6 +119,13 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
      */
     @Input()
     public disabled: boolean;
+
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean;
 
     /**
      * @internal

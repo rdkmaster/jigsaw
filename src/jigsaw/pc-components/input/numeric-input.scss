@@ -52,6 +52,17 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
         }
     }
 
+    &.#{$jigsaw-numeric-input}-hide-border {
+        .#{$jigsaw-numeric-input}-wrapper {
+            border-color: $bg-transparent;
+        }
+        
+        .#{$jigsaw-numeric-input}-wrapper:hover,
+        &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+            border-color: $brand-default;
+        }
+    }
+
     input {
         width: calc(100% - 20px);
         height: 100%;

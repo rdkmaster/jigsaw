@@ -12,10 +12,15 @@ import {NumericInputPrefixSuffixDemoComponent} from "./prefix-suffix/demo.compon
 import {NumericInputPrefixSuffixDemoModule} from "./prefix-suffix/demo.module";
 import { NumericInputShowOptionDemoModule } from './show-option/demo.module';
 import { NumericInputShowOptionDemoComponent } from './show-option/demo.component';
+import { NumericInputShowBorderDemoComponent } from "./show-border/demo.component";
+import { NumericInputShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: 'basic', component: NumericInputBasicDemoComponent
+    },
+    {
+        path: 'show-border', component: NumericInputShowBorderDemoComponent
     },
     {
         path: 'disabled', component: NumericInputDisabledDemoComponent
@@ -42,7 +47,8 @@ export const routerConfig = [
         NumericInputSizeDemoModule,
         NumericInputStepDemoModule,
         NumericInputPrefixSuffixDemoModule,
-        NumericInputShowOptionDemoModule
+        NumericInputShowOptionDemoModule,
+        NumericInputShowBorderDemoModule
     ]
 })
 export class NumericInputDemoModule {

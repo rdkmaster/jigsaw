@@ -9,6 +9,7 @@ import {
     NgModule,
     Output,
     ViewChild,
+    Injector
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from "@angular/forms";
@@ -16,6 +17,7 @@ import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 /**
  * 数字输入框
@@ -36,11 +38,12 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-numeric-input-host]': 'true',
         '[class.jigsaw-numeric-input-disabled]': 'disabled',
+        '[class.jigsaw-numeric-input-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-numeric-input-small]': 'size == "small"',
         '[class.jigsaw-numeric-input-large]': 'size == "large"',
         '[class.jigsaw-numeric-input-error]': '!valid',
         '[class.jigsaw-numeric-input-focused]': 'focused',
-        '[class.jigsaw-numeric-input-showOption]': 'showOption',
+        '[class.jigsaw-numeric-input-showOption]': 'showOption && (showBorder || focused)',
         '(click)': '_$stopPropagation($event)'
     },
     providers: [
@@ -49,9 +52,11 @@ import {GroupOptionValue} from "../list-and-tile/group-common";
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawNumericInput extends AbstractJigsawComponent implements ControlValueAccessor {
-    constructor(private _cdr: ChangeDetectorRef) {
+
+    public constructor(protected _cdr: ChangeDetectorRef, protected _injector: Injector) {
         super();
     }
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -67,6 +72,13 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public disabled: boolean = false;
+
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     /**
      * 输入框的placeholder

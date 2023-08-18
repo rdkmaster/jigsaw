@@ -19,7 +19,7 @@ export const routerConfig = [
     imports: [
         RouterModule.forChild(routerConfig),
         SwitchBasicDemoModule,
-        SwitchSizeDemoModule
+        SwitchSizeDemoModule,
     ]
 })
 export class SwitchDemoModule { }

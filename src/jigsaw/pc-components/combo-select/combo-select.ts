@@ -48,6 +48,7 @@ const _noRotateIcons: string[] = ['iconfont iconfont-e177'];
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-combo-select-host]': 'true',
         '[class.jigsaw-combo-select-error]': '!valid',
+        '[class.jigsaw-combo-select-hide-border]': '!showBorder && !_$opened',
         '[class.jigsaw-combo-select-hide-text-tag]': '!textTag'
     },
     providers: [
@@ -230,13 +231,13 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      * @NoMarkForCheckRequired
      */
     @Input()
+    public get showBorder(): boolean {
+        return this._showBorder;
+    }
+
     public set showBorder(value: boolean) {
         this._showBorder = value;
         this._$options.showBorder = this.showBorder;
-    }
-
-    public get showBorder(): boolean {
-        return this._showBorder;
     }
 
     private _positionType: PopupPositionType;

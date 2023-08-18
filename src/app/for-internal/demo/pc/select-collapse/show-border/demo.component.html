@@ -1,0 +1,14 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">Collapse-Select</jigsaw-header>
+<jigsaw-header [level]="2">showBorder</jigsaw-header>
+<jigsaw-collapse-select [showBorder]="showBorder" [data]="cityList" placeholder="请选择城市">
+</jigsaw-collapse-select>
+<div class="demo-setting-wrap">
+    <span class="text">show-border:</span>
+    <jigsaw-switch [(checked)]="showBorder"></jigsaw-switch>
+</div>

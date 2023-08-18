@@ -56,6 +56,7 @@ type TimePickerGR = TimeGr.time | TimeGr.time_hour_minute | TimeGr.time_minute_s
         '[class.jigsaw-time-picker-active]': '_$selectMode != "none"',
         '[class.jigsaw-time-picker-error]': '!valid',
         '[class.jigsaw-time-picker-disabled]': 'disabled',
+        '[class.jigsaw-time-picker-hide-border]': '!showBorder &&  _$selectMode === "none"',
         '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [
@@ -80,6 +81,13 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._cdr.markForCheck();
         });
     }
+     
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     /**
      * 参考`JigsawDateTimePicker.disabled`

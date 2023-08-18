@@ -57,6 +57,9 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
         })
     }
 
+    /**
+     * @internal
+     */
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;
 
@@ -74,6 +77,13 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     @Input()
     @RequireMarkForCheck()
     public valid: boolean = true;
+
+    /**
+     * 设置时间选择框边框和下拉箭头显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     private _gr: TimeGr = TimeGr.date;
 

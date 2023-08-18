@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+
+<a (click)="clear()">清空搜索框内容</a>
+
+<jigsaw-header>自动搜索</jigsaw-header>
+<jigsaw-search-input width="200px" [showBorder]="showBorder" [(value)]="value1" (search)="value1 = $event" [searchDebounce]="1000">
+</jigsaw-search-input>
+<div> {{ " 搜索值为：" + value1 }} </div>
+
+<jigsaw-header>手动搜索</jigsaw-header>
+<jigsaw-search-input width="200px" [showBorder]="showBorder" [(value)]="value2" [autoSearch]="false" (search)="value2 = $event">
+</jigsaw-search-input>
+<div> {{ " 搜索值为：" + value2 }} </div>
+边框隐藏：<jigsaw-switch [(checked)]="showBorder" onLabel="显示" offLabel="隐藏"></jigsaw-switch>

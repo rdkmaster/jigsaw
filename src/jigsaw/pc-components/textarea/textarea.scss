@@ -7,6 +7,12 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
     font-size: $font-size-base;
     border-radius: $border-radius-base;
 
+    &.#{$jigsaw-textarea}-hide-border {
+        .#{$jigsaw-textarea}-container {
+            border-color: $bg-transparent;
+        }
+    }
+
     .#{$jigsaw-textarea}-icon-end {
         position: absolute;
         left: 2px;

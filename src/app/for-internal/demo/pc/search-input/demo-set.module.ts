@@ -10,10 +10,15 @@ import {SearchInputHistoryStorageKeyDemoComponent} from "./history-storage-key/d
 import {SearchInputHistoryStorageKeyDemoModule} from "./history-storage-key/demo.module";
 import { SearchInputMaxWidthDemoModule } from "./max-width-height/demo.module";
 import { SearchInputMaxWidthDemoComponent } from "./max-width-height/demo.component";
+import { SearchInputShowBorderDemoComponent } from "./show-border/demo.component";
+import { SearchInputShowBorderDemoModule } from "./show-border/demo.module";
 
 export const routerConfig = [
     {
         path: "basic", component: SearchInputBasicDemoComponent
+    },
+    {
+        path: "show-border", component: SearchInputShowBorderDemoComponent
     },
     {
         path: "disabled", component: SearchInputDisabledDemoComponent
@@ -36,7 +41,8 @@ export const routerConfig = [
         SearchInputDisabledDemoModule,
         SearchInputDebounceDemoModule,
         SearchInputHistoryStorageKeyDemoModule,
-        SearchInputMaxWidthDemoModule
+        SearchInputMaxWidthDemoModule,
+        SearchInputShowBorderDemoModule
     ]
 })
 export class SearchInputDemoModule {}

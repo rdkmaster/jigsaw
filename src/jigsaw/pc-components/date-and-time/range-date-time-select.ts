@@ -59,6 +59,13 @@ export class JigsawRangeDateTimeSelect extends AbstractJigsawComponent implement
             this._changeRangeDateByGr();
         })
     }
+    
+    /**
+     * 设置边框显隐开关。
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public showBorder: boolean = true;
 
     @ViewChild('comboSelect')
     private _comboSelect: JigsawComboSelect;

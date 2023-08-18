@@ -40,7 +40,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             border-radius: $border-radius-base;
 
             &:hover {
-                border-color: $brand-default;
+                border-color: $brand-default !important;
             }
 
             &:active {
@@ -185,4 +185,26 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             }
         }
     }
+
+    &.#{$jigsaw-combo-select}-hide-border {
+        .#{$jigsaw-combo-select} {
+            .#{$jigsaw-combo-select}-selection {
+                border-color: $bg-transparent;
+            }
+    
+            .#{$jigsaw-combo-select}-arrow {
+                color: $bg-transparent;
+            }
+            
+            &:hover{
+                .#{$jigsaw-combo-select}-arrow {
+                    color: $brand-default;   
+                }
+
+                .#{$jigsaw-combo-select}-selection {
+                    border-color: $brand-default;
+                }  
+            } 
+        }
+    } 
 }
