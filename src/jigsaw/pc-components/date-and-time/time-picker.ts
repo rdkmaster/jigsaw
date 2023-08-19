@@ -523,21 +523,21 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
         if (this._$selectMode == 'hour') {
             let value = Number(this._$hour) + add;
             value = this._getValidNumberInRange(value, 0, 23);
-            if (this._updateHour(value)) {
+            if (this._updateHour(this._autoZero(value))) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$hour, this.step, this.gr);
             }
         } else if (this._$selectMode == 'minute') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$minute)) + add;
             value = this._getValidNumberInRange(value, 0, 59);
-            if (this._updateMinute(value)) {
+            if (this._updateMinute(this._autoZero(value))) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$minute, this.step, this.gr);
             }
         } else if (this._$selectMode == 'second') {
             add = add * this.step;
             let value = Number(this._getStepValue(this._$second)) + add;
             value = this._getValidNumberInRange(value, 0, 59);
-            if (this._updateSecond(value)) {
+            if (this._updateSecond(this._autoZero(value))) {
                 this._$floatInitData = this._getFloatInitData(this._$selectMode, this._$second, this.step, this.gr);
             }
         }
@@ -549,7 +549,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('hour', this._hour);
             return false;
         }
-        this._hour = this._autoZero(value);
+        this._hour = value;
         this._updateInputValue('hour', this._hour);
         return true;
     }
@@ -560,7 +560,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('minute', this._minute);
             return false;
         }
-        this._minute = this._autoZero(value);
+        this._minute = value;
         this._updateInputValue('minute', this._minute);
         return true;
     }
@@ -571,7 +571,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             this._updateInputValue('second', this._second);
             return false;
         }
-        this._second = this._autoZero(value);
+        this._second = value;
         this._updateInputValue('second', this._second);
         return true;
     }
