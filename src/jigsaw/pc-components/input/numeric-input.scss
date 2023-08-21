@@ -88,6 +88,10 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
                 color: $font-color-disabled-spec;
                 background-color: $bg-disabled;
                 cursor: not-allowed;
+
+                &::-webkit-input-placeholder {
+                    color: $font-color-disabled-spec;
+                }
             }
         }
     }

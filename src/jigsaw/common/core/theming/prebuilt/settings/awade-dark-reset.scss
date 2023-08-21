@@ -1,0 +1,220 @@
+.jigsaw-input-host {
+    .jigsaw-input-wrapper {
+        background: $bg-component;
+        border-color: $bg-component;
+    }
+}
+
+.jigsaw-numeric-input-host {
+    .jigsaw-numeric-input-wrapper {
+        background: $bg-component;
+        border-color: $bg-component;
+    }
+}
+
+.jigsaw-prefix-suffix {
+    background: $bg-component-darken;
+    border-color: $bg-component-darken;
+}
+
+.jigsaw-combo-select-host {
+    .jigsaw-combo-select {
+        .jigsaw-combo-select-selection {
+            background: $bg-component;
+            border-color: $bg-component;
+        }
+
+        &.jigsaw-combo-select-disabled {
+            .jigsaw-combo-select-selection {
+                background: $bg-disabled;
+            }
+        }
+    }
+
+    .jigsaw-combo-select-clear:hover,
+    .jigsaw-combo-select-arrow:hover {
+        color: $font-color-brand;
+    }
+}
+
+.jigsaw-search-input-host {
+    .jigsaw-search-input .jigsaw-search-input-button {
+        background: $bg-component-darken;
+        border-color: $bg-component-darken;
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-button-host {
+    background: $bg-component-darken;
+    color: $font-color-default;
+
+    &:hover {
+        color: $font-color-default;
+        background: $bg-disabled;
+        border-color: $bg-disabled;
+    }
+
+    &.jigsaw-button-color-primary:hover {
+        border-color: $primary-hover;
+    }
+
+    &.jigsaw-button-color-none {
+        background: transparent;
+    }
+
+    &.jigsaw-button-disabled {
+
+        &.jigsaw-button-color-primary,
+        &.jigsaw-button-color-warning,
+        &.jigsaw-button-color-error {
+            color: $font-color-disabled;
+        }
+    }
+}
+
+.jigsaw-tabs-bar-host {
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab {
+        color: $font-color-default;
+    }
+
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab.jigsaw-tabs-tab-active {
+        background: $gray-4;
+        color: $font-color-default;
+    }
+
+    .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
+        background: $gray-4;
+    }
+
+    &.jigsaw-tabs-page .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
+        background: $bg-hover;
+    }
+}
+
+.jigsaw-list-host {
+    &.jigsaw-tabs-list .jigsaw-list-option-host.jigsaw-list-option-selected .jigsaw-tabs-bar-list-option {
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-tag-host {
+    &.jigsaw-tag-preset-gray {
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-tree-host {
+    .ztree li a.curSelectedNode {
+        background: $blue-4;
+        border-color: $blue-4;
+        color: $font-color-default;
+    }
+
+    .ztree li a.curSelectedNode .node_name {
+        color: $font-color-default;
+    }
+}
+
+.jigsaw-tree-host {
+    .ztree li span:not(.node_name) {
+        color: $font-color-default;
+
+        &.button {
+
+            &.edit,
+            &.remove,
+            &.ico_open,
+            &.ico_close,
+            &.ico_docu,
+            &.chk.checkbox_false_full,
+            &.chk.checkbox_false_full_focus,
+            &.chk.checkbox_true_full,
+            &.chk.checkbox_true_full_focus,
+            &.switch.noline_open,
+            &.switch.noline_close,
+            &.switch.root_open,
+            &.switch.root_close,
+            &.switch.roots_open,
+            &.switch.roots_close,
+            &.switch.center_open,
+            &.switch.center_close,
+            &.switch.bottom_open,
+            &.switch.bottom_close,
+            &.chk.checkbox_true_part,
+            &.chk.checkbox_true_part_focus,
+            &[class*="ico_open"],
+            &[class*="ico_close"],
+            &[class*="ico_docu"] {
+                &:hover {
+                    &::after {
+                        color: $blue-10;
+                    }
+                }
+            }
+        }
+    }
+
+    .ztree li a input.rename {
+        color: $brand-default;
+    }
+}
+
+.jigsaw-list-option-host {
+    color: $font-color-default;
+
+    &.jigsaw-list-option-active {
+        color: $font-color-default;
+    }
+
+    &:not(.jigsaw-list-option-disabled):hover {
+        background: $bg-hover;
+
+        .jigsaw-list-option-title-box .jigsaw-list-option-title {
+            color: $font-color-default;
+        }
+    }
+
+    &.jigsaw-list-option-active {
+        background: $bg-active;
+        color: $font-color-default;
+
+        .jigsaw-list-option-title,
+        .jigsaw-list-option-sub-title {
+            color: $font-color-default;
+        }
+    }
+}
+
+.jigsaw-collapse-host {
+    .jigsaw-collapse .jigsaw-collapse-item .jigsaw-collapse-header:hover {
+        background: $bg-hover;
+    }
+}
+
+.jigsaw-drawer-host {
+    .jigsaw-drawer {
+        background: $bg-container;
+    }
+}
+
+.jigsaw-button-bar-host {
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option:not(.jigsaw-tile-option-disabled):hover,
+    &.jigsaw-button-bar-primary .jigsaw-tile-option:not(.jigsaw-tile-option-disabled):hover {
+        background: $bg-hover;
+        color: $font-color-default;
+    }
+
+    &.jigsaw-button-bar-primary .jigsaw-tile-option.jigsaw-tile-option-active:hover {
+        background: $brand-default;
+    }
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option.jigsaw-tile-option-active {
+        color: $font-color-default;
+    }
+
+    &.jigsaw-button-bar-default .jigsaw-tile-option.jigsaw-tile-option-active:hover {
+        background: $brand-lighten;
+    }
+}

@@ -8,6 +8,8 @@ import { ThemePropertiesDemoModule } from './properties/demo.module';
 import { ThemePropertiesDemoComponent } from './properties/demo.component';
 import { ThemeBuildInThemeDemoComponent } from './wings-theme/demo.component';
 import { ThemeBuildInThemeDemoModule } from './wings-theme/demo.module';
+import { ThemeAllComponentDemoComponent } from "./all-component/demo.component";
+import { ThemeAllComponentDemoModule } from "./all-component/demo.module";
 
 export const routerConfig = [
     {
@@ -21,13 +23,16 @@ export const routerConfig = [
     },
     {
         path: 'wings-theme', component: ThemeBuildInThemeDemoComponent
+    },
+    {
+        path: 'all-component', component: ThemeAllComponentDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), ThemeBuildInDemoModule, AdjustFontColorDemoModule,
-        ThemePropertiesDemoModule, ThemeBuildInThemeDemoModule
+        ThemePropertiesDemoModule, ThemeBuildInThemeDemoModule, ThemeAllComponentDemoModule
     ]
 })
 export class ThemeDemoModule {

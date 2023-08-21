@@ -1,4 +1,4 @@
-/* paletx-pro-light */
+/* awade-light */
 $blue-1: #e6f5ff;
 $blue-2: #bde4ff;
 $blue-3: #94d2ff;
@@ -111,11 +111,11 @@ $navy-10: #0b0f5e;
 
 $gray-1: #ffffff;
 $gray-2: #f5f5f5;
-$gray-3: #eeeeee;
-$gray-4: #e5e5e5;
-$gray-5: #d9d9d9;
-$gray-6: #bfbfbf;
-$gray-7: #999999;
+$gray-3: #f0f0f0;
+$gray-4: #eeeeee;
+$gray-5: #e5e5e5;
+$gray-6: #cccccc;
+$gray-7: #8a8a8a;
 $gray-8: #737373;
 $gray-9: #4d4d4d;
 $gray-10: #333333;
@@ -212,8 +212,8 @@ $brand-active-lighten: $blue-2;
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #f1f2f6;
-/*@public*/ $bg-container: $gray-2;
-/*@public*/ $bg-component: $gray-1;
+/*@public*/ $bg-container: $gray-1;
+/*@public*/ $bg-component: transparent;
 /*@public*/ $bg-component-darken: $gray-2;
 /*@public*/ $bg-disabled: $gray-2;
 /*@public*/ $bg-hover: $blue-1;
@@ -241,7 +241,7 @@ $font-color-white-darken: $gray-6;
 /*@public*/ $font-color-brand-hover: $brand-hover;
 
 /* border 边框 */
-/*@public*/ $border-color-default: $gray-5;
+/*@public*/ $border-color-default: $gray-6;
 /*@public*/ $border-color-disabled: $gray-4;
 $border-color-popup: $gray-4;
 $border-color-shadow-cntr: transparent;
@@ -262,8 +262,8 @@ $icon-color-inactive: $gray-4;
 /*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.12);
 
 /* 导航色 */
-/*@public*/ $nav-header: $primary-default;
-/*@public*/ $nav-navigation: $gray-2;
+/*@public*/ $nav-header: #0254F2;
+/*@public*/ $nav-navigation: $gray-5;
 /*@public*/ $nav-navigation-darken: $gray-3;
 /*@public*/ $nav-hover: $blue-1;
 /*@public*/ $nav-active: $gray-1;

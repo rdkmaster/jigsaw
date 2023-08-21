@@ -11,7 +11,7 @@ $jigsaw-status: #{$jigsaw-prefix}-status;
     a:hover,
     a:active {
         text-decoration: none;
-        color: $brand-default;
+        color: $font-color-brand;
     }
 
     &.#{$icon-prefix-cls}-disabled {

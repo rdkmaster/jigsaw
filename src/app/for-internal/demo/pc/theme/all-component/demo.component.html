@@ -1,0 +1,143 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<j-switch [(checked)]="disabled" onLabel="禁用" offLabel="非禁用"></j-switch>
+
+<j-header>All Component</j-header>
+
+<div class="component-cntr">
+    <j-input [disabled]="disabled" placeholder="请输入文本"></j-input>
+    <j-numeric-input [showOption]="true" [disabled]="disabled" placeholder="请输入数字" suffix="单位"></j-numeric-input>
+    <j-search-input [autoSearch]="false" [disabled]="disabled"></j-search-input>
+    <j-search-input [autoSearch]="true" [disabled]="disabled"></j-search-input>
+    <j-auto-complete-input placeholder="请输入自动补全文本" [data]="cityListText" [disabled]="disabled">
+    </j-auto-complete-input>
+</div>
+
+<div class="component-cntr">
+    <j-textarea placeholder="请输入文本"></j-textarea>
+
+    <ul>
+        <li>
+            <span style="color: var(--font-color-default)">font-color-default</span>
+            <span style="color: var(--font-color-brand)">font-color-brand</span>
+        </li>
+        <li>
+            <span style="color: var(--error-default)">error-default</span>
+            <span style="color: var(--error-hover)">error-hover</span>
+            <span style="color: var(--error-active)">error-active</span>
+            <span style="color: var(--error-disabled)">error-disabled</span>
+        </li>
+    </ul>
+</div>
+
+<div class="component-cntr">
+    <j-combo-select [(value)]="selectedCity" maxWidth="500" [clearable]="true" [disabled]="disabled" placeholder="请选择">
+        <ng-template>
+            <j-tile [(selectedItems)]="selectedCity" trackItemBy="label" width="400px">
+                <j-tile-option *ngFor="let city of cityList" [value]="city" width="22.8%">
+                    {{city.label}}
+                </j-tile-option>
+            </j-tile>
+        </ng-template>
+    </j-combo-select>
+    <j-select [data]="cityList" [disabled]="disabled" placeholder="请选择城市"></j-select>
+    <j-collapse-select [disabled]="disabled" [data]="groupList" placeholder="请选择">
+    </j-collapse-select>
+    <j-group-select [disabled]="disabled" [data]="groupList" placeholder="请选择">
+    </j-group-select>
+</div>
+
+<div class="component-cntr">
+    <j-button colorType="default" [disabled]="disabled"> 普通按钮 </j-button>
+    <j-button colorType="primary" [disabled]="disabled"> 主导按钮 </j-button>
+    <j-button colorType="error" [disabled]="disabled"> 错误按钮 </j-button>
+    <j-button colorType="warning" [disabled]="disabled"> 警告按钮 </j-button>
+    <j-button colorType="primary" icon="iconfont iconfont-e0a1" [disabled]="disabled"> 关键按钮 </j-button>
+    <j-button colorType="default" icon="iconfont iconfont-e0a1" [disabled]="disabled"> 次级按钮 </j-button>
+    <j-button colorType="default" icon="iconfont iconfont-e35b" [disabled]="disabled"></j-button>
+    <j-button colorType="none" [disabled]="disabled"> 文字按钮 </j-button>
+</div>
+
+<div class="component-cntr">
+    <j-button-bar [data]="cityList"></j-button-bar>
+    <j-button-bar [data]="cityList" colorType="default"></j-button-bar>
+</div>
+
+<div class="component-cntr">
+    <j-checkbox [enableIndeterminate]="true" [disabled]="disabled">Check Me</j-checkbox>
+    <j-switch [disabled]="disabled"></j-switch>
+    <j-radios-lite [data]="cityList" [disabled]="disabled"></j-radios-lite>
+</div>
+
+<div class="component-cntr">
+    <j-tag color="preset-gray" size="medium">灰色标签</j-tag>
+    <j-tag color="preset-blue" size="medium">蓝色标签</j-tag>
+    <j-tag color="preset-cyan" size="medium">青色标签</j-tag>
+    <j-tag color="preset-green" size="medium">绿色标签</j-tag>
+    <j-tag color="preset-magenta" size="medium">洋红标签</j-tag>
+    <j-tag color="preset-orange" size="medium">橘色标签</j-tag>
+    <j-tag color="preset-red" size="medium">红色标签</j-tag>
+    <j-tag color="preset-purple" size="medium">紫色标签</j-tag>
+</div>
+
+<div class="component-cntr">
+    <j-tabs-bar [data]="cityList"></j-tabs-bar>
+    <j-tabs-bar [data]="cityList" tabType="page"></j-tabs-bar>
+</div>
+
+<div class="component-cntr">
+    <j-navigation-menu [data]="navData"></j-navigation-menu>
+
+    <j-list-lite width="200" [data]="goodsList" labelField="name" [multipleSelect]="true">
+    </j-list-lite>
+
+    <j-list width="200" trackItemBy="label">
+        <j-list-option *ngFor="let city of cityList" [value]="city">
+            {{city.label}}
+        </j-list-option>
+    </j-list>
+
+    <j-collapse width="300">
+        <j-collapse-pane header="测试col">
+            <j-input placeholder="请输入姓名~"></j-input>
+        </j-collapse-pane>
+
+        <j-collapse-pane header="afdafd">
+            姓名:
+            <j-input placeholder="请输入姓名~"></j-input>
+        </j-collapse-pane>
+
+        <j-collapse-pane header="嵌套">
+            <j-collapse mode="accordion">
+                <j-collapse-pane header="测试col">
+                    <j-input placeholder="请输入姓名~"></j-input>
+                </j-collapse-pane>
+
+                <j-collapse-pane header="afdafd">
+                    姓名:
+                    <j-input placeholder="请输入姓名~"></j-input>
+                </j-collapse-pane>
+            </j-collapse>
+        </j-collapse-pane>
+    </j-collapse>
+</div>
+
+<div class="component-cntr">
+    <j-tree-ext [data]="treeData"></j-tree-ext>
+    <j-tree-ext [data]="treeData2"></j-tree-ext>
+</div>
+
+<div class="component-cntr">
+    <j-steps [data]="stepData"></j-steps>
+</div>
+
+<div class="component-cntr">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
+
+<div class="component-cntr">
+
+</div>
