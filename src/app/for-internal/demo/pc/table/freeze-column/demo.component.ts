@@ -49,15 +49,19 @@ export class TableFreezeColumnDemoComponent {
         { label: "auto", id: 1 },
         { label: "_inner_auto_", id: 2 },
         { label: "固定值", id: 3 },
+        { label: "不设置", id: 4 },
     ]);
 
     public selectedContentWidth = [{ label: "固定值", id: 3 }];
 
     public get contentWidth() {
-        if (this.selectedContentWidth[0].id != 3) {
+        if (this.selectedContentWidth[0].id == 3) {
+            return this.contentWidthNum;
+        } else if (this.selectedContentWidth[0].id == 4) {
+            return undefined;
+        } else {
             return this.selectedContentWidth[0].label;
         }
-        return this.contentWidthNum;
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

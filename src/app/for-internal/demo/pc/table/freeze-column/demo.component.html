@@ -15,8 +15,7 @@
     </li>
     <li class="demo-options-item">
         <span>contentWidth：</span>
-        <j-button-bar [(selectedItems)]="selectedContentWidth" [data]="contentWidthData"
-            (selectedItemsChange)="valueChange()">
+        <j-button-bar [(selectedItems)]="selectedContentWidth" [data]="contentWidthData" (selectedItemsChange)="valueChange()">
         </j-button-bar>
         <j-numeric-input *ngIf="selectedContentWidth[0].id == 3" [(value)]="contentWidthNum" min="100" max="5000"
             step="100" (valueChange)="valueChange()">
