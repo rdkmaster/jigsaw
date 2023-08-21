@@ -210,6 +210,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             if (this.initialized) {
                 this.valueChange.emit(this._value);
             }
+            this._propagateChange(this._value);
             this._cdr.markForCheck();
             return;
         }
