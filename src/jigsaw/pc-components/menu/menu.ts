@@ -16,6 +16,7 @@ import {SimpleNode, SimpleTreeData} from "../../common/core/data/tree-data";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {CommonUtils} from '../../common/core/utils/common-utils';
 import {JigsawList, JigsawListOption} from "../list-and-tile/list";
+import { JigsawThemeService } from "../../common/core/theming/theme";
 
 export type MenuTheme = 'light' | 'dark' | 'navigation';
 
@@ -145,7 +146,7 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     public get _$realTheme(): MenuTheme {
         let theme = this.initData && this.initData.theme ? this.initData.theme : this.theme;
         if (theme !== 'light' && theme !== 'dark' && theme !== 'navigation') {
-            theme = 'light';
+            theme = this._themeService.majorStyle;;
         }
         return <MenuTheme>theme;
     }
@@ -194,7 +195,8 @@ export class JigsawMenu extends AbstractJigsawComponent implements IPopupable, A
     @ViewChild('menuList')
     private _menuListInstance: JigsawList;
 
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef,
+        private _themeService: JigsawThemeService) {
         super();
     }
 
