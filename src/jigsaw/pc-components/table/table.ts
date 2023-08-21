@@ -504,6 +504,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let leftOffset = 0;
         const max = Math.min(this.frozenLeftColumns, tds.length);
         for (let i = 0; i < max; i++) {
+            tds[i].classList.add("jigsaw-cell-freeze");
             tds[i].style.left = leftOffset + 'px';
             leftOffset += tds[i].offsetWidth;
         }
@@ -516,32 +517,28 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let rightOffset = 0;
         const min = tds.length - 1 - this.frozenRightColumns;
         for (let i = tds.length - 1; i > min; i--) {
+            tds[i].classList.add("jigsaw-cell-freeze");
             tds[i].style.right = rightOffset + 'px';
             rightOffset += tds[i].offsetWidth;
         }
     }
 
-    /**
-     * @internal
-     */
-    public _$isCellFrozen(index): boolean {
-        return index < this.frozenLeftColumns || index > this._$headerSettings.length - 1 - this.frozenRightColumns;
-    }
-
     private _clearFreezeStyle() {
         if (!this.hideHeader) {
-            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
+            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td.jigsaw-cell-freeze');
             headers.forEach(cell => {
                 cell.style.removeProperty('left');
                 cell.style.removeProperty('right');
+                cell.classList.remove('jigsaw-cell-freeze');
             });
         }
 
         this._rowElementRefs.forEach(row => {
-            const tds = row.nativeElement.querySelectorAll('td');
+            const tds = row.nativeElement.querySelectorAll('td.jigsaw-cell-freeze');
             tds.forEach(cell => {
                 cell.style.removeProperty('left');
                 cell.style.removeProperty('right');
+                cell.classList.remove('jigsaw-cell-freeze');
             });
         })
     }
