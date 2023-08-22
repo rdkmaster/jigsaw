@@ -727,6 +727,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public dimensions: RadarDimension[] = [];
     public indicators: RadarIndicator[] = [];
+    public isDefaultFillBackground: boolean;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -772,6 +773,9 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 
         let series = CommonUtils.extendObjects<EchartSeriesItem>({type: 'radar'}, this.template.seriesItem);
         series.data = dimensions.map((dimension: RadarDimension) => {
+            const fromData = this.dimensions.every(dim => dim.name != dimension.name);
+            // 数据里过来的维度值自动加上默认填充背景
+            dimension.area = fromData ? this.isDefaultFillBackground : dimension.area;
             const records = this.data.filter(row => row[dimIndex] == dimension.name);
             const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
             const seriesItem = {
