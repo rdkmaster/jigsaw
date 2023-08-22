@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="demo-cntr">
+    <div>
+        <div>
+            <jigsaw-input (valueChange)="treeExt.fuzzySearch($event)"></jigsaw-input>
+        </div>
+        <jigsaw-tree-ext #ztree [(data)]="data"></jigsaw-tree-ext>
+    </div>
+</div>
