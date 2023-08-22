@@ -53,6 +53,11 @@ export class TableDownloadDemoComponent {
                     "$320,8000",
                 ],
                 [
+                    "测试带#的文本",
+                    "测试带#的文本",
+                    100,
+                ],
+                [
                     "\"测试带双引号的文本\"",
                     '"测试带双引号的文本"',
                     "'测试带单引号的文本'",
@@ -66,7 +71,7 @@ export class TableDownloadDemoComponent {
                     "'测试带'单引号的文本",
                     "测试带单引号'的文本'",
                     100,
-                ],
+                ]
             ],
             ["name", "position", "salary"],
             ["姓名", "职位", "薪资",]);
