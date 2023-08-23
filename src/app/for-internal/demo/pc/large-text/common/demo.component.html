@@ -51,6 +51,25 @@
             <label>启用valueMap</label>
             <jigsaw-switch [(checked)]="valueMapUsed" (checkedChange)="valueMapChecked($event)"></jigsaw-switch>
         </div>
+        <div class="row">
+            <label>大字组件标题</label>
+            <jigsaw-input [(value)]="largeTitle" placeholder="输入前置单位"></jigsaw-input>
+        </div>
+        <div class="row">
+            <label>大字组件标题样式</label>
+            <j-numeric-input [(value)]="largeTitleSize" (valueChange)="setStyle0()" [showOption]="false"
+                             min="6" [suffix]="'px'" placeholder="请输入前置单位字体大小"></j-numeric-input>
+            <jigsaw-color-select [enableOpacity]="true" [(color)]="largeTitleColor" (colorChange)="setStyle0()" width="40"></jigsaw-color-select>
+        </div>
+        <div class="row">
+            <label>标题偏移</label>
+            X：
+            <j-numeric-input [(value)]="titleX" (valueChange)="setStyle0()" [showOption]="false" min="0"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            Y：
+            <j-numeric-input [(value)]="titleY" (valueChange)="setStyle0()" [showOption]="false" min="0"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+        </div>
     </div>
     <div class="wrapper">
         <div class="row">
@@ -62,17 +81,11 @@
 
         <div class="row">
             <label>前置单位字体偏移</label>
-            下移：
-            <j-numeric-input [(value)]="leadingLeft" (valueChange)="setStyle()" [showOption]="false"
+            X：
+            <j-numeric-input [(value)]="leadingX" (valueChange)="setStyle()" [showOption]="false"
                              [suffix]="'px'" width="80"></j-numeric-input>
-            左移：
-            <j-numeric-input [(value)]="leadingBottom" (valueChange)="setStyle()" [showOption]="false"
-                             [suffix]="'px'" width="80"></j-numeric-input>
-            上移：
-            <j-numeric-input [(value)]="leadingRight" (valueChange)="setStyle()" [showOption]="false"
-                             [suffix]="'px'" width="80"></j-numeric-input>
-            右移：
-            <j-numeric-input [(value)]="leadingTop" (valueChange)="setStyle()" [showOption]="false"
+            Y：
+            <j-numeric-input [(value)]="leadingY" (valueChange)="setStyle()" [showOption]="false"
                              [suffix]="'px'" width="80"></j-numeric-input>
         </div>
 
@@ -94,17 +107,11 @@
         </div>
         <div class="row">
             <label>后缀单位字体偏移</label>
-            下移：
-            <j-numeric-input [(value)]="unitTop" (valueChange)="setStyle1()" [showOption]="false"
-                             [suffix]="'px'" width="80"></j-numeric-input>
-            左移：
-            <j-numeric-input [(value)]="unitRight" (valueChange)="setStyle1()" [showOption]="false"
-                             [suffix]="'px'" width="80" min="0"></j-numeric-input>
-            上移：
-            <j-numeric-input [(value)]="unitBottom" (valueChange)="setStyle1()" [showOption]="false"
-                             [suffix]="'px'" width="80"></j-numeric-input>
-            右移：
+            X：
             <j-numeric-input [(value)]="unitLeft" (valueChange)="setStyle1()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+            Y：
+            <j-numeric-input [(value)]="unitBottom" (valueChange)="setStyle1()" [showOption]="false"
                              [suffix]="'px'" width="80"></j-numeric-input>
         </div>
         <div class="row">
@@ -143,12 +150,13 @@
         </div>
         <div class="row">
             <label>图标与百分比偏移</label>
-            下移：
-            <j-numeric-input [(value)]="trendTop" (valueChange)="setStyle3()" [showOption]="false"
-                             [suffix]="'px'" width="80"></j-numeric-input>
-            右移：
+            X：
             <j-numeric-input [(value)]="trendLeft" (valueChange)="setStyle3()" [showOption]="false"
                              [suffix]="'px'" width="80"></j-numeric-input>
+            Y：
+            <j-numeric-input [(value)]="trendTop" (valueChange)="setStyle3()" [showOption]="false"
+                             [suffix]="'px'" width="80"></j-numeric-input>
+
         </div>
     </div>
 </div>
@@ -158,12 +166,12 @@
     <div class="box">
         <p>精度{{fractionDigits}}，动画时间{{animationDuration}}ms</p>
         <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [leadingUnit]="leadingUnit"
+        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [largeTitle]="largeTitle" [leadingUnit]="leadingUnit"
                            [unit]="unit" [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
                            [useRawValue]="useRawValue" [trend]="'percentage'" [leadingUnitStyle]="leadingStyle"
                            [unitStyle]="unitStyle" [valueStyle]="valueStyle" [basicTrendStyle]="basicTrendStyle"
                            [ascendingTrendStyle]="ascendingTrendStyle" [descendingTrendStyle]="descendingTrendStyle"
-                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap"></jigsaw-large-text>
+                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap" [largeTitleStyle]="largeTileStyle"></jigsaw-large-text>
     </div>
     <div class="box" style="margin-left: 100px">
         <p>组件内容为图标</p>
