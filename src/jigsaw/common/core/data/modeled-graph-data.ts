@@ -799,7 +799,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 散点图相关数据对象
 export class ScatterDimension extends Dimension {
-    public itemStyle: any = {};
+    public itemStyle?: any = {};
     public static extend(seriesItem: EchartSeriesItem, dimension: ScatterDimension) {
         const dimensionBak = <ScatterDimension>CommonUtils.deepCopy(dimension);
         delete dimensionBak.name;
