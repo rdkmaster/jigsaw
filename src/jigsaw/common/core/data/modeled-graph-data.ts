@@ -799,6 +799,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 散点图相关数据对象
 export class ScatterDimension extends Dimension {
+    public itemStyle: any = {};
     public static extend(seriesItem: EchartSeriesItem, dimension: ScatterDimension) {
         const dimensionBak = <ScatterDimension>CommonUtils.deepCopy(dimension);
         delete dimensionBak.name;
@@ -851,7 +852,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         options.xAxis = CommonUtils.extendObject(options.xAxis, this.xAxis);
         options.yAxis = CommonUtils.extendObject(options.yAxis, this.yAxis);
 
-        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        const dimensions = <ScatterDimension[]> this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         const dimIndex = this.getIndex(this.dimensionField);
         this._mergeLegend(options.legend, dimensions);
 
