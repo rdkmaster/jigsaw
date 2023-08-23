@@ -1201,19 +1201,16 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
         const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
-            + data.map(e => e.join(",")).join("\n");
-            // + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
-        // const link = document.createElement("a");
-        // link.setAttribute("href", csvContent);
-        // link.setAttribute("download", name);
-        // link.click();
-            const blob = new Blob([csvContent], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = name;
-            link.click();
-            URL.revokeObjectURL(url);
+            + data.map(e => e.map(i => {
+                let escapedValue = String(i).replace(/(")/g, '$1$1');
+                escapedValue = escapedValue.replace(/#/g, '%23');
+                return `"${escapedValue}"`;
+            }).join(",")).join("\n");
+
+        const link = document.createElement("a");
+        link.setAttribute("href", csvContent);
+        link.setAttribute("download", name);
+        link.click();
     }
 
     ngAfterViewInit() {
