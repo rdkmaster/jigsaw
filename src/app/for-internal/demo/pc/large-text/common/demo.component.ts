@@ -30,7 +30,7 @@ export class LargeTextCommonDemoComponent {
                 'margin': `0 0 ${this.titleY}px ${this.titleX}px`}};
     }
 
-    leadingUnit: string = "2023年：";
+    leadingUnit: string = "人民币";
 
     unit: string = "亿";
 
