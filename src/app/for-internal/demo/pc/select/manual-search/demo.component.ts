@@ -16,6 +16,7 @@ export class SelectManualSearchDemoComponent {
         { label: "西安" }
     ]);
     public manualSearch: boolean = true;
+    public debounceTime: number = 0;
 
     public valueChange($event) {
         console.log('valueChange=>', $event);

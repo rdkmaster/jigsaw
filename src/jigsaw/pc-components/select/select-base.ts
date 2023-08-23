@@ -606,6 +606,15 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public manualSearch: boolean = false;
 
     /**
+     * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
+     * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public searchDebounce: number | "none" = NaN;
+
+    /**
      * 设置边框显隐开关。
      * @NoMarkForCheckRequired
      */

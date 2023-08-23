@@ -11,9 +11,9 @@
                     'jigsaw-select-show-selected': _$showSelected,
                     'jigsaw-select-multiple-list': multipleSelect,
                     'jigsaw-select-single-list': !multipleSelect}">
-            <jigsaw-input *ngIf="searchable" width="100%" (valueChange)="_$handleSearching($event)">
-                <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
-            </jigsaw-input>
+            <jigsaw-search-input *ngIf="searchable" width="100%" (search)="_$handleSearching($event)"
+                [searchDebounce]="searchDebounce" historyStorageSize="0">
+            </jigsaw-search-input>
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                 <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
                 <jigsaw-circle-loading *ngIf="data && data['busy']" [size]="'small'"></jigsaw-circle-loading>

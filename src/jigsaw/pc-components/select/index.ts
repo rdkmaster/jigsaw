@@ -11,6 +11,7 @@ import {JigsawInputModule} from "../input/input";
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawToastModule } from "../toast/toast";
+import { JigsawSearchInputModule } from "../input/search-input";
 
 @NgModule({
     imports: [
@@ -22,6 +23,7 @@ import { JigsawToastModule } from "../toast/toast";
         PerfectScrollbarModule,
         JigsawLoadingModule,
         JigsawToastModule,
+        JigsawSearchInputModule,
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
