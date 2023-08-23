@@ -321,12 +321,42 @@ export class IntroComponent implements AfterViewInit {
                                             },
                                         ]
                                     },
+                                    { label: "卡片布局" },
+                                    {
+                                        label: "卡片样式",
+                                        nodes: [
+                                            {
+                                                label: "边框",
+                                                nodes: [
+                                                    { label: "无边框" },
+                                                    {
+                                                        label: "自定义",
+                                                        nodes: [
+                                                            { label: "上传图片" },
+                                                            { label: "收藏" },
+                                                            { label: "设置弹性边框" },
+                                                            { label: "删除" },
+                                                        ]
+                                                    },
+                                                    { label: "内置" },
+                                                ]
+                                            },
+                                            { label: "无背景" },
+                                            { label: "标题" },
+                                        ]
+                                    },
                                 ]
                             },
                             {
                                 label: "数据交互",
                                 nodes: [
-                                    { label: "属性" },
+                                    {
+                                        label: "属性",
+                                        nodes: [
+                                            { label: "数据" },
+                                            { label: "布尔值" },
+                                        ]
+                                    },
                                     {
                                         label: "交互动作",
                                         nodes: [
@@ -377,6 +407,15 @@ export class IntroComponent implements AfterViewInit {
                                     },
                                 ]
                             },
+                            {
+                                label: "图标样式",
+                                nodes: [
+                                    { label: "图形类型" },
+                                    { label: "坐标轴" },
+                                    { label: "图例" },
+                                    { label: "标题" },
+                                ]
+                            }
                         ]
                     },
                     {
