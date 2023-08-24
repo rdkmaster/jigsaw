@@ -705,7 +705,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
     private _themeChangeSubscription: Subscription;
-
     private _currentPageChangeSubscription: Subscription;
 
     private _addWindowListener() {
@@ -732,6 +731,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!(data?.pagingInfo instanceof PagingInfo)) {
             return;
         }
+        this._currentPageChangeSubscription?.unsubscribe();
         this._currentPageChangeSubscription = data.pagingInfo.subscribe(() => {
             if (this.data instanceof LocalPageableTableData) {
                 this._bodyScrollbar.scrollToTop();
