@@ -2,6 +2,14 @@ import { HttpClient } from "@angular/common/http";
 import { Component, ViewChild } from "@angular/core";
 import { AdditionalColumnDefine, JigsawTable, LocalPageableTableData, PageableTableData, TableCellCheckboxRenderer, TableData, TableHeadCheckboxRenderer } from "jigsaw/public_api";
 
+function generateAllAsciiCharactersString() {
+    let result = "";
+    for (let i = 1; i <= 255; i++) {
+        result += String.fromCharCode(i);
+    }
+    return result;
+}
+
 @Component({
     templateUrl: './demo.component.html'
 })
@@ -37,6 +45,11 @@ export class TableDownloadDemoComponent {
 
         this.additionalColumnDefinesData = new TableData(
             [
+                [
+                    "包含所有普通和特殊asc字符的情况",
+                    generateAllAsciiCharactersString(),
+                    542
+                ],
                 [
                     "测试带\"双引号\"的文本",
                     "测试带\'单引号\'的文本",
