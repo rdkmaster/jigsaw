@@ -798,6 +798,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
     private _themeChangeSubscription: Subscription;
+    private _currentPageChangeSubscription: Subscription;
 
     private _addWindowListener() {
         this._removeWindowListener();
@@ -818,6 +819,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
         });
+
+        const data: IPageable = <any>this.data;
+        if (!(data?.pagingInfo instanceof PagingInfo)) {
+            return;
+        }
+        this._currentPageChangeSubscription?.unsubscribe();
+        this._currentPageChangeSubscription = data.pagingInfo.subscribe(() => {
+            if (this.data instanceof LocalPageableTableData) {
+                this._bodyScrollbar.scrollToTop();
+                return;
+            }
+            // 这里如果不是本地分页需要等待表格数据更新完毕后更新滚动条
+            const removeAjaxCallback = this.data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                this._bodyScrollbar.scrollToTop();
+            })
+        })
     }
 
     public resize() {
@@ -858,6 +876,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeWindowResizeListener) {
             this._removeWindowResizeListener();
             this._removeWindowResizeListener = null;
+        }
+        if (this._currentPageChangeSubscription) {
+            this._currentPageChangeSubscription.unsubscribe();
+            this._currentPageChangeSubscription = null;
         }
         this._themeChangeSubscription?.unsubscribe();
     }
