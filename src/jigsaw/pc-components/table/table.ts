@@ -1198,7 +1198,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
         const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
-            + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
+            + data.map(e => e.map(i => {
+                const escapedValue = String(i)
+                    .replace(/(")/g, '$1$1')
+                    .replace(/#/g, '%23');
+                return `"${escapedValue}"`;
+            }).join(",")).join("\n");
 
         const link = document.createElement("a");
         link.setAttribute("href", csvContent);
