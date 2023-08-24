@@ -16,7 +16,21 @@ export class LargeTextCommonDemoComponent {
 
     animationDuration: number = 2000;
 
-    leadingUnit: string = "股票市值：";
+    largeTitle: string = "股票市值："
+    largeTitleSize = 23;
+    largeTitleColor = "#32e4d8";
+    titleY: number = 2;
+    titleX: number = 3;
+
+    largeTileStyle = {'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
+        'margin': `0 0 ${this.titleY}px ${this.titleX}px`}
+
+    setStyle0() {
+        this.largeTileStyle = {...this.largeTileStyle, ...{'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
+                'margin': `0 0 ${this.titleY}px ${this.titleX}px`}};
+    }
+
+    leadingUnit: string = "人民币";
 
     unit: string = "亿";
 
@@ -25,17 +39,15 @@ export class LargeTextCommonDemoComponent {
     leadingFontSize = 23;
     leadingFontColor = "#e43232";
 
-    leadingLeft: number = 12;
-    leadingBottom: number = -65;
-    leadingRight: number = 125;
-    leadingTop: number = 11;
+    leadingX: number = 0;
+    leadingY: number = 0;
 
     leadingStyle = {'font-size': this.leadingFontSize + 'px', 'color': '#e43232',
-        'margin': `${this.leadingLeft}px ${this.leadingBottom}px ${this.leadingRight}px ${this.leadingTop}px`}
+        'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`}
 
     setStyle() {
         this.leadingStyle = {...this.leadingStyle, ...{'font-size': this.leadingFontSize + 'px', 'color': this.leadingFontColor,
-            'margin': `${this.leadingLeft}px ${this.leadingBottom}px ${this.leadingRight}px ${this.leadingTop}px`}};
+            'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`}};
     }
 
     unitFontSize = 23;
@@ -44,16 +56,14 @@ export class LargeTextCommonDemoComponent {
 
     unitLeft: number = 12;
     unitBottom: number = -21;
-    unitRight: number = 16;
-    unitTop: number = 11;
 
     unitStyle = {'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
-        'margin': `${this.unitTop}px ${this.unitRight}px ${this.unitBottom}px ${this.unitLeft}px`}
+        'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`}
 
 
     setStyle1() {
         this.unitStyle = {...this.unitStyle, ...{'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
-                'margin': `${this.unitTop}px ${this.unitRight}px ${this.unitBottom}px ${this.unitLeft}px`}};
+                'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`}};
     }
 
     valueFontSize = 70;
@@ -77,15 +87,13 @@ export class LargeTextCommonDemoComponent {
 
     trendFontSize = 20;
     trendLeft: number = 0;
-    trendBottom: number = 0;
-    trendRight: number = 0;
-    trendTop: number = 38;
+    trendTop: number = 0;
     basicTrendStyle = {'font-size': this.trendFontSize + 'px', "justify-content":"center", "flex-flow": 'row',
-        'margin': `${this.trendTop}px ${this.trendRight}px ${this.trendBottom}px ${this.trendLeft}px`};
+        'margin': `${0 - this.trendTop}px 0 0 ${this.trendLeft}px`};
 
     setStyle3() {
         this.basicTrendStyle = {...this.basicTrendStyle, 'font-size': this.trendFontSize + 'px',
-            'margin': `${this.trendTop}px ${this.trendRight}px ${this.trendBottom}px ${this.trendLeft}px`};
+            'margin': `${0 - this.trendTop}px 0 0  ${this.trendLeft}px`};
     }
 
     ascendingTrendColor = '#56e10d'
