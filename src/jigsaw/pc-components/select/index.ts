@@ -7,10 +7,10 @@ import { JigsawCheckBoxModule } from "../checkbox/index";
 import { JigsawListModule } from "../list-and-tile/list";
 import { JigsawSelectGroup, JigsawSelectCollapse } from "./collapse-and-group-select";
 import { JigsawCollapseModule } from "../collapse/collapse";
-import {JigsawInputModule} from "../input/input";
 import { JigsawLoadingModule } from '../../common/components/loading/loading';
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawToastModule } from "../toast/toast";
+import { JigsawSearchInputModule } from "../input/search-input";
 
 @NgModule({
     imports: [
@@ -18,10 +18,10 @@ import { JigsawToastModule } from "../toast/toast";
         JigsawListModule,
         JigsawCheckBoxModule,
         JigsawCollapseModule,
-        JigsawInputModule,
         PerfectScrollbarModule,
         JigsawLoadingModule,
         JigsawToastModule,
+        JigsawSearchInputModule,
         TranslateModule.forChild()
     ],
     declarations: [JigsawSelect, JigsawSelectGroup, JigsawSelectCollapse],
