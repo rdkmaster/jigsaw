@@ -17,7 +17,6 @@ jobs:
                     git config user.email "circleci@jigsaw.com"
                     git config user.name "circleci"
                     git merge --no-edit master
-                    git log -10 --oneline
             - restore_cache:
                 # See the configuration reference documentation for more details on using restore_cache and save_cache steps
                 # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
