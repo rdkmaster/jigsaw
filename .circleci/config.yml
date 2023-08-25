@@ -11,12 +11,7 @@ jobs:
             - image: cimg/node:10.16
         steps:
             - checkout
-            - run:
-                name: Merging master into current branch
-                command: |
-                    git config user.email "circleci@jigsaw.com"
-                    git config user.name "circleci"
-                    git merge --no-edit master
+
             - restore_cache:
                 # See the configuration reference documentation for more details on using restore_cache and save_cache steps
                 # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
@@ -46,7 +41,6 @@ jobs:
                     node build/scripts/generate-external-demo-info.js
                     node build/scripts/generate-external-navigation-info.js
                     ./node_modules/.bin/gulp build:novice-guide
-
 # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
 #            - run:
 #                name: Building jigsaw lib
