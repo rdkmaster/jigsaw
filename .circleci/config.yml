@@ -24,6 +24,15 @@ jobs:
                 key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
                 paths:
                     - ~/.npm
+
+            - run:
+                  name: Merging master into current branch
+                  command: |
+                      git config user.email "circleci@jigsaw.com"
+                      git config user.name "circleci"
+                      git merge --no-edit master
+                      git log -10
+
             - run:
                 name: Static Tests
                 command: |
@@ -41,12 +50,6 @@ jobs:
 #                    node build/scripts/generate-external-demo-info.js
 #                    node build/scripts/generate-external-navigation-info.js
 #                    ./node_modules/.bin/gulp build:novice-guide
-
-            - run:
-                  name: Merging master into current branch
-                  command: |
-                    git merge --no-edit master
-                    git log -10
 
 # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
 #            - run:
