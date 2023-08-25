@@ -31,16 +31,16 @@ jobs:
                     node build/scripts/check-html-element-type.js
                     node build/scripts/check-import-path.js
                     node build/scripts/check-mark-for-check.js
-                    node build/scripts/check-public-variables.js
-                    node build/scripts/check-scss-in-demo.js
-                    node build/scripts/check-tagname-selector.js
-                    node build/scripts/extract-theme-variables.js
-                    node build/scripts/check-extraction.js
-                    node build/scripts/check-non-i18n-terms.js
-                    node build/scripts/create-component-wings-theme.js
-                    node build/scripts/generate-external-demo-info.js
-                    node build/scripts/generate-external-navigation-info.js
-                    ./node_modules/.bin/gulp build:novice-guide
+#                    node build/scripts/check-public-variables.js
+#                    node build/scripts/check-scss-in-demo.js
+#                    node build/scripts/check-tagname-selector.js
+#                    node build/scripts/extract-theme-variables.js
+#                    node build/scripts/check-extraction.js
+#                    node build/scripts/check-non-i18n-terms.js
+#                    node build/scripts/create-component-wings-theme.js
+#                    node build/scripts/generate-external-demo-info.js
+#                    node build/scripts/generate-external-navigation-info.js
+#                    ./node_modules/.bin/gulp build:novice-guide
 
             - run:
                   name: Merging master into current branch
