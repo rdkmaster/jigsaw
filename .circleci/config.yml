@@ -47,12 +47,9 @@ jobs:
                       node build/scripts/generate-external-navigation-info.js
                       ./node_modules/.bin/gulp build:novice-guide
 
-            # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
-            #            - run:
-            #                name: Building jigsaw lib
-            #                command: npm run build
             - run:
                   name: Building jigsaw and formly lib
+                  # 注，下面编译formly的时候需要顺便编译jigsaw，所以这里不需要先编译jigsaw库了
                   command: ./node_modules/.bin/gulp build:formly:clean
 
             - run:
