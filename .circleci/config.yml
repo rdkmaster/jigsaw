@@ -11,43 +11,49 @@ jobs:
             - image: cimg/node:10.16
         steps:
             - checkout
-
+            - run:
+                  name: Merging master into current branch
+                  command: |
+                      git config user.email "circleci@jigsaw.com"
+                      git config user.name "circleci"
+                      git merge --no-edit master
             - restore_cache:
-                # See the configuration reference documentation for more details on using restore_cache and save_cache steps
-                # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
-                keys:
-                    - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+                  # See the configuration reference documentation for more details on using restore_cache and save_cache steps
+                  # https://circleci.com/docs/2.0/configuration-reference/?section=reference#save_cache
+                  keys:
+                      - jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
             - run:
-                name: Installing jigsaw packages
-                command: npm ci
+                  name: Installing jigsaw packages
+                  command: npm ci
             - save_cache:
-                key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
-                paths:
-                    - ~/.npm
+                  key: jigsaw-deps-v1-{{ .Branch }}-{{checksum "package-lock.json"}}
+                  paths:
+                      - ~/.npm
             - run:
-                name: Static Tests
-                command: |
-                    node build/scripts/check-demo-import.js
-                    node build/scripts/check-html-element-type.js
-                    node build/scripts/check-import-path.js
-                    node build/scripts/check-mark-for-check.js
-                    node build/scripts/check-public-variables.js
-                    node build/scripts/check-scss-in-demo.js
-                    node build/scripts/check-tagname-selector.js
-                    node build/scripts/extract-theme-variables.js
-                    node build/scripts/check-extraction.js
-                    node build/scripts/check-non-i18n-terms.js
-                    node build/scripts/create-component-wings-theme.js
-                    node build/scripts/generate-external-demo-info.js
-                    node build/scripts/generate-external-navigation-info.js
-                    ./node_modules/.bin/gulp build:novice-guide
-# 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
-#            - run:
-#                name: Building jigsaw lib
-#                command: npm run build
+                  name: Static Tests
+                  command: |
+                      node build/scripts/check-demo-import.js
+                      node build/scripts/check-html-element-type.js
+                      node build/scripts/check-import-path.js
+                      node build/scripts/check-mark-for-check.js
+                      node build/scripts/check-public-variables.js
+                      node build/scripts/check-scss-in-demo.js
+                      node build/scripts/check-tagname-selector.js
+                      node build/scripts/extract-theme-variables.js
+                      node build/scripts/check-extraction.js
+                      node build/scripts/check-non-i18n-terms.js
+                      node build/scripts/create-component-wings-theme.js
+                      node build/scripts/generate-external-demo-info.js
+                      node build/scripts/generate-external-navigation-info.js
+                      ./node_modules/.bin/gulp build:novice-guide
+
+            # 下面编译formly的时候需要顺便编译jigsaw，所以这里不需要了
+            #            - run:
+            #                name: Building jigsaw lib
+            #                command: npm run build
             - run:
-                name: Building jigsaw and formly lib
-                command: ./node_modules/.bin/gulp build:formly:clean
+                  name: Building jigsaw and formly lib
+                  command: ./node_modules/.bin/gulp build:formly:clean
 
             - run:
                   name: Unit test
