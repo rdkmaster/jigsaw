@@ -446,6 +446,8 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     public pagingServerUrl: string;
 
+    public debounceTime: number = 200;
+
     public pagingInfo: PagingInfo = new PagingInfo();
     /*
     *  用于控制在初始化数据时，是否需要触发查询，如不需要需手动设置为false
@@ -472,13 +474,13 @@ export class PageableTableData extends TableData implements IServerSidePageable,
     }
 
     private _initSubjects(): void {
-        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(this.debounceTime)).subscribe(filter => {
             this.filterInfo = filter;
             if (this.ready) {
                 this._ajax();
             }
         });
-        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(this.debounceTime)).subscribe(sort => {
             this.sortInfo = sort;
             if (this.ready) {
                 this._ajax();
@@ -488,7 +490,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
             if (this.ready) {
                 this._ajax();
             }
-        })
+        });
     }
 
     /**

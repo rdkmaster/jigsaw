@@ -246,15 +246,16 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
 
     public set current(newValue: number) {
         newValue = newValue ? newValue : 1; //双绑初始值为undefined或null时，设默认值为1
-        if (this.current != newValue) {
-            this._current = newValue;
-            this.currentChange.emit(newValue);
-            if (this.data.pagingInfo.currentPage != newValue) {
-                // pagingInfo.currentPage采用的getter&setter，不可随便赋值
-                this.data.pagingInfo.currentPage = newValue;
-            }
-            this._changeDetectorRef.detectChanges();
+        if (this.current == newValue) {
+            return;
         }
+        this._current = newValue;
+        this.currentChange.emit(newValue);
+        if (this.data.pagingInfo.currentPage != newValue) {
+            // pagingInfo.currentPage采用的getter&setter，不可随便赋值
+            this.data.pagingInfo.currentPage = newValue;
+        }
+        this._changeDetectorRef.detectChanges();
     }
 
     /**

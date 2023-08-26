@@ -4,7 +4,15 @@
 
 
 <!-- start to learn the demo from here -->
+<jigsaw-header level="2">LocalPageableTableData</jigsaw-header>
 <jigsaw-pagination [data]="pageable"
+                   [pageSizeOptions]="[5, 10, 20]"
+                   [searchable]="false"
+                   [showQuickJumper]="true">
+</jigsaw-pagination>
+
+<jigsaw-header level="2">PageableTableData</jigsaw-header>
+<jigsaw-pagination [data]="pageable1"
                    [pageSizeOptions]="[5, 10, 20]"
                    [searchable]="false"
                    [showQuickJumper]="true">
@@ -17,5 +25,4 @@
     <li>pageInfo.pageSize: {{pageable.pagingInfo.pageSize}}</li>
     <li>pageInfo.currentPage: {{pageable.pagingInfo.currentPage}}</li>
     <li>pageInfo.totalRecord: {{pageable.pagingInfo.totalRecord}}</li>
-    <li>actions: {{actions}} <span>注意快速切换页时的debounce的效果</span></li>
 </ul>
