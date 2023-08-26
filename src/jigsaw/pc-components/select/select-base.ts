@@ -605,7 +605,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Input()
     public manualSearch: boolean = false;
 
-    private _searchDebounce: number = 0;
+    private _searchDebounce: number = 300;
 
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
