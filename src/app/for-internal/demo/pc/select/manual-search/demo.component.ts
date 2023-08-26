@@ -26,6 +26,7 @@ export class SelectManualSearchDemoComponent {
         console.log($event);
         const data = new LocalPageableArray<any>();
         data.pagingInfo.pageSize = Infinity;
+        data.debounceTime = this.debounceTime;
         const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
             // 在新建data准备好再赋值给组件data，防止出现闪动的情况
             removeUpdateSubscriber.unsubscribe();

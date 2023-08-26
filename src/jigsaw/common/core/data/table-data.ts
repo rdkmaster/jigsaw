@@ -446,7 +446,7 @@ export class PageableTableData extends TableData implements IServerSidePageable,
 
     public pagingServerUrl: string;
 
-    public debounceTime: number = 200;
+    public debounceTime: number = 300;
 
     public pagingInfo: PagingInfo = new PagingInfo();
     /*

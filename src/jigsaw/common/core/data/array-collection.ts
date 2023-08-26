@@ -680,7 +680,8 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
                 this._dataSourceChanged = false;
             }
         });
-        this._initSubjects();
+        // 搞成异步方式，这样可以等待如debounceTime属性发生变化后，才去使用他们
+        Promise.resolve().then(() => this._initSubjects());
     }
 
     public fromArray(source: T[]): ArrayCollection<T> {
