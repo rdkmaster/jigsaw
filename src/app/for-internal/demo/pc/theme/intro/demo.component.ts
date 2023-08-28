@@ -145,7 +145,20 @@ export class IntroComponent implements AfterViewInit {
                                     {
                                         label: "自动化测试",
                                         nodes: [
-                                            { label: "新建" },
+                                            {
+                                                label: "交互测试树",
+                                                nodes: [
+                                                    {
+                                                        label: "新建测试",
+                                                        nodes: [
+                                                            { label: "测试标题" },
+                                                            { label: "公共配置" },
+                                                            { label: "用例集合" },
+                                                        ]
+                                                    },
+                                                ]
+                                            },
+                                            { label: "搜索" },
                                         ]
                                     },
                                     { label: "提需求/Bug" },
