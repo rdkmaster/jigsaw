@@ -504,6 +504,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let leftOffset = 0;
         const max = Math.min(this.frozenLeftColumns, tds.length);
         for (let i = 0; i < max; i++) {
+            tds[i].classList.add("jigsaw-cell-freeze");
             tds[i].style.left = leftOffset + 'px';
             leftOffset += tds[i].offsetWidth;
         }
@@ -516,32 +517,28 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         let rightOffset = 0;
         const min = tds.length - 1 - this.frozenRightColumns;
         for (let i = tds.length - 1; i > min; i--) {
+            tds[i].classList.add("jigsaw-cell-freeze");
             tds[i].style.right = rightOffset + 'px';
             rightOffset += tds[i].offsetWidth;
         }
     }
 
-    /**
-     * @internal
-     */
-    public _$isCellFrozen(index): boolean {
-        return index < this.frozenLeftColumns || index > this._$headerSettings.length - 1 - this.frozenRightColumns;
-    }
-
     private _clearFreezeStyle() {
         if (!this.hideHeader) {
-            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td');
+            const headers = this._headerRowElementRefs.first.nativeElement.querySelectorAll('td.jigsaw-cell-freeze');
             headers.forEach(cell => {
                 cell.style.removeProperty('left');
                 cell.style.removeProperty('right');
+                cell.classList.remove('jigsaw-cell-freeze');
             });
         }
 
         this._rowElementRefs.forEach(row => {
-            const tds = row.nativeElement.querySelectorAll('td');
+            const tds = row.nativeElement.querySelectorAll('td.jigsaw-cell-freeze');
             tds.forEach(cell => {
                 cell.style.removeProperty('left');
                 cell.style.removeProperty('right');
+                cell.classList.remove('jigsaw-cell-freeze');
             });
         })
     }
@@ -801,6 +798,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _removeWindowScrollListener: Function;
     private _removeWindowResizeListener: Function;
     private _themeChangeSubscription: Subscription;
+    private _currentPageChangeSubscription: Subscription;
 
     private _addWindowListener() {
         this._removeWindowListener();
@@ -821,6 +819,23 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
         });
+
+        const data: IPageable = <any>this.data;
+        if (!(data?.pagingInfo instanceof PagingInfo)) {
+            return;
+        }
+        this._currentPageChangeSubscription?.unsubscribe();
+        this._currentPageChangeSubscription = data.pagingInfo.subscribe(() => {
+            if (this.data instanceof LocalPageableTableData) {
+                this.contentScrollbar.scrollToTop();
+                return;
+            }
+            // 这里如果不是本地分页需要等待表格数据更新完毕后更新滚动条
+            const removeAjaxCallback = this.data.onAjaxComplete(() => {
+                removeAjaxCallback();
+                this.contentScrollbar.scrollToTop();
+            })
+        })
     }
 
     public resize() {
@@ -861,6 +876,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this._removeWindowResizeListener) {
             this._removeWindowResizeListener();
             this._removeWindowResizeListener = null;
+        }
+        if (this._currentPageChangeSubscription) {
+            this._currentPageChangeSubscription.unsubscribe();
+            this._currentPageChangeSubscription = null;
         }
         this._themeChangeSubscription?.unsubscribe();
     }
@@ -1201,7 +1220,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
         const data = this.data instanceof LocalPageableTableData ? this.data.originalData : this.data.data;
         const csvContent = `data:text/csv;charset=utf-8, ${this.data.header.join(",")} \n`
-            + data.map(e => e.map(i=>`"${String(i).replace(/(")/g, '$1$1')}"`).join(",")).join("\n");
+            + data.map(e => e.map(i => {
+                const escapedValue = String(i)
+                    .replace(/(")/g, '$1$1')
+                    .replace(/#/g, '%23');
+                return `"${escapedValue}"`;
+            }).join(",")).join("\n");
 
         const link = document.createElement("a");
         link.setAttribute("href", csvContent);

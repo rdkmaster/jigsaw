@@ -127,6 +127,12 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
+    public title: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public unit: string = '';
 
     /**
@@ -142,8 +148,16 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     public trend: 'none' | 'percentage' | 'normal' = 'none';
 
     /**
-     * 设置前置单位字体样式、布局
-     * {'font-size': 'xx px', 'color': xx, 'align-items': 'center'|'start'|'end'}
+     * 设置组件标题字体样式、YX偏移
+     * {'font-size': 'xx px', 'color': xx，margin: 0 0 Ypx Xpx}
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public titleStyle: LargeTextStyle = {'font-size': '16px'};
+
+    /**
+     * 设置前置单位字体样式、XY偏移
+     * {'font-size': 'xx px', 'color': xx，margin: "0 Xpx Ypx 0"}
      * @NoMarkForCheckRequired
      */
     @Input()
@@ -166,8 +180,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     }
 
     /**
-     * 设置后缀单位字体样式、布局
-     * {'font-size': 'xx px', 'color': xx, 'align-items': 'center'|'start'|'end'}
+     * 设置后缀单位字体样式、YX偏移
+     * {'font-size': 'xx px', 'color': xx, margin: "0 0 Ypx Xpx" }
      * @NoMarkForCheckRequired
      */
     @Input()

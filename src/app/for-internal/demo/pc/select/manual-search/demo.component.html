@@ -9,9 +9,14 @@
         <span>手动搜索：</span>
         <jigsaw-switch [(checked)]="manualSearch"></jigsaw-switch>
     </li>
+    <li class="demo-options-item">
+        <span>设置防抖:</span>
+        <jigsaw-numeric-input width="120px" [(value)]="debounceTime" min="0" step="500"
+            suffix="ms"></jigsaw-numeric-input>
+    </li>
 </ul>
 
 <jigsaw-header>手动搜索</jigsaw-header>
 <jigsaw-select placeholder="请选择城市" [data]="cityList" [(value)]="value" [searchable]="true" [manualSearch]="manualSearch"
-    (valueChange)="valueChange($event)" (searchKeywordChange)="searchKeywordChange($event)">
+    [searchDebounce]="debounceTime" (valueChange)="valueChange($event)" (searchKeywordChange)="searchKeywordChange($event)">
 </jigsaw-select>

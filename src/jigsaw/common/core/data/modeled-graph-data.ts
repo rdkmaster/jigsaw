@@ -727,6 +727,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public dimensions: RadarDimension[] = [];
     public indicators: RadarIndicator[] = [];
+    public isDefaultFillBackground: boolean;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -772,6 +773,9 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 
         let series = CommonUtils.extendObjects<EchartSeriesItem>({type: 'radar'}, this.template.seriesItem);
         series.data = dimensions.map((dimension: RadarDimension) => {
+            const fromData = this.dimensions.every(dim => dim.name != dimension.name);
+            // 数据里过来的维度值自动加上默认填充背景
+            dimension.area = fromData ? this.isDefaultFillBackground : dimension.area;
             const records = this.data.filter(row => row[dimIndex] == dimension.name);
             const pruned = this.pruneData(records, dimIndex, [dimension], this.indicators)[0];
             const seriesItem = {
@@ -795,6 +799,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 // ------------------------------------------------------------------------------------------------
 // 散点图相关数据对象
 export class ScatterDimension extends Dimension {
+    public itemStyle?: any = {};
     public static extend(seriesItem: EchartSeriesItem, dimension: ScatterDimension) {
         const dimensionBak = <ScatterDimension>CommonUtils.deepCopy(dimension);
         delete dimensionBak.name;
@@ -847,7 +852,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         options.xAxis = CommonUtils.extendObject(options.xAxis, this.xAxis);
         options.yAxis = CommonUtils.extendObject(options.yAxis, this.yAxis);
 
-        const dimensions = this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        const dimensions = <ScatterDimension[]> this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
         const dimIndex = this.getIndex(this.dimensionField);
         this._mergeLegend(options.legend, dimensions);
 
