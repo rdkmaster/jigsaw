@@ -14,6 +14,7 @@ export class SelectCollapseDemoComponent {
     selectedCityForSelect: any;
     disabled: boolean = false;
     valid: boolean = true;
+    searchable: boolean = false;
 
     dataList = new ArrayCollection([
         { groupName: "分组标题1", data: [{ label: "文本选项1文本选项1文本选项1文本选项1文本选项1" }, { label: "文本选项2" }, { label: "文本选项3" }] },
@@ -65,7 +66,7 @@ export class SelectCollapseDemoComponent {
 
     public openTriggers = ["click","mouseenter","none"];
     public openTrigger = ["mouseenter"];
-    
+
     public closeTriggers = ["click","mouseleave","none"];
     public closeTrigger = ["mouseleave"];
     // ====================================================================
