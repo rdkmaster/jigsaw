@@ -206,8 +206,8 @@ $status-error: $red-6;
 /*@public*/ $brand-hover: $blue-5;
 /*@public*/ $brand-active: $blue-7;
 /*@public*/ $brand-disabled: $blue-2;
-$brand-lighten: $blue-1;
-$brand-active-lighten: $blue-2;
+/*@public*/ $brand-lighten: $blue-1;
+/*@public*/ $brand-active-lighten: $blue-2;
 
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;

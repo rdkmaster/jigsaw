@@ -156,9 +156,11 @@ export class IntroComponent implements AfterViewInit {
                                                             { label: "用例集合" },
                                                         ]
                                                     },
+                                                    { label: "删除测试" },
                                                 ]
                                             },
                                             { label: "搜索" },
+                                            { label: "交互视图" },
                                         ]
                                     },
                                     { label: "提需求/Bug" },
@@ -440,15 +442,39 @@ export class IntroComponent implements AfterViewInit {
                             {
                                 label: "底部操作栏",
                                 nodes: [
-                                    { label: "代码" },
-                                    { label: "日志" },
-                                    { label: "提示错误按钮" },
-                                    { label: "缩放" }
+                                    {
+                                        label: "画布工具栏",
+                                        nodes: [
+                                            { label: "代码" },
+                                            {
+                                                label: "日志",
+                                                nodes: [
+                                                    { label: "清空日志" },
+                                                ]
+                                            },
+                                            { label: "提示错误按钮" },
+                                        ]
+                                    },
+                                    { label: "缩放工具栏", },
                                 ]
                             },
                         ]
                     },
-                    { label: "画布" },
+                    {
+                        label: "画布",
+                        nodes: [
+                            {
+                                label: "表单模块",
+                                nodes: [
+                                    { label: "表单布局" },
+                                    { label: "隐藏组件" },
+                                    { label: "行内组" },
+                                    { label: "可拖入容器" },
+                                    { label: "组件容器" },
+                                ]
+                            }
+                        ]
+                    },
                 ]
             },
         ])
