@@ -86,11 +86,11 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
             height: var(--height-paging);
         }
 
-        > span:first-of-type {
+        >span:first-of-type {
             margin-right: 4px;
         }
 
-        > span:last-of-type {
+        >span:last-of-type {
             margin-left: 4px;
         }
     }
@@ -101,7 +101,7 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
         .#{$jigsaw-auto-complete-input}-host {
             height: var(--height-paging);
-            
+
             .#{$jigsaw-input}-host {
                 height: var(--height-paging);
             }
@@ -114,10 +114,13 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
 
     .#{$jigsaw-paging}-page-size {
         height: var(--height-paging);
+
         .#{$jigsaw-prefix}-combo-select-host {
             height: var(--height-paging);
+
             .#{$jigsaw-prefix}-combo-select {
                 height: var(--height-paging);
+
                 .#{$jigsaw-prefix}-combo-select-selection {
                     height: 100%;
                     min-height: unset;
@@ -137,6 +140,12 @@ $jigsaw-auto-complete-input: #{$jigsaw-prefix}-auto-complete-input;
                 }
             }
         }
+    }
+
+    &>div:last-child,
+    &.#{$jigsaw-paging}-simple>div:last-child,
+    &>jigsaw-select:last-child {
+        margin-right: 0px;
     }
 
     &.#{$jigsaw-paging}-simple {
