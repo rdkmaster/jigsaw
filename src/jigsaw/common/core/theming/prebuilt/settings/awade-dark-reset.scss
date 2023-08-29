@@ -227,3 +227,9 @@
         background: $brand-lighten;
     }
 }
+
+.jigsaw-table-host {
+    table tbody tr.jigsaw-table-row-selected td:not([rowspan]) {
+        background: $bg-active;
+    }
+}
