@@ -127,7 +127,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public title: string = '';
+    public caption: string = '';
 
     /**
      * @NoMarkForCheckRequired
@@ -153,7 +153,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public titleStyle: LargeTextStyle = {'font-size': '16px'};
+    public captionStyle: LargeTextStyle = {'font-size': '16px'};
 
     /**
      * 设置前置单位字体样式、XY偏移
