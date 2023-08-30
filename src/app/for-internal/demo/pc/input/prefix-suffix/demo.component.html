@@ -4,7 +4,7 @@
 
 <div class="demo-container">
     <label>单位组合：</label><br>
-    <jigsaw-input placeholder="unit demo" prefix="上行流量"></jigsaw-input>
+    <jigsaw-input placeholder="unit demo" [prefix]="prifix1" (prefixChange)="_$unitChange($event)"></jigsaw-input> <a (click)="changePrefix1()">修改单位</a>
     <br>
     <jigsaw-input placeholder="unit demo" suffix="Gb"></jigsaw-input>
     <br>
@@ -16,9 +16,10 @@
 
     <br><br>
     <label>单位可选：</label><br>
-    <jigsaw-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120" (suffixChange)="_$unitChange($event)"
+    <jigsaw-input placeholder="unit demo" [suffix]="prifix2" suffixWidth="120" (suffixChange)="_$unitChange($event)"
                   width="300">
     </jigsaw-input>
+    <a (click)="changePrefix2()">修改单位</a>
     <br>
     <jigsaw-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120" [disabled]="true" width="300">
     </jigsaw-input>

@@ -13,6 +13,18 @@ import {GroupOptionValue} from "jigsaw/public_api";
     `]
 })
 export class InputPrefixSuffixDemoComponent {
+    public prifix1 = "上行流量";
+
+    public changePrefix1() {
+        this.prifix1 = "修改的值"
+    }
+
+    public prifix2 = ['单位（GB）', '单位（MB）', '单位（KB）'];
+
+    public changePrefix2() {
+        this.prifix2 = ['修改的值1', '修改的值2', '修改的值3'];
+    }
+
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];
     public _$prefix = ['上行流量', '下行流量'];
     public _$prefixIcons: GroupOptionValue[] = [

@@ -143,9 +143,15 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     }
 
     public set data(value: GroupOptionValue | GroupOptionValue[]) {
+        if (this._data === value) {
+            return;
+        }
         this._data = value;
         if (this._data instanceof Array && this._data.length > 0) {
             this._$selected = this._data[0];
+        }
+        if (this.initialized) {
+            this.change.emit(this._$isUnique ? this.data : this._$selected);
         }
     }
 
