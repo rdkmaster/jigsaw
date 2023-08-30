@@ -40,7 +40,7 @@ export class LargeTextCommonDemoComponent {
     }
 
     setGradientColor0() {
-        this.largeTitleColor = 'linear-gradient(-45deg, #2ABDBA 0%, #265A61 100%)';
+        this.largeTitleColor = 'linear-gradient(180deg, #71C032 16%, #51E5A5 84%)';
         this.largeTileStyle = {
             ...this.largeTileStyle,
             'font-size': this.largeTitleSize + 'px',
