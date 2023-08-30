@@ -15,7 +15,6 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {AbstractJigsawComponent} from "../../common/common";
 import {JigsawFloat, JigsawFloatModule} from "../../common/directive/float/float";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawListModule} from "../list-and-tile/list";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 
@@ -143,9 +142,15 @@ export class JigsawPrefixSuffixComponent extends AbstractJigsawComponent {
     }
 
     public set data(value: GroupOptionValue | GroupOptionValue[]) {
+        if (this._data === value) {
+            return;
+        }
         this._data = value;
         if (this._data instanceof Array && this._data.length > 0) {
             this._$selected = this._data[0];
+        }
+        if (this.initialized) {
+            this.change.emit(this._$isUnique ? this.data : this._$selected);
         }
     }
 
