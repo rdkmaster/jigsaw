@@ -21,8 +21,8 @@
             </ng-container>
 
             <ng-container *ngSwitchCase="'icon'">
-                <div [ngClass]="{'icon-position-left':true}">
-                    <i [ngClass]="_$iconClass" [ngStyle]="valueStyle"></i>
+                <div [ngClass]="{'icon-position-left':true}" [ngStyle]="valueStyle">
+                    <i [ngClass]="_$iconClass"></i>
                 </div>
             </ng-container>
 
@@ -40,11 +40,17 @@
             <span>{{unit}}</span>
         </div>
         <div class="trend-container" *ngIf="trend!='none'" [ngStyle]="_$basicStyle">
-            <div [ngSwitch]="_$trendMap.trend">
-                <i *ngSwitchCase="'ascending'" [ngClass]="_$ascendingIcon" [ngStyle]="_$ascendingStyle"></i>
-                <i *ngSwitchCase="'descending'" [ngClass]="_$descendingIcon" [ngStyle]="_$descendingStyle"></i>
-                <i *ngSwitchCase="'unchanged'" [ngClass]="'iconfont iconfont-e19d'"></i>
-            </div>
+            <ng-container [ngSwitch]="_$trendMap.trend">
+                <div *ngSwitchCase="'ascending'" [ngStyle]="_$ascendingStyle">
+                    <i [ngClass]="_$ascendingIcon"></i>
+                </div>
+                <div *ngSwitchCase="'descending'" [ngStyle]="_$descendingStyle">
+                    <i [ngClass]="_$descendingIcon"></i>
+                </div>
+                <div *ngSwitchCase="'unchanged'">
+                    <i [ngClass]="'iconfont iconfont-e19d'"></i>
+                </div>
+            </ng-container>
             <div *ngIf="trend=='percentage'&&!!_$trendMap.percentage" [ngStyle]="trendValueStyle">
                 <span>{{_$trendMap.percentage}}%</span>
             </div>
