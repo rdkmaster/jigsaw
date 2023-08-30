@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LargeTextStyle} from "../../../../../../jigsaw/pc-components/large-text/large-text";
+import {LargeTextStyle} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
