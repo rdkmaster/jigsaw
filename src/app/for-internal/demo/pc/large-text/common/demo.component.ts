@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LargeTextStyle} from "../../../../../../jigsaw/pc-components/large-text/large-text";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -85,7 +86,7 @@ export class LargeTextCommonDemoComponent {
     }
 
 
-    trendFontSize = 20;
+    trendFontSize = 70;
     trendLeft: number = 0;
     trendTop: number = 0;
     basicTrendStyle = {'font-size': this.trendFontSize + 'px', "justify-content":"center", "flex-flow": 'row',
@@ -98,16 +99,41 @@ export class LargeTextCommonDemoComponent {
 
     ascendingTrendColor = '#56e10d'
     ascendingTrendIcon = 'iconfont iconfont-e032'
-    ascendingTrendStyle = {"ascending-icon": this.ascendingTrendIcon, "ascending-color": this.ascendingTrendColor}
+    ascendingTrendStyle: LargeTextStyle = {
+        "ascending-icon": this.ascendingTrendIcon,
+        "ascending-color": this.ascendingTrendColor
+    }
     setStyle4() {
         this.ascendingTrendStyle = {...this.ascendingTrendStyle, 'ascending-color': this.ascendingTrendColor, 'ascending-icon': this.ascendingTrendIcon};
     }
 
+    setGradientColor() {
+        this.ascendingTrendStyle = {
+            ...this.ascendingTrendStyle,
+            'ascending-color': 'transparent',
+            'ascending-icon': this.ascendingTrendIcon,
+            'background': "linear-gradient(180deg, #71C032 16%, #51E5A5 84%)",
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
+    }
+
     descendingTrendColor = '#f0065c'
     descendingTrendIcon = 'iconfont iconfont-e030'
-    descendingTrendStyle = {"descending-icon": this.descendingTrendIcon, "descending-color": this.descendingTrendColor}
+    descendingTrendStyle: LargeTextStyle = {"descending-icon": this.descendingTrendIcon, "descending-color": this.descendingTrendColor}
     setStyle5() {
         this.descendingTrendStyle = {...this.descendingTrendStyle, 'descending-icon': this.descendingTrendIcon, 'descending-color': this.descendingTrendColor};
+    }
+
+    setGradientColor1() {
+        this.descendingTrendStyle = {
+            ...this.descendingTrendStyle,
+            'descending-color': 'transparent',
+            'descending-icon': this.descendingTrendIcon,
+            'background': "linear-gradient(-45deg, #24D2E3 0%, #AF41C5 100%)",
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     trendValueFontSize = 16;

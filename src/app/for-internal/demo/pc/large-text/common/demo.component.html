@@ -125,6 +125,7 @@
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="ascendingTrendColor" (colorChange)="setStyle4()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor()">设置渐变色</jigsaw-button>
         </div>
         <div class="row">
             <label style="width: 200px">下降图标设置（图标，图标颜色）</label>
@@ -132,6 +133,7 @@
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="descendingTrendColor" (colorChange)="setStyle5()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor1()">设置渐变色</jigsaw-button>
         </div>
 
         <div class="row">
