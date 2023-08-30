@@ -581,6 +581,7 @@ export class GaugeSeries extends SeriesBase {
     public axisLabel?: any;
     public splitLine?: any;
     public pointer?: any;
+    public itemStyle?: any;
     public title?: any;
     public autoAxisLineColor?: boolean;
 }
