@@ -310,6 +310,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     ngOnDestroy() {
+        if (CommonUtils.isUndefined(this.ztree)) {
+            return;
+        }
         this.ztree.destroy();
         if (this._removeRefreshCallback) {
             this._removeRefreshCallback();

@@ -218,6 +218,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-range {
         height: 100%;
         padding-top: 32px;
+        overflow: hidden;
 
         &.#{$jigsaw-table}-hide-head {
             padding-top: 0 !important;

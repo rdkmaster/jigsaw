@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {LargeTextStyle} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -22,12 +23,33 @@ export class LargeTextCommonDemoComponent {
     titleY: number = 2;
     titleX: number = 3;
 
-    largeTileStyle = {'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
+    largeTileStyle: LargeTextStyle = {'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
         'margin': `0 0 ${this.titleY}px ${this.titleX}px`}
 
     setStyle0() {
-        this.largeTileStyle = {...this.largeTileStyle, ...{'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
-                'margin': `0 0 ${this.titleY}px ${this.titleX}px`}};
+        if (this.largeTitleColor.startsWith('linear-gradient')) {
+            this.setGradientColor0();
+            return;
+        }
+        this.largeTileStyle = {
+            ...this.largeTileStyle,
+            'font-size': this.largeTitleSize + 'px',
+            'color': this.largeTitleColor,
+            'margin': `0 0 ${this.titleY}px ${this.titleX}px`
+        };
+    }
+
+    setGradientColor0() {
+        this.largeTitleColor = 'linear-gradient(180deg, #71C032 16%, #51E5A5 84%)';
+        this.largeTileStyle = {
+            ...this.largeTileStyle,
+            'font-size': this.largeTitleSize + 'px',
+            'margin': `0 0 ${this.titleY}px ${this.titleX}px`,
+            'color': 'transparent',
+            'background': this.largeTitleColor,
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     leadingUnit: string = "人民币";
@@ -42,12 +64,33 @@ export class LargeTextCommonDemoComponent {
     leadingX: number = 0;
     leadingY: number = 0;
 
-    leadingStyle = {'font-size': this.leadingFontSize + 'px', 'color': '#e43232',
+    leadingStyle: LargeTextStyle = {'font-size': this.leadingFontSize + 'px', 'color': '#e43232',
         'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`}
 
     setStyle() {
-        this.leadingStyle = {...this.leadingStyle, ...{'font-size': this.leadingFontSize + 'px', 'color': this.leadingFontColor,
-            'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`}};
+        if (this.leadingFontColor.startsWith('linear-gradient')) {
+            this.setGradientColor3()
+            return;
+        }
+        this.leadingStyle = {
+            ...this.leadingStyle,
+            'font-size': this.leadingFontSize + 'px',
+            'color': this.leadingFontColor,
+            'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`
+        };
+    }
+
+    setGradientColor3() {
+        this.leadingFontColor = 'linear-gradient(180deg, #71C032 16%, #51E5A5 84%)';
+        this.leadingStyle = {
+            ...this.leadingStyle,
+            'font-size': this.leadingFontSize + 'px',
+            'margin': `0px ${this.leadingX}px ${this.leadingY}px 0px`,
+            'color': 'transparent',
+            'background': this.leadingFontColor,
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     unitFontSize = 23;
@@ -57,13 +100,34 @@ export class LargeTextCommonDemoComponent {
     unitLeft: number = 12;
     unitBottom: number = -21;
 
-    unitStyle = {'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
+    unitStyle: LargeTextStyle = {'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
         'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`}
 
 
     setStyle1() {
-        this.unitStyle = {...this.unitStyle, ...{'font-size': this.unitFontSize + 'px', 'color': this.unitFontColor,
-                'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`}};
+        if (this.unitFontColor.startsWith('linear-gradient')) {
+            this.setGradientColor4();
+            return;
+        }
+        this.unitStyle = {
+            ...this.unitStyle,
+            'font-size': this.unitFontSize + 'px',
+            'color': this.unitFontColor,
+            'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`
+        };
+    }
+
+    setGradientColor4() {
+        this.unitFontColor = 'linear-gradient(-43deg, #DA856D 0%, #FF0000 100%)';
+        this.unitStyle = {
+            ...this.unitStyle,
+            'font-size': this.unitFontSize + 'px',
+            'margin': `0px 0px ${this.unitBottom}px ${this.unitLeft}px`,
+            'color': 'transparent',
+            'background': this.unitFontColor,
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     valueFontSize = 70;
@@ -78,14 +142,28 @@ export class LargeTextCommonDemoComponent {
     iconFontSize = 80;
     iconColor = "pink";
 
-    iconStyle = {'font-size': this.iconFontSize + 'px', 'color': this.iconColor}
+    iconStyle: LargeTextStyle = {'font-size': this.iconFontSize + 'px', 'color': this.iconColor}
 
     setIconStyle() {
+        delete this.iconStyle.background;
+        delete this.iconStyle['background-clip'];
+        delete this.iconStyle['-webkit-background-clip'];
         this.iconStyle = {...this.iconStyle, ...{'font-size': this.iconFontSize + 'px', 'color': this.iconColor}};
     }
 
+    setGradientColor2() {
+        this.iconStyle = {
+            ...this.iconStyle,
+            'font-size': this.iconFontSize + 'px',
+            'color': 'transparent',
+            'background': "linear-gradient(180deg, #71C032 16%, #51E5A5 84%)",
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
+    }
 
-    trendFontSize = 20;
+
+    trendFontSize = 70;
     trendLeft: number = 0;
     trendTop: number = 0;
     basicTrendStyle = {'font-size': this.trendFontSize + 'px', "justify-content":"center", "flex-flow": 'row',
@@ -98,25 +176,70 @@ export class LargeTextCommonDemoComponent {
 
     ascendingTrendColor = '#56e10d'
     ascendingTrendIcon = 'iconfont iconfont-e032'
-    ascendingTrendStyle = {"ascending-icon": this.ascendingTrendIcon, "ascending-color": this.ascendingTrendColor}
+    ascendingTrendStyle: LargeTextStyle = {
+        "ascending-icon": this.ascendingTrendIcon,
+        "ascending-color": this.ascendingTrendColor
+    }
     setStyle4() {
         this.ascendingTrendStyle = {...this.ascendingTrendStyle, 'ascending-color': this.ascendingTrendColor, 'ascending-icon': this.ascendingTrendIcon};
     }
 
+    setGradientColor() {
+        this.ascendingTrendStyle = {
+            ...this.ascendingTrendStyle,
+            'ascending-color': 'transparent',
+            'ascending-icon': this.ascendingTrendIcon,
+            'background': "linear-gradient(180deg, #71C032 16%, #51E5A5 84%)",
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
+    }
+
     descendingTrendColor = '#f0065c'
     descendingTrendIcon = 'iconfont iconfont-e030'
-    descendingTrendStyle = {"descending-icon": this.descendingTrendIcon, "descending-color": this.descendingTrendColor}
+    descendingTrendStyle: LargeTextStyle = {"descending-icon": this.descendingTrendIcon, "descending-color": this.descendingTrendColor}
     setStyle5() {
         this.descendingTrendStyle = {...this.descendingTrendStyle, 'descending-icon': this.descendingTrendIcon, 'descending-color': this.descendingTrendColor};
+    }
+
+    setGradientColor1() {
+        this.descendingTrendStyle = {
+            ...this.descendingTrendStyle,
+            'descending-color': 'transparent',
+            'descending-icon': this.descendingTrendIcon,
+            'background': "linear-gradient(-45deg, #24D2E3 0%, #AF41C5 100%)",
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     trendValueFontSize = 16;
     trendValueFontColor = '#0e0e0e';
 
-    trendValueStyle = {'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}
+    trendValueStyle: LargeTextStyle = {'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}
 
     setStyle6() {
-        this.trendValueStyle = {...this.trendValueStyle, ...{'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}};
+        if (this.trendValueFontColor.startsWith('linear-gradient')) {
+            this.setGradientColor6();
+            return;
+        }
+        this.trendValueStyle = {
+            ...this.trendValueStyle,
+            'font-size': this.trendValueFontSize + 'px',
+            'color': this.trendValueFontColor
+        };
+    }
+
+    setGradientColor6() {
+        this.trendValueFontColor = "linear-gradient(-45deg, #8DF5EB 0%, #E577B8 100%)";
+        this.trendValueStyle = {
+            ...this.trendValueStyle,
+            'font-size': this.trendValueFontSize + 'px',
+            'color': 'transparent',
+            'background': this.trendValueFontColor,
+            'background-clip': 'text',
+            '-webkit-background-clip': 'text',
+        };
     }
 
     _$changeValue() {

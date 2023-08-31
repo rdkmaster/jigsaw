@@ -778,7 +778,7 @@ export class PagingInfo implements IEmittable {
     }
 
     public subscribe(callback?: (value:any) => void): Subscription {
-        return this._emitter.pipe(debounceTime(300)).subscribe(callback);
+        return this._emitter.pipe(debounceTime(10)).subscribe(callback);
     }
 
     public unsubscribe() {

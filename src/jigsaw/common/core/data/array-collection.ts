@@ -52,8 +52,13 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
      * 用于发起网络请求，在调用`fromAjax()`之前必须设置好此值。
      */
     public http: HttpClient;
-
     public dataReviser: DataReviser;
+    public debounceTime: number = 300;
+
+    constructor(source?: T[]) {
+        super();
+        _fromArray(this, source);
+    }
 
     public concat(...items: any[]): ArrayCollection<T> {
         const acArr = [];
@@ -73,11 +78,6 @@ export class ArrayCollection<T> extends JigsawArray<T> implements IAjaxComponent
             acArr.push(this[i])
         }
         return new ArrayCollection<T>(acArr.slice(start, end));
-    }
-
-    constructor(source?: T[]) {
-        super();
-        _fromArray(this, source);
     }
 
     protected _busy: boolean = false;
@@ -308,11 +308,11 @@ export class PageableArray extends ArrayCollection<any> implements IServerSidePa
     }
 
     protected _initSubjects(): void {
-        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(this.debounceTime)).subscribe(filter => {
             this.filterInfo = filter;
             this._ajax();
         });
-        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(this.debounceTime)).subscribe(sort => {
             this.sortInfo = sort;
             this._ajax();
         });
@@ -570,12 +570,12 @@ export class InfiniteScrollPageableArray extends PageableArray {
     }
 
     protected _initSubjects(): void {
-        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(this.debounceTime)).subscribe(filter => {
             this.filterInfo = filter;
             this.pagingInfo['_currentPage'] = 1;
             this._ajax();
         });
-        this._sortSubject.pipe(debounceTime(300)).subscribe(sort => {
+        this._sortSubject.pipe(debounceTime(this.debounceTime)).subscribe(sort => {
             this.sortInfo = sort;
             this.pagingInfo['_currentPage'] = 1;
             this._ajax();
@@ -680,7 +680,8 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
                 this._dataSourceChanged = false;
             }
         });
-        this._initSubjects();
+        // 搞成异步方式，这样可以等待如debounceTime属性发生变化后，才去使用他们
+        Promise.resolve().then(() => this._initSubjects());
     }
 
     public fromArray(source: T[]): ArrayCollection<T> {
@@ -712,12 +713,12 @@ export class LocalPageableArray<T> extends ArrayCollection<T> implements IPageab
     }
 
     private _initSubjects(): void {
-        this._filterSubject.pipe(debounceTime(300)).subscribe(filter => {
+        this._filterSubject.pipe(debounceTime(this.debounceTime)).subscribe(filter => {
             this.filteredData = this._bakData.filter(item => LocalPageableArray.filterItemByKeyword(item, filter.key, filter.field));
             this.firstPage();
         });
 
-        this._sortSubject.pipe(debounceTime(300)).subscribe((sortInfo: DataSortInfo) => {
+        this._sortSubject.pipe(debounceTime(this.debounceTime)).subscribe((sortInfo: DataSortInfo) => {
             const orderFlag = sortInfo.order == SortOrder.asc ? 1 : -1;
             if (sortInfo.as == SortAs.number) {
                 this.filteredData.sort((a, b) => orderFlag * (Number(sortInfo.field ? a[sortInfo.field] : a) - Number(sortInfo.field ? b[sortInfo.field] : b)));

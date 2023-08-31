@@ -605,6 +605,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Input()
     public manualSearch: boolean = false;
 
+    private _searchDebounce: number = 300;
+
     /**
      * 设置了此属性会给搜索增加一个防抖功能，并增加enter回车立刻搜索
      * 设为'none'、NaN、小于0，或者不设置则表示不设置防抖
@@ -612,7 +614,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public searchDebounce: number | "none" = NaN;
+    public get searchDebounce(): number | "none" {
+        return this._searchDebounce;
+    }
+
+    public set searchDebounce(value: number | "none") {
+        value = value == 'none' ? 0 : Number(value);
+        this._searchDebounce = isNaN(value) ? 0 : value;
+    }
 
     /**
      * 设置边框显隐开关。
@@ -645,6 +654,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
         const data = new LocalPageableArray<SelectOption>();
         data.pagingInfo.pageSize = Infinity;
+        data.debounceTime = this._searchDebounce;
         const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
             // 在新建data准备好再赋值给组件data，防止出现闪动的情况
             removeUpdateSubscriber.unsubscribe();

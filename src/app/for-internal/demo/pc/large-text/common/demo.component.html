@@ -60,6 +60,7 @@
             <j-numeric-input [(value)]="largeTitleSize" (valueChange)="setStyle0()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入前置单位字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="largeTitleColor" (colorChange)="setStyle0()" width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor0()">设置渐变色</jigsaw-button>
         </div>
         <div class="row">
             <label>标题偏移</label>
@@ -77,6 +78,7 @@
             <j-numeric-input [(value)]="leadingFontSize" (valueChange)="setStyle()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入前置单位字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="leadingFontColor" (colorChange)="setStyle()" width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor3()">设置渐变色</jigsaw-button>
         </div>
 
         <div class="row">
@@ -98,12 +100,14 @@
             <j-numeric-input [(value)]="iconFontSize" (valueChange)="setIconStyle()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入图标大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="iconColor" (colorChange)="setIconStyle()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor2()">设置渐变色</jigsaw-button>
         </div>
         <div class="row">
             <label>后缀单位字体样式</label>
             <j-numeric-input [(value)]="unitFontSize" (valueChange)="setStyle1()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入后缀单位字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="unitFontColor" (colorChange)="setStyle1()" width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor4()">设置渐变色</jigsaw-button>
         </div>
         <div class="row">
             <label>后缀单位字体偏移</label>
@@ -125,6 +129,7 @@
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="ascendingTrendColor" (colorChange)="setStyle4()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor()">设置渐变色</jigsaw-button>
         </div>
         <div class="row">
             <label style="width: 200px">下降图标设置（图标，图标颜色）</label>
@@ -132,6 +137,7 @@
                           title="图标的class字符串，支持Jigsaw自带图标库 @rdkmaster/icon-font">
             </jigsaw-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="descendingTrendColor" (colorChange)="setStyle5()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor1()">设置渐变色</jigsaw-button>
         </div>
 
         <div class="row">
@@ -139,6 +145,7 @@
             <j-numeric-input [(value)]="trendValueFontSize" (valueChange)="setStyle6()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入百分比趋势字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="trendValueFontColor" (colorChange)="setStyle6()"  width="40"></jigsaw-color-select>
+            <jigsaw-button (click)="setGradientColor6()">设置渐变色</jigsaw-button>
         </div>
 
         <div class="row">
@@ -166,12 +173,12 @@
     <div class="box">
         <p>精度{{fractionDigits}}，动画时间{{animationDuration}}ms</p>
         <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [title]="largeTitle" [leadingUnit]="leadingUnit"
+        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [caption]="largeTitle" [leadingUnit]="leadingUnit"
                            [unit]="unit" [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
                            [useRawValue]="useRawValue" [trend]="'percentage'" [leadingUnitStyle]="leadingStyle"
                            [unitStyle]="unitStyle" [valueStyle]="valueStyle" [basicTrendStyle]="basicTrendStyle"
                            [ascendingTrendStyle]="ascendingTrendStyle" [descendingTrendStyle]="descendingTrendStyle"
-                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap" [titleStyle]="largeTileStyle"></jigsaw-large-text>
+                           [trendValueStyle]="trendValueStyle" [valueMap]="valueMap" [captionStyle]="largeTileStyle"></jigsaw-large-text>
     </div>
     <div class="box" style="margin-left: 100px">
         <p>组件内容为图标</p>

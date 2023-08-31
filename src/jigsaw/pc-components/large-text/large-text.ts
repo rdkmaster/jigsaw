@@ -127,7 +127,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public title: string = '';
+    public caption: string = '';
 
     /**
      * @NoMarkForCheckRequired
@@ -153,7 +153,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public titleStyle: LargeTextStyle = {'font-size': '16px'};
+    public captionStyle: LargeTextStyle = {'font-size': '16px'};
 
     /**
      * 设置前置单位字体样式、XY偏移
@@ -227,7 +227,10 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
         this._ascendingTrendStyle = style;
         this._$ascendingIcon = this._ascendingTrendStyle['ascending-icon'] || 'iconfont iconfont-e032';
-        this._$ascendingStyle = {...this._$ascendingStyle, color: this._ascendingTrendStyle['ascending-color'] || 'green'};
+        const color = this._ascendingTrendStyle['ascending-color'] || 'green';
+        delete this._ascendingTrendStyle['ascending-icon'];
+        delete this._ascendingTrendStyle['ascending-color'];
+        this._$ascendingStyle = {...this._ascendingTrendStyle, color: color};
     }
 
     private _descendingTrendStyle: LargeTextStyle;
@@ -247,8 +250,11 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
             return;
         }
         this._descendingTrendStyle = style;
-        this._$descendingIcon = this._descendingTrendStyle['descending-icon'] || 'iconfont iconfont-e032';
-        this._$descendingStyle = {...this._$ascendingStyle, 'color': this._descendingTrendStyle['descending-color'] || 'red'};
+        this._$descendingIcon = this._descendingTrendStyle['descending-icon'] || 'iconfont iconfont-e030';
+        const color = this._descendingTrendStyle['descending-color'] || 'red';
+        delete this._descendingTrendStyle['descending-icon'];
+        delete this._descendingTrendStyle['descending-color'];
+        this._$descendingStyle = {...this._descendingTrendStyle, color: color};
     }
 
     /**
@@ -272,7 +278,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$ascendingStyle: LargeTextStyle = {'font-size': '16px', 'color': 'green'};
+    public _$ascendingStyle: LargeTextStyle = {'color': 'green'};
 
     /**
      * @internal
@@ -282,7 +288,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     /**
      * @internal
      */
-    public _$descendingStyle: LargeTextStyle = {'font-size': '16px', 'color': 'red'};
+    public _$descendingStyle: LargeTextStyle = {'color': 'red'};
 
     /**
      * @internal
