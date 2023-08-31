@@ -819,7 +819,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public dimensionField: string;
     public dimensions: ScatterDimension[] = [];
     public usingAllDimensions: boolean = true;
-    public isDefaultBubble: boolean;
+    public useDefaultBubble: boolean;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -861,7 +861,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         options.series = dimensions.map((dim, idx) => {
             const fromData = this.dimensions.every(d => d.name != dim.name);
             // 数据里过来的维度值自动加上默认散点样式
-            if (fromData && this.isDefaultBubble) {
+            if (fromData && this.useDefaultBubble) {
                 dim.itemStyle = dim.itemStyle || {};
                 Object.assign(dim.itemStyle, {opacity: 0.3, borderWidth: 2});
             }
