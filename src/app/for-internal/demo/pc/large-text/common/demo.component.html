@@ -141,11 +141,12 @@
         </div>
 
         <div class="row">
-            <label style="width: 200px">百分比趋势字体样式</label>
+            <label style="width: 200px">百分比趋势字体样式（未设置颜色时，颜色跟随上升下降图标变化）</label>
             <j-numeric-input [(value)]="trendValueFontSize" (valueChange)="setStyle6()" [showOption]="false"
                              min="6" [suffix]="'px'" placeholder="请输入百分比趋势字体大小"></j-numeric-input>
             <jigsaw-color-select [enableOpacity]="true" [(color)]="trendValueFontColor" (colorChange)="setStyle6()"  width="40"></jigsaw-color-select>
             <jigsaw-button (click)="setGradientColor6()">设置渐变色</jigsaw-button>
+            <jigsaw-button (click)="clearColor()">清空颜色</jigsaw-button>
         </div>
 
         <div class="row">
@@ -165,6 +166,11 @@
                              [suffix]="'px'" width="80"></j-numeric-input>
 
         </div>
+        <div class="row">
+            <label>直接操作组件value</label>
+            <jigsaw-button (click)="increase()">变大</jigsaw-button>
+            <jigsaw-button (click)="decrease()">变小</jigsaw-button>
+        </div>
     </div>
 </div>
 
@@ -173,7 +179,7 @@
     <div class="box">
         <p>精度{{fractionDigits}}，动画时间{{animationDuration}}ms</p>
         <hr>
-        <jigsaw-large-text [value]="value" [fractionDigits]="fractionDigits" [caption]="largeTitle" [leadingUnit]="leadingUnit"
+        <jigsaw-large-text #largeTextComponent [value]="value" [fractionDigits]="fractionDigits" [caption]="largeTitle" [leadingUnit]="leadingUnit"
                            [unit]="unit" [enableAnimation]="enableAnimation" [animationDuration]="animationDuration"
                            [useRawValue]="useRawValue" [trend]="'percentage'" [leadingUnitStyle]="leadingStyle"
                            [unitStyle]="unitStyle" [valueStyle]="valueStyle" [basicTrendStyle]="basicTrendStyle"

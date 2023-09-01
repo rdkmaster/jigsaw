@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {LargeTextStyle} from "jigsaw/public_api";
+import {Component, ViewChild} from '@angular/core';
+import {JigsawLargeTextComponent, LargeTextStyle} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -17,14 +17,27 @@ export class LargeTextCommonDemoComponent {
 
     animationDuration: number = 2000;
 
+    @ViewChild('largeTextComponent')
+    largeTextComponent: JigsawLargeTextComponent;
+
+    public increase() {
+        this.largeTextComponent.value = Number(this.largeTextComponent.value) + Math.floor(Math.random() * 100);
+    }
+
+    public decrease() {
+        this.largeTextComponent.value = Number(this.largeTextComponent.value) - Math.floor(Math.random() * 100);
+    }
+
     largeTitle: string = "股票市值："
     largeTitleSize = 23;
     largeTitleColor = "#32e4d8";
     titleY: number = 2;
     titleX: number = 3;
 
-    largeTileStyle: LargeTextStyle = {'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
-        'margin': `0 0 ${this.titleY}px ${this.titleX}px`}
+    largeTileStyle: LargeTextStyle = {
+        'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
+        'margin': `0 0 ${this.titleY}px ${this.titleX}px`
+    }
 
     setStyle0() {
         if (this.largeTitleColor.startsWith('linear-gradient')) {
@@ -216,7 +229,7 @@ export class LargeTextCommonDemoComponent {
     trendValueFontSize = 16;
     trendValueFontColor = '#0e0e0e';
 
-    trendValueStyle: LargeTextStyle = {'font-size': this.trendValueFontSize + 'px', 'color': this.trendValueFontColor}
+    trendValueStyle: LargeTextStyle = {'font-size': this.trendValueFontSize + 'px'}
 
     setStyle6() {
         if (this.trendValueFontColor.startsWith('linear-gradient')) {
@@ -240,6 +253,10 @@ export class LargeTextCommonDemoComponent {
             'background-clip': 'text',
             '-webkit-background-clip': 'text',
         };
+    }
+
+    clearColor() {
+        delete this.trendValueStyle.color;
     }
 
     _$changeValue() {
