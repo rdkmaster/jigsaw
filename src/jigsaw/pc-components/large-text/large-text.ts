@@ -55,6 +55,7 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         const currentValue = this._translateValueEnum(value);
         this._setTrend(previousValue, currentValue);
         this._value = value;
+        this._cdr.detectChanges();
         this._updateView();
     }
 
