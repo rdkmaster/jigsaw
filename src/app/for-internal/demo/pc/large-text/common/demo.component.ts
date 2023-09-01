@@ -34,8 +34,10 @@ export class LargeTextCommonDemoComponent {
     titleY: number = 2;
     titleX: number = 3;
 
-    largeTileStyle: LargeTextStyle = {'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
-        'margin': `0 0 ${this.titleY}px ${this.titleX}px`}
+    largeTileStyle: LargeTextStyle = {
+        'font-size': this.largeTitleSize + 'px', 'color': this.largeTitleColor,
+        'margin': `0 0 ${this.titleY}px ${this.titleX}px`
+    }
 
     setStyle0() {
         if (this.largeTitleColor.startsWith('linear-gradient')) {
