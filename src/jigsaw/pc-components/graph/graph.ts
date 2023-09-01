@@ -179,6 +179,10 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (this._themeService.constructor != themeInfo.target) {
+                // 判断是否是同一个themeService发出的事件
+                return;
+            }
             if (!this._graph || this._theme || this._globalTheme) {
                 // 用户配置了theme或者globalTheme属性的无需跟随工程皮肤切换
                 return;

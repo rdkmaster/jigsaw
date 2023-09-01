@@ -1,4 +1,4 @@
-import {EventEmitter, Injectable} from "@angular/core";
+import {EventEmitter, Injectable, Type} from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 import {ScopedThemeUtils, ScopedThemeInfo} from "../utils/scoped-theme-utils";
 
@@ -9,7 +9,7 @@ export type PopupBackgroundColor = "var(--bg-container)" | "#ffffff";
 declare const document;
 
 export type ThemeProperty = { name: string, value: string };
-export type ThemeInfo = { usingTheme: string, majorStyle: string };
+export type ThemeInfo = { usingTheme: string, majorStyle: string, target?: Type<JigsawTheme> };
 
 // @dynamic
 export class JigsawTheme {
@@ -58,7 +58,7 @@ export class JigsawTheme {
         style.onload = () => {
             this._themeProperties.splice(0, this._themeProperties.length);
             this._readThemeProperties(scopedThemeInfo);
-            this.themeChange.emit({usingTheme: this._usingTheme, majorStyle: this._majorStyle});
+            this.themeChange.emit({usingTheme: this._usingTheme, majorStyle: this._majorStyle, target: this});
             style.onload = null;
         };
     }

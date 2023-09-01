@@ -274,4 +274,5 @@ $nav-color-active: $brand-default;
 $nav-border: rgba(221, 221, 221, 0.5);
 
 /* 蒙版色 */
-$mask-default: rgba(#000, 0.3);
+/*@public*/ $mask-default: rgba(#000, 0.3);
+/*@public*/ $mask-lighten: hsla(0, 0, 0, 0.1);
