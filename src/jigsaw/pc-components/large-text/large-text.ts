@@ -1,7 +1,7 @@
 import {
     ChangeDetectionStrategy, ChangeDetectorRef,
     Component,
-    ElementRef,
+    ElementRef, Injector,
     Input, NgModule,
     OnInit,
     QueryList,
@@ -11,6 +11,7 @@ import {
 import {CommonModule} from "@angular/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 type TrendDirection = { trend: string, percentage: string };
 
@@ -36,8 +37,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
 
     /**
      * 大字组件的值，可以是number或者string类型
-     * @NoMarkForCheckRequired
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): number | string {
         return this._value;
@@ -55,7 +56,6 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         const currentValue = this._translateValueEnum(value);
         this._setTrend(previousValue, currentValue);
         this._value = value;
-        this._cdr.detectChanges();
         this._updateView();
     }
 
@@ -320,7 +320,9 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
      */
     public _$fontWidth = CommonUtils.getCssValue(16 * 0.6);
 
-    constructor(protected renderer: Renderer2, private _cdr: ChangeDetectorRef) {
+    constructor(protected renderer: Renderer2, private _cdr: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
