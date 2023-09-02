@@ -35,6 +35,10 @@
     .jigsaw-combo-select-arrow:hover {
         color: $font-color-brand;
     }
+
+    .jigsaw-combo-select-selection-rendered .jigsaw-tag-host {
+        background: $bg-component-darken;
+    }
 }
 
 .jigsaw-search-input-host {
@@ -101,6 +105,11 @@
 .jigsaw-tag-host {
     &.jigsaw-tag-preset-gray {
         color: $font-color-default;
+    }
+
+    &.jigsaw-tag-disabled.jigsaw-tag-preset-gray {
+        color: $font-color-disabled;
+        background: $bg-component-darken;
     }
 }
 
@@ -216,5 +225,11 @@
 
     &.jigsaw-button-bar-default .jigsaw-tile-option.jigsaw-tile-option-active:hover {
         background: $brand-lighten;
+    }
+}
+
+.jigsaw-table-host {
+    table tbody tr.jigsaw-table-row-selected td:not([rowspan]) {
+        background: $bg-active;
     }
 }

@@ -23,6 +23,10 @@ export class JigsawCascadingMenu extends JigsawFloatBase implements OnInit, Afte
                 private _themeService: JigsawThemeService) {
         super(_renderer, _elementRef, _popupService, _zone);
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            if (this._themeService.constructor != themeInfo.target) {
+                // 判断是否是同一个themeService发出的事件
+                return;
+            }
             if (this._jigsawCascadingMenuTheme) {
                 // 用户配置了jigsawCascadingMenuTheme属性的无需跟随工程皮肤切换
                 return;

@@ -206,8 +206,8 @@ $status-error: $red-6;
 /*@public*/ $brand-hover: $blue-7;
 /*@public*/ $brand-active: $blue-8;
 /*@public*/ $brand-disabled: $blue-2;
-$brand-lighten: $blue-1;
-$brand-active-lighten: $blue-2;
+/*@public*/ $brand-lighten: $blue-1;
+/*@public*/ $brand-active-lighten: $blue-2;
 
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
@@ -238,8 +238,8 @@ $font-color-tag: $gray-9;
 /*@public*/ $font-color-white: hsl(0, 0%, 100%);
 /*@public*/ $font-color-black: hsl(0, 0%, 0%);
 $font-color-white-darken: $gray-7;
-/*@public*/ $font-color-brand: $blue-8;
-/*@public*/ $font-color-brand-hover: $blue-7;
+/*@public*/ $font-color-brand: $blue-9;
+/*@public*/ $font-color-brand-hover: $blue-10;
 
 /* border 边框 */
 /*@public*/ $border-color-default: $gray-7;
@@ -274,4 +274,5 @@ $nav-color-active: $brand-default;
 $nav-border: $border-color-default;
 
 /* 蒙版色 */
-$mask-default: rgba(#fff, 0.6);
+/*@public*/ $mask-default: rgba(#fff, 0.6);
+/*@public*/ $mask-lighten: hsla(255, 255, 255, 0.1);

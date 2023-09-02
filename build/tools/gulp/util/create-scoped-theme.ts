@@ -1,5 +1,6 @@
 import {join} from 'path';
 import {writeFileSync, readFileSync} from 'fs-extra';
+import {renameSync} from 'fs';
 import {sync as glob} from 'glob';
 import {Bundler} from 'scss-bundle';
 import {
@@ -8,7 +9,26 @@ import {
 
 export async function bundleScopedScss(themeInfo: ScopedThemeInfo, themingPrebuiltHome: string, scssHome: string) {
     const allScopedScssGlob = join(scssHome, '**/*.scss');
+    console.log(allScopedScssGlob);
     const files = glob('*.scss', {cwd: themingPrebuiltHome});
+
+    let exclusiveScssResult = '';
+
+    if (themeInfo.type === "unoverridable") {
+        const exclusiveScss = join(scssHome, 'common/assets/scss/reset.scss');
+        const allThemeScss = join(scssHome, 'pc-components/theming/all-theme.scss');
+        const searchString = '@import "../../common/assets/scss/reset.scss";';
+        const result = await new Bundler().Bundle(exclusiveScss);
+        exclusiveScssResult = result.bundledContent;
+        renameSync(exclusiveScss, exclusiveScss + 'rename');
+
+        const allThemeContent = readFileSync(allThemeScss).toString();
+        if (!allThemeContent.includes(searchString)) {
+            console.error("Can't find reset import");
+        }
+        const allThemeResult = allThemeContent.replace(searchString, '');
+        writeFileSync(allThemeScss, allThemeResult);
+    }
     for (const filePath of files) {
         const result = await new Bundler().Bundle(join(themingPrebuiltHome, filePath), [allScopedScssGlob]);
         const targetScssThemePath = join(scssHome, filePath.replace(/(.+)\.scss$/, `$1-${themeInfo.name}.scss`));
@@ -16,7 +36,17 @@ export async function bundleScopedScss(themeInfo: ScopedThemeInfo, themingPrebui
                 ${ScopedThemeUtils.getScopedSelector(themeInfo)} {
                     ${result.bundledContent}
                 }
+                ${exclusiveScssResult}
             `);
+    }
+    if (themeInfo.type === "unoverridable") {
+        const exclusiveScss = join(scssHome, 'common/assets/scss/reset.scss');
+        const allThemeScss = join(scssHome, 'pc-components/theming/all-theme.scss');
+        const searchString = '@import "../../common/assets/scss/reset.scss";';
+        renameSync(exclusiveScss + 'rename', exclusiveScss)
+        const allThemeContent = readFileSync(allThemeScss).toString();
+        const allThemeResult = `${searchString} ${allThemeContent}`;
+        writeFileSync(allThemeScss, allThemeResult);
     }
 }
 

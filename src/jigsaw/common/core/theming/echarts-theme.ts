@@ -1247,6 +1247,12 @@ export const darkGraphTheme = {
         }
     },
 
+    tree: {
+        label: {
+            color: '#ccc'
+        }
+    },
+
     map: {
         mapType: 'china', // 各省的mapType暂时都用中文
         mapLocation: {
