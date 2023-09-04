@@ -30,6 +30,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     padding: 0 8px;
                     text-align: left;
                     line-height: inherit;
+                    overflow: hidden;
 
                     &.#{$jigsaw-table}-header-cell-sortable,
                     &.#{$jigsaw-table}-header-cell-filterable {
