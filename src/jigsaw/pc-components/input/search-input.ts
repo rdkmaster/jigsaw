@@ -80,6 +80,9 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     @Input()
     public showBorder: boolean = true;
 
+    /**
+     * @internal
+     */
     public _$placeholder: string = this._translateService.instant("search-input.placeholder");
     private _placeholder: string;
 
