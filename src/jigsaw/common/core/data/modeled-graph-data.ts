@@ -823,7 +823,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
-    public _$symbolTypes: string[] = ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
+    public symbolTypes: string[] = ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -872,11 +872,11 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             if (fromData && this.useDefaultSingleColor) {
                 dim.symbol = dim.symbol || '';
                 Object.assign(dim.itemStyle, {color: '#3B69FF'});
-                if (this._$symbolTypes.length > 0) {
+                if (this.symbolTypes.length > 0) {
                     // 获取下一个要使用的 symbol 类型
-                    const nextSymbolIndex = idx % this._$symbolTypes.length;
+                    const nextSymbolIndex = idx % this.symbolTypes.length;
                     // 更新 dim 对象中的 symbol 属性
-                    Object.assign(dim, {symbol: this._$symbolTypes[nextSymbolIndex]});
+                    Object.assign(dim, {symbol: this.symbolTypes[nextSymbolIndex]});
                 }
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
