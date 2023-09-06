@@ -161,6 +161,39 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
+    private _hoveredRow: number;
+
+    public _$onRowMouseOver(index: number) {
+        this._hoveredRow = index;
+        console.log(this._hoveredRow);
+    }
+
+    public _$onRowMouseOut() {
+        this._hoveredRow = null;
+    }
+
+    public _styleOptions;
+
+    /**
+     * 设置表格样式
+     * @NoMarkForCheckRequired
+    */
+    @Input()
+    public get styleOptions() {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(newValue) {
+        if (this._styleOptions === newValue) {
+            return;
+        }
+        this._styleOptions = newValue;
+        this._$tableStyle = this.styleOptions.table;
+
+    }
+
+    public _$tableStyle = {};
+
     /**
      * @NoMarkForCheckRequired
      */
