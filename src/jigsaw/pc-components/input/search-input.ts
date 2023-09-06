@@ -81,11 +81,29 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
     public showBorder: boolean = true;
 
     /**
+     * @internal
+     */
+    public _$placeholder: string = this._translateService.instant("search-input.placeholder");
+    private _placeholder: string;
+
+    /**
      * 输入框的placeholder
      */
     @RequireMarkForCheck()
     @Input()
-    public placeholder: string = this._translateService.instant("search-input.placeholder");
+    public get placeholder(): string {
+        return this._$placeholder;
+    }
+
+    public set placeholder(newValue: string) {
+        if (this._placeholder === newValue) {
+            return;
+        }
+        this._placeholder = newValue;
+        this._$placeholder = CommonUtils.isUndefined(this._placeholder) ?
+            this._translateService.instant("search-input.placeholder") : this._placeholder;
+    }
+
 
     private _value: string;
 
@@ -321,8 +339,11 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
         //国际化
         TranslateHelper.languageChangEvent.subscribe(langInfo => {
+            if (CommonUtils.isDefined(this._placeholder)) {
+                return;
+            }
             this._translateService.use(langInfo.curLang);
-            this.placeholder = this._translateService.instant("search-input.placeholder")
+            this._$placeholder = this._translateService.instant("search-input.placeholder")
         })
     }
 }
