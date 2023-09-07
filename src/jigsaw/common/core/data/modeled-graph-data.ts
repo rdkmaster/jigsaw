@@ -1,3 +1,4 @@
+import { Type } from "@angular/core";
 import {TableDataBase} from "./table-data";
 import {
     EchartLegend,
@@ -13,7 +14,6 @@ import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
-import { Type } from "@angular/core";
 
 export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
 
@@ -823,7 +823,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
-    public availableShapes: string[] = ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
+    private readonly _availableSymbols: string[] = ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -872,12 +872,10 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             if (fromData && this.useDefaultSingleColor) {
                 dim.symbol = dim.symbol || '';
                 Object.assign(dim.itemStyle, {color: '#3B69FF'});
-                if (this.availableShapes.length > 0) {
-                    // 获取下一个要使用的 symbol 类型
-                    const nextSymbolIndex = idx % this.availableShapes.length;
-                    // 更新 dim 对象中的 symbol 属性
-                    Object.assign(dim, {symbol: this.availableShapes[nextSymbolIndex]});
-                }
+                // 获取下一个要使用的 symbol 类型
+                const nextSymbolIndex = idx % this._availableSymbols.length;
+                // 更新 dim 对象中的 symbol 属性
+                Object.assign(dim, {symbol: this._availableSymbols[nextSymbolIndex]});
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
