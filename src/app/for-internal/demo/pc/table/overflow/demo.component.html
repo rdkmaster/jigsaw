@@ -1,0 +1,13 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>单元格是否显示超出部分：</span>
+        <jigsaw-switch [(checked)]="visibleOverflow" (checkedChange)="checkedChange()"></jigsaw-switch>
+    </li>
+</ul>
+<jigsaw-table #table [data]="tableData" [columnResizable]="true" [columnDefines]="columnDefines"></jigsaw-table>
