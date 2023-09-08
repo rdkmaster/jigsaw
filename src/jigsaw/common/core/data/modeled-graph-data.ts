@@ -5,8 +5,6 @@ import {
     EchartOptions,
     EchartSeriesItem,
     EchartTitle,
-    EchartToolbox,
-    EchartTooltip,
     EchartXAxis,
     EchartYAxis
 } from "./echart-types";
@@ -810,6 +808,9 @@ export class ScatterDimension extends Dimension {
     }
 }
 
+export const availableScatterSymbols: ('circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin')[] =
+    ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
+
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'scatter';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
@@ -823,7 +824,6 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
-    private readonly _availableSymbols: string[] = ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -873,9 +873,9 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
                 dim.symbol = dim.symbol || '';
                 Object.assign(dim.itemStyle, {color: '#3B69FF'});
                 // 获取下一个要使用的 symbol 类型
-                const nextSymbolIndex = idx % this._availableSymbols.length;
+                const nextSymbolIndex = idx % availableScatterSymbols.length;
                 // 更新 dim 对象中的 symbol 属性
-                Object.assign(dim, {symbol: this._availableSymbols[nextSymbolIndex]});
+                Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
