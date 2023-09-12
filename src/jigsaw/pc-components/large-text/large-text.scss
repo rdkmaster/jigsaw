@@ -18,6 +18,14 @@ $jigsaw-large-text: #{$jigsaw-prefix}-large-text;
                 align-items: center;
             }
 
+            .trend-container {
+                /*这里由于从组件中传这两个属性给ngStyle不生效，只能在这里设置!important*/
+                .trend-percentage {
+                    background-clip: text !important;
+                    -webkit-background-clip: text !important;
+                }
+            }
+
             .large-text {
                 display: flex;
                 align-items: center;

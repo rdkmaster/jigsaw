@@ -51,7 +51,7 @@
                     <i [ngClass]="'iconfont iconfont-e19d'"></i>
                 </div>
             </ng-container>
-            <div *ngIf="trend=='percentage'&&!!_$trendMap.percentage" [ngStyle]="trendValueStyle">
+            <div class="trend-percentage" *ngIf="trend=='percentage'&&!!_$trendMap.percentage" [ngStyle]="trendValueStyle">
                 <span>{{_$trendMap.percentage}}%</span>
             </div>
         </div>
