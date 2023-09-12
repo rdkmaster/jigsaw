@@ -15,6 +15,7 @@ import {JigsawSelectCollapse} from '@rdkmaster/jigsaw';
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
+            [showBorder]="to.showBorder"
             [placeholder]="to.placeholder"
             [optionWidth]="to.optionWidth"
             [optionHeight]="to.optionHeight"

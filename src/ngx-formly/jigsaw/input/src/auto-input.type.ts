@@ -12,6 +12,7 @@ import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
             [height]="to.height"
             [data]="to.data"
             [clearable]="to.clearable"
+            [showBorder]="to.showBorder"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [closeDropDownOnSelect]="to.closeDropDownOnSelect"

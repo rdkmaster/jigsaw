@@ -14,6 +14,7 @@ import {JigsawSelectGroup} from '@rdkmaster/jigsaw';
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
+            [showBorder]="to.showBorder"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
             [optionWidth]="to.optionWidth"

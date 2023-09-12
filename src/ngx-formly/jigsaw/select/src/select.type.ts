@@ -12,6 +12,7 @@ import {ArrayCollection, JigsawSelect} from "@rdkmaster/jigsaw";
             [width]="to.width"
             [height]="to.height"
             [disabled]="to.disabled"
+            [showBorder]="to.showBorder"
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
