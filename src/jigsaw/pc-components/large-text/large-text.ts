@@ -258,22 +258,20 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._$descendingStyle = {...this._descendingTrendStyle, color: color};
     }
 
-    public _trendValueStyle: LargeTextStyle;
+    private _trendValueStyle: LargeTextStyle;
 
     /**
-     * 设置趋势百分比样式
-     * 模板：{'font-size': 'xx px', 'color': xx}
+     * 设置趋势百分比样式，由于元素设置background-clip:text，background设置字体颜色
+     * 模板：{'font-size': 'xx px', 'color': 'transparent', background: 'xx'}
      * @NoMarkForCheckRequired
      */
     @Input()
     public get trendValueStyle() {
-        if (this._trendValueStyle.color) {
+        if (this._trendValueStyle?.background) {
             return this._trendValueStyle;
         }
-        if (this._$trendMap.trend === 'ascending') {
-            return this._getTrendColorStyle(this._$ascendingStyle);
-        }
-        return this._getTrendColorStyle(this._$descendingStyle);
+        return this._$trendMap.trend === 'ascending' ?
+            this._getTrendColorStyle(this._$ascendingStyle) : this._getTrendColorStyle(this._$descendingStyle);
     }
 
     public set trendValueStyle(style: LargeTextStyle) {
@@ -352,12 +350,11 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
     private _getTrendColorStyle(style: LargeTextStyle): LargeTextStyle {
         const color = style.color || 'black';
         const background = style.background ;
-        let trendColor: string;
-        trendColor = background ? background : color;
+        const trendColor = background ? background : color;
         return {
-            ...this._trendValueStyle,
-            'color': 'transparent',
-            'background': trendColor
+            ...(this._trendValueStyle || {}),
+            color: 'transparent',
+            background: trendColor
         }
     }
 

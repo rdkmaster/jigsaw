@@ -239,7 +239,8 @@ export class LargeTextCommonDemoComponent {
         this.trendValueStyle = {
             ...this.trendValueStyle,
             'font-size': this.trendValueFontSize + 'px',
-            'color': this.trendValueFontColor
+            'color': 'transparent',
+            'background': this.trendValueFontColor
         };
     }
 
@@ -250,13 +251,11 @@ export class LargeTextCommonDemoComponent {
             'font-size': this.trendValueFontSize + 'px',
             'color': 'transparent',
             'background': this.trendValueFontColor,
-            'background-clip': 'text',
-            '-webkit-background-clip': 'text',
         };
     }
 
     clearColor() {
-        delete this.trendValueStyle.color;
+        delete this.trendValueStyle.background;
     }
 
     _$changeValue() {
