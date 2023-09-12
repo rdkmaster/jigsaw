@@ -27,7 +27,7 @@ export interface LargeTextStyle {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
-        '[class.jigsaw-large-text-host]': 'true',
+        '[class.jigsaw-large-text-host]': 'true'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -258,13 +258,28 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._$descendingStyle = {...this._descendingTrendStyle, color: color};
     }
 
+    public _trendValueStyle: LargeTextStyle;
+
     /**
      * 设置趋势百分比样式
      * 模板：{'font-size': 'xx px', 'color': xx}
      * @NoMarkForCheckRequired
      */
     @Input()
-    public trendValueStyle: LargeTextStyle;
+    public get trendValueStyle() {
+        if (this._trendValueStyle.color) {
+            return this._trendValueStyle;
+        }
+        if (this._$trendMap.trend === 'ascending') {
+            return this._getTrendColorStyle(this._$ascendingStyle);
+        } else {
+            return this._getTrendColorStyle(this._$descendingStyle);
+        }
+    }
+
+    public set trendValueStyle(style: LargeTextStyle) {
+        this._trendValueStyle = style;
+    }
 
     /**
      * @internal
@@ -333,6 +348,18 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         this._value = this._roundToPrecision(this._value);
         this._translateValue(this._value);
         this._$valueList = this._value.toString().split('');
+    }
+
+    private _getTrendColorStyle(style: LargeTextStyle): LargeTextStyle {
+        const color = style.color || 'black';
+        const background = style.background ;
+        let trendColor: string;
+        trendColor = background ? background : color;
+        return {
+            ...this._trendValueStyle,
+            'color': 'transparent',
+            'background': trendColor
+        }
     }
 
     private _roundToPrecision(value: number): number {
