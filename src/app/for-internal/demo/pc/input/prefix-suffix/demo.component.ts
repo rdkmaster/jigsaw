@@ -68,6 +68,8 @@ export class InputPrefixSuffixDemoComponent {
         }
     ];
 
+    public _$blankSuffix = "";
+
     public _$unitChange(event: any) {
         console.log('prefix-suffix selected: ', event);
     }

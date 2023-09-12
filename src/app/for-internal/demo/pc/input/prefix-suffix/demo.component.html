@@ -38,7 +38,7 @@
                   [suffix]="_$icons" suffixWidth="120" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
     </jigsaw-input>
     <br>
-    <jigsaw-input #input1 placeholder="unit demo" width="400" [valid]="input1.value.length >= 3"></jigsaw-input>
+    <jigsaw-input #input1 placeholder="unit demo" width="400" [valid]="input1.value.length >= 3" [suffix]="_$blankSuffix"></jigsaw-input>
     <br>
     <jigsaw-input #input2 placeholder="unit demo" width="400" [valid]="input2.value.length >= 3"
                   (prefixChange)="_$unitChange($event)" [prefix]="_$prefix" prefixWidth="100"></jigsaw-input>
