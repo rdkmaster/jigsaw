@@ -16,7 +16,7 @@
 
     <br><br>
     <label>单位可选：</label><br>
-    <jigsaw-input placeholder="unit demo" [suffix]="prifix2" suffixWidth="120" (suffixChange)="_$unitChange($event)"
+    <jigsaw-input placeholder="unit demo" [suffix]="prefix2" suffixWidth="120" (suffixChange)="_$unitChange($event)"
                   width="300">
     </jigsaw-input>
     <a (click)="changePrefix2()">修改单位</a>
@@ -38,7 +38,8 @@
                   [suffix]="_$icons" suffixWidth="120" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
     </jigsaw-input>
     <br>
-    <jigsaw-input #input1 placeholder="unit demo" width="400" [valid]="input1.value.length >= 3" [suffix]="_$blankSuffix"></jigsaw-input>
+    <jigsaw-input #input1 placeholder="blank suffix" width="400" [valid]="input1.value.length >= 3" [suffix]="">
+    </jigsaw-input>
     <br>
     <jigsaw-input #input2 placeholder="unit demo" width="400" [valid]="input2.value.length >= 3"
                   (prefixChange)="_$unitChange($event)" [prefix]="_$prefix" prefixWidth="100"></jigsaw-input>
