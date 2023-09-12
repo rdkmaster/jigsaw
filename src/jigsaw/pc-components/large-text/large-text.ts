@@ -272,9 +272,8 @@ export class JigsawLargeTextComponent extends AbstractJigsawComponent implements
         }
         if (this._$trendMap.trend === 'ascending') {
             return this._getTrendColorStyle(this._$ascendingStyle);
-        } else {
-            return this._getTrendColorStyle(this._$descendingStyle);
         }
+        return this._getTrendColorStyle(this._$descendingStyle);
     }
 
     public set trendValueStyle(style: LargeTextStyle) {
