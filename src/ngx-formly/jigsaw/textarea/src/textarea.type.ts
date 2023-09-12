@@ -13,6 +13,7 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
             [(value)]="to.value"
             [clearable]="to.clearable"
             [placeholder]="to.placeholder"
+            [showBorder]="to.showBorder"
             [resize]="to.resize"
             [maxLength]="to.maxContentLength"
             [includesCRLF]="to.includesCRLF"
@@ -29,6 +30,7 @@ export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
     defaultOptions = {
         templateOptions: {
             clearable: true,
+            showBorder: true,
             valid: true,
             width: '100%',
             height: '100%',

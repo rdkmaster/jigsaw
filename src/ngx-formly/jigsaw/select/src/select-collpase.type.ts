@@ -15,6 +15,7 @@ import {JigsawSelectCollapse} from '@rdkmaster/jigsaw';
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
+            [showBorder]="to.showBorder"
             [placeholder]="to.placeholder"
             [optionWidth]="to.optionWidth"
             [optionHeight]="to.optionHeight"
@@ -45,6 +46,7 @@ export class FormlyFieldSelectCollapse extends FormlyFieldType<JigsawSelectColla
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,
+            showBorder: true,
             groupField: "groupName",
             optionHeight: 32
         },

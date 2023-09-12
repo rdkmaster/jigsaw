@@ -19,6 +19,7 @@ import {JigsawRangeDateTimeSelect, TimeGr} from '@rdkmaster/jigsaw';
             [markDates]="to.markDates"
             [step]="to.step"
             [placeholder]="to.placeholder"
+            [showBorder]="to.showBorder"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [weekStart]="to.weekStart"
@@ -33,6 +34,7 @@ export class FormlyFieldRangeDateTimeSelect extends FormlyFieldType<JigsawRangeD
         templateOptions: {
             width: '100%',
             valid: true,
+            showBorder: true,
             gr: TimeGr.date,
             openTrigger: 'click',
             closeTrigger: 'mouseleave'
