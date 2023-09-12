@@ -30,6 +30,7 @@ export class FormlyFieldTextArea extends FormlyFieldType<JigsawTextarea> {
     defaultOptions = {
         templateOptions: {
             clearable: true,
+            showBorder: true,
             valid: true,
             width: '100%',
             height: '100%',

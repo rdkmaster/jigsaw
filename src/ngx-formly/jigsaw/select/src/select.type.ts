@@ -45,6 +45,7 @@ export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
             labelField: 'label',
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
+            showBorder: true,
             useStatistics: true,
             optionHeight: 32
         },

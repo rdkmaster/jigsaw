@@ -43,6 +43,7 @@ export class FormlyFieldSelectGroup extends FormlyFieldType<JigsawSelectGroup> {
             minWidth: '100%',
             maxWidth: '100%',
             labelField: 'label',
+            showBorder: true,
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,

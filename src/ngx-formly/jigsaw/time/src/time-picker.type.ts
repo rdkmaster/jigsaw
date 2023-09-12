@@ -28,6 +28,7 @@ export class FormlyFieldTimePicker extends FormlyFieldType<JigsawTimePicker> {
         templateOptions: {
             valid: true,
             step: 1,
+            showBorder: true,
             gr: TimeGr.time,
             popDirection: 'down',
         },

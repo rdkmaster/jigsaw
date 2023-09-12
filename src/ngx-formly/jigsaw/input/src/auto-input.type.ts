@@ -44,6 +44,7 @@ export class FormlyFieldAutoInput extends FormlyFieldType<JigsawAutoCompleteInpu
             width: '100%',
             valid: true,
             clearable: true,
+            showBorder: true,
             maxDropDownWidth: '100%',
             maxDropDownHeight: '300px',
             closeDropDownOnSelect: true

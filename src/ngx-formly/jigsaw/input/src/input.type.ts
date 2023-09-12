@@ -61,6 +61,7 @@ export class FormlyFieldInput extends FieldType implements AfterViewInit {
             width: '100%',
             valid: true,
             clearable: true,
+            showBorder: true,
             min: -Infinity,
             max: Infinity,
             step: 1
