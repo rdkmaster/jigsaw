@@ -286,10 +286,11 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      */
     public get _$getBorderRadius(): BorderRadiusValue {
         const radius: BorderRadiusValue = {};
-        if (CommonUtils.isDefined(this.prefix)) {
+        // 配合template里的*ngIf；空字符、false不显示；字符串可以正常显示
+        if (this.prefix) {
             Object.assign(radius, {'border-top-left-radius': 0, 'border-bottom-left-radius': 0});
         }
-        if (CommonUtils.isDefined(this.suffix)) {
+        if (this.suffix) {
             Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
         }
         return radius;
@@ -299,13 +300,13 @@ export abstract class JigsawInputBase extends AbstractJigsawComponent implements
      * @internal
      */
     public get _$getWrapperClass(): 'jigsaw-input-both' | 'jigsaw-input-left' | 'jigsaw-input-right' | 'jigsaw-input-none' {
-        if (CommonUtils.isDefined(this.prefix) && CommonUtils.isDefined(this.suffix)) {
+        if (this.prefix && this.suffix) {
             return 'jigsaw-input-both';
         }
-        if (CommonUtils.isDefined(this.prefix)) {
+        if (this.prefix) {
             return 'jigsaw-input-left';
         }
-        if (CommonUtils.isDefined(this.suffix)) {
+        if (this.suffix) {
             return 'jigsaw-input-right';
         }
         return 'jigsaw-input-none';
