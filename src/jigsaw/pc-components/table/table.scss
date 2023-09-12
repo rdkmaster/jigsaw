@@ -19,7 +19,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 border-color: $border-color-default;
                 line-height: $line-height-base;
                 vertical-align: middle;
-                overflow: hidden;
 
                 .#{$jigsaw-table}-cell-content,
                 .#{$jigsaw-table}-header-cell {
@@ -131,8 +130,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     }
                 }
 
-                &.jigsaw-cell-visible-overflow {
-                    overflow: visible;
+                &.jigsaw-cell-hidden-overflow {
+                    overflow: hidden;
                 }
             }
         }

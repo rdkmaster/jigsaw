@@ -85,7 +85,7 @@ export class TableHeader {
     innerHtmlContext?: any;
     alignment?: 'left' | 'center' | 'right';
     noPadding?: boolean;
-    visibleOverflow?: boolean;
+    hiddenOverflow?: boolean;
 }
 
 export class TableCell {
@@ -101,7 +101,7 @@ export class TableCell {
     innerHtmlContext?: any;
     alignment?: 'left' | 'center' | 'right';
     noPadding?: boolean;
-    visibleOverflow?: boolean;
+    hiddenOverflow?: boolean;
 }
 
 export class TableHeadSetting {
@@ -120,7 +120,7 @@ export class TableHeadSetting {
     innerHtmlContext: any;
     alignment: 'left' | 'center' | 'right';
     noPadding: boolean;
-    visibleOverflow: boolean;
+    hiddenOverflow: boolean;
 }
 
 export class TableCellSetting {
@@ -141,7 +141,7 @@ export class TableCellSetting {
     innerHtmlContext: any;
     alignment: 'left' | 'center' | 'right';
     noPadding: boolean;
-    visibleOverflow: boolean;
+    hiddenOverflow: boolean;
 }
 
 export class SortChangeEvent {
