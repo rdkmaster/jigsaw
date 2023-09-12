@@ -809,7 +809,7 @@ export class ScatterDimension extends Dimension {
 }
 
 export const availableScatterSymbols: ('circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin')[] =
-    ['circle', 'rect', 'roundRect', 'triangle', 'diamond', 'pin'];
+    ['circle', 'roundRect', 'triangle', 'diamond', 'pin', 'rect'];
 
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'scatter';
