@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ColumnDefine, TableCellAutoCompleteEditorRenderer, TableCellPasswordRenderer, TableCellSelectRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer, TableData } from "jigsaw/public_api";
+import { ColumnDefine, TableCellAutoCompleteEditorRenderer, TableCellSelectRenderer, TableCellSwitchRenderer, TableCellTextEditorRenderer, TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -40,14 +40,11 @@ export class TableOverflowDemoComponent {
             ["超长文本", "自动输入框", "html原生下拉框", "入职日期", "下拉", "开关"]);
     }
 
-    hiddenOverflow: boolean = false;
-
     columnDefines: ColumnDefine[] = [
         {
             target: "name",
             cell: {
                 noPadding: true,
-                hiddenOverflow: this.hiddenOverflow
             }
         },
         {
@@ -60,7 +57,6 @@ export class TableOverflowDemoComponent {
                     }
                 },
                 editable: true,
-                hiddenOverflow: this.hiddenOverflow
             }
         },
         {
@@ -75,7 +71,6 @@ export class TableOverflowDemoComponent {
                         clearable: true,
                     };
                 },
-                hiddenOverflow: this.hiddenOverflow
             }
         },
         {
@@ -84,7 +79,6 @@ export class TableOverflowDemoComponent {
             cell: {
                 editable: false,
                 renderer: TableCellSwitchRenderer,
-                hiddenOverflow: this.hiddenOverflow
             }
         },
         {
@@ -102,7 +96,6 @@ export class TableOverflowDemoComponent {
                         <option value="$">$</option>
                     </select>`,
                 innerHtmlContext: this,
-                hiddenOverflow: this.hiddenOverflow
             }
         },
         {
@@ -115,19 +108,9 @@ export class TableOverflowDemoComponent {
                 </div>`,
                 innerHtmlContext: this,
                 noPadding: true,
-                hiddenOverflow: this.hiddenOverflow
             }
         }
     ];
-
-    checkedChange() {
-        this.columnDefines.forEach(item => {
-            item.cell.hiddenOverflow = this.hiddenOverflow;
-        })
-        setTimeout(() => {
-            this.tableData.refresh();
-        })
-    }
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

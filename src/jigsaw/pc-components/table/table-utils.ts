@@ -10,7 +10,7 @@ export class TableUtils {
         if (!settings) {
             settings = {
                 cellData: null, width: null, maxWidth: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, field: '',
-                sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null, filterable: false, hiddenOverflow: false
+                sortable: false, sortAs: SortAs.string, defaultSortOrder: SortOrder.default, innerHtmlContext: null, filterable: false
             };
         }
         settings.width = columnDefine.width;
@@ -24,7 +24,6 @@ export class TableUtils {
             settings.clazz = headerDef.clazz;
             settings.alignment = headerDef.alignment ? headerDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableHeadCheckboxRenderer" ? "center" : "left");
             settings.noPadding = !!headerDef.noPadding;
-            settings.hiddenOverflow = !!headerDef.hiddenOverflow;
             settings.sortable = headerDef.sortable;
             settings.sortAs = CommonUtils.isDefined(headerDef.sortAs) ? headerDef.sortAs : settings.sortAs;
             settings.filterable = headerDef.filterable;
@@ -39,7 +38,7 @@ export class TableUtils {
         if (!settings) {
             settings = {
                 cellData: '', width: null, visible: true, renderer: null, rendererInitData: null, clazz: '', alignment: 'left', noPadding: false, rowSpan: 1,
-                editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null, hiddenOverflow: false,
+                editable: false, editorRenderer: null, editorRendererInitData: null, group: null, field: null, tooltip: null, innerHtmlContext: null,
                 alwaysShowEditor: false
             }
         }
@@ -53,7 +52,6 @@ export class TableUtils {
             settings.clazz = cellDef.clazz;
             settings.alignment = cellDef.alignment ? cellDef.alignment : (settings.renderer instanceof Function && settings.renderer.prototype.constructor.name === "TableCellCheckboxRenderer" ? "center" : "left");
             settings.noPadding = !!cellDef.noPadding;
-            settings.hiddenOverflow = !!cellDef.hiddenOverflow;
             settings.editable = cellDef.editable;
             settings.alwaysShowEditor = cellDef.alwaysShowEditor;
             settings.editorRenderer = TableUtils.getRenderer(cellDef.editorRenderer);

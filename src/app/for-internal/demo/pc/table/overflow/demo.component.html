@@ -4,12 +4,6 @@
 
 
 <!-- start to learn the demo from here -->
-<ul class="demo-options">
-    <li class="demo-options-item">
-        <span>单元格是否隐藏超出部分：</span>
-        <jigsaw-switch [(checked)]="hiddenOverflow" (checkedChange)="checkedChange()"></jigsaw-switch>
-    </li>
-</ul>
-<jigsaw-table #table [data]="tableData" [columnResizable]="true" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-table #table [data]="tableData" [columnResizable]="true" [columnDefines]="columnDefines" frozenLeftColumns="1"></jigsaw-table>
 
 <span>改变最后一列的列宽到最小时，会出现滚动条</span>
