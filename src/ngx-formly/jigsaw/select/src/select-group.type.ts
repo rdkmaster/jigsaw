@@ -14,6 +14,7 @@ import {JigsawSelectGroup} from '@rdkmaster/jigsaw';
             [minWidth]="to.minWidth"
             [maxWidth]="to.maxWidth"
             [trackItemBy]="to.trackItemBy"
+            [showBorder]="to.showBorder"
             [labelField]="to.labelField"
             [placeholder]="to.placeholder"
             [optionWidth]="to.optionWidth"
@@ -42,6 +43,7 @@ export class FormlyFieldSelectGroup extends FormlyFieldType<JigsawSelectGroup> {
             minWidth: '100%',
             maxWidth: '100%',
             labelField: 'label',
+            showBorder: true,
             openTrigger: 'mouseenter',
             closeTrigger: 'mouseleave',
             useStatistics: true,

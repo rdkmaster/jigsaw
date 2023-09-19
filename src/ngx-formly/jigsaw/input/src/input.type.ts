@@ -12,6 +12,7 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
             [width]="to.width"
             [height]="to.height"
             [clearable]="to.clearable"
+            [showBorder]="to.showBorder"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [preIcon]="to.preIcon"
@@ -40,6 +41,7 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
                 [step]="to.step"
                 [valid]="to.valid && !showError"
                 [placeholder]="to.placeholder"
+                [showBorder]="to.showBorder"
                 [size]="to.size"
                 [showOption]="to.showOption"
                 [suffix]="to.suffix"
@@ -59,6 +61,7 @@ export class FormlyFieldInput extends FieldType implements AfterViewInit {
             width: '100%',
             valid: true,
             clearable: true,
+            showBorder: true,
             min: -Infinity,
             max: Infinity,
             step: 1

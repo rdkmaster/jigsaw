@@ -95,8 +95,13 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
         }
 
         if (lv2) {
-            if (lv2.selected || lv2.disabled) {
-                // 已选中 or 已禁用，直接返回
+            if (lv2.disabled) {
+                // 已禁用，直接返回
+                return;
+            }
+            if (lv2.selected) {
+                // 已选择，发送select
+                this.select.emit(lv2);
                 return;
             }
             this._resetMenuSelected();
@@ -119,7 +124,8 @@ export class JigsawNavigationMenu extends AbstractJigsawComponent implements OnD
                 return;
             }
             if (lv1.selected) {
-                // 已选中，直接返回
+                // 已选中，发送select
+                this.select.emit(lv1);
                 return;
             }
             this._resetMenuSelected();

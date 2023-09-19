@@ -6,7 +6,7 @@
 <a (click)="clear()">清空搜索框内容</a>
 
 <jigsaw-header>自动搜索</jigsaw-header>
-<jigsaw-search-input width="200px" [(value)]="value1" (search)="value1 = $event" [searchDebounce]="1000">
+<jigsaw-search-input width="200px" [(value)]="value1" (search)="value1 = $event" [searchDebounce]="1000" placeholder="这里是占位文本">
 </jigsaw-search-input>
 <div> {{ " 搜索值为：" + value1 }} </div>
 

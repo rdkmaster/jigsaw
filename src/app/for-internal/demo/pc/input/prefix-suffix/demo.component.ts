@@ -19,10 +19,10 @@ export class InputPrefixSuffixDemoComponent {
         this.prifix1 = "修改的值"
     }
 
-    public prifix2 = ['单位（GB）', '单位（MB）', '单位（KB）'];
+    public prefix2 = ['单位（GB）', '单位（MB）', '单位（KB）'];
 
     public changePrefix2() {
-        this.prifix2 = ['修改的值1', '修改的值2', '修改的值3'];
+        this.prefix2 = ['修改的值1', '修改的值2', '修改的值3'];
     }
 
     public _$units = ['单位（GB）', '单位（MB）', '单位（KB）'];

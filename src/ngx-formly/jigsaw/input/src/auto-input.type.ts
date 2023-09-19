@@ -12,6 +12,7 @@ import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
             [height]="to.height"
             [data]="to.data"
             [clearable]="to.clearable"
+            [showBorder]="to.showBorder"
             [valid]="to.valid && !showError"
             [placeholder]="to.placeholder"
             [closeDropDownOnSelect]="to.closeDropDownOnSelect"
@@ -43,6 +44,7 @@ export class FormlyFieldAutoInput extends FormlyFieldType<JigsawAutoCompleteInpu
             width: '100%',
             valid: true,
             clearable: true,
+            showBorder: true,
             maxDropDownWidth: '100%',
             maxDropDownHeight: '300px',
             closeDropDownOnSelect: true

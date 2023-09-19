@@ -11,6 +11,7 @@ import {JigsawTimePicker, TimeGr} from '@rdkmaster/jigsaw';
             [width]="to.width"
             [height]="to.height"
             [(value)]="to.value"
+            [showBorder]="to.showBorder"
             [valid]="to.valid && !showError"
             [step]="to.step"
             [gr]="to.gr"
@@ -27,6 +28,7 @@ export class FormlyFieldTimePicker extends FormlyFieldType<JigsawTimePicker> {
         templateOptions: {
             valid: true,
             step: 1,
+            showBorder: true,
             gr: TimeGr.time,
             popDirection: 'down',
         },

@@ -1,11 +1,10 @@
+import { Type } from "@angular/core";
 import {TableDataBase} from "./table-data";
 import {
     EchartLegend,
     EchartOptions,
     EchartSeriesItem,
     EchartTitle,
-    EchartToolbox,
-    EchartTooltip,
     EchartXAxis,
     EchartYAxis
 } from "./echart-types";
@@ -57,7 +56,7 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
         return idx == -1 ? this.header.indexOf(field) : idx;
     }
 
-    protected getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean): Dimension[] {
+    protected getRealDimensions(dimField: string, dimensions: Dimension[], usingAllDimensions: boolean, DimType: Type<Dimension> = Dimension): Dimension[] {
         const dims = [];
         const dimIndex = this.getIndex(dimField);
         if (dimIndex == -1) {
@@ -68,7 +67,7 @@ export abstract class AbstractModeledGraphData extends TableDataBase {
             if (series) {
                 dims.push(...series.map(s => {
                     const d = dimensions.find(d => d.name === s);
-                    return d ? d : new Dimension(s);
+                    return d ? d : new DimType(s);
                 }));
             }
         } else {
@@ -801,12 +800,16 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
 // 散点图相关数据对象
 export class ScatterDimension extends Dimension {
     public itemStyle?: any = {};
+    public symbol?: string = "";
     public static extend(seriesItem: EchartSeriesItem, dimension: ScatterDimension) {
         const dimensionBak = <ScatterDimension>CommonUtils.deepCopy(dimension);
         delete dimensionBak.name;
         Object.assign(seriesItem, dimensionBak);
     }
 }
+
+export const availableScatterSymbols: ('circle' | 'rect' | 'roundRect' | 'triangle' | 'diamond' | 'pin')[] =
+    ['circle', 'roundRect', 'triangle', 'diamond', 'pin', 'rect'];
 
 export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'scatter';
@@ -820,6 +823,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public dimensions: ScatterDimension[] = [];
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
+    public useDefaultSingleColor: boolean;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -854,7 +858,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
         options.xAxis = CommonUtils.extendObject(options.xAxis, this.xAxis);
         options.yAxis = CommonUtils.extendObject(options.yAxis, this.yAxis);
 
-        const dimensions = <ScatterDimension[]> this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions);
+        const dimensions = <ScatterDimension[]> this.getRealDimensions(this.dimensionField, this.dimensions, this.usingAllDimensions, ScatterDimension);
         const dimIndex = this.getIndex(this.dimensionField);
         this._mergeLegend(options.legend, dimensions);
 
@@ -864,6 +868,14 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             if (fromData && this.useDefaultBubble) {
                 dim.itemStyle = dim.itemStyle || {};
                 Object.assign(dim.itemStyle, {opacity: 0.3, borderWidth: 2});
+            }
+            if (fromData && this.useDefaultSingleColor) {
+                dim.symbol = dim.symbol || '';
+                Object.assign(dim.itemStyle, {color: '#3B69FF'});
+                // 获取下一个要使用的 symbol 类型
+                const nextSymbolIndex = idx % availableScatterSymbols.length;
+                // 更新 dim 对象中的 symbol 属性
+                Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
