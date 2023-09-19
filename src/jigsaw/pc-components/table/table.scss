@@ -10,6 +10,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         text-align: center;
         table-layout: fixed;
         font-size: $font-size-text-base;
+        overflow: hidden;
 
         tr {
             td {
@@ -218,7 +219,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-range {
         height: 100%;
         padding-top: 32px;
-        overflow: hidden;
 
         &.#{$jigsaw-table}-hide-head {
             padding-top: 0 !important;
@@ -230,7 +230,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         top: 0;
         width: 100%;
         height: inherit;
-        overflow: hidden;
     }
 
     .#{$jigsaw-table}-body-range {

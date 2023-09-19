@@ -11,9 +11,10 @@
     <span style="margin-left: 16px;">更改数据的信息： {{changeMsg}}</span>
 </p>
 <jigsaw-table width="400px" height="420" [data]="tableData1" [columnDefines]="columns1"
-              (edit)="onCellChange($event)">
+              (edit)="onCellChange($event)" [columnResizable]="true">
 </jigsaw-table>
 <jigsaw-table style="margin-left: 24px;" width="400px" height="420" [data]="tableData2" trackRowBy="name"
-              [columnDefines]="columns2" [additionalColumnDefines]="additional" (edit)="onCellChange($event)">
+              [columnDefines]="columns2" [additionalColumnDefines]="additional" (edit)="onCellChange($event)"
+              [columnResizable]="true">
 </jigsaw-table>
 
