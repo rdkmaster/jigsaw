@@ -1,11 +1,15 @@
-import { Component } from "@angular/core";
-import { TableData } from "jigsaw/public_api";
+import { Component, ViewChild } from "@angular/core";
+import { JigsawTable, TableData } from "jigsaw/public_api";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class TableSetStyleDemoComponent {
     tableData: TableData;
+
+    @ViewChild('table')
+    public table: JigsawTable;
 
     constructor() {
         this.tableData = new TableData(
@@ -104,17 +108,20 @@ export class TableSetStyleDemoComponent {
     }
 
     public styleOptions = {
-        host: {
-            border: '1px solid red',
-            shadow: '0px 1px 2px hsla(0, 0%, 0%, 0.12)'
-        },
         table: {
-            backgroundColor: 'cyan'
+            background: 'cyan',
+            border: '5px solid red',
+            shadow: '0px 1px 2px hsla(0, 0%, 0%, 0.12)'
         },
         header: {
             height: '40px'
         },
-        body: {}
+        body: {},
+        other: {}
+    }
+
+    public updateStyleOptions() {
+        this.table.updateStyleOptions();
     }
     // ====================================================================
     // ignore the following lines, they are not important to this demo

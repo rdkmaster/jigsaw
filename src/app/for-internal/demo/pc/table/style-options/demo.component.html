@@ -2,6 +2,12 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>背景色：</span>
+        <jigsaw-input [(value)]="styleOptions.table.background"></jigsaw-input>
+    </li>
+</ul>
+<a (click)="updateStyleOptions()">更新</a>
 <!-- start to learn the demo from here -->
-<jigsaw-table [data]="tableData" [styleOptions]="styleOptions"></jigsaw-table>
+<jigsaw-table #table [data]="tableData" [styleOptions]="styleOptions"></jigsaw-table>

@@ -60,6 +60,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.background]':'_$hostStyle.background',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -177,22 +178,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * 设置表格样式
      * @NoMarkForCheckRequired
-    */
+    */        
     @Input()
     public get styleOptions() {
         return this._styleOptions;
     }
 
-    public set styleOptions(newValue) {
-        if (this._styleOptions === newValue) {
+    public set styleOptions(value) {
+        if (this._styleOptions === value) {
             return;
         }
-        this._styleOptions = newValue;
-        this._$tableStyle = this.styleOptions.table;
-
+        this._styleOptions = value;
+        this.updateStyleOptions();
     }
 
+    public _$hostStyle: any = {
+        background: undefined
+    }; 
+
     public _$tableStyle = {};
+
+    public updateStyleOptions() {
+        this._styleOptions = this.styleOptions;
+        this._$hostStyle.background = this.styleOptions.table.background;
+    }
 
     /**
      * @NoMarkForCheckRequired
