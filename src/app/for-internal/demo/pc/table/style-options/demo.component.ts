@@ -110,6 +110,7 @@ export class TableSetStyleDemoComponent {
     public styleOptions = {
         table: {
             background: 'cyan',
+            backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
             border: '5px solid red',
             shadow: '0px 1px 2px hsla(0, 0%, 0%, 0.12)'
         },

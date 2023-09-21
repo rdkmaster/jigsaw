@@ -5,7 +5,14 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>背景色：</span>
-        <jigsaw-input [(value)]="styleOptions.table.background"></jigsaw-input>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.background"></jigsaw-input>
+        <jigsaw-button
+            (click)="styleOptions.table.background = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
+            预设渐进色</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>背景图：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundImage"></jigsaw-input>
     </li>
 </ul>
 <a (click)="updateStyleOptions()">更新</a>

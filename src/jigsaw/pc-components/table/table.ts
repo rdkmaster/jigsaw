@@ -61,6 +61,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.background]':'_$hostStyle.background',
+        '[style.backgroundImage]':'_$hostStyle.backgroundImage',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -201,6 +202,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public updateStyleOptions() {
         this._styleOptions = this.styleOptions;
         this._$hostStyle.background = this.styleOptions.table.background;
+        this._$hostStyle.backgroundImage = this.styleOptions.table.backgroundImage;
     }
 
     /**
