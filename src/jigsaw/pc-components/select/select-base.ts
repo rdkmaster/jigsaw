@@ -592,6 +592,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$onTagRemove(removedItem): void {
         this.remove.emit(removedItem);
+        this._value = this._$selectedItems;
         this._valueChange(this.value);
         this._$checkSelectAll();
         this._changeDetector.markForCheck();

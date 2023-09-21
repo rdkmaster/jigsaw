@@ -74,6 +74,9 @@ export class MultipleSelectDemoComponent {
     selectedArrayData2 = undefined;
     selectedArrayData3 = [{ label: "禁用选项3", disabled: true }, { label: "禁用选项7", disabled: true }]
 
+    textDataList = ["1", "2", "3", "4", "5"];
+    textValueList = ["1", "2", "3", "4", "5"];
+
     clearSelection() {
         this.selectedArrayData = null;
         this.selectedArrayData1 = null;
