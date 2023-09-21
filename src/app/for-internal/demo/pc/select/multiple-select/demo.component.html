@@ -63,3 +63,14 @@
     width="160px"
     [useStatistics]="false"
 ></jigsaw-select>
+
+<jigsaw-header>初始全选（文本数组）</jigsaw-header>
+<jigsaw-select
+    [data]="textDataList"
+    [(value)]="textValueList"
+    (valueChange)="valueChange($event)"
+    [multipleSelect]="true"
+    placeholder="请选择"
+    width="330px"
+    [useStatistics]="false"
+></jigsaw-select>
