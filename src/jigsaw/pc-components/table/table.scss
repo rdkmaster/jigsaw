@@ -10,7 +10,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         text-align: center;
         table-layout: fixed;
         font-size: $font-size-text-base;
-        overflow: hidden;
+        /* 不可设置overflow: hidden, 会影响冻结列的功能 */
 
         tr {
             td {
@@ -230,6 +230,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         top: 0;
         width: 100%;
         height: inherit;
+        overflow: hidden; /* 不可删除，配合冻结列功能，在设置contentWidth生效 */
     }
 
     .#{$jigsaw-table}-body-range {
