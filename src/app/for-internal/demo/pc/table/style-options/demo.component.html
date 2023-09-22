@@ -2,19 +2,48 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<jigsaw-button width="100%" colorType="primary" (click)="updateStyleOptions()">更新</jigsaw-button>
+
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>背景色：</span>
-        <jigsaw-input width="400px" [(value)]="styleOptions.table.background"></jigsaw-input>
-        <jigsaw-button
-            (click)="styleOptions.table.background = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
-            预设渐进色</jigsaw-button>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundColor"></jigsaw-input>
+        <jigsaw-button (click)="styleOptions.table.backgroundColor = 'var(--brand-default)'">
+            颜色变量</jigsaw-button>
+        <jigsaw-button (click)="styleOptions.table.backgroundColor = '#000000'">
+            具体色值</jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>背景图：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundImage"></jigsaw-input>
+        <jigsaw-button
+            (click)="styleOptions.table.backgroundImage = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
+            渐进色</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>背景图大小：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundSize"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>背景图位置：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundPosition"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>背景图重复：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundRepeat"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>边框：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.border"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>边框圆角：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.borderRadius"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>阴影：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.boxShadow"></jigsaw-input>
     </li>
 </ul>
-<a (click)="updateStyleOptions()">更新</a>
-<!-- start to learn the demo from here -->
+
 <jigsaw-table #table [data]="tableData" [styleOptions]="styleOptions"></jigsaw-table>

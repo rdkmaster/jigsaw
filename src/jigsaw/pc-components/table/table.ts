@@ -60,8 +60,14 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.background]':'_$hostStyle.background',
+        '[style.backgroundColor]':'_$hostStyle.backgroundColor',
         '[style.backgroundImage]':'_$hostStyle.backgroundImage',
+        '[style.backgroundSize]':'_$hostStyle.backgroundSize',
+        '[style.backgroundPosition]':'_$hostStyle.backgroundPosition',
+        '[style.backgroundRepeat]':'_$hostStyle.backgroundRepeat',
+        '[style.border]':'_$hostStyle.border',
+        '[style.borderRadius]':'_$hostStyle.borderRadius',
+        '[style.boxShadow]':'_$hostStyle.boxShadow',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -201,8 +207,14 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public updateStyleOptions() {
         this._styleOptions = this.styleOptions;
-        this._$hostStyle.background = this.styleOptions.table.background;
+        this._$hostStyle.backgroundColor = this.styleOptions.table.backgroundColor;
         this._$hostStyle.backgroundImage = this.styleOptions.table.backgroundImage;
+        this._$hostStyle.backgroundSize = this.styleOptions.table.backgroundSize;
+        this._$hostStyle.backgroundPosition = this.styleOptions.table.backgroundPosition;
+        this._$hostStyle.backgroundRepeat = this.styleOptions.table.backgroundRepeat;
+        this._$hostStyle.border = this.styleOptions.table.border;
+        this._$hostStyle.borderRadius = this.styleOptions.table.borderRadius;
+        this._$hostStyle.boxShadow = this.styleOptions.table.boxShadow;
     }
 
     /**

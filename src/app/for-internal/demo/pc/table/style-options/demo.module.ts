@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { JigsawInputModule, JigsawTableModule } from "jigsaw/public_api";
+import { JigsawButtonModule, JigsawInputModule, JigsawTableModule } from "jigsaw/public_api";
 import { JigsawDemoDescriptionModule } from "app/for-internal/description/demo-description";
 import { TableSetStyleDemoComponent } from './demo.component';
 
 @NgModule({
-    imports: [JigsawTableModule, JigsawDemoDescriptionModule, JigsawInputModule],
+    imports: [JigsawTableModule, JigsawDemoDescriptionModule, JigsawInputModule, JigsawButtonModule],
     declarations: [TableSetStyleDemoComponent],
     exports: [TableSetStyleDemoComponent]
 })
