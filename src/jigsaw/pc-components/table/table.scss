@@ -230,6 +230,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         top: 0;
         width: 100%;
         height: inherit;
+        overflow: hidden; /* 不可删除，配合冻结列功能，在设置contentWidth生效 */
     }
 
     .#{$jigsaw-table}-body-range {
