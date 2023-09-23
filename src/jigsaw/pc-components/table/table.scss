@@ -13,7 +13,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
         tr {
             td {
-                color: $font-color-default;
                 border-width: 1px;
                 border-style: solid;
                 border-color: $border-color-default;
@@ -133,15 +132,10 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         }
 
         thead {
-            color: $font-color-heading-bold;
-            font-weight: bold;
-
             tr {
                 height: 32px;
 
                 td {
-                    background: $bg-gray;
-
                     .#{$jigsaw-table}-header-cell {
                         .iconfont {
                             margin-right: 2px;
@@ -212,6 +206,9 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-header {
         position: absolute;
         top: 0;
+        background: $bg-gray;
+        color: $font-color-default;
+        font-weight: bold;
         z-index: $zindex-level-2;
     }
 

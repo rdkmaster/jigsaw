@@ -93,13 +93,41 @@ export class TableSetStyleDemoComponent {
             backgroundRepeat: 'no-repeat',
             border: '5px solid red',
             borderRadius: '5px',
-            boxShadow: '0px 1px 2px hsla(0, 0%, 0%, 0.12)'
+            boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
+            opacity: 1,
+            visibility: 'visable',
+            display: 'none'
         },
         header: {
-            height: '40px'
+            height: '80px',
+            backgroundColor: 'pink',
+            backgroundImage: 'linear-gradient(to right, #ff3366, #ff99cc)',
+            borderBottom: '2px solid red',
+            cell: {
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                noPadding: true,
+            }
         },
-        body: {},
-        other: {}
+        body: {
+            tr: {
+                normal: 'transparent',
+                odd: 'transparent',
+                even: 'transparent',
+                hover: 'red',
+                active: 'green'
+            },
+            cell: {
+                fontSize: '16px',
+                color: 'green',
+                justifyContent: 'center',
+                alignItems: 'center',
+                noPadding: true,
+            }
+        }
     }
 
     public updateStyleOptions() {

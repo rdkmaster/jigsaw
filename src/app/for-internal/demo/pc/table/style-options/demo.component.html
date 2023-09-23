@@ -44,6 +44,44 @@
         <span>阴影：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.table.boxShadow"></jigsaw-input>
     </li>
+    <li class="demo-options-item">
+        <span>透明度：</span>
+        <j-numeric-input min="0" max="1" step="0.1" [(value)]="styleOptions.table.opacity"></j-numeric-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头高度：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.height"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.backgroundColor"></jigsaw-input>
+        <jigsaw-button (click)="styleOptions.header.backgroundColor = 'var(--brand-default)'">
+            颜色变量</jigsaw-button>
+        <jigsaw-button (click)="styleOptions.header.backgroundColor = 'rgb(139, 0, 0)'">
+            rgb色值</jigsaw-button>
+        <jigsaw-button (click)="styleOptions.header.backgroundColor = 'transparent'">
+            透明</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>表头背景图：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.backgroundImage"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头分割线：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.borderBottom"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头单元格文本大小：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.cell.fontSize"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头单元格文本粗细：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.cell.fontWeight"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表头单元格文本颜色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.header.cell.color"></jigsaw-input>
+    </li>
 </ul>
 
 <jigsaw-table #table [data]="tableData" [styleOptions]="styleOptions"></jigsaw-table>

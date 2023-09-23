@@ -1,8 +1,7 @@
 <div #tableRange class="jigsaw-table-range"
-    [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length"
-    [ngStyle]="_$tableStyle">
+    [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
     <div #headerScrollbar class="jigsaw-table-header-range">
-        <table class="jigsaw-table-header" [hidden]="hideHeader || !_$headerSettings.length" height="80px">
+        <table class="jigsaw-table-header" [ngStyle]="_$headerStyle" [hidden]="hideHeader || !_$headerSettings.length">
             <colgroup>
                 <col #tableHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
@@ -46,9 +45,10 @@
                                             'jigsaw-cell-no-padding': head.noPadding}"></td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody (mouseout)="_$onRowMouseOut()">
                 <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex" (click)="_$clickRow(rowIndex)"
-                    (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$onRowMouseOver(rowIndex)"(mouseout)="_$onRowMouseOut()">
+                    (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$onRowMouseOver(rowIndex)"
+                    [ngStyle]="_$getTrStyle(rowIndex)">
                     <td *ngFor="let cell of row; index as tdIndex" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                         [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                         class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}"

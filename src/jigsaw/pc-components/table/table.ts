@@ -68,6 +68,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[style.border]':'_$hostStyle.border',
         '[style.borderRadius]':'_$hostStyle.borderRadius',
         '[style.boxShadow]':'_$hostStyle.boxShadow',
+        '[style.opacity]':'_$hostStyle.opacity',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -178,6 +179,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     public _$onRowMouseOut() {
         this._hoveredRow = null;
+        console.log(this._hoveredRow);
     }
 
     public _styleOptions;
@@ -199,11 +201,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this.updateStyleOptions();
     }
 
-    public _$hostStyle: any = {
-        background: undefined
-    }; 
+    public _$hostStyle: any = {}; 
+    public _$headerStyle: any ={};
 
-    public _$tableStyle = {};
+    public _$getTrStyle(index: number) {
+        if (index == this.selectedRow) {
+            return {
+                background: 'green'
+            }
+        }
+        if (index == this._hoveredRow) {
+            return {
+                background: 'black'
+            }
+        }
+    }
 
     public updateStyleOptions() {
         this._styleOptions = this.styleOptions;
@@ -215,6 +227,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._$hostStyle.border = this.styleOptions.table.border;
         this._$hostStyle.borderRadius = this.styleOptions.table.borderRadius;
         this._$hostStyle.boxShadow = this.styleOptions.table.boxShadow;
+        this._$hostStyle.opacity = this.styleOptions.table.opacity;
+        
+        this._$headerStyle.height = this.styleOptions.header.height;
+        this._$headerStyle.backgroundColor = this.styleOptions.header.backgroundColor;
+        this._$headerStyle.backgroundImage = this.styleOptions.header.backgroundImage;
+        this._$headerStyle.borderBottom = this.styleOptions.header.borderBottom;
+        this._$headerStyle.fontSize = this.styleOptions.header.cell.fontSize;
+        this._$headerStyle.fontWeight = this.styleOptions.header.cell.fontWeight;
+        this._$headerStyle.color = this.styleOptions.header.cell.color;
+
+        console.log(this._$hostStyle)
+        console.log(this._$headerStyle)
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
