@@ -33,7 +33,7 @@
             <img src="{{_$noDataSrc}}" alt="No data...">
             <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
         </div>
-        <table #tableBody class="jigsaw-table-body">
+        <table #tableBody class="jigsaw-table-body" [ngStyle]="_$bodyStyle">
             <colgroup>
                 <col #tableBodyHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>

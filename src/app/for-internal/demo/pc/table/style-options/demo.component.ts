@@ -1,11 +1,11 @@
-import { Component, ViewChild } from "@angular/core";
-import { JigsawTable, TableData } from "jigsaw/public_api";
+import {Component, OnInit, ViewChild} from "@angular/core";
+import {JigsawTable, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./../../assets/demo.common.css', './demo.component.css']
 })
-export class TableSetStyleDemoComponent {
+export class TableSetStyleDemoComponent implements OnInit {
     tableData: TableData;
 
     @ViewChild('table')
@@ -83,56 +83,67 @@ export class TableSetStyleDemoComponent {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    public styleOptions = {
-        table: {
-            // 这里存在一个重点，背景的渐变色是backgroundImage，必须要做区分
-            backgroundColor: 'cyan',
-            backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
-            backgroundSize: 'contain',
-            backgroundPosition: 'top',
-            backgroundRepeat: 'no-repeat',
-            border: '5px solid red',
-            borderRadius: '5px',
-            boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
-            opacity: 1,
-            visibility: 'visable',
-            display: 'none'
-        },
-        header: {
-            height: '80px',
-            backgroundColor: 'pink',
-            backgroundImage: 'linear-gradient(to right, #ff3366, #ff99cc)',
-            borderBottom: '2px solid red',
-            cell: {
-                fontSize: '16px',
-                fontWeight: 'bold',
-                color: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                noPadding: true,
-            }
-        },
-        body: {
-            tr: {
-                normal: 'transparent',
-                odd: 'transparent',
-                even: 'transparent',
-                hover: 'red',
-                active: 'green'
-            },
-            cell: {
-                fontSize: '16px',
-                color: 'green',
-                justifyContent: 'center',
-                alignItems: 'center',
-                noPadding: true,
-            }
-        }
-    }
+    public styleOptions: any = {table: {}, header: {cell: {}}, body: {tr: {}, cell: {}}};
 
     public updateStyleOptions() {
         this._removeEmptyValues(this.styleOptions);
         this.table.updateStyleOptions();
+    }
+
+    public removeStyleOptions() {
+        this.styleOptions = {table: {}, header: {cell: {}}, body: {tr: {}, cell: {}}};
+    }
+
+    public resetStyleOptions() {
+        this.styleOptions = {
+            table: {
+                // 这里存在一个重点，背景的渐变色是backgroundImage，必须要做区分
+                backgroundColor: 'cyan',
+                backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
+                backgroundSize: 'contain',
+                backgroundPosition: 'top',
+                backgroundRepeat: 'no-repeat',
+                border: '5px solid red',
+                borderRadius: '5px',
+                boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
+                opacity: 1,
+                visibility: 'visible',
+                display: 'block',
+                borderCollapse: 'separate',
+                borderSpacing: '5px'
+            },
+            header: {
+                height: '80px',
+                backgroundColor: 'pink',
+                backgroundImage: 'linear-gradient(to right, #ff3366, #ff99cc)',
+                borderBottom: '2px solid red',
+                cell: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: 'green',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    noPadding: true,
+                }
+            },
+            body: {
+                tr: {
+                    normal: 'transparent',
+                    odd: 'transparent',
+                    even: 'transparent',
+                    hover: 'red',
+                    selected: 'green'
+                },
+                cell: {
+                    fontSize: '16px',
+                    fontWeight: 'bold',
+                    color: 'green',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    noPadding: true,
+                }
+            }
+        };
     }
 
     private _removeEmptyValues(obj) {
@@ -152,6 +163,11 @@ export class TableSetStyleDemoComponent {
             }
         }
     }
+
+    ngOnInit() {
+        this.resetStyleOptions();
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

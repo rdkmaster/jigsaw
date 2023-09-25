@@ -2,23 +2,29 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-<jigsaw-button width="100%" colorType="primary" (click)="updateStyleOptions()">更新</jigsaw-button>
-
+<div class="demo-handler">
+    <jigsaw-button width="75%" colorType="primary" (click)="updateStyleOptions()">更新</jigsaw-button>
+    <jigsaw-button width="11%" colorType="default" (click)="resetStyleOptions()">重置</jigsaw-button>
+    <jigsaw-button width="11%" colorType="error" (click)="removeStyleOptions()">清空</jigsaw-button>
+</div>
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>背景色：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundColor"></jigsaw-input>
         <jigsaw-button (click)="styleOptions.table.backgroundColor = 'var(--brand-default)'">
-            颜色变量</jigsaw-button>
+            颜色变量
+        </jigsaw-button>
         <jigsaw-button (click)="styleOptions.table.backgroundColor = '#000000'">
-            具体色值</jigsaw-button>
+            具体色值
+        </jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>背景图：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.table.backgroundImage"></jigsaw-input>
         <jigsaw-button
-            (click)="styleOptions.table.backgroundImage = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
-            渐进色</jigsaw-button>
+                (click)="styleOptions.table.backgroundImage = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
+            渐进色
+        </jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>背景图大小：</span>
@@ -49,6 +55,22 @@
         <j-numeric-input min="0" max="1" step="0.1" [(value)]="styleOptions.table.opacity"></j-numeric-input>
     </li>
     <li class="demo-options-item">
+        <span>可见性：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.visibility"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>布局：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.display"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>边框模式：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.borderCollapse"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>边框间距：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.table.borderSpacing"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
         <span>表头高度：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.header.height"></jigsaw-input>
     </li>
@@ -56,11 +78,14 @@
         <span>表头背景色：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.header.backgroundColor"></jigsaw-input>
         <jigsaw-button (click)="styleOptions.header.backgroundColor = 'var(--brand-default)'">
-            颜色变量</jigsaw-button>
+            颜色变量
+        </jigsaw-button>
         <jigsaw-button (click)="styleOptions.header.backgroundColor = 'rgb(139, 0, 0)'">
-            rgb色值</jigsaw-button>
+            rgb色值
+        </jigsaw-button>
         <jigsaw-button (click)="styleOptions.header.backgroundColor = 'transparent'">
-            透明</jigsaw-button>
+            透明
+        </jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>表头背景图：</span>
@@ -81,6 +106,42 @@
     <li class="demo-options-item">
         <span>表头单元格文本颜色：</span>
         <jigsaw-input width="400px" [(value)]="styleOptions.header.cell.color"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体行背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.normal"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体行背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.normal"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体奇数行背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.odd"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体偶数行背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.even"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体行悬浮背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.hover"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体行选中背景色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.tr.selected"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体单元格文本大小：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.cell.fontSize"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体单元格文本粗细：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.cell.fontWeight"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>表格体单元格文本颜色：</span>
+        <jigsaw-input width="400px" [(value)]="styleOptions.body.cell.color"></jigsaw-input>
     </li>
 </ul>
 

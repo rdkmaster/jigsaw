@@ -100,7 +100,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
-                        padding: 0px;
+                        padding: 0;
                     }
                 }
 
@@ -169,7 +169,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 &.#{$jigsaw-table}-row-selected {
                     td:not([rowspan]) {
-                        background: $brand-active-lighten;
+                        //background: $brand-active-lighten;
                     }
                 }
 
@@ -179,7 +179,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 &:not(.jigsaw-table-row-expansion):hover {
                     td:not([rowspan]) {
-                        background: $bg-hover;
+                        //background: $bg-hover;
                     }
                 }
 
