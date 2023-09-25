@@ -199,6 +199,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
+    public series: any;
     public legendSource: 'dim' | 'kpi';
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
@@ -276,11 +277,19 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         const groupedByDim = group(flat(pruned), dimIndex);
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
-            .map((seriesData: EchartSeriesItem) => {
+            .map((seriesData: EchartSeriesItem, index) => {
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
                     Dimension.extend(seriesData, dim);
+                    if(this.series.length > 0) {
+                        if(this.series[index]) {
+                            Indicator.extend(seriesData, this.series[index]);
+                        } else {
+                            this.series[index] = JSON.parse(JSON.stringify(this.series[0])) ;
+                            Indicator.extend(seriesData, this.series[index])
+                        }
+                    }
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(dim, options);
                     this._autoRange(seriesData, options);
@@ -433,19 +442,26 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], field: this.field[kpi.index], data: getColumn(pruned, kpi.index)}))
-            .map(seriesData => {
+            .map((seriesData,index) => {
                 // 先取模板中的配置
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 // 再取用户配置
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
                     Indicator.extend(seriesData, indicator);
+                    if(this.series.length > 0) {
+                        if(this.series[index]) {
+                            Indicator.extend(seriesData, this.series[index]);
+                        } else {
+                            this.series[index] = JSON.parse(JSON.stringify(this.series[0])) ;
+                            Indicator.extend(seriesData, this.series[index])
+                        }
+                    }
                     // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
                     this._correctDoubleYAxis(indicator, options);
                 }
                 return seriesData;
             });
-
         return options;
     }
 
