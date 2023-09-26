@@ -282,12 +282,13 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
                     Dimension.extend(seriesData, dim);
-                    if(this.series.length > 0) {
+                    if(this.series && this.series.length > 0) {
                         if(this.series[index]) {
                             Indicator.extend(seriesData, this.series[index]);
                         } else {
                             this.series[index] = JSON.parse(JSON.stringify(this.series[0])) ;
                             Indicator.extend(seriesData, this.series[index])
+                            this._setSeriesType(seriesData);
                         }
                     }
                     // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
@@ -449,12 +450,13 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
                     Indicator.extend(seriesData, indicator);
-                    if(this.series.length > 0) {
+                    if(this.series && this.series.length > 0) {
                         if(this.series[index]) {
                             Indicator.extend(seriesData, this.series[index]);
                         } else {
-                            this.series[index] = JSON.parse(JSON.stringify(this.series[0])) ;
-                            Indicator.extend(seriesData, this.series[index])
+                            this.series[index] = JSON.parse(JSON.stringify(this.series[0]));
+                            Indicator.extend(seriesData, this.series[index]);
+                            this._setSeriesType(seriesData);
                         }
                     }
                     // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
@@ -840,6 +842,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
+    public series: any;
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -892,6 +895,22 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
                 const nextSymbolIndex = idx % availableScatterSymbols.length;
                 // 更新 dim 对象中的 symbol 属性
                 Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
+            }
+            if(this.series && this.series.length > 0) {
+                if(this.series[idx]) {
+                    Object.assign(dim, this.series[idx]);
+                } else {
+                    this.series[idx] = JSON.parse(JSON.stringify(this.series[0]));
+                    Object.assign(dim, this.series[idx]);
+                    if(this.useDefaultBubble) {
+                        dim.itemStyle = {opacity: 0.3, borderWidth: 2};
+                    }
+                    if(this.useDefaultSingleColor) {
+                        dim.itemStyle = {color: '#3B69FF'};
+                        const nextSymbolIndex = idx % availableScatterSymbols.length;
+                        Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
+                    }
+                }
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
