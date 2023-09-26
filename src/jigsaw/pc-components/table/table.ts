@@ -174,14 +174,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     private _hoveredRow: number;
 
+    /**
+     * @internal
+     */
     public _$onRowMouseOver(index: number) {
         this._hoveredRow = index;
-        console.log(this._hoveredRow);
     }
 
+    /**
+     * @internal
+     */
     public _$onRowMouseOut() {
         this._hoveredRow = null;
-        console.log(this._hoveredRow);
     }
 
     public _styleOptions;
@@ -200,7 +204,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._styleOptions = value;
-        console.log(this._$styleOptions)
         this._changeDetectorRef.detectChanges();
     }
 
@@ -228,7 +231,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public updateStyleOptions() {
-        console.log(this._$styleOptions)
         this.resize();
         this._changeDetectorRef.detectChanges();
     }
