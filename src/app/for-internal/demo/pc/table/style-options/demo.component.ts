@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
-import {JigsawTable, TableData} from "jigsaw/public_api";
+import {JigsawTable, styleOptions, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -83,11 +83,13 @@ export class TableSetStyleDemoComponent implements OnInit {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    public styleOptions: any = {
+    public styleOptions: styleOptions = {
         hostStyle: {},
         headerStyle: {},
         bodyStyle: {},
         bodyTrStyle: {},
+        headerCellStyle: {},
+        bodyCellStyle: {}
     };
 
     public updateStyleOptions() {
@@ -99,8 +101,10 @@ export class TableSetStyleDemoComponent implements OnInit {
         this.styleOptions = {
             hostStyle: {},
             headerStyle: {},
+            headerCellStyle: {},
             bodyStyle: {},
             bodyTrStyle: {},
+            bodyCellStyle: {}
         };
     }
 
@@ -116,7 +120,7 @@ export class TableSetStyleDemoComponent implements OnInit {
                 border: '5px solid red',
                 borderRadius: '5px',
                 boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
-                opacity: 1,
+                opacity: '1',
                 visibility: 'visible',
                 display: 'block',
             },
@@ -169,7 +173,7 @@ export class TableSetStyleDemoComponent implements OnInit {
     }
 
     private _cleanStyleOptions() {
-        const cleanedStyleOptions = {};
+        const cleanedStyleOptions: styleOptions = {};
 
         for (const key in this.styleOptions) {
             if (this.styleOptions.hasOwnProperty(key)) {

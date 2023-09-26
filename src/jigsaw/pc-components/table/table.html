@@ -1,7 +1,7 @@
 <div #tableRange class="jigsaw-table-range"
      [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
     <div #headerScrollbar class="jigsaw-table-header-range">
-        <table class="jigsaw-table-header" [ngStyle]="_$styleOptions.headerStyle"
+        <table class="jigsaw-table-header" [ngStyle]="_$styleOptions?.headerStyle"
                [hidden]="hideHeader || !_$headerSettings.length">
             <colgroup>
                 <col #tableHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
@@ -9,7 +9,7 @@
             <thead>
             <tr #headerRow>
                 <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index"
-                    class="{{head.clazz}}" [ngStyle]="_$styleOptions.headerCellStyle"
+                    class="{{head.clazz}}" [ngStyle]="_$styleOptions?.headerCellStyle"
                     [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
                         'jigsaw-cell-align-center': head.alignment === 'center',
                         'jigsaw-cell-align-right': head.alignment === 'right',
@@ -37,7 +37,7 @@
             <img src="{{_$noDataSrc}}" alt="No data...">
             <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
         </div>
-        <table #tableBody class="jigsaw-table-body" [ngStyle]="_$styleOptions.bodyStyle">
+        <table #tableBody class="jigsaw-table-body" [ngStyle]="_$styleOptions?.bodyStyle">
             <colgroup>
                 <col #tableBodyHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
@@ -58,7 +58,7 @@
                 <td *ngFor="let cell of row; index as tdIndex" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                     class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}"
-                    [ngStyle]="_$styleOptions.bodyCellStyle"
+                    [ngStyle]="_$styleOptions?.bodyCellStyle"
                     [ngClass]="{'jigsaw-cell-align-left': cell.alignment === 'left',
                                 'jigsaw-cell-align-center': cell.alignment === 'center',
                                 'jigsaw-cell-align-right': cell.alignment === 'right',

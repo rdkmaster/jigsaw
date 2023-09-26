@@ -476,3 +476,64 @@ export class AdditionalTableData extends TableData {
 }
 
 export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};
+
+export type styleOptions = {
+    hostStyle?: {
+        backgroundColor?: string,
+        backgroundImage?: string,
+        backgroundSize?: string,
+        backgroundPosition?: string,
+        backgroundRepeat?: string,
+        border?: string,
+        borderRadius?: string,
+        boxShadow?: string,
+        opacity?: string,
+        visibility?: string,
+        display?: string,
+    },
+    headerStyle?: {
+        height?: string,
+        backgroundColor?: string,
+        backgroundImage?: string,
+        backgroundSize?: string,
+        backgroundPosition?: string,
+        backgroundRepeat?: string,
+        borderBottom?: string,
+        borderCollapse?: string,
+        borderSpacing?: string
+    },
+    headerCellStyle?: {
+        borderWidth?: string,
+        borderStyle?: string,
+        borderColor?: string,
+        borderRadius?: string,
+        fontSize?: string,
+        fontWeight?: string,
+        color?: string
+    },
+    bodyStyle?: {
+        backgroundColor?: string,
+        backgroundImage?: string,
+        backgroundSize?: string,
+        backgroundPosition?: string,
+        backgroundRepeat?: string,
+        borderCollapse?: string,
+        borderSpacing?: string,
+    },
+    bodyTrStyle?: {
+        background?: string,
+        oddBackground?: string,
+        evenBackground?: string,
+        hoverBackground?: string,
+        selectedBackground?: string
+    },
+    bodyCellStyle?: {
+        borderWidth?: string,
+        borderStyle?: string,
+        borderColor?: string,
+        borderRadius?: string,
+        fontSize?: string,
+        fontWeight?: string,
+        color?: string
+    }
+}
