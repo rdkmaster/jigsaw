@@ -167,20 +167,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     background: $bg-transparent;
                 }
 
-                &.#{$jigsaw-table}-row-selected {
-                    td:not([rowspan]) {
-                        //background: $brand-active-lighten;
-                    }
-                }
-
                 td[rowspan] {
                     background: $bg-transparent;
-                }
-
-                &:not(.jigsaw-table-row-expansion):hover {
-                    td:not([rowspan]) {
-                        //background: $bg-hover;
-                    }
                 }
 
                 &.jigsaw-table-row-expansion {

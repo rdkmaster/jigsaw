@@ -83,20 +83,30 @@ export class TableSetStyleDemoComponent implements OnInit {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    public styleOptions: any = {table: {}, header: {cell: {}}, body: {tr: {}, cell: {}}};
+    public styleOptions: any = {
+        hostStyle: {},
+        headerStyle: {},
+        bodyStyle: {},
+        bodyTrStyle: {},
+    };
 
     public updateStyleOptions() {
-        this._removeEmptyValues(this.styleOptions);
+        this._cleanStyleOptions();
         this.table.updateStyleOptions();
     }
 
     public removeStyleOptions() {
-        this.styleOptions = {table: {}, header: {cell: {}}, body: {tr: {}, cell: {}}};
+        this.styleOptions = {
+            hostStyle: {},
+            headerStyle: {},
+            bodyStyle: {},
+            bodyTrStyle: {},
+        };
     }
 
     public resetStyleOptions() {
         this.styleOptions = {
-            table: {
+            hostStyle: {
                 // 这里存在一个重点，背景的渐变色是backgroundImage，必须要做区分
                 backgroundColor: 'cyan',
                 backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
@@ -109,59 +119,82 @@ export class TableSetStyleDemoComponent implements OnInit {
                 opacity: 1,
                 visibility: 'visible',
                 display: 'block',
+            },
+            headerStyle: {
+                height: '80px',
+                backgroundColor: '#666',
+                backgroundImage: '',
+                backgroundSize: '',
+                backgroundPosition: '',
+                backgroundRepeat: '',
+                borderBottom: '2px solid red',
                 borderCollapse: 'separate',
                 borderSpacing: '5px'
             },
-            header: {
-                height: '80px',
-                backgroundColor: 'pink',
-                backgroundImage: 'linear-gradient(to right, #ff3366, #ff99cc)',
-                borderBottom: '2px solid red',
-                cell: {
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    color: 'green',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    noPadding: true,
-                }
+            headerCellStyle: {
+                borderWidth: '2px',
+                borderStyle: 'dotted',
+                borderColor: 'yellow',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: 'green'
             },
-            body: {
-                tr: {
-                    normal: 'transparent',
-                    odd: 'transparent',
-                    even: 'transparent',
-                    hover: 'red',
-                    selected: 'green'
-                },
-                cell: {
-                    fontSize: '16px',
-                    fontWeight: 'bold',
-                    color: 'green',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    noPadding: true,
-                }
+            bodyStyle: {
+                backgroundColor: 'transparent',
+                backgroundImage: '',
+                backgroundSize: '',
+                backgroundPosition: '',
+                backgroundRepeat: '',
+                borderCollapse: 'separate',
+                borderSpacing: '5px',
+            },
+            bodyTrStyle: {
+                // tr不支持配置图片，但是支持渐进色，不过为了保证覆盖，同意会使用background CSS属性
+                background: 'transparent',
+                oddBackground: 'lightgreen',
+                evenBackground: 'transparent',
+                hoverBackground: 'red',
+                selectedBackground: 'green'
+            },
+            bodyCellStyle: {
+                borderWidth: '2px',
+                borderStyle: 'dotted',
+                borderColor: 'yellow',
+                borderRadius: '0px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                color: 'green',
             }
         };
     }
 
-    private _removeEmptyValues(obj) {
+    private _cleanStyleOptions() {
+        const cleanedStyleOptions = {};
+
+        for (const key in this.styleOptions) {
+            if (this.styleOptions.hasOwnProperty(key)) {
+                const obj = this.styleOptions[key];
+                cleanedStyleOptions[key] = this._cleanObject(obj);
+            }
+        }
+
+        this.styleOptions = cleanedStyleOptions;
+    }
+
+    private _cleanObject(obj) {
+        const cleanedObj = {};
+
         for (const key in obj) {
             if (obj.hasOwnProperty(key)) {
-                if (typeof obj[key] === 'object') {
-                    // 递归调用，处理嵌套对象
-                    this._removeEmptyValues(obj[key]);
-                    // 如果嵌套对象已经为空，则删除该属性
-                    if (Object.keys(obj[key]).length === 0) {
-                        delete obj[key];
-                    }
-                } else if (obj[key] === '' || obj[key] === undefined || obj[key] === null) {
-                    // 如果值是空字符串、undefined 或 null，则删除该属性
-                    delete obj[key];
+                const value = obj[key];
+
+                if (value !== undefined && value !== null && value !== '') {
+                    cleanedObj[key] = value;
                 }
             }
         }
+
+        return cleanedObj;
     }
 
     ngOnInit() {

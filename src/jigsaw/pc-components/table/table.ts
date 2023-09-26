@@ -60,17 +60,17 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.backgroundColor]': '_$hostStyle.backgroundColor',
-        '[style.backgroundImage]': '_$hostStyle.backgroundImage',
-        '[style.backgroundSize]':'_$hostStyle.backgroundSize',
-        '[style.backgroundPosition]':'_$hostStyle.backgroundPosition',
-        '[style.backgroundRepeat]':'_$hostStyle.backgroundRepeat',
-        '[style.border]':'_$hostStyle.border',
-        '[style.borderRadius]':'_$hostStyle.borderRadius',
-        '[style.boxShadow]':'_$hostStyle.boxShadow',
-        '[style.opacity]':'_$hostStyle.opacity',
-        '[style.visibility]':'_$hostStyle.visibility',
-        '[style.display]':'_$hostStyle.display',
+        '[style.backgroundColor]': '_$styleOptions?.hostStyle?.backgroundColor',
+        '[style.backgroundImage]': '_$styleOptions?.hostStyle?.backgroundImage',
+        '[style.backgroundSize]':'_$styleOptions?.hostStyle?.backgroundSize',
+        '[style.backgroundPosition]':'_$styleOptions?.hostStyle?.backgroundPosition',
+        '[style.backgroundRepeat]':'_$styleOptions?.hostStyle?.backgroundRepeat',
+        '[style.border]':'_$styleOptions?.hostStyle?.border',
+        '[style.borderRadius]':'_$styleOptions?.hostStyle?.borderRadius',
+        '[style.boxShadow]':'_$styleOptions?.hostStyle?.boxShadow',
+        '[style.opacity]':'_$styleOptions?.hostStyle?.opacity',
+        '[style.visibility]':'_$styleOptions?.hostStyle?.visibility',
+        '[style.display]':'_$styleOptions?.hostStyle?.display',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -191,74 +191,45 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
     */
     @Input()
-    public get styleOptions() {
+    public get _$styleOptions() {
         return this._styleOptions;
     }
 
-    public set styleOptions(value) {
+    public set _$styleOptions(value) {
         if (this._styleOptions === value) {
             return;
         }
         this._styleOptions = value;
-        this.updateStyleOptions();
+        console.log(this._$styleOptions)
+        this._changeDetectorRef.detectChanges();
     }
-
-    public _$hostStyle: any = {};
-    public _$headerStyle: any = {};
-    public _$bodyStyle: any = {};
-    public _$bodyTrStyle: any = {};
 
     public _$getTrStyle(index: number) {
         if (index == this.selectedRow) {
             return {
-                background: this._$bodyTrStyle.selected ? this._$bodyTrStyle.selected : 'var(--brand-active-lighten)'
+                background: this._$styleOptions?.bodyTrStyle?.selectedBackground || this._$styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)'
             }
         }
         if (index == this._hoveredRow) {
             return {
-                background: this._$bodyTrStyle.hover ? this._$bodyTrStyle.hover : 'var(--bg-hover)'
+                background: this._$styleOptions?.bodyTrStyle?.hoverBackground || this._$styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)'
+            }
+        }
+        if (index % 2 === 0) {
+            return {
+                background: this._$styleOptions?.bodyTrStyle?.evenBackground || this._$styleOptions?.bodyTrStyle?.background || 'unset'
+            }
+        }
+        if (index % 2 === 1) {
+            return {
+                background: this._$styleOptions?.bodyTrStyle?.oddBackground || this._$styleOptions?.bodyTrStyle?.background || 'unset'
             }
         }
     }
 
     public updateStyleOptions() {
-        this._styleOptions = this.styleOptions;
-        this._$hostStyle.backgroundColor = this.styleOptions.table.backgroundColor;
-        this._$hostStyle.backgroundImage = this.styleOptions.table.backgroundImage;
-        this._$hostStyle.backgroundSize = this.styleOptions.table.backgroundSize;
-        this._$hostStyle.backgroundPosition = this.styleOptions.table.backgroundPosition;
-        this._$hostStyle.backgroundRepeat = this.styleOptions.table.backgroundRepeat;
-        this._$hostStyle.border = this.styleOptions.table.border;
-        this._$hostStyle.borderRadius = this.styleOptions.table.borderRadius;
-        this._$hostStyle.boxShadow = this.styleOptions.table.boxShadow;
-        this._$hostStyle.opacity = this.styleOptions.table.opacity;
-        this._$hostStyle.visibility = this.styleOptions.table.visibility;
-        this._$hostStyle.display = this.styleOptions.table.display;
-
-        this._$headerStyle.height = this.styleOptions.header.height;
-        this._$headerStyle.backgroundColor = this.styleOptions.header.backgroundColor;
-        this._$headerStyle.backgroundImage = this.styleOptions.header.backgroundImage;
-        this._$headerStyle.borderBottom = this.styleOptions.header.borderBottom;
-        this._$headerStyle.fontSize = this.styleOptions.header.cell.fontSize;
-        this._$headerStyle.fontWeight = this.styleOptions.header.cell.fontWeight;
-        this._$headerStyle.color = this.styleOptions.header.cell.color;
-
-        this._$bodyTrStyle.normal = this.styleOptions.body.tr.normal;
-        this._$bodyTrStyle.odd = this.styleOptions.body.tr.odd;
-        this._$bodyTrStyle.even = this.styleOptions.body.tr.even;
-        this._$bodyTrStyle.hover = this.styleOptions.body.tr.hover;
-        this._$bodyTrStyle.selected = this.styleOptions.body.tr.selected;
-        this._$bodyStyle.fontSize = this.styleOptions.body.cell.fontSize;
-        this._$bodyStyle.fontWeight = this.styleOptions.body.cell.fontWeight;
-        this._$bodyStyle.color = this.styleOptions.body.cell.color;
-
-        this._$bodyStyle.borderCollapse = this.styleOptions.table.borderCollapse;
-        this._$bodyStyle.borderSpacing = this.styleOptions.table.borderSpacing;
-        this._$headerStyle.borderCollapse = this.styleOptions.table.borderCollapse;
-        this._$headerStyle.borderSpacing = this.styleOptions.table.borderSpacing;
-
-        console.log(this._$hostStyle)
-        console.log(this._$headerStyle)
+        console.log(this._$styleOptions)
+        this.resize();
         this._changeDetectorRef.detectChanges();
     }
 
