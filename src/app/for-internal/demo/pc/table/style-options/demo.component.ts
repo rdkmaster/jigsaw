@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from "@angular/core";
-import {JigsawTable, styleOptions, TableData} from "jigsaw/public_api";
+import {JigsawTable, TableStyleOptions, TableData} from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -83,7 +83,7 @@ export class TableSetStyleDemoComponent implements OnInit {
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
-    public styleOptions: styleOptions = {
+    public styleOptions: TableStyleOptions = {
         hostStyle: {},
         headerStyle: {},
         bodyStyle: {},
@@ -153,7 +153,7 @@ export class TableSetStyleDemoComponent implements OnInit {
                 borderSpacing: '5px',
             },
             bodyTrStyle: {
-                // tr不支持配置图片，但是支持渐进色，不过为了保证覆盖，同意会使用background CSS属性
+                // tr不支持配置图片，但是支持渐进色，不过为了保证覆盖，统一使用background CSS属性
                 background: 'transparent',
                 oddBackground: 'lightgreen',
                 evenBackground: 'transparent',
@@ -173,7 +173,7 @@ export class TableSetStyleDemoComponent implements OnInit {
     }
 
     private _cleanStyleOptions() {
-        const cleanedStyleOptions: styleOptions = {};
+        const cleanedStyleOptions: TableStyleOptions = {};
 
         for (const key in this.styleOptions) {
             if (this.styleOptions.hasOwnProperty(key)) {

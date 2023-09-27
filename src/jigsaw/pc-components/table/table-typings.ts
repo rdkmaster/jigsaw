@@ -477,7 +477,7 @@ export class AdditionalTableData extends TableData {
 
 export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};
 
-export type styleOptions = {
+export type TableStyleOptions = {
     hostStyle?: {
         backgroundColor?: string,
         backgroundImage?: string,

@@ -31,7 +31,8 @@ import {
     AdditionalTableData,
     ColumnDefine,
     ColumnDefineGenerator,
-    SortChangeEvent, styleOptions,
+    SortChangeEvent,
+    TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
     TableHeadSetting, TableRowExpandOptions
@@ -188,18 +189,18 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._hoveredRow = null;
     }
 
-    public _styleOptions: styleOptions;
+    private _styleOptions: TableStyleOptions;
 
     /**
      * 设置表格样式
      * @NoMarkForCheckRequired
     */
     @Input()
-    public get _$styleOptions(): styleOptions {
+    public get _$styleOptions(): TableStyleOptions {
         return this._styleOptions;
     }
 
-    public set _$styleOptions(value: styleOptions) {
+    public set _$styleOptions(value: TableStyleOptions) {
         if (this._styleOptions === value) {
             return;
         }
