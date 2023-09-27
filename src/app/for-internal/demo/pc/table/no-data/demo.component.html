@@ -3,9 +3,12 @@
 </jigsaw-demo-description>
 
 
-<!-- start to learn the demo from here -->
+ start to learn the demo from here
 <jigsaw-header>数据合法，data为空</jigsaw-header>
 <jigsaw-table [data]="tableData"></jigsaw-table>
 
 <jigsaw-header>数据不合法</jigsaw-header>
 <jigsaw-table></jigsaw-table>
+
+<jigsaw-header>大量表格列数据</jigsaw-header>
+<jigsaw-table [data]="tableData2" [columnDefines]="columnDefines"></jigsaw-table>
