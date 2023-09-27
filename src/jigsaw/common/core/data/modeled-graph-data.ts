@@ -450,6 +450,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     private _processSeriesData(index: number, seriesData: EchartSeriesItem, kpiOrDim: Indicator | Dimension, options: EchartOptions) {
         if (this.series && this.series.length > 0) {
             if (this.series[index]) {
+                delete this.series[index].name
                 Indicator.extend(seriesData, this.series[index]);
             } else {
                 this.series[index] = JSON.parse(JSON.stringify(this.series[0]));
