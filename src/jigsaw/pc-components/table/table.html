@@ -15,10 +15,8 @@
                         'jigsaw-cell-align-right': head.alignment === 'right',
                         'jigsaw-cell-no-padding': head.noPadding}">
                     <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
-                                         [cellData]="head.cellData" [field]="head.field" [row]="0"
-                                         [renderer]="head.renderer"
-                                         [rendererInitData]="head.rendererInitData" [sortable]="head.sortable"
-                                         [sortAs]="head.sortAs"
+                                         [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
+                                         [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
                                          [defaultSortOrder]="head.defaultSortOrder" (sort)="_$onSort($event)"
                                          [filterable]="head.filterable" [headerTrustedHtml]="head.cellData"
                                          [headerTrustedHtmlContext]="head.innerHtmlContext" [hostInstance]="this">
@@ -74,14 +72,11 @@
                              [trustedHtmlContext]="cell.innerHtmlContext">
                         </div>
                         <jigsaw-table-cell *ngSwitchDefault class="jigsaw-table-cell-content"
-                                           title="{{cell.tooltip ? cell.tooltip : ''}}" [theme]="theme"
-                                           [tableData]="data"
-                                           [additionalData]="additionalData" [(cellData)]="cell.cellData"
-                                           [row]="rowIndex"
+                                           title="{{cell.tooltip ? cell.tooltip : ''}}" [theme]="theme" [tableData]="data"
+                                           [additionalData]="additionalData" [(cellData)]="cell.cellData" [row]="rowIndex"
                                            [field]="cell.field" [renderer]="cell.renderer"
                                            [rendererInitData]="cell.rendererInitData" [editable]="cell.editable"
-                                           [alwaysShowEditor]="cell.alwaysShowEditor"
-                                           [editorRenderer]="cell.editorRenderer"
+                                           [alwaysShowEditor]="cell.alwaysShowEditor" [editorRenderer]="cell.editorRenderer"
                                            [editorRendererInitData]="cell.editorRendererInitData" [group]="cell.group"
                                            [rowSpan]="cell.rowSpan" [hostInstance]="this" (edit)="edit.emit($event)">
                         </jigsaw-table-cell>
