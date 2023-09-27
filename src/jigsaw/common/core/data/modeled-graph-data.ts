@@ -199,7 +199,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
-    public series: any;
+    public series: DimKpiBase[];
     public legendSource: 'dim' | 'kpi';
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
@@ -282,17 +282,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
                     Dimension.extend(seriesData, dim);
-                    if(this.series && this.series.length > 0) {
-                        if(this.series[index]) {
-                            Indicator.extend(seriesData, this.series[index]);
-                        } else {
-                            this.series[index] = JSON.parse(JSON.stringify(this.series[0])) ;
-                            Indicator.extend(seriesData, this.series[index])
-                            this._setSeriesType(seriesData);
-                        }
-                    }
-                    // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
-                    this._correctDoubleYAxis(dim, options);
+                    this._processSeriesData(index, seriesData, dim, options);
                     this._autoRange(seriesData, options);
                 } else {
                     // 数据自带的维度值
@@ -450,21 +440,25 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
                     Indicator.extend(seriesData, indicator);
-                    if(this.series && this.series.length > 0) {
-                        if(this.series[index]) {
-                            Indicator.extend(seriesData, this.series[index]);
-                        } else {
-                            this.series[index] = JSON.parse(JSON.stringify(this.series[0]));
-                            Indicator.extend(seriesData, this.series[index]);
-                            this._setSeriesType(seriesData);
-                        }
-                    }
-                    // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
-                    this._correctDoubleYAxis(indicator, options);
+                    this._processSeriesData(index, seriesData, indicator, options);
                 }
                 return seriesData;
             });
         return options;
+    }
+
+    private _processSeriesData(index: number, seriesData: EchartSeriesItem, kpiOrDim: Indicator | Dimension, options: EchartOptions) {
+        if (this.series && this.series.length > 0) {
+            if (this.series[index]) {
+                Indicator.extend(seriesData, this.series[index]);
+            } else {
+                this.series[index] = JSON.parse(JSON.stringify(this.series[0]));
+                Indicator.extend(seriesData, this.series[index]);
+                this._setSeriesType(seriesData);
+            }
+        }
+        // 指标或维度里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+        this._correctDoubleYAxis(kpiOrDim, options);
     }
 
     public refresh(): void {
@@ -896,16 +890,16 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
                 // 更新 dim 对象中的 symbol 属性
                 Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
             }
-            if(this.series && this.series.length > 0) {
-                if(this.series[idx]) {
+            if (this.series && this.series.length > 0) {
+                if (this.series[idx]) {
                     Object.assign(dim, this.series[idx]);
                 } else {
                     this.series[idx] = JSON.parse(JSON.stringify(this.series[0]));
                     Object.assign(dim, this.series[idx]);
-                    if(this.useDefaultBubble) {
+                    if (this.useDefaultBubble) {
                         dim.itemStyle = {opacity: 0.3, borderWidth: 2};
                     }
-                    if(this.useDefaultSingleColor) {
+                    if (this.useDefaultSingleColor) {
                         dim.itemStyle = {color: '#3B69FF'};
                         const nextSymbolIndex = idx % availableScatterSymbols.length;
                         Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
