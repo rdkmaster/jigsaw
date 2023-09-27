@@ -837,7 +837,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
-    public series: any;
+    public series: DimKpiBase[];
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
