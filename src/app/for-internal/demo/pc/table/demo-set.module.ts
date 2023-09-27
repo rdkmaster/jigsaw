@@ -131,6 +131,8 @@ import { TableFreezeColumnDemoModule } from "./freeze-column/demo.module";
 import { TableFreezeColumnDemoComponent } from "./freeze-column/demo.component";
 import { TableSetStyleDemoModule } from "./style-options/demo.module";
 import { TableSetStyleDemoComponent } from "./style-options/demo.component";
+import { TableOverflowDemoComponent } from "./overflow/demo.component";
+import { TableOverflowDemoModule } from "./overflow/demo.module";
 
 export const routerConfig = [
     {
@@ -329,6 +331,9 @@ export const routerConfig = [
         path: 'style-options', component: TableSetStyleDemoComponent
     },
     {
+        path: 'overflow', component: TableOverflowDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -349,7 +354,7 @@ export const routerConfig = [
         TreeTableDemoModule, TableCellEditablePropertyDemoModule,TableDraggableDemoModule, TableUpdateColumnDefinesDemoModule, TableAutoSaveDemoModule,
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
-        TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule, TableFreezeColumnDemoModule, TableSetStyleDemoModule
+        TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule, TableFreezeColumnDemoModule, TableSetStyleDemoModule, TableOverflowDemoModule
     ]
 })
 export class TableDemoModule {

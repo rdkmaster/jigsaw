@@ -40,7 +40,7 @@ $jigsaw-tag: #{$jigsaw-prefix}-tag;
             border-radius: $border-radius-base;
 
             &:hover {
-                border-color: $brand-default !important;
+                border-color: $brand-default;
             }
 
             &:active {
