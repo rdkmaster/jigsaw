@@ -207,7 +207,10 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._styleOptions = value;
         this._changeDetectorRef.detectChanges();
     }
-
+    
+    /**
+     * @internal
+     */
     public _$getTrStyle(index: number) {
         if (index == this.selectedRow) {
             return {
