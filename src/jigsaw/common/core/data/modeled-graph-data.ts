@@ -596,6 +596,7 @@ export class GaugeSeries extends SeriesBase {
     public itemStyle?: any;
     public title?: any;
     public autoAxisLineColor?: boolean;
+    public slope?: number;
 }
 
 export class ModeledGaugeGraphData extends AbstractModeledGraphData {
