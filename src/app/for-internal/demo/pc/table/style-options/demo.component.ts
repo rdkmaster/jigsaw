@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from "@angular/core";
-import {JigsawTable, TableStyleOptions, TableData} from "jigsaw/public_api";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { JigsawTable, TableStyleOptions, TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
@@ -111,18 +111,17 @@ export class TableSetStyleDemoComponent implements OnInit {
     public resetStyleOptions() {
         this.styleOptions = {
             hostStyle: {
-                // 这里存在一个重点，背景的渐变色是backgroundImage，必须要做区分
-                backgroundColor: 'cyan',
+                background: 'cyan',
                 backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',
-                border: '5px solid red',
+                borderWidth: '5px',
+                borderStyle: 'solid',
+                borderColor: 'red',
                 borderRadius: '5px',
                 boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
-                opacity: '1',
-                visibility: 'visible',
-                display: 'block',
+                opacity: '1'
             },
             headerStyle: {
                 height: '80px',
@@ -168,6 +167,10 @@ export class TableSetStyleDemoComponent implements OnInit {
                 fontSize: '16px',
                 fontWeight: 'bold',
                 color: 'green',
+            },
+            otherStyle: {
+                visibility: 'visible',
+                display: 'block',
             }
         };
     }

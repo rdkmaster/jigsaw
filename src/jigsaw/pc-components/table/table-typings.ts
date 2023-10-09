@@ -479,17 +479,17 @@ export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remain
 
 export type TableStyleOptions = {
     hostStyle?: {
-        backgroundColor?: string,
+        background?: string,
         backgroundImage?: string,
         backgroundSize?: string,
         backgroundPosition?: string,
         backgroundRepeat?: string,
-        border?: string,
+        borderWidth?: string,
+        borderStyle?: string,
+        borderColor?: string,
         borderRadius?: string,
         boxShadow?: string,
         opacity?: string,
-        visibility?: string,
-        display?: string,
     },
     headerStyle?: {
         height?: string,
@@ -535,5 +535,9 @@ export type TableStyleOptions = {
         fontSize?: string,
         fontWeight?: string,
         color?: string
+    },
+    otherStyle?: {
+        visibility?: string,
+        display?: string,
     }
 }

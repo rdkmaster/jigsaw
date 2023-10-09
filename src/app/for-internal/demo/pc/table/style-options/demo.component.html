@@ -12,21 +12,21 @@
     <ul class="demo-options">
         <li class="demo-options-item">
             <span>背景色：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundColor"></jigsaw-input>
-            <jigsaw-button (click)="styleOptions.hostStyle.backgroundColor = 'var(--brand-default)'">
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.background"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.hostStyle.background = 'var(--brand-default)'">
                 颜色变量
             </jigsaw-button>
-            <jigsaw-button (click)="styleOptions.hostStyle.backgroundColor = '#000000'">
+            <jigsaw-button (click)="styleOptions.hostStyle.background = '#000000'">
                 具体色值
+            </jigsaw-button>
+            <jigsaw-button
+                (click)="styleOptions.hostStyle.background = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
+                渐进色
             </jigsaw-button>
         </li>
         <li class="demo-options-item">
             <span>背景图：</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundImage"></jigsaw-input>
-            <jigsaw-button
-                    (click)="styleOptions.hostStyle.backgroundImage = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
-                渐进色
-            </jigsaw-button>
         </li>
         <li class="demo-options-item">
             <span>背景图大小：</span>
@@ -41,8 +41,16 @@
             <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundRepeat"></jigsaw-input>
         </li>
         <li class="demo-options-item">
-            <span>边框：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.border"></jigsaw-input>
+            <span>边框大小：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderWidth"></jigsaw-input>
+        </li>
+        <li class="demo-options-item">
+            <span>边框样式：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderStyle"></jigsaw-input>
+        </li>
+        <li class="demo-options-item">
+            <span>边框颜色：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderColor"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>边框圆角：</span>
@@ -50,11 +58,11 @@
         </li>
         <li class="demo-options-item">
             <span>阴影：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.boxShadow"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.boxShadow"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>透明度：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.opacity"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.opacity"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>可见性：</span>
