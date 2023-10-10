@@ -27,6 +27,7 @@ import {ArrayCollection, JigsawSelect} from "@rdkmaster/jigsaw";
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [useStatistics]="to.useStatistics"
+            [theme]="to.theme"
             [data]="to.data"
             [(value)]="to.value"
             (valueChange)="_$valueChange($event)"

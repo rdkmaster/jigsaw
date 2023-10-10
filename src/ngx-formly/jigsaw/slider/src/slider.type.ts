@@ -16,6 +16,7 @@ import {JigsawSlider} from "@rdkmaster/jigsaw";
             [step]="to.step"
             [vertical]="to.vertical"
             [marks]="to.marks"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-slider>
     `,

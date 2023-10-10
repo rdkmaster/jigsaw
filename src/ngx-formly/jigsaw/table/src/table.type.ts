@@ -18,6 +18,7 @@ import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
             [columnDefineGeneratorContext]="to.columnDefineGeneratorContext"
             [additionalColumnDefines]="to.additionalColumnDefines"
             [floatingHeader]="to.floatingHeader"
+            [theme]="to.theme"
             (sort)="to.sort && to.sort($event)"
             (selectChange)="to.selectChange && to.selectChange($event)"
             (selectedRowChange)="to.selectedRowChange && to.selectedRowChange($event)"

@@ -18,6 +18,7 @@ import {JigsawTextarea} from "@rdkmaster/jigsaw";
             [maxLength]="to.maxContentLength"
             [includesCRLF]="to.includesCRLF"
             [valid]="to.valid && !showError"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-textarea>
     `,

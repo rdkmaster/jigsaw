@@ -19,6 +19,7 @@ import {FormlyUploadComponent} from "./upload.component";
             [preSize]="to.preSize"
             [icon]="to.icon"
             [content]="to.content"
+            [theme]="to.theme"
             [uploadTargetUrl]="to.uploadTargetUrl"
             [uploadFileType]="to.uploadFileType"
             [uploadMultiple]="to.uploadMultiple"

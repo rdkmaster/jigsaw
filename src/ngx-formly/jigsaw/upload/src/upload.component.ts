@@ -22,6 +22,7 @@ import {IJigsawFormControl, JigsawUploadBase, JigsawUploadDirective, JigsawUploa
                 [colorType]="colorType"
                 [preSize]="preSize"
                 [icon]="icon"
+                [theme]="theme"
                 j-upload
                 [uploadTargetUrl]="targetUrl"
                 [uploadFileType]="fileType"
@@ -46,6 +47,7 @@ import {IJigsawFormControl, JigsawUploadBase, JigsawUploadDirective, JigsawUploa
         </div>
         <jigsaw-upload-result *ngIf="showUploadResult && files.length > 0" width="100%"
                               [uploader]="uploader"
+                              [theme]="theme"
                               (change)="_$resultChange($event)"
                               (progress)="resultProgress.emit($event)"
                               (remove)="resultRemove.emit($event)">
@@ -91,6 +93,8 @@ export class FormlyUploadComponent extends JigsawUploadBase implements IJigsawFo
     public clearable: boolean = true;
     @Input()
     public valid: boolean = true;
+    @Input()
+    public theme: 'light' | 'dark' | string;
 
     /**
      * 按钮本身的几个属性

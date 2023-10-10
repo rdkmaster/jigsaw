@@ -19,6 +19,7 @@ import {JigsawTimeSection} from '@rdkmaster/jigsaw';
             [showDate]="to.showDate"
             [multipleHour]="to.multipleHour"
             [multipleDate]="to.multipleDate"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-time-section>
     `,

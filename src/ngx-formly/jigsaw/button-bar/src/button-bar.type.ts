@@ -17,6 +17,7 @@ import {JigsawButtonBar} from "@rdkmaster/jigsaw";
             [labelField]="to.labelField"
             [multipleSelect]="to.multipleSelect"
             [(selectedItems)]="to.selectedItems"
+            [theme]="to.theme"
             (selectedItemsChange)="to.selectedItemsChange && to.selectedItemsChange($event)"
         ></jigsaw-button-bar>
     `,
