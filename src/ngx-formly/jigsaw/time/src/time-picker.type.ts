@@ -18,6 +18,7 @@ import {JigsawTimePicker, TimeGr} from '@rdkmaster/jigsaw';
             [limitStart]="to.limitStart"
             [limitEnd]="to.limitEnd"
             [popDirection]="to.popDirection"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-time-picker>
     `,

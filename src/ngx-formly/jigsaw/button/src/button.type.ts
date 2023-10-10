@@ -19,6 +19,7 @@ export enum SizeType {
                        [colorType]="to.colorType"
                        [preSize]="to.preSize"
                        [icon]="to.icon"
+                       [theme]="to.theme"
                        (click)="to.click"
         >{{to.content}}</jigsaw-button>
     `,

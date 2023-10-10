@@ -16,6 +16,7 @@ import {JigsawListLite} from "@rdkmaster/jigsaw";
             [multipleSelect]="to.multipleSelect"
             [optionCount]="to.optionCount"
             [searchable]="to.searchable"
+            [theme]="to.theme"
             [data]="to.data"
             [(selectedItems)]="to.selectedItems"
             (selectedItemsChange)="to.selectedItemsChange && to.selectedItemsChange($event)"

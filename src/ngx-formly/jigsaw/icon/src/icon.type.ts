@@ -18,6 +18,7 @@ import {JigsawIcon} from "@rdkmaster/jigsaw";
             [iconPosition]="to.iconPosition"
             [href]="to.href"
             [target]="to.target"
+            [theme]="to.theme"
         ></jigsaw-icon>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush,

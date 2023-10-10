@@ -27,6 +27,7 @@ import {JigsawSelectCollapse} from '@rdkmaster/jigsaw';
             [closeTrigger]="to.closeTrigger"
             [useStatistics]="to.useStatistics"
             [groupField]="to.groupField"
+            [theme]="to.theme"
             [data]="to.data"
             [(value)]="to.value"
             (valueChange)="to.valueChange && to.valueChange($event)"

@@ -17,6 +17,7 @@ import {JigsawTileLite} from "@rdkmaster/jigsaw";
             [optionWidth]="to.optionWidth"
             [optionHeight]="to.optionHeight"
             [showBorder]="to.showBorder"
+            [theme]="to.theme"
             [data]="to.data"
             [(selectedItems)]="to.selectedItems"
             (selectedItemsChange)="to.selectedItemsChange && to.selectedItemsChange($event)"

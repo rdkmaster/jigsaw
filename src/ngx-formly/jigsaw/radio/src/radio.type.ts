@@ -13,6 +13,7 @@ import {JigsawRadiosLite} from "@rdkmaster/jigsaw";
             [valid]="to.valid && !showError"
             [trackItemBy]="to.trackItemBy"
             [labelField]="to.labelField"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
         ></jigsaw-radios-lite>
     `,
