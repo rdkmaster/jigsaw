@@ -111,7 +111,7 @@ export class TableSetStyleDemoComponent implements OnInit {
     public resetStyleOptions() {
         this.styleOptions = {
             hostStyle: {
-                background: 'cyan',
+                background: undefined,
                 backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'top',
@@ -125,12 +125,16 @@ export class TableSetStyleDemoComponent implements OnInit {
             },
             headerStyle: {
                 height: '80px',
-                backgroundColor: '#666',
+                background: '#666',
                 backgroundImage: '',
                 backgroundSize: '',
                 backgroundPosition: '',
                 backgroundRepeat: '',
-                borderBottom: '2px solid red',
+                borderBottomWidth: '2px',
+                borderBottomColor:'red',
+                borderBottomStyle:'solid',
+                borderBottomLeftRadius: '1px',
+                borderBottomRightRadius: '1px',
                 borderCollapse: 'separate',
                 borderSpacing: '5px'
             },
@@ -143,7 +147,7 @@ export class TableSetStyleDemoComponent implements OnInit {
                 color: 'green'
             },
             bodyStyle: {
-                backgroundColor: 'transparent',
+                background: 'transparent',
                 backgroundImage: '',
                 backgroundSize: '',
                 backgroundPosition: '',
@@ -152,7 +156,6 @@ export class TableSetStyleDemoComponent implements OnInit {
                 borderSpacing: '5px',
             },
             bodyTrStyle: {
-                // tr不支持配置图片，但是支持渐进色，不过为了保证覆盖，统一使用background CSS属性
                 background: 'transparent',
                 oddBackground: 'lightgreen',
                 evenBackground: 'transparent',

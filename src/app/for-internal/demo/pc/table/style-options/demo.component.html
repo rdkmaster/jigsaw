@@ -58,19 +58,19 @@
         </li>
         <li class="demo-options-item">
             <span>阴影：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.boxShadow"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.boxShadow"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>透明度：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.opacity"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.opacity"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>可见性：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.visibility"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.visibility"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>布局：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.display"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.display"></jigsaw-input>
         </li>
     </ul>
     <jigsaw-header>表头样式</jigsaw-header>
@@ -109,8 +109,16 @@
             <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundImage"></jigsaw-input>
         </li>
         <li class="demo-options-item">
-            <span>表头分割线：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.borderBottom"></jigsaw-input>
+            <span>表头分割线宽度：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.borderBottomWidth"></jigsaw-input>
+        </li>
+        <li class="demo-options-item">
+            <span>表头分割线颜色：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.borderBottomColor"></jigsaw-input>
+        </li>
+        <li class="demo-options-item">
+            <span>表头分割线样式：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.borderBottomStyle"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>边框模式：</span>
@@ -234,4 +242,4 @@
         </li>
     </ul>
 </div>
-<jigsaw-table #table [data]="tableData" [_$styleOptions]="styleOptions"></jigsaw-table>
+<jigsaw-table #table [data]="tableData" [styleOptions]="styleOptions"></jigsaw-table>

@@ -493,12 +493,16 @@ export type TableStyleOptions = {
     },
     headerStyle?: {
         height?: string,
-        backgroundColor?: string,
+        background?: string,
         backgroundImage?: string,
         backgroundSize?: string,
         backgroundPosition?: string,
         backgroundRepeat?: string,
-        borderBottom?: string,
+        borderBottomWidth?: string,
+        borderBottomColor?: string,
+        borderBottomStyle?: string,
+        borderBottomLeftRadius?: string,
+        borderBottomRightRadius?: string,
         borderCollapse?: string,
         borderSpacing?: string
     },
@@ -512,7 +516,7 @@ export type TableStyleOptions = {
         color?: string
     },
     bodyStyle?: {
-        backgroundColor?: string,
+        background?: string,
         backgroundImage?: string,
         backgroundSize?: string,
         backgroundPosition?: string,

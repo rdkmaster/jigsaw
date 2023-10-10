@@ -61,19 +61,19 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.background]': '_$styleOptions?.hostStyle?.background',
-        '[style.backgroundImage]': '_$styleOptions?.hostStyle?.backgroundImage',
-        '[style.backgroundSize]':'_$styleOptions?.hostStyle?.backgroundSize',
-        '[style.backgroundPosition]':'_$styleOptions?.hostStyle?.backgroundPosition',
-        '[style.backgroundRepeat]':'_$styleOptions?.hostStyle?.backgroundRepeat',
-        '[style.borderWidth]':'_$styleOptions?.hostStyle?.borderWidth',
-        '[style.borderStyle]':'_$styleOptions?.hostStyle?.borderStyle',
-        '[style.borderColor]':'_$styleOptions?.hostStyle?.borderColor',
-        '[style.borderRadius]':'_$styleOptions?.hostStyle?.borderRadius',
-        '[style.boxShadow]':'_$styleOptions?.hostStyle?.boxShadow',
-        '[style.opacity]':'_$styleOptions?.hostStyle?.opacity',
-        '[style.visibility]':'_$styleOptions?.otherStyle?.visibility',
-        '[style.display]':'_$styleOptions?.otherStyle?.display',
+        '[style.background]': 'styleOptions?.hostStyle?.background',
+        '[style.backgroundImage]': 'styleOptions?.hostStyle?.backgroundImage',
+        '[style.backgroundSize]':'styleOptions?.hostStyle?.backgroundSize',
+        '[style.backgroundPosition]':'styleOptions?.hostStyle?.backgroundPosition',
+        '[style.backgroundRepeat]':'styleOptions?.hostStyle?.backgroundRepeat',
+        '[style.borderWidth]':'styleOptions?.hostStyle?.borderWidth',
+        '[style.borderStyle]':'styleOptions?.hostStyle?.borderStyle',
+        '[style.borderColor]':'styleOptions?.hostStyle?.borderColor',
+        '[style.borderRadius]':'styleOptions?.hostStyle?.borderRadius',
+        '[style.boxShadow]':'styleOptions?.hostStyle?.boxShadow',
+        '[style.opacity]':'styleOptions?.hostStyle?.opacity',
+        '[style.visibility]':'styleOptions?.otherStyle?.visibility',
+        '[style.display]':'styleOptions?.otherStyle?.display',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -198,11 +198,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @NoMarkForCheckRequired
     */
     @Input()
-    public get _$styleOptions(): TableStyleOptions {
+    public get styleOptions(): TableStyleOptions {
         return this._styleOptions;
     }
 
-    public set _$styleOptions(value: TableStyleOptions) {
+    public set styleOptions(value: TableStyleOptions) {
         if (this._styleOptions === value) {
             return;
         }
@@ -216,22 +216,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public _$getTrStyle(index: number) {
         if (index == this.selectedRow) {
             return {
-                background: this._$styleOptions?.bodyTrStyle?.selectedBackground || this._$styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)'
+                background: this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)'
             }
         }
         if (index == this._hoveredRow) {
             return {
-                background: this._$styleOptions?.bodyTrStyle?.hoverBackground || this._$styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)'
+                background: this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)'
             }
         }
         if (index % 2 === 0) {
             return {
-                background: this._$styleOptions?.bodyTrStyle?.evenBackground || this._$styleOptions?.bodyTrStyle?.background || 'unset'
+                background: this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset'
             }
         }
         if (index % 2 === 1) {
             return {
-                background: this._$styleOptions?.bodyTrStyle?.oddBackground || this._$styleOptions?.bodyTrStyle?.background || 'unset'
+                background: this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset'
             }
         }
     }
