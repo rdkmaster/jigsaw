@@ -25,10 +25,6 @@
             </jigsaw-button>
         </li>
         <li class="demo-options-item">
-            <span>背景图：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundImage"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
             <span>背景图大小：</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundSize"></jigsaw-input>
         </li>
@@ -81,14 +77,14 @@
         </li>
         <li class="demo-options-item">
             <span>表头背景色：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundColor"></jigsaw-input>
-            <jigsaw-button (click)="styleOptions.headerStyle.backgroundColor = 'var(--brand-default)'">
+            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.background"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.headerStyle.background = 'var(--brand-default)'">
                 颜色变量
             </jigsaw-button>
-            <jigsaw-button (click)="styleOptions.headerStyle.backgroundColor = 'rgb(139, 0, 0)'">
+            <jigsaw-button (click)="styleOptions.headerStyle.background = 'rgb(139, 0, 0)'">
                 rgb色值
             </jigsaw-button>
-            <jigsaw-button (click)="styleOptions.headerStyle.backgroundColor = 'transparent'">
+            <jigsaw-button (click)="styleOptions.headerStyle.background = 'transparent'">
                 透明
             </jigsaw-button>
         </li>
@@ -103,10 +99,6 @@
         <li class="demo-options-item">
             <span>表头背景图重复：</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundRepeat"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表头背景图：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundImage"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>表头分割线宽度：</span>
@@ -187,7 +179,7 @@
     <ul class="demo-options">
         <li class="demo-options-item">
             <span>表格体背景色：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.backgroundColor"></jigsaw-input>
+            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.background"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>表格体背景图大小：</span>

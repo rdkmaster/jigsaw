@@ -111,8 +111,8 @@ export class TableSetStyleDemoComponent implements OnInit {
     public resetStyleOptions() {
         this.styleOptions = {
             hostStyle: {
-                background: undefined,
-                backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
+                background: 'cyan',
+                // backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',
@@ -126,7 +126,6 @@ export class TableSetStyleDemoComponent implements OnInit {
             headerStyle: {
                 height: '80px',
                 background: '#666',
-                backgroundImage: '',
                 backgroundSize: '',
                 backgroundPosition: '',
                 backgroundRepeat: '',
@@ -148,7 +147,6 @@ export class TableSetStyleDemoComponent implements OnInit {
             },
             bodyStyle: {
                 background: 'transparent',
-                backgroundImage: '',
                 backgroundSize: '',
                 backgroundPosition: '',
                 backgroundRepeat: '',

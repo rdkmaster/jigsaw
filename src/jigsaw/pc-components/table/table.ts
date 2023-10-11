@@ -62,7 +62,6 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.background]': 'styleOptions?.hostStyle?.background',
-        '[style.backgroundImage]': 'styleOptions?.hostStyle?.backgroundImage',
         '[style.backgroundSize]':'styleOptions?.hostStyle?.backgroundSize',
         '[style.backgroundPosition]':'styleOptions?.hostStyle?.backgroundPosition',
         '[style.backgroundRepeat]':'styleOptions?.hostStyle?.backgroundRepeat',
