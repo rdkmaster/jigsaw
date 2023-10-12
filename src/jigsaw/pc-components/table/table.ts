@@ -32,6 +32,7 @@ import {
     ColumnDefine,
     ColumnDefineGenerator,
     SortChangeEvent,
+    TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
     TableHeadSetting, TableRowExpandOptions
@@ -60,6 +61,18 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
+        '[style.background]': 'styleOptions?.hostStyle?.background',
+        '[style.backgroundSize]':'styleOptions?.hostStyle?.backgroundSize',
+        '[style.backgroundPosition]':'styleOptions?.hostStyle?.backgroundPosition',
+        '[style.backgroundRepeat]':'styleOptions?.hostStyle?.backgroundRepeat',
+        '[style.borderWidth]':'styleOptions?.hostStyle?.borderWidth',
+        '[style.borderStyle]':'styleOptions?.hostStyle?.borderStyle',
+        '[style.borderColor]':'styleOptions?.hostStyle?.borderColor',
+        '[style.borderRadius]':'styleOptions?.hostStyle?.borderRadius',
+        '[style.boxShadow]':'styleOptions?.hostStyle?.boxShadow',
+        '[style.opacity]':'styleOptions?.hostStyle?.opacity',
+        '[style.visibility]':'styleOptions?.otherStyle?.visibility',
+        '[style.display]':'styleOptions?.otherStyle?.display',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -159,6 +172,54 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (this.initialized) {
             this._selectRow(value);
         }
+    }
+
+    private _styleOptions: TableStyleOptions;
+
+    /**
+     * 设置表格样式
+     * @NoMarkForCheckRequired
+    */
+    @Input()
+    public get styleOptions(): TableStyleOptions {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: TableStyleOptions) {
+        if (this._styleOptions === value) {
+            return;
+        }
+        this._styleOptions = value;
+        this._changeDetectorRef.detectChanges();
+    }
+
+    /**
+     * @internal
+     */
+    public _$hoveredRow: number;
+
+    /**
+     * @internal
+     */
+    public _$getTrStyle(index: number): {background: string} {
+        let background;
+        if (index == this.selectedRow) {
+            background = this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)';
+        } else if (index == this._$hoveredRow) {
+            background = this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)';
+        } else if (index % 2 === 0) {
+            background = this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+        } else if (index % 2 === 1) {
+            background = this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+        } else {
+            return undefined;
+        }
+        return {background};
+    }
+
+    public updateStyleOptions() {
+        this.resize();
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
