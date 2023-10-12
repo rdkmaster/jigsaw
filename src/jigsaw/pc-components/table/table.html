@@ -49,9 +49,9 @@
                 </td>
             </tr>
             </thead>
-            <tbody (mouseout)="_$onRowMouseOut()">
+            <tbody (mouseout)="_$hoveredRow = null">
             <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex" (click)="_$clickRow(rowIndex)"
-                (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$onRowMouseOver(rowIndex)"
+                (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$hoveredRow = rowIndex"
                 [ngStyle]="_$getTrStyle(rowIndex)">
                 <td *ngFor="let cell of row; index as tdIndex" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"

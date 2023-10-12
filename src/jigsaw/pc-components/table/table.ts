@@ -174,22 +174,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         }
     }
 
-    private _hoveredRow: number;
-
-    /**
-     * @internal
-     */
-    public _$onRowMouseOver(index: number) {
-        this._hoveredRow = index;
-    }
-
-    /**
-     * @internal
-     */
-    public _$onRowMouseOut() {
-        this._hoveredRow = null;
-    }
-
     private _styleOptions: TableStyleOptions;
 
     /**
@@ -208,31 +192,29 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._styleOptions = value;
         this._changeDetectorRef.detectChanges();
     }
-    
+
     /**
      * @internal
      */
-    public _$getTrStyle(index: number) {
+    public _$hoveredRow: number;
+
+    /**
+     * @internal
+     */
+    public _$getTrStyle(index: number): {background: string} {
+        let background;
         if (index == this.selectedRow) {
-            return {
-                background: this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)'
-            }
+            background = this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)';
+        } else if (index == this._$hoveredRow) {
+            background = this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)';
+        } else if (index % 2 === 0) {
+            background = this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+        } else if (index % 2 === 1) {
+            background = this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+        } else {
+            return undefined;
         }
-        if (index == this._hoveredRow) {
-            return {
-                background: this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)'
-            }
-        }
-        if (index % 2 === 0) {
-            return {
-                background: this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset'
-            }
-        }
-        if (index % 2 === 1) {
-            return {
-                background: this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset'
-            }
-        }
+        return {background};
     }
 
     public updateStyleOptions() {
