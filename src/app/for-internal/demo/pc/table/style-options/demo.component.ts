@@ -6,10 +6,12 @@ import { JigsawTable, TableStyleOptions, TableData } from "jigsaw/public_api";
     styleUrls: ['./../../assets/demo.common.css', './demo.component.css']
 })
 export class TableSetStyleDemoComponent implements OnInit {
-    tableData: TableData;
+    public tableData: TableData;
 
     @ViewChild('table')
     public table: JigsawTable;
+
+    public imgUrl = 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")';
 
     constructor() {
         this.tableData = new TableData(
@@ -112,7 +114,6 @@ export class TableSetStyleDemoComponent implements OnInit {
         this.styleOptions = {
             hostStyle: {
                 background: 'cyan',
-                // backgroundImage: 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")',
                 backgroundSize: 'contain',
                 backgroundPosition: 'top',
                 backgroundRepeat: 'no-repeat',

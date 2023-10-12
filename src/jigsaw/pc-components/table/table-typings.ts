@@ -478,67 +478,81 @@ export class AdditionalTableData extends TableData {
 export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};
 
 export type TableStyleOptions = {
-    hostStyle?: {
-        background?: string,
-        backgroundSize?: string,
-        backgroundPosition?: string,
-        backgroundRepeat?: string,
-        borderWidth?: string,
-        borderStyle?: string,
-        borderColor?: string,
-        borderRadius?: string,
-        boxShadow?: string,
-        opacity?: string,
-    },
-    headerStyle?: {
-        height?: string,
-        background?: string,
-        backgroundSize?: string,
-        backgroundPosition?: string,
-        backgroundRepeat?: string,
-        borderBottomWidth?: string,
-        borderBottomColor?: string,
-        borderBottomStyle?: string,
-        borderBottomLeftRadius?: string,
-        borderBottomRightRadius?: string,
-        borderCollapse?: string,
-        borderSpacing?: string
-    },
-    headerCellStyle?: {
-        borderWidth?: string,
-        borderStyle?: string,
-        borderColor?: string,
-        borderRadius?: string,
-        fontSize?: string,
-        fontWeight?: string,
-        color?: string
-    },
-    bodyStyle?: {
-        background?: string,
-        backgroundSize?: string,
-        backgroundPosition?: string,
-        backgroundRepeat?: string,
-        borderCollapse?: string,
-        borderSpacing?: string,
-    },
-    bodyTrStyle?: {
-        background?: string,
-        oddBackground?: string,
-        evenBackground?: string,
-        hoverBackground?: string,
-        selectedBackground?: string
-    },
-    bodyCellStyle?: {
-        borderWidth?: string,
-        borderStyle?: string,
-        borderColor?: string,
-        borderRadius?: string,
-        fontSize?: string,
-        fontWeight?: string,
-        color?: string
-    },
-    otherStyle?: {
-        visibility?: string,
-        display?: string,
-    }
+    hostStyle?: TableHostStyle,
+    headerStyle?: TableHeaderStyle,
+    headerCellStyle?: TableHeaderCellStyle,
+    bodyStyle?: TableBodyStyle,
+    bodyTrStyle?: TableBodyTrStyle,
+    bodyCellStyle?: TableBodyCellStyle,
+    otherStyle?: TableOtherStyle
+}
+
+export type TableHostStyle = {
+    background?: string,
+    backgroundSize?: string,
+    backgroundPosition?: string,
+    backgroundRepeat?: string,
+    borderWidth?: string,
+    borderStyle?: string,
+    borderColor?: string,
+    borderRadius?: string,
+    boxShadow?: string,
+    opacity?: string,
+}
+
+export type TableHeaderStyle = {
+    height?: string,
+    background?: string,
+    backgroundSize?: string,
+    backgroundPosition?: string,
+    backgroundRepeat?: string,
+    borderBottomWidth?: string,
+    borderBottomColor?: string,
+    borderBottomStyle?: string,
+    borderBottomLeftRadius?: string,
+    borderBottomRightRadius?: string,
+    borderCollapse?: string,
+    borderSpacing?: string
+}
+
+export type TableHeaderCellStyle = {
+    borderWidth?: string,
+    borderStyle?: string,
+    borderColor?: string,
+    borderRadius?: string,
+    fontSize?: string,
+    fontWeight?: string,
+    color?: string
+}
+
+export type TableBodyStyle = {
+    background?: string,
+    backgroundSize?: string,
+    backgroundPosition?: string,
+    backgroundRepeat?: string,
+    borderCollapse?: string,
+    borderSpacing?: string,
+}
+
+export type TableBodyTrStyle = {
+    background?: string,
+    oddBackground?: string,
+    evenBackground?: string,
+    hoverBackground?: string,
+    selectedBackground?: string
+}
+
+export type TableBodyCellStyle = {
+    borderWidth?: string,
+    borderStyle?: string,
+    borderColor?: string,
+    borderRadius?: string,
+    fontSize?: string,
+    fontWeight?: string,
+    color?: string
+}
+
+export type TableOtherStyle = {
+    visibility?: string,
+    display?: string,
 }
