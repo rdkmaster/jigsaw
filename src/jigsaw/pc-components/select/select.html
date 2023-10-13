@@ -21,7 +21,7 @@
 >
     <ng-template>
         <!-- 这里用一个div来控制弹出列表的宽度，否则Jigsaw-List自带300px的宽度，只要不设置optionWidth，每次在初始计算position时，获取的宽度都是300px -->
-        <div class="jigsaw-select-list-cntr-host" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
+        <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
             <jigsaw-search-input *ngIf="searchable" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
                 [searchDebounce]="manualSearch ? searchDebounce : 'none'">
             </jigsaw-search-input>
