@@ -16,7 +16,8 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
                 [multipleSelect]="multipleSelect" [height]="'100%'" [valid]="valid"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
-                           [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1}"
+                           [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1,
+                                       'jigsaw-button-bar-no-min-width': !!optionWidth}"
                            [width]="optionWidth" [height]="'100%'" [disabled]="item?.disabled"
                            title="{{item?.title == null ? '' : item.title}}">
                 <span *ngIf="item?.icon" [class]="item?.icon"

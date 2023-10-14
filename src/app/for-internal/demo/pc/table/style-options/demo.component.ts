@@ -11,8 +11,6 @@ export class TableSetStyleDemoComponent implements OnInit {
     @ViewChild('table')
     public table: JigsawTable;
 
-    public imgUrl = 'url("app/for-internal/demo/pc/navigation-bar/basic/assets/logo-dark.png")';
-
     constructor() {
         this.tableData = new TableData(
             [
@@ -114,10 +112,10 @@ export class TableSetStyleDemoComponent implements OnInit {
         this.styleOptions = {
             hostStyle: {
                 background: 'cyan',
-                backgroundSize: 'contain',
-                backgroundPosition: 'top',
-                backgroundRepeat: 'no-repeat',
-                borderWidth: '5px',
+                borderTopWidth: '5px',
+                borderRightWidth: '5px',
+                borderBottomWidth: '5px',
+                borderLeftWidth: '5px',
                 borderStyle: 'solid',
                 borderColor: 'red',
                 borderRadius: '5px',
@@ -127,14 +125,9 @@ export class TableSetStyleDemoComponent implements OnInit {
             headerStyle: {
                 height: '80px',
                 background: '#666',
-                backgroundSize: '',
-                backgroundPosition: '',
-                backgroundRepeat: '',
                 borderBottomWidth: '2px',
                 borderBottomColor:'red',
                 borderBottomStyle:'solid',
-                borderBottomLeftRadius: '1px',
-                borderBottomRightRadius: '1px',
                 borderCollapse: 'separate',
                 borderSpacing: '5px'
             },
@@ -147,10 +140,6 @@ export class TableSetStyleDemoComponent implements OnInit {
                 color: 'green'
             },
             bodyStyle: {
-                background: 'transparent',
-                backgroundSize: '',
-                backgroundPosition: '',
-                backgroundRepeat: '',
                 borderCollapse: 'separate',
                 borderSpacing: '5px',
             },
@@ -169,10 +158,6 @@ export class TableSetStyleDemoComponent implements OnInit {
                 fontSize: '16px',
                 fontWeight: 'bold',
                 color: 'green',
-            },
-            otherStyle: {
-                visibility: 'visible',
-                display: 'block',
             }
         };
     }

@@ -4,19 +4,20 @@
 
 <div class="demo-container">
     <label>单位组合：</label><br>
-    <jigsaw-numeric-input placeholder="unit demo" suffix="单位"></jigsaw-numeric-input>
+    <jigsaw-numeric-input placeholder="unit demo" suffix="单位" prefix="描述"></jigsaw-numeric-input>
     <br>
-    <jigsaw-numeric-input placeholder="unit demo" suffix="单位" [disabled]="true"></jigsaw-numeric-input>
+    <jigsaw-numeric-input placeholder="unit demo" suffix="单位" prefix="描述" [disabled]="true"></jigsaw-numeric-input>
     <br>
-    <jigsaw-numeric-input placeholder="unit demo" suffix="单位" width="300"></jigsaw-numeric-input>
+    <jigsaw-numeric-input placeholder="unit demo" suffix="单位" prefix="描述" width="300"></jigsaw-numeric-input>
 
     <br><br>
     <label>单位可选：</label><br>
-    <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120"
-                          (suffixChange)="_$unitChange($event)" width="300">
+    <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120" prefix="描述"
+        (suffixChange)="_$unitChange($event)" width="300">
     </jigsaw-numeric-input>
     <br>
-    <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120" [disabled]="true" width="300">
+    <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="120" prefix="描述" [disabled]="true"
+        width="300">
     </jigsaw-numeric-input>
 
     <br><br>
@@ -24,21 +25,26 @@
     <jigsaw-button-bar [(selectedItems)]="_$size" [data]="_$sizes"></jigsaw-button-bar>
     <br>
     <jigsaw-numeric-input placeholder="unit demo" [suffix]="_$units" suffixWidth="100"
-                          (suffixChange)="_$unitChange($event)" width="300" [size]="_$size">
+        (suffixChange)="_$unitChange($event)" width="300" [size]="_$size" prefix="描述">
     </jigsaw-numeric-input>
 
     <br><br>
     <label>更多内容：</label><br>
-    <jigsaw-numeric-input placeholder="unit demo" width="300" suffixWidth="120"
-                          [suffix]="_$icons" (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'">
+    <jigsaw-numeric-input placeholder="unit demo" width="300" suffixWidth="120" [suffix]="_$icons"
+        (suffixChange)="_$unitChange($event)" [suffixLabelField]="'name'" prefix="描述">
     </jigsaw-numeric-input>
     <br>
     <jigsaw-numeric-input #input1 placeholder="unit demo" [valid]="input1.value > 10" width="300">
     </jigsaw-numeric-input>
     <br>
     <jigsaw-numeric-input #input2 placeholder="unit demo" [suffix]="_$units" suffixWidth="100"
-                          (suffixChange)="_$unitChange($event)" width="300" [valid]="input2.value > 10">
+        (suffixChange)="_$unitChange($event)" width="300" [valid]="input2.value > 10" prefix="描述">
+    </jigsaw-numeric-input>
+    <br>
+    <jigsaw-numeric-input #input4 placeholder="unit demo" prefix="描述" width="300" [valid]="input4.value > 10">
+    </jigsaw-numeric-input>
+    <br>
+    <jigsaw-numeric-input #input5 placeholder="unit demo" [suffix]="_$units" suffixWidth="100"
+        (suffixChange)="_$unitChange($event)" width="300" [valid]="input5.value > 10">
     </jigsaw-numeric-input>
 </div>
-
-

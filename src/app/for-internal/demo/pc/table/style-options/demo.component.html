@@ -23,26 +23,22 @@
                 (click)="styleOptions.hostStyle.background = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
                 渐进色
             </jigsaw-button>
-            <jigsaw-button
-                (click)="styleOptions.hostStyle.background = imgUrl">
-                背景图
-            </jigsaw-button>
         </li>
         <li class="demo-options-item">
-            <span>背景图大小：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundSize"></jigsaw-input>
+            <span>上边框大小：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderTopWidth"></jigsaw-input>
         </li>
         <li class="demo-options-item">
-            <span>背景图位置：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundPosition"></jigsaw-input>
+            <span>右边框大小：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderRightWidth"></jigsaw-input>
         </li>
         <li class="demo-options-item">
-            <span>背景图重复：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.backgroundRepeat"></jigsaw-input>
+            <span>下边框大小：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderBottomWidth"></jigsaw-input>
         </li>
         <li class="demo-options-item">
-            <span>边框大小：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderWidth"></jigsaw-input>
+            <span>左边框大小：</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.borderLeftWidth"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>边框样式：</span>
@@ -64,14 +60,6 @@
             <span>透明度：</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.hostStyle.opacity"></jigsaw-input>
         </li>
-        <li class="demo-options-item">
-            <span>可见性：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.visibility"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>布局：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.otherStyle.display"></jigsaw-input>
-        </li>
     </ul>
     <jigsaw-header>表头样式</jigsaw-header>
     <ul class="demo-options">
@@ -91,18 +79,6 @@
             <jigsaw-button (click)="styleOptions.headerStyle.background = 'transparent'">
                 透明
             </jigsaw-button>
-        </li>
-        <li class="demo-options-item">
-            <span>表头背景图大小：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundSize"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表头背景图位置：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundPosition"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表头背景图重复：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyle.backgroundRepeat"></jigsaw-input>
         </li>
         <li class="demo-options-item">
             <span>表头分割线宽度：</span>
@@ -181,22 +157,6 @@
     </ul>
     <jigsaw-header>表格体样式</jigsaw-header>
     <ul class="demo-options">
-        <li class="demo-options-item">
-            <span>表格体背景色：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.background"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表格体背景图大小：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.backgroundSize"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表格体背景图位置：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.backgroundPosition"></jigsaw-input>
-        </li>
-        <li class="demo-options-item">
-            <span>表格体背景图重复：</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.backgroundRepeat"></jigsaw-input>
-        </li>
         <li class="demo-options-item">
             <span>边框模式：</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.bodyStyle.borderCollapse"></jigsaw-input>

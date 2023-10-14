@@ -483,16 +483,15 @@ export type TableStyleOptions = {
     headerCellStyle?: TableHeaderCellStyle,
     bodyStyle?: TableBodyStyle,
     bodyTrStyle?: TableBodyTrStyle,
-    bodyCellStyle?: TableBodyCellStyle,
-    otherStyle?: TableOtherStyle
+    bodyCellStyle?: TableBodyCellStyle
 }
 
 export type TableHostStyle = {
     background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
-    borderWidth?: string,
+    borderTopWidth?: string,
+    borderRightWidth?: string,
+    borderBottomWidth?: string,
+    borderLeftWidth?: string,
     borderStyle?: string,
     borderColor?: string,
     borderRadius?: string,
@@ -503,14 +502,9 @@ export type TableHostStyle = {
 export type TableHeaderStyle = {
     height?: string,
     background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
     borderBottomWidth?: string,
     borderBottomColor?: string,
     borderBottomStyle?: string,
-    borderBottomLeftRadius?: string,
-    borderBottomRightRadius?: string,
     borderCollapse?: string,
     borderSpacing?: string
 }
@@ -526,10 +520,6 @@ export type TableHeaderCellStyle = {
 }
 
 export type TableBodyStyle = {
-    background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
     borderCollapse?: string,
     borderSpacing?: string,
 }
@@ -550,9 +540,4 @@ export type TableBodyCellStyle = {
     fontSize?: string,
     fontWeight?: string,
     color?: string
-}
-
-export type TableOtherStyle = {
-    visibility?: string,
-    display?: string,
 }
