@@ -70,7 +70,6 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[style.borderColor]': 'styleOptions?.hostStyle?.borderColor',
         '[style.borderRadius]': 'styleOptions?.hostStyle?.borderRadius',
         '[style.boxShadow]': 'styleOptions?.hostStyle?.boxShadow',
-        '[style.display]': 'styleOptions?.otherStyle?.display',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
