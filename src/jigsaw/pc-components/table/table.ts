@@ -233,15 +233,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$getBodyClass(body: TableCellSetting) {
-        const alignment = body.alignment == 'default' && this.styleOptions?.bodyCellStyle?.horizontalAlignment ?
-            this.styleOptions?.bodyCellStyle?.horizontalAlignment : body.alignment;
+    public _$getBodyClass(cell: TableCellSetting) {
+        const alignment = cell.alignment == 'default' && this.styleOptions?.bodyCellStyle?.horizontalAlignment ?
+            this.styleOptions?.bodyCellStyle?.horizontalAlignment : cell.alignment;
         return {
             'jigsaw-cell-align-left': alignment == 'left',
             'jigsaw-cell-align-center': alignment == 'center',
             'jigsaw-cell-align-right': alignment == 'right',
             'jigsaw-cell-align-default': alignment == 'default',
-            'jigsaw-cell-no-padding': body.noPadding
+            'jigsaw-cell-no-padding': cell.noPadding
         };
     }
 

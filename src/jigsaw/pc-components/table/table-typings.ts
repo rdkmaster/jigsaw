@@ -480,10 +480,10 @@ export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remain
 export type TableStyleOptions = {
     hostStyle?: TableHostStyle,
     headerStyle?: TableHeaderStyle,
-    headerCellStyle?: TableHeaderCellStyle,
+    headerCellStyle?: TableCellStyle,
     bodyStyle?: TableBodyStyle,
     bodyTrStyle?: TableBodyTrStyle,
-    bodyCellStyle?: TableBodyCellStyle
+    bodyCellStyle?: TableCellStyle
 }
 
 export type TableHostStyle = {
@@ -509,7 +509,7 @@ export type TableHeaderStyle = {
     borderSpacing?: string
 }
 
-export type TableHeaderCellStyle = {
+export type TableCellStyle = {
     borderWidth?: string,
     borderStyle?: string,
     borderColor?: string,
@@ -526,20 +526,10 @@ export type TableBodyStyle = {
 }
 
 export type TableBodyTrStyle = {
+    height?: string,
     background?: string,
     oddBackground?: string,
     evenBackground?: string,
     hoverBackground?: string,
     selectedBackground?: string
-}
-
-export type TableBodyCellStyle = {
-    borderWidth?: string,
-    borderStyle?: string,
-    borderColor?: string,
-    borderRadius?: string,
-    fontSize?: string,
-    fontWeight?: string,
-    color?: string,
-    horizontalAlignment?: string
 }
