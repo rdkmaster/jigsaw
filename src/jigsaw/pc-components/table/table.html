@@ -39,10 +39,7 @@
             <thead *ngIf="_$isFFBrowser">
             <tr>
                 <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}"
-                    [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
-                                'jigsaw-cell-align-center': head.alignment === 'center',
-                                'jigsaw-cell-align-right': head.alignment === 'right',
-                                'jigsaw-cell-no-padding': head.noPadding}">
+                    [ngClass]="_$getHeaderClass(head)">
                 </td>
             </tr>
             </thead>
@@ -54,10 +51,7 @@
                     [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                     class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}"
                     [ngStyle]="styleOptions?.bodyCellStyle"
-                    [ngClass]="{'jigsaw-cell-align-left': cell.alignment === 'left',
-                                'jigsaw-cell-align-center': cell.alignment === 'center',
-                                'jigsaw-cell-align-right': cell.alignment === 'right',
-                                'jigsaw-cell-no-padding': cell.noPadding}">
+                    [ngClass]="_$getBodyClass(cell)">
                     <ng-container [ngSwitch]="cell.renderer">
                         <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
                                 <span class="jigsaw-table-cell-text"
