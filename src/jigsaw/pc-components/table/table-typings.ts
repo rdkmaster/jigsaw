@@ -83,7 +83,7 @@ export class TableHeader {
     filterable?: boolean;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
-    alignment?: 'left' | 'center' | 'right';
+    alignment?: 'default' | 'left' | 'center' | 'right';
     noPadding?: boolean;
 }
 
@@ -98,7 +98,7 @@ export class TableCell {
     data?: any | TableCellDataGenerator;
     tooltip?: any;
     innerHtmlContext?: any;
-    alignment?: 'left' | 'center' | 'right';
+    alignment?: 'default' | 'left' | 'center' | 'right';
     noPadding?: boolean;
 }
 
@@ -116,7 +116,7 @@ export class TableHeadSetting {
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;
-    alignment: 'left' | 'center' | 'right';
+    alignment: 'default' | 'left' | 'center' | 'right';
     noPadding: boolean;
 }
 
@@ -136,7 +136,7 @@ export class TableCellSetting {
     rowSpan: number;
     tooltip: any;
     innerHtmlContext: any;
-    alignment: 'left' | 'center' | 'right';
+    alignment: 'default' | 'left' | 'center' | 'right';
     noPadding: boolean;
 }
 
@@ -516,7 +516,8 @@ export type TableHeaderCellStyle = {
     borderRadius?: string,
     fontSize?: string,
     fontWeight?: string,
-    color?: string
+    color?: string,
+    horizontalAlignment?: string
 }
 
 export type TableBodyStyle = {
@@ -539,5 +540,6 @@ export type TableBodyCellStyle = {
     borderRadius?: string,
     fontSize?: string,
     fontWeight?: string,
-    color?: string
+    color?: string,
+    horizontalAlignment?: string
 }

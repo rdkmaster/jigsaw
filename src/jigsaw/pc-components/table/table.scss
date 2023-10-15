@@ -57,6 +57,19 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
                     display: block;
                 }
+                
+                &.jigsaw-cell-align-default {
+
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-start;
+                        text-align: left;
+
+                        ng-component {
+                            justify-content: flex-start;
+                        }
+                    }
+                }
 
                 &.jigsaw-cell-align-left {
 

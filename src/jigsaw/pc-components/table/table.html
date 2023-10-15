@@ -10,10 +10,7 @@
             <tr #headerRow>
                 <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index"
                     class="{{head.clazz}}" [ngStyle]="styleOptions?.headerCellStyle"
-                    [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
-                        'jigsaw-cell-align-center': head.alignment === 'center',
-                        'jigsaw-cell-align-right': head.alignment === 'right',
-                        'jigsaw-cell-no-padding': head.noPadding}">
+                    [ngClass]="_$getHeaderClass(head)">
                     <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
                                          [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                                          [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"

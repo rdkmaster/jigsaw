@@ -137,7 +137,8 @@ export class TableSetStyleDemoComponent implements OnInit {
                 borderColor: 'yellow',
                 fontSize: '16px',
                 fontWeight: 'bold',
-                color: 'green'
+                color: 'green',
+                horizontalAlignment:'right'
             },
             bodyStyle: {
                 borderCollapse: 'separate',

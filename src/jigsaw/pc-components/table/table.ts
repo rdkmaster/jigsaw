@@ -70,6 +70,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[style.borderColor]': 'styleOptions?.hostStyle?.borderColor',
         '[style.borderRadius]': 'styleOptions?.hostStyle?.borderRadius',
         '[style.boxShadow]': 'styleOptions?.hostStyle?.boxShadow',
+        '[style.opacity]':'styleOptions?.hostStyle?.opacity',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -212,6 +213,36 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return undefined;
         }
         return {background};
+    }
+
+    /**
+     * @internal
+     */
+    public _$getHeaderClass(head: TableHeadSetting) {
+        const alignment = head.alignment == 'default' && this.styleOptions?.headerCellStyle?.horizontalAlignment ?
+            this.styleOptions?.headerCellStyle?.horizontalAlignment : head.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': head.noPadding
+        };
+    }
+
+    /**
+     * @internal
+     */
+    public _$getBodyClass(body: TableCellSetting) {
+        const alignment = body.alignment == 'default' && this.styleOptions?.bodyCellStyle?.horizontalAlignment ?
+            this.styleOptions?.bodyCellStyle?.horizontalAlignment : body.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': body.noPadding
+        };
     }
 
     public updateStyleOptions() {
