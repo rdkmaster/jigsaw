@@ -411,14 +411,18 @@
         <section class="item-section">
             <jigsaw-header [theme]="darkTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList" [multipleSelect]="true">
+                </jigsaw-select>
+                <jigsaw-select [theme]="darkTheme" [searchable]="true" placeholder="无数据" [multipleSelect]="true">
                 </jigsaw-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select</jigsaw-header>
             <div class="item-div start">
-                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList">
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="请选择城市" [data]="_$cityList" [multipleSelect]="true">
+                </jigsaw-select>
+                <jigsaw-select [theme]="lightTheme" [searchable]="true" placeholder="无数据" [multipleSelect]="true">
                 </jigsaw-select>
             </div>
         </section>
@@ -429,6 +433,8 @@
             <div class="item-div start">
                 <jigsaw-collapse-select [theme]="darkTheme" [data]="_$groupData" [multipleSelect]="true"
                     placeholder="请选择" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
+                <jigsaw-collapse-select [theme]="darkTheme" [multipleSelect]="true"
+                    placeholder="无数据" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
             </div>
         </section>
         <section class="item-section">
@@ -436,6 +442,8 @@
             <div class="item-div start">
                 <jigsaw-collapse-select [theme]="lightTheme" [data]="_$groupData" [multipleSelect]="true"
                     placeholder="请选择" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
+                <jigsaw-collapse-select [theme]="lightTheme" [multipleSelect]="true"
+                    placeholder="无数据" width="160px" optionCount="6" [useStatistics]="true"></jigsaw-collapse-select>
             </div>
         </section>
     </li>
@@ -445,12 +453,16 @@
             <div class="item-div start">
                 <jigsaw-group-select [theme]="darkTheme" [data]="_$groupData" [multipleSelect]="true" placeholder="请选择"
                     width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
+                <jigsaw-group-select [theme]="darkTheme" [multipleSelect]="true" placeholder="无数据"
+                    width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
             </div>
         </section>
         <section class="item-section">
             <jigsaw-header [theme]="lightTheme">select-group</jigsaw-header>
             <div class="item-div start">
                 <jigsaw-group-select [theme]="lightTheme" [data]="_$groupData" [multipleSelect]="true" placeholder="请选择"
+                    width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
+                <jigsaw-group-select [theme]="lightTheme" [multipleSelect]="true" placeholder="无数据"
                     width="160px" optionCount="6" [useStatistics]="true"></jigsaw-group-select>
             </div>
         </section>

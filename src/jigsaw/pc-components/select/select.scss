@@ -412,8 +412,9 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     }
 }
 
-.#{$jigsaw-select}-list-cntr-host{
+.#{$jigsaw-select}-list-cntr-host {
     position: relative;
+    color: $font-color-default;
 
     .#{$jigsaw-select}-infinite-scroll-loading {
         position: absolute;

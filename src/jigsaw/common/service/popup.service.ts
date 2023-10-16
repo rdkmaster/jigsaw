@@ -140,6 +140,8 @@ export class PopupOptions {
     borderColor?: string;
     /**
      * popupService会默认给弹框设置一个背景（除了默认皮肤），用来适配皮肤的风格，defaultBackground可以用来设置这个背景的颜色
+     * **注意**
+     * 目前该属性用作内部wings-theme给combo-select来做弹出背景色的配置，如果开放使用则去除此条注释
      */
     defaultBackground?: string;
 }

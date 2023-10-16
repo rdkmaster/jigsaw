@@ -22,7 +22,7 @@
     <ng-template>
         <!-- 这里用一个div来控制弹出列表的宽度，否则Jigsaw-List自带300px的宽度，只要不设置optionWidth，每次在初始计算position时，获取的宽度都是300px -->
         <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
-            <jigsaw-search-input *ngIf="searchable" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
+            <jigsaw-search-input *ngIf="searchable" [theme]="theme" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
                 [searchDebounce]="manualSearch ? searchDebounce : 'none'">
             </jigsaw-search-input>
             <jigsaw-list #contentList width="100%"
@@ -38,10 +38,12 @@
                          [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}"
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect"
+                         [theme]="theme"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">
                 <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
                         *ngIf="!_$showSelected"
+                        [theme]="theme"
                         [(checked)]="_$selectAllChecked"
                         (checkedChange)="_$selectAll()"
                         [enableIndeterminate]="true">
@@ -59,7 +61,7 @@
                     <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item"
                                         [disabled]="item.disabled" [height]="optionHeight">
                         <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
-                                         [(checked)]="listItem.selected" mode="minimalist">
+                                         [(checked)]="listItem.selected" mode="minimalist" [theme]="theme">
                         </jigsaw-checkbox>
                         <span class="select-option-label" [title]="_$getItemLabel(item, labelField)">
                             {{_$getItemLabel(item, labelField)}}
@@ -73,7 +75,7 @@
                 </div>
             </jigsaw-list>
             <div *ngIf="_$infiniteScroll && data.length > 0 && data['busy']" class="jigsaw-select-infinite-scroll-loading">
-                <jigsaw-circle-loading [size]="'small'"></jigsaw-circle-loading>
+                <jigsaw-circle-loading [theme]="theme" [size]="'small'"></jigsaw-circle-loading>
                 <p>{{'select.loading' | translate}}</p>
             </div>
         </div>
