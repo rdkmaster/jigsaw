@@ -9,3 +9,16 @@
 
 <jigsaw-header>数据不合法</jigsaw-header>
 <jigsaw-table></jigsaw-table>
+
+<jigsaw-header>在高度充足的情况下，无数据的表现</jigsaw-header>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
+
+<jigsaw-header>在高度不足的情况下，两种情况的表现</jigsaw-header>
+<div class="short-box">
+    <jigsaw-table [data]="tableData2"></jigsaw-table>
+</div>
+<div class="short-box">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
