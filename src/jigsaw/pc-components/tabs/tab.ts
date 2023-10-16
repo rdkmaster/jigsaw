@@ -748,7 +748,7 @@ export class JigsawTab extends JigsawTabBase {
         return this._$tabPanes?.find((_, idx) => idx == index);
     }
 
-    public getTabContentRefByIndex(index: number): EmbeddedViewRef<any> | ComponentRef<IJigsawTabTitleRenderer> {
+    public getTabContentRef(index: number): EmbeddedViewRef<any> | ComponentRef<IJigsawTabTitleRenderer> {
         return this._tabContents?.find((_, idx) => idx == index)?._tabItemRef;
     }
 
