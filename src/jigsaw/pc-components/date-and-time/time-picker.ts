@@ -482,7 +482,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
     public _$handleKeyDown($event) {
         if ($event.key == 'Enter') {
             this._$cancelSelect(this._$selectMode as TimeSelectMode, true);
-            // this._$floatOpen = false;
+            this._$floatOpen = false;
         } else if ($event.key == 'ArrowRight') {
             this._$handleCtrlBarClick($event, 1);
         } else if ($event.key == 'ArrowLeft') {
@@ -603,7 +603,7 @@ export class JigsawTimePicker extends AbstractJigsawComponent implements Control
             }
         } else if (mode == 'second') {
             this._$second = value;
-            // this._$floatOpen = false;
+            this._$floatOpen = false;
         }
     }
 
