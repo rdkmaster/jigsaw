@@ -215,7 +215,6 @@ export class PopupInfo {
 
     promise: Promise<any>;
     private _promiseResolver: Function;
-
     toPromise<T = ButtonInfo>(): Promise<T> {
         if (!this.answer) {
             return null;
