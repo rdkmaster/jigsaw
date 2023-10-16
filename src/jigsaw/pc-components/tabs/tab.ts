@@ -20,8 +20,7 @@ import {
     Type,
     ViewChild,
     ViewChildren,
-    ViewContainerRef,
-    Renderer2
+    ViewContainerRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
 import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
@@ -29,7 +28,7 @@ import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../..
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
-import { CommonUtils } from '../../common/core/utils/common-utils';
+import {CommonUtils} from '../../common/core/utils/common-utils';
 
 export type TabBarData = {
     /**
@@ -337,7 +336,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     private _setInkBarStyle(index: number) {
-        if (!this.tabsInkBar || this.tabLabels.length == 0) return;
+        if (!this.tabsInkBar || this.tabLabels.length == 0) {
+            return;
+        }
 
         let labelPos = this._getLabelOffsetByKey(index);
         if (!labelPos) {
@@ -352,7 +353,9 @@ export abstract class JigsawTabBase extends AbstractJigsawComponent implements A
     }
 
     private _updateOverflowButton() {
-        if (!this.tabsNav || !this.tabsNavWrap) return;
+        if (!this.tabsNav || !this.tabsNavWrap) {
+            return;
+        }
         this._$showOverflowButton = this.tabsNavWrap.nativeElement.offsetWidth < this.tabsNav.nativeElement.offsetWidth;
         this._changeDetector.detectChanges();
     }
@@ -469,7 +472,9 @@ export class JigsawTabBar extends JigsawTabBase {
      * @internal
      */
     public _$listOptionClick(index) {
-        if (this.data[index].disabled) return;
+        if (this.data[index].disabled) {
+            return;
+        }
         this.selectedIndex = index;
     }
 
@@ -575,7 +580,9 @@ export class JigsawTab extends JigsawTabBase {
     public hideTab(index: number): void {
         let tabPane = this._getTabPaneByIndex(index);
 
-        if (!this._isTabPane(tabPane)) return;
+        if (!this._isTabPane(tabPane)) {
+            return;
+        }
 
         tabPane.hidden = true;
 
@@ -593,7 +600,9 @@ export class JigsawTab extends JigsawTabBase {
     public showTab(index: number) {
         let tabPane = this._getTabPaneByIndex(index);
 
-        if (!this._isTabPane(tabPane)) return;
+        if (!this._isTabPane(tabPane)) {
+            return;
+        }
 
         tabPane.hidden = false;
         this.selectedIndex = index;
@@ -617,57 +626,63 @@ export class JigsawTab extends JigsawTabBase {
      * @param contentTemplate 以一个`ng-template`标签包围起来的模板作为tab页的内容，当tab页的内容比较简单时，建议采用此方式。
      * @param initData 提供给`contentTemplate`的初始化数据
      * @param activateImmediately 是否立即激活新增的Tab页，默认值是`true`
+     * @param lazy 是否设置新增的Tab页为懒加载方式，默认值是`true`
      */
     public addTab(titleString: string, contentTemplate: TemplateRef<any>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @param titleTemplate 以一个`ng-template`标签包围起来的模板作为标题，
      * 这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。
      * @param contentTemplate
      * @param initData
      * @param activateImmediately
+     * @param lazy
      */
     public addTab(titleTemplate: TemplateRef<any>, contentTemplate: TemplateRef<any>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @param titleComponent 以一个组件作为标题，这样可以彻底定制化新增的tab的标题部分，例如加图标，甚至添加按钮、进度条等复杂视图。
      * @param contentTemplate
      * @param initData
      * @param activateImmediately
+     * @param lazy
      */
     public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentTemplate: TemplateRef<any>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @param titleString
      * @param contentComponent 以一个组件作为tab页的内容，
      * 如果新增的tab页内容比较复杂，建议采用此方式添加，以让各部分代码的耦合解开。
      * @param initData
      * @param activateImmediately
+     * @param lazy
      */
     public addTab(titleString: string, contentComponent: Type<IDynamicInstantiatable>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @param titleTemplate
      * @param contentComponent
      * @param initData
      * @param activateImmediately
+     * @param lazy
      */
     public addTab(titleTemplate: TemplateRef<any>, contentComponent: Type<IDynamicInstantiatable>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @param titleComponent
      * @param contentComponent
      * @param initData
      * @param activateImmediately
+     * @param lazy
      */
     public addTab(titleComponent: Type<IJigsawTabTitleRenderer>, contentComponent: Type<IDynamicInstantiatable>,
-                  initData?: Object, activateImmediately?: boolean);
+                  initData?: Object, activateImmediately?: boolean, lazy?: boolean);
     /**
      * @internal
      */
     public addTab(title: string | TemplateRef<any> | Type<IJigsawTabTitleRenderer>,
                   content: TemplateRef<any> | Type<IDynamicInstantiatable>,
-                  initData?: Object, activateImmediately: boolean = true) {
+                  initData?: Object, activateImmediately: boolean = true, lazy: boolean = true) {
         const factory = this._cfr.resolveComponentFactory(JigsawTabPane);
         let tabPane: JigsawTabPane = this._viewContainer.createComponent(factory).instance;
         if (typeof title == 'string') {
@@ -677,6 +692,7 @@ export class JigsawTab extends JigsawTabBase {
         }
         tabPane.content = content;
         tabPane.initData = initData;
+        tabPane.lazy = lazy;
 
         let tabTemp = this._$tabPanes.toArray();
         tabTemp.push(tabPane);
@@ -730,6 +746,10 @@ export class JigsawTab extends JigsawTabBase {
 
     public getTabPaneByIndex(index: number): JigsawTabPane {
         return this._$tabPanes?.find((_, idx) => idx == index);
+    }
+
+    public getTabContentRefByIndex(index: number): EmbeddedViewRef<any> | ComponentRef<IJigsawTabTitleRenderer> {
+        return this._tabContents?.find((_, idx) => idx == index)?._tabItemRef;
     }
 
     public renameTab(index: number, newTitle: string): string;
