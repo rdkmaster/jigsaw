@@ -61,16 +61,6 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.background]': 'styleOptions?.hostStyle?.background',
-        '[style.borderTopWidth]': 'styleOptions?.hostStyle?.borderTopWidth',
-        '[style.borderRightWidth]': 'styleOptions?.hostStyle?.borderRightWidth',
-        '[style.borderBottomWidth]': 'styleOptions?.hostStyle?.borderBottomWidth',
-        '[style.borderLeftWidth]': 'styleOptions?.hostStyle?.borderLeftWidth',
-        '[style.borderStyle]': 'styleOptions?.hostStyle?.borderStyle',
-        '[style.borderColor]': 'styleOptions?.hostStyle?.borderColor',
-        '[style.borderRadius]': 'styleOptions?.hostStyle?.borderRadius',
-        '[style.boxShadow]': 'styleOptions?.hostStyle?.boxShadow',
-        '[style.opacity]':'styleOptions?.hostStyle?.opacity',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -199,28 +189,58 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$getTrStyle(index: number): {background: string} {
+    public _$getRowBackground(index: number): string {
         let background;
         if (index == this.selectedRow) {
-            background = this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)';
+            background = this.styleOptions?.rowStyles?.selectedBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--brand-active-lighten)';
         } else if (index == this._$hoveredRow) {
-            background = this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)';
+            background = this.styleOptions?.rowStyles?.hoverBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--bg-hover)';
         } else if (index % 2 === 0) {
-            background = this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+            background = this.styleOptions?.rowStyles?.oddBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
         } else if (index % 2 === 1) {
-            background = this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+            background = this.styleOptions?.rowStyles?.evenBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
         } else {
+            return 'unset';
+        }
+        return background;
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderCollapse(): string {
+        return this.styleOptions?.rowStyles?.spacing ? 'separate' : 'collapse';
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderSpacing(): string {
+        return this.styleOptions?.rowStyles?.spacing ? `0 ${this.styleOptions.rowStyles.spacing}` : 'unset';
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableCellBorder(): string {
+        if (!this.styleOptions?.rowStyles?.borderType) {
             return undefined;
         }
-        return {background};
+        if (this.styleOptions.rowStyles.borderType !== 'all') {
+            return 'none';
+        }
+        const width = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderWidth : "1px";
+        const style = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderStyle : "solid";
+        const color = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderColor : "var(--border-color-default)";
+        return `${width} ${style} ${color}`;
     }
 
     /**
      * @internal
      */
     public _$getHeaderClass(head: TableHeadSetting) {
-        const alignment = head.alignment == 'default' && this.styleOptions?.headerCellStyle?.horizontalAlignment ?
-            this.styleOptions?.headerCellStyle?.horizontalAlignment : head.alignment;
+        const alignment = head.alignment == 'default' && this.styleOptions?.headerStyles?.textAlign ?
+            this.styleOptions?.headerStyles?.textAlign : head.alignment;
         return {
             'jigsaw-cell-align-left': alignment == 'left',
             'jigsaw-cell-align-center': alignment == 'center',
@@ -234,8 +254,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     public _$getBodyClass(cell: TableCellSetting) {
-        const alignment = cell.alignment == 'default' && this.styleOptions?.bodyCellStyle?.horizontalAlignment ?
-            this.styleOptions?.bodyCellStyle?.horizontalAlignment : cell.alignment;
+        const alignment = cell.alignment == 'default' && this.styleOptions?.cellStyles?.textAlign ?
+            this.styleOptions?.cellStyles?.textAlign : cell.alignment;
         return {
             'jigsaw-cell-align-left': alignment == 'left',
             'jigsaw-cell-align-center': alignment == 'center',
@@ -246,9 +266,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public updateStyleOptions() {
+    
         this.resize();
         this._changeDetectorRef.detectChanges();
     }
+
 
     /**
      * @NoMarkForCheckRequired

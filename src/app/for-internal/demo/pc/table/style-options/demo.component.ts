@@ -46,50 +46,15 @@ export class TableSetStyleDemoComponent implements OnInit {
                     "Tokyo",
                     "8422"
                 ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ],
-                [
-                    "Tiger Nixon2",
-                    "System Architect",
-                    "$320,8000",
-                    "2011/04/25",
-                    "Edinburgh",
-                    "5421"
-                ],
-                [
-                    "Garrett Winters1",
-                    "Accountant",
-                    "$170,7",
-                    "2011/07/25",
-                    "Tokyo",
-                    "8422"
-                ]
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
     }
 
     public styleOptions: TableStyleOptions = {
-        hostStyle: {},
-        headerStyle: {},
-        bodyStyle: {},
-        bodyTrStyle: {},
-        headerCellStyle: {},
-        bodyCellStyle: {}
+        rowStyles: {},
+        headerStyles: {},
+        cellStyles: {}
     };
 
     public updateStyleOptions() {
@@ -98,68 +63,46 @@ export class TableSetStyleDemoComponent implements OnInit {
     }
 
     public removeStyleOptions() {
-        this.styleOptions = {
-            hostStyle: {},
-            headerStyle: {},
-            headerCellStyle: {},
-            bodyStyle: {},
-            bodyTrStyle: {},
-            bodyCellStyle: {}
-        };
+        this.styleOptions = {};
     }
 
     public resetStyleOptions() {
         this.styleOptions = {
-            hostStyle: {
-                background: 'cyan',
-                borderTopWidth: '5px',
-                borderRightWidth: '5px',
-                borderBottomWidth: '5px',
-                borderLeftWidth: '5px',
-                borderStyle: 'solid',
-                borderColor: 'red',
-                borderRadius: '5px',
-                boxShadow: '2px 2px 4px hsla(0, 0%, 0%, 0.5)',
-                opacity: '1'
+            rowStyles: {
+                backgroundFill: "#ffffff", // 行背景填充
+                oddBackgroundFill: "#f6f6f6", // 奇数行背景填充
+                evenBackgroundFill: "#ffffff", // 偶数行背景填充
+                hoverBackgroundFill: "#e6e6e6", // 行悬浮背景填充
+                selectedBackgroundFill: "#c6c6c6", // 行选中背景填充
+                borderColor: "green", // 行边框颜色
+                borderType: "all", // 行边框类型
+                borderStyle: "solid", // 行边框样式
+                borderWidth: "5px", // 行边框宽度
+                borderRadius: "3px", // 行边框圆角
+                // boxShadow: "2px 2px 2px #888888", // 行阴影
+                opacity: '80%', // 行透明度
+                height: "50px", // 行高
+                // spacing: "8px", // 表格行间距
             },
-            headerStyle: {
-                height: '80px',
-                background: '#666',
-                borderBottomWidth: '2px',
-                borderBottomColor:'red',
-                borderBottomStyle:'solid',
-                borderCollapse: 'separate',
-                borderSpacing: '5px'
+            headerStyles: {
+                height: "60px", // 表头高度
+                backgroundFill: "cyan", // 表头背景填充
+                dividerColor: "#d9d9d9", // 表头分割线颜色
+                dividerType: "solid", // 表头分割线类型
+                dividerStyle: "solid", // 表头分割线样式
+                dividerWidth: "1px", // 表头分割线宽度
+                textAlign: "center", // 表头文字对齐类型
+                textWeight: "bold", // 表头文字粗细类型
+                textColor: "#333333", // 表头文字颜色
+                textSize: "16px", // 表头文字大小
             },
-            headerCellStyle: {
-                borderWidth: '2px',
-                borderStyle: 'dotted',
-                borderColor: 'yellow',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                color: 'green',
-                horizontalAlignment:'right'
+            cellStyles: {
+                textAlign: "right", // 表格文字对齐类型
+                textWeight: "normal", // 表格文字粗细类型
+                textColor: "#666666", // 表格文字颜色
+                textSize: "14px", // 表格文字大小
             },
-            bodyStyle: {
-                borderCollapse: 'separate',
-                borderSpacing: '5px',
-            },
-            bodyTrStyle: {
-                background: 'transparent',
-                oddBackground: 'lightgreen',
-                evenBackground: 'transparent',
-                hoverBackground: 'red',
-                selectedBackground: 'green'
-            },
-            bodyCellStyle: {
-                borderWidth: '2px',
-                borderStyle: 'dotted',
-                borderColor: 'yellow',
-                borderRadius: '0px',
-                fontSize: '16px',
-                fontWeight: 'bold',
-                color: 'green',
-            }
+
         };
     }
 

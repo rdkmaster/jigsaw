@@ -153,6 +153,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         thead {
             tr {
                 height: 32px;
+                background: $bg-gray;
 
                 td {
                     .#{$jigsaw-table}-header-cell {
@@ -215,7 +216,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-header {
         position: absolute;
         top: 0;
-        background: $bg-gray;
         color: $font-color-default;
         font-weight: bold;
         z-index: $zindex-level-2;
