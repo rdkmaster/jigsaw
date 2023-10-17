@@ -12,8 +12,12 @@
                     [style.boxShadow]="styleOptions?.rowStyles?.boxShadow"
                     [style.opacity]="styleOptions?.rowStyles?.opacity"
                     [style.height]="styleOptions?.headerStyles?.height">
-                    <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index"
-                        class="{{head.clazz}}" [ngClass]="_$getHeaderClass(head)">
+                    <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index; first as first"
+                        class="{{head.clazz}}" [ngClass]="_$getHeaderClass(head)"
+                        [style.borderTop]="_$getTableCellBorder('header', 'top', first, last)"
+                        [style.borderBottom]="_$getTableCellBorder('header', 'bottom', first, last)"
+                        [style.borderLeft]="_$getTableCellBorder('header', 'left', first, last)"
+                        [style.borderRight]="_$getTableCellBorder('header', 'right', first, last)">
                         <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
@@ -54,13 +58,16 @@
                     (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$hoveredRow = rowIndex"
                     [style.background]="_$getRowBackground(rowIndex)" [style.height]="styleOptions?.rowStyles?.height"
                     [style.boxShadow]="styleOptions?.rowStyles?.boxShadow"
-                    [style.opacity]="styleOptions?.rowStyles?.opacity"
-                    [style.borderRadius]="styleOptions?.rowStyles?.borderRadius">
-                    <td *ngFor="let cell of row; index as tdIndex"
+                    [style.opacity]="styleOptions?.rowStyles?.opacity">
+                    <td *ngFor="let cell of row; index as tdIndex; first as first; last as last"
                         [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                         [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                         class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}"
-                        [ngClass]="_$getBodyClass(cell)" [style.border]="_$getTableCellBorder()">
+                        [ngClass]="_$getBodyClass(cell)" [style.border]="_$getTableCellBorder()"
+                        [style.borderTop]="_$getTableCellBorder('body', 'top', first, last)"
+                        [style.borderBottom]="_$getTableCellBorder('body', 'bottom', first, last)"
+                        [style.borderLeft]="_$getTableCellBorder('body', 'left', first, last)"
+                        [style.borderRight]="_$getTableCellBorder('body', 'right', first, last)">
                         <ng-container [ngSwitch]="cell.renderer">
                             <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
                                 <span class="jigsaw-table-cell-text"

@@ -88,7 +88,7 @@ export class TableSetStyleDemoComponent implements OnInit {
                 height: "60px", // 表头高度
                 backgroundFill: "cyan", // 表头背景填充
                 dividerColor: "#d9d9d9", // 表头分割线颜色
-                dividerType: "solid", // 表头分割线类型
+                dividerType: "none", // 表头分割线类型
                 dividerStyle: "solid", // 表头分割线样式
                 dividerWidth: "1px", // 表头分割线宽度
                 textAlign: "center", // 表头文字对齐类型

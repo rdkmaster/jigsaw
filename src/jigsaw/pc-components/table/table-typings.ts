@@ -521,7 +521,10 @@ export type TableCellStyle = {
 }
 
 // 无线框，所有线框，外侧线框，上下框线
-export type TableRowBorderType = 'none' | 'all' | 'outer' | 'TopBottom';
+export type TableRowBorderType = 'none' | 'all' | 'outer' | 'topBottom';
+
+// 无覆盖线框，所有覆盖线框，外侧线框，上下框线
+export type TabledividerType = 'none' | 'all' | 'outer' | 'bottom';
 
 // 正常，加粗
 export type TableTextWeight = 'normal' | 'bold';

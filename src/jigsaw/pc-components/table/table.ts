@@ -222,18 +222,73 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$getTableCellBorder(): string {
-        if (!this.styleOptions?.rowStyles?.borderType) {
-            return undefined;
+    public _$getTableCellBorder(type: string, pos: string, first: boolean, last: boolean): string {
+        const rowType = this.styleOptions.rowStyles.borderType;
+        const dividerType = this.styleOptions.headerStyles.dividerType;
+        const commonBorderStyle = '1px solid red';
+        const headerBorderStyle = '1px solid green';
+
+        if (type === 'header') {
+            if (dividerType === 'none') {
+                return commonBorderStyle;
+            } else if (dividerType === 'all') {
+                if (pos === 'bottom') {
+                    return headerBorderStyle;
+                } else {
+                    return headerBorderStyle;
+                }
+            } else if (dividerType === 'outer') {
+                if (pos === 'top' || pos === 'bottom') {
+                    return headerBorderStyle;
+                } else if (pos === 'left' && first) {
+                    return headerBorderStyle;
+                } else if (pos === 'right' && last) {
+                    return headerBorderStyle;
+                } else {
+                    return 'none';
+                }
+            } else if (dividerType === 'bottom') {
+                if (pos === 'bottom') {
+                    return headerBorderStyle;
+                } else {
+                    return commonBorderStyle;
+                }
+            }
+        } else if (type === 'body') {
+            if (rowType === 'none') {
+                return 'none';
+            } else if (rowType === 'all') {
+                return commonBorderStyle;
+            } else if (rowType === 'outer') {
+                if (pos === 'top' || pos === 'bottom') {
+                    return commonBorderStyle;
+                } else if (pos === 'left' && first) {
+                    return commonBorderStyle;
+                } else if (pos === 'right' && last) {
+                    return commonBorderStyle;
+                } else {
+                    return 'none';
+                }
+            } else if (rowType === 'topBottom') {
+                if (pos === 'top' || pos === 'bottom') {
+                    return commonBorderStyle;
+                } else {
+                    return 'none';
+                }
+            }
         }
-        if (this.styleOptions.rowStyles.borderType !== 'all') {
-            return 'none';
-        }
-        const width = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderWidth : "1px";
-        const style = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderStyle : "solid";
-        const color = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderColor : "var(--border-color-default)";
-        return `${width} ${style} ${color}`;
+        return '';
     }
+    // if (!this.styleOptions?.rowStyles?.borderType) {
+    //     return undefined;
+    // }
+    // if (this.styleOptions.rowStyles.borderType !== 'all') {
+    //     return 'none';
+    // }
+    // const width = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderWidth : "1px";
+    // const style = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderStyle : "solid";
+    // const color = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderColor : "var(--border-color-default)";
+    // return `${width} ${style} ${color}`;
 
     /**
      * @internal
