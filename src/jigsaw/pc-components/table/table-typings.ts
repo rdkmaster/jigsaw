@@ -484,25 +484,29 @@ export type TableStyleOptions = {
 }
 
 export type TableRowStyle = {
+    height?: string, // 行高
+    spacing?: string, // 表格行间距
     backgroundFill?: string, // 行背景填充
     oddBackgroundFill?: string, // 奇数行背景填充
     evenBackgroundFill?: string, // 偶数行背景填充
     hoverBackgroundFill?: string, // 行悬浮背景填充
     selectedBackgroundFill?: string, // 行选中背景填充
-    borderColor?: string, // 行边框颜色
     borderType?: TableRowBorderType, // 行边框类型
-    borderStyle?: string, // 行边框样式
     borderWidth?: string, // 行边框宽度
+    borderStyle?: string, // 行边框样式
+    borderColor?: string, // 行边框颜色
     borderRadius?: string, // 行边框圆角
-    boxShadow?: string, // 行阴影
     opacity?: string, // 行透明度
-    height?: string, // 行高
-    spacing?: string, // 表格行间距
+    boxShadow?: string, // 行阴影
 }
 
 export type TableHeaderStyle = {
     height?: string, // 表头高度
     backgroundFill?: string, // 表头背景填充
+    borderType?: TableRowBorderType, // 行边框类型
+    borderWidth?: string, // 行边框宽度
+    borderStyle?: string, // 行边框样式
+    borderColor?: string, // 行边框颜色
     dividerColor?: string, // 表头分割线颜色
     dividerType?: string, // 表头分割线类型
     dividerStyle?: string, // 表头分割线样式
@@ -531,3 +535,5 @@ export type TableTextWeight = 'normal' | 'bold';
 
 // 默认，左对齐，居中，右对齐
 export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
+
+export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';

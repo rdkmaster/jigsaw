@@ -35,7 +35,7 @@ import {
     TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions
+    TableHeadSetting, TableRowExpandOptions, TableBorderPosition
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -219,76 +219,78 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return this.styleOptions?.rowStyles?.spacing ? `0 ${this.styleOptions.rowStyles.spacing}` : 'unset';
     }
 
-    /**
+    /*
      * @internal
      */
-    public _$getTableCellBorder(type: string, pos: string, first: boolean, last: boolean): string {
-        const rowType = this.styleOptions.rowStyles.borderType;
-        const dividerType = this.styleOptions.headerStyles.dividerType;
-        const commonBorderStyle = '1px solid red';
-        const headerBorderStyle = '1px solid green';
-
-        if (type === 'header') {
-            if (dividerType === 'none') {
-                return commonBorderStyle;
-            } else if (dividerType === 'all') {
-                if (pos === 'bottom') {
-                    return headerBorderStyle;
-                } else {
-                    return headerBorderStyle;
-                }
-            } else if (dividerType === 'outer') {
-                if (pos === 'top' || pos === 'bottom') {
-                    return headerBorderStyle;
-                } else if (pos === 'left' && first) {
-                    return headerBorderStyle;
-                } else if (pos === 'right' && last) {
-                    return headerBorderStyle;
-                } else {
-                    return 'none';
-                }
-            } else if (dividerType === 'bottom') {
-                if (pos === 'bottom') {
-                    return headerBorderStyle;
-                } else {
-                    return commonBorderStyle;
-                }
-            }
-        } else if (type === 'body') {
-            if (rowType === 'none') {
-                return 'none';
-            } else if (rowType === 'all') {
-                return commonBorderStyle;
-            } else if (rowType === 'outer') {
-                if (pos === 'top' || pos === 'bottom') {
-                    return commonBorderStyle;
-                } else if (pos === 'left' && first) {
-                    return commonBorderStyle;
-                } else if (pos === 'right' && last) {
-                    return commonBorderStyle;
-                } else {
-                    return 'none';
-                }
-            } else if (rowType === 'topBottom') {
-                if (pos === 'top' || pos === 'bottom') {
-                    return commonBorderStyle;
-                } else {
-                    return 'none';
-                }
-            }
+    public _$getTableRowBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.rowStyles?.borderType;
+        if (!borderType) {
+            return undefined;
         }
-        return '';
+
+        const width = this.styleOptions?.rowStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.rowStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.rowStyles?.borderColor || "var(--border-color-default)";
+        const border = `${width} ${style} ${color}`;
+
+        const borderStyles = {
+            none: 'none',
+            all: border,
+            outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+            topBottom: pos == 'top' ? border : pos === 'bottom' ? border : 'none'
+        }
+        return borderStyles[borderType];
     }
-    // if (!this.styleOptions?.rowStyles?.borderType) {
-    //     return undefined;
-    // }
-    // if (this.styleOptions.rowStyles.borderType !== 'all') {
-    //     return 'none';
-    // }
-    // const width = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderWidth : "1px";
-    // const style = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderStyle : "solid";
-    // const color = this.styleOptions.rowStyles.borderWidth ? this.styleOptions.rowStyles.borderColor : "var(--border-color-default)";
-    // return `${width} ${style} ${color}`;
+
+    /*
+     * @internal
+     */
+    public _$getTableHeaderBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.headerStyles?.borderType;
+        if (!borderType) {
+            return undefined;
+        }
+        const dividerType = this.styleOptions?.headerStyles?.dividerType || 'none';
+
+        const width = this.styleOptions?.headerStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.headerStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.headerStyles?.borderColor || "var(--border-color-default)";
+        const border = `${width} ${style} ${color}`;
+
+        const dividerWidth = this.styleOptions?.headerStyles?.dividerWidth || width;
+        const dividerStyle = this.styleOptions?.headerStyles?.dividerStyle || width;
+        const dividerColor = this.styleOptions?.headerStyles?.dividerColor || width;
+        const divider = `${dividerWidth} ${dividerStyle} ${dividerColor}`;
+
+        const borderStyles = {
+            none: {
+                none: 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos === 'bottom' ? divider : 'none'
+            },
+            all: {
+                none: border,
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : border,
+                bottom: pos == 'bottom' ? divider : border
+            },
+            outer: {
+                none: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: (pos == 'top' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : pos == 'bottom' ? divider : 'none',
+            },
+            topBottom: {
+                none: pos == 'top' || pos === 'bottom' ? border : 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos == 'top' ? border : pos === 'bottom' ? divider : 'none'
+            }
+        };
+
+        return borderStyles[borderType][dividerType];
+    }
 
     /**
      * @internal

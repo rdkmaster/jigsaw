@@ -74,23 +74,27 @@ export class TableSetStyleDemoComponent implements OnInit {
                 evenBackgroundFill: "#ffffff", // 偶数行背景填充
                 hoverBackgroundFill: "#e6e6e6", // 行悬浮背景填充
                 selectedBackgroundFill: "#c6c6c6", // 行选中背景填充
-                borderColor: "green", // 行边框颜色
                 borderType: "all", // 行边框类型
-                borderStyle: "solid", // 行边框样式
                 borderWidth: "5px", // 行边框宽度
+                borderStyle: "solid", // 行边框样式
+                borderColor: "green", // 行边框颜色
                 borderRadius: "3px", // 行边框圆角
-                // boxShadow: "2px 2px 2px #888888", // 行阴影
+                boxShadow: "2px 2px 2px #888888", // 行阴影
                 opacity: '80%', // 行透明度
                 height: "50px", // 行高
-                // spacing: "8px", // 表格行间距
+                spacing: "8px", // 表格行间距
             },
             headerStyles: {
                 height: "60px", // 表头高度
                 backgroundFill: "cyan", // 表头背景填充
-                dividerColor: "#d9d9d9", // 表头分割线颜色
+                borderType: "all", // 行边框类型
+                borderWidth: "5px", // 行边框宽度
+                borderStyle: "solid", // 行边框样式
+                borderColor: "green", // 行边框颜色
                 dividerType: "none", // 表头分割线类型
-                dividerStyle: "solid", // 表头分割线样式
                 dividerWidth: "1px", // 表头分割线宽度
+                dividerStyle: "solid", // 表头分割线样式
+                dividerColor: "#d9d9d9", // 表头分割线颜色
                 textAlign: "center", // 表头文字对齐类型
                 textWeight: "bold", // 表头文字粗细类型
                 textColor: "#333333", // 表头文字颜色
