@@ -71,6 +71,10 @@ export class TemplateDrivenDemoComponent {
         }
     }
 
+    public searchKeywordChange() {
+        console.log("搜索框内容改变了")
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
