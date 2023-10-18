@@ -138,6 +138,12 @@ export class PopupOptions {
      * borderRadius表示弹框的边框颜色
      */
     borderColor?: string;
+    /**
+     * popupService会默认给弹框设置一个背景（除了默认皮肤），用来适配皮肤的风格，defaultBackgroundColor可以用来设置这个背景的颜色
+     * **注意**
+     * 目前该属性用作内部wings-theme给combo-select来做弹出背景色的配置，如果开放使用则去除此条注释
+     */
+    defaultBackgroundColor?: string;
 }
 
 export type AbsolutePosition =
@@ -363,7 +369,7 @@ export class PopupService {
             // 给弹出设置皮肤
             let tagName = element.tagName.toLowerCase();
             if ((!options || !options.useCustomizedBackground) && tagName != 'jigsaw-block' && tagName != 'j-block') {
-                const backgroundColor = this._themeService.popupBackgroundColor;
+                const backgroundColor = options.defaultBackgroundColor ? options.defaultBackgroundColor : this._themeService.popupBackgroundColor;
                 if (backgroundColor) {
                     InternalUtils.renderer.setStyle(element, 'background', backgroundColor);
                 }
