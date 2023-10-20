@@ -292,6 +292,17 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return borderStyles[borderType][dividerType];
     }
 
+    /*
+     * @internal
+     */
+    public _$getTableRowRadius(first: boolean, last: boolean) {
+        const radius = this.styleOptions?.rowStyles?.borderRadius;
+        if (!radius || (!first && !last)) {
+            return undefined;
+        }
+        return first ? `${radius} 0 0 ${radius}` : `0 ${radius} ${radius} 0`;
+    }
+
     /**
      * @internal
      */
@@ -323,7 +334,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     }
 
     public updateStyleOptions() {
-    
         this.resize();
         this._changeDetectorRef.detectChanges();
     }
