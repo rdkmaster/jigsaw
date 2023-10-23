@@ -7,8 +7,8 @@ import {TableData} from "jigsaw/public_api";
 })
 export class TableNoDataDemoComponent {
     tableData: TableData;
-
     tableData2: TableData;
+    tableData3: TableData;
 
     constructor() {
         this.tableData = new TableData(
@@ -109,6 +109,12 @@ export class TableNoDataDemoComponent {
             ],
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
+        this.tableData3 = new TableData(
+            [],
+            ["name", "position", "salary", "enroll-date", "office", "extn"],
+            ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
+
     }
 
     // ====================================================================

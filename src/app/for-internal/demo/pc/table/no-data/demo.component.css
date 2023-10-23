@@ -1,6 +1,6 @@
 .short-box {
     width: 100%;
-    height: 80px;
+    height: 100px;
 }
 
 .short-box .jigsaw-table-host {
@@ -9,7 +9,7 @@
 
 .tall-box {
     width: 100%;
-    height: 400px;
+    height: 300px;
 }
 
 .tall-box .jigsaw-table-host {

@@ -528,6 +528,13 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
+    public _$hideImg = false;
+
+    private _updateNoDataImgHide() {
+        this._$hideImg = this._bodyRange?.nativeElement?.offsetHeight < 96;
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -663,6 +670,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._selectRow(this.selectedRow);
             // 设置冻结列
             this._updateFrozenColumns();
+            // 根据高度设置无数据图片是否显示
+            this._updateNoDataImgHide();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -906,6 +915,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateFillUpBlankRow();
         this._updateAutoPageSizing();
         this._updateFrozenColumns();
+        this._updateNoDataImgHide();
     }
 
     private _tableHeaderElement: HTMLElement;
@@ -995,6 +1005,9 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
+
+    @ViewChild('contentScrollbar')
+    public _bodyRange: ElementRef;
 
     @ViewChild('headerScrollbar', { read: ElementRef })
     private _headerScrollbar: ElementRef;
