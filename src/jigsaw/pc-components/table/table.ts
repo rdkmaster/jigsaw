@@ -528,6 +528,15 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
+    /**
+     * @internal
+     */
+    @ViewChild('contentScrollbar')
+    public _bodyRange: ElementRef;
+
+    /**
+     * @internal
+     */
     public _$hideImg = false;
 
     private _updateNoDataImgHide() {
@@ -1005,9 +1014,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
 
     @ViewChild('contentScrollbar', {read: PerfectScrollbarDirective})
     public contentScrollbar: PerfectScrollbarDirective;
-
-    @ViewChild('contentScrollbar')
-    public _bodyRange: ElementRef;
 
     @ViewChild('headerScrollbar', { read: ElementRef })
     private _headerScrollbar: ElementRef;
