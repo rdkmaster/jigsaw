@@ -48,7 +48,8 @@ import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigs
                 [openTrigger]="to.openTrigger"
                 [closeTrigger]="to.closeTrigger"
                 [valid]="to.valid && !showError"
-                [autoWidth]="to.autoWidth">
+                [autoWidth]="to.autoWidth"
+                [theme]="to.theme">
                 <ng-template>
                     <jigsaw-cascade
                         [width]="to.width"
@@ -59,6 +60,7 @@ import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigs
                         [trackItemBy]="to.trackItemBy"
                         [searchable]="to.searchable"
                         [optionWidth]="to.optionWidth"
+                        [theme]="to.theme"
                         (selectedItemsChange)="_$selectItemsChange($event)">
                     </jigsaw-cascade>
                 </ng-template>

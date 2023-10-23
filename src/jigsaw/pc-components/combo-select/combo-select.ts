@@ -225,6 +225,25 @@ export class JigsawComboSelect extends AbstractJigsawComponent implements Contro
      */
     public _$options: PopupOptions = {};
 
+    protected _theme: 'light' | 'dark' | string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get theme(): 'light' | 'dark' | string {
+        return this._theme;
+    }
+
+    public set theme(theme: 'light' | 'dark' | string) {
+        this._wingsTheme(theme);
+        if (theme == 'light' || theme == 'dark') {
+            // 目前wings-theme只应用了paletx-pro的规范，故取paletx-pro-dark规范
+            this._$options.defaultBackgroundColor = theme == 'light' ? '#fff' : '#0f111a';
+            this._$options.borderColor = theme == 'light' ? 'var(--border-color-default)' : '#474a59';
+        }
+    }
+
     private _showBorder: boolean = true;
 
     /**

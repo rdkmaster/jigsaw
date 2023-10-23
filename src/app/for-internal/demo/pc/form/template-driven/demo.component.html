@@ -48,7 +48,7 @@
     <div class="field">
         <label>Come From</label>
         <jigsaw-select [(ngModel)]="comeFrom" name="comeFrom" placeholder="Where are you come from"
-                       width="250px" [optionCount]="5"
+                       width="250px" [optionCount]="5" [searchable]="true" [manualSearch]="true" (searchKeywordChange)="searchKeywordChange()"
                        [data]="[
                             {label: 'Bei Jing'}, {label: 'Shang Hai'}, {label: 'Nan Jing'}, {label: 'Shen Zhen'},
                             {label: 'Chang Sha'}, {label: 'Cheng Du'}, {label: 'Chong Qing'}, {label: 'Hong Kong'},
@@ -108,5 +108,3 @@
     <p>Submit the form, and the form value should be shown here:</p>
     <p>{{formValue|json}}</p>
 </div>
-
-
