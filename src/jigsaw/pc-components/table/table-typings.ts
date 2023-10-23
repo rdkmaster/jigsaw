@@ -484,56 +484,210 @@ export type TableStyleOptions = {
 }
 
 export type TableRowStyle = {
-    height?: string, // 行高
-    spacing?: string, // 表格行间距
-    backgroundFill?: string, // 行背景填充
-    oddBackgroundFill?: string, // 奇数行背景填充
-    evenBackgroundFill?: string, // 偶数行背景填充
-    hoverBackgroundFill?: string, // 行悬浮背景填充
-    selectedBackgroundFill?: string, // 行选中背景填充
-    borderType?: TableRowBorderType, // 行边框类型
-    borderWidth?: string, // 行边框宽度
-    borderStyle?: string, // 行边框样式
-    borderColor?: string, // 行边框颜色
-    borderRadius?: string, // 行边框圆角
-    opacity?: string, // 行透明度
-    boxShadow?: string, // 行阴影
+    /**
+     * 行高
+     */
+    height?: string,
+
+    /**
+     * 表格行间距
+     */
+    spacing?: string,
+
+    /**
+     * 行背景填充
+     */
+    backgroundFill?: string,
+
+    /**
+     * 奇数行背景填充
+     */
+    oddBackgroundFill?: string,
+
+    /**
+     * 偶数行背景填充
+     */
+    evenBackgroundFill?: string,
+
+    /**
+     * 行悬浮背景填充
+     */
+    hoverBackgroundFill?: string,
+
+    /**
+     * 行选中背景填充
+     */
+    selectedBackgroundFill?: string,
+
+    /**
+     * 行边框类型
+     */
+    borderType?: TableRowBorderType,
+
+    /**
+     * 行边框宽度
+     */
+    borderWidth?: string,
+
+    /**
+     * 行边框样式
+     */
+    borderStyle?: string,
+
+    /**
+     * 行边框颜色
+     */
+    borderColor?: string,
+
+    /**
+     * 行边框圆角
+     */
+    borderRadius?: string,
+
+    /**
+     * 行透明度
+     */
+    opacity?: string,
+
+    /**
+     * 行阴影
+     */
+    boxShadow?: string,
 }
 
 export type TableHeaderStyle = {
-    height?: string, // 表头高度
-    backgroundFill?: string, // 表头背景填充
-    borderType?: TableRowBorderType, // 行边框类型
-    borderWidth?: string, // 行边框宽度
-    borderStyle?: string, // 行边框样式
-    borderColor?: string, // 行边框颜色
-    dividerColor?: string, // 表头分割线颜色
-    dividerType?: string, // 表头分割线类型
-    dividerStyle?: string, // 表头分割线样式
-    dividerWidth?: string, // 表头分割线宽度
-    textAlign?: TableTextAlign, // 表头文字对齐类型
-    textWeight?: TableTextWeight, // 表头文字粗细类型
-    textColor?: string, // 表头文字颜色
-    textSize?: string, // 表头文字大小
+    /**
+     * 表头高度
+     */
+    height?: string,
+
+    /**
+     * 表头背景填充
+     */
+    backgroundFill?: string,
+
+    /**
+     * 行边框类型
+     */
+    borderType?: TableRowBorderType,
+
+    /**
+     * 行边框宽度
+     */
+    borderWidth?: string,
+
+    /**
+     * 行边框样式
+     */
+    borderStyle?: string,
+
+    /**
+     * 行边框颜色
+     */
+    borderColor?: string,
+
+    /**
+     * 表头分割线颜色
+     */
+    dividerColor?: string,
+
+    /**
+     * 表头分割线类型
+     */
+    dividerType?: string,
+
+    /**
+     * 表头分割线样式
+     */
+    dividerStyle?: string,
+
+    /**
+     * 表头分割线宽度
+     */
+    dividerWidth?: string,
+
+    /**
+     * 表头文字对齐类型
+     */
+    textAlign?: TableTextAlign,
+
+    /**
+     * 表头文字粗细类型
+     */
+    textWeight?: TableTextWeight,
+
+    /**
+     * 表头文字颜色
+     */
+    textColor?: string,
+
+    /**
+     * 表头文字大小
+     */
+    textSize?: string,
 }
 
 export type TableCellStyle = {
-    textAlign?: TableTextAlign, // 表格文字对齐类型
-    textWeight?: TableTextWeight, // 表格文字粗细类型
-    textColor?: string, // 表格文字颜色
-    textSize?: string, // 表格文字大小
+    /**
+     * 表格文字对齐类型
+     */
+    textAlign?: TableTextAlign,
+
+    /**
+     * 表格文字粗细类型
+     */
+    textWeight?: TableTextWeight,
+
+    /**
+     * 表格文字颜色
+     */
+    textColor?: string,
+
+    /**
+     * 表格文字大小
+     */
+    textSize?: string,
 }
 
-// 无线框，所有线框，外侧线框，上下框线
+/**
+ * 表示表格行边框类型的字符串字面值类型。
+ * - 'none' 表示无线框。
+ * - 'all' 表示所有线框。
+ * - 'outer' 表示外侧线框。
+ * - 'topBottom' 表示上下框线。
+ */
 export type TableRowBorderType = 'none' | 'all' | 'outer' | 'topBottom';
 
-// 无覆盖线框，所有覆盖线框，外侧线框，上下框线
-export type TabledividerType = 'none' | 'all' | 'outer' | 'bottom';
+/**
+ * 表示表头分割线类型的字符串字面值类型。
+ * - 'none' 表示无覆盖线框。
+ * - 'all' 表示所有覆盖线框。
+ * - 'outer' 表示外侧线框。
+ * - 'bottom' 表示底部分割线。
+ */
+export type TableDividerType = 'none' | 'all' | 'outer' | 'bottom';
 
-// 正常，加粗
+/**
+ * 表示表格文字粗细类型的字符串字面值类型。
+ * - 'normal' 表示正常文字。
+ * - 'bold' 表示加粗文字。
+ */
 export type TableTextWeight = 'normal' | 'bold';
 
-// 默认，左对齐，居中，右对齐
+/**
+ * 表示表格文字对齐类型的字符串字面值类型。
+ * - 'default' 表示默认对齐方式。
+ * - 'left' 表示左对齐。
+ * - 'center' 表示居中对齐。
+ * - 'right' 表示右对齐。
+ */
 export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
 
+/**
+ * 表示表格边框的位置的字符串字面值类型。
+ * - 'top' 表示上边框。
+ * - 'bottom' 表示下边框。
+ * - 'left' 表示左边框。
+ * - 'right' 表示右边框。
+ */
 export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';

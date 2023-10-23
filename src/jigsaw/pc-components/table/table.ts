@@ -250,8 +250,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         if (!borderType) {
             return undefined;
         }
-        const dividerType = this.styleOptions?.headerStyles?.dividerType || 'none';
 
+        const dividerType = this.styleOptions?.headerStyles?.dividerType || 'none';
         const width = this.styleOptions?.headerStyles?.borderWidth || "1px";
         const style = this.styleOptions?.headerStyles?.borderStyle || "solid";
         const color = this.styleOptions?.headerStyles?.borderColor || "var(--border-color-default)";
