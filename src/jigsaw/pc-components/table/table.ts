@@ -532,7 +532,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      * @internal
      */
     @ViewChild('contentScrollbar')
-    public _bodyRange: ElementRef;
+    private _bodyRange: ElementRef;
 
     /**
      * @internal
