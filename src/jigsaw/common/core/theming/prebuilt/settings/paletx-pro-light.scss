@@ -220,7 +220,7 @@ $status-error: $red-6;
 /*@public*/ $bg-active: $blue-2;
 $bg-transparent: transparent;
 $bg-popup: $gray-1;
-$bg-gray: $gray-3;
+/*@public*/ $bg-gray: $gray-3;
 $bg-gray-spec: $gray-1;
 $bg-scrollbar: $gray-3;
 $bg-scrollbar-lighten: $gray-7;

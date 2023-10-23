@@ -1,23 +1,23 @@
-import {TemplateRef, Type, EventEmitter} from "@angular/core";
+import { TemplateRef, Type, EventEmitter } from "@angular/core";
 import {
     BigTableData,
     LocalPageableTableData,
     PageableTableData, RawTableData,
     TableData
 } from "../../common/core/data/table-data";
-import {SortAs, SortOrder} from "../../common/core/data/component-data";
-import {CommonUtils} from "../../common/core/utils/common-utils";
-import {TableCellRendererBase} from "./table-renderer";
+import { SortAs, SortOrder } from "../../common/core/data/component-data";
+import { CommonUtils } from "../../common/core/utils/common-utils";
+import { TableCellRendererBase } from "./table-renderer";
 
 export type TableColumnTarget = number | string | (number | string)[];
 export type ColumnDefineGenerator = (field: string, index: number) => ColumnDefine;
 export type TableCellDataGenerator = (tableData: TableData,
-                                      row: number,
-                                      column: number,
-                                      additionalData: AdditionalTableData) => any;
+    row: number,
+    column: number,
+    additionalData: AdditionalTableData) => any;
 export type TableHeaderDataGenerator = (tableData: TableData,
-                                      column: number,
-                                      additionalData: AdditionalTableData) => any;
+    column: number,
+    additionalData: AdditionalTableData) => any;
 
 export class TableValueGenerators {
     public static rowIndexGenerator(tableData: TableData, row: number): any {
@@ -83,7 +83,7 @@ export class TableHeader {
     filterable?: boolean;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
-    alignment?: 'left' | 'center' | 'right';
+    alignment?: 'default' | 'left' | 'center' | 'right';
     noPadding?: boolean;
 }
 
@@ -98,7 +98,7 @@ export class TableCell {
     data?: any | TableCellDataGenerator;
     tooltip?: any;
     innerHtmlContext?: any;
-    alignment?: 'left' | 'center' | 'right';
+    alignment?: 'default' | 'left' | 'center' | 'right';
     noPadding?: boolean;
 }
 
@@ -116,7 +116,7 @@ export class TableHeadSetting {
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;
-    alignment: 'left' | 'center' | 'right';
+    alignment: 'default' | 'left' | 'center' | 'right';
     noPadding: boolean;
 }
 
@@ -136,7 +136,7 @@ export class TableCellSetting {
     rowSpan: number;
     tooltip: any;
     innerHtmlContext: any;
-    alignment: 'left' | 'center' | 'right';
+    alignment: 'default' | 'left' | 'center' | 'right';
     noPadding: boolean;
 }
 
@@ -175,7 +175,7 @@ export class TouchedValue {
 }
 export class AdditionalTableData extends TableData {
 
-	public change = new EventEmitter();
+    public change = new EventEmitter();
 
     /**
      * 这个属性的值与`JigsawTable.trackRowBy`的值是相等的，关于这个属性的作用，
@@ -475,84 +475,219 @@ export class AdditionalTableData extends TableData {
     }
 }
 
-export type TableRowExpandOptions = {action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean};
+export type TableRowExpandOptions = { action?: 'toggle' | 'show' | 'hide', remainOpenAfterDataChanges?: boolean };
 
 export type TableStyleOptions = {
-    hostStyle?: TableHostStyle,
-    headerStyle?: TableHeaderStyle,
-    headerCellStyle?: TableHeaderCellStyle,
-    bodyStyle?: TableBodyStyle,
-    bodyTrStyle?: TableBodyTrStyle,
-    bodyCellStyle?: TableBodyCellStyle,
-    otherStyle?: TableOtherStyle
+    rowStyles?: TableRowStyle,
+    headerStyles?: TableHeaderStyle,
+    cellStyles?: TableCellStyle
 }
 
-export type TableHostStyle = {
-    background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
+export type TableRowStyle = {
+    /**
+     * 行高
+     */
+    height?: string,
+
+    /**
+     * 表格行间距
+     */
+    spacing?: string,
+
+    /**
+     * 行背景填充
+     */
+    backgroundFill?: string,
+
+    /**
+     * 奇数行背景填充
+     */
+    oddBackgroundFill?: string,
+
+    /**
+     * 偶数行背景填充
+     */
+    evenBackgroundFill?: string,
+
+    /**
+     * 行悬浮背景填充
+     */
+    hoverBackgroundFill?: string,
+
+    /**
+     * 行选中背景填充
+     */
+    selectedBackgroundFill?: string,
+
+    /**
+     * 行边框类型
+     */
+    borderType?: TableRowBorderType,
+
+    /**
+     * 行边框宽度
+     */
     borderWidth?: string,
+
+    /**
+     * 行边框样式
+     */
     borderStyle?: string,
+
+    /**
+     * 行边框颜色
+     */
     borderColor?: string,
+
+    /**
+     * 行边框圆角
+     */
     borderRadius?: string,
-    boxShadow?: string,
+
+    /**
+     * 行透明度
+     */
     opacity?: string,
+
+    /**
+     * 行阴影
+     */
+    boxShadow?: string,
 }
 
 export type TableHeaderStyle = {
+    /**
+     * 表头高度
+     */
     height?: string,
-    background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
-    borderBottomWidth?: string,
-    borderBottomColor?: string,
-    borderBottomStyle?: string,
-    borderBottomLeftRadius?: string,
-    borderBottomRightRadius?: string,
-    borderCollapse?: string,
-    borderSpacing?: string
-}
 
-export type TableHeaderCellStyle = {
+    /**
+     * 表头背景填充
+     */
+    backgroundFill?: string,
+
+    /**
+     * 行边框类型
+     */
+    borderType?: TableRowBorderType,
+
+    /**
+     * 行边框宽度
+     */
     borderWidth?: string,
+
+    /**
+     * 行边框样式
+     */
     borderStyle?: string,
+
+    /**
+     * 行边框颜色
+     */
     borderColor?: string,
-    borderRadius?: string,
-    fontSize?: string,
-    fontWeight?: string,
-    color?: string
+
+    /**
+     * 表头分割线颜色
+     */
+    dividerColor?: string,
+
+    /**
+     * 表头分割线类型
+     */
+    dividerType?: string,
+
+    /**
+     * 表头分割线样式
+     */
+    dividerStyle?: string,
+
+    /**
+     * 表头分割线宽度
+     */
+    dividerWidth?: string,
+
+    /**
+     * 表头文字对齐类型
+     */
+    textAlign?: TableTextAlign,
+
+    /**
+     * 表头文字粗细类型
+     */
+    textWeight?: TableTextWeight,
+
+    /**
+     * 表头文字颜色
+     */
+    textColor?: string,
+
+    /**
+     * 表头文字大小
+     */
+    textSize?: string,
 }
 
-export type TableBodyStyle = {
-    background?: string,
-    backgroundSize?: string,
-    backgroundPosition?: string,
-    backgroundRepeat?: string,
-    borderCollapse?: string,
-    borderSpacing?: string,
+export type TableCellStyle = {
+    /**
+     * 表格文字对齐类型
+     */
+    textAlign?: TableTextAlign,
+
+    /**
+     * 表格文字粗细类型
+     */
+    textWeight?: TableTextWeight,
+
+    /**
+     * 表格文字颜色
+     */
+    textColor?: string,
+
+    /**
+     * 表格文字大小
+     */
+    textSize?: string,
 }
 
-export type TableBodyTrStyle = {
-    background?: string,
-    oddBackground?: string,
-    evenBackground?: string,
-    hoverBackground?: string,
-    selectedBackground?: string
-}
+/**
+ * 表示表格行边框类型的字符串字面值类型。
+ * - 'none' 表示无线框。
+ * - 'all' 表示所有线框。
+ * - 'outer' 表示外侧线框。
+ * - 'topBottom' 表示上下框线。
+ */
+export type TableRowBorderType = 'none' | 'all' | 'outer' | 'topBottom';
 
-export type TableBodyCellStyle = {
-    borderWidth?: string,
-    borderStyle?: string,
-    borderColor?: string,
-    borderRadius?: string,
-    fontSize?: string,
-    fontWeight?: string,
-    color?: string
-}
+/**
+ * 表示表头分割线类型的字符串字面值类型。
+ * - 'none' 表示无覆盖线框。
+ * - 'all' 表示所有覆盖线框。
+ * - 'outer' 表示外侧线框。
+ * - 'bottom' 表示底部分割线。
+ */
+export type TableDividerType = 'none' | 'all' | 'outer' | 'bottom';
 
-export type TableOtherStyle = {
-    visibility?: string,
-    display?: string,
-}
+/**
+ * 表示表格文字粗细类型的字符串字面值类型。
+ * - 'normal' 表示正常文字。
+ * - 'bold' 表示加粗文字。
+ */
+export type TableTextWeight = 'normal' | 'bold';
+
+/**
+ * 表示表格文字对齐类型的字符串字面值类型。
+ * - 'default' 表示默认对齐方式。
+ * - 'left' 表示左对齐。
+ * - 'center' 表示居中对齐。
+ * - 'right' 表示右对齐。
+ */
+export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
+
+/**
+ * 表示表格边框的位置的字符串字面值类型。
+ * - 'top' 表示上边框。
+ * - 'bottom' 表示下边框。
+ * - 'left' 表示左边框。
+ * - 'right' 表示右边框。
+ */
+export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';

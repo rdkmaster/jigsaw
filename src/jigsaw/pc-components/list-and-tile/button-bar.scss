@@ -52,11 +52,16 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
                 overflow: hidden;
             }
 
+            &.#{jigsaw-button-bar}-no-min-width {
+                min-width: unset;
+            }
+
             .iconfont {
                 margin-right: 3px;
 
                 &.jigsaw-button-bar-icon-only {
                     margin-left: 3px;
+                    font-size: $font-size-lg;
                 }
             }
         }

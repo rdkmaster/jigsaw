@@ -35,7 +35,7 @@ import {
     TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions
+    TableHeadSetting, TableRowExpandOptions, TableBorderPosition
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -61,18 +61,6 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
-        '[style.background]': 'styleOptions?.hostStyle?.background',
-        '[style.backgroundSize]':'styleOptions?.hostStyle?.backgroundSize',
-        '[style.backgroundPosition]':'styleOptions?.hostStyle?.backgroundPosition',
-        '[style.backgroundRepeat]':'styleOptions?.hostStyle?.backgroundRepeat',
-        '[style.borderWidth]':'styleOptions?.hostStyle?.borderWidth',
-        '[style.borderStyle]':'styleOptions?.hostStyle?.borderStyle',
-        '[style.borderColor]':'styleOptions?.hostStyle?.borderColor',
-        '[style.borderRadius]':'styleOptions?.hostStyle?.borderRadius',
-        '[style.boxShadow]':'styleOptions?.hostStyle?.boxShadow',
-        '[style.opacity]':'styleOptions?.hostStyle?.opacity',
-        '[style.visibility]':'styleOptions?.otherStyle?.visibility',
-        '[style.display]':'styleOptions?.otherStyle?.display',
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-table-host]': 'true',
         '[class.jigsaw-table-ff]': '_$isFFBrowser',
@@ -201,26 +189,155 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$getTrStyle(index: number): {background: string} {
+    public _$getRowBackground(index: number): string {
         let background;
         if (index == this.selectedRow) {
-            background = this.styleOptions?.bodyTrStyle?.selectedBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--brand-active-lighten)';
+            background = this.styleOptions?.rowStyles?.selectedBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--brand-active-lighten)';
         } else if (index == this._$hoveredRow) {
-            background = this.styleOptions?.bodyTrStyle?.hoverBackground || this.styleOptions?.bodyTrStyle?.background || 'var(--bg-hover)';
+            background = this.styleOptions?.rowStyles?.hoverBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--bg-hover)';
         } else if (index % 2 === 0) {
-            background = this.styleOptions?.bodyTrStyle?.evenBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+            background = this.styleOptions?.rowStyles?.oddBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
         } else if (index % 2 === 1) {
-            background = this.styleOptions?.bodyTrStyle?.oddBackground || this.styleOptions?.bodyTrStyle?.background || 'unset';
+            background = this.styleOptions?.rowStyles?.evenBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
         } else {
+            return 'unset';
+        }
+        return background;
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderCollapse(): string {
+        return this.styleOptions?.rowStyles?.spacing ? 'separate' : 'collapse';
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderSpacing(): string {
+        return this.styleOptions?.rowStyles?.spacing ? `0 ${this.styleOptions.rowStyles.spacing}` : 'unset';
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableRowBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.rowStyles?.borderType;
+        if (!borderType) {
             return undefined;
         }
-        return {background};
+
+        const width = this.styleOptions?.rowStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.rowStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.rowStyles?.borderColor || "var(--border-color-default)";
+        const border = `${width} ${style} ${color}`;
+
+        const borderStyles = {
+            none: 'none',
+            all: border,
+            outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+            topBottom: pos == 'top' ? border : pos === 'bottom' ? border : 'none'
+        }
+        return borderStyles[borderType];
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableHeaderBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.headerStyles?.borderType;
+        if (!borderType) {
+            return undefined;
+        }
+
+        const dividerType = this.styleOptions?.headerStyles?.dividerType || 'none';
+        const width = this.styleOptions?.headerStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.headerStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.headerStyles?.borderColor || "var(--border-color-default)";
+        const border = `${width} ${style} ${color}`;
+
+        const dividerWidth = this.styleOptions?.headerStyles?.dividerWidth || width;
+        const dividerStyle = this.styleOptions?.headerStyles?.dividerStyle || width;
+        const dividerColor = this.styleOptions?.headerStyles?.dividerColor || width;
+        const divider = `${dividerWidth} ${dividerStyle} ${dividerColor}`;
+
+        const borderStyles = {
+            none: {
+                none: 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos === 'bottom' ? divider : 'none'
+            },
+            all: {
+                none: border,
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : border,
+                bottom: pos == 'bottom' ? divider : border
+            },
+            outer: {
+                none: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: (pos == 'top' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : pos == 'bottom' ? divider : 'none',
+            },
+            topBottom: {
+                none: pos == 'top' || pos === 'bottom' ? border : 'none',
+                all: divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos == 'top' ? border : pos === 'bottom' ? divider : 'none'
+            }
+        };
+
+        return borderStyles[borderType][dividerType];
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableRowRadius(first: boolean, last: boolean) {
+        const radius = this.styleOptions?.rowStyles?.borderRadius;
+        if (!radius || (!first && !last)) {
+            return undefined;
+        }
+        return first ? `${radius} 0 0 ${radius}` : `0 ${radius} ${radius} 0`;
+    }
+
+    /**
+     * @internal
+     */
+    public _$getHeaderClass(head: TableHeadSetting) {
+        const alignment = head.alignment == 'default' && this.styleOptions?.headerStyles?.textAlign ?
+            this.styleOptions?.headerStyles?.textAlign : head.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': head.noPadding
+        };
+    }
+
+    /**
+     * @internal
+     */
+    public _$getBodyClass(cell: TableCellSetting) {
+        const alignment = cell.alignment == 'default' && this.styleOptions?.cellStyles?.textAlign ?
+            this.styleOptions?.cellStyles?.textAlign : cell.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': cell.noPadding
+        };
     }
 
     public updateStyleOptions() {
         this.resize();
         this._changeDetectorRef.detectChanges();
     }
+
 
     /**
      * @NoMarkForCheckRequired

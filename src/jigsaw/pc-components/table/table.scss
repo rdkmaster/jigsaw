@@ -57,6 +57,19 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
                     display: block;
                 }
+                
+                &.jigsaw-cell-align-default {
+
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-start;
+                        text-align: left;
+
+                        ng-component {
+                            justify-content: flex-start;
+                        }
+                    }
+                }
 
                 &.jigsaw-cell-align-left {
 
@@ -140,6 +153,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         thead {
             tr {
                 height: 32px;
+                background: $bg-gray;
 
                 td {
                     .#{$jigsaw-table}-header-cell {
@@ -202,7 +216,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-header {
         position: absolute;
         top: 0;
-        background: $bg-gray;
         color: $font-color-default;
         font-weight: bold;
         z-index: $zindex-level-2;
