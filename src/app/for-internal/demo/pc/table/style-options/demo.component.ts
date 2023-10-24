@@ -86,25 +86,27 @@ export class TableSetStyleDemoComponent implements OnInit {
             },
             headerStyles: {
                 height: "60px", // 表头高度
-                backgroundFill: "cyan", // 表头背景填充
+                backgroundFill: "cyan", // 表头背景填充s
                 borderType: "all", // 行边框类型
                 borderWidth: "5px", // 行边框宽度
                 borderStyle: "solid", // 行边框样式
                 borderColor: "green", // 行边框颜色
                 dividerType: "none", // 表头分割线类型
-                dividerWidth: "1px", // 表头分割线宽度
+                dividerWidth: "5px", // 表头分割线宽度
                 dividerStyle: "solid", // 表头分割线样式
-                dividerColor: "#d9d9d9", // 表头分割线颜色
+                dividerColor: "purple", // 表头分割线颜色
                 textAlign: "center", // 表头文字对齐类型
                 textWeight: "bold", // 表头文字粗细类型
                 textColor: "#333333", // 表头文字颜色
                 textSize: "16px", // 表头文字大小
+                textStyle: "italic", // 表头文字样式
             },
             cellStyles: {
                 textAlign: "right", // 表格文字对齐类型
                 textWeight: "normal", // 表格文字粗细类型
                 textColor: "#666666", // 表格文字颜色
                 textSize: "14px", // 表格文字大小
+                textStyle: "italic", // 表格文字样式
             },
 
         };

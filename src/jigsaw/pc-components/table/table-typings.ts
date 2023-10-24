@@ -617,6 +617,11 @@ export type TableHeaderStyle = {
     textWeight?: TableTextWeight,
 
     /**
+     * 表头文字样式类型
+     */
+    textStyle?: TableTextStyle,
+
+    /**
      * 表头文字颜色
      */
     textColor?: string,
@@ -637,6 +642,11 @@ export type TableCellStyle = {
      * 表格文字粗细类型
      */
     textWeight?: TableTextWeight,
+
+    /**
+     * 表格文字样式类型
+     */
+    textStyle?: TableTextStyle,
 
     /**
      * 表格文字颜色
@@ -673,6 +683,13 @@ export type TableDividerType = 'none' | 'all' | 'outer' | 'bottom';
  * - 'bold' 表示加粗文字。
  */
 export type TableTextWeight = 'normal' | 'bold';
+
+/**
+ * 表示表格文字样式类型的字符串字面值类型。
+ * - 'normal' 表示正常文字。
+ * - 'italic' 表示斜体文字。
+ */
+export type TableTextStyle = 'normal' | 'italic';
 
 /**
  * 表示表格文字对齐类型的字符串字面值类型。

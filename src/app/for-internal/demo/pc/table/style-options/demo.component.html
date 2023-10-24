@@ -180,6 +180,13 @@
             <span>表头文字大小</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.headerStyles.textSize"></jigsaw-input>
         </li>
+        <li class="demo-options-item">
+            <span>表头文字样式</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.headerStyles.textStyle"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.headerStyles.textStyle = 'normal'">
+                normal
+            </jigsaw-button>
+        </li>
     </ul>
     <jigsaw-header>表格单元格样式</jigsaw-header>
     <ul class="demo-options">
@@ -198,6 +205,13 @@
         <li class="demo-options-item">
             <span>表格文字大小</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.cellStyles.textSize"></jigsaw-input>
+        </li>
+        <li class="demo-options-item">
+            <span>表格文字样式</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.cellStyles.textStyle"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.cellStyles.textStyle = 'normal'">
+                normal
+            </jigsaw-button>
         </li>
     </ul>
 </div>
