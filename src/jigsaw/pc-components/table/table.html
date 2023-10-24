@@ -1,8 +1,8 @@
 <div #tableRange class="jigsaw-table-range" [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
     <div #headerScrollbar class="jigsaw-table-header-range">
         <table class="jigsaw-table-header" [hidden]="hideHeader || !_$headerSettings.length"
-            [style.color]="styleOptions?.headerStyles?.textColor"
-            [style.fontSize]="styleOptions?.headerStyles?.textSize"
+            [style.color]="styleOptions?.headerStyles?.textColor" [style.fontStyle]="styleOptions?.headerStyles?.textStyle"
+            [style.fontSize]="styleOptions?.headerStyles?.textSize" [style.borderCollapse]="_$getTableBorderCollapse()"
             [style.fontWeight]="styleOptions?.headerStyles?.textWeight">
             <colgroup>
                 <col #tableHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
@@ -42,7 +42,7 @@
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
             [style.borderSpacing]="_$getTableBorderSpacing()" [style.color]="styleOptions?.cellStyles?.textColor"
-            [style.fontSize]="styleOptions?.cellStyles?.textSize"
+            [style.fontSize]="styleOptions?.cellStyles?.textSize" [style.fontStyle]="styleOptions?.cellStyles?.textStyle"
             [style.fontWeight]="styleOptions?.cellStyles?.textWeight">
             <colgroup>
                 <col #tableBodyHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
