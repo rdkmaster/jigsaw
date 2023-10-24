@@ -106,7 +106,7 @@ export class TableSetStyleDemoComponent implements OnInit {
                 textWeight: "normal", // 表格文字粗细类型
                 textColor: "#666666", // 表格文字颜色
                 textSize: "14px", // 表格文字大小
-                textStyle: "italic", // 表头文字样式
+                textStyle: "italic", // 表格文字样式
             },
 
         };
