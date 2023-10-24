@@ -537,7 +537,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$hideImg = false;
+    public _$hideImg: boolean = false;
 
     private _updateNoDataImgHide() {
         this._$hideImg = this._bodyRange?.nativeElement?.offsetHeight < 96;
