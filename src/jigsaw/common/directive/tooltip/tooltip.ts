@@ -16,7 +16,7 @@ import {CommonUtils} from "../../core/utils/common-utils";
 import { CommonModule } from '@angular/common';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
-export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any, theme?:'light' | 'dark'};
+export type TooltipInitData = { tooltip?: string, renderAs?: TooltipRenderAs, context?: any, theme?: 'light' | 'dark', breakWord?: boolean };
 export type TooltipRenderAs = 'plain-text' | 'html';
 
 /**
@@ -26,7 +26,8 @@ export type TooltipRenderAs = 'plain-text' | 'html';
     template: `
         <div class="jigsaw-tooltip" [style.display]="tooltip ? 'block' : 'none'"
             [ngClass]="{'jigsaw-tooltip-light':initData?.theme == 'light',
-                        'jigsaw-tooltip-dark':initData?.theme == 'dark'}">
+                        'jigsaw-tooltip-dark':initData?.theme == 'dark'
+                        'jigsaw-tooltip-break-word':initData?.breakWord}">
             <div [trustedHtml]="_$tooltip" [trustedHtmlContext]="initData?.context"
                  [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}">
             </div>
@@ -131,6 +132,18 @@ export class JigsawTooltip extends JigsawFloatBase {
             this.jigsawFloatOptions.borderColor = '#e5e5e5';
             this.jigsawFloatInitData.theme = 'light';
         }
+    }
+
+    private _breakWord: boolean;
+
+    @Input()
+    public get jigsawTooltipBreakWord(): boolean {
+        return this._breakWord;
+    }
+
+    public set jigsawTooltipBreakWord(value: boolean) {
+        this._breakWord = value;
+        this.jigsawFloatInitData.breakWord = value;
     }
 
     /**
