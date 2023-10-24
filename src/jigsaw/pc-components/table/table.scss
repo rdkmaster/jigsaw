@@ -242,7 +242,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         height: 100%;
 
         &.#{$jigsaw-table}-no-data {
-            height: 160px;
             border: 1px solid $border-color-default;
         }
 
