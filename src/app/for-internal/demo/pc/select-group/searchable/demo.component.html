@@ -3,6 +3,15 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
+<div class="demo-options-cntr">
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>搜索框占位文本</span>
+            <jigsaw-input [(value)]="searchPlaceholder"></jigsaw-input>
+        </li>
+    </ul>
+</div>
+
 <jigsaw-header>searchable</jigsaw-header>
-<jigsaw-group-select [data]="cityList" placeholder="请选择城市" [searchable]="true">
+<jigsaw-group-select [data]="cityList" placeholder="请选择城市" [searchable]="true" [searchPlaceholder]="searchPlaceholder">
 </jigsaw-group-select>

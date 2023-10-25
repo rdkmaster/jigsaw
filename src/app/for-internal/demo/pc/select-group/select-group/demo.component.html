@@ -2,8 +2,21 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"></jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-checkbox [(checked)]="disabled">是否禁止访问</jigsaw-checkbox>
-<jigsaw-checkbox [(checked)]="valid">是否有效</jigsaw-checkbox>
+<div class="demo-options-cntr">
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>全选时显示文本</span>
+            <jigsaw-input [(value)]="selectAllText"></jigsaw-input>
+        </li>
+    </ul>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>状态配置</span>
+            <jigsaw-checkbox [(checked)]="disabled">是否禁止访问</jigsaw-checkbox>
+            <jigsaw-checkbox [(checked)]="valid">是否有效</jigsaw-checkbox>
+        </li>
+    </ul>
+</div>
 
 <jigsaw-header>分组下拉（单选）</jigsaw-header>
 <jigsaw-group-select [disabled]="disabled" [valid]="valid" [data]="dataListWithoutDisabled"
@@ -22,13 +35,14 @@
     [valid]="valid"
     [data]="dataListWithoutDisabled"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="160px"
     optionCount="6"
     [useStatistics]="true"
     (valueChange)="valueChange($event)"
 ></jigsaw-group-select>
-<jigsaw-group-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true" [useStatistics]="true"
+<jigsaw-group-select [disabled]="disabled" [valid]="valid" [data]="dataList" [multipleSelect]="true" [selectAllText]="selectAllText" [useStatistics]="true"
                      placeholder="请选择" width="160px" optionWidth="320px" (valueChange)="valueChange($event)">
 </jigsaw-group-select>
 
@@ -38,6 +52,7 @@
     [valid]="valid"
     [data]="dataListWithoutDisabled"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     [useStatistics]="false"
     placeholder="请选择"
     width="160px"
@@ -49,6 +64,7 @@
     [valid]="valid"
     [data]="dataList"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     [useStatistics]="false"
     placeholder="请选择"
     width="160px"
@@ -63,6 +79,7 @@
     [data]="dataListWithoutDisabled"
     [value]="selectedOption"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="160px"
     maxHeight="32px"
@@ -75,6 +92,7 @@
     [valid]="valid"
     [data]="dataListWithoutDisabled"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="160px"
     maxHeight="58px"
@@ -89,6 +107,7 @@
     [valid]="valid"
     [data]="dataList"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="240px"
     (valueChange)="valueChange($event)"
@@ -98,6 +117,7 @@
     [valid]="valid"
     [data]="dataList"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     [useStatistics]="false"
     placeholder="请选择"
     minWidth="150px"
@@ -112,6 +132,7 @@
     [data]="dataListWithoutDisabled"
     [value]="fullSelectedOption"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
@@ -123,6 +144,7 @@
     [data]="dataListWithoutDisabled"
     [value]="selectedOption"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
@@ -141,6 +163,7 @@
     [disabled]="disabled"
     [valid]="valid"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="无数据（多选）"
     width="130px"
 ></jigsaw-group-select>
@@ -169,6 +192,7 @@
             { groupName: '分组标题3', data: [{ label: '文本选项1', disabled: true }, { label: '文本选项2', disabled: true }] }
         ]"
     [multipleSelect]="true"
+    [selectAllText]="selectAllText"
     placeholder="普通JSON对象"
     width="130px"
     [useStatistics]="true"

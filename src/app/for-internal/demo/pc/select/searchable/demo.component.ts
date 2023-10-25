@@ -7,8 +7,11 @@ import {
 
 @Component({
     templateUrl: './demo.component.html',
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class SelectSearchableDemoComponent {
+    public searchPlaceholder: string;
+
     selectedCityForSelect: any;
     cityListForSelect = new ArrayCollection([
         {label: "北京"},

@@ -13,7 +13,7 @@
                     'jigsaw-select-single-list': !multipleSelect}"
             [attr.data-theme]="theme">
             <jigsaw-search-input *ngIf="searchable" [theme]="theme" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
-                [searchDebounce]="manualSearch ? searchDebounce : 'none'">
+                [searchDebounce]="manualSearch ? searchDebounce : 'none'" [placeholder]="searchPlaceholder">
             </jigsaw-search-input>
             <div *ngIf="!data || data.length === 0" class="jigsaw-select-no-data">
                 <p *ngIf="!data || !data['busy']">{{'select.noData' | translate}}</p>
@@ -74,7 +74,7 @@
         </div>
     </ng-template>
     <div *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
-        {{'select.allSelected' | translate}}
+        {{_$selectAllText}}
     </div>
     <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}

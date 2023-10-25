@@ -23,7 +23,7 @@
         <!-- 这里用一个div来控制弹出列表的宽度，否则Jigsaw-List自带300px的宽度，只要不设置optionWidth，每次在初始计算position时，获取的宽度都是300px -->
         <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
             <jigsaw-search-input *ngIf="searchable" [theme]="theme" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
-                [searchDebounce]="manualSearch ? searchDebounce : 'none'">
+                [searchDebounce]="manualSearch ? searchDebounce : 'none'" [placeholder]="searchPlaceholder">
             </jigsaw-search-input>
             <jigsaw-list #contentList width="100%"
                          [ngClass]="{
@@ -81,7 +81,7 @@
         </div>
     </ng-template>
     <div  *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
-        {{'select.allSelected' | translate}}
+        {{_$selectAllText}}
     </div>
     <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}
