@@ -14,6 +14,8 @@ import { TooltipThemeDemoComponent } from './theme/demo.component';
 import { TooltipThemeDemoModule } from './theme/demo.module';
 import { TooltipScenesDemoComponent } from './scenes/demo.component';
 import { TooltipScenesDemoModule } from './scenes/demo.module';
+import { TooltipWordBreakDemoComponent } from "./word-break/demo.component";
+import { TooltipWordBreakDemoModule } from "./word-break/demo.module";
 
 export const routerConfig = [
     {
@@ -33,13 +35,16 @@ export const routerConfig = [
     },
     {
         path: 'scenes', component: TooltipScenesDemoComponent
+    },
+    {
+        path: 'word-break', component: TooltipWordBreakDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), TooltipBasicDemoModule, TooltipHtmlDemoModule, MovingTooltipDemoModule,
-        TooltipTriggerDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule
+        TooltipTriggerDemoModule, TooltipThemeDemoModule, TooltipScenesDemoModule, TooltipWordBreakDemoModule
     ],
     providers: [PopupService]
 })
