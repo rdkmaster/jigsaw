@@ -19,12 +19,13 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
 
     > div {
         max-height: 180px;
-        display: -webkit-box;
+        display: block;
         font-size: $font-size-base;
         line-height: $height-sm - 8px;
         text-align: left;
         word-break: normal;
         white-space: pre-wrap;
+        text-overflow: ellipsis;
         overflow: hidden;
     }
 }
