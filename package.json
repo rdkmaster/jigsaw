@@ -74,7 +74,7 @@
         "estraverse": "~4.2.0",
         "fs-extra": "~3.0.1",
         "glob": "~7.1.6",
-        "gulp": "~3.9.1",
+        "gulp": "~4.0.2",
         "gulp-clean": "~0.3.2",
         "gulp-clean-css": "~3.9.0",
         "gulp-connect": "~5.7.0",
