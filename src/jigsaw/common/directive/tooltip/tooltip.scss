@@ -23,7 +23,7 @@ $tooltip-prefix-cls: #{$jigsaw-prefix}-tooltip;
         font-size: $font-size-base;
         line-height: $height-sm - 8px;
         text-align: left;
-        word-break: break-all;
+        word-break: normal;
         white-space: pre-wrap;
         overflow: hidden;
     }
