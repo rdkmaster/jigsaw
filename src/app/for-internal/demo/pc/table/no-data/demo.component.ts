@@ -129,7 +129,7 @@ export class TableNoDataDemoComponent {
         const field = this._generateStringArray('FIELD', 26);
         const header = this._generateStringArray('HEADER', 26);
         this.columnDefines = [{ target: field, width: 'byContent' }];
-        this.tableData2 = new TableData([], field, header);
+        this.tableData4 = new TableData([], field, header);
     }
 
     private _generateStringArray(label: string, n: number): string[] {
