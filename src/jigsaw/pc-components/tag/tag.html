@@ -1,4 +1,4 @@
-<span #text [title]="title" *ngIf="!isAdd" class="jigsaw-tag-content">
+<span #text [title]="title || text?.innerText" *ngIf="!isAdd" class="jigsaw-tag-content">
     <i *ngIf="!!icon" class="{{icon}}" style="margin-left:4px"></i>
     <p class="jigsaw-tag-text">
         <ng-content></ng-content>
