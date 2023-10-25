@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="demo-options-cntr">
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>tooltip内容</span>
+            <jigsaw-input width="370" [(value)]="tooltipMessage"></jigsaw-input>
+        </li>
+    </ul>
+</div>
+
+<jigsaw-button [jigsawTooltip]="tooltipMessage" jigsawTooltipWordBreak="normal" jigsawTooltipPosition="bottom">normal</jigsaw-button>
+<jigsaw-button [jigsawTooltip]="tooltipMessage" jigsawTooltipWordBreak="break-all" jigsawTooltipPosition="bottom">break-all</jigsaw-button>
+<jigsaw-button [jigsawTooltip]="tooltipMessage" jigsawTooltipWordBreak="keep-all" jigsawTooltipPosition="bottom">keep-all</jigsaw-button>
