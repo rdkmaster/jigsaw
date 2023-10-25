@@ -19,6 +19,15 @@ import {JigsawPrefixSuffixModule} from "./prefix-suffix-widget";
 import {GroupOptionValue} from "../list-and-tile/group-common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
+type BorderRadius = {
+    'border-top-right-radius'?: number,
+    'border-bottom-right-radius'?: number,
+    'border-top-left-radius'?: number,
+    'border-bottom-left-radius'?: number
+}
+
+type WrapperClass = 'jigsaw-numeric-input-both' | 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-left' | 'jigsaw-numeric-input-none';
+
 /**
  * 数字输入框
  * - 支持最大值最小值
@@ -447,12 +456,36 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public suffixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
 
     /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefix: GroupOptionValue | GroupOptionValue[];
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixWidth: number;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public prefixLabelField: string;
+
+    @Output()
+    public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
+
+    /**
      * @internal
      */
-    public get _$getBorderRadius(): {'border-top-right-radius'?: number, 'border-bottom-right-radius'?: number} {
+    public get _$getBorderRadius(): BorderRadius {
         const radius = {};
         if (CommonUtils.isDefined(this.suffix)) {
-            Object.assign(radius, {'border-top-right-radius': 0, 'border-bottom-right-radius': 0});
+            Object.assign(radius, { 'border-top-right-radius': 0, 'border-bottom-right-radius': 0 });
+        }
+        if (CommonUtils.isDefined(this.prefix)) {
+            Object.assign(radius, { 'border-top-left-radius': 0, 'border-bottom-left-radius': 0 });
         }
         return radius;
     }
@@ -460,8 +493,16 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * @internal
      */
-    public get _$getWrapperClass(): 'jigsaw-numeric-input-right' | 'jigsaw-numeric-input-none' {
-        return CommonUtils.isDefined(this.suffix) ? 'jigsaw-numeric-input-right' : 'jigsaw-numeric-input-none';
+    public get _$getWrapperClass(): WrapperClass {
+        if (CommonUtils.isDefined(this.suffix) && CommonUtils.isDefined(this.prefix)) {
+            return 'jigsaw-numeric-input-both';
+        } else if (CommonUtils.isDefined(this.suffix)) {
+            return 'jigsaw-numeric-input-right';
+        } else if (CommonUtils.isDefined(this.prefix)) {
+            return 'jigsaw-numeric-input-left';
+        } else {
+            return 'jigsaw-numeric-input-none';
+        }
     }
 
     public setDisabledState(disabled: boolean): void {

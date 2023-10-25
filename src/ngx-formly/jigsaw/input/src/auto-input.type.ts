@@ -27,6 +27,7 @@ import {JigsawAutoCompleteInput} from "@rdkmaster/jigsaw";
             [prefix]="to.prefix"
             [prefixWidth]="to.prefixWidth"
             [prefixLabelField]="to.prefixLabelField"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (select)="to.select && to.select($event)"
             (textSelect)="to.textSelect && to.textSelect($event)"

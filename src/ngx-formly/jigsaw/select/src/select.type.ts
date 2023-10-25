@@ -27,13 +27,17 @@ import {ArrayCollection, JigsawSelect} from "@rdkmaster/jigsaw";
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
             [useStatistics]="to.useStatistics"
+            [theme]="to.theme"
             [data]="to.data"
+            [manualSearch]="to.manualSearch"
+            [searchDebounce]="to.searchDebounce"
             [(value)]="to.value"
             (valueChange)="_$valueChange($event)"
             (remove)="to.remove && to.remove($event)"
+            (searchKeywordChange)="to.searchKeywordChange && to.searchKeywordChange($event)"
         ></jigsaw-select>
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormlyFieldSelect extends FormlyFieldType<JigsawSelect> {
     defaultOptions = {

@@ -5,11 +5,33 @@
 
 <!-- start to learn the demo from here -->
 <jigsaw-header>数据合法，data为空</jigsaw-header>
-<jigsaw-table [data]="tableData"></jigsaw-table>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
 
 <jigsaw-header>数据不合法</jigsaw-header>
-<jigsaw-table></jigsaw-table>
+<div class="tall-box">
+    <jigsaw-table></jigsaw-table>
+</div>
+
+<jigsaw-header>在高度充足的情况下，无数据的表现</jigsaw-header>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
+
+<jigsaw-header>在高度不足的情况下，有数据和无数据的表现</jigsaw-header>
+<div class="short-box">
+    <jigsaw-table [data]="tableData2"></jigsaw-table>
+</div>
+<div class="short-box">
+    <jigsaw-table [data]="tableData"></jigsaw-table>
+</div>
+
+<jigsaw-header>在高度不足的情况下，表头数据正常的情况</jigsaw-header>
+<div class="short-box">
+    <jigsaw-table [data]="tableData3"></jigsaw-table>
+</div>
 
 <jigsaw-header>大量表格列数据</jigsaw-header>
 <a (click)="moreColumns()">测试动态多列的情况</a>
-<jigsaw-table [data]="tableData2" [columnDefines]="columnDefines"></jigsaw-table>
+<jigsaw-table [data]="tableData4" [columnDefines]="columnDefines"></jigsaw-table>

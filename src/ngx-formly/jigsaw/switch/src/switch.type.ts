@@ -14,6 +14,7 @@ import {JigsawSwitch} from "@rdkmaster/jigsaw";
             [offLabel]="to.offLabel"
             [size]="to.size"
             [readonly]="to.readonly"
+            [theme]="to.theme"
             (checkedChange)="to.checkedChange && to.checkedChange($event)"
         ></jigsaw-switch>
     `,

@@ -650,10 +650,10 @@
 
 .jigsaw-table-host {
     table {
+      background: $bg-component-darken;
         thead {
             tr {
                 td {
-                    background: $bg-component-darken;
                     color: $blue-9;
                     font-size: 14px;
                     border-bottom-width: 2px;

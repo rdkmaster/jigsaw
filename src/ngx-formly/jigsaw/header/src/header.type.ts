@@ -8,6 +8,7 @@ import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
         <jigsaw-header
             [formlyAttributes]="field"
             [level]="to.level"
+            [theme]="to.theme"
         >{{to.content}}</jigsaw-header>
     `,
     host: {

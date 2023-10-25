@@ -24,6 +24,7 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
             [prefix]="to.prefix"
             [prefixWidth]="to.prefixWidth"
             [prefixLabelField]="to.prefixLabelField"
+            [theme]="to.theme"
             (valueChange)="to.valueChange && to.valueChange($event)"
             (iconSelect)="to.iconSelect && to.iconSelect($event)"
             (preIconSelect)="to.preIconSelect && to.preIconSelect($event)"
@@ -47,6 +48,7 @@ import {JigsawInput, JigsawNumericInput} from "@rdkmaster/jigsaw";
                 [suffix]="to.suffix"
                 [suffixWidth]="to.suffixWidth"
                 [suffixLabelField]="to.suffixLabelField"
+                [theme]="to.theme"
                 (valueChange)="to.valueChange && to.valueChange($event)"
                 (suffixChange)="to.suffixChange && to.suffixChange($event)"
             ></jigsaw-numeric-input>

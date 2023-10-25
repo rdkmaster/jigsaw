@@ -14,7 +14,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
         tr {
             td {
-                color: $font-color-default;
                 border-width: 1px;
                 border-style: solid;
                 border-color: $border-color-default;
@@ -57,6 +56,19 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
                     display: block;
+                }
+                
+                &.jigsaw-cell-align-default {
+
+                    .#{$jigsaw-table}-cell-content,
+                    .#{$jigsaw-table}-header-cell {
+                        justify-content: flex-start;
+                        text-align: left;
+
+                        ng-component {
+                            justify-content: flex-start;
+                        }
+                    }
                 }
 
                 &.jigsaw-cell-align-left {
@@ -102,22 +114,25 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                     .#{$jigsaw-table}-cell-content,
                     .#{$jigsaw-table}-header-cell {
-                        padding: 0px;
+                        padding: 0;
                     }
                 }
 
                 &.jigsaw-cell-freeze {
                     position: sticky !important;
+                    background: inherit;
                     z-index: 1;
 
                     &::before {
                         content: "";
                         position: absolute;
                         top: 0;
-                        right: -1px;
-                        width: 1px;
+                        left: 0;
+                        width: 100%;
                         height: 100%;
-                        background: $border-color-default;
+                        background: inherit;
+                        border-right: 1px solid $border-color-default;
+                        z-index: -1;
                     }
 
                     &::after {
@@ -125,27 +140,31 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                         position: absolute;
                         top: 0;
                         left: -1px;
-                        width: 1px;
+                        width: 100%;
                         height: 100%;
-                        background: $border-color-default;
+                        background: $bg-body;
+                        border-left: 1px solid $border-color-default;
+                        z-index: -2;
                     }
                 }
             }
         }
 
         thead {
-            color: $font-color-heading-bold;
-            font-weight: bold;
-
             tr {
                 height: 32px;
+                background: $bg-gray;
 
                 td {
-                    background: $bg-gray;
-
                     .#{$jigsaw-table}-header-cell {
                         .iconfont {
                             margin-right: 2px;
+                        }
+                    }
+
+                    &.jigsaw-cell-freeze {
+                        &::after {
+                            background: $bg-gray;
                         }
                     }
                 }
@@ -174,20 +193,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                     background: $bg-transparent;
                 }
 
-                &.#{$jigsaw-table}-row-selected {
-                    td:not([rowspan]) {
-                        background: $brand-active-lighten;
-                    }
-                }
-
                 td[rowspan] {
                     background: $bg-transparent;
-                }
-
-                &:not(.jigsaw-table-row-expansion):hover {
-                    td:not([rowspan]) {
-                        background: $bg-hover;
-                    }
                 }
 
                 &.jigsaw-table-row-expansion {
@@ -197,10 +204,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
                 &:last-of-type.jigsaw-table-row-expansion {
                     border-bottom: 1px solid $border-color-default;
-                }
-
-                td.jigsaw-cell-freeze {
-                    background: $bg-body;
                 }
             }
         }
@@ -213,6 +216,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-header {
         position: absolute;
         top: 0;
+        color: $font-color-default;
+        font-weight: bold;
         z-index: $zindex-level-2;
     }
 
@@ -237,7 +242,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         height: 100%;
 
         &.#{$jigsaw-table}-no-data {
-            height: 160px;
             border: 1px solid $border-color-default;
         }
 

@@ -1,0 +1,9 @@
+.demo-options-cntr {
+    height: 40vh;
+    overflow-y: scroll;
+}
+
+.demo-handler {
+    display: flex;
+    justify-content: space-between;
+}

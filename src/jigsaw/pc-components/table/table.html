@@ -1,17 +1,24 @@
-<div #tableRange class="jigsaw-table-range"
-    [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
+<div #tableRange class="jigsaw-table-range" [class.jigsaw-table-hide-head]="hideHeader || !_$headerSettings.length">
     <div #headerScrollbar class="jigsaw-table-header-range">
-        <table class="jigsaw-table-header" [hidden]="hideHeader || !_$headerSettings.length">
+        <table class="jigsaw-table-header" [hidden]="hideHeader || !_$headerSettings.length"
+            [style.color]="styleOptions?.headerStyles?.textColor" [style.fontStyle]="styleOptions?.headerStyles?.textStyle"
+            [style.fontSize]="styleOptions?.headerStyles?.textSize" [style.borderCollapse]="_$getTableBorderCollapse()"
+            [style.fontWeight]="styleOptions?.headerStyles?.textWeight">
             <colgroup>
                 <col #tableHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
             <thead>
-                <tr #headerRow>
-                    <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index"
-                        class="{{head.clazz}}" [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
-                        'jigsaw-cell-align-center': head.alignment === 'center',
-                        'jigsaw-cell-align-right': head.alignment === 'right',
-                        'jigsaw-cell-no-padding': head.noPadding}">
+                <tr #headerRow [style.background]="styleOptions?.headerStyles?.backgroundFill"
+                    [style.boxShadow]="styleOptions?.rowStyles?.boxShadow"
+                    [style.opacity]="styleOptions?.rowStyles?.opacity"
+                    [style.height]="styleOptions?.headerStyles?.height">
+                    <td #tableHeaderCell *ngFor="let head of _$headerSettings; last as last; index as index; first as first"
+                        class="{{head.clazz}}" [ngClass]="_$getHeaderClass(head)"
+                        [style.borderTop]="_$getTableHeaderBorder('top', first, last)"
+                        [style.borderBottom]="_$getTableHeaderBorder('bottom', first, last)"
+                        [style.borderLeft]="_$getTableHeaderBorder('left', first, last)"
+                        [style.borderRight]="_$getTableHeaderBorder('right', first, last)"
+                        [style.borderRadius]="_$getTableRowRadius(first, last)">
                         <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
@@ -30,31 +37,39 @@
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
-            <img src="{{_$noDataSrc}}" alt="No data...">
+            <img *ngIf="!_$hideImg" src="{{_$noDataSrc}}" alt="No data...">
             <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
         </div>
-        <table #tableBody class="jigsaw-table-body">
+        <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
+            [style.borderSpacing]="_$getTableBorderSpacing()" [style.color]="styleOptions?.cellStyles?.textColor"
+            [style.fontSize]="styleOptions?.cellStyles?.textSize" [style.fontStyle]="styleOptions?.cellStyles?.textStyle"
+            [style.fontWeight]="styleOptions?.cellStyles?.textWeight">
             <colgroup>
                 <col #tableBodyHeaderColgroup *ngFor="let head of _$headerSettings;" width="{{head.width || '0*'}}">
             </colgroup>
             <thead *ngIf="_$isFFBrowser">
                 <tr>
-                    <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}" [ngClass]="{'jigsaw-cell-align-left': head.alignment === 'left',
-                                            'jigsaw-cell-align-center': head.alignment === 'center',
-                                            'jigsaw-cell-align-right': head.alignment === 'right',
-                                            'jigsaw-cell-no-padding': head.noPadding}"></td>
+                    <td *ngFor="let head of _$headerSettings;" class="{{head.clazz}}"
+                        [ngClass]="_$getHeaderClass(head)">
+                    </td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody (mouseout)="_$hoveredRow = null">
                 <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex" (click)="_$clickRow(rowIndex)"
-                    (dblclick)="_$handleRowDoubleClick(rowIndex)">
-                    <td *ngFor="let cell of row; index as tdIndex" [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
+                    (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$hoveredRow = rowIndex"
+                    [style.background]="_$getRowBackground(rowIndex)" [style.height]="styleOptions?.rowStyles?.height"
+                    [style.boxShadow]="styleOptions?.rowStyles?.boxShadow"
+                    [style.opacity]="styleOptions?.rowStyles?.opacity">
+                    <td *ngFor="let cell of row; index as tdIndex; first as first; last as last"
+                        [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                         [style.display]="cell.rowSpan ? 'table-cell' : 'none'"
                         class="{{cell.clazz}} {{cell.tooltip ? 'jigsaw-table-line-ellipsis': ''}}"
-                        [ngClass]="{'jigsaw-cell-align-left': cell.alignment === 'left',
-                                'jigsaw-cell-align-center': cell.alignment === 'center',
-                                'jigsaw-cell-align-right': cell.alignment === 'right',
-                                'jigsaw-cell-no-padding': cell.noPadding}">
+                        [ngClass]="_$getBodyClass(cell)"
+                        [style.borderTop]="_$getTableRowBorder('top', first, last)"
+                        [style.borderBottom]="_$getTableRowBorder( 'bottom', first, last)"
+                        [style.borderLeft]="_$getTableRowBorder('left', first, last)"
+                        [style.borderRight]="_$getTableRowBorder('right', first, last)"
+                        [style.borderRadius]="_$getTableRowRadius(first, last)">
                         <ng-container [ngSwitch]="cell.renderer">
                             <div *ngSwitchCase="undefined" class="jigsaw-table-cell-content">
                                 <span class="jigsaw-table-cell-text"

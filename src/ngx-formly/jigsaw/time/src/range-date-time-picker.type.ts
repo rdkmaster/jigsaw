@@ -20,6 +20,7 @@ import {JigsawRangeDateTimePicker, TimeGr} from '@rdkmaster/jigsaw';
             [markDates]="to.markDates"
             [step]="to.step"
             [weekStart]="to.weekStart"
+            [theme]="to.theme"
             (grChange)="to.grChange && to.grChange($event)"
             (change)="to.change && to.change($event)"
             (beginDateChange)="to.beginDateChange && to.beginDateChange($event)"

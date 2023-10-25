@@ -44,12 +44,46 @@ $jigsaw-numeric-input: #{$jigsaw-prefix}-numeric-input;
                 border-color: $error-default $border-color-default $error-default $error-default;
             }
 
+            &.#{$jigsaw-numeric-input}-left {
+                border-color: $error-default $error-default $error-default $border-color-default;
+            }
+
+            &.#{$jigsaw-numeric-input}-both {
+                border-color: $error-default $border-color-default $error-default $border-color-default;
+            }
+
             box-shadow: none;
         }
 
         .#{$jigsaw-prefix}-prefix-suffix {
             border-color: $error-default;
         }
+    }
+
+    &.#{$jigsaw-numeric-input}-minimalist {
+
+        .#{$jigsaw-numeric-input}-wrapper,
+        .#{$jigsaw-numeric-input}-wrapper:hover,
+        &.#{$jigsaw-numeric-input}-focused .#{$jigsaw-numeric-input}-wrapper {
+            &.#{$jigsaw-numeric-input}-none {
+                border-color: $error-default;
+            }
+
+            &.#{$jigsaw-numeric-input}-right {
+                border-color: $error-default $border-color-default $error-default $error-default;
+            }
+
+            &.#{$jigsaw-numeric-input}-left {
+                border-color: $error-default $error-default $error-default $border-color-default;
+            }
+
+            &.#{$jigsaw-numeric-input}-both {
+                border-color: $error-default $border-color-default $error-default $border-color-default;
+            }
+
+            box-shadow: none;
+        }
+
     }
 
     &.#{$jigsaw-numeric-input}-hide-border {

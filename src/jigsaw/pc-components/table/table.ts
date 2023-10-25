@@ -32,9 +32,10 @@ import {
     ColumnDefine,
     ColumnDefineGenerator,
     SortChangeEvent,
+    TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions
+    TableHeadSetting, TableRowExpandOptions, TableBorderPosition
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -160,6 +161,185 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._selectRow(value);
         }
     }
+
+    private _styleOptions: TableStyleOptions;
+
+    /**
+     * 设置表格样式
+     * @NoMarkForCheckRequired
+    */
+    @Input()
+    public get styleOptions(): TableStyleOptions {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: TableStyleOptions) {
+        if (this._styleOptions === value) {
+            return;
+        }
+        this._styleOptions = value;
+        this._changeDetectorRef.detectChanges();
+    }
+
+    /**
+     * @internal
+     */
+    public _$hoveredRow: number;
+
+    /**
+     * @internal
+     */
+    public _$getRowBackground(index: number): string {
+        let background;
+        if (index == this.selectedRow) {
+            background = this.styleOptions?.rowStyles?.selectedBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--brand-active-lighten)';
+        } else if (index == this._$hoveredRow) {
+            background = this.styleOptions?.rowStyles?.hoverBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--bg-hover)';
+        } else if (index % 2 === 0) {
+            background = this.styleOptions?.rowStyles?.oddBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
+        } else if (index % 2 === 1) {
+            background = this.styleOptions?.rowStyles?.evenBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
+        } else {
+            return 'unset';
+        }
+        return background;
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderCollapse(): string {
+        return this.styleOptions?.rowStyles?.spacing ? 'separate' : 'collapse';
+    }
+
+    /**
+     * @internal
+     */
+    public _$getTableBorderSpacing(): string {
+        return this.styleOptions?.rowStyles?.spacing ? `0 ${this.styleOptions.rowStyles.spacing}` : 'unset';
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableRowBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.rowStyles?.borderType;
+        if (!borderType) {
+            return undefined;
+        }
+
+        const width = this.styleOptions?.rowStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.rowStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.rowStyles?.borderColor || "var(--border-color-default)";
+        const separate = this._$getTableBorderCollapse() == 'separate';
+        const border = `${width} ${style} ${color}`;
+
+        const borderStyles = {
+            none: 'none',
+            all: separate ? (pos == 'left' && !first) ? 'none' : border : border,
+            outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+            topBottom: pos == 'top' ? border : pos === 'bottom' ? border : 'none'
+        }
+        return borderStyles[borderType];
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableHeaderBorder(pos: TableBorderPosition, first: boolean, last: boolean): string {
+        const borderType = this.styleOptions?.headerStyles?.borderType;
+        if (!borderType) {
+            return undefined;
+        }
+
+        const dividerType = this.styleOptions?.headerStyles?.dividerType || 'none';
+        const width = this.styleOptions?.headerStyles?.borderWidth || "1px";
+        const style = this.styleOptions?.headerStyles?.borderStyle || "solid";
+        const color = this.styleOptions?.headerStyles?.borderColor || "var(--border-color-default)";
+        const separate = this._$getTableBorderCollapse() == 'separate';
+        const border = `${width} ${style} ${color}`;
+
+        const dividerWidth = this.styleOptions?.headerStyles?.dividerWidth || width;
+        const dividerStyle = this.styleOptions?.headerStyles?.dividerStyle || width;
+        const dividerColor = this.styleOptions?.headerStyles?.dividerColor || width;
+        const divider = `${dividerWidth} ${dividerStyle} ${dividerColor}`;
+
+        const borderStyles = {
+            none: {
+                none: 'none',
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos === 'bottom' ? divider : 'none'
+            },
+            all: {
+                none: separate ? (pos == 'left' && !first) ? 'none' : border : border,
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : separate ? (pos == 'left') ? 'none' : border : border,
+                bottom: pos == 'bottom' ? divider : separate ? (pos == 'left' && !first) ? 'none' : border : border
+            },
+            outer: {
+                none: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: (pos == 'top' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : pos == 'bottom' ? divider : 'none',
+            },
+            topBottom: {
+                none: pos == 'top' || pos === 'bottom' ? border : 'none',
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
+                bottom: pos == 'top' ? border : pos === 'bottom' ? divider : 'none'
+            }
+        };
+
+        return borderStyles[borderType][dividerType];
+    }
+
+    /*
+     * @internal
+     */
+    public _$getTableRowRadius(first: boolean, last: boolean) {
+        const radius = this.styleOptions?.rowStyles?.borderRadius;
+        if (!radius || (!first && !last)) {
+            return undefined;
+        }
+        return first ? `${radius} 0 0 ${radius}` : `0 ${radius} ${radius} 0`;
+    }
+
+    /**
+     * @internal
+     */
+    public _$getHeaderClass(head: TableHeadSetting) {
+        const alignment = head.alignment == 'default' && this.styleOptions?.headerStyles?.textAlign ?
+            this.styleOptions?.headerStyles?.textAlign : head.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': head.noPadding
+        };
+    }
+
+    /**
+     * @internal
+     */
+    public _$getBodyClass(cell: TableCellSetting) {
+        const alignment = cell.alignment == 'default' && this.styleOptions?.cellStyles?.textAlign ?
+            this.styleOptions?.cellStyles?.textAlign : cell.alignment;
+        return {
+            'jigsaw-cell-align-left': alignment == 'left',
+            'jigsaw-cell-align-center': alignment == 'center',
+            'jigsaw-cell-align-right': alignment == 'right',
+            'jigsaw-cell-align-default': alignment == 'default',
+            'jigsaw-cell-no-padding': cell.noPadding
+        };
+    }
+
+    public updateStyleOptions() {
+        this.resize();
+        this._changeDetectorRef.detectChanges();
+    }
+
 
     /**
      * @NoMarkForCheckRequired
@@ -467,6 +647,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
+    /**
+     * @internal
+     */
+    @ViewChild('contentScrollbar')
+    private _bodyRange: ElementRef;
+
+    /**
+     * @internal
+     */
+    public _$hideImg: boolean = false;
+
+    private _updateNoDataImgHide() {
+        this._$hideImg = this._bodyRange?.nativeElement?.offsetHeight < 96;
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -602,6 +798,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._selectRow(this.selectedRow);
             // 设置冻结列
             this._updateFrozenColumns();
+            // 根据高度设置无数据图片是否显示
+            this._updateNoDataImgHide();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -845,6 +1043,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateFillUpBlankRow();
         this._updateAutoPageSizing();
         this._updateFrozenColumns();
+        this._updateNoDataImgHide();
     }
 
     private _tableHeaderElement: HTMLElement;

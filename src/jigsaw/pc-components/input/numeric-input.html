@@ -1,4 +1,8 @@
 <div class="jigsaw-numeric-input-container">
+    <jigsaw-prefix-suffix *ngIf="prefix" position="left" [showBorder]="showBorder" [disabled]="disabled" [data]="prefix" [contentWidth]="prefixWidth"
+                          [labelField]="prefixLabelField" (change)="prefixChange.emit($event)">
+    </jigsaw-prefix-suffix>
+
     <div class="jigsaw-numeric-input-wrapper" [ngStyle]="_$getBorderRadius" [ngClass]="_$getWrapperClass">
         <input #input
                [placeholder]="placeholder"

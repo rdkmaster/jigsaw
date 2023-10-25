@@ -199,6 +199,7 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
     public dimensions: Dimension[] = [];
     public usingAllDimensions: boolean = true;
     public indicators: Indicator[] = [];
+    public series: DimKpiBase[];
     public legendSource: 'dim' | 'kpi';
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
@@ -276,13 +277,12 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         const groupedByDim = group(flat(pruned), dimIndex);
         options.series = groupedByDim._$groupItems
             .map(dimName => ({data: getColumn(groupedByDim[dimName], this.indicators[0].index), name: dimName}))
-            .map((seriesData: EchartSeriesItem) => {
+            .map((seriesData: EchartSeriesItem, index) => {
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 const dim = this.dimensions.find(dim => dim.name == seriesData.name);
                 if (dim) {
                     Dimension.extend(seriesData, dim);
-                    // 维度值里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
-                    this._correctDoubleYAxis(dim, options);
+                    this._processSeriesData(index, seriesData, dim, options);
                     this._autoRange(seriesData, options);
                 } else {
                     // 数据自带的维度值
@@ -433,20 +433,33 @@ export class ModeledRectangularGraphData extends AbstractModeledGraphData {
         }
         options.series = this.indicators
             .map(kpi => ({name: this.header[kpi.index], field: this.field[kpi.index], data: getColumn(pruned, kpi.index)}))
-            .map(seriesData => {
+            .map((seriesData,index) => {
                 // 先取模板中的配置
                 CommonUtils.extendObjects<EchartSeriesItem>(seriesData, this.template.seriesItem);
                 // 再取用户配置
                 const indicator = this.indicators.find(indicator => indicator.field == seriesData.field);
                 if (indicator) {
                     Indicator.extend(seriesData, indicator);
-                    // 指标里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
-                    this._correctDoubleYAxis(indicator, options);
+                    this._processSeriesData(index, seriesData, indicator, options);
                 }
                 return seriesData;
             });
-
         return options;
+    }
+
+    private _processSeriesData(index: number, seriesData: EchartSeriesItem, kpiOrDim: Indicator | Dimension, options: EchartOptions) {
+        if (this.series && this.series.length > 0) {
+            if (this.series[index]) {
+                delete this.series[index].name
+                Indicator.extend(seriesData, this.series[index]);
+            } else {
+                this.series[index] = JSON.parse(JSON.stringify(this.series[0]));
+                Indicator.extend(seriesData, this.series[index]);
+                this._setSeriesType(seriesData);
+            }
+        }
+        // 指标或维度里面设置了双坐标，而模板是单坐标的，需要转为双坐标，不然会报错
+        this._correctDoubleYAxis(kpiOrDim, options);
     }
 
     public refresh(): void {
@@ -583,6 +596,7 @@ export class GaugeSeries extends SeriesBase {
     public itemStyle?: any;
     public title?: any;
     public autoAxisLineColor?: boolean;
+    public slope?: number;
 }
 
 export class ModeledGaugeGraphData extends AbstractModeledGraphData {
@@ -824,6 +838,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     public usingAllDimensions: boolean = true;
     public useDefaultBubble: boolean;
     public useDefaultSingleColor: boolean;
+    public series: DimKpiBase[];
 
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
         super(data, header, field);
@@ -876,6 +891,22 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
                 const nextSymbolIndex = idx % availableScatterSymbols.length;
                 // 更新 dim 对象中的 symbol 属性
                 Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
+            }
+            if (this.series && this.series.length > 0) {
+                if (this.series[idx]) {
+                    Object.assign(dim, this.series[idx]);
+                } else {
+                    this.series[idx] = JSON.parse(JSON.stringify(this.series[0]));
+                    Object.assign(dim, this.series[idx]);
+                    if (this.useDefaultBubble) {
+                        dim.itemStyle = {opacity: 0.3, borderWidth: 2};
+                    }
+                    if (this.useDefaultSingleColor) {
+                        dim.itemStyle = {color: '#3B69FF'};
+                        const nextSymbolIndex = idx % availableScatterSymbols.length;
+                        Object.assign(dim, {symbol: availableScatterSymbols[nextSymbolIndex]});
+                    }
+                }
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)

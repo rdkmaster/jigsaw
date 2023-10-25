@@ -23,6 +23,7 @@ import {JigsawDateTimeSelect, TimeGr} from '@rdkmaster/jigsaw';
             [weekStart]="to.weekStart"
             [openTrigger]="to.openTrigger"
             [closeTrigger]="to.closeTrigger"
+            [theme]="to.theme"
             (grChange)="to.grChange && to.grChange($event)"
             (dateChange)="to.dateChange && to.dateChange($event)"
         ></jigsaw-date-time-select>
