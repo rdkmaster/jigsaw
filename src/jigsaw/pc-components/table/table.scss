@@ -242,7 +242,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         height: 100%;
 
         &.#{$jigsaw-table}-no-data {
-            border: 1px solid $border-color-default;
+            // 使用outline解决表格无数据时，横向出现滚动条的问题
+            outline: 1px solid $border-color-default;
         }
 
         .ps__rail-x,
