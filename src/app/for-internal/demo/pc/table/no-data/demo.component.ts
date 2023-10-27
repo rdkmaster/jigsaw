@@ -1,14 +1,17 @@
-import {Component} from "@angular/core";
-import {TableData} from "jigsaw/public_api";
+import { Component } from "@angular/core";
+import { ColumnDefine, TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls:['./demo.component.css']
+    styleUrls: ['./demo.component.css']
 })
 export class TableNoDataDemoComponent {
     tableData: TableData;
     tableData2: TableData;
     tableData3: TableData;
+    tableData4: TableData;
+
+    columnDefines: ColumnDefine[];
 
     constructor() {
         this.tableData = new TableData(
@@ -115,11 +118,50 @@ export class TableNoDataDemoComponent {
             ["name", "position", "salary", "enroll-date", "office", "extn"],
             ["姓名", "职位", "薪资", "入职日期", "部门", "其他"]);
 
+        this.resetData();
     }
 
+    public moreColumns(needData: boolean = false) {
+        const field = this._generateStringArray('FIELD', 26);
+        const header = this._generateStringArray('HEADER', 26);
+        this.columnDefines = [{ target: field, width: 'byContent' }];
+        if (needData) {
+            const data = this._generateStringArray('CELL', 26);
+            this.tableData4 = new TableData([data], field, header);
+            return;
+        }
+        this.tableData4 = new TableData([], field, header);
+        setTimeout(() => {
+            // 需要更新columnDefine
+            this.tableData4.refresh();
+        })
+    }
+
+    public resetData() {
+        const field = this._generateStringArray('FIELD', 6);
+        const header = this._generateStringArray('HEADER', 6);
+        this.columnDefines = [{ target: field, width: 'byContent' }];
+        this.tableData4 = new TableData([], field, header);
+        setTimeout(() => {
+            // 需要更新columnDefine
+            this.tableData4.refresh();
+        })
+    }
+
+    private _generateStringArray(label: string, n: number): string[] {
+        const result: string[] = [];
+        for (let i = 0; i < n; i++) {
+            result.push(`${label}${i}`);
+        }
+        return result;
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
     summary: string = '';
     description: string = '';
 }
+
+
+
+

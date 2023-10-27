@@ -31,3 +31,11 @@
 <div class="short-box">
     <jigsaw-table [data]="tableData3"></jigsaw-table>
 </div>
+
+<jigsaw-header>大量表格列数据</jigsaw-header>
+<a class="a-button" (click)="moreColumns()">测试动态多列的情况</a>
+<a class="a-button" (click)="moreColumns(true)">测试动态多列有数据的情况</a>
+<a class="a-button" (click)="resetData()">重置数据</a>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData4" [columnDefines]="columnDefines"></jigsaw-table>
+</div>
