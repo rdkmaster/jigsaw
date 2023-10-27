@@ -8,6 +8,7 @@ import { TabBarBackgroundDemoComponent } from './background/demo.component';
 import { TabBarBackgroundDemoModule } from './background/demo.module';
 import { TabBarEditableDemoComponent } from './editable/demo.component';
 import { TabBarEditableDemoModule } from './editable/demo.module';
+import { TabBarStyleOptionsDemoModule } from './style-options/demo.module';
 
 export const routerConfig = [
     {
@@ -21,12 +22,16 @@ export const routerConfig = [
     },
     {
         path: 'editable', component: TabBarEditableDemoComponent
+    },
+    {
+        path: 'style-options', component: TabBarEditableDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), JigsawTabBarDemoModule, TabBarTypeDemoModule, TabBarBackgroundDemoModule, TabBarEditableDemoModule
+        RouterModule.forChild(routerConfig), JigsawTabBarDemoModule, TabBarTypeDemoModule, TabBarBackgroundDemoModule, TabBarEditableDemoModule,
+        TabBarStyleOptionsDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
