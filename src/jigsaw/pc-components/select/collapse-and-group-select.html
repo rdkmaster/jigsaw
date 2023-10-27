@@ -74,7 +74,7 @@
         </div>
     </ng-template>
     <div *ngIf="_$showAllStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
-        {{_$selectAllText}}
+        {{_$allSelectedText}}
     </div>
     <div *ngIf="_$showNumStatistics()" class="jigsaw-select-statistics" [ngClass]="{'jigsaw-select-statistics-disabled': disabled}">
         {{'select.selected' | translate:{num: _$selectedItems?.length} }}

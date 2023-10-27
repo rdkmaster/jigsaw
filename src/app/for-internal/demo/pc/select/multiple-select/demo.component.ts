@@ -6,7 +6,7 @@ import { ArrayCollection } from "jigsaw/public_api";
     styleUrls: ["./../../assets/demo.common.css", "./demo.component.css"]
 })
 export class MultipleSelectDemoComponent {
-    public selectAllText: string;
+    public allSelectedText: string;
 
     dataList = new ArrayCollection([
         { label: "文本选项1" },

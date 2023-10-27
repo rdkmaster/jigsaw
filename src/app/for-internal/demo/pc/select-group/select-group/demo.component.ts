@@ -10,8 +10,8 @@ class ForeverBusyArrayCollection extends ArrayCollection<any> {
     styleUrls: ["./../../assets/demo.common.css", "./demo.component.css"]
 })
 export class SelectGroupDemoComponent {
-    public selectAllText: string;
-    
+    public allSelectedText: string;
+
     foreverBusyArray = new ForeverBusyArrayCollection();
     selectedCityForSelect: any;
     disabled: boolean = false;

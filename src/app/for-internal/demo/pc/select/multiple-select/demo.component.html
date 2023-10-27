@@ -6,7 +6,7 @@
     <ul class="demo-options">
         <li class="demo-options-item">
             <span>全选时显示文本</span>
-            <jigsaw-input [(value)]="selectAllText"></jigsaw-input>
+            <jigsaw-input [(value)]="allSelectedText"></jigsaw-input>
         </li>
     </ul>
     <ul class="demo-options">
@@ -19,18 +19,20 @@
 </div>
 
 <jigsaw-header>基本用法</jigsaw-header>
-<jigsaw-select [data]="dataList" [multipleSelect]="true" [selectAllText]="selectAllText" placeholder="请选择" width="160px"
-    (valueChange)="valueChange($event)">
+<jigsaw-select [data]="dataList" [multipleSelect]="true" [allSelectedText]="allSelectedText" placeholder="请选择" width="160px"
+               (valueChange)="valueChange($event)">
 </jigsaw-select>
 
 <jigsaw-header>初始已选</jigsaw-header>
-<jigsaw-select [data]="dataList" [(value)]="selectedArrayData" [multipleSelect]="true" [selectAllText]="selectAllText" placeholder="请选择" width="160px"
-    (valueChange)="valueChange($event)">
+<jigsaw-select [data]="dataList" [(value)]="selectedArrayData" [multipleSelect]="true" [allSelectedText]="allSelectedText"
+               placeholder="请选择" width="160px"
+               (valueChange)="valueChange($event)">
 </jigsaw-select>
 
 <jigsaw-header>初始已选（有选项禁用）</jigsaw-header>
-<jigsaw-select [data]="dataList" [(value)]="selectedArrayData3" [multipleSelect]="true" [selectAllText]="selectAllText" placeholder="请选择" width="160px"
-    (valueChange)="valueChange($event)">
+<jigsaw-select [data]="dataList" [(value)]="selectedArrayData3" [multipleSelect]="true"
+               [allSelectedText]="allSelectedText" placeholder="请选择" width="160px"
+               (valueChange)="valueChange($event)">
 </jigsaw-select>
 
 <jigsaw-header>结果展开</jigsaw-header>
@@ -38,7 +40,7 @@
     [data]="dataList"
     [(value)]="selectedArrayData1"
     [multipleSelect]="true"
-    [selectAllText]="selectAllText"
+    [allSelectedText]="allSelectedText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="false"
@@ -50,7 +52,7 @@
     [data]="dataListWithoutDisabled"
     [(value)]="fullSelectedOption"
     [multipleSelect]="true"
-    [selectAllText]="selectAllText"
+    [allSelectedText]="allSelectedText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
@@ -62,7 +64,7 @@
     [data]="dataListWithoutDisabled"
     [(value)]="selectedOption"
     [multipleSelect]="true"
-    [selectAllText]="selectAllText"
+    [allSelectedText]="allSelectedText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="true"
@@ -75,7 +77,7 @@
     [(value)]="selectedArrayData2"
     (valueChange)="valueChange($event)"
     [multipleSelect]="true"
-    [selectAllText]="selectAllText"
+    [allSelectedText]="allSelectedText"
     placeholder="请选择"
     width="160px"
     [useStatistics]="false"
@@ -87,7 +89,7 @@
     [(value)]="textValueList"
     (valueChange)="valueChange($event)"
     [multipleSelect]="true"
-    [selectAllText]="selectAllText"
+    [allSelectedText]="allSelectedText"
     placeholder="请选择"
     width="330px"
     [useStatistics]="false"

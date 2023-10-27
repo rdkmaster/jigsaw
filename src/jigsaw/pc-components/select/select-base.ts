@@ -230,25 +230,25 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$selectAllText: string = this._translateService.instant("select.allSelected");
-    private _selectAllText: string;
+    public _$allSelectedText: string = this._translateService.instant("select.allSelected");
+
+    private _allSelectedText: string;
 
     /**
      * 全选时显示的文本
      */
     @RequireMarkForCheck()
     @Input()
-    public get selectAllText(): string {
-        return this._selectAllText;
+    public get allSelectedText(): string {
+        return this._allSelectedText;
     }
 
-    public set selectAllText(newValue: string) {
-        if (this._selectAllText === newValue) {
+    public set allSelectedText(newValue: string) {
+        if (this._allSelectedText === newValue) {
             return;
         }
-        this._selectAllText = newValue;
-        this._$selectAllText = CommonUtils.isUndefined(this._selectAllText) ?
-            this._translateService.instant("select.allSelected") : this._selectAllText;
+        this._allSelectedText = newValue;
+        this._$allSelectedText = this._allSelectedText || this._translateService.instant("select.allSelected");
     }
 
     /**
