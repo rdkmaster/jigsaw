@@ -7,9 +7,11 @@ class ForeverBusyArrayCollection extends ArrayCollection<any> {
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ["./demo.component.css"]
+    styleUrls: ["./../../assets/demo.common.css", "./demo.component.css"]
 })
 export class SelectGroupDemoComponent {
+    public allSelectedText: string;
+
     foreverBusyArray = new ForeverBusyArrayCollection();
     selectedCityForSelect: any;
     disabled: boolean = false;
