@@ -42,3 +42,4 @@ export * from './tab';
 export * from './tab-pane';
 export * from './tab-renderer';
 export * from './tab-item';
+export * from './tab-types'

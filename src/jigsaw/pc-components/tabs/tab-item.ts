@@ -19,14 +19,7 @@ import {
 } from '@angular/core';
 import {AbstractJigsawComponent} from "../../common/common";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
-
-/**
- * 改变tab标题时发送事件的携带数据类型。
- */
-export class TabTitleInfo {
-    key: number;
-    title: string
-}
+import { TabTitleInfo } from './tab-types';
 
 @Directive()
 export abstract class JigsawTabItemBase extends AbstractJigsawComponent implements OnDestroy {

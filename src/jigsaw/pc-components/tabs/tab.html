@@ -10,6 +10,7 @@
         [theme]="theme"
         [(selectedIndex)]="selectedIndex"
         (titleChange)="titleChange.emit($event)"
+        [styleOptions]="styleOptions?.tabBarStyles"
     ></jigsaw-tab-bar>
     <div class="jigsaw-tabs-content">
         <jigsaw-tab-content
@@ -20,6 +21,7 @@
             [lazy]="tab.lazy"
             [initData]="tab.initData"
             [ngStyle]="{transform: 'translate3d('+(i-_$selectedIndex)*100+'%, 0px, 0px)', transition: enableAnimation ?  'transform 0.5s' : ''}"
+            [style.background]="styleOptions?.contentStyles?.backgroundFill"
         >
         </jigsaw-tab-content>
     </div>

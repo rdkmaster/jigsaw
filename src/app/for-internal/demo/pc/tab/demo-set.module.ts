@@ -27,6 +27,8 @@ import {TabsTitleRendererDemoModule} from "./title-renderer/demo.module";
 import {TabsTitleRendererComponent} from "./title-renderer/demo.component";
 import { TabsBackgroundDemoComponent } from './background/demo.component';
 import { TabsBackgroundDemoModule } from './background/demo.module';
+import { TabBarStyleOptionsDemoComponent } from '../tab-bar/style-options/demo.component';
+import { TabBarStyleOptionsDemoModule } from '../tab-bar/style-options/demo.module';
 
 export const routerConfig = [
     {
@@ -72,6 +74,9 @@ export const routerConfig = [
     },
     {
         path: 'background', component: TabsBackgroundDemoComponent
+    },
+    {
+        path: 'style-options', component: TabBarStyleOptionsDemoComponent
     }
 ];
 
@@ -80,7 +85,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         TabsBasicDemoModule, TabsDestroyDemoModule, TabsHideTabDemoModule, TabsShowTabDemoModule,
         DynamicTabDemoModule, TabsWithInputDemoModule, TabsWithNgForDemoModule, TabsUpdateTitleDemoModule,
-        TabsEditableDemoModule, TabHeadlessDemoModule, TabsTypeDemoModule, TabsTitleRendererDemoModule, TabsBackgroundDemoModule
+        TabsEditableDemoModule, TabHeadlessDemoModule, TabsTypeDemoModule, TabsTitleRendererDemoModule, TabsBackgroundDemoModule,
+        TabBarStyleOptionsDemoModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
