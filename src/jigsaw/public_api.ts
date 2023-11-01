@@ -98,6 +98,7 @@ export * from "./pc-components/process-status/index";
 export * from "./pc-components/toast/toast";
 export * from "./pc-components/chart-icon/chart-icon";
 export * from "./pc-components/large-text/large-text"
+export * from "./pc-components/form-display/form-display"
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";

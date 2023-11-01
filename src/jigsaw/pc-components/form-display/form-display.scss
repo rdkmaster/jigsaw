@@ -1,0 +1,27 @@
+$jigsaw-form-display: #{$jigsaw-prefix}-form-display;
+
+.#{$jigsaw-form-display}-host {
+    display: block;
+
+    .form-display-total {
+
+        .form-display-table {
+            width: 100%;
+            text-align: center;
+            table-layout: fixed;
+            font-size: $font-size-text-base;
+
+            tr {
+                td {
+                    color: $font-color-black;
+                    line-height: $line-height-base;
+                    vertical-align: middle;
+
+                    .required {
+                        color: $red-6;
+                    }
+                }
+            }
+        }
+    }
+}
