@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Input, NgModule, OnInit, Renderer2} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, OnInit} from "@angular/core";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
 import {JigsawHeaderModule} from "../header/header";
@@ -8,7 +8,7 @@ interface StyleCombos {
     [property: string]: string | number;
 }
 
-type TitleConfig = {
+type SectionTitleStyle = {
     level: 1 | 2 | 3,
     marginBottom: string
 }
@@ -23,7 +23,13 @@ type TableCellConfig = string | {
 
 type TableRowConfig = TableCellConfig[];
 
-export type TableDataConfig = { title: string, titleStyle?: TitleConfig, data: TableRowConfig[], tdStyle?: StyleCombos, trStyle?: StyleCombos }
+export type TableDataConfig = {
+    title: string,
+    titleStyle?: SectionTitleStyle,
+    data: TableRowConfig[],
+    tdStyle?: StyleCombos,
+    trStyle?: StyleCombos
+}
 
 @WingsTheme('form-display.scss')
 @Component({
@@ -39,23 +45,22 @@ export type TableDataConfig = { title: string, titleStyle?: TitleConfig, data: T
 })
 export class JigsawFormDisplayComponent extends AbstractJigsawComponent implements OnInit {
 
-    private _formio: TableDataConfig[];
+    private _data: TableDataConfig[];
 
     @RequireMarkForCheck()
     @Input()
-    public get formio() {
-        return this._formio
+    public get data() {
+        return this._data
     }
 
-    public set formio(formio: TableDataConfig | TableDataConfig []) {
-        if (!Array.isArray(formio)) {
-            formio = [formio];
+    public set data(data: TableDataConfig | TableDataConfig []) {
+        if (!Array.isArray(data)) {
+            data = [data];
         }
-        this._formio = formio;
+        this._data = data;
     }
 
-    constructor(protected renderer: Renderer2, private _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
+    constructor(// @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
     }

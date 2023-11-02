@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent} from "../../../../../../jigsaw/pc-components/form-display/form-display";
+import {JigsawFormDisplayComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html',
@@ -97,7 +97,7 @@ export class FormDisplayCommonDemoComponent {
             titleStyle: {},
             data: [
                 [
-                    {value: '中文名称',isRequired: true, style: {background: '#ccc', 'font-weight': 'bold'}},
+                    {value: '中文名称', isRequired: true, style: {background: '#ccc', 'font-weight': 'bold'}},
                     {value: 'String', style: {}},
                     {value: '英文名称', style: {background: '#ccc', 'font-weight': 'bold'}},
                     {value: 'String', style: {}},
@@ -119,14 +119,15 @@ export class FormDisplayCommonDemoComponent {
                     {value: 'String', style: {}}
                 ]
             ],
-            trStyle: {background: '#fff',height: '40px', border: '1px black solid'}, tdStyle: {'text-align': 'left', border: '1px black solid'}
+            trStyle: {background: '#fff', height: '40px', border: '1px black solid'},
+            tdStyle: {'text-align': 'left', border: '1px black solid'}
         }]
 
     formioSelected: boolean = true;
 
     public changeSource() {
         this.formioSelected = !this.formioSelected;
-        this.jigsawFormDisplayComponent.formio = this.formioSelected ? this.formio : this.formio1;
+        this.jigsawFormDisplayComponent.data = this.formioSelected ? this.formio : this.formio1;
     }
 
     summary: string = "这个DEMO演示了form-display组件通过json转为表格的用法。";

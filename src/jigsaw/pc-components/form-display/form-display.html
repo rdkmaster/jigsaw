@@ -1,14 +1,15 @@
-<div class="form-display-total" *ngFor="let form of formio">
-    <jigsaw-header class="form-display-title"
-                   [level]="form.titleStyle.level || 2" [ngStyle]="{'margin-bottom': form.titleStyle.marginBottom || '15px'}" >{{form.title}}</jigsaw-header>
+<div class="form-display-total" *ngFor="let form of data">
+    <jigsaw-header class="form-display-title" [level]="form.titleStyle.level || 2"
+                   [ngStyle]="{'margin-bottom': form.titleStyle.marginBottom || '15px'}">
+        {{form.title}}
+    </jigsaw-header>
     <table class="form-display-table">
         <tr [ngStyle]="form.trStyle" *ngFor="let row of form.data">
-            <ng-container *ngFor="let cell of row">
-                <td [ngStyle]="form.tdStyle" [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" style="{{cell.style}}">
-                    {{ cell.value }}
-                    <span *ngIf="cell.isRequired" class="required">*</span>
-                </td>
-            </ng-container>
+            <td *ngFor="let cell of row" [ngStyle]="form.tdStyle"
+                [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" style="{{cell.style}}">
+                {{ cell.value }}
+                <span *ngIf="cell.isRequired" class="required">*</span>
+            </td>
         </tr>
     </table>
 </div>
