@@ -451,15 +451,15 @@ export class JigsawTabBar extends JigsawTabBase {
     /**
      * @internal
      */
-    public _$getTabBackground(tab: TabBarData, index: number) {
+    public _$getTabBackground(tab: TabBarData, index: number): string {
         if (tab.disabled) {
-            return this.styleOptions?.disabledStyles?.backgroundFill ? this.styleOptions?.disabledStyles?.backgroundFill : 'var(--bg-disabled)';
+            return this.styleOptions?.disabledStyles?.backgroundFill || 'var(--bg-disabled)';
         } else if (this._$selectedIndex == index) {
-            return this.styleOptions?.selectedStyles?.backgroundFill ? this.styleOptions?.selectedStyles?.backgroundFill : 'unset';
+            return this.styleOptions?.selectedStyles?.backgroundFill || 'unset';
         } else if (this._$hoveredTab == index) {
-            return this.styleOptions?.hoverStyles?.backgroundFill ? this.styleOptions?.hoverStyles?.backgroundFill : 'var(--brand-lighten)';
+            return this.styleOptions?.hoverStyles?.backgroundFill || 'var(--brand-lighten)';
         } else {
-            return this.styleOptions?.normalStyles?.backgroundFill ? this.styleOptions?.normalStyles?.backgroundFill : 'unset';
+            return this.styleOptions?.normalStyles?.backgroundFill || 'unset';
         }
     }
 
