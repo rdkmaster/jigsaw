@@ -448,8 +448,10 @@ export class JigsawTabBar extends JigsawTabBase {
      */
     public _$hoveredTab: number;
 
-    public _$getTabBackground(tab, index: number) {
-        console.log(tab, index);
+    /**
+     * @internal
+     */
+    public _$getTabBackground(tab: TabBarData, index: number) {
         if (tab.disabled) {
             return this.styleOptions?.disabledStyles?.backgroundFill ? this.styleOptions?.disabledStyles?.backgroundFill : 'var(--bg-disabled)';
         } else if (this._$selectedIndex == index) {
