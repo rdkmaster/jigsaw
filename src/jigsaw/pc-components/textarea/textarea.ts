@@ -246,8 +246,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     private _updateValue(value: string): string {
-        value = this._unifyLineBreak(value);
         if (this.includesCRLF) {
+            value = this._unifyLineBreak(value);
             value = value.substring(0, this._maxLength);
         } else {
             // 换行符和回车符不计入字符数
