@@ -7,6 +7,17 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
 
 .#{$jigsaw-transfer}-renderer {
     height: 100%;
+
+    .#{$jigsaw-transfer}-list-renderer-sub-title {
+        display: flex;
+        align-items: center;
+
+        .#{$jigsaw-transfer}-list-renderer-icon {
+            color: $font-color-brand;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+    }
 }
 
 .#{$list-renderer} {

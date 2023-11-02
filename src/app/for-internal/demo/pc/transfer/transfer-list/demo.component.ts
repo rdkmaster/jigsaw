@@ -1,6 +1,6 @@
-import { Component } from "@angular/core";
-import { ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer } from "jigsaw/public_api";
-import { HttpClient } from '@angular/common/http';
+import {Component} from "@angular/core";
+import {ArrayCollection, TransferListSourceRenderer, TransferListDestRenderer, ListOption} from "jigsaw/public_api";
+import {HttpClient} from '@angular/common/http';
 
 @Component({
     templateUrl: './demo.component.html',
@@ -15,8 +15,8 @@ export class TransferListDemoComponent {
     public subLabelField = 'remark'
     public trackItemBy = 'id';
     public isArray = false;
-    public dataType = [{ label: 'ArrayCollection', id: 1 }, { label: 'Array', id: 2 }];
-    public selectedDataType = [{ label: 'ArrayCollection', id: 1 }];
+    public dataType = [{label: 'ArrayCollection', id: 1}, {label: 'Array', id: 2}];
+    public selectedDataType = [{label: 'ArrayCollection', id: 1}];
 
     public allData = [
         {
@@ -123,6 +123,10 @@ export class TransferListDemoComponent {
 
     constructor(public http: HttpClient) {
         this.data = new ArrayCollection(this.allData);
+        this.data.forEach(item => {
+            item.destAddonIcon = "iconfont iconfont-e36f";
+            item.destAddonIconTitle = "点击图标进行配置";
+        });
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }
 
@@ -215,6 +219,10 @@ export class TransferListDemoComponent {
         this.isArray = !this.isArray;
         this.resetInputData();
         this.resetSelectedData();
+    }
+
+    public destIconClick(item: ListOption): void {
+        alert('正在配置 ' + item.name);
     }
 
     // ====================================================================
