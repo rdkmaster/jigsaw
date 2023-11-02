@@ -6,18 +6,22 @@ import {Component, ViewChild} from "@angular/core";
 export class TextareaMaxLengthDemoComponent {
     public _$includesCRLF: boolean = true;
     public _$value = '多行文本框';
+    public _$value1 = '包含多种风格换行符的文本 \n line1 \r\n line2 \n line3 \r\n line4';
+    public valueWithLineBreak = '';
+    public selectedLineBreakStyle: "windows" | "linux" | "let-it-be" = "let-it-be";
+    public lineBreakStyles = ["windows" , "linux" , "let-it-be"];
+    public maxLength: number = 100;
+
+    constructor() {
+        this.lineBreakChange();
+    }
 
     public _$valueChange($event: string): void {
         console.log(' input value: ', $event);
     }
 
-    public selectedSystem: "windows" | "linux" | "unset" = "unset";
-    systems = ["windows" , "linux" , "unset"];
-
-    maxLength: number = 100;
-
-    radioChange($event: string) {
-        console.log("selected System is", $event);
+    lineBreakChange() {
+        this.valueWithLineBreak = this._$value1.replace(/\r/g, '\\r').replace(/\n/g, '\\n');
     }
 
     // ====================================================================

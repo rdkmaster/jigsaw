@@ -207,14 +207,15 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public includesCRLF: boolean = false;
 
     /**
-     *  设置存入对应系统所使用的换行符
-     *  windows使用/r/n。换行符被识别成两个字符
-     *  linux使用/n，换行符被识别成一个字符
+     *  设置组件输出的`value`换行符风格
+     *  - windows使用\r\n。换行符被识别成两个字符
+     *  - linux使用\n，换行符被识别成一个字符
+     *  - let-it-be或者不设置，则不自动处理
      *
      *  $demo = textarea/max-length
      * */
     @Input()
-    public lineBreakStyle: "windows" | "linux" | "unset" = "unset";
+    public lineBreakStyle: "windows" | "linux" | "let-it-be" | undefined;
 
     /**
      * @internal
@@ -263,7 +264,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     private _unifyLineBreak(value: string): string {
-        if (this.lineBreakStyle == 'unset') {
+        if (!this.lineBreakStyle || this.lineBreakStyle == 'let-it-be') {
             return value;
         }
         const replacement = (this.lineBreakStyle == 'windows') ? "\r\n" : "\n";
