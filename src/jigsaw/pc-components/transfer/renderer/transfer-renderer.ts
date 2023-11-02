@@ -28,6 +28,8 @@ export type ListOption = {
     label?: string;
     subLabel?: string;
     additionalData?: any;
+    icon?: string;
+    iconTitle?: string;
     [field: string]: string | boolean | number;
 }
 
@@ -94,6 +96,10 @@ export abstract class AbstractTransferRendererBase {
      * @internal
      */
     public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>>;
+    /**
+     * @internal
+     */
+    public destinationIconClick: EventEmitter<ListOption>;
     /**
      * @internal
      */
@@ -180,6 +186,9 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     @Output()
     public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
+    @Output()
+    public destinationIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
+
     /**
      * 渲染器配置
      * @internal
@@ -256,6 +265,24 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
         }
         this.selectedItems.splice(0, this.selectedItems.length);
         this.selectedItemsChange.emit(this.selectedItems);
+    }
+
+    /**
+     * @internal
+     */
+    public _$iconClick(event: MouseEvent, item: ListOption): void {
+        event.stopPropagation();
+        if (this.isDestRenderer) {
+            this.destinationIconClick.emit(item);
+        }
+    }
+
+    /**
+     * @internal
+     * 判断是否是目标列表渲染器，暂时只给目标渲染器添加图标点击按钮
+     */
+    public get isDestRenderer(): boolean {
+        return this instanceof TransferListDestRenderer;
     }
 }
 

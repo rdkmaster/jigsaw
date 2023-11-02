@@ -287,7 +287,6 @@ const animations = [
     animations,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, OnDestroy {
     constructor(
         protected changeDetectorRef: ChangeDetectorRef,
@@ -310,6 +309,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public sourceToggleButtonSubscribe: Subscription;
     public sourceSelectedItemsChangeSubscribe: Subscription;
     public destSelectedItemsChangeSubscribe: Subscription;
+    public destIconClickSubscribe: Subscription;
 
     private _data: any;
 
@@ -433,6 +433,9 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this.destSelectedItemsChangeSubscribe = this.destComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
             this._checkDestSelectAll();
             this.destinationChecked.emit(currentSelectedItems);
+        });
+        this.destIconClickSubscribe = this.destComponent.destinationIconClick.subscribe((item: ListOption) => {
+            this.destinationIconClick.emit(item);
         });
     }
 
@@ -724,10 +727,16 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public sourceChecked: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     /**
-     * 源数据的选中状态发生变化时，向外发送事件
+     * 已选项的选中状态发生变化时，向外发送事件
      */
     @Output()
     public destinationChecked: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
+
+    /**
+     * 已选项中的图标点击事件
+     */
+    @Output()
+    public destinationIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
 
     public get isPageable(): boolean {
         return this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity;

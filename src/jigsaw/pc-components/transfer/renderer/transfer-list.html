@@ -12,6 +12,8 @@
             </ng-container>
             <span j-sub-title class="jigsaw-transfer-list-renderer-sub-title">
                 {{_$getItemSubLabel(item)}}
+                <i class="jigsaw-transfer-list-renderer-icon" *ngIf="isDestRenderer && item.icon"
+                   [ngClass]="item.icon" [title]="item.iconTitle" (click)="_$iconClick($event, item)"></i>
             </span>
         </j-list-option>
     </jigsaw-list>
