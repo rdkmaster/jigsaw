@@ -14,7 +14,7 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
         border: none !important;
 
         .#{$jigsaw-list}-option-host.#{$jigsaw-list}-option-active {
-            background: unset;
+            background: $bg-component;
 
             .jigsaw-list-option-title,
             .jigsaw-list-option-sub-title {

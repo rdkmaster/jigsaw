@@ -220,7 +220,7 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
             }
 
             &.#{$jigsaw-list-option}-active {
-                background: none;
+                background: $bg-component;
                 color: $font-color-default;
 
                 &:not(.#{$jigsaw-list-option}-disabled):hover {
