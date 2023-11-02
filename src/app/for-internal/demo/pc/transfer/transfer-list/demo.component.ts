@@ -124,8 +124,8 @@ export class TransferListDemoComponent {
     constructor(public http: HttpClient) {
         this.data = new ArrayCollection(this.allData);
         this.data.forEach(item => {
-            item.icon = "iconfont iconfont-e36f";
-            item.iconTitle = "点击图标进行配置";
+            item.destAddonIcon = "iconfont iconfont-e36f";
+            item.destAddonIconTitle = "点击图标进行配置";
         });
         this.selectedItems = new ArrayCollection([this.allData[0], this.allData[1], this.allData[2]]);
     }
@@ -222,7 +222,7 @@ export class TransferListDemoComponent {
     }
 
     public destIconClick(item: ListOption): void {
-        alert('正在配置' + item.name);
+        alert('正在配置 ' + item.name);
     }
 
     // ====================================================================

@@ -306,11 +306,6 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
     public sourceComponent: AbstractTransferRendererBase;
     public destComponent: AbstractTransferRendererBase;
 
-    public sourceToggleButtonSubscribe: Subscription;
-    public sourceSelectedItemsChangeSubscribe: Subscription;
-    public destSelectedItemsChangeSubscribe: Subscription;
-    public destIconClickSubscribe: Subscription;
-
     private _data: any;
 
     /**
@@ -426,16 +421,16 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
         this._$sourceCheckbox = this.sourceComponent.setting.selectAll;
         this._$destCheckbox = this.destComponent.setting.selectAll;
 
-        this.sourceSelectedItemsChangeSubscribe = this.sourceComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
+        this.sourceComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
             this._checkSourceSelectAll();
             this.sourceChecked.emit(currentSelectedItems);
         });
-        this.destSelectedItemsChangeSubscribe = this.destComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
+        this.destComponent.selectedItemsChange.subscribe((currentSelectedItems) => {
             this._checkDestSelectAll();
             this.destinationChecked.emit(currentSelectedItems);
         });
-        this.destIconClickSubscribe = this.destComponent.destinationIconClick.subscribe((item: ListOption) => {
-            this.destinationIconClick.emit(item);
+        this.destComponent.destAddonIconClick.subscribe((item: ListOption) => {
+            this.destAddonIconClick.emit(item);
         });
     }
 
@@ -736,7 +731,7 @@ export class JigsawTransfer extends AbstractJigsawComponent implements OnInit, O
      * 已选项中的图标点击事件
      */
     @Output()
-    public destinationIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
+    public destAddonIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
 
     public get isPageable(): boolean {
         return this.data && this.data.pagingInfo && this.data.pagingInfo.pageSize != Infinity;

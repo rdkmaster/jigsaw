@@ -28,8 +28,8 @@ export type ListOption = {
     label?: string;
     subLabel?: string;
     additionalData?: any;
-    icon?: string;
-    iconTitle?: string;
+    destAddonIcon?: string;
+    destAddonIconTitle?: string;
     [field: string]: string | boolean | number;
 }
 
@@ -99,7 +99,7 @@ export abstract class AbstractTransferRendererBase {
     /**
      * @internal
      */
-    public destinationIconClick: EventEmitter<ListOption>;
+    public destAddonIconClick: EventEmitter<ListOption>;
     /**
      * @internal
      */
@@ -187,7 +187,7 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     public selectedItemsChange: EventEmitter<ArrayCollection<ListOption>> = new EventEmitter<ArrayCollection<ListOption>>();
 
     @Output()
-    public destinationIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
+    public destAddonIconClick: EventEmitter<ListOption> = new EventEmitter<ListOption>();
 
     /**
      * 渲染器配置
@@ -270,10 +270,10 @@ export abstract class TransferListRendererBase extends AbstractTransferRendererB
     /**
      * @internal
      */
-    public _$iconClick(event: MouseEvent, item: ListOption): void {
+    public _$destAddonIconClick(event: MouseEvent, item: ListOption): void {
         event.stopPropagation();
         if (this.isDestRenderer) {
-            this.destinationIconClick.emit(item);
+            this.destAddonIconClick.emit(item);
         }
     }
 
