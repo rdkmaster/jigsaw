@@ -222,7 +222,7 @@ export class TransferListDemoComponent {
     }
 
     public destIconClick(item: ListOption): void {
-        console.log(item);
+        alert('正在配置' + item.name);
     }
 
     // ====================================================================
