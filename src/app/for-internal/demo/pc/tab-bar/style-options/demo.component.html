@@ -1,0 +1,111 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<div class="demo-options-cntr">
+    <jigsaw-header>标签栏样式</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.barStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.barStyles.backgroundFill = 'var(--brand-default)'">
+                颜色变量
+            </jigsaw-button>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.barStyles.backgroundFill = '#000000'">
+                具体色值
+            </jigsaw-button>
+            <jigsaw-button
+                (click)="styleOptions.tabBarStyles.barStyles.backgroundFill = 'linear-gradient(to right, #FF3CAC, #784BA0, #2B86C5, #00A5E0)'">
+                渐进色
+            </jigsaw-button>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.barStyles.backgroundFill = 'transparent'">
+                透明
+            </jigsaw-button>
+        </li>
+    </ul>
+    <jigsaw-header>标签样式</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>默认背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.normalStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.normalStyles.backgroundFill = 'transparent'">
+                透明
+            </jigsaw-button>
+        </li>
+        <li class="demo-options-item">
+            <span>选中背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.selectedStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.selectedStyles.backgroundFill = 'transparent'">
+                透明
+            </jigsaw-button>
+        </li>
+        <li class="demo-options-item">
+            <span>悬浮背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.hoverStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.hoverStyles.backgroundFill = 'transparent'">
+                透明
+            </jigsaw-button>
+        </li>
+        <li class="demo-options-item">
+            <span>禁用背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.disabledStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.tabBarStyles.disabledStyles.backgroundFill = 'transparent'">
+                透明
+            </jigsaw-button>
+        </li>
+    </ul>
+    <jigsaw-header>内容区样式</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>内容区背景填充</span>
+            <jigsaw-input width="400px" [(value)]="styleOptions.contentStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-button (click)="styleOptions.contentStyles.backgroundFill = 'var(--brand-default)'">
+                变量
+            </jigsaw-button>
+        </li>
+    </ul>
+    <jigsaw-header>兼容性</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>backgroundColor</span>
+            <jigsaw-input width="400px" [(value)]="backgroundColor"></jigsaw-input>
+            <jigsaw-button (click)="backgroundColor = 'var(--brand-default)'">
+                变量
+            </jigsaw-button>
+        </li>
+    </ul>
+</div>
+<div class="demo-cntr">
+    <div>
+        <jigsaw-tabs-bar width="100%" [data]="tabBarData" [styleOptions]="styleOptions.tabBarStyles"
+            [backgroundColor]="backgroundColor"></jigsaw-tabs-bar>
+    </div>
+    <div>
+        <jigsaw-tabs [backgroundColor]="backgroundColor" [styleOptions]="styleOptions">
+            <jigsaw-tab-pane title="tab1">
+                <ng-template>
+                    <p class="tab-content">tab content 1
+                    <p>
+                </ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab2" [disabled]="true">
+                <ng-template>
+                    <p class="tab-content">tab content 2
+                    <p>
+                </ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab3">
+                <ng-template>
+                    <p class="tab-content">tab content 3
+                    <p>
+                </ng-template>
+            </jigsaw-tab-pane>
+            <jigsaw-tab-pane title="tab4">
+                <ng-template>
+                    <p class="tab-content">tab content 4
+                    <p>
+                </ng-template>
+            </jigsaw-tab-pane>
+        </jigsaw-tabs>
+    </div>
+</div>

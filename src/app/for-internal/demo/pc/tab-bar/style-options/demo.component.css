@@ -1,0 +1,13 @@
+.demo-options-cntr {
+    height: 40vh;
+    overflow-y: scroll;
+}
+
+.demo-cntr>div {
+    width: 100%;
+    height: 200px;
+}
+
+.tab-content {
+    height: 120px;
+}

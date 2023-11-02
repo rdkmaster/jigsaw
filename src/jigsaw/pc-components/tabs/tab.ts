@@ -23,34 +23,13 @@ import {
     ViewContainerRef
 } from '@angular/core';
 import {JigsawTabPane} from "./tab-pane";
-import {JigsawTabContent, JigsawTabLabel, TabTitleInfo} from "./tab-item";
+import {JigsawTabContent, JigsawTabLabel} from "./tab-item";
 import {AbstractJigsawComponent, IDynamicInstantiatable, WingsTheme} from "../../common/common";
 import {Subscription} from "rxjs";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {IJigsawTabTitleRenderer} from "./tab-renderer";
 import {CommonUtils} from '../../common/core/utils/common-utils';
-
-export type TabBarData = {
-    /**
-     * 字符串类型的标题
-     */
-    label?: string,
-    /**
-     * 支持包含简单标签的HTML片段
-     */
-    html?: string,
-    /**
-     * 当配置了HTML内容时，搭配该属性，可以指定HTML运行的上下文
-     */
-    htmlContext?: any,
-    disabled?: boolean,
-    hidden?: boolean,
-    /**
-     * 显示在文本前面的图标
-     */
-    icon?: string,
-    renderer?: Type<IJigsawTabTitleRenderer>
-}
+import { TabBarData, TabBarStyleOptions, TabStyleOptions, TabTitleInfo } from './tab-types';
 
 @Directive()
 export abstract class JigsawTabBase extends AbstractJigsawComponent implements AfterViewInit, AfterViewChecked {
@@ -445,6 +424,45 @@ export class JigsawTabBar extends JigsawTabBase {
         super(_changeDetector, _elementRef, _injector);
     }
 
+    private _styleOptions: TabBarStyleOptions;
+
+    /**
+     * 设置标签样式
+     * @NoMarkForCheckRequired
+    */
+    @Input()
+    public get styleOptions(): TabBarStyleOptions {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: TabBarStyleOptions) {
+        if (this._styleOptions === value) {
+            return;
+        }
+        this._styleOptions = value;
+        this._changeDetector.detectChanges();
+    }
+
+    /**
+     * @internal
+     */
+    public _$hoveredTab: number;
+
+    /**
+     * @internal
+     */
+    public _$getTabBackground(tab: TabBarData, index: number): string {
+        if (tab.disabled) {
+            return this.styleOptions?.disabledStyles?.backgroundFill || 'var(--bg-disabled)';
+        } else if (this._$selectedIndex == index) {
+            return this.styleOptions?.selectedStyles?.backgroundFill || 'unset';
+        } else if (this._$hoveredTab == index) {
+            return this.styleOptions?.hoverStyles?.backgroundFill || 'var(--brand-lighten)';
+        } else {
+            return this.styleOptions?.normalStyles?.backgroundFill || 'unset';
+        }
+    }
+
     /**
      * tab页点击
      * @internal
@@ -525,6 +543,25 @@ export class JigsawTab extends JigsawTabBase {
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_changeDetector, _elementRef, _injector);
+    }
+
+    private _styleOptions: TabStyleOptions;
+
+    /**
+     * 设置标签样式
+     * @NoMarkForCheckRequired
+    */
+    @Input()
+    public get styleOptions(): TabStyleOptions {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: TabStyleOptions) {
+        if (this._styleOptions === value) {
+            return;
+        }
+        this._styleOptions = value;
+        this._changeDetector.detectChanges();
     }
 
     /**
