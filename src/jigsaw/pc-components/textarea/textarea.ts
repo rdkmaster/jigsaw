@@ -207,6 +207,16 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     public includesCRLF: boolean = false;
 
     /**
+     *  设置存入对应系统所使用的换行符
+     *  windows使用/r/n。换行符被识别成两个字符
+     *  linux使用/n，换行符被识别成一个字符
+     *
+     *  $demo = textarea/max-length
+     * */
+    @Input()
+    public lineBreakStyle: "windows" | "linux" | "unset" = "unset";
+
+    /**
      * @internal
      */
     public _$currentLength: number = 0;
@@ -236,6 +246,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     private _updateValue(value: string): string {
+        value = this._unifyLineBreak(value);
         if (this.includesCRLF) {
             value = value.substring(0, this._maxLength);
         } else {
@@ -249,6 +260,14 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             this._textareaElement.nativeElement.value = value;
         }
         return value;
+    }
+
+    private _unifyLineBreak(value: string): string {
+        if (this.lineBreakStyle == 'unset') {
+            return value;
+        }
+        const replacement = (this.lineBreakStyle == 'windows') ? "\r\n" : "\n";
+        return value.replace(/(\r\n|\n|\r)/g, replacement);
     }
 
     private _getLengthWithoutCRLF(value: string): number {

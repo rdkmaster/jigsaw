@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, ViewChild} from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html'
@@ -8,7 +8,16 @@ export class TextareaMaxLengthDemoComponent {
     public _$value = '多行文本框';
 
     public _$valueChange($event: string): void {
-        console.log(' input value: ', $event)
+        console.log(' input value: ', $event);
+    }
+
+    public selectedSystem: "windows" | "linux" | "unset" = "unset";
+    systems = ["windows" , "linux" , "unset"];
+
+    maxLength: number = 100;
+
+    radioChange($event: string) {
+        console.log("selected System is", $event);
     }
 
     // ====================================================================

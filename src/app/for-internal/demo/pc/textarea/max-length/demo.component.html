@@ -20,10 +20,14 @@
         <div class="demo-3 live-demo live-demo-block">
             字符数是否包含回车换行符：
             <jigsaw-switch [(checked)]="_$includesCRLF" offLabel="不包含" onLabel="包含"></jigsaw-switch>
+            <br>
+            设置系统：
+            <jigsaw-radios-lite [(value)]="selectedSystem" (valueChange)="radioChange($event)" [data]="systems">
+            </jigsaw-radios-lite>
+            设置字符限制：
+            <jigsaw-numeric-input [(value)]="maxLength" ></jigsaw-numeric-input>
             <br><br>
-            <jigsaw-textarea [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
+            <jigsaw-textarea [maxLength]="maxLength" [includesCRLF]="_$includesCRLF" [lineBreakStyle]="selectedSystem" (valueChange)="_$valueChange($event)"></jigsaw-textarea>
         </div>
     </div>
 </div>
-
-
