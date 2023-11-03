@@ -211,6 +211,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      *  - windows使用\r\n。换行符被识别成两个字符
      *  - linux使用\n，换行符被识别成一个字符
      *
+     * @NoMarkForCheckRequired
+     *
      *  $demo = textarea/max-length
      * */
     @Input()
