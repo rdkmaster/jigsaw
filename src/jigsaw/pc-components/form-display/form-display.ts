@@ -8,27 +8,52 @@ interface StyleCombos {
     [property: string]: string | number;
 }
 
+
+/**
+ * level 控制组件表题尺寸
+ * marginBottom 控制下边距
+ * marginTop 控制多个form-display组件上下间距
+ * */
 type SectionTitleStyle = {
     level: 1 | 2 | 3,
-    marginBottom: string
+    marginBottom: string,
+    marginTop: string
 }
 
+/**
+ * value 单元格的值
+ * colSpan 控制单元格横跨列数
+ * rowSpan 控制单元格所站行数
+ * style 单元格定制样式
+ * isTableHeader 使用表头样式
+ * isRequired 是否必填项
+ * */
 type TableCellConfig = string | {
     value: string,
     colSpan?: number,
     rowSpan?: number,
     style?: StyleCombos,
-    isRequired?: boolean
+    isTableHeader?: boolean;
+    isRequired?: boolean,
 }
 
 type TableRowConfig = TableCellConfig[];
 
+/**
+ *  title 标题内容
+ *  titleStyle 标题样式--SectionTitleStyle
+ *  data 表数据
+ *  trStyle 表行统一样式
+ *  tdStyle 表单元格统一样式
+ *
+ *  优先级data.style > tdStyle > trStyle
+ * */
 export type TableDataConfig = {
     title: string,
     titleStyle?: SectionTitleStyle,
     data: TableRowConfig[],
-    tdStyle?: StyleCombos,
     trStyle?: StyleCombos
+    tdStyle?: StyleCombos
 }
 
 @WingsTheme('form-display.scss')

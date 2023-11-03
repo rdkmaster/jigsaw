@@ -12,13 +12,25 @@ $jigsaw-form-display: #{$jigsaw-prefix}-form-display;
             font-size: $font-size-text-base;
 
             tr {
+                border-color: $border-color-default;
+
+                .table-header {
+                    background: $bg-gray;
+                }
+
                 td {
-                    color: $font-color-black;
+                    border-width: 0;
+                    border-style: solid;
+                    border-color: $border-color-default;
+                    font-size: $font-size-text-base;
+                    color: $font-color-default;
                     line-height: $line-height-base;
                     vertical-align: middle;
+                    background: unset;
+                    height: 32px;
 
                     .required {
-                        color: $red-6;
+                        color: #F04646;
                     }
                 }
             }

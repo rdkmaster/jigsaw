@@ -1,11 +1,11 @@
 <div class="form-display-total" *ngFor="let form of data">
     <jigsaw-header class="form-display-title" [level]="form.titleStyle.level || 2"
-                   [ngStyle]="{'margin-bottom': form.titleStyle.marginBottom || '15px'}">
+                   [ngStyle]="{'margin-bottom': form.titleStyle.marginBottom || '4px', 'margin-top': form.titleStyle.marginTop || '20px'}">
         {{form.title}}
     </jigsaw-header>
     <table class="form-display-table">
         <tr [ngStyle]="form.trStyle" *ngFor="let row of form.data">
-            <td *ngFor="let cell of row" [ngStyle]="form.tdStyle"
+            <td *ngFor="let cell of row" [ngStyle]="form.tdStyle" [ngClass]="{'table-header': cell.isTableHeader}"
                 [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" style="{{cell.style}}">
                 {{ cell.value }}
                 <span *ngIf="cell.isRequired" class="required">*</span>
