@@ -21,7 +21,7 @@
             字符数是否包含回车换行符：
             <jigsaw-switch [(checked)]="_$includesCRLF" offLabel="不包含" onLabel="包含"></jigsaw-switch>
             <br><br>
-            <jigsaw-textarea [maxLength]="100" [includesCRLF]="_$includesCRLF" (valueChange)="_$valueChange($event)">
+            <jigsaw-textarea [maxLength]="100" [includesCRLF]="_$includesCRLF" [lineBreakStyle]="selectedLineBreakStyle" (valueChange)="_$valueChange($event)">
             </jigsaw-textarea>
         </div>
         <div class="demo-3 live-demo live-demo-block">

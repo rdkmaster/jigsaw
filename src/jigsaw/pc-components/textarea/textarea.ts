@@ -166,7 +166,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             value = this._updateValue(value);
             this._$currentLength = this.includesCRLF ? value.length : this._getLengthWithoutCRLF(value);
         }
-        return value;
+        return this._unifyLineBreak(value);
     }
 
     /**
@@ -215,7 +215,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      *  $demo = textarea/max-length
      * */
     @Input()
-    public lineBreakStyle: "windows" | "linux" | "let-it-be" | undefined;
+    public lineBreakStyle: "windows" | "linux" | undefined = 'linux';
 
     /**
      * @internal
@@ -264,7 +264,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     }
 
     private _unifyLineBreak(value: string): string {
-        if (!this.lineBreakStyle || this.lineBreakStyle == 'let-it-be') {
+        if (!this.lineBreakStyle) {
             return value;
         }
         const replacement = (this.lineBreakStyle == 'windows') ? "\r\n" : "\n";

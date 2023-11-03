@@ -8,9 +8,8 @@ export class TextareaMaxLengthDemoComponent {
     public _$value = '多行文本框';
     public _$value1 = '包含多种风格换行符的文本 \n line1 \r\n line2 \n line3 \r\n line4';
     public valueWithLineBreak = '';
-    public selectedLineBreakStyle: "windows" | "linux" | "let-it-be" = "let-it-be";
-    public lineBreakStyles = ["windows" , "linux" , "let-it-be"];
-    public maxLength: number = 100;
+    public selectedLineBreakStyle: "windows" | "linux" = "linux";
+    public lineBreakStyles = ["windows" , "linux"];
 
     constructor() {
         this.lineBreakChange();
