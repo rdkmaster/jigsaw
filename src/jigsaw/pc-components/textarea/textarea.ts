@@ -210,12 +210,11 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
      *  设置组件输出的`value`换行符风格
      *  - windows使用\r\n。换行符被识别成两个字符
      *  - linux使用\n，换行符被识别成一个字符
-     *  - let-it-be或者不设置，则不自动处理
      *
      *  $demo = textarea/max-length
      * */
     @Input()
-    public lineBreakStyle: "windows" | "linux" | undefined = 'linux';
+    public lineBreakStyle: "windows" | "linux" = 'linux';
 
     /**
      * @internal
