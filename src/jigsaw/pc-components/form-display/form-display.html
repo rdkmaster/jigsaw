@@ -6,7 +6,7 @@
     <table class="form-display-table">
         <tr [ngStyle]="form.trStyle" *ngFor="let row of form.data">
             <td *ngFor="let cell of row"
-                [ngClass]="{'table-header': cell.isTableHeader}" [ngStyle]="form.tdStyle"
+                [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="form.tdStyle"
                 [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" style="{{cell.style}}">
                 {{ cell.value }}
                 <span *ngIf="cell.isRequired" class="required">*</span>
