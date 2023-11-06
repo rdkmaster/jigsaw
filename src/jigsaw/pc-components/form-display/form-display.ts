@@ -66,6 +66,14 @@ type TableCellConfig = string | {
 type TableRowConfig = TableCellConfig[];
 
 /**
+ *  设置表格统一样式
+ *  columnWidths 设置表格每列宽度，提供数组少于列数，剩余列数设为auto
+ *  如何没设置columnWidths，每列平均分配宽度
+ * */
+
+type TableCommonStyle = StyleCombos & { columnWidths: number[] };
+
+/**
  * 表数据的配置
  */
 export type TableDataConfig = {
@@ -93,7 +101,9 @@ export type TableDataConfig = {
     /**
      * 表格单元格的统一样式，优先级次之
      */
-    tdStyle?: StyleCombos
+    tdStyle?: StyleCombos,
+
+    commonStyle?: TableCommonStyle
 }
 
 @WingsTheme('form-display.scss')
@@ -114,6 +124,8 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         super();
     }
 
+    public _$tablesColumns: number[][];
+
     private _data: TableDataConfig[];
 
     @RequireMarkForCheck()
@@ -127,6 +139,22 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             data = [data];
         }
         this._data = data;
+        this._$tablesColumns = this._data.map(data => data?.commonStyle?.columnWidths || []);
+        console.log(this._$tablesColumns);
+    }
+
+    public _$isString(cell: TableCellConfig) {
+        return typeof cell === 'string';
+    }
+
+    public _$getColumnLength(data: TableRowConfig[]): number {
+        let maxLength = 0;
+        for (const row of data) {
+            if (Array.isArray(row)) {
+                maxLength = Math.max(maxLength, row.length);
+            }
+        }
+        return maxLength;
     }
 }
 

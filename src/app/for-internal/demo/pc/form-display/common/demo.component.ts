@@ -28,9 +28,10 @@ export class FormDisplayCommonDemoComponent {
                 ['业务域', '描述'],
                 ['Lte_Coverage', 'Ltecover高铁MR覆盖全维度天粒度统计'],
                 ['属性标签', '附件'],
-                ['p sdewpresweo', 'LtecoveNpe']
+                ['p sdewpresweo', 'LtecoveNpe', "ssss"]
             ],
-            trStyle: {}, tdStyle: {'text-align': 'left', 'width': '80px'}
+            trStyle: {}, tdStyle: {'text-align': 'left'},
+            commonStyle: {columnWidths: [100, 200, 300]}
         },
         {
             title: '目的表字段',
@@ -127,7 +128,8 @@ export class FormDisplayCommonDemoComponent {
                 ]
             ],
             trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'}
+            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
+            commonStyle: {columnWidths: [100, 200, 300]}
         }];
 
     formioSelected: boolean = true;
