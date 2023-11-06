@@ -451,15 +451,27 @@ export class JigsawTabBar extends JigsawTabBase {
     /**
      * @internal
      */
-    public _$getTabBackground(tab: TabBarData, index: number): string {
+    public _$getTabLabelStyle(tab: TabBarData, index: number) {
         if (tab.disabled) {
-            return this.styleOptions?.disabledStyles?.backgroundFill || 'var(--bg-disabled)';
+            return {
+                background: this.styleOptions?.disabledStyles?.backgroundFill || 'var(--bg-disabled)',
+                color: this.styleOptions?.disabledStyles?.textColor || 'var(--font-color-disabled-spec)',
+            }
         } else if (this._$selectedIndex == index) {
-            return this.styleOptions?.selectedStyles?.backgroundFill || 'unset';
+            return {
+                background: this.styleOptions?.selectedStyles?.backgroundFill || 'unset',
+                color: this.styleOptions?.selectedStyles?.textColor || 'var(--brand-default)'
+            }
         } else if (this._$hoveredTab == index) {
-            return this.styleOptions?.hoverStyles?.backgroundFill || 'var(--brand-lighten)';
+            return {
+                background: this.styleOptions?.hoverStyles?.backgroundFill || 'var(--brand-lighten)',
+                color: this.styleOptions?.hoverStyles?.textColor || 'var(--font-color-tag)'
+            }
         } else {
-            return this.styleOptions?.normalStyles?.backgroundFill || 'unset';
+            return {
+                background: this.styleOptions?.normalStyles?.backgroundFill || 'unset',
+                color: this.styleOptions?.normalStyles?.textColor || 'var(--font-color-tag)'
+            }
         }
     }
 

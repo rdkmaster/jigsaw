@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TabBarStyleOptions, TabStyleOptions } from "jigsaw/public_api";
+import { TabStyleOptions } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -14,16 +14,20 @@ export class TabBarStyleOptionsDemoComponent implements OnInit {
                 backgroundFill: undefined
             },
             normalStyles: {
-                backgroundFill: undefined
+                backgroundFill: undefined,
+                textColor: undefined
             },
             selectedStyles: {
-                backgroundFill: undefined
+                backgroundFill: undefined,
+                textColor: undefined
             },
             hoverStyles: {
-                backgroundFill: undefined
+                backgroundFill: undefined,
+                textColor: undefined
             },
             disabledStyles: {
-                backgroundFill: undefined
+                backgroundFill: undefined,
+                textColor: undefined
             }
         },
         contentStyles: {

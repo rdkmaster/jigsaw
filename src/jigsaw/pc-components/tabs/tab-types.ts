@@ -43,24 +43,40 @@ export type TabBarStyleOptions = {
         * 标签背景填充
         */
         backgroundFill?: string;
+        /**
+         * 标签文字颜色
+         */
+        textColor?: string,
     },
     selectedStyles?: {
         /**
         * 标签选中背景填充
         */
         backgroundFill?: string;
+        /**
+         * 标签选中文字颜色
+         */
+        textColor?: string,
     },
     hoverStyles?: {
         /**
         * 标签悬浮背景填充
         */
         backgroundFill?: string;
+        /**
+         * 标签悬浮文字颜色
+         */
+        textColor?: string,
     },
     disabledStyles?: {
         /**
         * 标签禁用背景填充
         */
         backgroundFill?: string;
+        /**
+         * 标签禁用文字颜色
+         */
+        textColor?: string,
     }
 }
 

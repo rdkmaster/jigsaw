@@ -19,7 +19,7 @@
                                   (click)="!tab.disabled && _$tabClick(i)"
                                   (remove)="_$handleRemove($event)"
                                   (labelChange)="titleChange.emit($event)"
-                                  [style.background]="_$getTabBackground(tab, i)"
+                                  [ngStyle]="_$getTabLabelStyle(tab, i)"
                                   (mouseover)="_$hoveredTab = i">
                 </jigsaw-tab-label>
                 <span class="iconfont iconfont-ea1d jigsaw-tabs-add-bar" *ngIf="editable"
