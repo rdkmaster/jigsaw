@@ -241,11 +241,6 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     .#{$jigsaw-table}-body-range {
         height: 100%;
 
-        &.#{$jigsaw-table}-no-data {
-            height: 160px;
-            border: 1px solid $border-color-default;
-        }
-
         .ps__rail-x,
         .ps__rail-y {
             z-index: 2;
@@ -267,11 +262,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
     .#{$jigsaw-table}-no-data-img {
         flex-direction: column;
+        justify-content: center;
         align-items: center;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        width: 100%;
+        height: 100%;
+        border: 1px solid $border-color-default;
 
         .#{$jigsaw-table}-no-data-text {
             color: $font-color-hint;

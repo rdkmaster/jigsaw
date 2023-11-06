@@ -231,11 +231,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const width = this.styleOptions?.rowStyles?.borderWidth || "1px";
         const style = this.styleOptions?.rowStyles?.borderStyle || "solid";
         const color = this.styleOptions?.rowStyles?.borderColor || "var(--border-color-default)";
+        const separate = this._$getTableBorderCollapse() == 'separate';
         const border = `${width} ${style} ${color}`;
 
         const borderStyles = {
             none: 'none',
-            all: border,
+            all: separate ? (pos == 'left' && !first) ? 'none' : border : border,
             outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
             topBottom: pos == 'top' ? border : pos === 'bottom' ? border : 'none'
         }
@@ -255,6 +256,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const width = this.styleOptions?.headerStyles?.borderWidth || "1px";
         const style = this.styleOptions?.headerStyles?.borderStyle || "solid";
         const color = this.styleOptions?.headerStyles?.borderColor || "var(--border-color-default)";
+        const separate = this._$getTableBorderCollapse() == 'separate';
         const border = `${width} ${style} ${color}`;
 
         const dividerWidth = this.styleOptions?.headerStyles?.dividerWidth || width;
@@ -265,25 +267,25 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         const borderStyles = {
             none: {
                 none: 'none',
-                all: divider,
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
                 outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
                 bottom: pos === 'bottom' ? divider : 'none'
             },
             all: {
-                none: border,
-                all: divider,
-                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : border,
-                bottom: pos == 'bottom' ? divider : border
+                none: separate ? (pos == 'left' && !first) ? 'none' : border : border,
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
+                outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : separate ? (pos == 'left') ? 'none' : border : border,
+                bottom: pos == 'bottom' ? divider : separate ? (pos == 'left' && !first) ? 'none' : border : border
             },
             outer: {
                 none: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : 'none',
-                all: divider,
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
                 outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
                 bottom: (pos == 'top' || (pos == 'left' && first) || (pos == 'right' && last)) ? border : pos == 'bottom' ? divider : 'none',
             },
             topBottom: {
                 none: pos == 'top' || pos === 'bottom' ? border : 'none',
-                all: divider,
+                all: separate ? (pos == 'left' && !first) ? 'none' : divider : divider,
                 outer: (pos == 'top' || pos == 'bottom' || (pos == 'left' && first) || (pos == 'right' && last)) ? divider : 'none',
                 bottom: pos == 'top' ? border : pos === 'bottom' ? divider : 'none'
             }
@@ -645,6 +647,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         data.pagingInfo.containerHeight = containerSize;
     }
 
+    /**
+     * @internal
+     */
+    @ViewChild('contentScrollbar')
+    private _bodyRange: ElementRef;
+
+    /**
+     * @internal
+     */
+    public _$hideImg: boolean = false;
+
+    private _updateNoDataImgHide() {
+        this._$hideImg = this._bodyRange?.nativeElement?.offsetHeight < 96;
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -780,6 +798,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._selectRow(this.selectedRow);
             // 设置冻结列
             this._updateFrozenColumns();
+            // 根据高度设置无数据图片是否显示
+            this._updateNoDataImgHide();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1023,6 +1043,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._updateFillUpBlankRow();
         this._updateAutoPageSizing();
         this._updateFrozenColumns();
+        this._updateNoDataImgHide();
     }
 
     private _tableHeaderElement: HTMLElement;

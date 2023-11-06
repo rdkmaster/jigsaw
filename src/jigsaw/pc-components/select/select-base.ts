@@ -220,6 +220,38 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public placeholder: string;
 
     /**
+     * 搜索框placeholder文本
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public searchPlaceholder: string;
+
+    /**
+     * @internal
+     */
+    public _$allSelectedText: string = this._translateService.instant("select.allSelected");
+
+    private _allSelectedText: string;
+
+    /**
+     * 全选时显示的文本
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get allSelectedText(): string {
+        return this._allSelectedText;
+    }
+
+    public set allSelectedText(newValue: string) {
+        if (this._allSelectedText === newValue) {
+            return;
+        }
+        this._allSelectedText = newValue;
+        this._$allSelectedText = this._allSelectedText || this._translateService.instant("select.allSelected");
+    }
+
+    /**
      * 设置多选框显示详细结果/统计结果
      *
      * @NoMarkForCheckRequired

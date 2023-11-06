@@ -1,5 +1,4 @@
 import {
-    ChangeDetectionStrategy,
     Component,
     ElementRef,
     EventEmitter,
@@ -8,8 +7,7 @@ import {
     NgModule,
     OnInit,
     Output,
-    Renderer2,
-    ViewChild
+    Renderer2
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AnimationDestroy} from "../../common/components/animations/destroy";
@@ -109,16 +107,14 @@ export class JigsawTag extends AbstractJigsawComponent implements OnInit {
     @Input()
     public icon: string;
 
-    @ViewChild('text', { read: ElementRef })
-    private _text: ElementRef;
-
     private _title: string;
+
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public get title(): string {
-        return CommonUtils.isDefined(this._title) ? this._title : this._text?.nativeElement.innerText;
+        return this._title;
     }
 
     public set title(value: string) {

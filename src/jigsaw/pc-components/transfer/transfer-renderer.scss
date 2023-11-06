@@ -1,5 +1,3 @@
-@import "../../common/assets/scss/core/base";
-
 $jigsaw-transfer: #{$jigsaw-prefix}-transfer;
 $jigsaw-list: #{$jigsaw-prefix}-list;
 $transfer-renderer: #{$jigsaw-prefix}-transfer-renderer;
@@ -9,10 +7,34 @@ $table-renderer: #{$jigsaw-prefix}-transfer-table-renderer;
 
 .#{$jigsaw-transfer}-renderer {
     height: 100%;
+
+    .#{$jigsaw-transfer}-list-renderer-sub-title {
+        display: flex;
+        align-items: center;
+
+        .#{$jigsaw-transfer}-list-renderer-icon {
+            color: $font-color-brand;
+            cursor: pointer;
+            margin-left: 8px;
+        }
+    }
 }
 
 .#{$list-renderer} {
     .#{$jigsaw-list}-host {
         border: none !important;
+
+        .#{$jigsaw-list}-option-host.#{$jigsaw-list}-option-active {
+            background: $bg-component;
+
+            .jigsaw-list-option-title,
+            .jigsaw-list-option-sub-title {
+                color: $font-color-default;
+            }
+
+            &:hover {
+                background: var(--bg-hover);
+            }
+        }
     }
 }
