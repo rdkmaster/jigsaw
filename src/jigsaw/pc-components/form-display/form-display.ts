@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, OnInit} from "@angular/core";
-import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {CommonModule} from "@angular/common";
+import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
@@ -8,51 +8,91 @@ interface StyleCombos {
     [property: string]: string | number;
 }
 
-
 /**
- * level 控制组件表题尺寸
- * marginBottom 控制下边距
- * marginTop 控制多个form-display组件上下间距
- * */
+ * 控制组件标题的尺寸
+ */
 type SectionTitleStyle = {
+    /**
+     * 控制标题的级别，可选值为1、2、3
+     */
     level: 1 | 2 | 3,
+
+    /**
+     * 控制组件标题下方的下边距
+     */
     marginBottom: string,
+
+    /**
+     * 控制多个 form-display 组件之间的上下间距
+     */
     marginTop: string
 }
 
 /**
- * value 单元格的值
- * colSpan 控制单元格横跨列数
- * rowSpan 控制单元格所站行数
- * style 单元格定制样式
- * isTableHeader 使用表头样式
- * isRequired 是否必填项
- * */
+ * 单元格配置，用于定义单元格的属性和样式
+ */
 type TableCellConfig = string | {
+    /**
+     * 单元格的值
+     */
     value: string,
+
+    /**
+     * 控制单元格横跨的列数
+     */
     colSpan?: number,
+
+    /**
+     * 控制单元格横跨的行数
+     */
     rowSpan?: number,
+
+    /**
+     * 单元格的自定义样式
+     */
     style?: StyleCombos,
-    isTableHeader?: boolean;
+
+    /**
+     * 指定是否应用表头样式
+     */
+    isHeader?: boolean;
+
+    /**
+     * 指定单元格是否为必填项
+     */
     isRequired?: boolean,
 }
 
 type TableRowConfig = TableCellConfig[];
 
 /**
- *  title 标题内容
- *  titleStyle 标题样式--SectionTitleStyle
- *  data 表数据
- *  trStyle 表行统一样式
- *  tdStyle 表单元格统一样式
- *
- *  优先级data.style > tdStyle > trStyle
- * */
+ * 表数据的配置
+ */
 export type TableDataConfig = {
+    /**
+     * 表的标题内容
+     * 优先级data.style > tdStyle > trStyle
+     */
     title: string,
+
+    /**
+     * 表标题的样式，可选类型为 SectionTitleStyle
+     */
     titleStyle?: SectionTitleStyle,
+
+    /**
+     * 表的数据行配置，参考 `TableRowConfig` 类型
+     */
     data: TableRowConfig[],
-    trStyle?: StyleCombos
+
+    /**
+     * 表格行的统一样式，优先级最低
+     */
+    trStyle?: StyleCombos,
+
+    /**
+     * 表格单元格的统一样式，优先级次之
+     */
     tdStyle?: StyleCombos
 }
 
@@ -69,6 +109,10 @@ export type TableDataConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawFormDisplayComponent extends AbstractJigsawComponent implements OnInit {
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        private _injector: Injector) {
+        super();
+    }
 
     private _data: TableDataConfig[];
 
@@ -83,11 +127,6 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             data = [data];
         }
         this._data = data;
-    }
-
-    constructor(// @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector) {
-        super();
     }
 }
 
