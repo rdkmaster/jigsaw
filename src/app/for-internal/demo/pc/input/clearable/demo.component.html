@@ -2,9 +2,18 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
-
 <!-- start to learn the demo from here -->
-<jigsaw-input value="clearable" [clearable]="enabled"></jigsaw-input>
-<jigsaw-switch [(checked)]="enabled" onLabel="on" offLabel="off"></jigsaw-switch>
-
-
+<div class="demo-options-cntr">
+    <jigsaw-header>clearable</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>可清除：</span>
+            <jigsaw-switch [(checked)]="enabled" onLabel="on" offLabel="off"></jigsaw-switch>
+        </li>
+        <li class="demo-options-item">
+            <span>禁用：</span>
+            <jigsaw-switch [(checked)]="disabled" onLabel="on" offLabel="off"></jigsaw-switch>
+        </li>
+    </ul>
+</div>
+<jigsaw-input value="clearable" [clearable]="enabled" [disabled]="disabled"></jigsaw-input>
