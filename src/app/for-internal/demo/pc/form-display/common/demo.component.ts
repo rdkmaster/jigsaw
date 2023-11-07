@@ -54,7 +54,8 @@ export class FormDisplayCommonDemoComponent {
 
             ],
             trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'}
+            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
+            commonStyle: {columnWidths: [300, 200, 100]}
         }
     ]
 

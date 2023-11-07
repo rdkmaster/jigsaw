@@ -124,6 +124,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         super();
     }
 
+    /**
+     * @internal
+     */
     public _$tablesColumns: number[][];
 
     private _data: TableDataConfig[];
@@ -143,10 +146,16 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         console.log(this._$tablesColumns);
     }
 
+    /**
+     * @internal
+     */
     public _$isString(cell: TableCellConfig) {
         return typeof cell === 'string';
     }
 
+    /**
+     * @internal
+     */
     public _$getColumnLength(data: TableRowConfig[]): number {
         let maxLength = 0;
         for (const row of data) {
