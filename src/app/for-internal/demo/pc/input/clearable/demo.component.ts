@@ -1,10 +1,12 @@
 import {Component} from "@angular/core";
 
 @Component({
-    templateUrl: './demo.component.html'
+    templateUrl: './demo.component.html',
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class InputClearableDemoComponent {
-    enabled: boolean;
+    public enabled: boolean;
+    public disabled: boolean;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo
