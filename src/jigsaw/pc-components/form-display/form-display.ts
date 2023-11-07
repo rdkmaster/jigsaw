@@ -66,14 +66,6 @@ type TableCellConfig = string | {
 type TableRowConfig = TableCellConfig[];
 
 /**
- *  设置表格统一样式
- *  columnWidths 设置表格每列宽度，提供数组少于列数，剩余列数设为auto
- *  如何没设置columnWidths，每列平均分配宽度
- * */
-
-type TableCommonStyle = StyleCombos & { columnWidths: number[] };
-
-/**
  * 表数据的配置
  */
 export type TableDataConfig = {
@@ -103,7 +95,11 @@ export type TableDataConfig = {
      */
     tdStyle?: StyleCombos,
 
-    commonStyle?: TableCommonStyle
+    /**
+     *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
+     *  如何没设置columnWidths，每列平均分配宽度
+     * */
+    columnWidths?: number[]
 }
 
 @WingsTheme('form-display.scss')
@@ -124,11 +120,6 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         super();
     }
 
-    /**
-     * @internal
-     */
-    public _$tablesColumns: number[][];
-
     private _data: TableDataConfig[];
 
     @RequireMarkForCheck()
@@ -142,28 +133,40 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             data = [data];
         }
         this._data = data;
-        this._$tablesColumns = this._data.map(data => data?.commonStyle?.columnWidths || []);
-        console.log(this._$tablesColumns);
+        this._$tablesColumns = this._data.map(data => data.columnWidths || []);
+        this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
+
+    /**
+     * 用于储存数据中每一个表的每一列的列宽
+     * @internal
+     */
+    public _$tablesColumns: number[][];
+
+    /**
+     * 用于储存数据中每一个表的的列数
+     * @internal
+     */
+    public _$tablesColumnLengths: undefined[][];
 
     /**
      * @internal
      */
-    public _$isString(cell: TableCellConfig) {
+    public _$isString(cell: TableCellConfig): boolean {
         return typeof cell === 'string';
     }
 
     /**
      * @internal
      */
-    public _$getColumnLength(data: TableRowConfig[]): number {
+    public _$getColumnLength(data: TableRowConfig[]): undefined[] {
         let maxLength = 0;
         for (const row of data) {
             if (Array.isArray(row)) {
                 maxLength = Math.max(maxLength, row.length);
             }
         }
-        return maxLength;
+        return [].constructor(maxLength);
     }
 }
 
