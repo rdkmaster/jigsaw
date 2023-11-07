@@ -106,7 +106,7 @@ export class FormDisplayCommonDemoComponent {
             titleStyle: {},
             data: [
                 [
-                    {value: '中文名称', isRequired: true, style: {'font-weight': '500'}, isHeader: true},
+                    {value: '中文名称', isRequired: true, style: {'font-weight': '500', 'text-align': 'right'}, isHeader: true},
                     {value: 'String'},
                     {value: '英文名称', style: {'font-weight': '500'}, isHeader: true},
                     {value: 'String'},
@@ -114,13 +114,13 @@ export class FormDisplayCommonDemoComponent {
                     {value: 'String(主数据)'}
                 ],
                 [
-                    {value: '存储状态', style: {'font-weight': '500'}, isHeader: true},
+                    {value: '存储状态', style: {'font-weight': '500', 'text-align': 'right'}, isHeader: true},
                     {value: 'String(线上线下)'},
                     {value: '数据类别', style: {'font-weight': '500'}, isHeader: true},
                     {value: 'String(B开头6位流水码)', colSpan: 3}
                 ],
                 [
-                    {value: '创建时间', style: {'font-weight': '500'}, isHeader: true},
+                    {value: '创建时间', style: {'font-weight': '500', 'text-align': 'right'}, isHeader: true},
                     {value: 'String'},
                     {value: '更新人', style: {'font-weight': '500'}, isHeader: true},
                     {value: 'String'},
@@ -129,8 +129,8 @@ export class FormDisplayCommonDemoComponent {
                 ]
             ],
             trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [100, 200, 300]
+            tdStyle: {'text-align': 'right', 'border-width': '1px', 'padding-left': '9px'},
+            columnWidths: [100, 200, 80]
         }];
 
     formioSelected: boolean = true;
