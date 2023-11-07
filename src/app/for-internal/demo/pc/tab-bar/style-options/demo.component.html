@@ -23,22 +23,40 @@
             </jigsaw-button>
         </li>
     </ul>
-    <jigsaw-header>标签样式</jigsaw-header>
+    <jigsaw-header>标签默认样式</jigsaw-header>
     <ul class="demo-options">
         <li class="demo-options-item">
             <span>默认背景填充</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.normalStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.normalStyles.backgroundFill"></jigsaw-input>
             <jigsaw-button (click)="styleOptions.tabBarStyles.normalStyles.backgroundFill = 'transparent'">
                 透明
             </jigsaw-button>
         </li>
         <li class="demo-options-item">
-            <span>选中背景填充</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.selectedStyles.backgroundFill"></jigsaw-input>
+            <span>文字颜色</span>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.normalStyles.textColor"></jigsaw-input>
+        </li>
+    </ul>
+    <jigsaw-header>标签选中样式</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
+            <span>背景填充</span>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.selectedStyles.backgroundFill"></jigsaw-input>
             <jigsaw-button (click)="styleOptions.tabBarStyles.selectedStyles.backgroundFill = 'transparent'">
                 透明
             </jigsaw-button>
         </li>
+        <li class="demo-options-item">
+            <span>文字颜色</span>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.selectedStyles.textColor"></jigsaw-input>
+        </li>
+    </ul>
+    <jigsaw-header>标签悬浮样式</jigsaw-header>
+    <ul class="demo-options">
         <li class="demo-options-item">
             <span>悬浮背景填充</span>
             <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.hoverStyles.backgroundFill"></jigsaw-input>
@@ -47,11 +65,25 @@
             </jigsaw-button>
         </li>
         <li class="demo-options-item">
+            <span>文字颜色</span>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.hoverStyles.textColor"></jigsaw-input>
+        </li>
+    </ul>
+    <jigsaw-header>标签禁用样式</jigsaw-header>
+    <ul class="demo-options">
+        <li class="demo-options-item">
             <span>禁用背景填充</span>
-            <jigsaw-input width="400px" [(value)]="styleOptions.tabBarStyles.disabledStyles.backgroundFill"></jigsaw-input>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.disabledStyles.backgroundFill"></jigsaw-input>
             <jigsaw-button (click)="styleOptions.tabBarStyles.disabledStyles.backgroundFill = 'transparent'">
                 透明
             </jigsaw-button>
+        </li>
+        <li class="demo-options-item">
+            <span>文字颜色</span>
+            <jigsaw-input width="400px"
+                [(value)]="styleOptions.tabBarStyles.disabledStyles.textColor"></jigsaw-input>
         </li>
     </ul>
     <jigsaw-header>内容区样式</jigsaw-header>
