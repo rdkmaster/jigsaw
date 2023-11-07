@@ -28,6 +28,8 @@ $jigsaw-form-display: #{$jigsaw-prefix}-form-display;
                     vertical-align: middle;
                     background: unset;
                     height: 32px;
+                    padding-left: 8px;
+                    padding-right: 8px;
 
                     .required {
                         color: #F04646;

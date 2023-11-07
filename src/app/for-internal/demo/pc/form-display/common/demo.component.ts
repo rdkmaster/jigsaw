@@ -129,7 +129,7 @@ export class FormDisplayCommonDemoComponent {
                 ]
             ],
             trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'right', 'border-width': '1px', 'padding-left': '9px'},
+            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
             columnWidths: [100, 200, 80]
         }];
 

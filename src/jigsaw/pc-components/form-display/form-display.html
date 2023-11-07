@@ -15,8 +15,8 @@
                     <td [ngStyle]="form.tdStyle" >{{ cell }}</td>
                 </ng-container>
                 <ng-template #cellTemplate>
-                    <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="form.tdStyle"
-                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="cell.style">
+                    <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
+                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="form.tdStyle">
                         {{ cell.value }}
                         <span *ngIf="cell.isRequired" class="required">*</span>
                     </td>
