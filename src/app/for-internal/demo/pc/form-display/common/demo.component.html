@@ -1,0 +1,10 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="form">
+    <jigsaw-form-display #jigsawFormDisplayComponent [data]="formio" [width]="'800px'"></jigsaw-form-display>
+</div>
+
+<div style="position: absolute; left: 888px; top: 70px">
+    <jigsaw-button (click)="changeSource()">改变数据源</jigsaw-button>
+</div>

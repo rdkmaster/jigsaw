@@ -286,6 +286,10 @@ export const routerConfigPC = [
     {
         path: "pc/large-text",
         loadChildren: () => import('./demo/pc/large-text/demo-set.module').then(m => m.LargeTextDemoModule),
+    },
+    {
+        path: "pc/form-display",
+        loadChildren: () => import('./demo/pc/form-display/demo-set-module').then(m => m.FormDisplayDemoModule),
     }
 ];
 export const routerConfigMobile = [
