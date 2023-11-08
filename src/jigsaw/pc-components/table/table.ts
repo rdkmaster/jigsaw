@@ -178,31 +178,21 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             return;
         }
         this._styleOptions = value;
+        this._setRowBackground();
         this._changeDetectorRef.detectChanges();
     }
 
-    /**
-     * @internal
-     */
-    public _$hoveredRow: number;
-
-    /**
-     * @internal
-     */
-    public _$getRowBackground(index: number): string {
-        let background;
-        if (index == this.selectedRow) {
-            background = this.styleOptions?.rowStyles?.selectedBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--brand-active-lighten)';
-        } else if (index == this._$hoveredRow) {
-            background = this.styleOptions?.rowStyles?.hoverBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'var(--bg-hover)';
-        } else if (index % 2 === 0) {
-            background = this.styleOptions?.rowStyles?.oddBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
-        } else if (index % 2 === 1) {
-            background = this.styleOptions?.rowStyles?.evenBackgroundFill || this.styleOptions?.rowStyles?.backgroundFill || 'unset';
-        } else {
-            return 'unset';
-        }
-        return background;
+    private _setRowBackground() {
+        const normal = this.styleOptions?.rowStyles?.backgroundFill || 'unset';
+        const odd = this.styleOptions?.rowStyles?.oddBackgroundFill || 'transparent';
+        const even = this.styleOptions?.rowStyles?.evenBackgroundFill || 'transparent';
+        const hover = this.styleOptions?.rowStyles?.hoverBackgroundFill || 'var(--bg-hover)';
+        const selected = this.styleOptions?.rowStyles?.selectedBackgroundFill || 'var(--brand-active-lighten)';
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-table-row', normal.trim());
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-table-row-odd', odd.trim());
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-table-row-even', even.trim());
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-table-row-hover', hover.trim());
+        this._elementRef.nativeElement.style.setProperty('--jigsaw-table-row-selected', selected.trim());
     }
 
     /**
