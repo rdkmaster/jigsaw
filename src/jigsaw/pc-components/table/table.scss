@@ -187,11 +187,11 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 background: var(--jigsaw-table-row, 'unset');
 
                 &:nth-child(2n) {
-                    background: var(--jigsaw-table-row-odd, $bg-transparent);
+                    background: var(--jigsaw-table-row-even, $bg-transparent);
                 }
                 
                 &:nth-child(2n-1) {
-                    background: var(--jigsaw-table-row-even, $bg-transparent);
+                    background: var(--jigsaw-table-row-odd, $bg-transparent);
                 }
 
                 &:hover {
