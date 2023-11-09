@@ -1,0 +1,17 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>是否允许空值：</span>
+        <jigsaw-switch [(checked)]="allowEmptyValue"></jigsaw-switch>
+    </li>
+</ul>
+
+<j-numeric-input [(value)]="value" [allowEmptyValue]="allowEmptyValue" min="-10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)">
+</j-numeric-input>
+<p>当前值{{value}}</p>
