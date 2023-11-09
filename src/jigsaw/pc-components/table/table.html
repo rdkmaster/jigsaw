@@ -54,12 +54,13 @@
                     </td>
                 </tr>
             </thead>
-            <tbody (mouseout)="_$hoveredRow = null">
+            <tbody>
                 <tr #tableRow *ngFor="let row of _$cellSettings; index as rowIndex" (click)="_$clickRow(rowIndex)"
-                    (dblclick)="_$handleRowDoubleClick(rowIndex)" (mouseover)="_$hoveredRow = rowIndex"
-                    [style.background]="_$getRowBackground(rowIndex)" [style.height]="styleOptions?.rowStyles?.height"
+                    (dblclick)="_$handleRowDoubleClick(rowIndex)"
+                    [style.height]="styleOptions?.rowStyles?.height"
                     [style.boxShadow]="styleOptions?.rowStyles?.boxShadow"
-                    [style.opacity]="styleOptions?.rowStyles?.opacity">
+                    [style.opacity]="styleOptions?.rowStyles?.opacity"
+                    [class.jigsaw-table-row-selected]="selectedRow == rowIndex">
                     <td *ngFor="let cell of row; index as tdIndex; first as first; last as last"
                         [attr.rowspan]="cell.rowSpan > 1 ? cell.rowSpan : null"
                         [style.display]="cell.rowSpan ? 'table-cell' : 'none'"

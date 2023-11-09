@@ -184,13 +184,22 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
             tr {
                 height: 32px;
+                background: var(--jigsaw-table-row, 'unset');
 
                 &:nth-child(2n) {
-                    background: $bg-transparent;
+                    background: var(--jigsaw-table-row-even, $bg-transparent);
+                }
+                
+                &:nth-child(2n-1) {
+                    background: var(--jigsaw-table-row-odd, $bg-transparent);
                 }
 
-                &:nth-child(2n-1) {
-                    background: $bg-transparent;
+                &:hover {
+                    background: var(--jigsaw-table-row-hover, var(--bg-hover));
+                }
+
+                &.jigsaw-table-row-selected {
+                    background: var(--jigsaw-table-row-selected, var(--brand-active-lighten));
                 }
 
                 td[rowspan] {
