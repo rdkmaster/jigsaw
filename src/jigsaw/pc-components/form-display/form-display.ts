@@ -133,6 +133,10 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             data = [data];
         }
         this._data = data;
+        const form = data[0];
+        if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
+            this._data = this._transformForms(data);
+        }
         this._$tablesColumns = this._data.map(data => data.columnWidths || []);
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
@@ -167,6 +171,85 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             }
         }
         return [].constructor(maxLength);
+    }
+
+    private _transformForms(data: any[]): TableDataConfig[] {
+        let formDisplayData: TableDataConfig[] = [];
+        if (!Array.isArray(data)) {
+            return formDisplayData;
+        }
+        // 如果第一个数据没有fields，则说明是单一的表单
+        if (!data[0]?.fields) {
+            formDisplayData.push(this._transformOneStep(data));
+        } else {
+            data.forEach(form => {
+                formDisplayData.push(this._transformOneStep(form.fields, form.label))
+            })
+        }
+        return formDisplayData;
+    }
+
+    private _transformOneStep(data: any[], title: string = ''): TableDataConfig {
+        const tableData: TableDataConfig = {title: title, data: []};
+        data.forEach(form => {
+            tableData.data = tableData.data.concat(this._distinguishData(form));
+        })
+        return tableData;
+    }
+
+    private _distinguishData(form: any): TableRowConfig[] {
+        let tableData: TableRowConfig[] = [];
+        if (!Array.isArray(form)) {
+            form = [form];
+        }
+        form.forEach(f => {
+            tableData = tableData.concat(this._transformRow(f));
+        })
+        return tableData;
+    }
+
+    private _transformRow(row): TableRowConfig[] {
+        let tableData: TableRowConfig[] = [];
+        let a: TableRowConfig = [];
+        if (!row.fieldGroup) {
+            tableData.push(this._transformCell(row));
+        } else {
+            row.fieldGroup.forEach((field) => {
+                a = a.concat(this._transformCell(field));
+            })
+            tableData.push(a);
+        }
+        return tableData;
+    }
+
+    private _transformCell(field): TableCellConfig [] {
+        if (!field.templateOptions) {
+            return ['', ''];
+        }
+        const header: TableCellConfig = {value: field.templateOptions.label || "", isHeader: true};
+        let common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
+        if (field.type == "date-time-select") {
+            common.value = field.templateOptions.date;
+        }
+        if (field.type == "range-date-time-select") {
+            const date = field.templateOptions.date;
+            if (date) {
+                common.value = `${date.beginDate}, ${date.endDate}`
+            }
+        }
+        if (field.type == "tile-lite") {
+            const selectedItems = field.templateOptions.selectedItems;
+            if (selectedItems?.[0]) {
+                common.value = `${selectedItems[0]}`
+            }
+        }
+        if (field.type == "list-lite") {
+            const selectedItems = field.templateOptions.selectedItems;
+            if (selectedItems?.[0]) {
+                common.value = `${selectedItems[0].label}`
+            }
+        }
+        return [header, common];
     }
 }
 

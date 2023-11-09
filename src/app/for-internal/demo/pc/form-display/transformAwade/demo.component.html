@@ -1,0 +1,11 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="form">
+    <jigsaw-form-display #jigsawFormDisplayComponent [data]="formio" [width]="'800px'"></jigsaw-form-display>
+</div>
+
+<div style="position: absolute; left: 888px; top: 70px">
+    <jigsaw-button (click)="changeSource()">不包含step</jigsaw-button>
+    <jigsaw-button (click)="changeSource1()">包含step</jigsaw-button>
+</div>

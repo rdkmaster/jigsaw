@@ -1,6 +1,6 @@
 <div class="form-display-total" *ngFor="let form of data; let i = index">
-    <jigsaw-header class="form-display-title" [level]="form.titleStyle.level || 2"
-                   [ngStyle]="{'margin-bottom': form.titleStyle.marginBottom || '4px','margin-top': form.titleStyle.marginTop || '20px'}">
+    <jigsaw-header *ngIf="form.title" class="form-display-title" [level]="form.titleStyle?.level || 2"
+                   [ngStyle]="{'margin-bottom': form.titleStyle?.marginBottom || '4px','margin-top': form.titleStyle?.marginTop || '20px'}">
         {{form.title}}
     </jigsaw-header>
     <table class="form-display-table">
