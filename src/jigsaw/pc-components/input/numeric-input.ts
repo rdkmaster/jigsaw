@@ -389,7 +389,6 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @internal
      */
     public _$handleBlur(event: FocusEvent) {
-        console.log(this._value,this.allowEmptyValue)
         this._focused = false;
         this._onTouched();
         if ((<any>this._value == "" && !this.allowEmptyValue) || (<any>this._value !== "" && (this._value < this.min || isNaN(this._value)))) {
