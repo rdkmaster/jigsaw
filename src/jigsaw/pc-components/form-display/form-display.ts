@@ -3,6 +3,7 @@ import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {FormlyFieldConfig} from '@ngx-formly/core';
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -102,6 +103,13 @@ export type TableDataConfig = {
     columnWidths?: number[]
 }
 
+export type StepFieldsConfig = {
+    label: string;
+    agentId?: string;
+    panelHeight?: string;
+    fields: FormlyFieldConfig[];
+};
+
 @WingsTheme('form-display.scss')
 @Component({
     selector: 'jigsaw-form-display',
@@ -179,17 +187,17 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             return formDisplayData;
         }
         // 如果第一个数据没有fields，则说明是单一的表单
-        if (!data[0]?.fields) {
-            formDisplayData.push(this._transformOneStep(data));
-        } else {
+        if (data[0]?.fields) {
             data.forEach(form => {
                 formDisplayData.push(this._transformOneStep(form.fields, form.label))
             })
+        } else {
+            formDisplayData.push(this._transformOneStep(data));
         }
         return formDisplayData;
     }
 
-    private _transformOneStep(data: any[], title: string = ''): TableDataConfig {
+    private _transformOneStep(data: FormlyFieldConfig[], title: string = ''): TableDataConfig {
         const tableData: TableDataConfig = {title: title, data: []};
         data.forEach(form => {
             tableData.data = tableData.data.concat(this._distinguishData(form));
@@ -197,7 +205,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return tableData;
     }
 
-    private _distinguishData(form: any): TableRowConfig[] {
+    private _distinguishData(form: FormlyFieldConfig | FormlyFieldConfig[]): TableRowConfig[] {
         let tableData: TableRowConfig[] = [];
         if (!Array.isArray(form)) {
             form = [form];
@@ -208,21 +216,21 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return tableData;
     }
 
-    private _transformRow(row): TableRowConfig[] {
+    private _transformRow(row: FormlyFieldConfig): TableRowConfig[] {
         let tableData: TableRowConfig[] = [];
-        let a: TableRowConfig = [];
+        let newRow: TableRowConfig = [];
         if (!row.fieldGroup) {
             tableData.push(this._transformCell(row));
         } else {
-            row.fieldGroup.forEach((field) => {
-                a = a.concat(this._transformCell(field));
+            row.fieldGroup.forEach((field: FormlyFieldConfig) => {
+                newRow = newRow.concat(this._transformCell(field));
             })
-            tableData.push(a);
+            tableData.push(newRow);
         }
         return tableData;
     }
 
-    private _transformCell(field): TableCellConfig [] {
+    private _transformCell(field: FormlyFieldConfig): TableCellConfig [] {
         if (!field.templateOptions) {
             return ['', ''];
         }

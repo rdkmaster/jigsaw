@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent} from "jigsaw/public_api";
+import {JigsawFormDisplayComponent, StepFieldsConfig} from "jigsaw/public_api";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
 @Component({
@@ -10,7 +10,7 @@ export class TransFormCommonDemoComponent {
     @ViewChild('jigsawFormDisplayComponent')
     jigsawFormDisplayComponent: JigsawFormDisplayComponent
 
-    public formio: FormlyFieldConfig[] =  [
+    public formio: FormlyFieldConfig[] | StepFieldsConfig[] =  [
         {fieldGroup:[
                 {type:'auto-input',templateOptions: {label: "字段11", title: undefined}},
                 {type:'auto-input',templateOptions: {label: "字段22", title: "33"}},
@@ -37,7 +37,7 @@ export class TransFormCommonDemoComponent {
     }
 
     public changeSource1() {
-        const noStep = [
+        const oneStep = [
             {fieldGroup:[
                     {type:'auto-input',templateOptions: {label: "字段11", title: undefined}},
                     {type:'auto-input',templateOptions: {label: "字段22", title: "33"}},
@@ -48,11 +48,11 @@ export class TransFormCommonDemoComponent {
             {type:'auto-input',templateOptions: {label: "字段33", title: "33"}},
         ];
         this.formio = [
-            {label: "SS11111111111", fields: noStep},
-            {label: "SS11222222222", fields: noStep},
+            {label: "SS11111111111", fields: oneStep},
+            {label: "SS11222222222", fields: oneStep},
         ];
     }
 
-    summary: string = "这个DEMO演示了form-display组件通过json转为表格的用法。";
+    summary: string = "这个DEMO演示了已awade表单的root_fields做为数据源生成的form-display组件";
     description: string = "";
 }
