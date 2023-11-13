@@ -269,6 +269,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         }
         const header: TableCellConfig = {value: field.templateOptions.label || "", isRequired: field.templateOptions.required};
         let common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
+        if (field.type == "checkbox" || field.type == 'switch') {
+            common.value = `${!!field.templateOptions.checked}`
+        }
         if (field.type == "date-time-select") {
             common.value = field.templateOptions.date;
         }
