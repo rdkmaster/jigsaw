@@ -1,6 +1,6 @@
 <div class="form-display-total" *ngFor="let form of data; let i = index">
-    <jigsaw-header *ngIf="form.title" class="form-display-title" [level]="form.titleStyle?.level || 2"
-                   [ngStyle]="{'margin-bottom': form.titleStyle?.marginBottom || '4px','margin-top': form.titleStyle?.marginTop || '20px'}">
+    <jigsaw-header *ngIf="form.title" class="form-display-title" [level]="styleOptions[i].titleStyle?.level || 2"
+                   [ngStyle]="{'margin-bottom': styleOptions[i].titleStyle?.marginBottom || '4px','margin-top': styleOptions[i].titleStyle?.marginTop || '20px'}">
         {{form.title}}
     </jigsaw-header>
     <table class="form-display-table">
@@ -9,14 +9,14 @@
                 <col [attr.width]="_$tablesColumns[i][j] ? _$tablesColumns[i][j] + 'px': 'auto'">
             </ng-container>
         </colgroup>
-        <tr [ngStyle]="form.trStyle" *ngFor="let row of form.data">
+        <tr [ngStyle]="styleOptions[i].trStyle" *ngFor="let row of form.data">
             <ng-container *ngFor="let cell of row">
                 <ng-container *ngIf="_$isString(cell); else cellTemplate">
-                    <td [ngStyle]="form.tdStyle" >{{ cell }}</td>
+                    <td [ngStyle]="styleOptions[i].tdStyle" >{{ cell }}</td>
                 </ng-container>
                 <ng-template #cellTemplate>
                     <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
-                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="form.tdStyle">
+                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="styleOptions[i].tdStyle">
                         {{ cell.value }}
                         <span *ngIf="cell.isRequired" class="required">*</span>
                     </td>

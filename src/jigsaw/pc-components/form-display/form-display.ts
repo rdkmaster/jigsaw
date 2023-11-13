@@ -1,9 +1,10 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {FormlyFieldConfig} from '@ngx-formly/core';
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -77,14 +78,16 @@ export type TableDataConfig = {
     title: string,
 
     /**
+     * 表的数据行配置，参考 `TableRowConfig` 类型
+     */
+    data: TableRowConfig[]
+}
+
+export type FormDisplayStyleOptions = {
+    /**
      * 表标题的样式，可选类型为 SectionTitleStyle
      */
     titleStyle?: SectionTitleStyle,
-
-    /**
-     * 表的数据行配置，参考 `TableRowConfig` 类型
-     */
-    data: TableRowConfig[],
 
     /**
      * 表格行的统一样式，优先级最低
@@ -123,8 +126,9 @@ export type StepFieldsConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawFormDisplayComponent extends AbstractJigsawComponent implements OnInit {
-    constructor(// @RequireMarkForCheck 需要用到，勿删
-        private _injector: Injector) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
@@ -141,19 +145,48 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             data = [data];
         }
         this._data = data;
-        const form = data[0];
+        const form = data[0] || {};
         if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
             this._data = this._transformForms(data);
         }
-        this._$tablesColumns = this._data.map(data => data.columnWidths || []);
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
+    }
+
+    private _styleOptions: FormDisplayStyleOptions[];
+
+    /**
+     * 设置组件样式
+     * @NoMarkForCheckRequired
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get styleOptions() {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]) {
+        const dataLength = this._data.length || 1;
+        if (CommonUtils.isUndefined(value)) {
+            value = Array(dataLength).fill({
+                titleStyle: {},
+                trStyle:{},
+                tdStyle: {},
+                columnWidths: []
+            })
+        }
+        if (!Array.isArray(value)) {
+            value = Array(dataLength).fill(value);
+        }
+        this._styleOptions = value;
+        this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
      * 用于储存数据中每一个表的每一列的列宽
      * @internal
      */
-    public _$tablesColumns: number[][];
+    public _$tablesColumns: number[][] = [[0, 0]];
 
     /**
      * 用于储存数据中每一个表的的列数
@@ -234,7 +267,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (!field.templateOptions) {
             return ['', ''];
         }
-        const header: TableCellConfig = {value: field.templateOptions.label || "", isHeader: true};
+        const header: TableCellConfig = {value: field.templateOptions.label || "", isRequired: field.templateOptions.required};
         let common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
         if (field.type == "date-time-select") {
             common.value = field.templateOptions.date;
