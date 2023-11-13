@@ -156,7 +156,6 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 
     /**
      * 设置组件样式
-     * @NoMarkForCheckRequired
      */
     @RequireMarkForCheck()
     @Input()
