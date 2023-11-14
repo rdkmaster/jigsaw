@@ -659,11 +659,17 @@ export class PagingInfo implements IEmittable {
     }
 
     public set pageSize(value: number) {
+        this.setPageSize(value);
+    }
+    
+    public setPageSize(value:number, silent: boolean = false) {
         if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
             return;
         }
         this._pageSize = value;
-        this.emit();
+        if (!silent) {
+            this.emit();
+        }
     }
 
     private _currentPage: number = 1;
@@ -680,9 +686,17 @@ export class PagingInfo implements IEmittable {
     }
 
     public set currentPage(value: number) {
-        if (isNaN(value) || value < 1 || value > this.totalPage) return;
+        this.setCurrentPage(value);
+    }
+
+    public setCurrentPage(value: number, silent: boolean = false) {
+        if (isNaN(value) || value < 1 || value > this.totalPage) {
+            return;
+        }
         this._currentPage = value;
-        this.emit();
+        if (!silent) {
+            this.emit();
+        }
     }
 
     /**
