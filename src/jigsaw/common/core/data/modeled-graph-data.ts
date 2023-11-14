@@ -13,7 +13,7 @@ import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
 
-export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -1019,3 +1019,42 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
     }
 }
 
+// ------------------------------------------------------------------------------------------------
+// 漏斗图相关数据对象
+export class FunnelSeries extends SeriesBase {
+    public sort?: 'ascending' | 'descending' | 'none';
+    public gap?: number;
+    public orient?: 'vertical' | 'horizontal';
+    public funnelAlign?: 'left' | 'right' | 'center';
+    public label?: string;
+    public itemStyle?: string;
+    public labelLine?: string;
+}
+
+export class ModeledFunnelGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    public type: GraphType = 'funnel';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
+    public series: MapSeries[];
+    private _options: EchartOptions;
+
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+        
+        CommonUtils.extendObject(options, this.template.optionPatch);
+        return options;
+    }
+}
