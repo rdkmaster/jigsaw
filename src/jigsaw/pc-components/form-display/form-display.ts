@@ -147,7 +147,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         this._data = data;
         const form = data[0] || {};
         if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
-            this._data = this._transformForms(data);
+            this._data = this._transformForms(<StepFieldsConfig[] | FormlyFieldConfig[]>data);
         }
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
@@ -213,20 +213,24 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return [].constructor(maxLength);
     }
 
-    private _transformForms(data: TableDataConfig[]): TableDataConfig[] {
+    private _transformForms(data: StepFieldsConfig[] | FormlyFieldConfig[]): TableDataConfig[] {
         const formDisplayData: TableDataConfig[] = [];
         if (!Array.isArray(data)) {
             return formDisplayData;
         }
         // 如果第一个数据没有fields，则说明是单一的表单
-        if (data[0]?.fields) {
+        if (this._isStepFieldsConfig(data[0])) {
             data.forEach(form => {
                 formDisplayData.push(this._transformOneStep(form.fields, form.label))
             })
         } else {
-            formDisplayData.push(this._transformOneStep(data));
+            formDisplayData.push(this._transformOneStep(<FormlyFieldConfig[]>data));
         }
         return formDisplayData;
+    }
+
+    private _isStepFieldsConfig(config: FormlyFieldConfig | StepFieldsConfig): boolean {
+        return (config as StepFieldsConfig).fields !== undefined;
     }
 
     private _transformOneStep(data: FormlyFieldConfig[], title: string = ''): TableDataConfig {
