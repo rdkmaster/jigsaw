@@ -140,7 +140,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return this._data
     }
 
-    public set data(data: TableDataConfig | TableDataConfig []) {
+    public set data(data: TableDataConfig | TableDataConfig[]) {
         if (!Array.isArray(data)) {
             data = [data];
         }
@@ -213,8 +213,8 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return [].constructor(maxLength);
     }
 
-    private _transformForms(data: any[]): TableDataConfig[] {
-        let formDisplayData: TableDataConfig[] = [];
+    private _transformForms(data: TableDataConfig[]): TableDataConfig[] {
+        const formDisplayData: TableDataConfig[] = [];
         if (!Array.isArray(data)) {
             return formDisplayData;
         }
@@ -233,7 +233,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         const tableData: TableDataConfig = {title: title, data: []};
         data.forEach(form => {
             tableData.data = tableData.data.concat(this._distinguishData(form));
-        })
+        });
         return tableData;
     }
 
@@ -249,7 +249,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     }
 
     private _transformRow(row: FormlyFieldConfig): TableRowConfig[] {
-        let tableData: TableRowConfig[] = [];
+        const tableData: TableRowConfig[] = [];
         let newRow: TableRowConfig = [];
         if (!row.fieldGroup) {
             tableData.push(this._transformCell(row));
@@ -262,12 +262,12 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return tableData;
     }
 
-    private _transformCell(field: FormlyFieldConfig): TableCellConfig [] {
+    private _transformCell(field: FormlyFieldConfig): TableCellConfig[] {
         if (!field.templateOptions) {
             return ['', ''];
         }
         const header: TableCellConfig = {value: field.templateOptions.label || "", isRequired: field.templateOptions.required};
-        let common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
+        const common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
         if (field.type == "checkbox" || field.type == 'switch') {
             common.value = `${!!field.templateOptions.checked}`
         }

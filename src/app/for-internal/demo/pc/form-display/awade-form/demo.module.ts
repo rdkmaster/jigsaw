@@ -13,5 +13,4 @@ import {JigsawDemoDescriptionModule} from "../../../../description/demo-descript
     exports: [TransFormCommonDemoComponent]
 })
 export class TransformAwadeCommonDemoModule {
-
 }
