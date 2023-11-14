@@ -214,7 +214,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._cdr.markForCheck();
             return;
         }
-        if (CommonUtils.isUndefined(value) || (<any>this._value == "" && this.allowEmptyValue)) {
+        if (CommonUtils.isUndefined(value) || <any>value === "") {
             this._value = value;
             if (this.initialized) {
                 this.valueChange.emit(this._value);
@@ -234,7 +234,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             console.error('value property must be a number, please input a number or number string');
         }
 
-        if (<any>value === "-" || Number(value) < this.min) {
+        if (<any>value === "" || <any>value === "-" || Number(value) < this.min) {
             // 正在输入的数值会在blur的时候处理
             this._value = value;
             return;
@@ -391,7 +391,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        if ((<any>this._value == "" && !this.allowEmptyValue) || (<any>this._value !== "" && (this._value < this.min || isNaN(this._value)))) {
+        if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
         }
@@ -477,7 +477,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      * @NoMarkForCheckRequired
      */
     @Input()
-    public allowEmptyValue: boolean = true;
+    public defaultValue: number;
 
     @Output()
     public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();

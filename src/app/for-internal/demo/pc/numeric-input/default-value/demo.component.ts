@@ -4,9 +4,9 @@ import { Component } from "@angular/core";
     templateUrl: './demo.component.html',
     styleUrls: ['./../../assets/demo.common.css']
 })
-export class NumericInputAllowEmptyValueDemoComponent {
+export class NumericInputDefaultValueDemoComponent {
     public value: number;
-    public allowEmptyValue = true;
+    public defaultValue = 0;
 
     public valueChange($event) {
         console.log($event, typeof $event == "number");

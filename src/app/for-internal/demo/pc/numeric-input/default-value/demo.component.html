@@ -8,10 +8,10 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>是否允许空值：</span>
-        <jigsaw-switch [(checked)]="allowEmptyValue"></jigsaw-switch>
+        <jigsaw-input [(value)]="defaultValue"></jigsaw-input>
     </li>
 </ul>
 
-<j-numeric-input [(value)]="value" [allowEmptyValue]="allowEmptyValue" min="-10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)">
+<j-numeric-input [(value)]="value" [defaultValue]="defaultValue" min="-10" max="110" placeholder="请输入数字" (valueChange)="valueChange($event)">
 </j-numeric-input>
 <p>当前值{{value}}</p>

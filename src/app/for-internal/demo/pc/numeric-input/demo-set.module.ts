@@ -14,8 +14,8 @@ import { NumericInputShowOptionDemoModule } from './show-option/demo.module';
 import { NumericInputShowOptionDemoComponent } from './show-option/demo.component';
 import { NumericInputShowBorderDemoComponent } from "./show-border/demo.component";
 import { NumericInputShowBorderDemoModule } from "./show-border/demo.module";
-import { NumericInputAllowEmptyValueDemoModule } from "./allow-empty-value/demo.module";
-import { NumericInputAllowEmptyValueDemoComponent } from "./allow-empty-value/demo.component";
+import { NumericInputDefaultValueDemoModule } from "./default-value/demo.module";
+import { NumericInputDefaultValueDemoComponent } from "./default-value/demo.component";
 
 export const routerConfig = [
     {
@@ -40,7 +40,7 @@ export const routerConfig = [
         path: 'show-option', component: NumericInputShowOptionDemoComponent
     },
     {
-        path: 'all-empty-value', component: NumericInputAllowEmptyValueDemoComponent
+        path: 'all-empty-value', component: NumericInputDefaultValueDemoComponent
     },
 ];
 
@@ -54,7 +54,7 @@ export const routerConfig = [
         NumericInputPrefixSuffixDemoModule,
         NumericInputShowOptionDemoModule,
         NumericInputShowBorderDemoModule,
-        NumericInputAllowEmptyValueDemoModule
+        NumericInputDefaultValueDemoModule
     ]
 })
 export class NumericInputDemoModule {
