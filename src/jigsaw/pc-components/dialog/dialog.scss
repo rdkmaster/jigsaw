@@ -51,7 +51,7 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
         }
 
         .#{$jigsaw-dialog}-content {
-            padding: 16px 16px 32px 16px;
+            padding: 16px;
             background: $bg-transparent;
         }
 
@@ -59,7 +59,8 @@ $jigsaw-dialog: #{$jigsaw-prefix}-dialog;
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            height: 56px;
+            padding-top: 16px;
+            height: 72px;
             min-height: 56px;
             background: $bg-transparent;
 
