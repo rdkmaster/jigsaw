@@ -6,7 +6,15 @@ import { Component } from "@angular/core";
 })
 export class NumericInputDefaultValueDemoComponent {
     public value: number;
-    public defaultValue = 0;
+    public min = -10;
+    public max = 110;
+    public notANumber = NaN;
+    public defaultValueStr = "";
+
+    public get defaultValue() {
+        const num = parseInt(this.defaultValueStr);
+        return isNaN(num) ? undefined : num;
+    };
 
     public valueChange($event) {
         console.log($event, typeof $event == "number");

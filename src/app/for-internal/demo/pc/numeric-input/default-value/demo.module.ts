@@ -8,7 +8,8 @@ import { JigsawHeaderModule } from "jigsaw/public_api";
 @NgModule({
     declarations: [NumericInputDefaultValueDemoComponent],
     exports: [NumericInputDefaultValueDemoComponent],
-    imports: [JigsawNumericInputModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawSwitchModule, JigsawInputModule]
+    imports: [JigsawNumericInputModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawSwitchModule, JigsawButtonModule,
+        JigsawInputModule]
 })
 export class NumericInputDefaultValueDemoModule {
 

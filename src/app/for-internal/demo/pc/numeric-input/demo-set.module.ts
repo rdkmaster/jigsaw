@@ -40,7 +40,7 @@ export const routerConfig = [
         path: 'show-option', component: NumericInputShowOptionDemoComponent
     },
     {
-        path: 'all-empty-value', component: NumericInputDefaultValueDemoComponent
+        path: 'default-value', component: NumericInputDefaultValueDemoComponent
     },
 ];
 

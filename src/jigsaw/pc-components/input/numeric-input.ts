@@ -391,6 +391,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
+        if (this._needApplyDefaultValue(this._value)) {
+            this._value = this.defaultValue;
+        }
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
@@ -478,6 +481,10 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public defaultValue: number;
+
+    private _needApplyDefaultValue(value): boolean {
+        return typeof this.defaultValue == 'number' && (CommonUtils.isUndefined(value) || isNaN(value) || typeof value == 'string');
+    }
 
     @Output()
     public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
