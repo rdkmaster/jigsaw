@@ -1,8 +1,10 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {FormlyFieldConfig} from '@ngx-formly/core';
+import {CommonUtils} from "../../common/core/utils/common-utils";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -76,14 +78,16 @@ export type TableDataConfig = {
     title: string,
 
     /**
+     * 表的数据行配置，参考 `TableRowConfig` 类型
+     */
+    data: TableRowConfig[]
+}
+
+export type FormDisplayStyleOptions = {
+    /**
      * 表标题的样式，可选类型为 SectionTitleStyle
      */
     titleStyle?: SectionTitleStyle,
-
-    /**
-     * 表的数据行配置，参考 `TableRowConfig` 类型
-     */
-    data: TableRowConfig[],
 
     /**
      * 表格行的统一样式，优先级最低
@@ -102,6 +106,13 @@ export type TableDataConfig = {
     columnWidths?: number[]
 }
 
+export type StepFieldsConfig = {
+    label: string;
+    agentId?: string;
+    panelHeight?: string;
+    fields: FormlyFieldConfig[];
+};
+
 @WingsTheme('form-display.scss')
 @Component({
     selector: 'jigsaw-form-display',
@@ -115,8 +126,9 @@ export type TableDataConfig = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawFormDisplayComponent extends AbstractJigsawComponent implements OnInit {
-    constructor(// @RequireMarkForCheck 需要用到，勿删
-        private _injector: Injector) {
+    constructor(private _changeDetectorRef: ChangeDetectorRef,
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
     }
 
@@ -128,20 +140,52 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         return this._data
     }
 
-    public set data(data: TableDataConfig | TableDataConfig []) {
+    public set data(data: TableDataConfig | TableDataConfig[]) {
         if (!Array.isArray(data)) {
             data = [data];
         }
         this._data = data;
-        this._$tablesColumns = this._data.map(data => data.columnWidths || []);
+        const form = data[0] || {};
+        if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
+            this._data = this._transformForms(<StepFieldsConfig[] | FormlyFieldConfig[]>data);
+        }
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
+    }
+
+    private _styleOptions: FormDisplayStyleOptions[];
+
+    /**
+     * 设置组件样式
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get styleOptions() {
+        return this._styleOptions;
+    }
+
+    public set styleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]) {
+        const dataLength = this._data.length || 1;
+        if (CommonUtils.isUndefined(value)) {
+            value = Array(dataLength).fill({
+                titleStyle: {},
+                trStyle:{},
+                tdStyle: {},
+                columnWidths: []
+            })
+        }
+        if (!Array.isArray(value)) {
+            value = Array(dataLength).fill(value);
+        }
+        this._styleOptions = value;
+        this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
+        this._changeDetectorRef.detectChanges();
     }
 
     /**
      * 用于储存数据中每一个表的每一列的列宽
      * @internal
      */
-    public _$tablesColumns: number[][];
+    public _$tablesColumns: number[][] = [[0, 0]];
 
     /**
      * 用于储存数据中每一个表的的列数
@@ -167,6 +211,92 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             }
         }
         return [].constructor(maxLength);
+    }
+
+    private _transformForms(data: StepFieldsConfig[] | FormlyFieldConfig[]): TableDataConfig[] {
+        const formDisplayData: TableDataConfig[] = [];
+        if (!Array.isArray(data)) {
+            return formDisplayData;
+        }
+        // 如果第一个数据没有fields，则说明是单一的表单
+        if (this._isStepFieldsConfig(data[0])) {
+            data.forEach(form => {
+                formDisplayData.push(this._transformOneStep(form.fields, form.label))
+            })
+        } else {
+            formDisplayData.push(this._transformOneStep(<FormlyFieldConfig[]>data));
+        }
+        return formDisplayData;
+    }
+
+    private _isStepFieldsConfig(config: FormlyFieldConfig | StepFieldsConfig): boolean {
+        return (config as StepFieldsConfig).fields !== undefined;
+    }
+
+    private _transformOneStep(data: FormlyFieldConfig[], title: string = ''): TableDataConfig {
+        const tableData: TableDataConfig = {title: title, data: []};
+        data.forEach(form => {
+            tableData.data = tableData.data.concat(this._distinguishData(form));
+        });
+        return tableData;
+    }
+
+    private _distinguishData(form: FormlyFieldConfig | FormlyFieldConfig[]): TableRowConfig[] {
+        let tableData: TableRowConfig[] = [];
+        if (!Array.isArray(form)) {
+            form = [form];
+        }
+        form.forEach(f => {
+            tableData = tableData.concat(this._transformRow(f));
+        })
+        return tableData;
+    }
+
+    private _transformRow(row: FormlyFieldConfig): TableRowConfig[] {
+        const tableData: TableRowConfig[] = [];
+        let newRow: TableRowConfig = [];
+        if (!row.fieldGroup) {
+            tableData.push(this._transformCell(row));
+        } else {
+            row.fieldGroup.forEach((field: FormlyFieldConfig) => {
+                newRow = newRow.concat(this._transformCell(field));
+            })
+            tableData.push(newRow);
+        }
+        return tableData;
+    }
+
+    private _transformCell(field: FormlyFieldConfig): TableCellConfig[] {
+        if (!field.templateOptions) {
+            return ['', ''];
+        }
+        const header: TableCellConfig = {value: field.templateOptions.label || "", isRequired: field.templateOptions.required};
+        const common: TableCellConfig = {value: field.templateOptions.title || field.templateOptions.value || ""};
+        if (field.type == "checkbox" || field.type == 'switch') {
+            common.value = `${!!field.templateOptions.checked}`
+        }
+        if (field.type == "date-time-select") {
+            common.value = field.templateOptions.date;
+        }
+        if (field.type == "range-date-time-select") {
+            const date = field.templateOptions.date;
+            if (date) {
+                common.value = `${date.beginDate}, ${date.endDate}`
+            }
+        }
+        if (field.type == "tile-lite") {
+            const selectedItems = field.templateOptions.selectedItems;
+            if (selectedItems?.[0]) {
+                common.value = `${selectedItems[0]}`
+            }
+        }
+        if (field.type == "list-lite") {
+            const selectedItems = field.templateOptions.selectedItems;
+            if (selectedItems?.[0]) {
+                common.value = `${selectedItems[0].label}`
+            }
+        }
+        return [header, common];
     }
 }
 

@@ -48,7 +48,6 @@ export class HttpClientOptions {
      * 通过这个静态方法就可以实现一键式的转换。一般Jigsaw内部使用，应用无需关注。
      *
      * @param options
-     *
      */
     public static prepare(options: string | Object): PreparedHttpClientOptions {
         if (!options) {
@@ -621,8 +620,6 @@ export class PagingInfo implements IEmittable {
      * - 如果你有自己的实现，则请更改这个属性指向你提供的服务；
      * - 如果你没有自己的实现，则建议使用[RDK](https://github.com/rdkmaster/rdk)提供服务，
      * 我们也建议你尽量使用[RDK](https://github.com/rdkmaster/rdk)提供的这个服务；
-     *
-     *
      */
     public static pagingServerUrl: string = '/rdk/service/app/common/paging';
 
@@ -640,10 +637,8 @@ export class PagingInfo implements IEmittable {
 
     /**
      * 总记录数
-     *
      */
     public totalRecord: number = 0;
-
 
     private _pageSize: number = 20;
 
@@ -651,8 +646,6 @@ export class PagingInfo implements IEmittable {
      * 当前单页记录数
      *
      * $demo = pagination/with-page-info
-     *
-     *
      */
     public get pageSize(): number {
         return this._pageSize;
@@ -661,7 +654,7 @@ export class PagingInfo implements IEmittable {
     public set pageSize(value: number) {
         this.setPageSize(value);
     }
-    
+
     public setPageSize(value:number, silent: boolean = false) {
         if (isNaN(value) || value < 1 || this.autoPageSizing || this._pageSize === value) {
             return;
@@ -678,8 +671,6 @@ export class PagingInfo implements IEmittable {
      * 当前页索引，从1开始计数。修改此属性后，`PagingInfo`会发出获取对应页数据的事件，通过`subscribe`添加监听器可处理此事件。
      *
      * $demo = pagination/with-page-info
-     *
-     *
      */
     public get currentPage(): number {
         return this._currentPage;
@@ -703,8 +694,6 @@ export class PagingInfo implements IEmittable {
      * 总页数
      *
      * $demo = pagination/with-page-info
-     *
-     *
      */
     public get totalPage(): number {
         return this.totalRecord && this.pageSize != Infinity ? Math.ceil(this.totalRecord / this.pageSize) : 1;
