@@ -199,10 +199,9 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     /**
      * 输入框的值，双绑
      *
-     * @NoMarkForCheckRequired
-     *
      * $demo = numeric-input/basic
      */
+    @RequireMarkForCheck()
     @Input()
     public get value(): number {
         return this._value;
@@ -214,6 +213,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._cdr.markForCheck();
             return;
         }
+        value = this._applyDefaultValue(value, false);
         if (CommonUtils.isUndefined(value) || <any>value === "") {
             this._value = value;
             if (this.initialized) {
@@ -391,6 +391,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
+        this._value = this._applyDefaultValue(this.value, true);
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             this._updateValue();
@@ -472,6 +473,23 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
      */
     @Input()
     public prefixLabelField: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public defaultValue: number;
+
+    private _applyDefaultValue(value: number, handleEmptyString: boolean) {
+        // 如果没有defaultValue，或者正在输入的是负数，则跳过
+        if (typeof this.defaultValue != 'number' || <any>value == "-") {
+            return value;
+        }
+        if (CommonUtils.isUndefined(value) || isNaN(value) || (handleEmptyString && String(value).trim() == '')) {
+            return Math.min(Math.max(Number(this.defaultValue), this.min), this.max);
+        }
+        return value;
+    }
 
     @Output()
     public prefixChange: EventEmitter<GroupOptionValue> = new EventEmitter<GroupOptionValue>();
