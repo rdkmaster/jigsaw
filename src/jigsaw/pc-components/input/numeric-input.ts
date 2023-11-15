@@ -482,7 +482,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Input()
     public defaultValue: number;
 
-    private _needApplyDefaultValue(value): boolean {
+    private _needApplyDefaultValue(value: number): boolean {
         return typeof this.defaultValue == 'number' && (CommonUtils.isUndefined(value) || isNaN(value) || typeof value == 'string');
     }
 
