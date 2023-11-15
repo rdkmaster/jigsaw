@@ -392,7 +392,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
         this._focused = false;
         this._onTouched();
         if (this._needApplyDefaultValue(this._value)) {
-            this._value = this.defaultValue;
+            const value = this.defaultValue > this.max ? this.max : this.defaultValue;
+            this._value = value;
         }
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
