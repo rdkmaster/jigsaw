@@ -12,7 +12,7 @@ export class NumericInputDefaultValueDemoComponent {
     public defaultValueStr = "";
 
     public get defaultValue() {
-        const num = parseInt(this.defaultValueStr);
+        const num = parseFloat(this.defaultValueStr);
         return isNaN(num) ? undefined : num;
     };
 
