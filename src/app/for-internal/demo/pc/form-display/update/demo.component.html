@@ -1,0 +1,10 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="form">
+    <jigsaw-form-display #jigsawFormDisplayComponent [data]="formData" [styleOptions]="styleOptions" [width]="'800px'"></jigsaw-form-display>
+</div>
+
+<div style="position: absolute; left: 888px; top: 70px">
+    <jigsaw-button (click)="changeSource1()">更新数据</jigsaw-button>
+</div>

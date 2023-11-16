@@ -152,6 +152,11 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
 
+    public update(data: TableDataConfig | TableDataConfig[]) {
+        this.data = data;
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _styleOptions: FormDisplayStyleOptions[];
 
     /**
@@ -178,7 +183,6 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         }
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
-        this._changeDetectorRef.detectChanges();
     }
 
     /**
