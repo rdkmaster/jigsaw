@@ -213,7 +213,7 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
             this._cdr.markForCheck();
             return;
         }
-        value = this._applyDefaultValue(value, false)[0];
+        value = this._applyDefaultValue(value, false).value;
         if (CommonUtils.isUndefined(value) || <any>value === "") {
             this._value = value;
             if (this.initialized) {
@@ -391,8 +391,8 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     public _$handleBlur(event: FocusEvent) {
         this._focused = false;
         this._onTouched();
-        let needUpdate = false;
-        [this._value, needUpdate] = this._applyDefaultValue(this._value, true);
+        let {value, needUpdate} = this._applyDefaultValue(this._value, true);
+        this._value = value;
         if (<any>this._value !== "" && (this._value < this.min || isNaN(this._value))) {
             this._value = this.min == -Infinity ? 0 : this.min;
             needUpdate = true;
@@ -484,15 +484,18 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
     @Input()
     public defaultValue: number;
 
-    private _applyDefaultValue(value: number, handleEmptyString: boolean): [number, boolean] {
+    private _applyDefaultValue(value: number, handleEmptyString: boolean): {value: number, needUpdate: boolean} {
         // 如果没有defaultValue，或者正在输入的是负数，则跳过
+        let needUpdate = false;
         if (typeof this.defaultValue != 'number' || <any>value == "-") {
-            return [value, false];
+            return {value, needUpdate};
         }
         if (CommonUtils.isUndefined(value) || isNaN(value) || (handleEmptyString && String(value).trim() == '')) {
-            return [Math.min(Math.max(Number(this.defaultValue), this.min), this.max), true];
+            needUpdate = true;
+            value = Math.min(Math.max(Number(this.defaultValue), this.min), this.max);
+            return {value, needUpdate};
         }
-        return [value, false];
+        return {value, needUpdate};
     }
 
     @Output()
