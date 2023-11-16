@@ -342,7 +342,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     private _containsEmptyString: boolean = false;
     protected _checkDataContainsEmptyString() {
         let res = false;
-        console.log(this._data)
         if (!this._data || this._data.length == 0) {
             res = true;
         } else {
@@ -362,7 +361,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             }
         }
         this._containsEmptyString = res;
-        console.log(this._containsEmptyString);
     }
 
     protected _getCurrentData():any {
