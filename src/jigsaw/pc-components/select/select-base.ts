@@ -323,13 +323,50 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
-                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
+                this._$selectedItems = this.multipleSelect ? newValue : this._getSelectedItems(newValue);
             } else {
                 this._$selectedItems = new ArrayCollection([]);
             }
             this._$checkSelectAll();
             this._changeDetector.detectChanges();
         })
+    }
+
+    private _getSelectedItems(newValue) {
+        if (newValue != "") {
+            return [newValue];
+        }
+        return this._containsEmptyString ? [newValue] : new ArrayCollection([]);
+    }
+
+    private _containsEmptyString: boolean = false;
+    protected _checkDataContainsEmptyString() {
+        let res = false;
+        console.log(this._data)
+        if (!this._data || this._data.length == 0) {
+            res = true;
+        } else {
+            for (let i = 0; i < this._data.length; i++) {
+                const data = this._data[i];
+                if (data == '') {
+                    res = true;
+                    break;
+                }
+                if (typeof data != 'object') {
+                    continue;
+                }
+                if (data[this.labelField] == '') {
+                    res = true;
+                    break;
+                }
+            }
+        }
+        this._containsEmptyString = res;
+        console.log(this._containsEmptyString);
+    }
+
+    protected _getCurrentData():any {
+        return this._data;
     }
 
     /**
@@ -518,6 +555,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$infiniteScroll = true;
         }
         this._setData(value);
+        this._checkDataContainsEmptyString();
         if (!(this._data.onRefresh instanceof Function)) {
             return;
         }
@@ -527,6 +565,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._removeOnRefresh = this._data.onRefresh(() => {
             this._updateViewData();
             this._$checkSelectAll();
+            this._checkDataContainsEmptyString();
             // 等待数据处理完成赋值，消除统计的闪动
             this._searchKey = this._searchKeyBak;
         })
