@@ -486,16 +486,14 @@ export class JigsawNumericInput extends AbstractJigsawComponent implements Contr
 
     private _applyDefaultValue(value: number, handleEmptyString: boolean): {value: number, needUpdate: boolean} {
         // 如果没有defaultValue，或者正在输入的是负数，则跳过
-        let needUpdate = false;
         if (typeof this.defaultValue != 'number' || <any>value == "-") {
-            return {value, needUpdate};
+            return {value, needUpdate: false};
         }
         if (CommonUtils.isUndefined(value) || isNaN(value) || (handleEmptyString && String(value).trim() == '')) {
-            needUpdate = true;
             value = Math.min(Math.max(Number(this.defaultValue), this.min), this.max);
-            return {value, needUpdate};
+            return {value, needUpdate: true};
         }
-        return {value, needUpdate};
+        return {value, needUpdate: false};
     }
 
     @Output()
