@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent, StepFieldsConfig} from "jigsaw/public_api";
+import {JigsawFormDisplayComponent, TableDataConfig} from "jigsaw/public_api";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
 @Component({
@@ -36,7 +36,7 @@ export class FormDisplayUpdateComponent {
     public changeSource1() {
         this.formComponentInstance.formio[0].fieldGroup = [];
         this.formComponentInstance.formio.push({type: 'auto-input', templateOptions: {label: "字段33", title: "33"}});
-        this.jigsawFormDisplayComponent.update(this.formComponentInstance.formio);
+        this.jigsawFormDisplayComponent.update(<TableDataConfig[]>this.formComponentInstance.formio);
         this.jigsawFormDisplayComponent.styleOptions = [
             this.styleOptions,
             {
