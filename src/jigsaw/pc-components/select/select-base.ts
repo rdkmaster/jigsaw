@@ -354,7 +354,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
 
     protected _checkDataContainsEmptyString(): void {
         if (!this._data || this._data.length == 0) {
-            this._containsEmptyString = true;
+            this._containsEmptyString = false;
             return;
         }
 
@@ -635,10 +635,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$handleClearable() {
-        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
+        this._handleClearableValue();
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
+    }
+
+    protected _handleClearableValue() {
+        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
     }
 
     /**
@@ -936,6 +940,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$checkSelectAll();
             this._changeDetector.detectChanges();
         })
+    }
+
+    protected _checkDataContainsEmptyString() {
+        return;
+    }
+
+    protected _handleClearableValue() {
+        this._value = this.multipleSelect ? new ArrayCollection([]) : undefined;
     }
 
     protected _valueChange(value: any): void {

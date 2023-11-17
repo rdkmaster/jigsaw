@@ -24,6 +24,11 @@ export class SelectClearableDemoComponent {
         }
     }
 
+    public changeEmptyData() {
+        this.cityList = new ArrayCollection([]);
+        this.selectedCityForSelect = undefined;
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
