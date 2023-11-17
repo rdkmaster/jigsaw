@@ -13,7 +13,6 @@ export class FormDisplayCommonDemoComponent {
     public formio = [
         {
             title: '新增数据源',
-            titleStyle: {},
             data: [
                 [
                     {value: '名称', isRequired: true},
@@ -28,14 +27,11 @@ export class FormDisplayCommonDemoComponent {
                 ['业务域', '描述'],
                 ['Lte_Coverage', 'Ltecover高铁MR覆盖全维度天粒度统计'],
                 ['属性标签', '附件'],
-                ['p sdewpresweo', 'LtecoveNpe', "ssss", "dddd"]
-            ],
-            trStyle: {}, tdStyle: {'text-align': 'left'},
-            columnWidths: [400, 200, 100]
+                ['p sdewpresweo', 'LtecoveNpe']
+            ]
         },
         {
             title: '目的表字段',
-            titleStyle: {},
             data: [
                 [
                     {value: '目的表字段', isHeader: true, isRequired: true},
@@ -52,17 +48,19 @@ export class FormDisplayCommonDemoComponent {
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
                 ['edw_last-source', 'string', '300', '---', '否']
 
-            ],
-            trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [300, 200, 100]
+            ]
         }
     ]
+
+    public formStyleOption = {
+        trStyle: {'border-width': '1px'},
+        tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
+        columnWidths: [300, 200, 100]
+    }
 
     public formio1 = [
         {
             title: '任务配置',
-            titleStyle: {},
             data: [
                 [
                     {value: '工作流名称', isRequired: true},
@@ -98,12 +96,10 @@ export class FormDisplayCommonDemoComponent {
                     {value: '计算任务执行参数', isRequired: true, colSpan: 2},
                     {value: '计算任务提交参数', isRequired: true, colSpan: 2},
                 ]
-            ],
-            trStyle: {}, tdStyle: {'text-align': 'left'}
+            ]
         },
         {
             title: '基础信息',
-            titleStyle: {},
             data: [
                 [
                     {value: '中文名称', isRequired: true, style: {'font-weight': '500', 'text-align': 'right'}, isHeader: true},
@@ -127,17 +123,27 @@ export class FormDisplayCommonDemoComponent {
                     {value: '更新时间', style: {'font-weight': '500'}, isHeader: true},
                     {value: 'String'}
                 ]
-            ],
+            ]
+        }];
+
+    public formStyleOption1 = [
+        {
+            trStyle: {},
+            tdStyle: {'text-align': 'left'}
+        },
+        {
             trStyle: {'border-width': '1px'},
             tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
             columnWidths: [100, 200, 80]
-        }];
+        }
+    ]
 
     formioSelected: boolean = true;
 
     public changeSource() {
         this.formioSelected = !this.formioSelected;
-        this.jigsawFormDisplayComponent.data = <TableDataConfig><unknown>(this.formioSelected ? this.formio : this.formio1);
+        this.jigsawFormDisplayComponent.data = this.formioSelected ? this.formio : this.formio1;
+        this.jigsawFormDisplayComponent.styleOptions = this.formioSelected ? this.formStyleOption : this.formStyleOption1;
     }
 
     summary: string = "这个DEMO演示了form-display组件通过json转为表格的用法。";

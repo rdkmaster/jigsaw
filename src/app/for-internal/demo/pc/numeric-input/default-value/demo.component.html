@@ -1,0 +1,31 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>默认值：</span>
+        <jigsaw-input [(value)]="defaultValueStr"></jigsaw-input>
+    </li>
+    <li class="demo-options-item">
+        <span>最值：</span>
+        <jigsaw-numeric-input prefix="最小值" [(value)]="min"></jigsaw-numeric-input>
+        <jigsaw-numeric-input prefix="最大值" [(value)]="max"></jigsaw-numeric-input>
+    </li>
+    <li class="demo-options-item">
+        <span>操作：</span>
+        <jigsaw-button (click)="value = undefined">设置为undefined</jigsaw-button>
+        <jigsaw-button (click)="value = null">设置为null</jigsaw-button>
+        <jigsaw-button (click)="value = notANumber">设置为NaN</jigsaw-button>
+        <jigsaw-button (click)="value = 88">设置为88</jigsaw-button>
+    </li>
+</ul>
+
+<jigsaw-header [level]="1">默认值</jigsaw-header>
+<j-numeric-input [(value)]="value" [defaultValue]="defaultValue" [min]="min" [max]="max" placeholder="请输入数字"
+    (valueChange)="valueChange($event)">
+</j-numeric-input>
+<p>当前值{{value}}</p>
