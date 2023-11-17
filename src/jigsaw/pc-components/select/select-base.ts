@@ -332,7 +332,18 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         })
     }
 
-    private _getSelectedItems(newValue) {
+    /**
+     * 当前的状况是无效值无论用空字符串还是undefined都有问题。
+     *
+     * 这样搞：
+     * - 当已知data里包含空字符串时，将空字符串当做合法值处理
+     * - 否则，当已知data里不含空字符串时，将空字符串当做非法值处理
+     *
+     * 点击清空的按钮后，也做类似处理：
+     * - 当已知data里包含空字符串时，使用undefined作为当值值
+     * - 否则，当已知data里不含空字符串时，使用空字符串作为当值值（保持兼容）
+     */
+    private _getSelectedItems(newValue: any): any[] {
         if (newValue != "") {
             return [newValue];
         }
@@ -340,31 +351,28 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     }
 
     private _containsEmptyString: boolean = false;
-    protected _checkDataContainsEmptyString() {
-        let res = false;
+
+    protected _checkDataContainsEmptyString(): void {
         if (!this._data || this._data.length == 0) {
-            res = true;
-        } else {
-            for (let i = 0; i < this._data.length; i++) {
-                const data = this._data[i];
-                if (data == '') {
-                    res = true;
-                    break;
-                }
-                if (typeof data != 'object') {
-                    continue;
-                }
-                if (data[this.labelField] == '') {
-                    res = true;
-                    break;
-                }
+            this._containsEmptyString = true;
+            return;
+        }
+
+        for (let i = 0; i < this._data.length; i++) {
+            const data = this._data[i];
+            if (data === '') {
+                this._containsEmptyString = true;
+                return;
+            }
+            if (typeof data != 'object') {
+                continue;
+            }
+            if (data[this.labelField] === '') {
+                this._containsEmptyString = true;
+                return;
             }
         }
-        this._containsEmptyString = res;
-    }
-
-    protected _getCurrentData():any {
-        return this._data;
+        this._containsEmptyString = false;
     }
 
     /**
