@@ -334,7 +334,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
         const history = localStorage.getItem(this.historyStorageKey);
         if (CommonUtils.isDefined(history)) {
-            this._$history = JSON.parse(history);
+            this._$history = JSON.parse(history).slice(0, this.historyStorageSize);
         }
 
         //国际化
