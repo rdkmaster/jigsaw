@@ -270,6 +270,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     }
 
     .#{$jigsaw-table}-no-data-img {
+        position: sticky;
+        left: 0;
         flex-direction: column;
         justify-content: center;
         align-items: center;
