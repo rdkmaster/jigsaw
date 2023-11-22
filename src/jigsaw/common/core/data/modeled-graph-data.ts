@@ -786,7 +786,6 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
         let series = CommonUtils.extendObjects<EchartSeriesItem>({type: 'radar'}, this.template.seriesItem);
-        console.log("1111111111111111");
         series.data = dimensions.map((dimension: RadarDimension) => {
             const fromData = this.dimensions.every(dim => dim.name != dimension.name);
             // 数据里过来的维度值自动加上默认填充背景
