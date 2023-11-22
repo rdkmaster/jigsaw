@@ -1049,12 +1049,10 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.series) {
-            return undefined;
-        }
         const options = this.template.getInstance();
         
         CommonUtils.extendObject(options, this.template.optionPatch);
+        options.series = [this.template.seriesItem];
         return options;
     }
 }
