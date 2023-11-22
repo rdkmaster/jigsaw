@@ -13,7 +13,7 @@ import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
 
-export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map';
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'graph';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -786,6 +786,7 @@ export class ModeledRadarGraphData extends AbstractModeledGraphData {
         options.radar = CommonUtils.extendObject(options.radar, {indicator: indicator});
 
         let series = CommonUtils.extendObjects<EchartSeriesItem>({type: 'radar'}, this.template.seriesItem);
+        console.log("1111111111111111");
         series.data = dimensions.map((dimension: RadarDimension) => {
             const fromData = this.dimensions.every(dim => dim.name != dimension.name);
             // 数据里过来的维度值自动加上默认填充背景
@@ -939,6 +940,33 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     }
 }
 
+export class ModeledBubbleGraphData extends AbstractModeledGraphData {
+    public type: GraphType = 'graph';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
+
+    public xAxis: EchartXAxis = {};
+    public yAxis: EchartYAxis = {};
+    public dimensions: ScatterDimension[] = [];
+    public series: DimKpiBase[];
+
+    private _options: EchartOptions;
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.series) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+
+        CommonUtils.extendObject(options, this.template.optionPatch);
+        return options;
+    }
+}
 
 // ------------------------------------------------------------------------------------------------
 // 轮廓图相关数据对象
@@ -1018,4 +1046,3 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
         super.refresh();
     }
 }
-
