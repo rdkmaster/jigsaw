@@ -1039,6 +1039,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'funnel';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
+
     private _options: EchartOptions;
 
     get options(): EchartOptions {
@@ -1049,10 +1050,22 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
+        if (!this.series || !this.header.length || !this.data.length) {
+            return undefined;
+        }
+
         const options = this.template.getInstance();
         
         CommonUtils.extendObject(options, this.template.optionPatch);
-        options.series = [this.template.seriesItem];
+        options.series = this.series.map((seriesData, idx) => {
+            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({ type: 'funnel' }, this.template.seriesItem);
+            seriesItem.data = [];
+            this.data.forEach((data, index) => {
+                seriesItem.data.push({ value: data, name: this.header[index] })
+            })
+            SeriesBase.extend(seriesItem, seriesData, idx);
+            return seriesItem;
+        });
         return options;
     }
 }
