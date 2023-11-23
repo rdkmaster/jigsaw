@@ -5,6 +5,11 @@ import {Component} from "@angular/core";
     styleUrls: ['./demo.component.css']
 })
 export class FloatBasicDemo {
+    public jigsawFloatOpen;
+
+    closeFloat() {
+        this.jigsawFloatOpen = false
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

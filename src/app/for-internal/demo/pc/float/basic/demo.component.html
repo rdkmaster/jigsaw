@@ -11,10 +11,11 @@
 
 <jigsaw-header>容器目标</jigsaw-header>
 <div class="target-box" jigsaw-float [jigsawFloatTarget]="jigsawFloatArea"
-    [jigsawFloatOptions]="{useCustomizedBackground: true}">Hover Me!</div>
+    [jigsawFloatOptions]="{useCustomizedBackground: true}" [(jigsawFloatOpen)]="jigsawFloatOpen">Hover Me!</div>
 
 <ng-template #jigsawFloatArea>
     <div class="jigsawFloatArea">
         dropdown placeholder
+        <a (click)="closeFloat()">关闭</a>
     </div>
 </ng-template>
