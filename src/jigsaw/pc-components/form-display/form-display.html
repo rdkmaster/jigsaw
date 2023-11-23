@@ -1,6 +1,9 @@
 <div class="form-display-total" *ngFor="let form of data; let i = index">
     <jigsaw-header *ngIf="form.title" class="form-display-title" [level]="styleOptions[i].titleStyle?.level || 2"
-                   [ngStyle]="{'margin-bottom': styleOptions[i].titleStyle?.marginBottom || '4px','margin-top': styleOptions[i].titleStyle?.marginTop || '20px'}">
+                   [ngStyle]="{
+                                'margin-bottom': styleOptions[i].titleStyle?.marginBottom || '4px',
+                                'margin-top': styleOptions[i].titleStyle?.marginTop || '20px'
+                              }">
         {{form.title}}
     </jigsaw-header>
     <table class="form-display-table">
@@ -13,15 +16,23 @@
             <ng-container *ngFor="let cell of row">
                 <ng-container *ngIf="_$isString(cell); else cellTemplate">
                     <td [ngClass]="{'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
-                        [ngStyle]="styleOptions[i].tdStyle" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell:''"
-                        [jigsawTooltipPosition]="_$toolTipConfig[i].position" [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly" >{{ cell }}</td>
+                        [ngStyle]="styleOptions[i].tdStyle">
+                        <span [jigsawTooltip]="_$toolTipConfig[i].enableTooltip ? cell : ''"
+                              [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
+                            {{ cell }}
+                        </span>
+                    </td>
                 </ng-container>
                 <ng-template #cellTemplate>
                     <td [ngClass]="{'table-header': cell.isHeader,'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
-                        [ngStyle]="cell.style" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
-                        [jigsawTooltipPosition]="_$toolTipConfig[i].position" [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly"
-                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="styleOptions[i].tdStyle">
-                        {{ cell.value }}
+                        [ngStyle]="cell.style" [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1"
+                        [style]="styleOptions[i].tdStyle">
+                        <span [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
+                              [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
+                            {{ cell.value }}
+                        </span>
                         <span *ngIf="cell.isRequired" class="required">*</span>
                     </td>
                 </ng-template>

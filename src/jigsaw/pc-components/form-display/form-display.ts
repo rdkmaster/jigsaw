@@ -88,17 +88,17 @@ export type TableDataConfig = {
 export type TooltipConfig = {
     /**
      * 控制组件单元格是否开启悬浮提示
-     * */
+     */
     enableTooltip: boolean,
 
     /**
      * 控制悬浮提示位置
-     * */
+     */
     position?: FloatPosition,
 
     /**
      * 控制悬浮提示是否仅在文字过长时显示
-     * */
+     */
     overflowOnly?: boolean
 }
 
@@ -121,12 +121,12 @@ export type FormDisplayStyleOptions = {
     /**
      *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
      *  如何没设置columnWidths，每列平均分配宽度
-     * */
+     */
     columnWidths?: number[],
 
     /**
      *  悬浮提示配置项
-     * */
+     */
     tooltipConfig?: TooltipConfig
 }
 
@@ -201,7 +201,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
                 tdStyle: {},
                 columnWidths: [],
                 tooltipConfig: {}
-            })
+            });
         }
         if (!Array.isArray(value)) {
             value = Array(dataLength).fill(value);
@@ -209,16 +209,12 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
         this._$toolTipConfig = this._styleOptions.map(option => {
-            const config: TooltipConfig = {
-                enableTooltip: false,
-                position: 'top',
-                overflowOnly: true
+            return {
+                enableTooltip: !!option.tooltipConfig?.enableTooltip,
+                position: option.tooltipConfig?.position || 'top',
+                overflowOnly: !!option.tooltipConfig?.overflowOnly
             }
-            config.enableTooltip = !!option.tooltipConfig?.enableTooltip;
-            config.position = option.tooltipConfig?.position || 'top';
-            config.overflowOnly = !!option.tooltipConfig?.overflowOnly;
-            return config
-        })
+        });
     }
 
     /**

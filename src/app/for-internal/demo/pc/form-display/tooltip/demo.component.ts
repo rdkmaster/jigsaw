@@ -26,7 +26,7 @@ export class FormDisplayTooltipDemoComponent {
                 ],
                 [
                     {value: 'sql_sde_lte_sdcis'},
-                    {value: 'DwS/dimission'}
+                    {value: 'DwS/dimension'}
                 ],
                 ['所属业务名称目的表字段字段长度实业务主题话实说属性标签粒度统计', '数据结构名称目的表字段字段长度实业务主题话实说属性标签粒度统计'],
                 ['LTE base', 'DDSSiefad'],
