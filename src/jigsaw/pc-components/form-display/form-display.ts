@@ -127,7 +127,7 @@ export type FormDisplayStyleOptions = {
     /**
      *  悬浮提示配置项
      * */
-    tooltipConfig?: TooltipConfig,
+    tooltipConfig?: TooltipConfig
 }
 
 export type StepFieldsConfig = {

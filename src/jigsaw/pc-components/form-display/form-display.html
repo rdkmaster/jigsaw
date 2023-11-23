@@ -12,11 +12,13 @@
         <tr [ngStyle]="styleOptions[i].trStyle" *ngFor="let row of form.data">
             <ng-container *ngFor="let cell of row">
                 <ng-container *ngIf="_$isString(cell); else cellTemplate">
-                    <td [ngStyle]="styleOptions[i].tdStyle" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell:''"
+                    <td [ngClass]="{'tooltip':_$toolTipConfig[i].enableTooltip}"
+                        [ngStyle]="styleOptions[i].tdStyle" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell:''"
                         [jigsawTooltipPosition]="_$toolTipConfig[i].position" [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly" >{{ cell }}</td>
                 </ng-container>
                 <ng-template #cellTemplate>
-                    <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
+                    <td [ngClass]="{'table-header': cell.isHeader, 'tooltip':_$toolTipConfig[i].enableTooltip}"
+                        [ngStyle]="cell.style" [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
                         [jigsawTooltipPosition]="_$toolTipConfig[i].position" [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly"
                         [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="styleOptions[i].tdStyle">
                         {{ cell.value }}

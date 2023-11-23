@@ -2,8 +2,7 @@ import {Component, ViewChild} from "@angular/core";
 import {FloatPosition, JigsawFormDisplayComponent} from "jigsaw/public_api";
 
 @Component({
-    templateUrl: 'demo.component.html',
-    styleUrls: ['demo.component.css']
+    templateUrl: 'demo.component.html'
 })
 export class FormDisplayCommonDemoComponent {
 

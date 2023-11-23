@@ -6,6 +6,8 @@ import {TransFormCommonDemoComponent} from "./awade-form/demo.component";
 import {TransformAwadeCommonDemoModule} from "./awade-form/demo.module";
 import {FormDisplayUpdateDemoModule} from "./update/demo.module";
 import {FormDisplayUpdateComponent} from "./update/demo.component";
+import {FormDisplayTooltipDemoModule} from "./tooltip/demo.module";
+import {FormDisplayTooltipDemoComponent} from "./tooltip/demo.component";
 
 export const routerConfig = [
     {
@@ -16,12 +18,15 @@ export const routerConfig = [
     },
     {
         path: 'update', component: FormDisplayUpdateComponent
+    },
+    {
+        path: 'tooltip', component: FormDisplayTooltipDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
-        RouterModule.forChild(routerConfig), FormDisplayCommonDemoModule, TransformAwadeCommonDemoModule, FormDisplayUpdateDemoModule
+        RouterModule.forChild(routerConfig), FormDisplayCommonDemoModule, TransformAwadeCommonDemoModule, FormDisplayUpdateDemoModule, FormDisplayTooltipDemoModule
     ]
 })
 export class FormDisplayDemoModule {

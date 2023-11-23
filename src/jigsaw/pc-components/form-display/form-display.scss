@@ -30,15 +30,18 @@ $jigsaw-form-display: #{$jigsaw-prefix}-form-display;
                     height: 32px;
                     padding-left: 8px;
                     padding-right: 8px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    max-width: 100%;
                     cursor: default;
 
                     .required {
                         color: #F04646;
                     }
+                }
+
+                .tooltip {
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    max-width: 100%;
                 }
             }
         }
