@@ -228,11 +228,15 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     public _$tablesColumns: number[][] = [[0, 0]];
 
     /**
-     * 用于储存数据中每一个表的的列数
+     * 用于储存数据中每一个表的列数
      * @internal
      */
     public _$tablesColumnLengths: undefined[][];
 
+    /**
+     * 用于储存数据中每一个表的tooltip配置
+     * @internal
+     */
     public _$toolTipConfig: TooltipConfig[];
 
     /**
