@@ -13,6 +13,7 @@ $jigsaw-date-picker: #{$jigsaw-prefix}-date-picker;
     color: $font-color-default;
     overflow: hidden;
     user-select: none;
+    outline: none;
 
     .#{$jigsaw-date-picker}-header {
         display: flex;

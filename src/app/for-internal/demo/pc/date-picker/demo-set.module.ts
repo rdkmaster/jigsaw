@@ -14,6 +14,8 @@ import {DatePickerWeekStartComponent} from "./week-start/demo.component";
 import {DatePickerWeekStartDemoModule} from "./week-start/demo.module";
 import { DatePickerOptionsDemoModule } from "./options/demo.module";
 import { DatePickerOptionsDemoComponent } from "./options/demo.component";
+import { DatePickerKeyboardDemoModule } from "./keyboard/demo.module";
+import { DatePickerKeyboardDemoComponent } from "./keyboard/demo.component";
 
 export const routerConfig = [
     {
@@ -37,6 +39,9 @@ export const routerConfig = [
     {
         path: 'options', component: DatePickerOptionsDemoComponent
     },
+    {
+        path: 'keyboard', component: DatePickerKeyboardDemoComponent
+    },
 ];
 
 @NgModule({
@@ -48,7 +53,8 @@ export const routerConfig = [
         DatePickerGrItemDemoModule,
         DatePickerMarkDemoModule,
         DatePickerWeekStartDemoModule,
-        DatePickerOptionsDemoModule
+        DatePickerOptionsDemoModule,
+        DatePickerKeyboardDemoModule
     ]
 })
 export class DatePickerDemoModule {

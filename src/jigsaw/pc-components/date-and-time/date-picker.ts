@@ -9,7 +9,8 @@ import {
     NgModule,
     Output,
     Renderer2,
-    Injector
+    Injector,
+    HostListener
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CommonModule} from '@angular/common';
@@ -113,9 +114,11 @@ export class GrItem {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
+        '[attr.tabindex]': '0',
         '[class.jigsaw-date-picker-host]': 'true',
         '[class.jigsaw-date-picker-error]': '!valid',
         '[class.jigsaw-date-picker-disabled]': 'disabled',
+        '(keydown)': '_$handleKeyDown($event)'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawDatePicker), multi: true},
@@ -795,6 +798,47 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         }
     }
 
+    selectedRowIndex: number = 0;
+    selectedColIndex: number = 0;
+
+    public _$handleKeyDown($event) {
+        console.log($event)
+        console.log(this._$selectMode);
+        console.log(this._$dayList);
+        // this._$dayList[1][1].isSelected=true;
+        if ($event.key === 'ArrowUp') {
+            this._moveSelection(-1, 0, this._$dayList);
+        } else if ($event.key === 'ArrowDown') {
+            this._moveSelection(1, 0, this._$dayList);
+        } else if ($event.key === 'ArrowLeft') {
+            this._moveSelection(0, -1, this._$dayList);
+        } else if ($event.key === 'ArrowRight') {
+            this._moveSelection(0, 1, this._$dayList);
+        }
+    }
+
+    private _moveSelection(rowChange: number, colChange: number, grid) {
+        const newRow = this.selectedRowIndex + rowChange;
+        const newCol = this.selectedColIndex + colChange;
+
+        if (
+            newRow >= 0 &&
+            newRow < grid.length &&
+            newCol >= 0 &&
+            newCol < grid[0].length &&
+            grid[newRow][newCol].isDisabled
+        ) {
+            grid[this.selectedRowIndex][this.selectedColIndex].isSelected = false;
+            this.selectedRowIndex = newRow;
+            this.selectedColIndex = newCol;
+            grid[this.selectedRowIndex][this.selectedColIndex].isSelected = true;
+        }
+    }
+
+    private _getPreselectIndex(num, min, max) {
+        return Math.min(Math.max(num, min), max);
+    }
+    
     /**
      * @internal
      */
