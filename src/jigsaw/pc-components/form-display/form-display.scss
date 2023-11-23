@@ -30,10 +30,20 @@ $jigsaw-form-display: #{$jigsaw-prefix}-form-display;
                     height: 32px;
                     padding-left: 8px;
                     padding-right: 8px;
+                    cursor: default;
 
                     .required {
                         color: #F04646;
                     }
+                }
+
+                .form-display-tooltip {
+                    display: inline-block;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    vertical-align: bottom;
+                    max-width: 100%;
                 }
             }
         }

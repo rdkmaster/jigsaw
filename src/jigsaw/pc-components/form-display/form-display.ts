@@ -5,6 +5,8 @@ import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
+import {FloatPosition} from "../../common/directive/float/float";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -83,6 +85,23 @@ export type TableDataConfig = {
     data: TableRowConfig[]
 }
 
+export type TooltipConfig = {
+    /**
+     * 控制组件单元格是否开启悬浮提示
+     */
+    enableTooltip: boolean,
+
+    /**
+     * 控制悬浮提示位置
+     */
+    position?: FloatPosition,
+
+    /**
+     * 控制悬浮提示是否仅在文字过长时显示
+     */
+    overflowOnly?: boolean
+}
+
 export type FormDisplayStyleOptions = {
     /**
      * 表标题的样式，可选类型为 SectionTitleStyle
@@ -102,8 +121,13 @@ export type FormDisplayStyleOptions = {
     /**
      *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
      *  如何没设置columnWidths，每列平均分配宽度
-     * */
-    columnWidths?: number[]
+     */
+    columnWidths?: number[],
+
+    /**
+     *  悬浮提示配置项
+     */
+    tooltipConfig?: TooltipConfig
 }
 
 export type StepFieldsConfig = {
@@ -175,14 +199,22 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
                 titleStyle: {},
                 trStyle:{},
                 tdStyle: {},
-                columnWidths: []
-            })
+                columnWidths: [],
+                tooltipConfig: {}
+            });
         }
         if (!Array.isArray(value)) {
             value = Array(dataLength).fill(value);
         }
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
+        this._$toolTipConfig = this._styleOptions.map(option => {
+            return {
+                enableTooltip: !!option.tooltipConfig?.enableTooltip,
+                position: option.tooltipConfig?.position || 'top',
+                overflowOnly: !!option.tooltipConfig?.overflowOnly
+            }
+        });
     }
 
     /**
@@ -192,10 +224,16 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     public _$tablesColumns: number[][] = [[0, 0]];
 
     /**
-     * 用于储存数据中每一个表的的列数
+     * 用于储存数据中每一个表的列数
      * @internal
      */
     public _$tablesColumnLengths: undefined[][];
+
+    /**
+     * 用于储存数据中每一个表的tooltip配置
+     * @internal
+     */
+    public _$toolTipConfig: TooltipConfig[];
 
     /**
      * @internal
@@ -305,7 +343,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule],
+    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule],
     declarations: [JigsawFormDisplayComponent],
     exports: [JigsawFormDisplayComponent]
 })
