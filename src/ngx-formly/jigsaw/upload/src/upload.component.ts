@@ -41,7 +41,7 @@ import {IJigsawFormControl, JigsawUploadBase, JigsawUploadDirective, JigsawUploa
                 (uploadChange)="_$uploadChange($event)"
             >{{content}}</jigsaw-button>
             <a *ngIf="clearable && showUploadResult && files.length > 0" class="formly-jigsaw-upload-button-clear"
-               title="清除上传结果" (click)="clear()">
+               [title]="'formUpload.clear' | translate" (click)="clear()">
                 <i class="iconfont iconfont-e865"></i>
             </a>
         </div>
