@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent, TableDataConfig} from "jigsaw/public_api";
+import {FloatPosition, JigsawFormDisplayComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html',
@@ -16,7 +16,7 @@ export class FormDisplayCommonDemoComponent {
             data: [
                 [
                     {value: '名称', isRequired: true},
-                    {value: '数据层级/类型'},
+                    {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计'},
                 ],
                 [
                     {value: 'sql_sde_lte_sdcis'},
@@ -35,7 +35,7 @@ export class FormDisplayCommonDemoComponent {
             data: [
                 [
                     {value: '目的表字段', isHeader: true, isRequired: true},
-                    {value: '类型', isHeader: true, isRequired: true},
+                    {value: '目的表字段字段长度实业务主题话实说属性标签粒度统计', isHeader: true, isRequired: true},
                     {value: '字段长度', isHeader: true, isRequired: true},
                     {value: '字段描述', isHeader: true, isRequired: true},
                     {value: '业务主题', isHeader: true, isRequired: true},
@@ -55,7 +55,12 @@ export class FormDisplayCommonDemoComponent {
     public formStyleOption = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [300, 200, 100]
+        columnWidths: [300, 200, 100],
+        tooltipConfig: {
+            enableTooltip: true,
+            overflowOnly: true,
+            position: <FloatPosition>'top'
+        }
     }
 
     public formio1 = [
@@ -129,12 +134,19 @@ export class FormDisplayCommonDemoComponent {
     public formStyleOption1 = [
         {
             trStyle: {},
-            tdStyle: {'text-align': 'left'}
+            tdStyle: {'text-align': 'left'},
+            tooltipConfig: {
+                enableTooltip: true,
+                position: <FloatPosition>'right'
+            }
         },
         {
             trStyle: {'border-width': '1px'},
             tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [100, 200, 80]
+            columnWidths: [100, 200, 80],
+            tooltipConfig: {
+                enableTooltip: true
+            }
         }
     ]
 
