@@ -38,9 +38,11 @@ $jigsaw-form-display: #{$jigsaw-prefix}-form-display;
                 }
 
                 .form-display-tooltip {
+                    display: inline-block;
                     white-space: nowrap;
                     overflow: hidden;
                     text-overflow: ellipsis;
+                    vertical-align: bottom;
                     max-width: 100%;
                 }
             }
