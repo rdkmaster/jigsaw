@@ -59,7 +59,6 @@ export class FunnelGraphComponent {
                 }
             }
         }
-        // this.funnelPlotData.series = [{}]
         this.funnelPlotData.refresh();
     }
 

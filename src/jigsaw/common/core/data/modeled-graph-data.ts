@@ -1055,17 +1055,58 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
         }
 
         const options = this.template.getInstance();
+        if (options.legend) {
+            options.legend.data = [];
+        }
         
         CommonUtils.extendObject(options, this.template.optionPatch);
-        options.series = this.series.map((seriesData, idx) => {
-            const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({ type: 'funnel' }, this.template.seriesItem);
-            seriesItem.data = [];
-            this.data.forEach((data, index) => {
-                seriesItem.data.push({ value: data, name: this.header[index] })
+        options.series = this.series
+            .filter(seriesData => {
+                if (!seriesData.dimensionField) {
+                    return false;
+                }
+                if (!seriesData.indicators || seriesData.indicators.length == 0) {
+                    return false;
+                }
+                return seriesData.usingAllDimensions || (seriesData.dimensions && seriesData.dimensions.length > 0);
             })
-            SeriesBase.extend(seriesItem, seriesData, idx);
-            return seriesItem;
-        });
+            .map((seriesData, idx) => {
+                const dimensions = this.getRealDimensions(seriesData.dimensionField, seriesData.dimensions, seriesData.usingAllDimensions);
+                const dimIndex = this.getIndex(seriesData.dimensionField);
+                seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
+                seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
+
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'pie'}, this.template.seriesItem);
+                const legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
+                if (dimensions.length == 0) {
+                    console.warn('No valid dimension found, this graph will not be rendered!');
+                } else if (legendSource == 'dim') {
+                    // 多维度
+                    this._mergeLegend(options.legend, dimensions);
+                    let records;
+                    if (seriesData.usingAllDimensions) {
+                        records = this.data;
+                    } else {
+                        records = this.data.filter(row => dimensions.find(d => d.name == row[dimIndex]));
+                    }
+                    const kpiIndex = seriesData.indicators[0].index;
+                    records = records.map(row => [row[dimIndex], row[kpiIndex]]);
+                    const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
+                    indicator.index = 1;
+                    seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
+                        .map(row => ({name: row[0], value: row[1]}));
+                } else {
+                    // 多指标
+                    this._mergeLegend(options.legend, seriesData.indicators);
+                    const dim = dimensions[0].name;
+                    const records = this.data.filter(row => row[dimIndex] == dim);
+                    const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
+                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                }
+
+                SeriesBase.extend(seriesItem, seriesData, idx);
+                return seriesItem;
+            });
         return options;
     }
 }
