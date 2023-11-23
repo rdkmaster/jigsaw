@@ -43,8 +43,6 @@ import {BarGraphComponent} from "app/for-internal/demo/pc/graph/bar/demo.compone
 import {BarGraphModule} from "./bar/demo.module";
 import {GraphDownloadDirectiveModule} from "./download-directive/demo.module";
 import {GraphDownloadDirectiveComponent} from "./download-directive/demo.component";
-import { FunnelGraphModule } from "./funnel/demo.module";
-import { FunnelGraphComponent } from "./funnel/demo.component";
 
 export const routerConfig = [
     {
@@ -102,9 +100,6 @@ export const routerConfig = [
         path: 'funnel-plot', component: FunnelPlotGraphComponent
     },
     {
-        path: 'funnel', component: FunnelGraphComponent
-    },
-    {
         path: 'gauge', component: GaugeGraphComponent
     },
     {
@@ -139,7 +134,6 @@ export const routerConfig = [
         FunnelPlotGraphModule,
         GaugeGraphModule,
         BarGraphModule,
-        FunnelGraphModule,
         GraphDownloadDirectiveModule
     ]
 })

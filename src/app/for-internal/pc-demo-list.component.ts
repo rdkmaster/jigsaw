@@ -18,6 +18,7 @@ import {routerConfig as fishBoneConfig} from "./demo/pc/fish-bone/demo-set.modul
 import {routerConfig as floatConfig} from "./demo/pc/float/demo-set.module";
 import {routerConfig as formConfig} from "./demo/pc/form/demo-set.module";
 import {routerConfig as graphConfig} from "./demo/pc/graph/demo-set.module";
+import {routerConfig as modeledGraphConfig} from "./demo/pc/modeled-graph/demo-set.module";
 import {routerConfig as i18nConfig} from "./demo/pc/i18n/demo-set.module";
 import {routerConfig as inputConfig} from "./demo/pc/input/demo-set.module";
 import {routerConfig as numericInputConfig} from "./demo/pc/numeric-input/demo-set.module";
@@ -194,6 +195,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'float', floatConfig);
         this._addRouterConfig(routerConfig, 'form', formConfig);
         this._addRouterConfig(routerConfig, 'graph', graphConfig);
+        this._addRouterConfig(routerConfig, 'modeled-graph', modeledGraphConfig);
         this._addRouterConfig(routerConfig, 'i18n', i18nConfig);
         this._addRouterConfig(routerConfig, 'input', inputConfig);
         this._addRouterConfig(routerConfig, 'numeric-input', numericInputConfig);
