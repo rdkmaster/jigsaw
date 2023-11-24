@@ -1036,9 +1036,10 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public type: GraphType = 'funnel';
+    public type: GraphType = 'funnel';    
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
+    public legendSource: 'dim' | 'kpi';
 
     private _options: EchartOptions;
 
@@ -1047,6 +1048,14 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
             this._options = this.createChartOptions();
         }
         return this._options;
+    }
+
+    private _mergeLegend(legendObject: EchartLegend, candidates: (Indicator | Dimension)[]): void {
+        if (!legendObject) {
+            return;
+        }
+        const names = candidates.map(can => can.name);
+        legendObject.data.push(...names.filter(legend => legendObject.data.indexOf(legend) == -1));
     }
 
     protected createChartOptions(): EchartOptions {
