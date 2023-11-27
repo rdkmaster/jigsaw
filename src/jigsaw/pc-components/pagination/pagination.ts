@@ -657,7 +657,7 @@ export class JigsawPaginationModule {
             },
             en: {
                 page: "Page",
-                goto: "Goto page",
+                goto: "Go to page",
                 page2: "",
                 showTotalRecord: "Total {{ number }} record(s)",
             }
