@@ -1740,7 +1740,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
     public minSymbolSize: number = 60;
 
     // 最大气泡大小
-    public symbolSize: number = 150;
+    public symbolSize: number = 200;
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
@@ -1749,7 +1749,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
         maxValue = Math.max(maxValue, ...valueList);
         const minValue = Math.min(maxValue, ...valueList);
 
-        const sizeScale = (this.symbolSize - this.minSymbolSize) / (maxValue - minValue);
+        const sizeScale = (this.symbolSize - this.minSymbolSize) / Math.max((maxValue - minValue), 1);
         const sizeOffset = this.minSymbolSize - sizeScale * minValue;
 
         // 斥力 为了防止重叠，斥力最好大于 symbolSize
@@ -1758,12 +1758,19 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
         // 获取要渲染的数据
         const data = this.data[0].map((item) => {
             // 根据与最大值的比例和最大气泡大小，算出每个元素的大小
-            let size = Math.max(sizeScale*item.value + sizeOffset, this.minSymbolSize);
-
+            let size: number;
+            if (maxValue == minValue) {
+                size = this.symbolSize;
+            } else {
+                size = Math.max(sizeScale*item.value + sizeOffset, this.minSymbolSize);
+            }
             return {
                 name: item.label,
                 value: item.value,
                 symbolSize: size,
+                itemStyle: item.itemStyle || '',
+                x: item.x || 0,
+                y: item.y || 0
             };
         });
 
@@ -1778,14 +1785,36 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                 {
                     data,
                     type: "graph", // 关系图
-                    layout: "force", // 采用力引导布局
-                    force: {
-                        // 力引导布局相关的配置项
-                        repulsion, // 值越大则斥力越大 每个元素间隔越大
-                    },
-                    // 高亮状态的图形样式
+                    layout: "none", // 采用力引导布局
+                    // force: {
+                    //     // 力引导布局相关的配置项
+                    //     repulsion, // 值越大则斥力越大 每个元素间隔越大
+                    //     // 是否开启布局动画
+                    //     layoutAnimation: true,
+                    //     // 元素之间的引力，越大引力越强默认是1
+                    //     gravity: 0.1,
+                    //     // 即布局动画执行的时间。数值越大，动画执行的时间越长
+                    //     coolDown: 10
+                    // },
                     emphasis: {
+                        // 鼠标悬停时高亮效果
+                        focus: 'adjacency',
+                        // 强调状态下缩放比例
                         scale: 2,
+                        // 失去焦点是模糊
+                        blur: 10,
+                        // 强调状态下标签颜色
+                        label: '',
+                        // 强调状态下的元素样式
+                        // itemStyle: {
+                        //     color: 'blue',
+                        //     borderWidth: 2,
+                        // },
+                        // 强调状态下的线的状态
+                        // lineStyle: {
+                        //     color: 'green',
+                        //     width: 3,
+                        // },
                     },
                     // 设置 label
                     label: {
@@ -1813,7 +1842,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                         borderWidth: 1,
                         color: "green",
                     },
-                },
+                }
             ],
         };
     }

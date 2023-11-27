@@ -1,13 +1,6 @@
-import { Type } from "@angular/core";
+import {Type} from "@angular/core";
 import {TableDataBase} from "./table-data";
-import {
-    EchartLegend,
-    EchartOptions,
-    EchartSeriesItem,
-    EchartTitle,
-    EchartXAxis,
-    EchartYAxis
-} from "./echart-types";
+import {EchartLegend, EchartOptions, EchartSeriesItem, EchartTitle, EchartXAxis, EchartYAxis} from "./echart-types";
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
@@ -911,11 +904,11 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
                 .map(row => {
-                return [
-                    row[xAxisKpiIndex],
-                    row[yAxisKpiIndex]
-                ]
-            });
+                    return [
+                        row[xAxisKpiIndex],
+                        row[yAxisKpiIndex]
+                    ]
+                });
             seriesItem.name = dim.name ? dim.name : 'series' + idx;
             ScatterDimension.extend(seriesItem, dim);
             return seriesItem;
@@ -940,12 +933,17 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 }
 
 export class ModeledBubbleGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
     public type: GraphType = 'graph';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: EchartXAxis = {};
     public yAxis: EchartYAxis = {};
-    public dimensions: ScatterDimension[] = [];
+    public minSymbolSize: number;
+    public maxSymbolSize: number;
     public series: DimKpiBase[];
 
     private _options: EchartOptions;
@@ -957,13 +955,80 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
     }
 
     protected createChartOptions(): EchartOptions {
-        if (!this.series) {
+        console.log("101010101010");
+        if (!this.minSymbolSize || !this.maxSymbolSize) {
             return undefined;
         }
         const options = this.template.getInstance();
+        options.xAxis = this.xAxis;
+        options.yAxis = this.yAxis;
+        const data = this._handleData();
 
+        // 斥力 为了防止重叠，斥力最好大于 maxSymbolSize
+        const repulsion = this.maxSymbolSize * 1.5;
+        options.series = [
+            {
+                data,
+                type: this.type,
+                layout: "force",
+                force: {
+                    repulsion,
+                },
+                emphasis: {
+                    scale: 2,
+                },
+                label: {
+                    show: true,
+                    position: "inside",
+                    formatter: [`{title|{b}}`, `{num|{c}}`].join("\n"),
+                    rich: {
+                        title: {
+                            align: "center",
+                            fontSize: 13,
+                            lineHeight: 18,
+                            color: "#FFF",
+                        },
+                        num: {
+                            align: "center",
+                            fontSize: "15",
+                            lineHeight: 21,
+                            fontWeight: 500,
+                            color: "#FFF",
+                        },
+                    },
+                },
+                itemStyle: {
+                    borderWidth: 1,
+                    color: "green",
+                },
+            },
+        ]
         CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
+    }
+
+    private _handleData() {
+        if (!this.data || !this.data.length) return;
+        let maxValue = 1;
+        const valueList = this.data.map(item => item["value"]);
+        maxValue = Math.max(maxValue, ...valueList);
+        const minValue = Math.min(maxValue, ...valueList);
+
+        const sizeScale = (this.maxSymbolSize - this.minSymbolSize) / (maxValue - minValue);
+        const sizeOffset = this.minSymbolSize - sizeScale * minValue;
+
+        // 获取要渲染的数据
+        return this.data.map((item) => {
+            // 根据与最大值的比例和最大气泡大小，算出每个元素的大小
+            let size = Math.max(sizeScale * Number(item["value"]) + sizeOffset, this.minSymbolSize);
+
+            return {
+                name: item["label"],
+                value: item["value"],
+                symbolSize: size,
+                itemStyle: item["itemStyle"] || ''
+            };
+        });
     }
 }
 
