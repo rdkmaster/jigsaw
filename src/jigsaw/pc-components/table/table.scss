@@ -256,14 +256,21 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         }
     }
 
-    &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range::after{
-        content: '';
-        position: absolute;
-        top: 0px;
-        width: 1px;
-        height: 100%;
-        background: $border-color-default;
-    }
+    &.#{$jigsaw-table}-ff{
+        .#{$jigsaw-table}-body-range::after{
+            content: '';
+            position: absolute;
+            top: 0px;
+            width: 1px;
+            height: 100%;
+            background: $border-color-default;
+        }
+    
+        &.#{$jigsaw-table}-hide-column-dividers .#{$jigsaw-table}-body-range::after{
+            width: 0;
+        }
+    } 
+    
     
     &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range.#{$jigsaw-table}-no-data {        
         .#{$jigsaw-table}-body {
@@ -370,8 +377,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
 
         table tbody tr td,
         table tbody tr.jigsaw-table-row-expansion,
-        .jigsaw-table-body-range.jigsaw-table-no-data,
-        &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range {
+        .jigsaw-table-body-range.jigsaw-table-no-data {
             border-right: none;
             border-left: none;
         }
