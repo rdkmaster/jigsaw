@@ -14,12 +14,17 @@ export class FormDisplayCommonDemoComponent {
             title: '新增数据源',
             data: [
                 [
-                    {value: '名称', isRequired: true},
-                    {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计'},
+                    {value: '名称', renderer: 'html'},
+                    {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
                 ],
                 [
-                    {value: 'sql_sde_lte_sdcis'},
-                    {value: 'DwS/dimission'}
+                    {value: `<div style="background: grey; width: fit-content; border-radius: 5px; padding: 0 8px 0 8px;">DwS/dimission</div>`, renderer: 'html'},
+                    {value: `
+                            <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
+                                节能减排管理</div>
+                            <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
+                                fdasf</div>`,
+                        renderer: 'html'}
                 ],
                 ['所属业务', '数据结构'],
                 ['LTE base', 'DDSSiefad'],

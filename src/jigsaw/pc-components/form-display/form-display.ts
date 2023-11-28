@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit, TemplateRef} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
@@ -7,6 +7,9 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
+import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
+import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
+import {DefaultFormDisplayCellRenderer} from "./form-display-renderer";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -65,6 +68,11 @@ type TableCellConfig = string | {
      * 指定单元格是否为必填项
      */
     isRequired?: boolean,
+
+    /**
+     * 表示单元格是富文本
+     */
+    renderer?: TemplateRef<any> | string
 }
 
 type TableRowConfig = TableCellConfig[];
@@ -238,8 +246,11 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     /**
      * @internal
      */
-    public _$isString(cell: TableCellConfig): boolean {
-        return typeof cell === 'string';
+    public _$getCellType(cell: TableCellConfig): string {
+        if (typeof cell == 'string') {
+            return 'string';
+        }
+        return cell.renderer ? '' : 'normal';
     }
 
     /**
@@ -343,9 +354,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule],
-    declarations: [JigsawFormDisplayComponent],
-    exports: [JigsawFormDisplayComponent]
+    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule, JigsawTrustedHtmlModule],
+    declarations: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent, DefaultFormDisplayCellRenderer],
+    exports: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent, DefaultFormDisplayCellRenderer]
 })
 export class JigsawFormDisplayModule {
 }
