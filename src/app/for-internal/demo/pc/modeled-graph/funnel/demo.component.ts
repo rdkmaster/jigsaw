@@ -7,23 +7,81 @@ import { ModeledFunnelGraphData } from "jigsaw/public_api";
 })
 export class FunnelGraphComponent {
     constructor(public http: HttpClient) {
-        this.funnelPlotData = new ModeledFunnelGraphData();
-        this.funnelPlotData.data = [[60], [40], [20], [80], [100]];
-        this.funnelPlotData.header = ['访问', '咨询', '订单', '点击', '展现'];
-        this.funnelPlotData.template.option = {
+        this.funnelData = new ModeledFunnelGraphData();
+        this.funnelData.data = [
+            ["Sagitar", "80", "899.48", "177.36", "902.11", "226.06", "608.18", "4", "0.66", "1.49", "6"],
+            ["Focus", "60", "340.84", "948.05", "653.80", "118.46", "733.72", "196", "0.62", "0.28", "7"],
+            ["Civic", "40", "736.70", "788.63", "907.83", "877.41", "894.30", "108", "0.28", "1.26", "1"]
+        ];
+        this.funnelData.header = [
+            "Vehicle Model",
+            "Sales of Current Month",
+            "R&D Spending",
+            "Management Spending",
+            "Sales Spending",
+            "Market Spending",
+            "CRM Spending",
+            "Real-time Average Speed",
+            "Real-time Fuel Consumption",
+            "Real-time Water Temperature",
+            "Real-time Rotation Speed"
+        ];
+        this.funnelData.field = [
+            "vehicle_model",
+            "sales",
+            "rd_spending",
+            "management_spending",
+            "sales_spending",
+            "market_spending",
+            "custom_service_spending",
+            "real_time_average_speed",
+            "real_time_fuel_consumption",
+            "real_time_water_temperature",
+            "real_time_rotating_speed"
+        ];
+        this.funnelData.series = [
+            {
+                dimensions: [
+                    {
+                        name: "Sagitar"
+                    },
+                    {
+                        name: "Focus"
+                    },
+                    {
+                        name: "Civic"
+                    }
+                ],
+                usingAllDimensions: true,
+                indicators: [
+                    {
+                        name: "Sales of Current Month",
+                        field: "sales",
+                        aggregateBy: "average",
+                        index: 1
+                    }
+                ],
+                name: "Sales of Current Month",
+                dimensionField: "vehicle_model"
+            }
+        ];
+        this.funnelData.template.option = {
             legend: {
-                data: ['展现', '点击', '访问', '咨询', '订单']
+                show: true,
+                type: "scroll",
+                orient: "vertical",
+                left: "left"
             },
             title: {
-                text: '漏斗图',
-                subtext: '纯属虚构'
+                show: true,
+                text: '漏斗图'
             },
             tooltip: {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c}%"
             },
         }
-        this.funnelPlotData.template.seriesItem = {
+        this.funnelData.template.seriesItem = {
             name: '漏斗图',
             type: 'funnel',
             left: '10%',
@@ -59,10 +117,10 @@ export class FunnelGraphComponent {
                 }
             }
         }
-        this.funnelPlotData.refresh();
+        this.funnelData.refresh();
     }
 
-    public funnelPlotData: ModeledFunnelGraphData;
+    public funnelData: ModeledFunnelGraphData;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

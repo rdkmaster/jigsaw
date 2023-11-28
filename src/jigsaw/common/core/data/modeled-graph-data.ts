@@ -1038,7 +1038,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
 
     public type: GraphType = 'funnel';    
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
-    public series: MapSeries[];
+    public series: FunnelSeries[];
     public legendSource: 'dim' | 'kpi';
 
     private _options: EchartOptions;
