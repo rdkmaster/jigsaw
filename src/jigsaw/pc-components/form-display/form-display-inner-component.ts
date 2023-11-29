@@ -1,9 +1,7 @@
 import {
     Component,
     Input,
-    TemplateRef,
     ViewChild,
-    EmbeddedViewRef,
     ComponentRef,
     AfterViewInit,
     OnInit,
@@ -15,7 +13,11 @@ import {
     Directive
 } from "@angular/core"
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {DefaultFormDisplayCellRenderer, FormDisplayRendererBase} from "./form-display-renderer";
+import {
+    FormDisplayHtmlCellRenderer,
+    FormDisplayRendererBase,
+    FormDisplayTagCellRenderer
+} from "./form-display-renderer";
 
 
 @Directive()
@@ -27,10 +29,10 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
 
     @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
-    protected rendererRef: ComponentRef<FormDisplayRendererBase> | EmbeddedViewRef<any>;
-    protected _customRenderer: Type<FormDisplayRendererBase> | TemplateRef<any> | 'html';
+    protected rendererRef: ComponentRef<FormDisplayRendererBase>;
+    protected _customRenderer: Type<FormDisplayRendererBase> | string;
 
-    private _cellData;
+    private _cellData: string | string[];
 
     /**
      * @NoMarkForCheckRequired
@@ -49,12 +51,12 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get renderer(): Type<FormDisplayRendererBase> | TemplateRef<any> | 'html' {
+    public get renderer(): Type<FormDisplayRendererBase> | string {
         return this._customRenderer
     }
 
-    public set renderer(value: Type<FormDisplayRendererBase> | TemplateRef<any> | 'html') {
-        if (this._customRenderer == value || (!value && this._customRenderer instanceof DefaultFormDisplayCellRenderer)) {
+    public set renderer(value: Type<FormDisplayRendererBase> | string) {
+        if (this._customRenderer == value || (!value && this._customRenderer instanceof FormDisplayHtmlCellRenderer)) {
             return;
         }
         this._customRenderer = value;
@@ -78,25 +80,39 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
         }
     }
 
-    protected rendererFactory(renderer: Type<FormDisplayRendererBase> | TemplateRef<any>, initData: any): ComponentRef<FormDisplayRendererBase> | EmbeddedViewRef<any> {
-        if (renderer instanceof TemplateRef) {
-            return this.rendererHost.viewContainerRef.createEmbeddedView(renderer);
-        } else {
-            const componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
-            const componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
-            componentRef.instance.cellData = this.cellData;
-            componentRef.instance.initData = initData;
-            return componentRef;
+    protected rendererFactory(renderer: Type<FormDisplayRendererBase>, initData: any): ComponentRef<FormDisplayRendererBase> {
+        const componentFactory = this.componentFactoryResolver.resolveComponentFactory(renderer);
+        const componentRef = this.rendererHost.viewContainerRef.createComponent(componentFactory);
+        componentRef.instance.cellData = this.cellData;
+        componentRef.instance.initData = initData;
+        return componentRef;
+    }
+
+    private _transformRenderer(renderer: string): Type<FormDisplayRendererBase> {
+        switch (renderer) {
+            case 'html':
+                return FormDisplayHtmlCellRenderer;
+            case 'tag':
+                return FormDisplayTagCellRenderer;
+            default:
+                return FormDisplayHtmlCellRenderer
         }
     }
 
     ngAfterViewInit(): void {
-        this.renderer = this.renderer != 'html' ? this.renderer : DefaultFormDisplayCellRenderer;
+        if (typeof this.renderer == 'string') {
+            this.renderer = this._transformRenderer(this.renderer);
+        }
         this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
+        this.changeDetector.detectChanges();
     }
 
     ngOnInit(): void {
+        super.ngOnInit();
+    }
 
+    ngOnDestroy() {
+        super.ngOnDestroy()
     }
 }
 

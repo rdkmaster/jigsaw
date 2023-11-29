@@ -14,7 +14,10 @@ export class FormDisplayCommonDemoComponent {
             title: '新增数据源',
             data: [
                 [
-                    {value: '名称', renderer: 'html'},
+                    {
+                        value: ['名称', '名称1', '名称2'],
+                        renderer: 'tag'
+                    },
                     {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
                 ],
                 [

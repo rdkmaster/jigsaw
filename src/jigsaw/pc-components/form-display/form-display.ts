@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit, TemplateRef} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Injector,
+    Input,
+    NgModule,
+    ChangeDetectorRef,
+    OnInit,
+    Type
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
@@ -7,9 +16,8 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
-import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
-import {DefaultFormDisplayCellRenderer} from "./form-display-renderer";
+import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -42,7 +50,7 @@ type TableCellConfig = string | {
     /**
      * 单元格的值
      */
-    value: string,
+    value: string | string[],
 
     /**
      * 控制单元格横跨的列数
@@ -70,9 +78,14 @@ type TableCellConfig = string | {
     isRequired?: boolean,
 
     /**
-     * 表示单元格是富文本
+     * 指定单元格使用的渲染器
      */
-    renderer?: TemplateRef<any> | string
+    renderer?: Type<FormDisplayRendererBase> | string,
+
+    /**
+     *  渲染器的配置
+     * */
+    rendererInitData?: any
 }
 
 type TableRowConfig = TableCellConfig[];
@@ -205,7 +218,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (CommonUtils.isUndefined(value)) {
             value = Array(dataLength).fill({
                 titleStyle: {},
-                trStyle:{},
+                trStyle: {},
                 tdStyle: {},
                 columnWidths: [],
                 tooltipConfig: {}
@@ -354,9 +367,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule, JigsawTrustedHtmlModule],
-    declarations: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent, DefaultFormDisplayCellRenderer],
-    exports: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent, DefaultFormDisplayCellRenderer]
+    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule, JigsawTableRendererModule],
+    declarations: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent],
+    exports: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent]
 })
 export class JigsawFormDisplayModule {
 }
