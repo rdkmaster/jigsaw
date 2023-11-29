@@ -9,6 +9,8 @@
     <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
     <a jigsaw-button (click)="onClick()">使用 a 标签</a>
     <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
 </div>
 <jigsaw-header>自带ngIf</jigsaw-header>
 <div>
@@ -18,6 +20,8 @@
     <jigsaw-button *ngIf="showButton" (click)="onClick()">普通用法</jigsaw-button>
     <a *ngIf="showButton" jigsaw-button (click)="onClick()">使用 a 标签</a>
     <button *ngIf="showButton" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="showButton" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="showButton" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
 </div>
 <jigsaw-header>自带ngIf + 父容器ngIf</jigsaw-header>
 <div>
@@ -29,6 +33,9 @@
         <jigsaw-button *ngIf="showButton2" (click)="onClick()">普通用法</jigsaw-button>
         <a *ngIf="showButton2" jigsaw-button (click)="onClick()">使用 a 标签</a>
         <button *ngIf="showButton2" jigsaw-button (click)="onClick()">使用 button 标签</button>
+        <jigsaw-button *ngIf="showButton2" (click)="onClick()"><span
+                class="iconfont iconfont-e9ff"></span></jigsaw-button>
+        <jigsaw-button *ngIf="showButton2" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
     </div>
 </div>
 <jigsaw-header>自带ngIf true</jigsaw-header>
@@ -36,6 +43,8 @@
     <jigsaw-button *ngIf="true" (click)="onClick()">普通用法</jigsaw-button>
     <a *ngIf="true" jigsaw-button (click)="onClick()">使用 a 标签</a>
     <button *ngIf="true" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="true" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="true" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
 </div>
 <jigsaw-header>父容器ngIf</jigsaw-header>
 <div>
@@ -46,6 +55,8 @@
         <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
         <a jigsaw-button (click)="onClick()">使用 a 标签</a>
         <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+        <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+        <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
     </div>
 </div>
 <jigsaw-header>父容器1ngIf + 父容器2ngIf</jigsaw-header>
@@ -59,6 +70,8 @@
             <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
             <a jigsaw-button (click)="onClick()">使用 a 标签</a>
             <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+            <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+            <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
         </div>
     </div>
 </div>
@@ -67,6 +80,8 @@
     <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
     <a jigsaw-button (click)="onClick()">使用 a 标签</a>
     <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
 </j-box>
 <jigsaw-header>父容器box + 自带ngIf</jigsaw-header>
 <j-box>
@@ -76,4 +91,7 @@
     <jigsaw-button *ngIf="showButton3" (click)="onClick()">普通用法</jigsaw-button>
     <a *ngIf="showButton3" jigsaw-button (click)="onClick()">使用 a 标签</a>
     <button *ngIf="showButton3" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="showButton3" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="showButton3" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+    <jigsaw-button *ngIf="showButton3" icon="iconfont iconfont-e0a1" (click)="onClick()">新增参数</jigsaw-button>
 </j-box>

@@ -111,9 +111,15 @@ export class JigsawButton extends AbstractJigsawComponent implements AfterViewIn
     ngAfterViewInit() {
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
-                if (!this.text.nativeElement.innerText) {
-                    this._renderer.addClass(this.element.nativeElement, 'jigsaw-button-icon');
+                if (this.text.nativeElement.innerText) {
+                    return
                 }
+                // 需要将判定时间点进一步延后，以防止在某些情况（j-box + ngIf）下，获取不到innerText的情况
+                setTimeout(() => {
+                    if (!this.text.nativeElement.innerText) {
+                        this._renderer.addClass(this.element.nativeElement, 'jigsaw-button-icon');
+                    }
+                })
             });
         });
     }
