@@ -16,18 +16,18 @@ export class FormDisplayCommonDemoComponent {
                 [
                     {
                         value: ['名称', '名称1', '名称2'],
-                        rendererAs: 'tag'
+                        renderAs: 'tag'
                     },
                     {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
                 ],
                 [
-                    {value: `<div style="background: grey; width: fit-content; border-radius: 5px; padding: 0 8px 0 8px;">DwS/dimission</div>`, rendererAs: 'html'},
+                    {value: `<div style="background: grey; width: fit-content; border-radius: 5px; padding: 0 8px 0 8px;">DwS/dimission</div>`, renderAs: 'html'},
                     {value: `
                             <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
                                 节能减排管理</div>
                             <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
                                 fdasf</div>`,
-                        rendererAs: 'html'}
+                        renderAs: 'html'}
                 ],
                 ['所属业务', '数据结构'],
                 ['LTE base', 'DDSSiefad'],
