@@ -1,14 +1,18 @@
-import {Component} from "@angular/core";
-import {FloatPosition} from "jigsaw/public_api";
+import {Component, ViewChild} from "@angular/core";
+import {FloatPosition, JigsawFormDisplayComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html'
 })
 export class FormDisplayPerformanceTestDemoComponent {
+    @ViewChild('jigsawFormDisplayComponent')
+    jigsawFormDisplayComponent: JigsawFormDisplayComponent
+
+    public formDisplayRows: number = 299;
 
     public formio = {
-        "title": "3000条无渲染器数据",
-        "data": this.getCommonData(299)
+        "title": `${(this.formDisplayRows+1)*10}条无渲染器数据`,
+        "data": this.getCommonData(this.formDisplayRows)
     }
 
     public getCommonData(rowCount: number): any[] {
@@ -54,7 +58,13 @@ export class FormDisplayPerformanceTestDemoComponent {
         }
     }
 
+    public changeSource() {
+        this.jigsawFormDisplayComponent.data = {
+            "title": `${(this.formDisplayRows+1)*10}条无渲染器数据`,
+            "data": this.getCommonData(this.formDisplayRows)
+        }
+    }
 
-    summary: string = "这个DEMO演示了form-display组件单元格使用渲染器。";
+    summary: string = "这个DEMO演示了form-display组件单元格未使用渲染器数据。";
     description: string = "";
 }

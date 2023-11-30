@@ -9,9 +9,11 @@ export class FormDisplayRendererDataTestDemoComponent {
     @ViewChild('jigsawFormDisplayComponent')
     jigsawFormDisplayComponent: JigsawFormDisplayComponent
 
+    public formDisplayRows: number = 99;
+
     public formio = {
-        "title": "1000条渲染器数据",
-        "data": this.getRendererAsData(99)
+        "title": `${(this.formDisplayRows+1)*10}条渲染器数据`,
+        "data": this.getRendererAsData(this.formDisplayRows)
     }
 
     public getRendererAsData(rowCount: number): any[] {
@@ -67,7 +69,13 @@ export class FormDisplayRendererDataTestDemoComponent {
         }
     }
 
+    public changeSource() {
+        this.jigsawFormDisplayComponent.data = {
+            "title": `${(this.formDisplayRows+1)*10}条渲染器数据`,
+            "data": this.getRendererAsData(this.formDisplayRows)
+        }
+    }
 
-    summary: string = "这个DEMO演示了form-display组件单元格使用渲染器。";
+    summary: string = "这个DEMO演示了form-display组件单元格使用渲染器数据。";
     description: string = "";
 }
