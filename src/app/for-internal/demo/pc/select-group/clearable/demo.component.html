@@ -17,6 +17,11 @@
         <jigsaw-button (click)="changeEmptyData()">清空数据</jigsaw-button>
     </li>
     <li class="demo-options-item">
+        <span>已选项：</span>
+        <jigsaw-button (click)="changeValue(false)">设置为南京</jigsaw-button>
+        <jigsaw-button (click)="changeValue(true)">设置为空字符数据</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
         <span>操作：</span>
         <jigsaw-button (click)="selectedCityForSelect = ''">设置为空字符串</jigsaw-button>
         <jigsaw-button (click)="selectedCityForSelect = undefined">设置为undefined</jigsaw-button>
@@ -24,7 +29,8 @@
 </ul>
 
 <p>注意placeholder的变化</p>
-<jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)" placeholder="请选择城市"
+<jigsaw-group-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)" placeholder="请选择城市"
     [data]="cityList" [clearable]="clearable">
-</jigsaw-select>
-<p class="message">选择的城市是 <span>{{selectedCityForSelect}}</span></p>
+</jigsaw-group-select>
+<p class="message">选择的城市是 <span>{{selectedCityForSelect ? selectedCityForSelect.length > 0 ?
+        selectedCityForSelect[0].data[0].label : '' : ''}}</span></p>
