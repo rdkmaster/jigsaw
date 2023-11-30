@@ -42,7 +42,7 @@
                         <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
                             [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1"
                             [style]="styleOptions[i].tdStyle">
-                            <jigsaw-form-display-cell [renderer]="cell.renderer" [cellData]="cell.value" [rendererInitData]="cell.rendererInitData">
+                            <jigsaw-form-display-cell [renderer]="cell.rendererAs" [cellData]="cell.value" [rendererInitData]="cell.rendererInitData">
                             </jigsaw-form-display-cell>
                             <span *ngIf="cell.isRequired" class="required">*</span>
                         </td>

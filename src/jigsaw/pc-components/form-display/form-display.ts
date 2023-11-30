@@ -80,7 +80,7 @@ type TableCellConfig = string | {
     /**
      * 指定单元格使用的渲染器
      */
-    renderer?: Type<FormDisplayRendererBase> | string,
+    rendererAs?: Type<FormDisplayRendererBase> | string,
 
     /**
      *  渲染器的配置
@@ -263,7 +263,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (typeof cell == 'string') {
             return 'string';
         }
-        return cell.renderer ? '' : 'normal';
+        return cell.rendererAs ? '' : 'normal';
     }
 
     /**

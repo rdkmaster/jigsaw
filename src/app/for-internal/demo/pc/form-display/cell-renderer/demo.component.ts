@@ -22,13 +22,13 @@ export class FormDisplayCellRendererDemoComponent {
                     {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
                 ],
                 [
-                    {value: `DwS/dimission`, renderer: 'tag'},
+                    {value: `DwS/dimission`, rendererAs: 'tag'},
                     {value: `
                             <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
                                 节能减排管理</div>
                             <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
                                 fdasf</div>`,
-                        renderer: 'html'}
+                        rendererAs: 'html'}
                 ],
                 ['所属业务', '数据结构'],
                 ['LTE base', 'DDSSiefad'],
@@ -50,11 +50,11 @@ export class FormDisplayCellRendererDemoComponent {
                 ],
                 ['edw_creat_date', 'string', '300', '---', {
                     value: ['是','否', '确实'],
-                    renderer: 'tag',
+                    rendererAs: 'tag',
                     rendererInitData: {
-                        tagSize: 'small',
-                        tagColor: 'blue',
-                        tagSelectedColor: 'pink'
+                        size: 'small',
+                        color: 'blue',
+                        selectedColor: 'pink'
                     }
                 }],
                 ['edw_last_update', 'bigint', '300', '---', '是'],

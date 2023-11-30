@@ -19,7 +19,6 @@ import {
     FormDisplayTagCellRenderer
 } from "./form-display-renderer";
 
-
 @Directive()
 export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
@@ -45,7 +44,6 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
     public set cellData(value) {
         this._cellData = value;
     }
-
 
     /**
      * @NoMarkForCheckRequired

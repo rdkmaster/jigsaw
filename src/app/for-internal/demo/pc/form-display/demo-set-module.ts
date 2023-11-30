@@ -10,6 +10,10 @@ import {FormDisplayTooltipDemoModule} from "./tooltip/demo.module";
 import {FormDisplayTooltipDemoComponent} from "./tooltip/demo.component";
 import {FormDisplayCellRendererDemoModule} from "./cell-renderer/demo.module";
 import {FormDisplayCellRendererDemoComponent} from "./cell-renderer/demo.component";
+import {FormDisplayPerformanceTestDemoModule} from "./common-data-test/demo.module";
+import {FormDisplayPerformanceTestDemoComponent} from "./common-data-test/demo.component";
+import {FormDisplayRendererDataTestDemoComponent} from "./renderer-data-test/demo.component";
+import {FormDisplayRendererDataTestDemoModule} from "./renderer-data-test/demo.module";
 
 export const routerConfig = [
     {
@@ -26,13 +30,19 @@ export const routerConfig = [
     },
     {
         path: 'cell-renderer', component: FormDisplayCellRendererDemoComponent
+    },
+    {
+        path: 'common-data-test', component: FormDisplayPerformanceTestDemoComponent
+    },
+    {
+        path: 'renderer-data-test', component: FormDisplayRendererDataTestDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), FormDisplayCommonDemoModule, TransformAwadeCommonDemoModule, FormDisplayUpdateDemoModule, FormDisplayTooltipDemoModule,
-        FormDisplayCellRendererDemoModule
+        FormDisplayCellRendererDemoModule, FormDisplayPerformanceTestDemoModule, FormDisplayRendererDataTestDemoModule
     ]
 })
 export class FormDisplayDemoModule {

@@ -55,7 +55,6 @@ export class FormDisplayHtmlCellRenderer extends FormDisplayRendererBase {
     }
 }
 
-
 /**
  * form-display单元格tag渲染器
  * @internal
@@ -85,10 +84,10 @@ export class FormDisplayTagCellRenderer extends FormDisplayRendererBase {
         if (!this.initData) {
             return;
         }
-        this.size = this.initData.tagSize ? this.initData.tagSize : 'medium';
-        this.color = this.initData.tagColor ? this.initData.tagColor : 'preset-gray';
-        this.selectedColor = this.initData.tagSelectedColor ? this.initData.tagSelectedColor : '';
-        this.margin = this.initData.tagMargin ? this.initData.tagMargin : '0 2px';
+        this.size = this.initData.size ? this.initData.size : 'medium';
+        this.color = this.initData.color ? this.initData.color : 'preset-gray';
+        this.selectedColor = this.initData.selectedColor ? this.initData.selectedColor : '';
+        this.margin = this.initData.margin ? this.initData.margin : '0 2px';
     }
 }
 
