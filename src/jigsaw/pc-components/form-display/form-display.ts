@@ -80,7 +80,7 @@ type TableCellConfig = string | {
     /**
      * 指定单元格使用的渲染器
      */
-    renderAs?: Type<FormDisplayRendererBase> | string,
+    renderAs?: Type<FormDisplayRendererBase> | 'html' | 'tag',
 
     /**
      *  渲染器的配置

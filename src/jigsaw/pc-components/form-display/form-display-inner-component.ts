@@ -41,7 +41,7 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
         return this._cellData;
     }
 
-    public set cellData(value) {
+    public set cellData(value: string | string[]) {
         this._cellData = value;
     }
 
@@ -86,7 +86,7 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
         return componentRef;
     }
 
-    private _transformRenderer(renderer: string): Type<FormDisplayRendererBase> {
+    private _getRendererByType(renderer: string): Type<FormDisplayRendererBase> {
         switch (renderer) {
             case 'html':
                 return FormDisplayHtmlCellRenderer;
@@ -99,7 +99,7 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
 
     ngAfterViewInit(): void {
         if (typeof this.renderer == 'string') {
-            this.renderer = this._transformRenderer(this.renderer);
+            this.renderer = this._getRendererByType(this.renderer);
         }
         this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
         this.changeDetector.detectChanges();

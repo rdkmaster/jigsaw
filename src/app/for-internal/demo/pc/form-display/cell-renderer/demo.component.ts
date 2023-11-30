@@ -16,13 +16,12 @@ export class FormDisplayCellRendererDemoComponent {
                 [
                     {
                         value: '名称',
-                        renderer: 'tag',
                         isRequired: true
                     },
                     {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
                 ],
                 [
-                    {value: `DwS/dimission`, renderAs: 'tag'},
+                    {value: `DwS/dimension`, renderAs: 'tag'},
                     {value: `
                             <div style="display: inline-block; background: grey; width: fit-content; padding: 0 8px 0 8px; margin: 0 4px 0 4px; border-radius: 2px">
                                 节能减排管理</div>
