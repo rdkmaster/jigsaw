@@ -1,0 +1,97 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header>普通场景</jigsaw-header>
+<div>
+    <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
+    <a jigsaw-button (click)="onClick()">使用 a 标签</a>
+    <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+</div>
+<jigsaw-header>自带ngIf</jigsaw-header>
+<div>
+    <div>
+        <jigsaw-switch [(checked)]="showButton"></jigsaw-switch>
+    </div>
+    <jigsaw-button *ngIf="showButton" (click)="onClick()">普通用法</jigsaw-button>
+    <a *ngIf="showButton" jigsaw-button (click)="onClick()">使用 a 标签</a>
+    <button *ngIf="showButton" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="showButton" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="showButton" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+</div>
+<jigsaw-header>自带ngIf + 父容器ngIf</jigsaw-header>
+<div>
+    <div>
+        <jigsaw-switch [(checked)]="showButton2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showCntr4"></jigsaw-switch>
+    </div>
+    <div *ngIf="showCntr4">
+        <jigsaw-button *ngIf="showButton2" (click)="onClick()">普通用法</jigsaw-button>
+        <a *ngIf="showButton2" jigsaw-button (click)="onClick()">使用 a 标签</a>
+        <button *ngIf="showButton2" jigsaw-button (click)="onClick()">使用 button 标签</button>
+        <jigsaw-button *ngIf="showButton2" (click)="onClick()"><span
+                class="iconfont iconfont-e9ff"></span></jigsaw-button>
+        <jigsaw-button *ngIf="showButton2" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+    </div>
+</div>
+<jigsaw-header>自带ngIf true</jigsaw-header>
+<div>
+    <jigsaw-button *ngIf="true" (click)="onClick()">普通用法</jigsaw-button>
+    <a *ngIf="true" jigsaw-button (click)="onClick()">使用 a 标签</a>
+    <button *ngIf="true" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="true" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="true" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+</div>
+<jigsaw-header>父容器ngIf</jigsaw-header>
+<div>
+    <div>
+        <jigsaw-switch [(checked)]="showCntr"></jigsaw-switch>
+    </div>
+    <div *ngIf="showCntr">
+        <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
+        <a jigsaw-button (click)="onClick()">使用 a 标签</a>
+        <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+        <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+        <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+    </div>
+</div>
+<jigsaw-header>父容器1ngIf + 父容器2ngIf</jigsaw-header>
+<div>
+    <div>
+        <jigsaw-switch [(checked)]="showCntr2"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="showCntr3"></jigsaw-switch>
+    </div>
+    <div *ngIf="showCntr2">
+        <div *ngIf="showCntr3">
+            <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
+            <a jigsaw-button (click)="onClick()">使用 a 标签</a>
+            <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+            <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+            <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+        </div>
+    </div>
+</div>
+<jigsaw-header>父容器box</jigsaw-header>
+<j-box>
+    <jigsaw-button (click)="onClick()">普通用法</jigsaw-button>
+    <a jigsaw-button (click)="onClick()">使用 a 标签</a>
+    <button jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+</j-box>
+<jigsaw-header>父容器box + 自带ngIf</jigsaw-header>
+<j-box>
+    <div>
+        <jigsaw-switch [(checked)]="showButton3"></jigsaw-switch>
+    </div>
+    <jigsaw-button *ngIf="showButton3" (click)="onClick()">普通用法</jigsaw-button>
+    <a *ngIf="showButton3" jigsaw-button (click)="onClick()">使用 a 标签</a>
+    <button *ngIf="showButton3" jigsaw-button (click)="onClick()">使用 button 标签</button>
+    <jigsaw-button *ngIf="showButton3" (click)="onClick()"><span class="iconfont iconfont-e9ff"></span></jigsaw-button>
+    <jigsaw-button *ngIf="showButton3" icon="iconfont iconfont-e9ff" (click)="onClick()"></jigsaw-button>
+    <jigsaw-button *ngIf="showButton3" icon="iconfont iconfont-e0a1" (click)="onClick()">新增参数</jigsaw-button>
+</j-box>
