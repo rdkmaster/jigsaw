@@ -1,4 +1,13 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Injector,
+    Input,
+    NgModule,
+    ChangeDetectorRef,
+    OnInit,
+    Type
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
@@ -7,6 +16,8 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
+import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
+import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -39,7 +50,7 @@ type TableCellConfig = string | {
     /**
      * 单元格的值
      */
-    value: string,
+    value: string | string[],
 
     /**
      * 控制单元格横跨的列数
@@ -65,6 +76,16 @@ type TableCellConfig = string | {
      * 指定单元格是否为必填项
      */
     isRequired?: boolean,
+
+    /**
+     * 指定单元格使用的渲染器
+     */
+    renderAs?: Type<FormDisplayRendererBase> | 'html' | 'tag',
+
+    /**
+     *  渲染器的配置
+     * */
+    rendererInitData?: any
 }
 
 type TableRowConfig = TableCellConfig[];
@@ -197,7 +218,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (CommonUtils.isUndefined(value)) {
             value = Array(dataLength).fill({
                 titleStyle: {},
-                trStyle:{},
+                trStyle: {},
                 tdStyle: {},
                 columnWidths: [],
                 tooltipConfig: {}
@@ -238,8 +259,11 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     /**
      * @internal
      */
-    public _$isString(cell: TableCellConfig): boolean {
-        return typeof cell === 'string';
+    public _$getCellType(cell: TableCellConfig): string {
+        if (typeof cell == 'string') {
+            return 'string';
+        }
+        return cell.renderAs ? '' : 'normal';
     }
 
     /**
@@ -343,9 +367,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule],
-    declarations: [JigsawFormDisplayComponent],
-    exports: [JigsawFormDisplayComponent]
+    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule, JigsawTableRendererModule],
+    declarations: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent],
+    exports: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent]
 })
 export class JigsawFormDisplayModule {
 }
