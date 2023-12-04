@@ -1,14 +1,14 @@
 import {NgModule} from '@angular/core';
 import {JigsawButtonModule, JigsawSelectModule, JigsawSwitchModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
-import {SelectClearableDemoComponent} from './demo.component';
+import {GroupSelectClearableDemoComponent} from './demo.component';
 
 import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     imports: [JigsawSelectModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawSwitchModule, JigsawButtonModule],
-    declarations: [SelectClearableDemoComponent],
-    exports: [SelectClearableDemoComponent]
+    declarations: [GroupSelectClearableDemoComponent],
+    exports: [GroupSelectClearableDemoComponent]
 })
-export class SelectClearableDemoModule {
+export class GroupSelectClearableDemoModule {
 }

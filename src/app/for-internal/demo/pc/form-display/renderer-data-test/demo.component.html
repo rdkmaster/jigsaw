@@ -1,0 +1,7 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<label>行数：</label><jigsaw-numeric-input [(value)]="formDisplayRows" [step]="10" [min]="1" (valueChange)="changeSource()"></jigsaw-numeric-input>
+<div class="form">
+    <jigsaw-form-display #jigsawFormDisplayComponent [data]="formio" [styleOptions]="formStyleOption" ></jigsaw-form-display>
+</div>

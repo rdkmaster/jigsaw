@@ -13,7 +13,7 @@ import {CallbackRemoval} from "../../common/core/utils/common-utils";
     selector: 'jigsaw-button-bar, j-button-bar',
     template: `
         <j-tile [theme]="theme" [(selectedItems)]="selectedItems" [trackItemBy]="trackItemBy"
-                [multipleSelect]="multipleSelect" [height]="'100%'" [valid]="valid"
+                [multipleSelect]="multipleSelect" [height]="'100%'" [valid]="valid" [autoRemoveInvalidValue]="autoRemoveInvalidValue"
                 (selectedItemsChange)="_$handleSelectChange($event)">
             <j-tile-option #tileOpt *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
                            [ngClass]="{'jigsaw-button-bar-one-option': data && data.length == 1,
@@ -86,6 +86,12 @@ export class JigsawButtonBar extends AbstractJigsawGroupLiteComponent {
      */
     @Input()
     public preSize: 'default' | 'small' = 'default';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public autoRemoveInvalidValue: boolean = true;
 
     ngOnDestroy() {
         super.ngOnDestroy();

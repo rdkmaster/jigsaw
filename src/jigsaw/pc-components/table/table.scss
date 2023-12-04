@@ -57,7 +57,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 .#{$jigsaw-table}-cell-content.#{$jigsaw-table}-cell-html-renderer {
                     display: block;
                 }
-                
+
                 &.jigsaw-cell-align-default {
 
                     .#{$jigsaw-table}-cell-content,
@@ -189,7 +189,7 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
                 &:nth-child(2n) {
                     background: var(--jigsaw-table-row-even, $bg-transparent);
                 }
-                
+
                 &:nth-child(2n-1) {
                     background: var(--jigsaw-table-row-odd, $bg-transparent);
                 }
@@ -256,9 +256,24 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
         }
     }
 
-    &.#{$jigsaw-table}-ff .#{$jigsaw-table}-body-range {
-        border-left: 1px solid $border-color-default;
-        border-right: 1px solid $border-color-default;
+    &.#{$jigsaw-table}-ff {
+        .#{$jigsaw-table}-body-range {
+            border-left: 1px solid $border-color-default;
+            border-right: 1px solid $border-color-default;
+        }
+
+        .#{$jigsaw-table}-body-range.#{$jigsaw-table}-no-data {
+            border-left: none;
+            border-right: none;
+
+            .#{$jigsaw-table}-body {
+                min-height: 1px;
+            }
+
+            .ps__rail-y {
+                display: none;
+            }
+        }
     }
 
     .#{$jigsaw-table}-auto-width {
@@ -270,6 +285,8 @@ $jigsaw-table: #{$jigsaw-prefix}-table;
     }
 
     .#{$jigsaw-table}-no-data-img {
+        position: sticky;
+        left: 0;
         flex-direction: column;
         justify-content: center;
         align-items: center;

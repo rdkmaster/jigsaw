@@ -17,6 +17,8 @@ import { ButtonIconDemoComponent } from './with-icon/demo.component';
 import { ButtonIconDemoModule } from './with-icon/demo.module';
 import { ButtonInstancesDemoComponent } from './instances/demo.component';
 import { ButtonInstancesDemoModule } from './instances/demo.module';
+import { ButtonBasicIconDemoComponent } from "./icon/demo.component";
+import { ButtonBasicIconDemoModule } from "./icon/demo.module";
 
 export const routerConfig = [
     {
@@ -44,6 +46,9 @@ export const routerConfig = [
         path: 'instances', component: ButtonInstancesDemoComponent
     },
     {
+        path: 'icon', component: ButtonBasicIconDemoComponent
+    },
+    {
         desc: 'with-chart-icon', url: '/pc/chart-icon/with-button'
     }
 ];
@@ -58,7 +63,8 @@ export const routerConfig = [
         ButtonWithLoadingModule,
         ButtonFullModule,
         ButtonIconDemoModule,
-        ButtonInstancesDemoModule
+        ButtonInstancesDemoModule,
+        ButtonBasicIconDemoModule
     ]
 })
 export class ButtonDemoModule {

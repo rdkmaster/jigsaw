@@ -1,6 +1,9 @@
 <div class="form-display-total" *ngFor="let form of data; let i = index">
     <jigsaw-header *ngIf="form.title" class="form-display-title" [level]="styleOptions[i].titleStyle?.level || 2"
-                   [ngStyle]="{'margin-bottom': styleOptions[i].titleStyle?.marginBottom || '4px','margin-top': styleOptions[i].titleStyle?.marginTop || '20px'}">
+                   [ngStyle]="{
+                                'margin-bottom': styleOptions[i].titleStyle?.marginBottom || '4px',
+                                'margin-top': styleOptions[i].titleStyle?.marginTop || '20px'
+                              }">
         {{form.title}}
     </jigsaw-header>
     <table class="form-display-table">
@@ -11,16 +14,40 @@
         </colgroup>
         <tr [ngStyle]="styleOptions[i].trStyle" *ngFor="let row of form.data">
             <ng-container *ngFor="let cell of row">
-                <ng-container *ngIf="_$isString(cell); else cellTemplate">
-                    <td [ngStyle]="styleOptions[i].tdStyle" >{{ cell }}</td>
+                <ng-container [ngSwitch]="_$getCellType(cell)">
+                    <ng-container *ngSwitchCase="'string'">
+                        <td [ngStyle]="styleOptions[i].tdStyle">
+                        <span [ngClass]="{'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
+                              [jigsawTooltip]="_$toolTipConfig[i].enableTooltip ? cell : ''"
+                              [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
+                            {{ cell }}
+                        </span>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngSwitchCase="'normal'">
+                        <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
+                            [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1"
+                            [style]="styleOptions[i].tdStyle">
+                        <span [ngClass]="{'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
+                              [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
+                              [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
+                            {{ cell.value }}
+                            <span *ngIf="cell.isRequired" class="required">*</span>
+                        </span>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngSwitchDefault>
+                        <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
+                            [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1"
+                            [style]="styleOptions[i].tdStyle">
+                            <jigsaw-form-display-cell [renderer]="cell.renderAs" [cellData]="cell.value" [rendererInitData]="cell.rendererInitData">
+                            </jigsaw-form-display-cell>
+                            <span *ngIf="cell.isRequired" class="required">*</span>
+                        </td>
+                    </ng-container>
                 </ng-container>
-                <ng-template #cellTemplate>
-                    <td [ngClass]="{'table-header': cell.isHeader}" [ngStyle]="cell.style"
-                        [colSpan]="cell.colSpan || 1" [rowSpan]="cell.rowSpan || 1" [style]="styleOptions[i].tdStyle">
-                        {{ cell.value }}
-                        <span *ngIf="cell.isRequired" class="required">*</span>
-                    </td>
-                </ng-template>
             </ng-container>
         </tr>
     </table>

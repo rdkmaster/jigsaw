@@ -1,10 +1,23 @@
-import {ChangeDetectionStrategy, Component, Injector, Input, NgModule, ChangeDetectorRef, OnInit} from "@angular/core";
+import {
+    ChangeDetectionStrategy,
+    Component,
+    Injector,
+    Input,
+    NgModule,
+    ChangeDetectorRef,
+    OnInit,
+    Type
+} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
+import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
+import {FloatPosition} from "../../common/directive/float/float";
+import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
+import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -37,7 +50,7 @@ type TableCellConfig = string | {
     /**
      * 单元格的值
      */
-    value: string,
+    value: string | string[],
 
     /**
      * 控制单元格横跨的列数
@@ -63,6 +76,16 @@ type TableCellConfig = string | {
      * 指定单元格是否为必填项
      */
     isRequired?: boolean,
+
+    /**
+     * 指定单元格使用的渲染器
+     */
+    renderAs?: Type<FormDisplayRendererBase> | 'html' | 'tag',
+
+    /**
+     *  渲染器的配置
+     * */
+    rendererInitData?: any
 }
 
 type TableRowConfig = TableCellConfig[];
@@ -81,6 +104,23 @@ export type TableDataConfig = {
      * 表的数据行配置，参考 `TableRowConfig` 类型
      */
     data: TableRowConfig[]
+}
+
+export type TooltipConfig = {
+    /**
+     * 控制组件单元格是否开启悬浮提示
+     */
+    enableTooltip: boolean,
+
+    /**
+     * 控制悬浮提示位置
+     */
+    position?: FloatPosition,
+
+    /**
+     * 控制悬浮提示是否仅在文字过长时显示
+     */
+    overflowOnly?: boolean
 }
 
 export type FormDisplayStyleOptions = {
@@ -102,8 +142,13 @@ export type FormDisplayStyleOptions = {
     /**
      *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
      *  如何没设置columnWidths，每列平均分配宽度
-     * */
-    columnWidths?: number[]
+     */
+    columnWidths?: number[],
+
+    /**
+     *  悬浮提示配置项
+     */
+    tooltipConfig?: TooltipConfig
 }
 
 export type StepFieldsConfig = {
@@ -152,6 +197,11 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
 
+    public update(data: TableDataConfig | TableDataConfig[]) {
+        this.data = data;
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _styleOptions: FormDisplayStyleOptions[];
 
     /**
@@ -168,17 +218,24 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (CommonUtils.isUndefined(value)) {
             value = Array(dataLength).fill({
                 titleStyle: {},
-                trStyle:{},
+                trStyle: {},
                 tdStyle: {},
-                columnWidths: []
-            })
+                columnWidths: [],
+                tooltipConfig: {}
+            });
         }
         if (!Array.isArray(value)) {
             value = Array(dataLength).fill(value);
         }
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
-        this._changeDetectorRef.detectChanges();
+        this._$toolTipConfig = this._styleOptions.map(option => {
+            return {
+                enableTooltip: !!option.tooltipConfig?.enableTooltip,
+                position: option.tooltipConfig?.position || 'top',
+                overflowOnly: !!option.tooltipConfig?.overflowOnly
+            }
+        });
     }
 
     /**
@@ -188,16 +245,25 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     public _$tablesColumns: number[][] = [[0, 0]];
 
     /**
-     * 用于储存数据中每一个表的的列数
+     * 用于储存数据中每一个表的列数
      * @internal
      */
     public _$tablesColumnLengths: undefined[][];
 
     /**
+     * 用于储存数据中每一个表的tooltip配置
      * @internal
      */
-    public _$isString(cell: TableCellConfig): boolean {
-        return typeof cell === 'string';
+    public _$toolTipConfig: TooltipConfig[];
+
+    /**
+     * @internal
+     */
+    public _$getCellType(cell: TableCellConfig): string {
+        if (typeof cell == 'string') {
+            return 'string';
+        }
+        return cell.renderAs ? '' : 'normal';
     }
 
     /**
@@ -301,9 +367,9 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule],
-    declarations: [JigsawFormDisplayComponent],
-    exports: [JigsawFormDisplayComponent]
+    imports: [CommonModule, JigsawCommonModule, JigsawHeaderModule, JigsawTooltipModule, JigsawTableRendererModule],
+    declarations: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent],
+    exports: [JigsawFormDisplayComponent, JigsawFormDisplayCellComponent]
 })
 export class JigsawFormDisplayModule {
 }
