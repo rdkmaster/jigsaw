@@ -62,7 +62,7 @@ export class FormDisplayHtmlCellRenderer extends FormDisplayRendererBase {
 @Component({
     template: `
         <ng-container *ngFor="let tag of tags">
-            <span [ngStyle]="{'margin': margin}" style="display: inline-block">
+            <span style="display: inline-block" [ngStyle]="{'margin': margin}">
                 <jigsaw-tag [size]="size" [color]="color" [selectedColor]="selectedColor">{{tag}}</jigsaw-tag>
             </span>
         </ng-container>`,
