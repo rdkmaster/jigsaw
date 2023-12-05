@@ -19,7 +19,7 @@ export class FormDisplayCommonDemoComponent {
                         renderAs: 'tag'
                     },
                     {
-                        value: ['tag标签间距支持配置','tag标签间距支持配置','tag标签间距支持配置'],
+                        value: ['tag标签间距支持配置', 'tag标签间距支持配置', 'tag标签间距支持配置'],
                         renderAs: 'tag',
                         rendererInitData: {
                             margin: "6px 2px"
