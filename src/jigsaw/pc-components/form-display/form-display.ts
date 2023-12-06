@@ -194,6 +194,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
             this._data = this._transformForms(<StepFieldsConfig[] | FormlyFieldConfig[]>data);
         }
+        this._setStyleOptions(this._styleOptions);
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
 
@@ -214,6 +215,10 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     }
 
     public set styleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]) {
+        this._setStyleOptions(value);
+    }
+
+    private _setStyleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]): void {
         const dataLength = this._data.length || 1;
         if (CommonUtils.isUndefined(value)) {
             value = Array(dataLength).fill({
@@ -226,6 +231,11 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         }
         if (!Array.isArray(value)) {
             value = Array(dataLength).fill(value);
+        }
+        while (value.length < dataLength) {
+            // 如果 value 的长度小于 dataLength，则使用最后一个值补齐
+            const lastValue = value[value.length - 1];
+            value.push(lastValue);
         }
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
