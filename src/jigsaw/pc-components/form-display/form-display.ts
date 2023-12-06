@@ -194,7 +194,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         if (form.hasOwnProperty('fields') || form.hasOwnProperty('templateOptions') || form.hasOwnProperty('fieldGroup')) {
             this._data = this._transformForms(<StepFieldsConfig[] | FormlyFieldConfig[]>data);
         }
-        this.styleOptions = this._styleOptions;
+        this._setStyleOptions(this._styleOptions);
         this._$tablesColumnLengths = this._data.map(data => this._$getColumnLength(data.data));
     }
 
@@ -215,6 +215,10 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
     }
 
     public set styleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]) {
+        this._setStyleOptions(value);
+    }
+
+    private _setStyleOptions(value: FormDisplayStyleOptions | FormDisplayStyleOptions[]): void {
         const dataLength = this._data.length || 1;
         if (CommonUtils.isUndefined(value)) {
             value = Array(dataLength).fill({
