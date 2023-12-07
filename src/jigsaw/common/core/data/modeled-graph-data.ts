@@ -1085,7 +1085,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'pie'}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'funnel'}, this.template.seriesItem);
                 const legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
                 if (dimensions.length == 0) {
                     console.warn('No valid dimension found, this graph will not be rendered!');
