@@ -219,6 +219,14 @@ export class JigsawPagination extends AbstractJigsawComponent implements OnInit,
     public autoSearch: boolean = true;
 
     /**
+     * 设置搜索历史记录数
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public historyStorageSize: number = 20;
+
+    /**
      * 页码改变的事件
      */
     @Output()
