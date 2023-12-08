@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {FloatPosition, JigsawFormDisplayComponent} from "jigsaw/public_api";
+import {FloatPosition, JigsawFormDisplayComponent, TableDataConfig} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html'
@@ -15,10 +15,16 @@ export class FormDisplayCommonDemoComponent {
             data: [
                 [
                     {
-                        value: ['名称', '名称1', '名称2'],
+                        value: ['tag标签默认间距', '名称1', '名称2', 'tag标签默认间距', '名称1', '名称2', 'tag标签默认间距', '名称1', '名称2'],
                         renderAs: 'tag'
                     },
-                    {value: '名称目的表字段字段长度实业务主题话实说属性标签粒度统计', isRequired: true},
+                    {
+                        value: ['tag标签间距支持配置', 'tag标签间距支持配置', 'tag标签间距支持配置'],
+                        renderAs: 'tag',
+                        rendererInitData: {
+                            margin: "6px 2px"
+                        }
+                    },
                 ],
                 [
                     {value: `<div style="background: grey; width: fit-content; border-radius: 5px; padding: 0 8px 0 8px;">DwS/dimission</div>`, renderAs: 'html'},
@@ -35,26 +41,6 @@ export class FormDisplayCommonDemoComponent {
                 ['Lte_Coverage', 'Ltecover高铁MR覆盖全维度天粒度统计'],
                 ['属性标签', '附件'],
                 ['p sdewpresweo', 'LtecoveNpe']
-            ]
-        },
-        {
-            title: '目的表字段',
-            data: [
-                [
-                    {value: '目的表字段', isHeader: true, isRequired: true},
-                    {value: '目的表字段字段长度实业务主题话实说属性标签粒度统计', isHeader: true, isRequired: true},
-                    {value: '字段长度', isHeader: true, isRequired: true},
-                    {value: '字段描述', isHeader: true, isRequired: true},
-                    {value: '业务主题', isHeader: true, isRequired: true},
-                ],
-                ['edw_creat_date', 'string', '300', '---', '是'],
-                ['edw_last_update', 'bigint', '300', '---', '是'],
-                ['edw_last_source', 'string', '300', '---', '否'],
-                ['edw_valid_flag', 'bigint', '---', '---', '是'],
-                ['edw_last_source', 'string', '300', '---', '是'],
-                ['edw_valid_flag', 'bigint', '---', '---', '否'],
-                ['edw_last-source', 'string', '300', '---', '否']
-
             ]
         }
     ]
@@ -136,33 +122,34 @@ export class FormDisplayCommonDemoComponent {
                     {value: 'String'}
                 ]
             ]
-        }];
-
-    public formStyleOption1 = [
-        {
-            trStyle: {},
-            tdStyle: {'text-align': 'left'},
-            tooltipConfig: {
-                enableTooltip: true,
-                position: <FloatPosition>'right'
-            }
         },
         {
-            trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [100, 200, 80],
-            tooltipConfig: {
-                enableTooltip: true
-            }
+            title: '目的表字段',
+            data: [
+                [
+                    {value: '目的表字段', isHeader: true, isRequired: true},
+                    {value: '目的表字段字段长度实业务主题话实说属性标签粒度统计', isHeader: true, isRequired: true},
+                    {value: '字段长度', isHeader: true, isRequired: true},
+                    {value: '字段描述', isHeader: true, isRequired: true},
+                    {value: '业务主题', isHeader: true, isRequired: true},
+                ],
+                ['edw_creat_date', 'string', '300', '---', '是'],
+                ['edw_last_update', 'bigint', '300', '---', '是'],
+                ['edw_last_source', 'string', '300', '---', '否'],
+                ['edw_valid_flag', 'bigint', '---', '---', '是'],
+                ['edw_last_source', 'string', '300', '---', '是'],
+                ['edw_valid_flag', 'bigint', '---', '---', '否'],
+                ['edw_last-source', 'string', '300', '---', '否']
+
+            ]
         }
-    ]
+    ];
 
     formioSelected: boolean = true;
 
     public changeSource() {
         this.formioSelected = !this.formioSelected;
-        this.jigsawFormDisplayComponent.data = this.formioSelected ? this.formio : this.formio1;
-        this.jigsawFormDisplayComponent.styleOptions = this.formioSelected ? this.formStyleOption : this.formStyleOption1;
+        this.jigsawFormDisplayComponent.data = <TableDataConfig | TableDataConfig[]>(this.formioSelected ? this.formio : this.formio1);
     }
 
     summary: string = "这个DEMO演示了form-display组件通过json转为表格的用法。";

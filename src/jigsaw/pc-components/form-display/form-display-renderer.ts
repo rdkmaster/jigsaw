@@ -62,7 +62,7 @@ export class FormDisplayHtmlCellRenderer extends FormDisplayRendererBase {
 @Component({
     template: `
         <ng-container *ngFor="let tag of tags">
-            <span [ngStyle]="{'margin': margin}">
+            <span style="display: inline-block" [ngStyle]="{'margin': margin}">
                 <jigsaw-tag [size]="size" [color]="color" [selectedColor]="selectedColor">{{tag}}</jigsaw-tag>
             </span>
         </ng-container>`,
@@ -73,7 +73,7 @@ export class FormDisplayTagCellRenderer extends FormDisplayRendererBase {
     public size: 'small' | 'medium';
     public color: string;
     public selectedColor: string;
-    public margin: string = '0 2px';
+    public margin: string = '3px 2px';
 
     ngOnInit() {
         super.ngOnInit();
@@ -87,7 +87,7 @@ export class FormDisplayTagCellRenderer extends FormDisplayRendererBase {
         this.size = this.initData.size ? this.initData.size : 'medium';
         this.color = this.initData.color ? this.initData.color : 'preset-gray';
         this.selectedColor = this.initData.selectedColor ? this.initData.selectedColor : '';
-        this.margin = this.initData.margin ? this.initData.margin : '0 2px';
+        this.margin = this.initData.margin ? this.initData.margin : '3px 2px';
     }
 }
 
