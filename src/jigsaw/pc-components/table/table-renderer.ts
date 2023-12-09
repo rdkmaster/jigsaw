@@ -555,6 +555,9 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
     }
 
     private _updateTargetData() {
+        if (!this.targetData) {
+            return;
+        }
         if (CommonUtils.isDefined(this.targetData.data[this.row])) {
             this.targetData.data[this.row][this.column] = this.checked;
             this._changeDetectorRef.markForCheck();
