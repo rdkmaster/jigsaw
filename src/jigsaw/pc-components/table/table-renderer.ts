@@ -744,7 +744,7 @@ export type SelectRendererInitData = {
 @Component({
     template: `
         <jigsaw-select [theme]="theme" [value]="selected" [data]="data" height="28px" [disabled]="_$disabled"
-                       [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger"
+                       [valid]="_$valid" [optionCount]="5" width="100%" [openTrigger]="_$openTrigger" [placeholder]="_$placeholder"
                        closeTrigger="mouseleave" (valueChange)="_$handleValueChange($event)"
                        [searchable]="_$searchable">
         </jigsaw-select>
@@ -901,7 +901,9 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     set cellData(value: any) {
         this._cellData = value;
-        this.selected = {label: value};
+        if (CommonUtils.isDefined(value) && value !== '') {
+            this.selected = {label: value};
+        }
     }
 
     private _hasDestroyed: boolean;
