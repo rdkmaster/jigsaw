@@ -81,6 +81,7 @@ export class TableHeader {
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
     filterable?: boolean;
+    filterHistoryStorageSize?: number;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
     alignment?: 'default' | 'left' | 'center' | 'right';
@@ -113,6 +114,7 @@ export class TableHeadSetting {
     sortable: boolean;
     sortAs: SortAs;
     filterable: boolean;
+    filterHistoryStorageSize: number;
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;

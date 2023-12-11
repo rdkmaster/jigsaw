@@ -3,7 +3,7 @@
         <div *ngIf="showTotalRecord" class="jigsaw-paging-total-record">{{'pagination.showTotalRecord' | translate:{number: _$totalRecord} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="160"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
-                             [autoSearch]="autoSearch">
+                             [autoSearch]="autoSearch" [historyStorageSize]="historyStorageSize">
         </jigsaw-search-input>
         <div *ngIf="mode == 'complex'" class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e1e0"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="!_$prevDisabled && _goto(1)">
@@ -43,7 +43,7 @@
         <div *ngIf="showTotalRecord" class="jigsaw-paging-total-record">{{'pagination.showTotalRecord' | translate:{number: _$totalRecord} }}</div>
         <jigsaw-search-input [theme]="theme" class="jigsaw-paging-search" *ngIf="searchable" width="100"
                              (search)="_$searchEvent($event)" [searchDebounce]="searchDebounce"
-                             [autoSearch]="autoSearch">
+                             [autoSearch]="autoSearch" [historyStorageSize]="historyStorageSize">
         </jigsaw-search-input>
         <div class="jigsaw-paging-prev jigsaw-paging-page iconfont iconfont-e1e0"
              [class.jigsaw-paging-disabled]="_$prevDisabled" (click)="!_$prevDisabled && _goto(1)">

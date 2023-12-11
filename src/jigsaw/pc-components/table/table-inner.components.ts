@@ -273,6 +273,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                 [tableData]="tableData"
                 [field]="field"
                 [float]="_$jigsawFloat"
+                [historyStorageSize]="filterHistoryStorageSize"
             >
             </jigsaw-table-header-filter-box>
         </ng-template>
@@ -296,6 +297,12 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      */
     @Input()
     public filterable: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public filterHistoryStorageSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -654,7 +661,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
                 <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)"
-                    floatPosition="topLeft" [historyStorageKey]="'jigsaw.tableHeaderFilter.' + field">
+                    floatPosition="topLeft" [historyStorageKey]="'jigsaw.tableHeaderFilter.' + field" [historyStorageSize]="historyStorageSize">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
@@ -731,6 +738,12 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
      */
     @Input()
     public hostInstance: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public historyStorageSize: number = 3;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
