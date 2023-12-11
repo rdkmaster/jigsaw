@@ -743,6 +743,42 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 });
         });
     }
+
+    public setChildChecked(nodes, checked, children){
+        for (const node of nodes[children]) {
+            node.checked = checked;
+            if (node[children] && node[children].length > 0) {
+                this.setChildChecked(node, checked, children)
+            }
+        }
+    }
+
+    public updateCheckedStatus(nodes, labelToMatch, checked, identifier, children) {
+        for (const node of nodes) {
+            if (node[identifier] === labelToMatch) {
+                node.checked = checked;
+                if (node[children] && node[children].length > 0) {
+                    this.setChildChecked(node, checked, children)
+                }
+            }
+            if (node[children] && node[children].length > 0) {
+                this.updateCheckedStatus(node[children], labelToMatch, checked, identifier, children);
+            }
+        }
+    }
+
+    public updateParentCheckedStatus(node, checked, children) {
+        if (node[children] && node[children].length > 0) {
+            for (const childNode of node[children]) {
+                if (childNode.checked) {
+                    node.checked = true;
+                    return;
+                }
+                this.updateParentCheckedStatus(childNode, checked, children);
+            }
+            node.checked = false;
+        }
+    }
 }
 
 @NgModule({
