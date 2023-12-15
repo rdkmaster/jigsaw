@@ -792,7 +792,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 const childChecked = this._updateParentCheckedStatus(childNode, checked, children);
                 if (childChecked) {
                     hasCheckedChild = true;
-                    break;
                 }
             }
             node.checked = hasCheckedChild;
