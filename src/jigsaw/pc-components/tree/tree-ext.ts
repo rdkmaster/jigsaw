@@ -744,41 +744,50 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    public updateCheckedStatu (nodes, $event, children, identifier) {
-            this.updateCheckedStatus(nodes, $event, $event.treeNodes.checked, identifier, children);
-        for (const parentNode of nodes) {
-            this.updateParentCheckedStatus(parentNode, $event.treeNodes.checked, children);
+    public updateCheckedStatus (nodes: []|object, $event: any, children: string, identifier: string[]):any {
+        if(Array.isArray(nodes)){
+            this._updateCheckedStatus(nodes, $event, $event.treeNodes.checked, identifier, children);
+            for (const parentNode of nodes) {
+                this._updateParentCheckedStatus(parentNode, $event.treeNodes.checked, children);
+            }
         }
+        if(typeof nodes === 'object' && nodes !== null && !Array.isArray(nodes)){
+            this._updateCheckedStatus(nodes[children], $event, $event.treeNodes.checked, identifier, children);
+            for (const parentNode of nodes[children]) {
+                this._updateParentCheckedStatus(parentNode, $event.treeNodes.checked, children);
+            }
+        }   
     }
 
-    public setChildChecked(nodes, checked, children){
+    private _setChildChecked(nodes: any, checked: boolean, children: string):any {
         for (const node of nodes[children]) {
             node.checked = checked;
             if (node[children] && node[children].length > 0) {
-                this.setChildChecked(node, checked, children)
+                this._setChildChecked(node, checked, children)
             }
         }
     }
 
-    public updateCheckedStatus(nodes, $event, checked, identifiers, children) {
+    private _updateCheckedStatus(nodes: any, $event: any, checked: boolean, identifiers: string[], children: string):any {
         for (const node of nodes) {
             const identifiersMatch = identifiers.every(identifier => node[identifier] === $event.treeNodes[identifier]);
             if (identifiersMatch) {
                 node.checked = checked;
                 if (node[children] && node[children].length > 0) {
-                    this.setChildChecked(node, checked, children);
+                    this._setChildChecked(node, checked, children);
                 }
             }
             if (node[children] && node[children].length > 0) {
-                this.updateCheckedStatus(node[children], $event, checked, identifiers, children);
+                this._updateCheckedStatus(node[children], $event, checked, identifiers, children);
             }
         }
     }
-    public updateParentCheckedStatus(node, checked, children) {
+
+    private _updateParentCheckedStatus(node: any, checked: boolean, children: string):any {
         if (node[children] && node[children].length > 0) {
             let hasCheckedChild = false;
             for (const childNode of node[children]) {
-                const childChecked = this.updateParentCheckedStatus(childNode, checked, children);
+                const childChecked = this._updateParentCheckedStatus(childNode, checked, children);
                 if (childChecked) {
                     hasCheckedChild = true;
                     break;
