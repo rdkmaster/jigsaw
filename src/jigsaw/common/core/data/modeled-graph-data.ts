@@ -1021,14 +1021,45 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
 
 // ------------------------------------------------------------------------------------------------
 // 漏斗图相关数据对象
+export type FunnelItemStyle = {
+    borderColor?: string;
+    borderWidth?: number;
+    borderType?: string;
+    shadowBlur?: number;
+    shadowColor?: string;
+    shadowOffsetX?: number;
+    shadowOffsetY?: number;
+    opacity?: number;
+}
+
+export type FunnelLabel = {
+    show?: boolean;
+    position?:string;
+    color?:string;
+    fontStyle?:string;
+    fontWeight?:string;
+    fontSize?:number;
+}
+
+export type FunnelLabelLine = {
+    show?: boolean;
+    lineStyle?: FunnelLineStyle;
+}
+
+export type FunnelLineStyle = {
+    color?: string;
+    width?: number;
+    type?: string;
+}
+
 export class FunnelSeries extends SeriesBase {
     public sort?: 'ascending' | 'descending' | 'none';
     public gap?: number;
     public orient?: 'vertical' | 'horizontal';
     public funnelAlign?: 'left' | 'right' | 'center';
-    public label?: string;
-    public itemStyle?: string;
-    public labelLine?: string;
+    public label?: FunnelLabel;
+    public itemStyle?: FunnelItemStyle;
+    public labelLine?: FunnelLabelLine;
 }
 
 export class ModeledFunnelGraphData extends AbstractModeledGraphData {
