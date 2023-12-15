@@ -14,7 +14,7 @@ import {JigsawHeaderModule} from "../header/header";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawTooltipModule} from "../../common/directive/tooltip/tooltip";
+import {JigsawTooltipModule, TooltipWordBreak} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
 import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
 import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
@@ -121,6 +121,12 @@ export type TooltipConfig = {
      * 控制悬浮提示是否仅在文字过长时显示
      */
     overflowOnly?: boolean
+
+    /**
+     * 控制tooltip内容如何被分割和换行
+     * 默认换行: "break-all"
+     * */
+    wordBreak?: TooltipWordBreak
 }
 
 export type FormDisplayStyleOptions = {
@@ -243,7 +249,8 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             return {
                 enableTooltip: !!option.tooltipConfig?.enableTooltip,
                 position: option.tooltipConfig?.position || 'top',
-                overflowOnly: !!option.tooltipConfig?.overflowOnly
+                overflowOnly: !!option.tooltipConfig?.overflowOnly,
+                wordBreak: option.tooltipConfig?.wordBreak || 'break-all',
             }
         });
     }
