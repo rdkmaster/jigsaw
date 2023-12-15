@@ -1,14 +1,20 @@
 <ng-content></ng-content>
 <j-breadcrumb-item *ngFor="let item of data; let isLast = last; let i = index; let len = count" [isLast]="isLast"
-    [ngClass]="!(len > foldThreshold && 0 < i && i < len - 2) ?'':'fold'"
-    [separatorType]="separatorType" [separator]="separator">
-    <a *ngIf="!(len > foldThreshold && i == 1)"
-        class="jigsaw-breadcrumb-link"
-        [routerLink]="item?.routeLink"
+    [ngClass]="!(len > foldThreshold && 0 < i && i < len - 2) ?'':'fold'" [separatorType]="separatorType"
+    [separator]="separator">
+    <a *ngIf="item?.routeLink && !(len > foldThreshold && i == 1)" class="jigsaw-breadcrumb-link"
+        [routerLink]="item?.routeLink" (click)="select.emit(item)">
+        <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
+        <span *ngIf="item" class="jigsaw-breadcrumb-label">{{_$getLabel(item)}}</span>
+        <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911"
+            title="{{item?.hint}}"><i></i></span>
+    </a>
+    <a *ngIf="!item?.routeLink && !(len > foldThreshold && i == 1)" class="jigsaw-breadcrumb-link"
         (click)="select.emit(item)">
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
         <span *ngIf="item" class="jigsaw-breadcrumb-label">{{_$getLabel(item)}}</span>
-        <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911" title="{{item?.hint}}"><i></i></span>
+        <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911"
+            title="{{item?.hint}}"><i></i></span>
     </a>
     <a class="jigsaw-breadcrumb-link" *ngIf="len > foldThreshold && i == 1">
         <span class="iconfont iconfont-e2b6"></span>
