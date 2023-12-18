@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {FloatPosition, JigsawFormDisplayComponent} from "jigsaw/public_api";
+import {FloatPosition, JigsawFormDisplayComponent, TooltipWordBreak} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html'
@@ -13,6 +13,13 @@ export class FormDisplayTooltipDemoComponent {
 
     public _$updateTooltipEnable() {
         this.formStyleOption["tooltipConfig"].enableTooltip = this._$tooltipEnable;
+        this.jigsawFormDisplayComponent.styleOptions = this.formStyleOption;
+    }
+
+    public _$tooltipWordBreak: boolean = false;
+
+    public _$updateTooltipWordBreak() {
+        this.formStyleOption["tooltipConfig"].wordBreak = this._$tooltipWordBreak ? "break-all" : "normal";
         this.jigsawFormDisplayComponent.styleOptions = this.formStyleOption;
     }
 
@@ -47,8 +54,8 @@ export class FormDisplayTooltipDemoComponent {
                     {value: '业务主题', isHeader: true, isRequired: true},
                 ],
                 ['数据结构名称目的表字段字段长度实业务主题话实说属性标签粒度统计', 'string', '300', '---', '是'],
-                ['edw_last_update edw_last_update edw_last_update', 'bigint', '300', '---', '是'],
-                ['edw_last_source edw_last_sourceedw_last_sourceedw_last_source', 'string', '300', '---', '否'],
+                ['edw_last_updateedw_last_updateedw_last_updateedw_last_updateedw_last_updateedw_last_update', 'bigint', '300', '---', '是'],
+                ['edw_last_updateedw_last_updateedw_last_updateedw_last_updateedw_last_updateedw_last_update', 'string', '300', '---', '否'],
                 ['edw_valid_flag', 'bigint', '---', '---', '是'],
                 ['edw_last_source', 'string', '300', '---', '是'],
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
@@ -65,7 +72,8 @@ export class FormDisplayTooltipDemoComponent {
         tooltipConfig: {
             enableTooltip: this._$tooltipEnable,
             overflowOnly: true,
-            position: <FloatPosition>'top'
+            position: <FloatPosition>'top',
+            wordBreak: <TooltipWordBreak>"normal"
         }
     }
 

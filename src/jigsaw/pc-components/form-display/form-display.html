@@ -20,6 +20,7 @@
                         <span [ngClass]="{'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
                               [jigsawTooltip]="_$toolTipConfig[i].enableTooltip ? cell : ''"
                               [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipWordBreak]="_$toolTipConfig[i].wordBreak"
                               [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
                             {{ cell }}
                         </span>
@@ -32,6 +33,7 @@
                         <span [ngClass]="{'form-display-tooltip':_$toolTipConfig[i].enableTooltip}"
                               [jigsawTooltip]="_$toolTipConfig[i].enableTooltip?cell.value:''"
                               [jigsawTooltipPosition]="_$toolTipConfig[i].position"
+                              [jigsawTooltipWordBreak]="_$toolTipConfig[i].wordBreak"
                               [jigsawTooltipOverflowOnly]="_$toolTipConfig[i].overflowOnly">
                             {{ cell.value }}
                             <span *ngIf="cell.isRequired" class="required">*</span>

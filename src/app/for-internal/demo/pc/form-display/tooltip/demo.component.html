@@ -9,3 +9,8 @@
     <label>是否开启悬浮提示</label>
     <jigsaw-switch [(checked)]="_$tooltipEnable" (checkedChange)="_$updateTooltipEnable()"></jigsaw-switch>
 </div>
+
+<div style="position: absolute; left: 888px; top: 170px">
+    <label>在单词内部的任何地方是否可以换行</label>
+    <jigsaw-switch [(checked)]="_$tooltipWordBreak" (checkedChange)="_$updateTooltipWordBreak()"></jigsaw-switch>
+</div>
