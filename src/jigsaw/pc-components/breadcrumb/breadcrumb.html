@@ -7,14 +7,14 @@
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
         <span *ngIf="item" class="jigsaw-breadcrumb-label">{{_$getLabel(item)}}</span>
         <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911"
-            title="{{item?.hint}}"><i></i></span>
+            title="{{item?.hint}}"></span>
     </a>
     <a *ngIf="!item?.routeLink && !(len > foldThreshold && i == 1)" class="jigsaw-breadcrumb-link"
         (click)="select.emit(item)">
         <span *ngIf="item?.icon" class="jigsaw-breadcrumb-icon {{item?.icon}}"></span>
         <span *ngIf="item" class="jigsaw-breadcrumb-label">{{_$getLabel(item)}}</span>
         <span *ngIf="item?.hint" class="jigsaw-breadcrumb-hint iconfont iconfont-e911"
-            title="{{item?.hint}}"><i></i></span>
+            title="{{item?.hint}}"></span>
     </a>
     <a class="jigsaw-breadcrumb-link" *ngIf="len > foldThreshold && i == 1">
         <span class="iconfont iconfont-e2b6"></span>
