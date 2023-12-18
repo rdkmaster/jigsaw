@@ -1034,11 +1034,11 @@ export type FunnelItemStyle = {
 
 export type FunnelLabel = {
     show?: boolean;
-    position?:string;
-    color?:string;
-    fontStyle?:string;
-    fontWeight?:string;
-    fontSize?:number;
+    position?: string;
+    color?: string;
+    fontStyle?: string;
+    fontWeight?: string;
+    fontSize?: number;
 }
 
 export type FunnelLabelLine = {
