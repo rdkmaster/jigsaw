@@ -744,20 +744,20 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    public updateCheckedStatus (nodes: any, $event: any, children: string, identifier: string[]): void{
+    public updateCheckedStatus (nodes: any, treeNode: any, children: string, identifier: string[]): void{
         if(!nodes) {
             return;
           }
         if(Array.isArray(nodes)){
-            this._updateCheckedStatus(nodes, $event, $event.treeNodes.checked, identifier, children);
+            this._updateCheckedStatus(nodes, treeNode, treeNode.checked, identifier, children);
             for (const parentNode of nodes) {
-                this._updateParentCheckedStatus(parentNode, $event.treeNodes.checked, children);
+                this._updateParentCheckedStatus(parentNode, treeNode.checked, children);
             }
             return;
         }
-        this._updateCheckedStatus(nodes[children], $event, $event.treeNodes.checked, identifier, children);
+        this._updateCheckedStatus(nodes[children], treeNode, treeNode.checked, identifier, children);
         for (const parentNode of nodes[children]) {
-            this._updateParentCheckedStatus(parentNode, $event.treeNodes.checked, children);
+            this._updateParentCheckedStatus(parentNode, treeNode.checked, children);
         }
     }
 
@@ -770,9 +770,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    private _updateCheckedStatus(nodes: any, $event: any, checked: boolean, identifiers: string[], children: string) {
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, identifiers: string[], children: string) {
         for (const node of nodes) {
-            const identifiersMatch = identifiers.every(identifier => node[identifier] === $event.treeNodes[identifier]);
+            const identifiersMatch = identifiers.every(identifier => node[identifier] === treeNode[identifier]);
             if (identifiersMatch) {
                 node.checked = checked;
                 if (node[children] && node[children].length > 0) {
@@ -780,7 +780,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 }
             }
             if (node[children] && node[children].length > 0) {
-                this._updateCheckedStatus(node[children], $event, checked, identifiers, children);
+                this._updateCheckedStatus(node[children], treeNode, checked, identifiers, children);
             }
         }
     }
