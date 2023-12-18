@@ -117,6 +117,7 @@ export class FunnelGraphComponent {
                 }
             }
         }
+        this.funnelData.colorConfig = 'blue';
         this.funnelData.refresh();
     }
 

@@ -12,6 +12,7 @@ import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
+import { JigsawThemeService } from "../theming/theme";
 
 export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel';
 
@@ -1071,6 +1072,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: FunnelSeries[];
     public legendSource: 'dim' | 'kpi';
+    public colorConfig: string;
 
     private _options: EchartOptions;
 
@@ -1098,7 +1100,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
         if (options.legend) {
             options.legend.data = [];
         }
-        
+
         CommonUtils.extendObject(options, this.template.optionPatch);
         options.series = this.series
             .filter(seriesData => {
@@ -1116,7 +1118,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
                 seriesData.indicators.forEach(kpi => kpi.index = this.getIndex(kpi.field));
                 seriesData.indicators.forEach(kpi => kpi.name = kpi.name ? kpi.name : this.header[kpi.index]);
 
-                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'funnel'}, this.template.seriesItem);
+                const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({ type: 'funnel' }, this.template.seriesItem);
                 const legendSource = this.legendSource ? this.legendSource : dimensions.length > 1 ? 'dim' : 'kpi';
                 if (dimensions.length == 0) {
                     console.warn('No valid dimension found, this graph will not be rendered!');
@@ -1134,19 +1136,24 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
                     const indicator: Indicator = CommonUtils.deepCopy(seriesData.indicators[0]);
                     indicator.index = 1;
                     seriesItem.data = this.pruneData(records, 0, dimensions, [indicator])
-                        .map(row => ({name: row[0], value: row[1]}));
+                        .map(row => ({ name: row[0], value: row[1] }));
                 } else {
                     // 多指标
                     this._mergeLegend(options.legend, seriesData.indicators);
                     const dim = dimensions[0].name;
                     const records = this.data.filter(row => row[dimIndex] == dim);
                     const pruned = this.pruneData(records, dimIndex, dimensions, seriesData.indicators)[0];
-                    seriesItem.data = seriesData.indicators.map(i => ({name: i.name, value: pruned[i.index]}));
+                    seriesItem.data = seriesData.indicators.map(i => ({ name: i.name, value: pruned[i.index] }));
                 }
 
                 SeriesBase.extend(seriesItem, seriesData, idx);
                 return seriesItem;
             });
+
+        if (this.colorConfig) {
+            options.color = JigsawThemeService.getGraphTheme().chartColorConfigs[this.colorConfig];
+        }
+        
         return options;
     }
 }
