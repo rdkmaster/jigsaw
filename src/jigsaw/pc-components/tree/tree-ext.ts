@@ -770,9 +770,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBys: string[], childrenPropertyName: string) {
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string[], childrenPropertyName: string) {
         for (const node of nodes) {
-            const identifiersMatch = trackItemBys.every(identifier => node[identifier] === treeNode[identifier]);
+            const identifiersMatch = trackItemBy.every(identifier => node[identifier] === treeNode[identifier]);
             if (identifiersMatch) {
                 node.checked = checked;
                 if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
@@ -780,7 +780,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 }
             }
             if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
-                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, trackItemBys, childrenPropertyName);
+                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, trackItemBy, childrenPropertyName);
             }
         }
     }
