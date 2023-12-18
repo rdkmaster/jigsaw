@@ -770,9 +770,10 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string[], childrenPropertyName: string) {
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string | string[], childrenPropertyName: string) {
         for (const node of nodes) {
-            const identifiersMatch = trackItemBy.every(identifier => node[identifier] === treeNode[identifier]);
+            const identifiersMatch = (Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy])
+                .every(identifier => node[identifier] === treeNode[identifier]);
             if (identifiersMatch) {
                 node.checked = checked;
                 if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
