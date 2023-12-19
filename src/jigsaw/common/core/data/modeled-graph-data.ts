@@ -1154,7 +1154,6 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
             options.color = JigsawThemeService.getGraphTheme().chartColorConfigs[this.colorConfig];
         }
 
-        console.log(options)
         return options;
     }
 

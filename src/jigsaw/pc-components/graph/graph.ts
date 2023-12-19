@@ -210,7 +210,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._dataValid) {
             return;
         }
-        console.log(option)
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
         this._changeDetectorRef.markForCheck();
