@@ -23,6 +23,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawThemeService} from "../../common/core/theming/theme";
+import { options } from "jigsaw/public_api";
 
 declare const echarts: any;
 
@@ -209,6 +210,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (!this._dataValid) {
             return;
         }
+        console.log(option)
         this._graph.setOption(option, true, lazyUpdate);
         this._registerEvent();
         this._changeDetectorRef.markForCheck();

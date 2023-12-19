@@ -6,7 +6,7 @@ export const lightGraphTheme = {
     color: ['#1e7ffb', '#e67608', '#07bb74', '#4ac6d7', '#c156f3', '#f5d23d', '#30404f','#778cef'],
     // 默认的色盘配置
     chartColorConfigs: {
-        blue: [ "#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63"]
+        blue: ["#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63", "#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63"]
     },
     // 图表标题
     textStyle: {
@@ -733,7 +733,7 @@ export const darkGraphTheme = {
     color: ['#207ef8', '#ed8a2b', '#06ba74', '#4ac6d7', '#c156f3', '#f5d23d', '#778cef', '#f26c82', '#186bd2'],
     // 默认的色盘配置
     chartColorConfigs: {
-        blue: ["#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63"]
+        blue: ["#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63", "#3C55EB", "#2D40BA", "#223298", "#1B277C", "#131C63"]
     },
     // 图表标题
     textStyle: {
