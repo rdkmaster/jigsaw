@@ -748,15 +748,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         if (!nodes) {
             return;
         }
-        if (Array.isArray(nodes)) {
-            this._updateCheckedStatus(nodes, treeNode, treeNode.checked, trackItemBy, childrenPropertyName);
-            for (const parentNode of nodes) {
-                this._updateParentCheckedStatus(parentNode, treeNode.checked, childrenPropertyName);
-            }
-            return;
-        }
-        this._updateCheckedStatus(nodes[childrenPropertyName], treeNode, treeNode.checked, trackItemBy, childrenPropertyName);
-        for (const parentNode of nodes[childrenPropertyName]) {
+        const targetNodes = Array.isArray(nodes) ? nodes : nodes[childrenPropertyName];
+        this._updateCheckedStatus(targetNodes, treeNode, treeNode.checked, trackItemBy, childrenPropertyName);
+        for (const parentNode of targetNodes) {
             this._updateParentCheckedStatus(parentNode, treeNode.checked, childrenPropertyName);
         }
     }
@@ -764,7 +758,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     private _setChildChecked(nodes: any, checked: boolean, childrenPropertyName: string) {
         for (const node of nodes[childrenPropertyName]) {
             node.checked = checked;
-            if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+            if (node[childrenPropertyName]?.length > 0) {
                 this._setChildChecked(node, checked, childrenPropertyName)
             }
         }
@@ -787,17 +781,17 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     private _updateParentCheckedStatus(node: any, checked: boolean, childrenPropertyName: string): boolean {
-        if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
-            let hasCheckedChild = false;
-            for (const childNode of node[childrenPropertyName]) {
-                const childChecked = this._updateParentCheckedStatus(childNode, checked, childrenPropertyName);
-                if (childChecked) {
-                    hasCheckedChild = true;
-                }
-            }
-            node.checked = hasCheckedChild;
+        if (!node[childrenPropertyName] || node[childrenPropertyName].length == 0) {
             return node.checked;
         }
+        let hasCheckedChild = false;
+        for (const childNode of node[childrenPropertyName]) {
+            const childChecked = this._updateParentCheckedStatus(childNode, checked, childrenPropertyName);
+            if (childChecked) {
+                hasCheckedChild = true;
+            }
+        }
+        node.checked = hasCheckedChild;
         return node.checked;
     }
 }
