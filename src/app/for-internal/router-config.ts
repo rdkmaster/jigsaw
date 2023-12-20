@@ -68,6 +68,10 @@ export const routerConfigPC = [
         loadChildren: () => import('./demo/pc/graph/demo-set.module').then(m => m.GraphDemoModule),
     },
     {
+        path: "pc/modeled-graph",
+        loadChildren: () => import('./demo/pc/modeled-graph/demo-set.module').then(m => m.ModeledGraphDemoModule),
+    },
+    {
         path: "pc/i18n",
         loadChildren: () => import('./demo/pc/i18n/demo-set.module').then(m => m.I18nDemoModule),
     },
