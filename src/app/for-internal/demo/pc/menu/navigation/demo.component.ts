@@ -70,7 +70,7 @@ export class NavigationMenuNavDemo {
                     {label: '告警监控', selected: true},
                     {label: '告警统计'},
                     {label: '定时导出'},
-                    {label: 'LooooooooooongLooooooooooongLooooooooooongLooooooooooongLooooooooooongLooooooooooongLooooooooooong'},
+                    {label: '告警同步'},
                     {label: 'Test Looooooooooong English Text'}
                 ]
             },
