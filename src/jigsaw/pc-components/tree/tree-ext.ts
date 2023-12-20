@@ -744,40 +744,55 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    public setChildChecked(nodes, checked, children){
-        for (const node of nodes[children]) {
+    public updateCheckedStatus(nodes: any, treeNode: any, childrenPropertyName: string, trackItemBy: string[]): void {
+        if (!nodes) {
+            return;
+        }
+        const targetNodes = Array.isArray(nodes) ? nodes : nodes[childrenPropertyName];
+        this._updateCheckedStatus(targetNodes, treeNode, treeNode.checked, trackItemBy, childrenPropertyName);
+        for (const parentNode of targetNodes) {
+            this._updateParentCheckedStatus(parentNode, treeNode.checked, childrenPropertyName);
+        }
+    }
+
+    private _setChildChecked(nodes: any, checked: boolean, childrenPropertyName: string) {
+        for (const node of nodes[childrenPropertyName]) {
             node.checked = checked;
-            if (node[children] && node[children].length > 0) {
-                this.setChildChecked(node, checked, children)
+            if (node[childrenPropertyName]?.length > 0) {
+                this._setChildChecked(node, checked, childrenPropertyName)
             }
         }
     }
 
-    public updateCheckedStatus(nodes, labelToMatch, checked, identifier, children) {
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string | string[], childrenPropertyName: string) {
         for (const node of nodes) {
-            if (node[identifier] === labelToMatch) {
+            const identifiersMatch = (Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy])
+                .every(identifier => node[identifier] === treeNode[identifier]);
+            if (identifiersMatch) {
                 node.checked = checked;
-                if (node[children] && node[children].length > 0) {
-                    this.setChildChecked(node, checked, children)
+                if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+                    this._setChildChecked(node, checked, childrenPropertyName);
                 }
             }
-            if (node[children] && node[children].length > 0) {
-                this.updateCheckedStatus(node[children], labelToMatch, checked, identifier, children);
+            if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, trackItemBy, childrenPropertyName);
             }
         }
     }
 
-    public updateParentCheckedStatus(node, checked, children) {
-        if (node[children] && node[children].length > 0) {
-            for (const childNode of node[children]) {
-                if (childNode.checked) {
-                    node.checked = true;
-                    return;
-                }
-                this.updateParentCheckedStatus(childNode, checked, children);
-            }
-            node.checked = false;
+    private _updateParentCheckedStatus(node: any, checked: boolean, childrenPropertyName: string): boolean {
+        if (!node[childrenPropertyName] || node[childrenPropertyName].length == 0) {
+            return node.checked;
         }
+        let hasCheckedChild = false;
+        for (const childNode of node[childrenPropertyName]) {
+            const childChecked = this._updateParentCheckedStatus(childNode, checked, childrenPropertyName);
+            if (childChecked) {
+                hasCheckedChild = true;
+            }
+        }
+        node.checked = hasCheckedChild;
+        return node.checked;
     }
 }
 
