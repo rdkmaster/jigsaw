@@ -1061,6 +1061,12 @@ export class FunnelSeries extends SeriesBase {
     public label?: FunnelLabel;
     public itemStyle?: FunnelItemStyle;
     public labelLine?: FunnelLabelLine;
+    public width?: string;
+    public height?: string;
+    public top?: string;
+    public left?: string;
+    public colorConfig?: string;
+    public color?: string[];
 }
 
 export class ModeledFunnelGraphData extends AbstractModeledGraphData {
@@ -1072,7 +1078,6 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: FunnelSeries[];
     public legendSource: 'dim' | 'kpi';
-    public colorConfig: string;
 
     private _options: EchartOptions;
 
@@ -1146,13 +1151,14 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
                     seriesItem.data = seriesData.indicators.map(i => ({ name: i.name, value: pruned[i.index] }));
                 }
 
+                if (seriesData.colorConfig) {
+                    seriesData.color = JigsawThemeService.getGraphTheme().chartColorConfigs[seriesData.colorConfig];
+                }
                 SeriesBase.extend(seriesItem, seriesData, idx);
                 return seriesItem;
             });
 
-        if (this.colorConfig) {
-            options.color = JigsawThemeService.getGraphTheme().chartColorConfigs[this.colorConfig];
-        }
+
 
         return options;
     }
