@@ -745,13 +745,16 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     public updateCheckedStatus(nodes: any, treeNode: any, childrenPropertyName: string, trackItemBy: string[]): void {
-        if (!nodes) {
+        if (!nodes || !treeNode) {
             return;
         }
         const targetNodes = Array.isArray(nodes) ? nodes : nodes[childrenPropertyName];
-        this._updateCheckedStatus(targetNodes, treeNode, treeNode.checked, trackItemBy, childrenPropertyName);
-        for (const parentNode of targetNodes) {
-            this._updateParentCheckedStatus(parentNode, treeNode.checked, childrenPropertyName);
+        const checked = treeNode && Array.isArray(treeNode) ? treeNode[0].checked : treeNode.checked
+        this._updateCheckedStatus(targetNodes, treeNode, checked, trackItemBy, childrenPropertyName);
+        if(!Array.isArray(treeNode)){
+            for (const parentNode of targetNodes) {
+                this._updateParentCheckedStatus(parentNode, checked, childrenPropertyName);
+            }
         }
     }
 
@@ -765,13 +768,27 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
     }
 
     private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string | string[], childrenPropertyName: string) {
+        const identifiers = Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy];
         for (const node of nodes) {
-            const identifiersMatch = (Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy])
-                .every(identifier => node[identifier] === treeNode[identifier]);
-            if (identifiersMatch) {
-                node.checked = checked;
-                if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
-                    this._setChildChecked(node, checked, childrenPropertyName);
+            const findMatchingNode = (treeNodeArray: any[]) => {
+                return treeNodeArray.find(item =>
+                    identifiers.every(identifier => node[identifier] === item[identifier])
+                );
+            };
+            if (Array.isArray(treeNode)) {
+                const matchingNode = findMatchingNode(treeNode);
+                node.checked = !checked;
+                if (matchingNode) {
+                    node.checked = checked;
+                }
+            } else {
+                const identifiersMatch = identifiers.every(identifier => node[identifier] === treeNode[identifier]);
+                if (identifiersMatch) {
+                    node.checked = checked;
+    
+                    if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+                        this._setChildChecked(node, checked, childrenPropertyName);
+                    }
                 }
             }
             if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
