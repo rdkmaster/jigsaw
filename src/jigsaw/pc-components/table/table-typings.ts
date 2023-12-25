@@ -710,3 +710,15 @@ export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
  * - 'right' 表示右边框。
  */
 export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';
+
+/**
+ * 表格渲染器里的状态改变时发出的事件类型。
+ * - 'type' 表示渲染器名。
+ * - 'status' 表示事件名
+ * - 'event' 表示$event。
+ */
+export type CellStatusEvent = {
+    type: string,
+    status: string,
+    event: any
+}

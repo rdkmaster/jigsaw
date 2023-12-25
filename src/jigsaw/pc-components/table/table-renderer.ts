@@ -11,7 +11,7 @@ import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-inp
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
-import {_getColumnIndex, AdditionalTableData} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, CellStatusEvent} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
@@ -63,6 +63,9 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
+
+    @Output()
+    public cellStatusChange = new EventEmitter<CellStatusEvent>();
 
     protected _calcInitProperty<T>(property: string, defaultValue: T): T {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
@@ -1037,6 +1040,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
         }
+        const event = {
+            type: "TableDragReplaceRow",
+            status: "dragStart",
+            event: dragInfo
+        };
+        this.cellStatusChange.emit(event);
     }
 
     /**
@@ -1099,6 +1108,12 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
                 this.hostInstance.selectedRow = this.row + 1;
             }
         }
+        const event = {
+            type: "TableDragReplaceRow",
+            status: "drop",
+            event: dragInfo
+        };
+        this.cellStatusChange.emit(event);
         // inform jigsaw-table to update view
         this.tableData.refresh();
     }

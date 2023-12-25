@@ -20,7 +20,7 @@ import {
 } from "@angular/core";
 import {isObservable} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, CellStatusEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
@@ -486,6 +486,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
+    @Output()
+    public cellStatusChange = new EventEmitter<CellStatusEvent>();
+
     private _editorRendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _goEditCallback: () => void;
@@ -534,6 +537,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this._emitDataChange(cellData);
             }
         });
+        renderer.cellStatusChange.subscribe(cellStatus => {
+            this.cellStatusChange.emit(cellStatus);
+        })
     }
 
     private _editorRendererSubscribe(renderer: TableCellRendererBase) {
