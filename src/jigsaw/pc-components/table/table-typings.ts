@@ -712,13 +712,18 @@ export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
 export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';
 
 /**
- * 表格渲染器里的状态改变时发出的事件类型。
- * - 'type' 表示渲染器名。
- * - 'status' 表示事件名
- * - 'event' 表示$event。
+ * 表格单元格渲染器里的额外事件统一发出的事件类型。
+ * - 'cellType' 表示渲染器名。
+ * - 'event.name' 表示事件名。
+ * - 'event.data' 表示$event。
+ * - 'cellData' 表示当前单元格数据
+ * - 'row' 表示当前单元格所在行
+ * - 'field' 表示当前单元格所在列的field
  */
-export type CellStatusEvent = {
-    type: string,
-    status: string,
-    event: any
+export type CellRendererEvent = {
+    cellType: string,
+    event: { name: string, data: any },
+    cellData: any,
+    row: number,
+    field: string
 }

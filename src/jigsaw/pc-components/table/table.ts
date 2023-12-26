@@ -35,7 +35,7 @@ import {
     TableStyleOptions,
     TableCellSetting,
     TableDataChangeEvent,
-    TableHeadSetting, TableRowExpandOptions, TableBorderPosition, CellStatusEvent
+    TableHeadSetting, TableRowExpandOptions, TableBorderPosition, CellRendererEvent
 } from "./table-typings";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {IPageable, PagingInfo, SortOrder} from "../../common/core/data/component-data";
@@ -866,7 +866,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     public edit = new EventEmitter<TableDataChangeEvent>();
 
     @Output()
-    public cellStatusChange = new EventEmitter<CellStatusEvent>();
+    public cellStatusChange = new EventEmitter<CellRendererEvent>();
 
     /**
      * @NoMarkForCheckRequired

@@ -20,7 +20,7 @@ import {
 } from "@angular/core";
 import {isObservable} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, AdditionalTableData, CellStatusEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
@@ -487,7 +487,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     public edit = new EventEmitter<TableDataChangeEvent>();
 
     @Output()
-    public cellStatusChange = new EventEmitter<CellStatusEvent>();
+    public cellStatusChange = new EventEmitter<CellRendererEvent>();
 
     private _editorRendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
