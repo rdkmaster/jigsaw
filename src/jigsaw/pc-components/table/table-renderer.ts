@@ -1087,7 +1087,13 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (draggingRowIndex === this.row) {
             return;
         }
-        if (dragInfo.element.className.indexOf("drop-top") !== -1) {
+
+        const match = dragInfo.element.className.match(/drop-(top|mid|bottom)/);
+        if (!match) {
+            return;
+        }
+        const dropType = match[0];
+        if (dropType == 'drop-top') {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
                 this.hostInstance.selectedRow = this.row - 1;
@@ -1095,7 +1101,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
                 this.hostInstance.selectedRow = this.row;
             }
-        } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
+        } else if (dropType == 'drop-mid') {
             const draggingRow = this.tableData.data[draggingRowIndex];
             if (!draggingRow) {
                 return;
@@ -1104,7 +1110,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this.tableData.data[this.row] = draggingRow;
             this.tableData.data[draggingRowIndex] = thisRow;
             this.hostInstance.selectedRow = this.row;
-        } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
+        } else if (dropType == 'drop-bottom') {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
                 this.hostInstance.selectedRow = this.row;
@@ -1116,7 +1122,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         const event = {
             cellType: "TableDragReplaceRow",
             event: {
-                name: "drop",
+                name: dropType,
                 data: dragInfo
             },
             cellData: this.cellData,
