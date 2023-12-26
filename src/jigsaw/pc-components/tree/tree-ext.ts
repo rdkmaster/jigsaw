@@ -749,8 +749,9 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
             return;
         }
         const targetNodes = Array.isArray(nodes) ? nodes : nodes[childrenPropertyName];
-        const checked = treeNode && Array.isArray(treeNode) ? treeNode[0].checked : treeNode.checked
-        this._updateCheckedStatus(targetNodes, treeNode, checked, trackItemBy, childrenPropertyName);
+        const checked = treeNode && Array.isArray(treeNode) ? treeNode[0].checked : treeNode.checked;
+        const identifiers = Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy];
+        this._updateCheckedStatus(targetNodes, treeNode, checked, identifiers, childrenPropertyName);
         if(!Array.isArray(treeNode)){
             for (const parentNode of targetNodes) {
                 this._updateParentCheckedStatus(parentNode, checked, childrenPropertyName);
@@ -767,8 +768,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         }
     }
 
-    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, trackItemBy: string | string[], childrenPropertyName: string) {
-        const identifiers = Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy];
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, identifiers: string[], childrenPropertyName: string) {
         for (const node of nodes) {
             const findMatchingNode = (treeNodeArray: any[]) => {
                 return treeNodeArray.find(item =>
@@ -792,7 +792,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 }
             }
             if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
-                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, trackItemBy, childrenPropertyName);
+                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, identifiers, childrenPropertyName);
             }
         }
     }
