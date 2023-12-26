@@ -11,7 +11,7 @@ import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-inp
 import {JigsawCheckBoxModule} from "../checkbox/index";
 import {CheckBoxStatus} from "../checkbox/typings";
 import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
-import {_getColumnIndex, AdditionalTableData} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, CellRendererEvent} from "./table-typings";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawSwitchModule} from "../switch/switch";
 import {JigsawSelectModule} from "../select/index";
@@ -63,6 +63,9 @@ export class TableCellRendererBase implements OnInit, OnDestroy {
 
     @Output()
     public cellDataChange = new EventEmitter<any>();
+
+    @Output()
+    public cellStatusChange = new EventEmitter<CellRendererEvent>();
 
     protected _calcInitProperty<T>(property: string, defaultValue: T): T {
         if (!this.initData || !this.initData.hasOwnProperty(property)) {
@@ -1037,6 +1040,17 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
         }
+        const event = {
+            cellType: "TableDragReplaceRow",
+            event: {
+                name: "dragStart",
+                data: dragInfo
+            },
+            cellData: this.cellData,
+            row: this.row,
+            field: this.field
+        };
+        this.cellStatusChange.emit(event);
     }
 
     /**
@@ -1073,7 +1087,13 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         if (draggingRowIndex === this.row) {
             return;
         }
-        if (dragInfo.element.className.indexOf("drop-top") !== -1) {
+
+        const match = dragInfo.element.className.match(/drop-(top|mid|bottom)/);
+        if (!match) {
+            return;
+        }
+        const dropType = match[0];
+        if (dropType == 'drop-top') {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
                 this.hostInstance.selectedRow = this.row - 1;
@@ -1081,7 +1101,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
                 this.hostInstance.selectedRow = this.row;
             }
-        } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
+        } else if (dropType == 'drop-mid') {
             const draggingRow = this.tableData.data[draggingRowIndex];
             if (!draggingRow) {
                 return;
@@ -1090,7 +1110,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             this.tableData.data[this.row] = draggingRow;
             this.tableData.data[draggingRowIndex] = thisRow;
             this.hostInstance.selectedRow = this.row;
-        } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
+        } else if (dropType == 'drop-bottom') {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row);
                 this.hostInstance.selectedRow = this.row;
@@ -1099,6 +1119,17 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
                 this.hostInstance.selectedRow = this.row + 1;
             }
         }
+        const event = {
+            cellType: "TableDragReplaceRow",
+            event: {
+                name: dropType,
+                data: dragInfo
+            },
+            cellData: this.cellData,
+            row: this.row,
+            field: this.field
+        };
+        this.cellStatusChange.emit(event);
         // inform jigsaw-table to update view
         this.tableData.refresh();
     }

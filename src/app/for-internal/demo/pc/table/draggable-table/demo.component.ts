@@ -53,6 +53,10 @@ export class TableDraggableDemoComponent {
         }
     ];
 
+    public cellStatusChange($event) {
+        console.log($event);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

@@ -3,7 +3,8 @@
 
 <!-- start to learn the demo from here -->
 <div class="demo-container">
-    <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns">
+    <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns"
+    (cellStatusChange)="cellStatusChange($event)">
     </jigsaw-table>
     <p>选中行 {{selectedRow}}</p>
     <p>图标
