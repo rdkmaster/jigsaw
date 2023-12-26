@@ -1041,7 +1041,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
         }
         const event = {
-            cellType: this.constructor.name,
+            cellType: "TableDragReplaceRow",
             event: {
                 name: "dragStart",
                 data: dragInfo
@@ -1114,7 +1114,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             }
         }
         const event = {
-            cellType: this.constructor.name,
+            cellType: "TableDragReplaceRow",
             event: {
                 name: "drop",
                 data: dragInfo
