@@ -744,7 +744,7 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         });
     }
 
-    public updateCheckedStatus(nodes: any, treeNode: any, childrenPropertyName: string, trackItemBy: string[]): void {
+    public updateCheckedStatus(nodes: any, treeNode: any, childrenPropertyName: string, trackItemBy: string[] | string): void {
         if (!nodes || !treeNode) {
             return;
         }
@@ -752,10 +752,11 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
         const checked = treeNode && Array.isArray(treeNode) ? treeNode[0].checked : treeNode.checked;
         const identifiers = Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy];
         this._updateCheckedStatus(targetNodes, treeNode, checked, identifiers, childrenPropertyName);
-        if(!Array.isArray(treeNode)){
-            for (const parentNode of targetNodes) {
-                this._updateParentCheckedStatus(parentNode, checked, childrenPropertyName);
-            }
+        if (Array.isArray(treeNode)) {
+            return;
+        }
+        for (const parentNode of targetNodes) {
+            this._updateParentCheckedStatus(parentNode, checked, childrenPropertyName);
         }
     }
 
@@ -770,13 +771,10 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
 
     private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, identifiers: string[], childrenPropertyName: string) {
         for (const node of nodes) {
-            const findMatchingNode = (treeNodeArray: any[]) => {
-                return treeNodeArray.find(item =>
+            if (Array.isArray(treeNode)) {
+                const matchingNode = treeNode.find(item =>
                     identifiers.every(identifier => node[identifier] === item[identifier])
                 );
-            };
-            if (Array.isArray(treeNode)) {
-                const matchingNode = findMatchingNode(treeNode);
                 node.checked = !checked;
                 if (matchingNode) {
                     node.checked = checked;
@@ -785,7 +783,6 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 const identifiersMatch = identifiers.every(identifier => node[identifier] === treeNode[identifier]);
                 if (identifiersMatch) {
                     node.checked = checked;
-    
                     if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
                         this._setChildChecked(node, checked, childrenPropertyName);
                     }
