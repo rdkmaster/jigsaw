@@ -6,112 +6,321 @@ import {BubbleChartGraphData} from "jigsaw/public_api";
     templateUrl: './demo.component.html'
 })
 export class BubbleGraphComponent {
+    public orangeX: number = 215;
+    public orangeY: number = 195;
+    public orangeBorderWidth = 1;
+    public staticData = [
+        [
+            {
+                label: "西瓜",
+                value: 399,
+                labelConfig: {
+                    show: true,
+                    position: 'inside',
+                    formatter: '{b}\n{c}',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: 'red',
+                },
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(0, 128, 0, 0)',
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(0, 128, 0, 0.46)'
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+                x: 185, y: 195
+            },
+            {
+                label: "橘子",
+                value: 399,
+                labelConfig: {
+                    show: true,
+                    position: 'inside',
+                    formatter: '{b}\n{c}',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: 'black',
+                },
+                itemStyle: {
+                    borderWidth: this.orangeBorderWidth,
+                    borderColor: 'rgba(0, 120, 215, 0.7)',
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 165, 0, 0)',
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 165, 0, 0.46)',
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+                x: this.orangeX, y: this.orangeY
+            },
+            {
+                label: "苹果",
+                value: 399,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 0, 0, 0)',
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 0, 0, 0.46)',
+                            },
+                        ],
+                        global: false,
+                    },
+
+                },
+                x: 210, y: 210
+            },
+            {
+                label: "香蕉",
+                value: 399,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 255, 0, 0)',
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 255, 0, 0.46)',
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+                x: 190, y: 210
+            },
+            {
+                label: "葡萄",
+                value: 400,
+                labelConfig: {
+                    show: true,
+                    position: 'inside',
+                    formatter: '{b}\n{c}',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    color: 'pink',
+                },
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(128, 0, 128, 0)',
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(128, 0, 128, 0.46)',
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+                x: 200, y: 200
+            }
+        ]
+    ];
+    public dynamicData = [
+        [
+            {
+                label: "西瓜",
+                value: 400,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(0, 128, 0, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(0, 128, 0, 0.46)'
+                            },
+                        ],
+                        global: false,
+                    }
+                }
+            },
+            {
+                label: "橘子",
+                value: 300,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 165, 0, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 165, 0, 0.46)'
+                            },
+                        ],
+                        global: false,
+                    },
+                }
+            },
+            {
+                label: "苹果",
+                value: 200,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 0, 0, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 0, 0, 0.46)'
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+            },
+            {
+                label: "香蕉",
+                value: 150,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(255, 255, 0, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(255, 255, 0, 0.46)'
+                            },
+                        ],
+                        global: false,
+                    },
+                },
+            },
+            {
+                label: "葡萄",
+                value: 50,
+                itemStyle: {
+                    borderWidth: 1,
+                    color: {
+                        type: 'radial',
+                        x: 0.5,
+                        y: 0.5,
+                        r: 0.5,
+                        colorStops: [
+                            {
+                                offset: 0,
+                                color: 'rgba(128, 0, 128, 0)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgba(128, 0, 128, 0.46)'
+                            },
+                        ],
+                        global: false
+                    },
+                }
+            }
+        ]
+    ];
     constructor(public http: HttpClient) {
-        this.scatterData = new BubbleChartGraphData();
-        this.scatterData.title = '气泡图';
-        this.scatterData.data =  [
-            [
-                {
-                    label: "苹果",
-                    value: 400,
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: {
-                            type: 'radial', // 使用径向渐变
-                            x: 0.5, // 渐变中心的 x 坐标，取值范围 0 - 1
-                            y: 0.5, // 渐变中心的 y 坐标，取值范围 0 - 1
-                            r: 0.5, // 渐变半径，取值范围 0 - 1
-                            colorStops: [
-                                {
-                                    offset: 0, // 0% 处的颜色
-                                    color: 'rgba(25, 211, 196, 0)', // 渐变色
-                                },
-                                {
-                                    offset: 1, // 100% 处的颜色
-                                    color: 'rgba(25, 211, 196, 0.46)', // 渐变色
-                                },
-                            ],
-                            global: false, // 缺省为 false
-                        },
-                    },
-                    x: 185, y: 195
-                },
-                {
-                    label: "橘子",
-                    value: 400,
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: "orange"
-                    },
-                    x: 215, y: 195
-                },
-                {
-                    label: "西瓜",
-                    value: 400,
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: "rgba(25, 211, 196, 0.46)"
-                    },
-                    x: 210, y: 210
-                },
-                {
-                    label: "香蕉",
-                    value: 400,
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: "yellow"
-                    },
-                    x: 190, y: 210
-                },
-                {
-                    label: "葡萄",
-                    value: 400,
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: "purple"
-                    },
-                    x: 200, y: 200
-                },
-                // {
-                //     label: "橘子1",
-                //     value: 150,
-                //     itemStyle: {
-                //         borderWidth: 1,
-                //         color: "orange"
-                //     }
-                // },
-                // {
-                //     label: "西瓜1",
-                //     value: 110,
-                //     itemStyle: {
-                //         borderWidth: 1,
-                //         color: "rgba(25, 211, 196, 0.46)"
-                //     }
-                // },
-                // {
-                //     label: "香蕉1",
-                //     value: 420,
-                //     itemStyle: {
-                //         borderWidth: 1,
-                //         color: "yellow"
-                //     }
-                // },
-                // {
-                //     label: "葡萄1",
-                //     value: 500,
-                //     itemStyle: {
-                //         borderWidth: 1,
-                //         color: "purple"
-                //     }
-                // }
-            ]
-        ];
+        this.staticBubbleData = new BubbleChartGraphData();
+        this.staticBubbleData.title = '位置固定气泡图';
+        this.staticBubbleData.data = this.staticData;
+
+        this.dynamicBubbleData = new BubbleChartGraphData();
+        this.dynamicBubbleData.title = "引力布局气泡图";
+        this.dynamicBubbleData.data = this.dynamicData;
     }
 
-    scatterData: BubbleChartGraphData;
+    staticBubbleData: BubbleChartGraphData;
 
-    handleClick($event) {
-        console.log($event);
+    dynamicBubbleData: BubbleChartGraphData;
+
+    maxBubble: number = 200;
+    minBubble: number = 130;
+
+    public dataConfigChange() {
+        this.staticBubbleData = new BubbleChartGraphData();
+        this.staticBubbleData.minSymbolSize = this.minBubble;
+        this.staticBubbleData.symbolSize = this.maxBubble;
+        this.staticData[0].find(item => {
+            if (item.label == "橘子") {
+                item.x = this.orangeX;
+                item.y = this.orangeY;
+                item.itemStyle.borderWidth = this.orangeBorderWidth;
+            }
+        })
+        this.staticBubbleData.data = this.staticData;
+    }
+
+    public handleClick(event) {
+        console.log(event);
     }
 
     // ====================================================================

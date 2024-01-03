@@ -1,12 +1,20 @@
-import {Type} from "@angular/core";
+import { Type } from "@angular/core";
 import {TableDataBase} from "./table-data";
-import {EchartLegend, EchartOptions, EchartSeriesItem, EchartTitle, EchartXAxis, EchartYAxis} from "./echart-types";
+import {
+    EchartLegend,
+    EchartOptions,
+    EchartSeriesItem,
+    EchartTitle,
+    EchartXAxis,
+    EchartYAxis
+} from "./echart-types";
 import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
+import { JigsawThemeService } from "../theming/theme";
 
-export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'graph';
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'graph';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -932,106 +940,6 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
     }
 }
 
-export class ModeledBubbleGraphData extends AbstractModeledGraphData {
-    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
-        super(data, header, field);
-    }
-
-    public type: GraphType = 'graph';
-    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
-
-    public xAxis: EchartXAxis = {};
-    public yAxis: EchartYAxis = {};
-    public minSymbolSize: number;
-    public maxSymbolSize: number;
-    public series: DimKpiBase[];
-
-    private _options: EchartOptions;
-    get options(): EchartOptions {
-        if (!this._options) {
-            this._options = this.createChartOptions();
-        }
-        return this._options;
-    }
-
-    protected createChartOptions(): EchartOptions {
-        console.log("101010101010");
-        if (!this.minSymbolSize || !this.maxSymbolSize) {
-            return undefined;
-        }
-        const options = this.template.getInstance();
-        options.xAxis = this.xAxis;
-        options.yAxis = this.yAxis;
-        const data = this._handleData();
-
-        // 斥力 为了防止重叠，斥力最好大于 maxSymbolSize
-        const repulsion = this.maxSymbolSize * 1.5;
-        options.series = [
-            {
-                data,
-                type: this.type,
-                layout: "force",
-                force: {
-                    repulsion,
-                },
-                emphasis: {
-                    scale: 2,
-                },
-                label: {
-                    show: true,
-                    position: "inside",
-                    formatter: [`{title|{b}}`, `{num|{c}}`].join("\n"),
-                    rich: {
-                        title: {
-                            align: "center",
-                            fontSize: 13,
-                            lineHeight: 18,
-                            color: "#FFF",
-                        },
-                        num: {
-                            align: "center",
-                            fontSize: "15",
-                            lineHeight: 21,
-                            fontWeight: 500,
-                            color: "#FFF",
-                        },
-                    },
-                },
-                itemStyle: {
-                    borderWidth: 1,
-                    color: "green",
-                },
-            },
-        ]
-        CommonUtils.extendObject(options, this.template.optionPatch);
-        return options;
-    }
-
-    private _handleData() {
-        if (!this.data || !this.data.length) return;
-        let maxValue = 1;
-        const valueList = this.data.map(item => item["value"]);
-        maxValue = Math.max(maxValue, ...valueList);
-        const minValue = Math.min(maxValue, ...valueList);
-
-        const sizeScale = (this.maxSymbolSize - this.minSymbolSize) / (maxValue - minValue);
-        const sizeOffset = this.minSymbolSize - sizeScale * minValue;
-
-        // 获取要渲染的数据
-        return this.data.map((item) => {
-            // 根据与最大值的比例和最大气泡大小，算出每个元素的大小
-            let size = Math.max(sizeScale * Number(item["value"]) + sizeOffset, this.minSymbolSize);
-
-            return {
-                name: item["label"],
-                value: item["value"],
-                symbolSize: size,
-                itemStyle: item["itemStyle"] || ''
-            };
-        });
-    }
-}
-
 // ------------------------------------------------------------------------------------------------
 // 轮廓图相关数据对象
 export class MapSeries extends SeriesBase {
@@ -1108,5 +1016,102 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
     public refresh(): void {
         this._options = undefined;
         super.refresh();
+    }
+}
+
+// 气泡图
+export class ModeledBubbleGraphData extends AbstractModeledGraphData {
+    constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
+        super(data, header, field);
+    }
+
+    public type: GraphType = 'graph';
+    public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
+
+    public xAxis: EchartXAxis = {};
+    public yAxis: EchartYAxis = {};
+    public minSymbolSize: number;
+    public maxSymbolSize: number;
+    public layout: string = 'force';
+    public series: DimKpiBase[];
+
+    private _options: EchartOptions;
+    get options(): EchartOptions {
+        if (!this._options) {
+            this._options = this.createChartOptions();
+        }
+        return this._options;
+    }
+
+    protected createChartOptions(): EchartOptions {
+        if (!this.minSymbolSize || !this.maxSymbolSize) {
+            return undefined;
+        }
+        const options = this.template.getInstance();
+        options.xAxis = this.xAxis;
+        options.yAxis = this.yAxis;
+        const data = this._handleData();
+
+        // 斥力 为了防止重叠，斥力最好大于 maxSymbolSize
+        const repulsion = this.maxSymbolSize * 1.5;
+        options.series = [
+            {
+                data,
+                type: this.type,
+                layout: this.layout,
+                draggable: true,
+                roam: true,
+                force: {
+                    repulsion,
+                },
+                emphasis: {
+                    scale: 2,
+                },
+                label: {
+                    show: true,
+                    position: 'inside',
+                    formatter: '{b}\n{c}',
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    color: 'white',
+                },
+                itemStyle: {
+                    borderWidth: 1,
+                    color: "green",
+                },
+            },
+        ]
+        CommonUtils.extendObject(options, this.template.optionPatch);
+        return options;
+    }
+
+    private _handleData() {
+        if (!this.data || !this.data.length) return;
+        let maxValue = 1;
+        const valueList = this.data.map(item => item["value"]);
+        maxValue = Math.max(maxValue, ...valueList);
+        const minValue = Math.min(maxValue, ...valueList);
+
+        const sizeScale = (this.maxSymbolSize - this.minSymbolSize) / (maxValue - minValue);
+        const sizeOffset = this.minSymbolSize - sizeScale * minValue;
+
+        // 获取要渲染的数据
+        return this.data.map((item) => {
+            // 根据与最大值的比例和最大气泡大小，算出每个元素的大小
+            let size = Math.max(sizeScale * Number(item["value"]) + sizeOffset, this.minSymbolSize);
+
+            const itemData = {
+                name: item["label"],
+                value: item["value"],
+                label: item["labelConfig"] || {},
+                symbolSize: size,
+                itemStyle: item["itemStyle"] || {}
+            };
+            if (!item["x"] && !item["y"]) {
+                return itemData;
+            }
+            this.layout = "none";
+            return {...itemData, x: item["x"], y: item["y"]};
+        });
     }
 }

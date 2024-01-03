@@ -1737,11 +1737,12 @@ export class FunnelPlotGraphData extends AbstractNormalGraphData {
  * */
 export class BubbleChartGraphData extends AbstractNormalGraphData {
     // 气泡图形大小最小值
-    public minSymbolSize: number = 60;
+    public minSymbolSize: number = 130;
 
     // 最大气泡大小
-    public symbolSize: number = 200;
+    public symbolSize: number = 150;
 
+    public layout: string = 'force';
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
         let maxValue = 1;
@@ -1749,7 +1750,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
         maxValue = Math.max(maxValue, ...valueList);
         const minValue = Math.min(maxValue, ...valueList);
 
-        const sizeScale = (this.symbolSize - this.minSymbolSize) / Math.max((maxValue - minValue), 1);
+        const sizeScale = (this.symbolSize - this.minSymbolSize) / (maxValue - minValue);
         const sizeOffset = this.minSymbolSize - sizeScale * minValue;
 
         // 斥力 为了防止重叠，斥力最好大于 symbolSize
@@ -1764,14 +1765,18 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
             } else {
                 size = Math.max(sizeScale*item.value + sizeOffset, this.minSymbolSize);
             }
-            return {
+            const itemData = {
                 name: item.label,
                 value: item.value,
+                label: item.labelConfig || {},
                 symbolSize: size,
-                itemStyle: item.itemStyle || '',
-                x: item.x || 0,
-                y: item.y || 0
+                itemStyle: item.itemStyle || {},
             };
+            if (!item.x && !item.y) {
+                return itemData;
+            }
+            this.layout = "none";
+            return {...itemData, x: item.x, y: item.y};
         });
 
         return {
@@ -1785,36 +1790,26 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                 {
                     data,
                     type: "graph", // 关系图
-                    layout: "none", // 采用力引导布局
-                    // force: {
-                    //     // 力引导布局相关的配置项
-                    //     repulsion, // 值越大则斥力越大 每个元素间隔越大
-                    //     // 是否开启布局动画
-                    //     layoutAnimation: true,
-                    //     // 元素之间的引力，越大引力越强默认是1
-                    //     gravity: 0.1,
-                    //     // 即布局动画执行的时间。数值越大，动画执行的时间越长
-                    //     coolDown: 10
-                    // },
+                    layout: this.layout,
+                    draggable: true,     // 启用节点拖拽
+                    roam: true,          // 启用鼠标缩放和平移漫游
+                    force: {
+                        // 值越大则斥力越大 每个元素间隔越大
+                        repulsion,
+                        // 是否开启布局动画
+                        layoutAnimation: true,
+                        // 元素之间的引力，越大引力越强默认是1
+                        gravity: 0.1,
+                        // 即布局动画执行的时间。数值越大，动画执行的时间越长
+                        coolDown: 10
+                    },
+                    // 高亮状态的图形样式
                     emphasis: {
-                        // 鼠标悬停时高亮效果
-                        focus: 'adjacency',
-                        // 强调状态下缩放比例
                         scale: 2,
                         // 失去焦点是模糊
                         blur: 10,
                         // 强调状态下标签颜色
-                        label: '',
-                        // 强调状态下的元素样式
-                        // itemStyle: {
-                        //     color: 'blue',
-                        //     borderWidth: 2,
-                        // },
-                        // 强调状态下的线的状态
-                        // lineStyle: {
-                        //     color: 'green',
-                        //     width: 3,
-                        // },
+                        label: ''
                     },
                     // 设置 label
                     label: {
@@ -1837,12 +1832,11 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                             },
                         },
                     },
-                    // 设置元素的样式
                     itemStyle: {
                         borderWidth: 1,
                         color: "green",
                     },
-                }
+                },
             ],
         };
     }
