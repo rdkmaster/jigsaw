@@ -1073,7 +1073,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
                     formatter: '{b}\n{c}',
                     fontSize: 14,
                     fontWeight: 'bold',
-                    color: 'white',
+                    color: 'black',
                 },
                 itemStyle: {
                     borderWidth: 1,
