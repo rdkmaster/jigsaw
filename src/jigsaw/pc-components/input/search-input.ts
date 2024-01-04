@@ -210,6 +210,10 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
         }
 
         if (this._$history.length === 0) {
+            /* 当存储空间为0时，直接返回 */
+            if (this.historyStorageSize == 0) {
+                return;
+            }
             /* 当历史记录为空时，auto-complete-input无法绑定_$history */
             this._$history = new Array(value);
             this._changeDetectorRef.detectChanges();
@@ -334,7 +338,7 @@ export class JigsawSearchInput extends AbstractJigsawComponent implements Contro
 
         const history = localStorage.getItem(this.historyStorageKey);
         if (CommonUtils.isDefined(history)) {
-            this._$history = JSON.parse(history);
+            this._$history = JSON.parse(history).slice(0, this.historyStorageSize);
         }
 
         //国际化

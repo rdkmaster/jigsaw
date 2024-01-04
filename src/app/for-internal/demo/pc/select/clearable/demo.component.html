@@ -4,13 +4,27 @@
 
 
 <!-- start to learn the demo from here -->
-<div class="live-demo-wrap">
-    <jigsaw-header [level]="1">Select</jigsaw-header>
-    <div class="live-demo">
-        <jigsaw-header [level]="2">清除功能</jigsaw-header>
-        <jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)"
-                       placeholder="请选择城市" [data]="cityList" [clearable]="true">
-        </jigsaw-select>
-        <p class="message">选择的城市是 <span>{{selectedCityForSelect}}</span></p>
-    </div>
-</div>
+<jigsaw-header [level]="1">清除功能</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>默认值：</span>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>数据：</span>
+        <jigsaw-button (click)="changeData(false)">切换无空字符串数据</jigsaw-button>
+        <jigsaw-button (click)="changeData(true)">切换有空字符串数据</jigsaw-button>
+        <jigsaw-button (click)="changeEmptyData()">清空数据</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>操作：</span>
+        <jigsaw-button (click)="selectedCityForSelect = ''">设置为空字符串</jigsaw-button>
+        <jigsaw-button (click)="selectedCityForSelect = undefined">设置为undefined</jigsaw-button>
+    </li>
+</ul>
+
+<p>注意placeholder的变化</p>
+<jigsaw-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)" placeholder="请选择城市"
+    [data]="cityList" [clearable]="clearable">
+</jigsaw-select>
+<p class="message">选择的城市是 <span>{{selectedCityForSelect}}</span></p>

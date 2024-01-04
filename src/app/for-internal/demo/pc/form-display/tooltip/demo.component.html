@@ -1,0 +1,16 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<div class="form">
+    <jigsaw-form-display #jigsawFormDisplayComponent [data]="formio" [styleOptions]="formStyleOption" [width]="'800px'"></jigsaw-form-display>
+</div>
+
+<div style="position: absolute; left: 888px; top: 70px">
+    <label>是否开启悬浮提示</label>
+    <jigsaw-switch [(checked)]="_$tooltipEnable" (checkedChange)="_$updateTooltipEnable()"></jigsaw-switch>
+</div>
+
+<div style="position: absolute; left: 888px; top: 170px">
+    <label>在单词内部的任何地方是否可以换行</label>
+    <jigsaw-switch [(checked)]="_$tooltipWordBreak" (checkedChange)="_$updateTooltipWordBreak()"></jigsaw-switch>
+</div>

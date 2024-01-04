@@ -22,7 +22,8 @@ export class TableSetHeaderFilterDemoComponent {
         {
             target: "name",
             header: {
-                filterable: true
+                filterable: true,
+                filterHistoryStorageSize: 0
             }
         }, {
             target: "position",

@@ -22,8 +22,8 @@
                         <jigsaw-table-header [tableData]="data" [theme]="theme" [additionalData]="additionalData"
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
-                            [defaultSortOrder]="head.defaultSortOrder" (sort)="_$onSort($event)"
-                            [filterable]="head.filterable" [headerTrustedHtml]="head.cellData"
+                            [defaultSortOrder]="head.defaultSortOrder" (sort)="_$onSort($event)" [headerTrustedHtml]="head.cellData"
+                            [filterable]="head.filterable" [filterHistoryStorageSize]="head.filterHistoryStorageSize" 
                             [headerTrustedHtmlContext]="head.innerHtmlContext" [hostInstance]="this">
                         </jigsaw-table-header>
                         <div *ngIf="columnResizable && !last" class="column-resize-handler"
@@ -88,7 +88,8 @@
                                 [rendererInitData]="cell.rendererInitData" [editable]="cell.editable"
                                 [alwaysShowEditor]="cell.alwaysShowEditor" [editorRenderer]="cell.editorRenderer"
                                 [editorRendererInitData]="cell.editorRendererInitData" [group]="cell.group"
-                                [rowSpan]="cell.rowSpan" [hostInstance]="this" (edit)="edit.emit($event)">
+                                [rowSpan]="cell.rowSpan" [hostInstance]="this" (edit)="edit.emit($event)"
+                                (cellStatusChange)="cellStatusChange.emit($event)">
                             </jigsaw-table-cell>
                         </ng-container>
                     </td>

@@ -743,6 +743,71 @@ export class JigsawTreeExt extends AbstractJigsawComponent implements AfterViewI
                 });
         });
     }
+
+    public updateCheckedStatus(nodes: any, treeNode: any, childrenPropertyName: string, trackItemBy: string[] | string): void {
+        if (!nodes || !treeNode) {
+            return;
+        }
+        const targetNodes = Array.isArray(nodes) ? nodes : nodes[childrenPropertyName];
+        const checked = treeNode && Array.isArray(treeNode) ? treeNode[0].checked : treeNode.checked;
+        const identifiers = Array.isArray(trackItemBy) ? trackItemBy : [trackItemBy];
+        this._updateCheckedStatus(targetNodes, treeNode, checked, identifiers, childrenPropertyName);
+        if (Array.isArray(treeNode)) {
+            return;
+        }
+        for (const parentNode of targetNodes) {
+            this._updateParentCheckedStatus(parentNode, checked, childrenPropertyName);
+        }
+    }
+
+    private _setChildChecked(nodes: any, checked: boolean, childrenPropertyName: string) {
+        for (const node of nodes[childrenPropertyName]) {
+            node.checked = checked;
+            if (node[childrenPropertyName]?.length > 0) {
+                this._setChildChecked(node, checked, childrenPropertyName)
+            }
+        }
+    }
+
+    private _updateCheckedStatus(nodes: any, treeNode: any, checked: boolean, identifiers: string[], childrenPropertyName: string) {
+        for (const node of nodes) {
+            if (Array.isArray(treeNode)) {
+                const matchingNode = treeNode.find(item =>
+                    identifiers.every(identifier => node[identifier] === item[identifier])
+                );
+                node.checked = !checked;
+                if (matchingNode) {
+                    node.checked = checked;
+                }
+            } else {
+                const identifiersMatch = identifiers.every(identifier => node[identifier] === treeNode[identifier]);
+                if (identifiersMatch) {
+                    node.checked = checked;
+                    if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+                        this._setChildChecked(node, checked, childrenPropertyName);
+                    }
+                }
+            }
+            if (node[childrenPropertyName] && node[childrenPropertyName].length > 0) {
+                this._updateCheckedStatus(node[childrenPropertyName], treeNode, checked, identifiers, childrenPropertyName);
+            }
+        }
+    }
+
+    private _updateParentCheckedStatus(node: any, checked: boolean, childrenPropertyName: string): boolean {
+        if (!node[childrenPropertyName] || node[childrenPropertyName].length == 0) {
+            return node.checked;
+        }
+        let hasCheckedChild = false;
+        for (const childNode of node[childrenPropertyName]) {
+            const childChecked = this._updateParentCheckedStatus(childNode, checked, childrenPropertyName);
+            if (childChecked) {
+                hasCheckedChild = true;
+            }
+        }
+        node.checked = hasCheckedChild;
+        return node.checked;
+    }
 }
 
 @NgModule({

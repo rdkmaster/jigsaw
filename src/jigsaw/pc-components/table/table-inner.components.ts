@@ -20,7 +20,7 @@ import {
 } from "@angular/core";
 import {isObservable} from "rxjs";
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
-import {_getColumnIndex, AdditionalTableData, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
+import {_getColumnIndex, AdditionalTableData, CellRendererEvent, SortChangeEvent, TableDataChangeEvent} from "./table-typings";
 import {DefaultCellRenderer, TableCellRendererBase} from "./table-renderer";
 import {TableData} from "../../common/core/data/table-data";
 import {SortAs, SortOrder} from "../../common/core/data/component-data";
@@ -273,6 +273,7 @@ export class TableInternalCellBase extends AbstractJigsawViewBase implements Aft
                 [tableData]="tableData"
                 [field]="field"
                 [float]="_$jigsawFloat"
+                [historyStorageSize]="filterHistoryStorageSize"
             >
             </jigsaw-table-header-filter-box>
         </ng-template>
@@ -296,6 +297,12 @@ export class JigsawTableHeaderInternalComponent extends TableInternalCellBase im
      */
     @Input()
     public filterable: boolean;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public filterHistoryStorageSize: number;
 
     /**
      * @NoMarkForCheckRequired
@@ -479,6 +486,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
     @Output()
     public edit = new EventEmitter<TableDataChangeEvent>();
 
+    @Output()
+    public cellStatusChange = new EventEmitter<CellRendererEvent>();
+
     private _editorRendererRef: ComponentRef<TableCellRendererBase> | EmbeddedViewRef<any>;
 
     private _goEditCallback: () => void;
@@ -527,6 +537,9 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
                 this._emitDataChange(cellData);
             }
         });
+        renderer.cellStatusChange.subscribe(cellStatus => {
+            this.cellStatusChange.emit(cellStatus);
+        })
     }
 
     private _editorRendererSubscribe(renderer: TableCellRendererBase) {
@@ -654,7 +667,7 @@ export class JigsawTableCellInternalComponent extends TableInternalCellBase impl
             <div class="jigsaw-table-header-filter-search">
                 <j-checkbox [(checked)]="_$selectAllChecked" (checkedChange)="_$selectAll()"></j-checkbox>
                 <jigsaw-search-input width="250" [searchDebounce]="1000" (search)="_$handleSearching($event)"
-                    floatPosition="topLeft" [historyStorageKey]="'jigsaw.tableHeaderFilter.' + field">
+                    floatPosition="topLeft" [historyStorageKey]="'jigsaw.tableHeaderFilter.' + field" [historyStorageSize]="historyStorageSize">
                 </jigsaw-search-input>
             </div>
             <j-list class="jigsaw-table-header-filter-list" [perfectScrollbar]="{ wheelSpeed: 0.5, minScrollbarLength: 20 }"
@@ -731,6 +744,12 @@ export class JigsawTableHeaderFilterBox extends AbstractJigsawViewBase implement
      */
     @Input()
     public hostInstance: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public historyStorageSize: number = 3;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;

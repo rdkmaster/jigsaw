@@ -323,13 +323,57 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
-                this._$selectedItems = this.multipleSelect ? newValue : [newValue];
+                this._$selectedItems = this.multipleSelect ? newValue : this._getSelectedItems(newValue);
             } else {
                 this._$selectedItems = new ArrayCollection([]);
             }
             this._$checkSelectAll();
             this._changeDetector.detectChanges();
         })
+    }
+
+    /**
+     * **问题描述：**
+     * 目前在处理无效数值时，空字符串和undefined均存在问题。
+     *
+     * **解决方案：**
+     * 1. 对于已知数据中包含空字符串的情况，将空字符串视为合法值。
+     * 2. 对于已知数据中不包含空字符串的情况，将空字符串视为非法值。
+     *
+     * **按钮清空行为：**
+     * 1. 当已知数据中包含空字符串时，点击清空按钮将使用undefined作为默认值。
+     * 2. 当已知数据中不包含空字符串时，点击清空按钮将使用空字符串作为默认值以保持兼容性。
+     */
+    private _getSelectedItems(newValue: any): any[] {
+        if (newValue != "") {
+            return [newValue];
+        }
+        return this._containsEmptyString ? [newValue] : new ArrayCollection([]);
+    }
+
+    private _containsEmptyString: boolean = false;
+
+    protected _checkDataContainsEmptyString(): void {
+        if (!this._data || this._data.length == 0) {
+            this._containsEmptyString = false;
+            return;
+        }
+
+        for (let i = 0; i < this._data.length; i++) {
+            const data = this._data[i];
+            if (data === '') {
+                this._containsEmptyString = true;
+                return;
+            }
+            if (typeof data != 'object') {
+                continue;
+            }
+            if (data[this.labelField] === '') {
+                this._containsEmptyString = true;
+                return;
+            }
+        }
+        this._containsEmptyString = false;
     }
 
     /**
@@ -518,6 +562,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$infiniteScroll = true;
         }
         this._setData(value);
+        this._checkDataContainsEmptyString();
         if (!(this._data.onRefresh instanceof Function)) {
             return;
         }
@@ -527,6 +572,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._removeOnRefresh = this._data.onRefresh(() => {
             this._updateViewData();
             this._$checkSelectAll();
+            this._checkDataContainsEmptyString();
             // 等待数据处理完成赋值，消除统计的闪动
             this._searchKey = this._searchKeyBak;
         })
@@ -590,10 +636,14 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @internal
      */
     public _$handleClearable() {
-        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
+        this._handleClearableValue();
         this._$selectAllChecked = CheckBoxStatus.unchecked;
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
+    }
+
+    protected _handleClearableValue() {
+        this._value = this.multipleSelect ? new ArrayCollection([]) : "";
     }
 
     /**
@@ -891,6 +941,14 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
             this._$checkSelectAll();
             this._changeDetector.detectChanges();
         })
+    }
+
+    protected _checkDataContainsEmptyString() {
+        return;
+    }
+
+    protected _handleClearableValue() {
+        this._value = this.multipleSelect ? new ArrayCollection([]) : undefined;
     }
 
     protected _valueChange(value: any): void {

@@ -43,7 +43,7 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
             }
 
             & > p {
-                max-width: 120px;
+                max-width: calc(100% - 8px);
                 height: $height-sm;
                 line-height: $height-sm;
                 text-align: center;

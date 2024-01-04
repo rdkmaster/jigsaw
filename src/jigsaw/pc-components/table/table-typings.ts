@@ -81,6 +81,7 @@ export class TableHeader {
     sortAs?: SortAs;
     defaultSortOrder?: SortOrder;
     filterable?: boolean;
+    filterHistoryStorageSize?: number;
     data?: any | TableHeaderDataGenerator; // 用于设置自定义表头
     innerHtmlContext?: any;
     alignment?: 'default' | 'left' | 'center' | 'right';
@@ -113,6 +114,7 @@ export class TableHeadSetting {
     sortable: boolean;
     sortAs: SortAs;
     filterable: boolean;
+    filterHistoryStorageSize: number;
     defaultSortOrder: SortOrder;
     field: string;
     innerHtmlContext: any;
@@ -708,3 +710,20 @@ export type TableTextAlign = 'default' | 'left' | 'center' | 'right';
  * - 'right' 表示右边框。
  */
 export type TableBorderPosition = 'top' | 'bottom' | 'left' | 'right';
+
+/**
+ * 表格单元格渲染器里的额外事件统一发出的事件类型。
+ * - 'cellType' 表示渲染器名。
+ * - 'event.name' 表示事件名。
+ * - 'event.data' 表示$event。
+ * - 'cellData' 表示当前单元格数据
+ * - 'row' 表示当前单元格所在行
+ * - 'field' 表示当前单元格所在列的field
+ */
+export type CellRendererEvent = {
+    cellType: string,
+    event: { name: string, data: any },
+    cellData: any,
+    row: number,
+    field: string
+}

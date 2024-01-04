@@ -1,0 +1,36 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<jigsaw-header [level]="1">清除功能</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>默认值：</span>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>数据：</span>
+        <jigsaw-button (click)="changeData(false)">切换无空字符串数据</jigsaw-button>
+        <jigsaw-button (click)="changeData(true)">切换有空字符串数据</jigsaw-button>
+        <jigsaw-button (click)="changeEmptyData()">清空数据</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>已选项：</span>
+        <jigsaw-button (click)="changeValue(false)">设置为南京</jigsaw-button>
+        <jigsaw-button (click)="changeValue(true)">设置为空字符数据</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>操作：</span>
+        <jigsaw-button (click)="selectedCityForSelect = ''">设置为空字符串</jigsaw-button>
+        <jigsaw-button (click)="selectedCityForSelect = undefined">设置为undefined</jigsaw-button>
+    </li>
+</ul>
+
+<p>注意placeholder的变化</p>
+<jigsaw-group-select [(value)]="selectedCityForSelect" (valueChange)="selectChange($event)" placeholder="请选择城市"
+    [data]="cityList" [clearable]="clearable">
+</jigsaw-group-select>
+<p class="message">选择的城市是 <span>{{selectedCityForSelect ? selectedCityForSelect.length > 0 ?
+        selectedCityForSelect[0].data[0].label : '' : ''}}</span></p>
