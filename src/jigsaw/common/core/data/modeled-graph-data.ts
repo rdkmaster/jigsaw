@@ -12,7 +12,6 @@ import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
-import { JigsawThemeService } from "../theming/theme";
 
 export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'graph';
 
@@ -911,12 +910,7 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
             }
             const seriesItem = CommonUtils.extendObjects<EchartSeriesItem>({type: 'scatter'}, this.template.seriesItem);
             seriesItem.data = this.data.filter(row => row[dimIndex] == dim.name)
-                .map(row => {
-                    return [
-                        row[xAxisKpiIndex],
-                        row[yAxisKpiIndex]
-                    ]
-                });
+                .map(row => [row[xAxisKpiIndex], row[yAxisKpiIndex]]);
             seriesItem.name = dim.name ? dim.name : 'series' + idx;
             ScatterDimension.extend(seriesItem, dim);
             return seriesItem;
