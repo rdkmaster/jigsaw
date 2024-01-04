@@ -14,7 +14,7 @@ import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
 import { JigsawThemeService } from "../theming/theme";
 
-export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'graph';
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'bubble';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -1068,7 +1068,7 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public type: GraphType = 'funnel';    
+    public type: GraphType = 'funnel';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: FunnelSeries[];
     public legendSource: 'dim' | 'kpi';
@@ -1168,7 +1168,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public type: GraphType = 'graph';
+    public type: GraphType = 'bubble';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: EchartXAxis = {};
@@ -1201,7 +1201,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
         options.series = [
             {
                 data,
-                type: this.type,
+                type: this.type == 'bubble' ? 'graph' : this.type,
                 layout: this.layout,
                 draggable: true,
                 roam: true,
