@@ -14,7 +14,7 @@ import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
 import { JigsawThemeService } from "../theming/theme";
 
-export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'bubble';
+export type GraphType = 'rectangular' | 'pie' | 'gauge' | 'radar' | 'scatter' | 'map' | 'funnel' | 'graph';
 
 export abstract class AbstractModeledGraphData extends TableDataBase {
     protected abstract createChartOptions(): EchartOptions;
@@ -1168,7 +1168,8 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
         super(data, header, field);
     }
 
-    public type: GraphType = 'bubble';
+    // 此气泡图使用的是echarts的关系图，type类型为graph
+    public type: GraphType = 'graph';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
 
     public xAxis: EchartXAxis = {};
@@ -1201,7 +1202,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
         options.series = [
             {
                 data,
-                type: this.type == 'bubble' ? 'graph' : this.type,
+                type: this.type,
                 layout: this.layout,
                 draggable: true,
                 roam: true,
