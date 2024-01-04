@@ -1743,6 +1743,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
     public symbolSize: number = 150;
 
     public layout: string = 'force';
+    
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
         let maxValue = 1;

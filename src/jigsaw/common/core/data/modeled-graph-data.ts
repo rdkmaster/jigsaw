@@ -1036,6 +1036,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
     public series: DimKpiBase[];
 
     private _options: EchartOptions;
+
     get options(): EchartOptions {
         if (!this._options) {
             this._options = this.createChartOptions();
@@ -1086,7 +1087,9 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
     }
 
     private _handleData() {
-        if (!this.data || !this.data.length) return;
+        if (!this.data || !this.data.length) {
+            return;
+        }
         let maxValue = 1;
         const valueList = this.data.map(item => item["value"]);
         maxValue = Math.max(maxValue, ...valueList);
