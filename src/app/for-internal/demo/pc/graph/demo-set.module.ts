@@ -43,6 +43,8 @@ import {BarGraphComponent} from "app/for-internal/demo/pc/graph/bar/demo.compone
 import {BarGraphModule} from "./bar/demo.module";
 import {GraphDownloadDirectiveModule} from "./download-directive/demo.module";
 import {GraphDownloadDirectiveComponent} from "./download-directive/demo.component";
+import {BubbleGraphModule} from "./bubble/demo.module";
+import {BubbleGraphComponent} from "./bubble/demo.component";
 
 export const routerConfig = [
     {
@@ -107,6 +109,9 @@ export const routerConfig = [
     },
     {
         path: 'download-directive', component: GraphDownloadDirectiveComponent
+    },
+    {
+        path: 'bubble', component: BubbleGraphComponent
     }
 ];
 
@@ -134,7 +139,8 @@ export const routerConfig = [
         FunnelPlotGraphModule,
         GaugeGraphModule,
         BarGraphModule,
-        GraphDownloadDirectiveModule
+        GraphDownloadDirectiveModule,
+        BubbleGraphModule
     ]
 })
 export class GraphDemoModule {

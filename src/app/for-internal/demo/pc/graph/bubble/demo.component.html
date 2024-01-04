@@ -1,0 +1,26 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+
+<!-- start to learn the demo from here -->
+<div class="live-demo-wrap">
+    <jigsaw-header [level]="1">气泡图</jigsaw-header>
+    <div class="clearfix">
+        <div class="live-demo live-demo-block" style="width:700px">
+            <jigsaw-header [level]="2">BubbleChartGraphData固定位置数据</jigsaw-header>
+            <jigsaw-graph [data]="staticBubbleData" height="500" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+        <div class="live-demo live-demo-block" style="width:700px">
+            <jigsaw-header [level]="2">BubbleChartGraphData引力图数据</jigsaw-header>
+            <jigsaw-graph [data]="dynamicBubbleData" height="500" (click)="handleClick($event)"></jigsaw-graph>
+        </div>
+    </div>
+    <div class="clearfix">
+        <label>最大气泡</label><jigsaw-numeric-input [(value)]="maxBubble" (valueChange)="dataConfigChange()"></jigsaw-numeric-input>
+        <label>最小气泡</label><jigsaw-numeric-input [(value)]="minBubble" (valueChange)="dataConfigChange()"></jigsaw-numeric-input><br>
+        <label>橘子位置</label>X<jigsaw-numeric-input [(value)]="orangeX" (valueChange)="dataConfigChange()"></jigsaw-numeric-input>
+        Y<jigsaw-numeric-input [(value)]="orangeY" (valueChange)="dataConfigChange()"></jigsaw-numeric-input><br>
+        <label>橘子边框宽度</label><jigsaw-numeric-input [(value)]="orangeBorderWidth" (valueChange)="dataConfigChange()"></jigsaw-numeric-input>
+    </div>
+</div>
