@@ -197,7 +197,8 @@ export class TimeService {
      * @param unit  单位
      */
     public static addDate(date: Time, num: string | number, unit: TimeUnit): Moment {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).add(num, TimeService._timeUnitMap.get(unit));
+        const formatter = TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd);
+        return moment(date, formatter).add(num, TimeService._timeUnitMap.get(unit));
     }
 
     /**
@@ -219,7 +220,7 @@ export class TimeService {
      */
     public static format(date: Time, formatter: string | TimeFormatters): string {
         if (typeof formatter === "number") formatter = TimeService._timeFormatterConvert(formatter);
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).format(formatter);
+        return moment(date).format(formatter);
     }
 
     /**
@@ -229,8 +230,8 @@ export class TimeService {
      * @param gr
      */
     public static formatWithGr(date: Time, gr: TimeGr): string {
-        let format = TimeService.getFormatter(gr);
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).format(format);
+        const format = TimeService.getFormatter(gr);
+        return moment(date).format(format);
     }
 
     /**
@@ -289,7 +290,7 @@ export class TimeService {
      *
      */
     public static getWeekYear(date: Time): number {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).weekYear();
+        return moment(date).weekYear();
     }
 
     /**
@@ -299,7 +300,7 @@ export class TimeService {
      *
      */
     public static getWeekOfYear(date: Time): number {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).week();
+        return moment(date).week();
     }
 
 
@@ -314,7 +315,7 @@ export class TimeService {
      *
      */
     public static getYear(date: Time): number {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).year();
+        return moment(date).year();
     }
 
     /**
@@ -324,7 +325,7 @@ export class TimeService {
      *
      */
     public static getMonth(date: Time): number {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).month() + 1;
+        return moment(date).month() + 1;
     }
 
     /**
@@ -334,7 +335,7 @@ export class TimeService {
      *
      */
     public static getDay(date: Time): number {
-        return moment(date, TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd)).date();
+        return moment(date).date();
     }
 
     public static getDateFromYearAndWeek(year: number, week: number): Date {
