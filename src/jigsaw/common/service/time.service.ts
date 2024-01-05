@@ -230,7 +230,7 @@ export class TimeService {
      * @param gr
      */
     public static formatWithGr(date: Time, gr: TimeGr): string {
-        let format = TimeService.getFormatter(gr);
+        const format = TimeService.getFormatter(gr);
         return moment(date).format(format);
     }
 
