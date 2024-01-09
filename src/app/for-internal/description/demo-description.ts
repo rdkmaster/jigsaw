@@ -99,7 +99,9 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
         { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' },
         { label: "AWADE Light", name: 'awade', majorStyle: 'light' },
-        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' }
+        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' },
+        { label: "COPILOT Light", name: 'copilot', majorStyle: 'light' },
+        { label: "COPILOT Dark", name: 'copilot', majorStyle: 'dark' }
     ]);
 
     constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService) {

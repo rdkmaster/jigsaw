@@ -1,0 +1,7 @@
+@import "../../../common/core/theming/prebuilt/settings/paletx-pro-base.scss";
+@import "../../../common/core/theming/prebuilt/settings/copilot-light.scss";
+@import "../all-theme";
+@import "../../../common/core/theming/prebuilt/settings/copilot-light-reset.scss";
+// 下面这些文件使用npm start或者编译的时候，会自动被extract-theme-variables.js创建出来
+@import "../../../common/core/theming/prebuilt/extraction/paletx-pro-base.scss";
+@import "../../../common/core/theming/prebuilt/extraction/copilot-light.scss";
