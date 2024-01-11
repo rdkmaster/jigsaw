@@ -1,14 +1,14 @@
 /* copilot-dark */
-$blue-1: #192738;
-$blue-2: #1e3a59;
-$blue-3: #1f4b7a;
-$blue-4: #1c5c9c;
-$blue-5: #196dbd;
-$blue-6: #1681de;
-$blue-7: #3c99e6;
-$blue-8: #64b2ed;
-$blue-9: #8ecaf5;
-$blue-10: #bbe2fc;
+$blue-1: #011b51;
+$blue-2: #012774;
+$blue-3: #023497;
+$blue-4: #023eb6;
+$blue-5: #0348d4;
+$blue-6: #0099FE;
+$blue-7: #1a7cf8;
+$blue-8: #3b94fa;
+$blue-9: #5caaf9;
+$blue-10: #7dbff9;
 
 $cyan-1: #102426;
 $cyan-2: #143a3d;
@@ -212,12 +212,12 @@ $status-error: $red-6;
 /* background 背景色 */
 /*@public*/ $bg-body: $gray-1;
 /*@public*/ $bg-app: #12131C;
-/*@public*/ $bg-container: $gray-2;
-/*@public*/ $bg-component: $gray-1;
+/*@public*/ $bg-container: #071739;
+/*@public*/ $bg-component: #071739;
 /*@public*/ $bg-component-darken: $gray-4;
 /*@public*/ $bg-disabled: $gray-6;
-/*@public*/ $bg-hover: $gray-4;
-/*@public*/ $bg-active: $gray-5;
+/*@public*/ $bg-hover: #05325d;
+/*@public*/ $bg-active: #05325d;
 $bg-transparent: transparent;
 $bg-popup: $gray-2;
 /*@public*/ $bg-gray: $gray-3;
@@ -242,7 +242,7 @@ $font-color-white-darken: $gray-6;
 /*@public*/ $font-color-brand-hover: hsl(0, 0%, 100%);
 
 /* border 边框 */
-/*@public*/ $border-color-default: $gray-6;
+/*@public*/ $border-color-default: #3B4F79;
 /*@public*/ $border-color-disabled: $gray-5;
 $border-color-popup: $gray-5;
 $border-color-shadow-cntr: $gray-5;
