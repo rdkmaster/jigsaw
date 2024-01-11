@@ -1057,6 +1057,8 @@ export class FunnelSeries extends SeriesBase {
     public labelLine?: FunnelLabelLine;
     public width?: string;
     public height?: string;
+    public min?: number;
+    public max?: number;
     public top?: string;
     public left?: string;
     public colorConfig?: string;
