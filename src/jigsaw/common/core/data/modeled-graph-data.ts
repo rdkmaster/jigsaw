@@ -940,9 +940,42 @@ export class ModeledScatterGraphData extends AbstractModeledGraphData {
 export class MapSeries extends SeriesBase {
     public mapType?: string = '';
     public label?: string;
-    public itemStyle?: string;
+    public itemStyle?: MapItemStyle;
     public animation?: string;
     public roam?: boolean;
+}
+
+export type MapVisualMap = {
+    position?: string;
+    type?: string;
+    startText?: string;
+    endText?: string;
+    text?: string[];
+    min?: number;
+    max?: number;
+    colorConfig?: string;
+    color?: string[];
+    textStyle?: MapVisualMapTextStyle;
+    more?: any;
+}
+
+export type MapVisualMapTextStyle = {
+    color?: string;
+    fontStyle?: string;
+    fontWeight?: string;
+    fontSize?: number;
+}
+
+export type MapItemStyle = {
+    areaColor?: string;
+    borderColor?: string;
+    borderWidth?: number;
+    borderType?: string;
+    shadowBlur?: number;
+    shadowColor?: string;
+    shadowOffsetX?: number;
+    shadowOffsetY?: number;
+    opacity?: number;
 }
 
 export class ModeledMapGraphData extends AbstractModeledGraphData {
@@ -953,6 +986,7 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
     public type: GraphType = 'map';
     public template: CustomModeledGraphTemplate = new CustomModeledGraphTemplate();
     public series: MapSeries[];
+    public visualMap: MapVisualMap;
     private _options: EchartOptions;
 
     get options(): EchartOptions {
@@ -1004,6 +1038,9 @@ export class ModeledMapGraphData extends AbstractModeledGraphData {
                 SeriesBase.extend(seriesItem, seriesData, idx);
                 return seriesItem;
             });
+        if (options.visualMap?.colorConfig) {
+            options.visualMap.color = JigsawThemeService.getGraphTheme().chartColorConfigs[options.visualMap.colorConfig];
+        }
         CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
     }
