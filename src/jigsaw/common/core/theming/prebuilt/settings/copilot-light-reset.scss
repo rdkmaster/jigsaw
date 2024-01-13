@@ -1,0 +1,30 @@
+.jigsaw-button-host {
+    border-radius: 16px;
+}
+
+.jigsaw-textarea-host {
+    .jigsaw-textarea-container {
+        border-radius: 8px;
+    }
+}
+
+.jigsaw-collapse-host {
+    .jigsaw-collapse {
+        .jigsaw-collapse-item {
+            .jigsaw-collapse-header {
+                &:hover {
+                    background: transparent;
+                }
+            }
+        }
+
+        .jigsaw-collapse-item-inactive {
+            .jigsaw-collapse-header {
+                &:hover {
+                    background: #98C6F9;
+                    border-radius: 6px;
+                }
+            }
+        }
+    }
+}

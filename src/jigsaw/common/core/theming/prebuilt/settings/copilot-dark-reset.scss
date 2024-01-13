@@ -8,3 +8,62 @@ $test-6:#1E76F3; // 弹出信息
 
 $test-6:#999999; // 页面整体文本
 $test-6:#ffffff; // 列表选中文本
+
+.jigsaw-button-host {
+    border-radius: 16px;
+    border-color: $brand-default;
+}
+
+.jigsaw-collapse-host {
+    .jigsaw-collapse {
+        .jigsaw-collapse-item {
+            .jigsaw-collapse-header {
+                &:hover {
+                    background: transparent;
+                }
+            }
+        }
+
+        .jigsaw-collapse-item-inactive {
+            .jigsaw-collapse-header {
+                &:hover {
+                    background: rgba(30,118,243,0.28);
+                }
+            }
+        }
+    }
+}
+
+.jigsaw-textarea-host {
+    .jigsaw-textarea-container {
+        border-radius: 8px;
+    }
+}
+
+.jigsaw-icon-host {
+    a:link, a:visited, a:active {
+        color: var(--brand-default);
+    }
+
+    a:hover {
+        color: var(--brand-hover);
+    }
+}
+
+a {
+    color: var(--brand-default);
+
+    &:hover {
+        color: var(--brand-hover);
+    }
+}
+
+.jigsaw-table-host table thead tr,
+.jigsaw-combo-select-host .jigsaw-combo-select-selection-rendered .jigsaw-tag-host {
+    background: linear-gradient(270deg, #41B1EC 0%, #2C6CD7 53%, #3C54EB 100%);
+}
+
+.jigsaw-combo-select-host .jigsaw-combo-select-selection {
+    background: #2C3A59;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.4);
+}
