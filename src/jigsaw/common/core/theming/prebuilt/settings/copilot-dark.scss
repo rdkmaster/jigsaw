@@ -118,7 +118,7 @@ $gray-6: #474a59;
 $gray-7: #7b7e8c;
 $gray-8: #a4a7b3;
 $gray-9: #d9d9d9;
-$gray-10: #e5e5e5;
+$gray-10: #ffffff;
 
 /* 线型色 */
 $line-blue: $blue-6;
@@ -226,7 +226,7 @@ $bg-scrollbar: $gray-5;
 $bg-scrollbar-lighten: $gray-7;
 
 /* font 字体颜色 */
-/*@public*/ $font-color-default: $gray-9;
+/*@public*/ $font-color-default: $gray-10;
 /*@public*/ $font-color-disabled: $gray-6;
 /*@public*/ $font-color-heading: $gray-10;
 /*@public*/ $font-color-disabled-spec: $gray-7;
