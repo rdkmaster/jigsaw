@@ -19,14 +19,6 @@ $test-6:#ffffff; // 列表选中文本
         .jigsaw-collapse-item {
             .jigsaw-collapse-header {
                 &:hover {
-                    background: transparent;
-                }
-            }
-        }
-
-        .jigsaw-collapse-item-inactive {
-            .jigsaw-collapse-header {
-                &:hover {
                     background: rgba(30,118,243,0.28);
                 }
             }
