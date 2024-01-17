@@ -100,7 +100,8 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
         { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' },
         { label: "AWADE Light", name: 'awade', majorStyle: 'light' },
-        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' }
+        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' },
+        { label: "OES Mobile Light", name: 'paletx-pro-mobile', majorStyle: 'light' },
     ]);
 
     constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService,
