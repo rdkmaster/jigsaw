@@ -1,13 +1,29 @@
-import {Component} from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 
 @Component({
     templateUrl: './demo.component.html'
 })
-export class ButtonBasicDemoComponent {
+export class ButtonBasicDemoComponent implements OnInit {
+    constructor(private _renderer: Renderer2) {
+
+    }
     onClick() {
         alert('hello jigsaw button');
     }
 
+    private _removeWindowResizeListener: Function;
+
+    resize() {
+        console.log((document.documentElement.clientWidth / 450) * 100);
+        document.getElementsByTagName('html')[0].style.fontSize =
+            (document.documentElement.clientWidth / 450) * 100 + 'px';
+    }
+
+    ngOnInit(): void {
+        console.log((document.documentElement.clientWidth / 450) * 100);
+        this._removeWindowResizeListener = this._renderer.listen(
+            'window', 'resize', () => this.resize());
+    }
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

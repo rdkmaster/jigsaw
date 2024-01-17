@@ -79,6 +79,11 @@
                 "input": "src/jigsaw/common/core/theming/themes/awade-dark.scss",
                 "bundleName": "themes/awade-dark",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-mobile-light.scss",
+                "bundleName": "themes/paletx-pro-mobile-light",
+                "inject": false
               }
             ],
             "scripts": [

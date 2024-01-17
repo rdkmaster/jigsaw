@@ -12,6 +12,7 @@ import {
 } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
 import { MockData } from "../../libs/app.interceptor";
+import { ActivatedRoute } from "@angular/router";
 
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
 
@@ -102,10 +103,18 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' }
     ]);
 
-    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService) {
+    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService,
+        private _route: ActivatedRoute) {
     }
 
     ngAfterContentInit() {
+        console.log(this._route);
+        const currentRouteSnapshot = this._route.snapshot;
+    
+        // 从快照中获取完整的URL
+        console.log(currentRouteSnapshot.url.join('/')) 
+        console.log(currentRouteSnapshot.url.join('/').includes('mobile'))
+    
         this.themeInit();
     }
 
@@ -222,7 +231,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     ngOnInit() {
         if (this.showDetail === undefined) {
             this.showDetail = urlParams['open-desc'] == 'true';
-        }
+        } 
     }
 }
 
