@@ -1,0 +1,44 @@
+/* font size */
+$font-size-base: var(--copilot-font-size-base);
+$font-size-sm: var(--copilot-font-size-sm);
+$font-size-med: var(--copilot-font-size-med);
+$font-size-lg: var(--copilot-font-size-lg);
+$font-size-text-base: var(--copilot-font-size-base);
+
+:root {
+    --copilot-font-size-base: 12px;
+    --copilot-font-size-sm: 10px;
+    --copilot-font-size-med: 11px;
+    --copilot-font-size-lg: 14px;
+    --copilot-font-size-text-base: 12px;
+}
+
+@media screen and (min-width: 800px) {
+    :root {
+        --copilot-font-size-base: 12px;
+        --copilot-font-size-sm: 10px;
+        --copilot-font-size-med: 11px;
+        --copilot-font-size-lg: 14px;
+        --copilot-font-size-text-base: 12px;
+    }
+}
+
+@media screen and (min-width: 1200px) {
+    :root {
+        --copilot-font-size-base: 16px;
+        --copilot-font-size-sm: 14px;
+        --copilot-font-size-med: 15px;
+        --copilot-font-size-lg: 18px;
+        --copilot-font-size-text-base: 16px;
+    }
+}
+
+@media screen and (min-width: 1800px) {
+    :root {
+        --copilot-font-size-base: 18px;
+        --copilot-font-size-sm: 16px;
+        --copilot-font-size-med: 17px;
+        --copilot-font-size-lg: 20px;
+        --copilot-font-size-text-base: 18px;
+    }
+}
