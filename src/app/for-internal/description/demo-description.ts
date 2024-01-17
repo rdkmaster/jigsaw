@@ -108,12 +108,8 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     }
 
     ngAfterContentInit() {
-        console.log(this._route);
-        const currentRouteSnapshot = this._route.snapshot;
-    
-        // 从快照中获取完整的URL
-        console.log(currentRouteSnapshot.url.join('/')) 
-        console.log(currentRouteSnapshot.url.join('/').includes('mobile'))
+        console.log(this._route.pathFromRoot);
+
     
         this.themeInit();
     }
