@@ -4,8 +4,19 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-mobile-button (click)="onClick()" colorType="primary">普通用法</jigsaw-mobile-button>
 
-<a jigsaw-mobile-button (click)="onClick()" colorType="primary">使用 a 标签</a>
+<ul>
+    <li>
+        <jigsaw-mobile-button (click)="onClick()" colorType="primary">普通用法</jigsaw-mobile-button>
 
-<button jigsaw-mobile-button (click)="onClick()" colorType="primary">使用 button 标签</button>
+        <a jigsaw-mobile-button (click)="onClick()" colorType="primary">使用 a 标签</a>
+
+        <button jigsaw-mobile-button (click)="onClick()" colorType="primary">使用 button 标签</button>
+
+    </li>
+    <li>
+        <jigsaw-mobile-button (click)="onClick()" colorType="default">
+            普通按钮
+        </jigsaw-mobile-button>
+    </li>
+</ul>
