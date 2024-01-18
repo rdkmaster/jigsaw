@@ -11,16 +11,17 @@ export class ButtonBasicDemoComponent implements OnInit {
         alert('hello jigsaw button');
     }
 
+    public width = 450;
+
     private _removeWindowResizeListener: Function;
 
     resize() {
-        console.log((document.documentElement.clientWidth / 450) * 100);
+        console.log((document.documentElement.clientWidth / Number(this.width)) * 100);
         document.getElementsByTagName('html')[0].style.fontSize =
-            (document.documentElement.clientWidth / 450) * 100 + 'px';
+            (document.documentElement.clientWidth / Number(this.width)) * 100 + 'px';
     }
 
     ngOnInit(): void {
-        console.log((document.documentElement.clientWidth / 450) * 100);
         this._removeWindowResizeListener = this._renderer.listen(
             'window', 'resize', () => this.resize());
     }

@@ -298,10 +298,6 @@ export const routerConfigPC = [
 ];
 export const routerConfigMobile = [
     {
-        path: "mobile/alert",
-        loadChildren: () => import('./demo/mobile/alert/demo-set.module').then(m => m.AlertMobileDemoModule),
-    },
-    {
         path: "mobile/button",
         loadChildren: () => import('./demo/mobile/button/demo-set.module').then(m => m.ButtonMobileDemoModule),
     },

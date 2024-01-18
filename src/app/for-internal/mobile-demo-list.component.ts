@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {routerConfig as alertConfig} from "./demo/mobile/alert/demo-set.module";
+
 import {routerConfig as buttonConfig} from "./demo/mobile/button/demo-set.module";
 import {routerConfig as buttonBarConfig} from "./demo/mobile/button-bar/demo-set.module";
 import {routerConfig as checkboxConfig} from "./demo/mobile/checkbox/demo-set.module";
@@ -69,7 +69,6 @@ export class MobileDemoListManager {
     }
 
     private static _mergeRoutes(routerConfig: any[]) {
-        this._addRouterConfig(routerConfig, 'alert', alertConfig);
         this._addRouterConfig(routerConfig, 'button', buttonConfig);
         this._addRouterConfig(routerConfig, 'button-bar', buttonBarConfig);
         this._addRouterConfig(routerConfig, 'checkbox', checkboxConfig);
