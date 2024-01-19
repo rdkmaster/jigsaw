@@ -210,6 +210,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Input()
     public maxSelectedItemsLimit: number = 0;
 
+    /**
+     * @internal
+     */
     public _$allowSelect = true;
 
     private _checkAllowSelect() {
