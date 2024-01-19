@@ -203,6 +203,31 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public multipleSelect: boolean = false;
 
     /**
+     * 多选最大个数限制
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxSelectedItemsLimit: number = 0;
+
+    public _$allowSelect = true;
+
+    private _checkAllowSelect() {
+        if (this._checkmaxSelectedItemsLimit()) {
+            return;
+        }
+        if (this._value.length >= this.maxSelectedItemsLimit) {
+            this._$allowSelect = false
+        } else {
+            this._$allowSelect = true
+        }
+    }
+
+    private _checkmaxSelectedItemsLimit(): boolean {
+        return !this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0
+    }
+
+    /**
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      *
@@ -431,10 +456,15 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = new ArrayCollection(this._getValidData().concat(disabledSelectedItems));
+            const availableOptions  = this._getValidData().concat(disabledSelectedItems);
+            if (this._checkmaxSelectedItemsLimit && availableOptions.length >= this.maxSelectedItemsLimit) {
+                availableOptions.splice(this.maxSelectedItemsLimit);
+            }
+            this._$selectedItems = new ArrayCollection(availableOptions);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
+        this._checkAllowSelect();
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
@@ -624,6 +654,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return;
         }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
+        console.log('TTTTTTTTTTT=>',this._value);
+        this._checkAllowSelect();
         this._valueChange(this.value);
         if (this._$showSelected && this.value.length == 0) {
             this._$showSelected = false;

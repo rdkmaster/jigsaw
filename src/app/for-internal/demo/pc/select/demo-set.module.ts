@@ -37,6 +37,8 @@ import { SelectManualSearchDemoComponent } from "./manual-search/demo.component"
 import { SelectManualSearchDemoModule } from "./manual-search/demo.module";
 import { SelectShowBorderDemoModule } from "./show-border/demo.module";
 import { SelectShowBorderDemoComponent } from "./show-border/demo.component";
+import { SelectOptionsDemoModule } from "./options/demo.module";
+import { SelectOptionsDemoComponent } from "./options/demo.component";
 
 export const routerConfig = [
     {
@@ -92,6 +94,9 @@ export const routerConfig = [
     },
     {
         path: 'manual-search', component: SelectManualSearchDemoComponent
+    },
+    {
+        path: 'options', component: SelectOptionsDemoComponent
     }
 ];
 
@@ -115,7 +120,8 @@ export const routerConfig = [
         SelectValidDemoModule,
         SelectInfiniteScrollDemoModule,
         SelectManualSearchDemoModule,
-        SelectShowBorderDemoModule
+        SelectShowBorderDemoModule,
+        SelectOptionsDemoModule
     ]
 })
 export class SelectDemoModule {

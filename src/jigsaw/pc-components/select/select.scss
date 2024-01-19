@@ -416,6 +416,15 @@ $jigsaw-list-option: #{$jigsaw-prefix}-list-option;
     position: relative;
     color: $font-color-default;
 
+    &.jigsaw-select-not-allow-select {
+        .jigsaw-select-list-host {
+            .jigsaw-list-option-host:not(.jigsaw-list-option-active) {
+                color: $font-color-disabled;
+                pointer-events: none;
+            }
+        }
+    }
+
     .#{$jigsaw-select}-infinite-scroll-loading {
         position: absolute;
         bottom: 0;

@@ -1,0 +1,42 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>数据：</span>
+        <jigsaw-button (click)="_$changeData()">修改</jigsaw-button>
+        <jigsaw-button (click)="_$resetData()">重置</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>已选项：</span>
+        <jigsaw-button (click)="_$changeValue()" [disabled]="!value">修改已选项</jigsaw-button>
+        <jigsaw-button (click)="_$clearValue()">清空已选</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>搜索：</span>
+        <jigsaw-switch [(checked)]="searchable"></jigsaw-switch>
+        <span>禁用：</span>
+        <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
+        <span>多选：</span>
+        <jigsaw-switch [(checked)]="multipleSelect" (checkedChange)="_$clearValue()"></jigsaw-switch>
+        <span>清空：</span>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
+        <span>选项可显示条数：</span>
+        <j-numeric-input [(value)]="optionCount" min="3" max="10" placeholder="请输入展示的选项条数">
+        </j-numeric-input>
+    </li>
+    <li class="demo-options-item">
+        <span>最大可选条数：</span>
+        <j-numeric-input [(value)]="maxSelectedItemsLimit" min="1" max="200" placeholder="请输入最大可选条数">
+        </j-numeric-input>
+    </li>
+</ul>
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-select [data]="data" [maxSelectedItemsLimit]="maxSelectedItemsLimit" [optionCount]="optionCount" [searchable]="searchable" [clearable]="clearable"
+    [(value)]="value" [disabled]="disabled" [multipleSelect]="multipleSelect" closeTrigger="click" width="300" labelField="label"
+    placeholder="请选择" (valueChange)="valueChange($event)">
+</jigsaw-select>
