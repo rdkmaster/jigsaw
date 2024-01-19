@@ -10,7 +10,7 @@ export class SelectOptionsDemoComponent {
     public data;
     public value;
     public searchable = true;
-    public clearable = false;
+    public clearable = true;
     public disabled = false;
     public multipleSelect = true;
     public optionCount = 10;
@@ -26,7 +26,9 @@ export class SelectOptionsDemoComponent {
     }
 
     public _$changeData() {
-
+        this.value = undefined;
+        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安", "纽约", "伦敦", "东京", "巴黎", "柏林", "悉尼", "莫斯科", "迪拜", "新德里", "多伦多", "京都", "马德里", "温哥华", "里约热内卢", "开罗", "圣保罗", "曼谷", "雅加达", "孟买", "墨西哥城", "雪梨", "香港", "洛杉矶", "罗马", "阿姆斯特丹", "首尔", "伊斯兰堡", "新加坡", "伊斯坦布尔", "布宜诺斯艾利斯", "卡拉奇", "吉隆坡", "雅典", "奥斯陆", "京都", "渥太华", "华盛顿", "雅典", "奥斯陆", "渥太华", "华盛顿", "孟买", "迈阿密", "雅典"]
+        );
     }
 
     public _$resetData() {
@@ -82,21 +84,24 @@ export class SelectOptionsDemoComponent {
             { "label": "孟买" },
             { "label": "迈阿密" },
             { "label": "雅典" }
-        ]
-        );
+        ]);
+
     }
 
     public _$clearValue() {
         this.value = undefined;
     }
 
-    public _$changeValue() {
-        console.log(this.value);
+    public _$setValue() {
         this.value = new ArrayCollection([
-            { label: "北京" },
-            { label: "上海" }
-        ]);
+            { "label": "北京" },
+            { "label": "上海" },
+            { "label": "南京" },
+            { "label": "深圳" },
+            { "label": "长沙" }
+        ])
     }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

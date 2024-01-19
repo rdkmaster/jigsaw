@@ -6,12 +6,12 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>数据：</span>
-        <jigsaw-button (click)="_$changeData()">修改</jigsaw-button>
+        <jigsaw-button (click)="_$changeData()">修改为字符串数组</jigsaw-button>
         <jigsaw-button (click)="_$resetData()">重置</jigsaw-button>
     </li>
     <li class="demo-options-item">
         <span>已选项：</span>
-        <jigsaw-button (click)="_$changeValue()" [disabled]="!value">修改已选项</jigsaw-button>
+        <jigsaw-button (click)="_$setValue()">设置已选项（5个）</jigsaw-button>
         <jigsaw-button (click)="_$clearValue()">清空已选</jigsaw-button>
     </li>
     <li class="demo-options-item">
@@ -30,8 +30,8 @@
         </j-numeric-input>
     </li>
     <li class="demo-options-item">
-        <span>最大可选条数：</span>
-        <j-numeric-input [(value)]="maxSelectedItemsLimit" min="1" max="200" placeholder="请输入最大可选条数">
+        <span>最大可选条数(0为非法值)：</span>
+        <j-numeric-input [(value)]="maxSelectedItemsLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
     </li>
 </ul>
