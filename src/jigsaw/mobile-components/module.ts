@@ -1,6 +1,5 @@
 import {NgModule} from "@angular/core";
 
-import {JigsawMobileAlertModule} from './alert/alert';
 import {JigsawBlockModule} from '../common/components/block/block';
 import {JigsawMobileButtonModule} from './button/button';
 import {JigsawMobileCheckBoxModule} from './checkbox/index';
@@ -31,7 +30,6 @@ import {JigsawMobileRateModule} from "./rate/index";
 import {JigsawMobileHeaderModule} from  "./header/header";
 
 const JIGSAW_MODULE = [
-    JigsawMobileAlertModule,
     JigsawBlockModule,
     JigsawMobileButtonModule,
     JigsawMobileCheckBoxModule,

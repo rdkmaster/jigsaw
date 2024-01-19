@@ -12,6 +12,7 @@ import {
 } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
 import { MockData } from "../../libs/app.interceptor";
+import { ActivatedRoute } from "@angular/router";
 
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
 
@@ -99,13 +100,18 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
         { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
         { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' },
         { label: "AWADE Light", name: 'awade', majorStyle: 'light' },
-        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' }
+        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' },
+        { label: "OES Mobile Light", name: 'paletx-pro-mobile', majorStyle: 'light' },
     ]);
 
-    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService) {
+    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService,
+        private _route: ActivatedRoute) {
     }
 
     ngAfterContentInit() {
+        console.log(this._route.pathFromRoot);
+
+    
         this.themeInit();
     }
 
@@ -222,7 +228,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     ngOnInit() {
         if (this.showDetail === undefined) {
             this.showDetail = urlParams['open-desc'] == 'true';
-        }
+        } 
     }
 }
 

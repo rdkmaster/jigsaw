@@ -1,75 +1,130 @@
-import {Component, Input, NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {AbstractJigsawComponent} from '../../common/common';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, NgModule, NgZone, ViewChild, AfterViewInit, Renderer2 } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { AbstractJigsawComponent, WingsTheme } from '../../common/common';
 
 /**
  * 在界面上显示一个按钮，最常见最简单的组件。
  * - 支持多种预设颜色用于表达按钮不同的作用，参考`colorType`；
  * - 支持多种预设尺寸以适应不同场合，参考`preSize`；
- * - 支持任意自定义尺寸，[参考这里]($demo=button/width-height)；
- * - 支持彻底的自定义标签，甚至与loading融合在一起使用，[参考这里]($demo=button/with-loading)；
+ * - 支持任意自定义尺寸，[参考这里](/#/components/button?demo=button-login)；
+ * - 支持彻底的自定义标签，甚至与loading融合在一起使用，[参考这里](/#/components/button?demo=button-loading)；
  *
  * 这是一个表单友好组件。与表单配合使用时，建议用法
  * `<button jigsaw-button type="submit"></button>`，
- * 参考[这个demo]($demo=form/template-driven)。
- *
- * $demo = button/full
- * $demo = button/basic
  */
+@WingsTheme('button.scss')
 @Component({
     selector: 'jigsaw-mobile-button, a[jigsaw-mobile-button], button[jigsaw-mobile-button], jm-button, a[jm-button], button[jm-button]',
     templateUrl: 'button.html',
     host: {
-        '[class.jigsaw-button]': 'true',
-        '[class.jigsaw-button-disabled]': 'disabled',
-        '(click)': '_onClick()',
         '[style.min-width]': 'width',
         '[style.height]': 'height',
-        '[class.jigsaw-button-clicked]': "_clicked",
+        '[attr.data-theme]': 'theme',
+        '[class.jigsaw-button-host]': 'true',
+        '[class.jigsaw-button-disabled]': 'disabled',
+        '[class.jigsaw-button-clicked]': "_$clicked",
         '[class.jigsaw-button-size-small]': "preSize === 'small'",
+        '[class.jigsaw-button-size-medium]': "preSize === 'medium'",
         '[class.jigsaw-button-size-large]': "preSize === 'large'",
         '[class.jigsaw-button-color-primary]': "colorType === 'primary'",
         '[class.jigsaw-button-color-warning]': "colorType === 'warning'",
-        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'"
-    }
+        '[class.jigsaw-button-color-error]': "colorType === 'error' || colorType === 'danger'",
+        '[class.jigsaw-button-color-none]': "colorType === 'none'",
+        '[class.jigsaw-button-icon-left]': "iconPosition === 'left'",
+        '[class.jigsaw-button-icon-right]': "iconPosition === 'right'",
+        '(click)': '_onClick()'
+    },
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawMobileButton extends AbstractJigsawComponent {
+export class JigsawMobileButton extends AbstractJigsawComponent implements AfterViewInit {
+    constructor(public element: ElementRef, protected _zone: NgZone, protected _renderer: Renderer2) {
+        super(_zone);
+    }
+
+    @ViewChild('text')
+    text: ElementRef;
 
     /**
      * 设置按钮不可交互状态的开关，为true则不可交互，为false则可交互。
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/disabled
      */
-    @Input() public disabled: boolean = false;
+    @Input()
+    public disabled: boolean = false;
 
     /**
      * 按钮颜色类型 `default` , `primary` , `warning` , `error|danger`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/full
      */
-    @Input() public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' = 'default';
+    @Input()
+    public colorType: 'default' | 'primary' | 'warning' | 'error' | 'danger' | 'none' = 'default';
 
     /**
      * 按钮预设尺寸 `default` , `small` , `large`
      *
+     * @NoMarkForCheckRequired
+     *
      * $demo = button/full
      */
-    @Input() public preSize: 'default' | 'small' | 'large' = 'default';
+    @Input()
+    public preSize: 'default' | 'small' | 'medium' | 'large' = 'default';
 
     /**
-     * @internal
-     * 按钮动画执行状态
+     * 配置按钮图标
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = button/full
      */
-    public _clicked: boolean = false;
+    @Input()
+    public icon: string;
+
+    /**
+     * 图标的位置
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public iconPosition: 'left' | 'right' = 'left';
+
+    /**
+     * 按钮动画执行状态
+     * @internal
+     */
+    public _$clicked: boolean = false;
 
     /**
      * @internal
      */
     public _onClick(): void {
-        if (!this.disabled && !this._clicked) {
-            this._clicked = true;
-            this.callLater(() => this._clicked = false, 360);
+        if (!this.disabled && !this._$clicked) {
+            this._$clicked = true;
+            this.callLater(() => this._$clicked = false, 360);
         }
+    }
+
+    ngAfterViewInit() {
+        this.runAfterMicrotasks(() => {
+            this._zone.run(() => {
+                if (this.text.nativeElement.innerText) {
+                    return
+                }
+                // 需要将判定时间点进一步延后，以防止在某些情况（j-box + ngIf）下，获取不到innerText的情况
+                this.runAfterMicrotasks(() => {
+                    this._zone.run(() => {
+                        if (!this.text.nativeElement.innerText) {
+                            this._renderer.addClass(this.element.nativeElement, 'jigsaw-button-icon');
+                        }
+                    });
+                });
+
+            });
+        });
     }
 }
 

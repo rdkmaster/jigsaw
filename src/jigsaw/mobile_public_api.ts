@@ -29,7 +29,6 @@ export * from "./common/service/loading.service";
 export * from "./common/service/popup.service";
 export * from "./common/service/time.service";
 export * from "./common/service/time.types";
-export * from "./mobile-components/alert/alert";
 export * from "./mobile-components/button/button";
 export * from "./mobile-components/checkbox/index";
 export * from "./mobile-components/checkbox/typings";

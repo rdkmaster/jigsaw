@@ -1,5 +1,4 @@
 import {Component} from "@angular/core";
-import {JigsawMobileInfoAlert} from "jigsaw/mobile_public_api";
 
 @Component({
     templateUrl: 'demo.component.html',
@@ -8,10 +7,6 @@ import {JigsawMobileInfoAlert} from "jigsaw/mobile_public_api";
 export class MoveAndClickDemoComponent {
     mouseStartPosition = {x: null, y: null};
 
-    handleButtonClick() {
-        JigsawMobileInfoAlert.show('the movable button is clicked!');
-    }
-
     recordMouseStartPosition(event) {
         this.mouseStartPosition.x = event.clientX;
         this.mouseStartPosition.y = event.clientY;
@@ -19,7 +14,6 @@ export class MoveAndClickDemoComponent {
 
     handleMouseUp(event) {
         if (this.isClickAction(event)) {
-            this.handleButtonClick();
         }
     }
 
