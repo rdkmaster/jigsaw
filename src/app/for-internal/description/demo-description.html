@@ -1,0 +1,36 @@
+<div>
+    <span class="demo-set-btn" jigsaw-float [jigsawFloatTarget]="settingsPanel" [jigsawFloatOptions]="{borderType: 'pointer'}">
+        DEMO设置 |
+    </span>
+    <span class="summary" [innerHtml]="summary"></span>
+    <span class="links">
+        <span *ngIf="!!content">|</span>
+        <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
+        |
+        <a (click)="openDemoCode()">查看本DEMO源码</a>
+    </span>
+    <br *ngIf="showDetail">
+    <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
+    <br>
+    <span class="links" *ngIf="showDetail && !!content">
+        <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
+        <a (click)="openDemoCode()">查看本DEMO源码</a>
+    </span>
+</div>
+<hr>
+
+<ng-template #settingsPanel>
+    <div class="demo-control-bar">
+        <p>切换皮肤</p>
+        <div>
+            <jigsaw-button-bar optionWidth="150" [(selectedItems)]="selectedTheme" trackItemBy="name,majorStyle" [data]="themes"
+                [multipleSelect]="false" (selectedItemsChange)="themeSelectChange($event)">
+            </jigsaw-button-bar>
+        </div>
+
+        <p>切换语言</p>
+        <jigsaw-button-bar optionWidth="120" [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
+            [(selectedItems)]="selectedLanguage" (selectedItemsChange)="changeLanguage($event[0])">
+        </jigsaw-button-bar>
+    </div>
+</ng-template>

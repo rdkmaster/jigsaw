@@ -1,0 +1,42 @@
+hr {
+    margin: 3px 0 10px 0;
+}
+
+div {
+    padding-top: 6px;
+}
+
+.summary {
+    font-size: 16px;
+}
+
+.links {
+    margin-left: 12px;
+    font-size: 12px;
+}
+
+.demo-set-btn {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 4px;
+    font-size: 16px;
+    color: var(--brand-default);
+    cursor: pointer;
+}
+
+.demo-control-bar {
+    height: max-content;
+    padding: 16px 16px 8px 16px;
+    background-color: var(--bg-container) !important;
+}
+
+.demo-control-bar .jigsaw-button-bar-host {
+    height: auto;
+    margin-bottom: 8px;
+    margin-left: 16px;
+}
+
+.demo-control-bar p {
+    margin-bottom: 4px;
+    font-weight: bold;
+}

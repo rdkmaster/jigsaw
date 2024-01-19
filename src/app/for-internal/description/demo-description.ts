@@ -18,75 +18,8 @@ const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
 
 @Component({
     selector: 'jigsaw-demo-description, j-demo-description',
-    styles: [`
-        hr {
-            margin: 3px 0 10px 0;
-        }
-
-        div {
-            padding-top: 6px;
-        }
-
-        .summary {
-            font-size: 16px;
-        }
-
-        .links {
-            margin-left: 12px;
-            font-size: 12px;
-        }
-
-        .demo-control-bar {
-            background-color: var(--bg-container) !important;
-            padding: 16px 16px 8px 16px;
-        }
-
-        .demo-control-bar jigsaw-button-bar {
-            margin-bottom: 8px;
-            margin-left: 16px;
-            display: block;
-        }
-
-        .demo-control-bar p {
-            margin-bottom: 4px;
-            font-weight: bold;
-        }
-    `],
-    template: `
-        <div style="max-width: calc(100vw - 340px)">
-            <span class="summary" [innerHtml]="summary"></span>
-            <span class="links">
-                <span *ngIf="!!content">|</span>
-                <a *ngIf="!!content" (click)="toggleDesc()">{{showDetail ? '隐藏' : '展开'}}详情</a>
-                |
-                <a (click)="openDemoCode()">查看本DEMO源码</a>
-                |
-                <a jigsaw-float [jigsawFloatTarget]="settingsPanel" [jigsawFloatOptions]="{borderType: 'pointer'}">设置</a>
-            </span>
-            <br *ngIf="showDetail">
-            <jigsaw-markdown *ngIf="showDetail" [markdown]="content"></jigsaw-markdown>
-            <br>
-            <span class="links" *ngIf="showDetail && !!content">
-                <a (click)="showDetail = !showDetail">{{showDetail ? '隐藏' : '展开'}}详情</a> |
-                <a (click)="openDemoCode()">查看本DEMO源码</a>
-            </span>
-        </div>
-        <hr>
-
-        <ng-template #settingsPanel>
-            <div class="demo-control-bar">
-                <p>切换皮肤</p>
-                <jigsaw-button-bar [(selectedItems)]="selectedTheme" trackItemBy="name,majorStyle" [data]="themes"
-                                   [multipleSelect]="false" (selectedItemsChange)="themeSelectChange($event)">
-                </jigsaw-button-bar>
-                <p>切换语言</p>
-                <jigsaw-button-bar [data]="[{label: '中文', value: 'zh'}, {label: 'English', value: 'en'}]"
-                                   [(selectedItems)]="selectedLanguage"
-                                   (selectedItemsChange)="changeLanguage($event[0])">
-                </jigsaw-button-bar>
-            </div>
-        </ng-template>
-    `
+    styleUrls: ['./demo-description.css'],
+    templateUrl:'./demo-description.html'
 })
 export class JigsawDemoDescription implements OnInit, AfterContentInit {
     public selectedTheme: any[];
