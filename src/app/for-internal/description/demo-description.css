@@ -18,7 +18,7 @@ div {
 .demo-set-btn {
     display: inline-flex;
     align-items: center;
-    margin-right: 4px;
+    margin-right: 36px;
     font-size: 16px;
     color: var(--brand-default);
     cursor: pointer;
