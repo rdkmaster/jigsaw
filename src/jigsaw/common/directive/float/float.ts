@@ -282,7 +282,8 @@ export class JigsawFloatBase extends AbstractJigsawViewBase implements OnDestroy
             }
         }
         // 弹出的全局遮盖jigsaw-block' 触发的mouseleave不应关闭float
-        if (event.toElement && event.toElement.className !== 'jigsaw-block' && canClose) {
+        // 火狐浏览器中，mouseleave 事件是不包含 toElement 属性，为了兼容性，使用relatedTarget
+        if (event.relatedTarget && event.relatedTarget.className !== 'jigsaw-block' && canClose) {
             this._rollOutDenouncesTimer = this.callLater(() => {
                 this.closeFloat(event);
             }, this.jigsawFloatCloseDelay);
