@@ -74,16 +74,9 @@ export class SelectOptionsDemoComponent {
             { "label": "吉隆坡" },
             { "label": "雅典" },
             { "label": "奥斯陆" },
-            { "label": "京都" },
             { "label": "渥太华" },
             { "label": "华盛顿" },
-            { "label": "雅典" },
-            { "label": "奥斯陆" },
-            { "label": "渥太华" },
-            { "label": "华盛顿" },
-            { "label": "孟买" },
-            { "label": "迈阿密" },
-            { "label": "雅典" }
+            { "label": "迈阿密" }
         ]);
 
     }
