@@ -47,8 +47,7 @@
                         [theme]="theme"
                         [(checked)]="_$selectAllChecked"
                         (checkedChange)="_$selectAll()"
-                        [enableIndeterminate]="true"
-                        [disabled]="!_$allowSelect">
+                        [enableIndeterminate]="true">
                         <span>{{'select.selectAll' | translate}}</span>
                     </jigsaw-checkbox>
                     <div class="jigsaw-select-show-selected" *ngIf="!_$showSelected && _$showNumStatistics()" (click)="_$showSelected = true">

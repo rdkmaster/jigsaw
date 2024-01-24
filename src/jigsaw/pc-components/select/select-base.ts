@@ -11,6 +11,7 @@ import { JigsawComboSelect } from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
 import { TranslateService } from "@ngx-translate/core";
+import { JigsawToast } from "../toast/toast";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -216,15 +217,18 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$allowSelect = true;
 
     private _checkAllowSelect() {
-        if (this._checkmaxSelectedItemsLimit()) {
+        if (!this._value || this._checkmaxSelectedItemsLimit()) {
             this._$allowSelect = true
             return;
         }
         this._$allowSelect = this._value.length < this.maxSelectedItemsLimit
+        if (!this._$allowSelect) {
+            JigsawToast.showWarn(this._translateService.instant("select.maxLimitWarning"));
+        }
     }
 
     private _checkmaxSelectedItemsLimit(): boolean {
-        return !this.multipleSelect || !this._value || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0
+        return !this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0
     }
 
     private _getAvailableValue(value) {
@@ -460,7 +464,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (this._$selectedItems?.length > 0) {
             disabledSelectedItems.push(...this._$selectedItems.filter(item => item.disabled));
         }
-        if (this._allSelectCheck()) {
+        if (this._allSelectCheck() || !this._$allowSelect) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
@@ -500,7 +504,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._allSelectCheck()) {
+        if (this._allSelectCheck() || !this._$allowSelect) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else if (this._allDisabledCheck()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
