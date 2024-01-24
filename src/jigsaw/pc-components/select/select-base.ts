@@ -517,13 +517,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 全选按钮只考虑可选内容，不考虑disabled
      * 会存在当前已选不在当期列表中的情况(已选项默认disabled)
      */
-    protected _allSelectCheck(): boolean {
+    private _allSelectCheck(): boolean {
         const validData = this._getValidData();
         if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
+        return validData.every(data =>
+            !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)));
     }
 
     /**
@@ -537,9 +537,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!disabledData.length) {
             return false;
         }
-        return this._$selectedItems.every(
-            selectedItem => !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy))
-        );
+        return this._$selectedItems.every(selectedItem =>
+            !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy)));
     }
 
     /**
