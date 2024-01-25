@@ -1201,6 +1201,56 @@ export class ModeledFunnelGraphData extends AbstractModeledGraphData {
     }
 }
 
+// ------------------------------------------------------------------------------------------------
+// 气泡图相关数据对象
+export type ColorStop = {
+    offset: number,
+    color: string
+}
+
+export type GradientColor = {
+    type: string,
+    x: number,
+    y: number,
+    r: number,
+    colorStops: ColorStop[],
+    global: boolean
+}
+
+export type BubbleItemStyle = {
+    borderWidth?: number,
+    borderType?: string,
+    borderColor?: string,
+    shadowBlur?: number,
+    shadowColor?: string,
+    shadowOffsetX?: number,
+    shadowOffsetY?: number,
+    color?: string | GradientColor
+}
+
+export type BubbleLabelConfig = {
+    color: string,
+    fontSize: number,
+    fontWeight: string,
+    fontStyle: string,
+    formatter?: string,
+    position?: string,
+    show: boolean
+}
+
+export type BubbleSeries = {
+    label: string,
+    value: number,
+    itemStyle: BubbleItemStyle,
+    labelConfig: BubbleLabelConfig,
+    x: number,
+    y: number
+}
+
+export type EmphasisConfig = {
+    itemStyle: BubbleItemStyle,
+    label?: BubbleLabelConfig
+}
 // 气泡图
 export class ModeledBubbleGraphData extends AbstractModeledGraphData {
     constructor(data: GraphDataMatrix = [], header: GraphDataHeader = [], field: GraphDataField = []) {
@@ -1217,6 +1267,7 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
     public maxSymbolSize: number;
     public layout: string = 'force';
     public series: DimKpiBase[];
+    public emphasisConfig: EmphasisConfig;
 
     private _options: EchartOptions;
 
@@ -1235,35 +1286,21 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
         options.xAxis = this.xAxis;
         options.yAxis = this.yAxis;
         const data = this._handleData();
+        const emphasisConfig = this.emphasisConfig || {};
 
         // 斥力 为了防止重叠，斥力最好大于 maxSymbolSize
-        const repulsion = this.maxSymbolSize * 1.5;
+        const repulsion = this.maxSymbolSize * 3;
         options.series = [
             {
                 data,
                 type: this.type,
                 layout: this.layout,
                 draggable: true,
-                roam: true,
                 force: {
                     repulsion,
                 },
-                emphasis: {
-                    scale: 2,
-                },
-                label: {
-                    show: true,
-                    position: 'inside',
-                    formatter: '{b}\n{c}',
-                    fontSize: 14,
-                    fontWeight: 'bold',
-                    color: 'black',
-                },
-                itemStyle: {
-                    borderWidth: 1,
-                    color: "green",
-                },
-            },
+                emphasis: emphasisConfig
+            }
         ]
         CommonUtils.extendObject(options, this.template.optionPatch);
         return options;
@@ -1291,7 +1328,8 @@ export class ModeledBubbleGraphData extends AbstractModeledGraphData {
                 value: item["value"],
                 label: item["labelConfig"] || {},
                 symbolSize: size,
-                itemStyle: item["itemStyle"] || {}
+                itemStyle: item["itemStyle"] || {},
+                emphasis: item["emphasisConfig"] || this.emphasisConfig
             };
             if (!item["x"] && !item["y"]) {
                 return itemData;

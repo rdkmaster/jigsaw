@@ -1744,6 +1744,8 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
 
     public layout: string = 'force';
 
+    public emphasisConfig: any;
+
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
         let maxValue = 1;
@@ -1755,7 +1757,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
         const sizeOffset = this.minSymbolSize - sizeScale * minValue;
 
         // 斥力 为了防止重叠，斥力最好大于 symbolSize
-        const repulsion = this.symbolSize * 1.5;
+        const repulsion = this.symbolSize * 3;
 
         // 获取要渲染的数据
         const data = this.data[0].map((item) => {
@@ -1772,6 +1774,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                 label: item.labelConfig || {},
                 symbolSize: size,
                 itemStyle: item.itemStyle || {},
+                emphasis: item.emphasisConfig || this.emphasisConfig
             };
             if (!item.x && !item.y) {
                 return itemData;
@@ -1779,6 +1782,8 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
             this.layout = "none";
             return {...itemData, x: item.x, y: item.y};
         });
+
+        const emphasisConfig = this.emphasisConfig || {};
 
         return {
             xAxis: {
@@ -1793,7 +1798,6 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                     type: "graph", // 关系图
                     layout: this.layout,
                     draggable: true,     // 启用节点拖拽
-                    roam: true,          // 启用鼠标缩放和平移漫游
                     force: {
                         // 值越大则斥力越大 每个元素间隔越大
                         repulsion,
@@ -1805,13 +1809,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                         coolDown: 10
                     },
                     // 高亮状态的图形样式
-                    emphasis: {
-                        scale: 2,
-                        // 失去焦点是模糊
-                        blur: 10,
-                        // 强调状态下标签颜色
-                        label: ''
-                    },
+                    emphasis: emphasisConfig,
                     // 设置 label
                     label: {
                         show: true,
@@ -1831,7 +1829,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
                                 fontWeight: 500,
                                 color: "#FFF",
                             },
-                        },
+                        }
                     },
                     itemStyle: {
                         borderWidth: 1,
