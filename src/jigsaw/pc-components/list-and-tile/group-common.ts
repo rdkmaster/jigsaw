@@ -79,6 +79,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._propagateChange(newValue);
     }
 
+    /**
+     * 多选最大个数限制
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxSelectedItemsLimit: number = 0;
+
     constructor(protected _cdr: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {

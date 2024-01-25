@@ -5,6 +5,8 @@ import {ListFullDemoModule} from "./full/demo.module";
 import {ListFullDemoComponent} from "./full/demo.component";
 import { ListTrackItemByDemoComponent } from "./track-item-by/demo.component";
 import { ListTrackItemByDemoModule } from "./track-item-by/demo.module";
+import { ListOptionsDemoModule } from "./options/demo.module";
+import { ListOptionsDemoComponent } from "./options/demo.component";
 
 export const routerConfig = [
     {
@@ -13,13 +15,17 @@ export const routerConfig = [
     {
         path: 'track-item-by', component: ListTrackItemByDemoComponent
     },
+    {
+        path: 'options', component: ListOptionsDemoComponent
+    },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig),
         ListFullDemoModule,
-        ListTrackItemByDemoModule
+        ListTrackItemByDemoModule,
+        ListOptionsDemoModule
     ]
 })
 export class ListDemoModule{
