@@ -6,7 +6,7 @@
         <jigsaw-date-time-picker #dateTimePicker [theme]="theme" [date]="date" (dateChange)="_$updateValue.emit($event)" [(gr)]="gr"
                                  (grChange)="grChange.emit($event)" [showConfirmButton]="showConfirmButton" [limitStart]="limitStart"
                                  [limitEnd]="limitEnd" [grItems]="grItems" [markDates]="markDates" [step]="step" [weekStart]="weekStart"
-                                 [firstWeekMustContains]="firstWeekMustContains"
+                                 [firstWeekMustContains]="firstWeekMustContains" [clearOnReClick]="clearOnReClick"
                                  (dateTimeSelect)="_$closeComboSelect($event)">
         </jigsaw-date-time-picker>
     </ng-template>

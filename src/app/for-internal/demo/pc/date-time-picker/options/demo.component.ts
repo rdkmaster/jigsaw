@@ -3,10 +3,11 @@ import { JigsawDatePicker } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    styleUrls: ['./../../assets/demo.common.css']
 })
 export class DatePickerTimeOptionsDemoComponent {
     public date;
+    public clearOnReClick = true;
 
     @ViewChild('dateTimePicker')
     private _dateTimePicker: JigsawDatePicker;

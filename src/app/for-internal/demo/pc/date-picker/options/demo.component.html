@@ -12,8 +12,14 @@
         <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
         <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>再次点击时清除数据：</span>
+        <jigsaw-switch [(checked)]="clearOnReClick"></jigsaw-switch>
+    </li>
 </ul>
-<jigsaw-date-picker #datePicker [(date)]="date" (dateChange)="dateChange($event)"></jigsaw-date-picker>
+
+<jigsaw-header [level]="2">基础用法</jigsaw-header>
+<jigsaw-date-picker #datePicker [(date)]="date" (dateChange)="dateChange($event)" [clearOnReClick]="clearOnReClick"></jigsaw-date-picker>
 <div>
     <span>选择的时间是：{{date}}</span>
 </div>

@@ -234,6 +234,14 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
     public clearable: boolean = false;
 
     /**
+     * 是否再次点击时清除数据
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearOnReClick: boolean = true;
+
+    /**
      * @internal
      */
     public _$dateComboValue: ArrayCollection<ComboSelectValue>;

@@ -125,4 +125,11 @@
         <div></div>
         <jigsaw-date-time-select [(date)]="date13" (dateChange)="onDateChange($event)"></jigsaw-date-time-select>
     </div>
+
+    <div class="demo-14 live-demo">
+        <jigsaw-header [level]="2">再次点击时不清除数据</jigsaw-header>
+        <div></div>
+        <jigsaw-date-time-select [(date)]="date14" (dateChange)="onDateChange($event)" [clearOnReClick]="false"
+            [showConfirmButton]="true" gr="second"></jigsaw-date-time-select>
+    </div>
 </div>

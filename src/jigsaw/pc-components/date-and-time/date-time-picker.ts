@@ -375,6 +375,14 @@ export class JigsawDateTimePicker extends AbstractJigsawComponent implements Con
     public showConfirmButton: boolean = false;
 
     /**
+     * 是否再次点击时清除数据
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public clearOnReClick: boolean = true;
+
+    /**
      * @internal
      */
     @Output()
