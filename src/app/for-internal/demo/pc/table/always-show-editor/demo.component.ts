@@ -27,11 +27,11 @@ export class TableAlwaysShowEditorDemoComponent {
                     "542"
                 ],
                 [
-                    "Garrett Winters1",
+                    "空字符2",
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
-                    "Tokyo",
+                    "",
                     "8422"
                 ],
                 [
@@ -79,7 +79,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "Accountant",
                     "$170,7",
                     "2011/07/25",
-                    "Tokyo",
+                    "",
                     "8422"
                 ],
                 [
@@ -87,7 +87,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "System Architect",
                     "$320,8000",
                     "2011/04/25",
-                    "Edinburgh",
+                    "",
                     "5421"
                 ],
                 [
@@ -95,7 +95,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "Accountant",
                     "$170,50",
                     "2011/07/25",
-                    "Tokyo",
+                    "",
                     "8422"
                 ],
                 [
@@ -119,7 +119,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "System Architect",
                     "$320,800",
                     "2011/04/25",
-                    "Edinburgh",
+                    "",
                     "5421"
                 ],
                 [
@@ -127,7 +127,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "System Architect",
                     "$320,80",
                     "2011/04/25",
-                    "Edinburgh",
+                    "",
                     "542111"
                 ],
                 [
@@ -135,7 +135,7 @@ export class TableAlwaysShowEditorDemoComponent {
                     "Accountant",
                     "$170,750",
                     "2011/07/25",
-                    "Tokyo",
+                    "",
                     "84212"
                 ],
                 [
