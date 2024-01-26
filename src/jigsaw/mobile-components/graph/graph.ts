@@ -2,7 +2,7 @@
  * Created by 10177553 on 2017/3/23.
  */
 import {AfterViewInit, Component, ElementRef, EventEmitter, Input, NgZone, OnDestroy, OnInit, Output, Renderer2,} from "@angular/core";
-import {AbstractGraphData} from "../../common/core/data/graph-data";
+import {AbstractGraphData} from "../../common/core/data/graph-data/graph-data";
 
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent} from "../../common/common";
