@@ -239,7 +239,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @NoMarkForCheckRequired
      */
     @Input()
-    public clearOnReClick: boolean = true;
+    public clearOnReselect: boolean = true;
 
     /**
      * @internal

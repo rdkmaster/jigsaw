@@ -31,13 +31,13 @@
     </li>
     <li class="demo-options-item">
         <span>再次点击时清除数据：</span>
-        <jigsaw-switch [(checked)]="clearOnReClick"></jigsaw-switch>
+        <jigsaw-switch [(checked)]="clearOnReselect"></jigsaw-switch>
     </li>
 </ul>
 
 <jigsaw-header [level]="2">基本用法</jigsaw-header>
 <jigsaw-date-time-picker #dateTimePicker [(date)]="date" [gr]="gr[0]" [limitStart]="limitStart" [limitEnd]="limitEnd"
-    [clearOnReClick]="clearOnReClick" (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
+    [clearOnReselect]="clearOnReselect" (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
 <div>
     <span>选择的时间是：{{date}}</span>
 </div>

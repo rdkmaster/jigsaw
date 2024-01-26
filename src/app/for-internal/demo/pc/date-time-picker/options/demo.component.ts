@@ -7,7 +7,7 @@ import { JigsawDatePicker } from "jigsaw/public_api";
 })
 export class DatePickerTimeOptionsDemoComponent {
     public date;
-    public clearOnReClick = true;
+    public clearOnReselect = true;
 
     @ViewChild('dateTimePicker')
     private _dateTimePicker: JigsawDatePicker;

@@ -5,7 +5,7 @@
 </div>
 <jigsaw-date-picker #datePicker [theme]="theme" [(date)]="_$date" (dateChange)="_$handleDateChange()" [gr]="_$dateGr"
     [markDates]="markDates" [firstWeekMustContains]="firstWeekMustContains" [limitStart]="_$dateLimitStart"
-    [limitEnd]="_$dateLimitEnd" [rangeDate]="rangeDate" [weekStart]="weekStart" [clearOnReClick]="clearOnReClick"
+    [limitEnd]="_$dateLimitEnd" [rangeDate]="rangeDate" [weekStart]="weekStart" [clearOnReselect]="clearOnReselect"
     (dateSelect)="dateTimeSelect.emit($event)"></jigsaw-date-picker>
 <div class="jigsaw-date-time-picker-bottom" *ngIf="!!_$timeGr">
     <j-time-picker #timePicker height="24" [theme]="theme" [(value)]="_$time" (valueChange)="_$handleTimeChange()"

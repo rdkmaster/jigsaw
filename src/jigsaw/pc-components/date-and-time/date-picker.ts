@@ -317,7 +317,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return;
         }
         this.dateSelect.emit('month');
-        if (this.clearOnReClick && monthCell.isSelected && TimeGr[this._gr] === 'month') {
+        if (this.clearOnReselect && monthCell.isSelected && TimeGr[this._gr] === 'month') {
             this.clearDate();
             return;
         }
@@ -479,7 +479,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
      * @NoMarkForCheckRequired
      */
     @Input()
-    public clearOnReClick: boolean = true;
+    public clearOnReselect: boolean = true;
 
     /**
      * @internal
@@ -489,7 +489,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
             return;
         }
         this.dateSelect.emit('day');
-        if (this.clearOnReClick && dayCell.isSelected) {
+        if (this.clearOnReselect && dayCell.isSelected) {
             this.clearDate();
             return;
         }
