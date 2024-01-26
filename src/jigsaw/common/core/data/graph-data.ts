@@ -5,6 +5,7 @@ import {Type} from "@angular/core";
 
 declare const echarts: any;
 import {JigsawThemeService} from "../theming/theme";
+import {EmphasisConfig} from "./modeled-graph-data";
 
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
@@ -1732,6 +1733,7 @@ export class FunnelPlotGraphData extends AbstractNormalGraphData {
         return opt;
     }
 }
+
 /**
  * 气泡图
  * */
@@ -1744,7 +1746,7 @@ export class BubbleChartGraphData extends AbstractNormalGraphData {
 
     public layout: string = 'force';
 
-    public emphasisConfig: any;
+    public emphasisConfig: EmphasisConfig;
 
     protected createChartOptions(): EchartOptions {
         if (!this.data || !this.data.length) return;
