@@ -293,9 +293,6 @@ export class BubbleGraphComponent {
         this.staticBubbleData.title = '位置固定气泡图';
         this.staticBubbleData.data = this.staticData;
         this.staticBubbleData.emphasisConfig = {
-            label: {
-                show: false
-            },
             itemStyle: {
                 borderWidth: 1,
                 borderColor: 'black',

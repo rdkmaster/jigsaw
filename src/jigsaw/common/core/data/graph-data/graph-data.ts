@@ -1,21 +1,12 @@
 import {EchartLegend, EchartOptions, EchartTitle, EchartTooltip} from "../echart-types";
 import {TableDataBase} from "../table-data";
 import {CommonUtils} from "../../utils/common-utils";
-import {Type} from "@angular/core";
-import {EmphasisConfig} from "../modeled-graph-data";
-import {DoughnutGraphData, DoughnutRateGraphData, DoughnutScoreGraphData, PieGraphData, PieGraphDataByRow} from "./pie-doughnut";
-
-declare const echarts: any;
 
 export type GraphMatrixRow = (string | number)[];
 export type GraphDataHeader = string[];
 export type GraphDataField = string[];
 export type GraphDataRowDescriptor = string[];
 export type GraphDataMatrix = GraphMatrixRow[];
-
-export abstract class AbstractGraphStyle {
-    protected abstract createChartOptions(): EchartOptions;
-}
 
 /**
  * 这是所有的图形数据的基类，正如类名所提示的，这个类是抽象的。
@@ -181,7 +172,7 @@ export abstract class AbstractGraphData extends TableDataBase {
 }
 
 /**
- * 这是一个通用的图形数据，提供给它一个`EchartOptions`，它就可以渲染出对应的图了。
+ * 这是一个通用的图形数据，提供给它一个`EchartsOptions`，它就可以渲染出对应的图了。
  *
  * Jigsaw有计划对常用的图形做封装，包括使用接口和样式，尽情期待。
  *
@@ -205,98 +196,98 @@ export class GraphData extends AbstractGraphData {
      * @param rawTableData
      *
      */
-    public static of(rawTableData: any): AbstractGraphData {
-        if (!super.isGraphData(rawTableData) || !rawTableData.type) {
-            return null;
-        }
-        let GraphDataType: Type<AbstractGraphData>;
-        switch (rawTableData.type) {
-            case 'OutlineMapData':
-                GraphDataType = OutlineMapData;
-                break;
-            case 'PieGraphData':
-                GraphDataType = PieGraphData;
-                break;
-            case 'PieGraphDataByRow':
-                GraphDataType = PieGraphDataByRow;
-                break;
-            case 'DoughnutGraphData':
-                GraphDataType = DoughnutGraphData;
-                break;
-            case 'DoughnutRateGraphData':
-                GraphDataType = DoughnutRateGraphData;
-                break;
-            case 'DoughnutScoreGraphData':
-                GraphDataType = DoughnutScoreGraphData;
-                break;
-            case 'LineGraphData':
-                GraphDataType = LineGraphData;
-                break;
-            case 'LineGraphDataByRow':
-                GraphDataType = LineGraphDataByRow;
-                break;
-            case 'LineBarGraphData':
-                GraphDataType = LineBarGraphData;
-                break;
-            case 'BarGraphData':
-                GraphDataType = BarGraphData;
-                break;
-            case 'BarGraphDataByRow':
-                GraphDataType = BarGraphDataByRow;
-                break;
-            case 'StripGraphData':
-                GraphDataType = StripGraphData;
-                break;
-            case 'StripSequenceGraphData':
-                GraphDataType = StripSequenceGraphData;
-                break;
-            case 'StripColorGraphData':
-                GraphDataType = StripColorGraphData;
-                break;
-            case 'StackedAreaGraphData':
-                GraphDataType = StackedAreaGraphData;
-                break;
-            case 'GaugeGraphData':
-                GraphDataType = GaugeGraphData;
-                break;
-            case 'ScatterGraphData':
-                GraphDataType = ScatterGraphData;
-                break;
-            case 'RadarGraphData':
-                GraphDataType = RadarGraphData;
-                break;
-            case 'KLineGraphData':
-                GraphDataType = KLineGraphData;
-                break;
-            case 'BoxPlotGraphData':
-                GraphDataType = BoxPlotGraphData;
-                break;
-            case 'HeatGraphData':
-                GraphDataType = HeatGraphData;
-                break;
-            case 'RelationalGraphData':
-                GraphDataType = RelationalGraphData;
-                break;
-            case 'FunnelPlotGraphData':
-                GraphDataType = FunnelPlotGraphData;
-                break;
-        }
-        return GraphDataType ? this._createGraphData(GraphDataType, rawTableData) : null;
-    }
+    // public static of(rawTableData: any): AbstractGraphData {
+    //     if (!super.isGraphData(rawTableData) || !rawTableData.type) {
+    //         return null;
+    //     }
+    //     let GraphDataType: Type<AbstractGraphData>;
+    //     switch (rawTableData.type) {
+    //         case 'OutlineMapData':
+    //             GraphDataType = OutlineMapData;
+    //             break;
+    //         case 'PieGraphData':
+    //             GraphDataType = PieGraphData;
+    //             break;
+    //         case 'PieGraphDataByRow':
+    //             GraphDataType = PieGraphDataByRow;
+    //             break;
+    //         case 'DoughnutGraphData':
+    //             GraphDataType = DoughnutGraphData;
+    //             break;
+    //         case 'DoughnutRateGraphData':
+    //             GraphDataType = DoughnutRateGraphData;
+    //             break;
+    //         case 'DoughnutScoreGraphData':
+    //             GraphDataType = DoughnutScoreGraphData;
+    //             break;
+    //         case 'LineGraphData':
+    //             GraphDataType = LineGraphData;
+    //             break;
+    //         case 'LineGraphDataByRow':
+    //             GraphDataType = LineGraphDataByRow;
+    //             break;
+    //         case 'LineBarGraphData':
+    //             GraphDataType = LineBarGraphData;
+    //             break;
+    //         case 'BarGraphData':
+    //             GraphDataType = BarGraphData;
+    //             break;
+    //         case 'BarGraphDataByRow':
+    //             GraphDataType = BarGraphDataByRow;
+    //             break;
+    //         case 'StripGraphData':
+    //             GraphDataType = StripGraphData;
+    //             break;
+    //         case 'StripSequenceGraphData':
+    //             GraphDataType = StripSequenceGraphData;
+    //             break;
+    //         case 'StripColorGraphData':
+    //             GraphDataType = StripColorGraphData;
+    //             break;
+    //         case 'StackedAreaGraphData':
+    //             GraphDataType = StackedAreaGraphData;
+    //             break;
+    //         case 'GaugeGraphData':
+    //             GraphDataType = GaugeGraphData;
+    //             break;
+    //         case 'ScatterGraphData':
+    //             GraphDataType = ScatterGraphData;
+    //             break;
+    //         case 'RadarGraphData':
+    //             GraphDataType = RadarGraphData;
+    //             break;
+    //         case 'KLineGraphData':
+    //             GraphDataType = KLineGraphData;
+    //             break;
+    //         case 'BoxPlotGraphData':
+    //             GraphDataType = BoxPlotGraphData;
+    //             break;
+    //         case 'HeatGraphData':
+    //             GraphDataType = HeatGraphData;
+    //             break;
+    //         case 'RelationalGraphData':
+    //             GraphDataType = RelationalGraphData;
+    //             break;
+    //         case 'FunnelPlotGraphData':
+    //             GraphDataType = FunnelPlotGraphData;
+    //             break;
+    //     }
+    //     return GraphDataType ? this._createGraphData(GraphDataType, rawTableData) : null;
+    // }
 
-    private static _createGraphData<T extends AbstractGraphData>(ClassName: Type<T>, rawData): T {
-        const gd = new ClassName();
-        if (rawData.hasOwnProperty('header')) {
-            gd.header = rawData.header;
-        }
-        if (rawData.hasOwnProperty('data')) {
-            gd.data = rawData.data;
-        }
-        if (rawData.hasOwnProperty('rowDescriptor')) {
-            gd.rowDescriptor = rawData.rowDescriptor;
-        }
-        return gd;
-    }
+    // private static _createGraphData<T extends AbstractGraphData>(ClassName: Type<T>, rawData): T {
+    //     const gd = new ClassName();
+    //     if (rawData.hasOwnProperty('header')) {
+    //         gd.header = rawData.header;
+    //     }
+    //     if (rawData.hasOwnProperty('data')) {
+    //         gd.data = rawData.data;
+    //     }
+    //     if (rawData.hasOwnProperty('rowDescriptor')) {
+    //         gd.rowDescriptor = rawData.rowDescriptor;
+    //     }
+    //     return gd;
+    // }
 }
 
 export abstract class AbstractNormalGraphData extends AbstractGraphData {
@@ -342,535 +333,6 @@ export abstract class AbstractNormalGraphData extends AbstractGraphData {
 export class OutlineMapData extends AbstractNormalGraphData {
     protected createChartOptions(): any {
         return undefined;
-    }
-}
-
-/**
- * 折线图
- */
-export class LineGraphData extends AbstractNormalGraphData {
-
-    protected defaultType = 'line';
-
-    protected createSeries() {
-        return this.data.map((row, index) => {
-            return {name: this.header[index], type: this.defaultType, data: this.data.map(row => row[index])}
-        });
-    }
-
-    protected optionsTemplate: EchartOptions = {
-        tooltip: {
-            trigger: 'axis',
-            axisPointer: {
-                type: 'cross',
-                label: {
-                    backgroundColor: '#6a7985'
-                }
-            }
-        },
-        legend: {
-            left: 'center',
-            data: []
-        },
-        toolbox: {
-            feature: {
-                saveAsImage: {}
-            }
-        },
-        grid: {
-            left: '3%',
-            right: '4%',
-            bottom: '3%',
-            containLabel: true
-        },
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: false,
-                data: []
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value'
-            }
-        ],
-        series: []
-    };
-
-    protected createChartOptions(): EchartOptions {
-        if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this.optionsTemplate};
-        this._extendOption(opt);
-        opt.legend.data = this.header;
-        opt.xAxis[0].data = this.rowDescriptor;
-        opt.series = this.createSeries();
-        return opt;
-    }
-}
-
-/**
- * 加这个类是为了保持向下兼容
- * @internal
- */
-export class LineBarGraphData extends LineGraphData {
-}
-
-export class LineGraphDataByRow extends LineGraphData {
-    protected createSeries() {
-        return this.data.map((row, index) => {
-            return {name: this.rowDescriptor[index], type: this.defaultType, data: row}
-        });
-    }
-
-    protected createChartOptions(): EchartOptions {
-        if (!this.data || !this.data.length) return;
-        const opt: EchartOptions = {...this.optionsTemplate};
-        this._extendOption(opt);
-        opt.legend.data = this.rowDescriptor;
-        opt.xAxis[0].data = this.header;
-        opt.series = this.createSeries();
-        return opt;
-    }
-}
-
-/**
- * 柱状图
- */
-export class BarGraphData extends LineGraphData {
-    protected defaultType = 'bar';
-}
-
-/**
- * 柱状图（按行）
- */
-export class BarGraphDataByRow extends LineGraphDataByRow {
-    protected defaultType = 'bar';
-}
-
-/**
- * 条形图
- */
-export class StripGraphData extends AbstractNormalGraphData {
-
-    protected getBrowserInfo() {
-        //只做了谷歌和火狐的兼容性
-        let agent = navigator.userAgent.toLowerCase();
-        if (agent.indexOf("firefox") > 0) {
-            return -10;
-        } else {
-            return -15;
-        }
-    }
-
-    protected getGridRight() {
-        let gridRight = "" + this.data[0][0];
-        return gridRight.length * 8
-    }
-
-    protected optionsTemplate: EchartOptions = {
-        grid: {
-            left: 100,
-            top: 60
-        },
-        tooltip: {
-            trigger: 'item',
-            axisPointer: {type: ''},
-            formatter: function (params) {
-                return params[1].name + '<br/>'
-                    + params[1].seriesName + ' : ' + params[1].value
-            }
-        },
-        xAxis: [
-            {
-                type: 'value',
-                splitNumber: 4,
-                splitLine: {show: false},
-                position: 'bottom',
-                max: "dataMax",
-                axisLabel: {
-                    textStyle: {
-                        color: '#bbbbbb'
-                    }
-                },
-                axisTick: {//坐标轴刻度相关设置
-                    show: true,
-                    inside: false,
-                    color: '#ddd',
-                    length: 3,//刻度长短设置
-                    lineStyle: {
-                        color: '#ddd',
-                    }
-                },
-                axisLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#ddd',
-                        width: 1
-                    }
-                }
-            }
-        ],
-        yAxis: [
-            {
-
-                splitLine: {show: false},
-                data: [],
-                boundaryGap: [0.01, 0.01],
-                axisLabel: {
-                    textStyle: {
-                        color: '#666'
-                    }
-                },
-                axisLine: {
-                    show: true,
-                    lineStyle: {
-                        color: '#ddd',
-                        width: 1
-                    }
-                },
-                axisTick: {//坐标轴刻度相关设置
-                    show: true,
-                    length: 3,//刻度长短设置
-                    lineStyle: {
-                        color: '#54acd5',
-                    }
-                }
-            }
-        ]
-    };
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        const options = {...this.optionsTemplate};
-        this._extendOption(options);
-        options.grid.right = this.getGridRight();
-        options.yAxis[0].data = this.header;
-        options.series = [
-            {
-                type: 'bar',
-                barGap: '-100%',
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        barBorderColor: '#54acd5',
-                        opacity: 0.2,
-                        color: '#54acd5',
-                        barBorderRadius: 5
-                    }
-                },
-                barWidth: 10,
-                data: this.data[0]
-            },
-            {
-                animation: true,
-                type: 'bar',
-                label: {
-                    normal: {
-                        show: true,
-                        position: ['100%', this.getBrowserInfo()],
-                        textStyle: {
-                            fontSize: 12,
-                            color: "#54acd5"
-                        }
-                    }
-                },
-                barGap: '-100%',
-                itemStyle: {
-                    normal: {
-                        barBorderColor: '#54acd5',
-                        color: '#54acd5',
-                        barBorderRadius: 5
-                    }
-                },
-                barWidth: 10,
-                tooltip: {
-                    trigger: 'axis',
-                },
-                data: this.data[1]
-            }
-        ];
-        return options;
-    }
-}
-
-/**
- * 条形时序图
- */
-export class StripSequenceGraphData extends StripGraphData {
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        const options = {...this.optionsTemplate};
-        this._extendOption(options);
-        options.grid.right = this.getGridRight();
-        options.yAxis[0].type = 'category';
-        options.yAxis[0].data = this.header;
-        options.series = [
-            {
-                type: 'bar',
-                barGap: '-100%',
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        barBorderColor: '#54acd5',
-                        opacity: 0.2,
-                        color: '#54acd5',
-                        barBorderRadius: 5
-                    }
-                },
-                barWidth: 10,
-                data: this.data[0]
-            },
-            {
-                type: 'bar',
-                stack: '总量',
-                barGap: '-100%',
-                silent: true,
-                itemStyle: {
-                    normal: {
-                        barBorderColor: 'rgba(0,0,0,0)',
-                        color: 'rgba(0,0,0,0)',
-                        barBorderRadius: 5,
-                        textStyle: {
-                            align: 'right'
-                        }
-                    }
-                },
-                barWidth: 10,
-                data: this.data[1]
-            },
-            {
-                type: 'bar',
-                stack: '总量',
-                barGap: '-100%',
-                silent: true,
-                animation: true,
-                label: {
-                    normal: {
-                        show: true,
-                        position: ['100%', this.getBrowserInfo()],
-                        textStyle: {
-                            color: "#54acd5"
-                        }
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        barBorderColor: '#54acd5',
-                        color: '#54acd5',
-                        barBorderRadius: 5
-                    }
-                },
-                barWidth: 10,
-                data: this.data[2]
-            }
-        ];
-        return options;
-    }
-}
-
-/**
- * 条形色值图
- */
-export class StripColorGraphData extends AbstractNormalGraphData {
-    protected optionsTemplate: EchartOptions = {
-        title: {
-            text: '',
-            left: "center",
-            top: 20,
-            textStyle: {
-                color: '#434343',
-                fontSize: 12
-            }
-        },
-        calculable: true,
-        grid: {
-            left: 90,
-            right: 60,
-            top: 60
-        },
-        xAxis: [
-            {
-                type: 'value',
-                splitNumber: 4,
-                axisLine: {
-                    show: false
-                },
-                splitLine: {//出网格线
-                    show: false
-                },
-                axisLabel: {
-                    show: false
-                }
-            }
-        ],
-        yAxis: [
-            {
-                splitLine: {
-                    show: false
-                },
-                boundaryGap: true,
-                type: 'category',
-                scale: false,
-                axisLabel: {
-                    textStyle: {
-                        color: '#434343'//刻度标签样式
-                    }
-
-                },
-                axisLine: {
-                    show: false
-                },
-                axisTick: {//坐标轴刻度相关设置
-                    show: false
-                },
-                data: []
-            }
-        ],
-        series: [
-            {
-                name: 'bar',
-                type: 'bar',
-                stack: "总量",
-                silent: true,
-                animation: false,//关闭动漫
-                barWidth: '10px',
-                data: []
-
-            },
-            {
-                name: 'bar6',
-                type: 'bar',
-                stack: "总量",
-                silent: true,
-                animation: false,//关闭动漫
-                label: {//图形数据显示位置
-                    normal: {
-                        show: true, position: ['100%', -5],
-                        textStyle: {
-                            color: "#585858"
-                        },
-                        formatter: function (params) {
-                            return "  " + (100 - params.value)
-                        }
-                    },
-                },
-                itemStyle: {//图形边框设置，如边框大小，圆角，填充着色
-                    normal: {
-                        color: "#dedede"
-                    }
-                },
-                barWidth: '10px',//条形宽度
-                data: []
-            }
-
-        ]
-    };
-
-    protected createSeries(): any[][] {
-        return [
-            this.data[0].map(v => {
-                return {
-                    value: v,
-                    itemStyle: {
-                        normal: {
-                            color: v > 95 ? "#98e2a6" : v > 90 ? "#9ad0e2" : v > 80 ? "#f7e685" : v > 70 ? "#f6c88a" : "#ff8e74"
-                        }
-                    }
-                }
-            }),
-            this.data[0].map(v => 100 - v)
-        ]
-    }
-
-    protected createChartOptions(): EchartOptions {
-        if (!this.data || !this.data.length) return;
-        const opt = {...this.optionsTemplate};
-        this._extendOption(opt);
-        opt.yAxis[0].data = this.header;
-        [opt.series[0].data, opt.series[1].data] = this.createSeries();
-        return opt;
-    }
-}
-
-/**
- * 堆叠区域图
- */
-export class StackedAreaGraphData extends AbstractGraphData {
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-
-        return {
-            xAxis: [
-                {
-                    type: 'category',
-                    boundaryGap: false,
-                    alignWithLabel: true,
-                    axisLabel: { // 类轴刻度间隔
-                        interval: 4
-                    },
-                    axisTick: {  //坐标轴刻度相关设置
-                        show: true,
-                        inside: true,
-                        interval: 0,
-                        length: 5,//刻度长短设置
-                        lineStyle: {
-                            color: '#bbb',
-                        }
-                    },
-                    splitLine: {//网格线相关设置
-                        interval: 0,//类目轴为true且为这个为0时才会显示
-                        lineStyle: {
-                            color: "#eee"
-                        }
-                    },
-                    data: this.header
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    max: 3,
-                    axisTick: {
-                        show: false,
-                    },
-                    axisLine: {//轴线设置
-                        lineStyle: {
-                            color: '#ccc'
-                        }
-                    },
-                    min: 0,
-                    axisLabel: {
-                        formatter: function (params) {
-                            return params.toFixed(1) == "0.0" ? "" : params.toFixed(1) + "%"
-                        }
-                    }
-                }
-            ],
-            series: [
-                {
-                    type: 'line',
-                    connectNulls: true,
-                    smooth: true,
-                    symbolSize: [5, 5],
-                    showAllSymbol: true,
-                    areaStyle: {
-                        normal: {
-                            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                                {
-                                    offset: 0, color: '#ff7c24' // 0% 处的颜色
-                                },
-                                {
-                                    offset: 1, color: '#fff' // 100% 处的颜色
-                                }
-                            ], false)
-                        }
-                    },
-                    data: this.data[0],
-                }
-            ]
-        };
-
     }
 }
 
@@ -976,467 +438,5 @@ export class RadarGraphData extends AbstractNormalGraphData {
         opt.radar.indicator = this._calcRadar();
         opt.series[0].data = this.createSeries();
         return opt;
-    }
-}
-
-/**
- * K线图
- */
-export class KLineGraphData extends AbstractNormalGraphData {
-    protected createSeries(): any[] {
-        return [{
-            name: 'k data',
-            type: 'k',
-            showAllSymbol: true,
-            animation: true,
-            smooth: false,
-            symbolSize: [5, 5],
-            hoverAnimation: false,
-            data: this.data
-        }];
-    }
-
-    public sampleColors = ["#54acd5", "#f99660", "#a4bf6a", "#ec6d6d", "#f7b913", "#8ac9b6", "#bea5c8", "#01c5c2", "#a17660"];
-    public vmaxColors = ['#41addc', '#bea5c8', '#85c56c', '#f99660', '#ffc20e', '#ec6d6d', '#8ac9b6', '#585eaa', '#b22c46', '#96582a'];
-
-    protected optionsTemplate = {
-        color: this.vmaxColors,
-        tooltip: {
-            trigger: 'axis',
-            position: function (point) {// 固定在顶部
-                return [point[0] + 10, point[1]];
-            }
-        },
-        grid: {
-            left: 45,
-            right: 45,
-            top: 60
-        },
-        calculable: true,
-        /*当某天无数据不补零，同时不连线的效果实现*/
-        /*
-        *以x轴为类目轴为例:如下
-        *坐标轴 刻度标签 设显示间隔:xAxis.axisLabel.interval根据具体情况设置标签显示间隔;
-        *坐标轴 刻度 的显示间隔:xAxis.axisTick.interval设置全部显示为0;
-        *标志图形全部显示:series.showAllSymbol设置为true,
-        * */
-        xAxis: [
-            {
-                type: 'category',
-                boundaryGap: false,
-                axisLabel: {//标签设置
-                    interval: 4
-                },
-                splitLine: {//设置网格
-                    interval: 0
-                },
-                scale: true,
-                data: []
-            }
-        ],
-        yAxis: [
-            {
-                type: 'value',
-                splitNumber: 10,//不是类轴才会生效，设置网格多少
-                axisLabel: {//标签设置
-                    interval: 4
-                }
-            }
-        ],
-        series: []
-    };
-
-    protected createChartOptions(): EchartOptions {
-        if (!this.data || !this.data.length) return;
-        const opt = {...this.optionsTemplate};
-        this._extendOption(opt);
-        opt.xAxis[0].data = this.header;
-        opt.series = this.createSeries();
-        return opt;
-    }
-}
-
-/**
- * 箱线图
- */
-export class BoxPlotGraphData extends AbstractGraphData {
-    public title: string;
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-
-        return {
-            title: [
-                {
-                    text: this.title,
-                    left: 'center',
-                },
-                {
-                    text: 'upper: Q3 + 1.5 * IRQ \nlower: Q1 - 1.5 * IRQ',
-                    borderColor: '#999',
-                    borderWidth: 1,
-                    textStyle: {
-                        fontSize: 14
-                    },
-                    left: '10%',
-                    top: '90%'
-                }
-            ],
-            tooltip: {
-                trigger: 'item',
-                axisPointer: {
-                    type: 'shadow'
-                }
-            },
-            grid: {
-                left: '10%',
-                right: '10%',
-                bottom: '15%'
-            },
-            xAxis: {
-                type: 'category',
-                data: this.data.map((row, i) => i),
-                boundaryGap: true,
-                nameGap: 30,
-                splitArea: {
-                    show: false
-                },
-                axisLabel: {
-                    formatter: 'expr {value}'
-                },
-                splitLine: {
-                    show: false
-                }
-            },
-            yAxis: {
-                type: 'value',
-                name: 'km/s minus 299,000',
-                splitArea: {
-                    show: true
-                }
-            },
-            series: [
-                {
-                    name: 'boxplot',
-                    type: 'boxplot',
-                    data: this.data,
-                    tooltip: {
-                        formatter: function (param) {
-                            return [
-                                'Experiment ' + param.name + ': ',
-                                'upper: ' + param.data[5],
-                                'Q3: ' + param.data[4],
-                                'median: ' + param.data[3],
-                                'Q1: ' + param.data[2],
-                                'lower: ' + param.data[1]
-                            ].join('<br/>')
-                        }
-                    }
-                },
-                /*{
-                    name: 'outlier',
-                    type: 'scatter',
-                    data: data.outliers
-                }*/
-            ]
-        };
-    }
-}
-
-/**
- * 热力图
- */
-export class HeatGraphData extends AbstractNormalGraphData {
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        return {
-            tooltip: {
-                position: 'top'
-            },
-            animation: false,
-            grid: {
-                height: '50%',
-                y: '10%'
-            },
-            xAxis: {
-                type: 'category',
-                data: this.data[this.data.length - 2],
-                splitArea: {
-                    show: true
-                }
-            },
-            yAxis: {
-                type: 'category',
-                data: this.data[this.data.length - 1],
-                splitArea: {
-                    show: true
-                }
-            },
-            visualMap: {
-                min: 0,
-                max: 10,
-                calculable: true,
-                orient: 'horizontal',
-                left: 'center',
-                bottom: '15%'
-            },
-            series: [{
-                name: 'Punch Card',
-                type: 'heatmap',
-                data: this.data.slice(0, this.data.length - 2),
-                label: {
-                    normal: {
-                        show: true
-                    }
-                },
-                itemStyle: {
-                    emphasis: {
-                        shadowBlur: 10,
-                        shadowColor: 'rgba(0, 0, 0, 0.5)'
-                    }
-                }
-            }]
-        };
-    }
-}
-
-/**
- * 关系图
- */
-export class RelationalGraphData extends AbstractGraphData {
-    public data: any[];
-
-    public title: string;
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        return {
-            title: {
-                text: this.title
-            },
-            tooltip: {},
-            xAxis: {
-                type: 'category',
-                boundaryGap: false,
-                data: this.data[this.data.length - 2]
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [
-                {
-                    type: 'graph',
-                    layout: 'none',
-                    coordinateSystem: 'cartesian2d',
-                    symbolSize: 40,
-                    label: {
-                        normal: {
-                            show: true
-                        }
-                    },
-                    edgeSymbol: ['circle', 'arrow'],
-                    edgeSymbolSize: [4, 10],
-                    data: this.data[0],
-                    links: this.data[this.data.length - 1],
-                    lineStyle: {
-                        normal: {
-                            color: '#2f4554'
-                        }
-                    }
-                }
-            ]
-        };
-    }
-}
-
-/**
- * 漏斗图
- */
-export class FunnelPlotGraphData extends AbstractNormalGraphData {
-    protected optionsTemplate = {
-        title: {
-            text: '',
-            left: 'left'
-        },
-        tooltip: {
-            trigger: 'item',
-            formatter: "{a} <br/>{b} : {c}%"
-        },
-        toolbox: {
-            feature: {
-                dataView: {readOnly: false},
-                restore: {},
-                saveAsImage: {}
-            }
-        },
-        legend: {
-            left: 'center',
-            data: []
-        },
-        calculable: true,
-        series: [
-            {
-                name: '漏斗图',
-                type: 'funnel',
-                left: '10%',
-                top: 60,
-                //x2: 80,
-                bottom: 60,
-                width: '80%',
-                // height: {totalHeight} - y - y2,
-                min: 0,
-                max: 100,
-                minSize: '0%',
-                maxSize: '100%',
-                sort: 'descending',
-                gap: 2,
-                label: {
-                    normal: {
-                        show: true,
-                        position: 'inside'
-                    },
-                    emphasis: {
-                        textStyle: {
-                            fontSize: 20
-                        }
-                    }
-                },
-                labelLine: {
-                    normal: {
-                        length: 10,
-                        lineStyle: {
-                            width: 1,
-                            type: 'solid'
-                        }
-                    }
-                },
-                itemStyle: {
-                    normal: {
-                        borderColor: '#fff',
-                        borderWidth: 1
-                    }
-                },
-                data: []
-            }
-        ]
-    };
-
-    protected createChartOptions(): any {
-        if (!this.data || !this.data.length) return;
-        const opt = {...this.optionsTemplate};
-        this._extendOption(opt);
-        opt.legend.data = this.rowDescriptor.reverse();
-        opt.series[0].data = this.data.map((row, i) => ({value: row[0], name: this.rowDescriptor[i]}));
-        return opt;
-    }
-}
-
-/**
- * 气泡图
- * */
-export class BubbleChartGraphData extends AbstractNormalGraphData {
-    // 气泡图形大小最小值
-    public minSymbolSize: number = 130;
-
-    // 最大气泡大小
-    public symbolSize: number = 150;
-
-    public layout: string = 'force';
-
-    public emphasisConfig: EmphasisConfig;
-
-    protected createChartOptions(): EchartOptions {
-        if (!this.data || !this.data.length) return;
-        let maxValue = 1;
-        const valueList = this.data[0].map(item => item.value);
-        maxValue = Math.max(maxValue, ...valueList);
-        const minValue = Math.min(maxValue, ...valueList);
-
-        const sizeScale = (this.symbolSize - this.minSymbolSize) / (maxValue - minValue);
-        const sizeOffset = this.minSymbolSize - sizeScale * minValue;
-
-        // 斥力 为了防止重叠，斥力最好大于 symbolSize
-        const repulsion = this.symbolSize * 3;
-
-        // 获取要渲染的数据
-        const data = this.data[0].map((item) => {
-            // 根据与最大值的比例和最大气泡大小，算出每个元素的大小
-            let size: number;
-            if (maxValue == minValue) {
-                size = this.symbolSize;
-            } else {
-                size = Math.max(sizeScale*item.value + sizeOffset, this.minSymbolSize);
-            }
-            const itemData = {
-                name: item.label,
-                value: item.value,
-                label: item.labelConfig || {},
-                symbolSize: size,
-                itemStyle: item.itemStyle || {},
-                emphasis: item.emphasisConfig || this.emphasisConfig
-            };
-            if (!item.x && !item.y) {
-                return itemData;
-            }
-            this.layout = "none";
-            return {...itemData, x: item.x, y: item.y};
-        });
-
-        const emphasisConfig = this.emphasisConfig || {};
-
-        return {
-            xAxis: {
-                show: false,
-            },
-            yAxis: {
-                show: false,
-            },
-            series: [
-                {
-                    data,
-                    type: "graph", // 关系图
-                    layout: this.layout,
-                    draggable: true,     // 启用节点拖拽
-                    force: {
-                        // 值越大则斥力越大 每个元素间隔越大
-                        repulsion,
-                        // 是否开启布局动画
-                        layoutAnimation: true,
-                        // 元素之间的引力，越大引力越强默认是1
-                        gravity: 0.1,
-                        // 即布局动画执行的时间。数值越大，动画执行的时间越长
-                        coolDown: 10
-                    },
-                    // 高亮状态的图形样式
-                    emphasis: emphasisConfig,
-                    // 设置 label
-                    label: {
-                        show: true,
-                        position: "inside",
-                        formatter: [`{title|{b}}`, `{num|{c}}`].join("\n"),
-                        rich: {
-                            title: {
-                                align: "center",
-                                fontSize: 13,
-                                lineHeight: 18,
-                                color: "#FFF",
-                            },
-                            num: {
-                                align: "center",
-                                fontSize: "15",
-                                lineHeight: 21,
-                                fontWeight: 500,
-                                color: "#FFF",
-                            },
-                        }
-                    },
-                    itemStyle: {
-                        borderWidth: 1,
-                        color: "green",
-                    },
-                },
-            ],
-        };
     }
 }

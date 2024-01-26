@@ -2,9 +2,10 @@ import {
     AbstractModeledGraphData, CustomModeledGraphTemplate,
     Dimension,
     Indicator,
-    ModeledPieGraphData,
-} from "./modeled-graph-data";
-import {EchartOptions} from "./echart-types";
+
+} from "./modeled";
+import {EchartOptions} from "../echart-types";
+import {ModeledPieGraphData} from "./modeled-pie";
 
 
 class TestGraphData extends AbstractModeledGraphData {
