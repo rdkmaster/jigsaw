@@ -13,7 +13,7 @@ export * from "./common/core/data/component-data";
 export * from "./common/core/data/echart-types";
 export * from "./common/core/data/modeled-graph-data";
 export * from "./common/core/data/general-collection";
-export * from "./common/core/data/graph-data";
+export * from "./common/core/data/graph-data/graph-data";
 export * from "./common/core/data/table-data";
 export * from "./common/core/data/tree-data";
 export * from "./common/core/data/unified-paging/exports.min";
@@ -102,3 +102,8 @@ export * from "./pc-components/form-display/form-display"
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";
+export {DoughnutScoreGraphData} from "./common/core/data/graph-data/pie-doughnut";
+export {DoughnutRateGraphData} from "./common/core/data/graph-data/pie-doughnut";
+export {DoughnutGraphData} from "./common/core/data/graph-data/pie-doughnut";
+export {PieGraphDataByRow} from "./common/core/data/graph-data/pie-doughnut";
+export {PieGraphData} from "./common/core/data/graph-data/pie-doughnut";

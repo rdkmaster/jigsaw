@@ -8,7 +8,7 @@ import {
     EchartXAxis,
     EchartYAxis
 } from "./echart-types";
-import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data";
+import {GraphDataField, GraphDataHeader, GraphDataMatrix} from "./graph-data/graph-data";
 import {aggregate, AggregateAlgorithm, distinct, flat, group, Grouped} from "../utils/data-collection-utils";
 import {CommonUtils} from "../utils/common-utils";
 import {getColumn} from "./unified-paging/paging";
