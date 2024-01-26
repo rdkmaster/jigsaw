@@ -78,7 +78,13 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         }
         this._propagateChange(newValue);
     }
-
+    
+    constructor(protected _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+            super();
+        }
+        
     /**
      * 多选最大个数限制
      *
@@ -87,10 +93,10 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     @Input()
     public maxSelectedItemsLimit: number = 0;
 
-    constructor(protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super();
+    private checkMaxOptionsReached() {
+        if (!this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0 || !this.selectedItems) {
+            return;
+        }
     }
 
     /**
@@ -117,6 +123,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     @Output()
     public selectedItemsChange = new EventEmitter<any[]>();
+
+
 
     //获取映射的items
     protected _items: QueryList<AbstractJigsawOptionComponent>;
