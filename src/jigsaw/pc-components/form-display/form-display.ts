@@ -18,6 +18,7 @@ import {JigsawTooltipModule, TooltipWordBreak} from "../../common/directive/tool
 import {FloatPosition} from "../../common/directive/float/float";
 import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
 import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
+import {options} from "../../common/novice-guide/utils";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -152,6 +153,12 @@ export type FormDisplayStyleOptions = {
     columnWidths?: number[],
 
     /**
+     *  列宽种类配置项，默认是百分比
+     *  fixed为固定尺寸，percentage为百分比尺寸
+     */
+    columnWidthType?: "fixed" | "percentage",
+
+    /**
      *  悬浮提示配置项
      */
     tooltipConfig?: TooltipConfig
@@ -245,12 +252,13 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
         }
         this._styleOptions = value;
         this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
+        this._$tablesColumnsType = this._styleOptions.map(options => options.columnWidthType == 'fixed' ? "px" : "%");
         this._$toolTipConfig = this._styleOptions.map(option => {
             return {
                 enableTooltip: !!option.tooltipConfig?.enableTooltip,
                 position: option.tooltipConfig?.position || 'top',
                 overflowOnly: !!option.tooltipConfig?.overflowOnly,
-                wordBreak: option.tooltipConfig?.wordBreak || 'break-all',
+                wordBreak: option.tooltipConfig?.wordBreak || 'break-all'
             }
         });
     }
@@ -260,6 +268,12 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
      * @internal
      */
     public _$tablesColumns: number[][] = [[0, 0]];
+
+    /**
+     * 用于储存数据每个表列宽的单位
+     * @internal
+     */
+    public _$tablesColumnsType: ("px" | "%")[];
 
     /**
      * 用于储存数据中每一个表的列数

@@ -75,7 +75,8 @@ export class FormDisplayCellRendererDemoComponent {
             enableTooltip: true,
             overflowOnly: true,
             position: <FloatPosition>'top'
-        }
+        },
+        columnWidthType: "fixed"
     }
 
 
