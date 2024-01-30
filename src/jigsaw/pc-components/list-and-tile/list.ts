@@ -17,6 +17,9 @@ import {AbstractJigsawOptionComponent} from "./group-common";
 import {AbstractJigsawGroupComponent} from "./group-common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {WingsTheme} from "../../common/common";
+import { TranslateModule, TranslateService } from "@ngx-translate/core";
+import { JigsawToast } from "../toast/toast";
+import {TranslateHelper} from "../../common/core/utils/translate-helper";
 
 @WingsTheme('list.scss')
 @Component({
@@ -79,6 +82,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
 })
 export class JigsawListOption extends AbstractJigsawOptionComponent {
     constructor(public elementRef: ElementRef,
+                protected _translateService: TranslateService,
                 // @RequireMarkForCheck 需要用到，勿删
                 protected _injector: Injector) {
         super(_injector);
@@ -109,7 +113,11 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
      * @internal
      */
     public _$handleClick(): void {
-        if (this.disabled || this.value == null || (!this.selected && this.maxOptionsReached)) {
+        if (this.disabled || this.value == null) {
+            return;
+        }
+        if (!this.selected && this.maxOptionsReached) {
+            JigsawToast.showError(this._translateService.instant("list.maxOptionsReached"))
             return;
         }
         this.change.emit(this);
@@ -117,9 +125,19 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
 }
 
 @NgModule({
-    imports: [CommonModule, FormsModule],
+    imports: [CommonModule, FormsModule, TranslateModule.forChild()],
     declarations: [JigsawList, JigsawListOption],
     exports: [JigsawList, JigsawListOption]
 })
 export class JigsawListModule {
+    constructor() {
+        TranslateHelper.initI18n("list", {
+            zh: {
+                maxOptionsReached: "已达到选择上限"
+            },
+            en: {
+                maxOptionsReached: "Maximum options reached"
+            }
+        });
+    }
 }

@@ -39,8 +39,7 @@ export class JigsawSelectModule {
                 noData: "暂无数据",
                 loading: "数据加载中...",
                 groupNoData: "无数据",
-                preventCollapse: "在此分组数据未完整加载时，折叠被临时禁用",
-                maxLimitWarning: "已达到选择上限"
+                preventCollapse: "在此分组数据未完整加载时，折叠被临时禁用"
             },
             en: {
                 selectAll: "All",
@@ -51,8 +50,7 @@ export class JigsawSelectModule {
                 noData: "No Data",
                 loading: "Loading...",
                 groupNoData: "No Data",
-                preventCollapse: "Folding is temporarily disabled while this grouped data is not fully loaded.",
-                maxLimitWarning: "Maximum selections reached"
+                preventCollapse: "Folding is temporarily disabled while this grouped data is not fully loaded."
             }
         });
     }

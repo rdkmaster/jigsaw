@@ -216,7 +216,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$maxOptionsReached: boolean = false;
 
     /**
-    availableOptions * 选择结果框的清除按钮的显示与隐藏
+     * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      *
      * @NoMarkForCheckRequired
