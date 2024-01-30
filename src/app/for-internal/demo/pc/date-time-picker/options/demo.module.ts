@@ -8,7 +8,7 @@ import { CommonModule } from "@angular/common";
     declarations: [DatePickerTimeOptionsDemoComponent],
     exports: [ DatePickerTimeOptionsDemoComponent ],
     imports: [JigsawDateTimePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule, JigsawHeaderModule,
-        JigsawButtonBarModule, JigsawRadioModule, CommonModule]
+        JigsawButtonBarModule, JigsawRadioModule, CommonModule, JigsawSwitchModule]
 })
 export class DateTimePickerOptionsDemoModule{
 

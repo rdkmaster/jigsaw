@@ -6,7 +6,8 @@ import {DatePickerOptionsDemoComponent} from "./demo.component";
 @NgModule({
     declarations: [DatePickerOptionsDemoComponent],
     exports: [ DatePickerOptionsDemoComponent ],
-    imports: [JigsawDatePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule, JigsawHeaderModule                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              ]
+    imports: [JigsawDatePickerModule, JigsawDemoDescriptionModule, JigsawSwitchModule, JigsawButtonModule, JigsawHeaderModule,
+        JigsawSwitchModule]
 })
 export class DatePickerOptionsDemoModule{
 

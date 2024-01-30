@@ -21,6 +21,7 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
             align-items: center;
             width: auto;
             min-width: 60px;
+            max-width: 120px;
             margin: 0;
             padding: 0 8px;
             border-radius: 0;
@@ -43,7 +44,6 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
             }
 
             & > p {
-                max-width: calc(100% - 8px);
                 height: $height-sm;
                 line-height: $height-sm;
                 text-align: center;
@@ -54,6 +54,7 @@ $jigsaw-button-bar: #{$jigsaw-prefix}-button-bar;
 
             &.#{jigsaw-button-bar}-no-min-width {
                 min-width: unset;
+                max-width: unset;
             }
 
             .iconfont {
