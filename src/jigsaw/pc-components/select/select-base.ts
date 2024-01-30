@@ -11,7 +11,6 @@ import { JigsawComboSelect } from '../combo-select/index';
 import { JigsawList } from "../list-and-tile/list";
 import { JigsawCollapse } from "../collapse/collapse";
 import { TranslateService } from "@ngx-translate/core";
-import { JigsawToast } from "../toast/toast";
 
 export type SelectOption = {
     disabled?: boolean;
@@ -214,30 +213,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * @internal
      */
-    public _$allowSelect = true;
-
-    private _checkAllowSelect() {
-        if (!this._value || this._checkmaxSelectedItemsLimit()) {
-            this._$allowSelect = true
-            return;
-        }
-        this._$allowSelect = this._value.length < this.maxSelectedItemsLimit
-        if (!this._$allowSelect) {
-            JigsawToast.showWarn(this._translateService.instant("select.maxLimitWarning"));
-        }
-    }
-
-    private _checkmaxSelectedItemsLimit(): boolean {
-        return !this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0
-    }
-
-    private _getAvailableValue(value) {
-        if (!this._checkmaxSelectedItemsLimit() && value.length >= this.maxSelectedItemsLimit) {
-            value.splice(this.maxSelectedItemsLimit)
-            return value;
-        }
-        return value;
-    }
+    public _$maxOptionsReached: boolean = false;
 
     /**
     availableOptions * 选择结果框的清除按钮的显示与隐藏
@@ -360,7 +336,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._propagateChange(newValue);
         this.runMicrotask(() => {
             if (CommonUtils.isDefined(newValue)) {
-                this._$selectedItems = this.multipleSelect ? this._getAvailableValue(newValue) : this._getSelectedItems(newValue);
+                this._$selectedItems = this.multipleSelect ? newValue : this._getSelectedItems(newValue);
             } else {
                 this._$selectedItems = new ArrayCollection([]);
             }
@@ -464,33 +440,27 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (this._$selectedItems?.length > 0) {
             disabledSelectedItems.push(...this._$selectedItems.filter(item => item.disabled));
         }
-        if (this._allSelectCheck() || !this._$allowSelect) {
+        if (this._allSelectCheck() || this._$maxOptionsReached) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            let availableOptions = this._getValidData().concat(disabledSelectedItems);
-            if (!this._checkmaxSelectedItemsLimit() && availableOptions.length >= this.maxSelectedItemsLimit) {
-                // 如果已有已选项，则依照已选项排序，将选项依次放在availableOptions的前面
-                if (this._$selectedItems?.length > 0) {
-                    availableOptions = availableOptions.sort((a, b) => {
-                        const aInSelected = this._$selectedItems.includes(a);
-                        const bInSelected = this._$selectedItems.includes(b);
-                        if (aInSelected && !bInSelected) {
-                            return -1;
-                        } else if (!aInSelected && bInSelected) {
-                            return 1;
-                        } else {
-                            return 0;
+            const availableOptions = this._getValidData().concat(disabledSelectedItems);
+            if (!isNaN(this.maxSelectedItemsLimit) && this.maxSelectedItemsLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectedItemsLimit) {
+                for (const element of availableOptions) {
+                    if (!this._$selectedItems.includes(element)) {
+                        this._$selectedItems.push(element);
+                        if (this._$selectedItems.length >= this.maxSelectedItemsLimit) {
+                            break;
                         }
-                    })
+                    }
                 }
-                availableOptions.splice(this.maxSelectedItemsLimit);
+                (this._$selectedItems as ArrayCollection<SelectOption>).refresh();
+            } else {
+                this._$selectedItems = new ArrayCollection(availableOptions);
             }
-            this._$selectedItems = new ArrayCollection(availableOptions);
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
-        this._checkAllowSelect();
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
@@ -504,7 +474,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._allSelectCheck() || !this._$allowSelect) {
+        if (this._allSelectCheck()) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else if (this._allDisabledCheck()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
@@ -679,7 +649,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             return;
         }
         this._value = this.multipleSelect ? selectedItems : selectedItems[0];
-        this._checkAllowSelect();
         this._valueChange(this.value);
         if (this._$showSelected && this.value.length == 0) {
             this._$showSelected = false;
@@ -694,7 +663,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public _$handleClearable() {
         this._handleClearableValue();
         this._$selectAllChecked = CheckBoxStatus.unchecked;
-        this._$allowSelect = true;
         this._valueChange(this.value);
         this._changeDetector.markForCheck();
     }
@@ -711,7 +679,6 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         this._onTouched();
         if (openState) {
             this._$showSelected = false;
-            this._checkAllowSelect();
             const removeListener = this._renderer.listen(this._comboSelect._jigsawFloat.popupElement, 'animationend', () => {
                 removeListener();
                 this._setInfiniteScroll()

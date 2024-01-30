@@ -21,8 +21,7 @@
 >
     <ng-template>
         <!-- 这里用一个div来控制弹出列表的宽度，否则Jigsaw-List自带300px的宽度，只要不设置optionWidth，每次在初始计算position时，获取的宽度都是300px -->
-        <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}"
-            [ngClass]="{ 'jigsaw-select-not-allow-select':!_$allowSelect }">
+        <div class="jigsaw-select-list-cntr-host" [attr.data-theme]="theme" [ngStyle]="{'width': optionWidth ? optionWidth : '100%'}">
             <jigsaw-search-input *ngIf="searchable" [theme]="theme" width="100%" (search)="_$handleSearching($event)" historyStorageSize="0"
                 [searchDebounce]="manualSearch ? searchDebounce : 'none'" [placeholder]="searchPlaceholder">
             </jigsaw-search-input>
@@ -40,6 +39,8 @@
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect"
                          [theme]="theme"
+                         [(maxOptionsReached)]="_$maxOptionsReached"
+                         [maxSelectedItemsLimit]="maxSelectedItemsLimit"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">
                 <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
@@ -60,7 +61,7 @@
                 </div>
                 <div>
                     <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item"
-                                        [disabled]="item.disabled" [height]="optionHeight">
+                                        [disabled]="item.disabled" [height]="optionHeight" [maxOptionsReached]="_$maxOptionsReached">
                         <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
                                          [(checked)]="listItem.selected" mode="minimalist" [theme]="theme">
                         </jigsaw-checkbox>
