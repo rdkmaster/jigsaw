@@ -7,12 +7,12 @@ import { ArrayCollection } from "jigsaw/public_api";
 })
 export class ListOptionsDemoComponent {
     public data;
-    public selectedItems;
+    public selectedItems = new ArrayCollection([]);
     public disabled = false;
     public multipleSelect = true;
     public valid = true;
-    public maxSelectedItemsLimit = 2;
-    public maxOptionsReached;
+    public maxSelectedItemsLimit: number = 2;
+    public maxOptionsReached: boolean = false;
 
     constructor() {
         this.resetData();
@@ -23,7 +23,7 @@ export class ListOptionsDemoComponent {
     }
 
     public resetData() {
-        this.selectedItems = new ArrayCollection([]);
+        this.selectedItems.splice(0, this.selectedItems.length);
         this.data = new ArrayCollection([
             { "label": "北京" },
             { "label": "上海" },
@@ -84,7 +84,8 @@ export class ListOptionsDemoComponent {
     }
 
     public clearValue() {
-        this.selectedItems = new ArrayCollection([]);
+        this.selectedItems.splice(0, this.selectedItems.length);
+        this.selectedItems.refresh();
     }
 
     public setValue() {
@@ -93,8 +94,7 @@ export class ListOptionsDemoComponent {
             { "label": "上海" },
             { "label": "南京" },
             { "label": "深圳" },
-            { "label": "长沙" }
-        ])
+        ]);
     }
 
     // ====================================================================

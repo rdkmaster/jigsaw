@@ -11,7 +11,7 @@
     </li>
     <li class="demo-options-item">
         <span>已选项：</span>
-        <jigsaw-button (click)="setValue()">设置已选项（5个）</jigsaw-button>
+        <jigsaw-button (click)="setValue()">设置已选项（4个）</jigsaw-button>
         <jigsaw-button (click)="clearValue()">清空已选</jigsaw-button>
     </li>
     <li class="demo-options-item">
@@ -26,14 +26,14 @@
         <span>最大可选条数(0为非法值)：</span>
         <j-numeric-input [(value)]="maxSelectedItemsLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
-        {{maxOptionsReached}}
+        <span>当前状态：{{maxOptionsReached}}</span>
     </li>
 </ul>
 <jigsaw-header>基本用法</jigsaw-header>
 <j-list width="200" height="400" [multipleSelect]="multipleSelect" [disabled]="disabled" [valid]="valid"
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}"
     [maxSelectedItemsLimit]="maxSelectedItemsLimit" [selectedItems]="selectedItems" (selectedItemsChange)="selectedItemsChange($event)"
-    [(maxOptionsReached)]="maxOptionsReached">
+    [(maxOptionsReached)]="maxOptionsReached" trackItemBy="label">
     <j-list-option *ngFor="let item of data" [value]="item" [maxOptionsReached]="maxOptionsReached">
         {{item.label}}
     </j-list-option>

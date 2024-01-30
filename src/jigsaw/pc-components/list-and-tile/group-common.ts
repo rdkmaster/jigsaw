@@ -77,6 +77,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             return;
         }
         this._propagateChange(newValue);
+        this._checkMaxOptionsReached();
     }
     
     constructor(protected _cdr: ChangeDetectorRef,
@@ -90,6 +91,9 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
      */
     public _$maxOptionsReached: boolean = false;
 
+    /**
+     * 判断是否达到最大已选项
+     */
     @Input()
     @RequireMarkForCheck()
     public get maxOptionsReached(): boolean {
@@ -162,7 +166,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
             }
-            this._checkMaxOptionsReached();
         } else {
             //单选选中
             this._selectedItems.splice(0, this._selectedItems.length);
@@ -184,6 +187,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     //根据selectedItems设置选中的option
     protected _setItemState(items: QueryList<AbstractJigsawOptionComponent>): void {
+        this._checkMaxOptionsReached();
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }
@@ -237,7 +241,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._setItemTheme(this._items);
         this._subscribeItemSelectedChange(this._items);
         this._removeItemsChanges = this._items.changes.subscribe(items => {
-            this.maxOptionsReached = false;
             // 异步变更data数据
             this._setItemState(items);
             this._setItemTheme(this._items);
