@@ -31,12 +31,12 @@
     </li>
     <li class="demo-options-item">
         <span>最大可选条数(0为非法值)：</span>
-        <j-numeric-input [(value)]="maxSelectedItemsLimit" min="0" max="200" placeholder="请输入最大可选条数">
+        <j-numeric-input [(value)]="maxSelectionLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
     </li>
 </ul>
 <jigsaw-header>基本用法</jigsaw-header>
-<jigsaw-select [data]="data" [maxSelectedItemsLimit]="maxSelectedItemsLimit" [optionCount]="optionCount" [searchable]="searchable" [clearable]="clearable"
+<jigsaw-select [data]="data" [maxSelectionLimit]="maxSelectionLimit" [optionCount]="optionCount" [searchable]="searchable" [clearable]="clearable"
     [(value)]="value" [disabled]="disabled" [multipleSelect]="multipleSelect" closeTrigger="click" width="300" labelField="label"
     placeholder="请选择" (valueChange)="valueChange($event)">
 </jigsaw-select>

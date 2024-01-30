@@ -6,7 +6,7 @@ import { ArrayCollection, GroupOptionValue, JigsawListLite } from "jigsaw/public
     styleUrls: ['./../../assets/demo.common.css']
 })
 export class ListLiteOptionsDemoComponent {
-    public maxSelectedItemsLimit = 2;
+    public maxSelectionLimit = 2;
     public multipleSelect = true;
 
     public data: GroupOptionValue[] = [

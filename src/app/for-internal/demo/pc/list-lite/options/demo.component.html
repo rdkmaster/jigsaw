@@ -11,11 +11,11 @@
     </li>
     <li class="demo-options-item">
         <span>最大可选条数(0为非法值)：</span>
-        <j-numeric-input [(value)]="maxSelectedItemsLimit" min="0" max="200" placeholder="请输入最大可选条数">
+        <j-numeric-input [(value)]="maxSelectionLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
     </li>
 </ul>
 
 <jigsaw-header [level]="2">基本用法</jigsaw-header>
 <j-list-lite width="200" [data]="data" labelField="name" [multipleSelect]="multipleSelect"
-    [maxSelectedItemsLimit]="maxSelectedItemsLimit" (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>
+    [maxSelectionLimit]="maxSelectionLimit" (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>

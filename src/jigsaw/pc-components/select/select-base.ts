@@ -208,12 +208,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * @NoMarkForCheckRequired
      */
     @Input()
-    public maxSelectedItemsLimit: number = 0;
+    public maxSelectionLimit: number = 0;
 
     /**
      * @internal
      */
-    public _$maxOptionsReached: boolean = false;
+    public _$maxSelectionReached: boolean = false;
 
     /**
      * 选择结果框的清除按钮的显示与隐藏
@@ -440,16 +440,16 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (this._$selectedItems?.length > 0) {
             disabledSelectedItems.push(...this._$selectedItems.filter(item => item.disabled));
         }
-        if (this._allSelectCheck() || this._$maxOptionsReached) {
+        if (this._allSelectCheck() || this._$maxSelectionReached) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
             const availableOptions = this._getValidData().concat(disabledSelectedItems);
-            if (!isNaN(this.maxSelectedItemsLimit) && this.maxSelectedItemsLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectedItemsLimit) {
+            if (!isNaN(this.maxSelectionLimit) && this.maxSelectionLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectionLimit) {
                 for (const element of availableOptions) {
                     if (!this._$selectedItems.includes(element)) {
                         this._$selectedItems.push(element);
-                        if (this._$selectedItems.length >= this.maxSelectedItemsLimit) {
+                        if (this._$selectedItems.length >= this.maxSelectionLimit) {
                             break;
                         }
                     }

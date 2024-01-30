@@ -11,8 +11,8 @@ export class ListOptionsDemoComponent {
     public disabled = false;
     public multipleSelect = true;
     public valid = true;
-    public maxSelectedItemsLimit: number = 2;
-    public maxOptionsReached: boolean = false;
+    public maxSelectionLimit: number = 2;
+    public maxSelectionReached: boolean = false;
 
     constructor() {
         this.resetData();

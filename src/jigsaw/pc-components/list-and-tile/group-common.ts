@@ -77,7 +77,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             return;
         }
         this._propagateChange(newValue);
-        this._checkMaxOptionsReached();
+        this._checkMaxSelectionLimit();
     }
     
     constructor(protected _cdr: ChangeDetectorRef,
@@ -89,27 +89,27 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     /**
      * @internal
      */
-    public _$maxOptionsReached: boolean = false;
+    public _$maxSelectionReached: boolean = false;
 
     /**
      * 判断是否达到最大已选项
      */
     @Input()
     @RequireMarkForCheck()
-    public get maxOptionsReached(): boolean {
-        return this._$maxOptionsReached;
+    public get maxSelectionReached(): boolean {
+        return this._$maxSelectionReached;
     }
 
-    public set maxOptionsReached(value: boolean) {
-        if (CommonUtils.isUndefined(value) || value == this._$maxOptionsReached) {
+    public set maxSelectionReached(value: boolean) {
+        if (CommonUtils.isUndefined(value) || value == this._$maxSelectionReached) {
             return;
         }
-        this._$maxOptionsReached = value;
-        this.maxOptionsReachedChange.emit(this.maxOptionsReached);
+        this._$maxSelectionReached = value;
+        this.maxSelectionReachedChange.emit(this.maxSelectionReached);
     }
 
     @Output()
-    public maxOptionsReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
         
     /**
      * 多选最大个数限制
@@ -117,14 +117,14 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
      * @NoMarkForCheckRequired
      */
     @Input()
-    public maxSelectedItemsLimit: number = 0;
+    public maxSelectionLimit: number = 0;
 
-    private _checkMaxOptionsReached() {
-        if (!this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0 || !this.selectedItems) {
-            this.maxOptionsReached = false;
+    private _checkMaxSelectionLimit(): void {
+        if (!this.multipleSelect || isNaN(this.maxSelectionLimit) || this.maxSelectionLimit <= 0 || !this.selectedItems) {
+            this.maxSelectionReached = false;
             return;
         }
-        this.maxOptionsReached = this.selectedItems.length >= this.maxSelectedItemsLimit;
+        this.maxSelectionReached = this.selectedItems.length >= this.maxSelectionLimit;
     }
 
     /**
@@ -187,7 +187,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     //根据selectedItems设置选中的option
     protected _setItemState(items: QueryList<AbstractJigsawOptionComponent>): void {
-        this._checkMaxOptionsReached();
+        this._checkMaxSelectionLimit();
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }

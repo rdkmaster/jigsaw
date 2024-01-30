@@ -163,12 +163,12 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      * @NoMarkForCheckRequired
      */
     @Input()
-    public maxSelectedItemsLimit: number = 0;
+    public maxSelectionLimit: number = 0;
 
     /**
      * @internal
      */
-    public _$maxOptionsReached: boolean = false;
+    public _$maxSelectionReached: boolean = false;
 
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;

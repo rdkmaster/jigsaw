@@ -5,10 +5,10 @@
 <div [class]="showBorder ? 'jigsaw-list-lite-wrapper' : 'jigsaw-list-lite-wrapper jigsaw-list-lite-wrapper-no-border'"
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}" [style.max-height]="height">
     <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
-        [(selectedItems)]="selectedItems" [(maxOptionsReached)]="_$maxOptionsReached" [maxSelectedItemsLimit]="maxSelectedItemsLimit"
+        [(selectedItems)]="selectedItems" [(maxSelectionReached)]="_$maxSelectionReached" [maxSelectionLimit]="maxSelectionLimit"
         (selectedItemsChange)="_$handleSelectChange($event)">
         <j-list-option [theme]="theme" *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
-            [disabled]="item?.disabled" [maxOptionsReached]="_$maxOptionsReached">
+            [disabled]="item?.disabled" [maxSelectionReached]="_$maxSelectionReached">
             <p j-title class="jigsaw-list-lite-text" [title]="_$getItemLabel(item, labelField)">
                 <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
                 <span class="jigsaw-list-lite-text-content">{{_$getItemLabel(item, labelField)}}</span>

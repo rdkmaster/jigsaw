@@ -14,7 +14,7 @@ export class SelectOptionsDemoComponent {
     public disabled = false;
     public multipleSelect = true;
     public optionCount = 10;
-    public maxSelectedItemsLimit = 3;
+    public maxSelectionLimit = 3;
     public isLocal = true;
 
     constructor(public http: HttpClient) {

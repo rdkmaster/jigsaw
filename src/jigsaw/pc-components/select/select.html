@@ -39,8 +39,8 @@
                          [ngStyle]="{'max-height': _$listHeight}"
                          [multipleSelect]="multipleSelect"
                          [theme]="theme"
-                         [(maxOptionsReached)]="_$maxOptionsReached"
-                         [maxSelectedItemsLimit]="maxSelectedItemsLimit"
+                         [(maxSelectionReached)]="_$maxSelectionReached"
+                         [maxSelectionLimit]="maxSelectionLimit"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">
                 <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
@@ -61,7 +61,7 @@
                 </div>
                 <div>
                     <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item"
-                                        [disabled]="item.disabled" [height]="optionHeight" [maxOptionsReached]="_$maxOptionsReached">
+                                        [disabled]="item.disabled" [height]="optionHeight" [maxSelectionReached]="_$maxSelectionReached">
                         <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
                                          [(checked)]="listItem.selected" mode="minimalist" [theme]="theme">
                         </jigsaw-checkbox>

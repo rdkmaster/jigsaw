@@ -31,7 +31,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
         '[attr.data-theme]':'theme',
         '[class.jigsaw-list-host]': 'true',
         '[class.jigsaw-list-error]': '!valid',
-        '[class.jigsaw-list-max-option-reached]': '_$maxOptionsReached',
+        '[class.jigsaw-list-max-option-reached]': '_$maxSelectionReached',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
@@ -74,7 +74,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-list-option-host]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
-        '[class.jigsaw-list-option-disabled]': 'disabled || (!selected && maxOptionsReached)',
+        '[class.jigsaw-list-option-disabled]': 'disabled || (!selected && maxSelectionReached)',
         '[class.jigsaw-list-option-separator]': 'value ? false : (value == null)',
         '(click)': '_$handleClick()'
     },
@@ -106,7 +106,7 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
 
     @RequireMarkForCheck()
     @Input()
-    public maxOptionsReached: boolean = false;
+    public maxSelectionReached: boolean = false;
 
     /**
      * 点击组件触发
@@ -116,8 +116,8 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
         if (this.disabled || this.value == null) {
             return;
         }
-        if (!this.selected && this.maxOptionsReached) {
-            JigsawToast.showError(this._translateService.instant("list.maxOptionsReached"))
+        if (!this.selected && this.maxSelectionReached) {
+            JigsawToast.showError(this._translateService.instant("list.maxSelectionReached"))
             return;
         }
         this.change.emit(this);
@@ -133,10 +133,10 @@ export class JigsawListModule {
     constructor() {
         TranslateHelper.initI18n("list", {
             zh: {
-                maxOptionsReached: "已达到选择上限"
+                maxSelectionReached: "已达到选择上限"
             },
             en: {
-                maxOptionsReached: "Maximum options reached"
+                maxSelectionReached: "Maximum selection reached"
             }
         });
     }
