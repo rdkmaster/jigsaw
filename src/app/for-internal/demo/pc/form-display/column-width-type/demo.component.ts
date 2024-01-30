@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {FloatPosition} from "../../../../../../jigsaw/common/directive/float/float";
+import {FloatPosition} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html'
 })
