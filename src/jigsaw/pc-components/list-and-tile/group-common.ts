@@ -84,6 +84,28 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         protected _injector: Injector) {
             super();
         }
+
+    /**
+     * @internal
+     */
+    public _$maxOptionsReached: boolean = false;
+
+    @Input()
+    @RequireMarkForCheck()
+    public get maxOptionsReached(): boolean {
+        return this._$maxOptionsReached;
+    }
+
+    public set maxOptionsReached(value: boolean) {
+        if (CommonUtils.isUndefined(value) || value == this._$maxOptionsReached) {
+            return;
+        }
+        this._$maxOptionsReached = value;
+        this.maxOptionsReachedChange.emit(this.maxOptionsReached);
+    }
+
+    @Output()
+    public maxOptionsReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
         
     /**
      * 多选最大个数限制
@@ -93,10 +115,12 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     @Input()
     public maxSelectedItemsLimit: number = 0;
 
-    private checkMaxOptionsReached() {
+    private _checkMaxOptionsReached() {
         if (!this.multipleSelect || isNaN(this.maxSelectedItemsLimit) || this.maxSelectedItemsLimit <= 0 || !this.selectedItems) {
+            this.maxOptionsReached = false;
             return;
         }
+        this.maxOptionsReached = this.selectedItems.length >= this.maxSelectedItemsLimit;
     }
 
     /**
@@ -124,8 +148,6 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     @Output()
     public selectedItemsChange = new EventEmitter<any[]>();
 
-
-
     //获取映射的items
     protected _items: QueryList<AbstractJigsawOptionComponent>;
 
@@ -140,6 +162,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
                     }
                 });
             }
+            this._checkMaxOptionsReached();
         } else {
             //单选选中
             this._selectedItems.splice(0, this._selectedItems.length);
@@ -214,6 +237,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
         this._setItemTheme(this._items);
         this._subscribeItemSelectedChange(this._items);
         this._removeItemsChanges = this._items.changes.subscribe(items => {
+            this.maxOptionsReached = false;
             // 异步变更data数据
             this._setItemState(items);
             this._setItemTheme(this._items);

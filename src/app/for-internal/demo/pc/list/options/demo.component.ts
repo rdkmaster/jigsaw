@@ -11,7 +11,8 @@ export class ListOptionsDemoComponent {
     public disabled = false;
     public multipleSelect = true;
     public valid = true;
-    public maxSelectedItemsLimit = 0;
+    public maxSelectedItemsLimit = 2;
+    public maxOptionsReached;
 
     constructor() {
         this.resetData();
@@ -22,7 +23,7 @@ export class ListOptionsDemoComponent {
     }
 
     public resetData() {
-        this.selectedItems = undefined;
+        this.selectedItems = new ArrayCollection([]);
         this.data = new ArrayCollection([
             { "label": "北京" },
             { "label": "上海" },
@@ -68,16 +69,22 @@ export class ListOptionsDemoComponent {
             { "label": "华盛顿" },
             { "label": "迈阿密" }
         ]);
-
     }
 
     public changeData() {
-        this.selectedItems = undefined;
-        this.data = new ArrayCollection(["北京", "上海", "南京", "深圳", "长沙", "西安", "纽约", "伦敦", "东京", "巴黎", "柏林", "悉尼", "莫斯科", "迪拜", "新德里", "多伦多", "京都", "马德里", "温哥华", "里约热内卢", "开罗", "圣保罗", "曼谷", "雅加达", "孟买", "墨西哥城", "雪梨", "香港", "洛杉矶", "罗马", "阿姆斯特丹", "首尔", "伊斯兰堡", "新加坡", "伊斯坦布尔", "布宜诺斯艾利斯", "卡拉奇", "吉隆坡", "雅典", "奥斯陆", "渥太华", "华盛顿", "迈阿密"]);
+        this.selectedItems = new ArrayCollection([]);
+        this.data = new ArrayCollection([
+            { "label": "北京" },
+            { "label": "上海" },
+            { "label": "南京" },
+            { "label": "深圳" },
+            { "label": "长沙" },
+            { "label": "西安" },
+        ]);
     }
 
     public clearValue() {
-        this.selectedItems = undefined;
+        this.selectedItems = new ArrayCollection([]);
     }
 
     public setValue() {

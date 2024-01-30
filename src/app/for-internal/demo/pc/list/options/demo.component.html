@@ -26,13 +26,15 @@
         <span>最大可选条数(0为非法值)：</span>
         <j-numeric-input [(value)]="maxSelectedItemsLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
+        {{maxOptionsReached}}
     </li>
 </ul>
 <jigsaw-header>基本用法</jigsaw-header>
 <j-list width="200" height="400" [multipleSelect]="multipleSelect" [disabled]="disabled" [valid]="valid"
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}"
-    (selectedItemsChange)="selectedItemsChange($event)">
-    <j-list-option *ngFor="let item of data" [value]="item">
+    [maxSelectedItemsLimit]="maxSelectedItemsLimit" [selectedItems]="selectedItems" (selectedItemsChange)="selectedItemsChange($event)"
+    [(maxOptionsReached)]="maxOptionsReached">
+    <j-list-option *ngFor="let item of data" [value]="item" [maxOptionsReached]="maxOptionsReached">
         {{item.label}}
     </j-list-option>
 </j-list>

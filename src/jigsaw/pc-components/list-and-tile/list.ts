@@ -28,6 +28,7 @@ import {WingsTheme} from "../../common/common";
         '[attr.data-theme]':'theme',
         '[class.jigsaw-list-host]': 'true',
         '[class.jigsaw-list-error]': '!valid',
+        '[class.jigsaw-list-max-option-reached]': '_$maxOptionsReached',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
@@ -70,7 +71,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-list-option-host]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
-        '[class.jigsaw-list-option-disabled]': 'disabled',
+        '[class.jigsaw-list-option-disabled]': 'disabled || (!selected && maxOptionsReached)',
         '[class.jigsaw-list-option-separator]': 'value ? false : (value == null)',
         '(click)': '_$handleClick()'
     },
@@ -99,12 +100,16 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
         this.selectedChange.emit(value);
     }
 
+    @RequireMarkForCheck()
+    @Input()
+    public maxOptionsReached: boolean = false;
+
     /**
      * 点击组件触发
      * @internal
      */
     public _$handleClick(): void {
-        if (this.disabled || this.value == null) {
+        if (this.disabled || this.value == null || (!this.selected && this.maxOptionsReached)) {
             return;
         }
         this.change.emit(this);
