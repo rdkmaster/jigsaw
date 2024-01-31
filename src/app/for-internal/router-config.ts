@@ -294,6 +294,10 @@ export const routerConfigPC = [
     {
         path: "pc/form-display",
         loadChildren: () => import('./demo/pc/form-display/demo-set-module').then(m => m.FormDisplayDemoModule),
+    },
+    {
+        path: "pc/auto-display",
+        loadChildren: () => import('./demo/pc/auto-display/demo-set.module').then(m => m.AutoDisplayDemoModule),
     }
 ];
 export const routerConfigMobile = [

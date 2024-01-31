@@ -65,6 +65,7 @@ import {JigsawProcessStatusModule} from "./process-status/index";
 import {JigsawUploadFallbackModule} from './fallback/upload/index';
 import {JigsawSearchInputModule} from './input/search-input';
 import {JigsawChartIconModule} from './chart-icon/chart-icon';
+import {JigsawAutoDisplayModule} from "./auto-display/auto-display";
 
 const JIGSAW_MODULE = [
     JigsawAlertModule,
@@ -133,7 +134,8 @@ const JIGSAW_MODULE = [
     JigsawProcessStatusModule,
     JigsawUploadFallbackModule,
     JigsawSearchInputModule,
-    JigsawChartIconModule
+    JigsawChartIconModule,
+    JigsawAutoDisplayModule
 ];
 
 @NgModule({
