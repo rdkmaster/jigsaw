@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {FloatPosition, JigsawFormDisplayComponent, TooltipWordBreak} from "jigsaw/public_api";
+import {FloatPosition, JigsawFormDisplayComponent, TooltipWordBreak, FormDisplayStyleOptions} from "jigsaw/public_api";
 
 @Component({
     templateUrl: 'demo.component.html'
@@ -13,14 +13,14 @@ export class FormDisplayTooltipDemoComponent {
 
     public _$updateTooltipEnable() {
         this.formStyleOption["tooltipConfig"].enableTooltip = this._$tooltipEnable;
-        this.jigsawFormDisplayComponent.styleOptions = this.formStyleOption;
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
     }
 
     public _$tooltipWordBreak: boolean = false;
 
     public _$updateTooltipWordBreak() {
         this.formStyleOption["tooltipConfig"].wordBreak = this._$tooltipWordBreak ? "break-all" : "normal";
-        this.jigsawFormDisplayComponent.styleOptions = this.formStyleOption;
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
     }
 
     public formio = [
@@ -69,6 +69,7 @@ export class FormDisplayTooltipDemoComponent {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
         columnWidths: [300, 200, 100],
+        columnWidthType: "fixed",
         tooltipConfig: {
             enableTooltip: this._$tooltipEnable,
             overflowOnly: true,

@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent, StepFieldsConfig} from "jigsaw/public_api";
+import {JigsawFormDisplayComponent, StepFieldsConfig, FormDisplayStyleOptions} from "jigsaw/public_api";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
 @Component({
@@ -26,7 +26,8 @@ export class TransFormCommonDemoComponent {
     public styleOptions = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [100, 200, 80]
+        columnWidths: [100, 200, 80],
+        columnWidthType: "fixed"
     }
 
     public changeSource() {
@@ -42,7 +43,7 @@ export class TransFormCommonDemoComponent {
             {type: 'auto-input', templateOptions: {label: "字段33", required: true, title: "33"}},
             {type: 'auto-input', templateOptions: {label: "字段33", required: true, title: "33"}},
         ];
-        this.jigsawFormDisplayComponent.styleOptions = this.styleOptions;
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.styleOptions;
     }
 
     public changeSource1() {
@@ -61,12 +62,13 @@ export class TransFormCommonDemoComponent {
             {label: "SS11111111111", fields: oneStep},
             {label: "SS11222222222", fields: oneStep},
         ];
-        this.jigsawFormDisplayComponent.styleOptions = [
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions[]> [
             this.styleOptions,
             {
                 trStyle: {'border-width': '2px'},
                 tdStyle: {'border-width': '2px', 'padding-left': '9px'},
-                columnWidths: [100, 150, 100]
+                columnWidths: [100, 150, 100],
+                columnWidthType: "fixed"
             }
         ];
     }

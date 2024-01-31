@@ -49,6 +49,7 @@ export class FormDisplayCommonDemoComponent {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
         columnWidths: [300, 200, 100],
+        columnWidthType: "fixed",
         tooltipConfig: {
             enableTooltip: true,
             overflowOnly: true,

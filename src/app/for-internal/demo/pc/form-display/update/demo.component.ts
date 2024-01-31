@@ -1,5 +1,5 @@
 import {Component, ViewChild} from "@angular/core";
-import {JigsawFormDisplayComponent, TableDataConfig} from "jigsaw/public_api";
+import {JigsawFormDisplayComponent, TableDataConfig, FormDisplayStyleOptions} from "jigsaw/public_api";
 import {FormlyFieldConfig} from '@ngx-formly/core';
 
 @Component({
@@ -30,14 +30,15 @@ export class FormDisplayUpdateComponent {
     public styleOptions = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [100, 200, 80]
+        columnWidths: [100, 200, 80],
+        columnWidthType: "fixed"
     }
 
     public changeSource1() {
         this.formComponentInstance.formio[0].fieldGroup = [];
         this.formComponentInstance.formio.push({type: 'auto-input', templateOptions: {label: "字段33", title: "33"}});
         this.jigsawFormDisplayComponent.update(<TableDataConfig[]>this.formComponentInstance.formio);
-        this.jigsawFormDisplayComponent.styleOptions = [
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions[]>[
             this.styleOptions,
             {
                 trStyle: {'border-width': '2px'},
