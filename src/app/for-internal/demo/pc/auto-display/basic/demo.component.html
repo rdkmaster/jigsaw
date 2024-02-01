@@ -3,5 +3,15 @@
 </jigsaw-demo-description>
 
 <jigsaw-header [level]="1">Auto-display</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>数据控制</span>
+        <jigsaw-button (click)="addTableData()">添加一个表格</jigsaw-button>
+        <jigsaw-button (click)="addBarGraph()">添加一个柱状图</jigsaw-button>
+        <jigsaw-button (click)="addStackGraph()">添加一个堆叠区域图</jigsaw-button>
+        <jigsaw-button></jigsaw-button>
+    </li>
+</ul>
 
+<jigsaw-header>基本用法</jigsaw-header>
 <jigsaw-auto-display [data]="data"></jigsaw-auto-display>
