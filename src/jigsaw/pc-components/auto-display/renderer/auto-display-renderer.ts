@@ -14,6 +14,8 @@ import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/
 import { JigsawTagModule } from "../../tag/tag";
 import { JigsawTableModule } from "../../table/table";
 import { JigsawGraphModule } from "../../graph/index";
+import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-data";
+import { TableData } from "../../../common/core/data/table-data";
 
 @Directive()
 export class AutoDisplayRendererBase implements OnInit, OnDestroy {
@@ -42,11 +44,14 @@ export class AutoDisplayRendererBase implements OnInit, OnDestroy {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutoDisplayTableRenderer extends AutoDisplayRendererBase {
+    public _$data: TableData;
+
     ngOnInit() {
         super.ngOnInit();
+        this._$data = new TableData();
+        this._$data.fromObject(this.initData);
     }
 }
-
 
 /**
  * @internal
@@ -56,8 +61,11 @@ export class AutoDisplayTableRenderer extends AutoDisplayRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutoDisplayGraphRenderer extends AutoDisplayRendererBase {
+    public _$data: AbstractGraphData;
+
     ngOnInit() {
         super.ngOnInit();
+        this._$data = new GraphData(this.initData);
     }
 }
 
