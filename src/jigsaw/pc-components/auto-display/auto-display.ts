@@ -10,6 +10,8 @@ import {
 import { CommonModule } from "@angular/common";
 import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { JigsawAutoDisplayContentComponent } from "./auto-display-inner-component";
+import { JigsawAutoDisplayRendererModule } from "./renderer/auto-display-renderer";
 
 export type AutoDisplay = {
     label?: any;
@@ -43,14 +45,14 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
     }
 
     public set data(data: AutoDisplay[]) {
-
+        this._data = data;
     }
 }
 
 @NgModule({
-    imports: [CommonModule, JigsawCommonModule],
-    declarations: [JigsawAutoDisplayComponent],
-    exports: [JigsawAutoDisplayComponent]
+    imports: [CommonModule, JigsawCommonModule, JigsawAutoDisplayRendererModule],
+    declarations: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent],
+    exports: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent]
 })
 export class JigsawAutoDisplayModule {
 }
