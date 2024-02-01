@@ -1,5 +1,15 @@
 $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
 
 .#{$jigsaw-auto-display}-host {
-    
+    .class1 {
+        background: cyan;
+    }
+
+    .class2 {
+        background: red;
+    }
+
+    .class3 {
+        background: goldenrod;
+    }
 }

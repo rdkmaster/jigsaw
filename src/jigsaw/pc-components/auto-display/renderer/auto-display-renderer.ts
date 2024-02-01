@@ -17,6 +17,8 @@ import { JigsawGraphModule } from "../../graph/index";
 import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-data";
 import { TableData } from "../../../common/core/data/table-data";
 
+
+// ！！！！需要抽公共类TD！！！！！
 @Directive()
 export class AutoDisplayRendererBase implements OnInit, OnDestroy {
     constructor(// @RequireMarkForCheck 需要用到，勿删

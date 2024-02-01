@@ -48,26 +48,17 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
         super();
     }
 
-    private _data: ArrayCollection<AutoDisplay>;
+    private _data: AutoDisplay[];
 
     @RequireMarkForCheck()
     @Input()
-    public get data(): ArrayCollection<AutoDisplay> {
+    public get data(): AutoDisplay[] {
         return this._data
     }
 
-    public set data(data: ArrayCollection<AutoDisplay>) {
-        this._data = data instanceof Array ? new ArrayCollection(data) : data;
-        if (this._removeInputDataChangeListener) {
-            this._removeInputDataChangeListener();
-            this._removeInputDataChangeListener = null;
-        }
-        this._removeInputDataChangeListener = this._data.onRefresh(() => {
-            
-        });
+    public set data(data: AutoDisplay[]) {
+        this._data = data;
     }
-
-    private _removeInputDataChangeListener: CallbackRemoval;
 
     public update() {
         this._changeDetectorRef.markForCheck();
@@ -75,10 +66,6 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
     ngOnDestroy() {
         super.ngOnDestroy();
-        if (this._removeInputDataChangeListener) {
-            this._removeInputDataChangeListener();
-            this._removeInputDataChangeListener = null;
-        }
     }
 }
 

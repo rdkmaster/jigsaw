@@ -6,12 +6,18 @@
 <ul class="demo-options">
     <li class="demo-options-item">
         <span>数据控制</span>
-        <jigsaw-button (click)="addTableData()">添加一个表格</jigsaw-button>
-        <jigsaw-button (click)="addBarGraph()">添加一个柱状图</jigsaw-button>
-        <jigsaw-button (click)="addStackGraph()">添加一个堆叠区域图</jigsaw-button>
-        <jigsaw-button></jigsaw-button>
+        <jigsaw-button (click)="addTableData()">添加表格</jigsaw-button>
+        <jigsaw-button (click)="addBarGraph()">添加柱状图</jigsaw-button>
+        <jigsaw-button (click)="addStackGraph()">添加堆叠区域图</jigsaw-button>
+        <jigsaw-button (click)="addPieGraph()">添加饼图</jigsaw-button>
+        <jigsaw-button (click)="addGaugeGraph()">添加仪表盘</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>数据删除</span>
+        <jigsaw-tag *ngFor="let item of data; let i = index" [closable]="true"
+            (close)="removeData(i)">数据源 - {{i + 1}}</jigsaw-tag>
     </li>
 </ul>
 
 <jigsaw-header>基本用法</jigsaw-header>
-<jigsaw-auto-display [data]="data"></jigsaw-auto-display>
+<jigsaw-auto-display #autoDisplay [data]="data"></jigsaw-auto-display>
