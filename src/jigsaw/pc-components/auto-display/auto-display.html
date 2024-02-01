@@ -1,10 +1,3 @@
-<div [ngClass]="{
-    'class1': data.length === 1,
-    'class2': data.length === 2,
-    'class3': data.length === 3
-}">
-    <div *ngFor="let item of data; let i = index">
-        <jigsaw-auto-display-content [renderer]="item.renderAs" [rendererInitData]="item.initData">
-        </jigsaw-auto-display-content>
-    </div>
-</div>
+<jigsaw-auto-display-content *ngFor="let item of data; let i = index" [renderer]="item.renderAs"
+    [rendererInitData]="item.initData">
+</jigsaw-auto-display-content>

@@ -100,7 +100,10 @@ export class JigsawAutoDisplayInnerBase extends AbstractJigsawViewBase implement
  */
 @Component({
     selector: 'jigsaw-auto-display-content',
-    template: '<ng-template jigsaw-renderer-host></ng-template>'
+    template: '<ng-template jigsaw-renderer-host></ng-template>',
+    host: {
+        '[class.jigsaw-auto-display-content-host]': 'true',
+    },
 })
 export class JigsawAutoDisplayContentComponent extends JigsawAutoDisplayInnerBase implements OnInit, OnDestroy {
 }

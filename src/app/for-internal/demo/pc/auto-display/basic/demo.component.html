@@ -14,10 +14,14 @@
     </li>
     <li class="demo-options-item">
         <span>数据删除</span>
-        <jigsaw-tag *ngFor="let item of data; let i = index" [closable]="true"
-            (close)="removeData(i)">数据源 - {{i + 1}}</jigsaw-tag>
+        <div class="data-tags">
+            <jigsaw-tag *ngFor="let item of data; let i = index" [closable]="true" (close)="removeData(i)">数据源 - {{i +
+                1}}</jigsaw-tag>
+        </div>
     </li>
 </ul>
 
 <jigsaw-header>基本用法</jigsaw-header>
-<jigsaw-auto-display #autoDisplay [data]="data"></jigsaw-auto-display>
+<div class="demo-container">
+    <jigsaw-auto-display #autoDisplay [data]="data"></jigsaw-auto-display>
+</div>

@@ -37,7 +37,13 @@ export type AutoDisplay = {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
-        '[class.jigsaw-auto-display-host]': 'true'
+        '[class.jigsaw-auto-display-host]': 'true',
+        '[class.jigsaw-auto-display-1x1]': 'data.length == 1',
+        '[class.jigsaw-auto-display-2x1]': 'data.length == 2',
+        '[class.jigsaw-auto-display-3x1]': 'data.length == 3',
+        '[class.jigsaw-auto-display-2x2]': 'data.length == 4',
+        '[class.jigsaw-auto-display-3x2]': 'data.length == 5',
+        '[class.jigsaw-auto-display-3x3]': 'data.length == 9',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })

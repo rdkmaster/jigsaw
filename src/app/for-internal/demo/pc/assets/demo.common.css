@@ -9,7 +9,6 @@
 }
 
 .demo-options .demo-options-item>*[class^="jigsaw-"]:not(:first-child),
-.demo-options .demo-options-item>*[class^="j-"]:not(:first-child),
-.demo-options .demo-options-item>.jigsaw-tag-host:not(:first-child) {
+.demo-options .demo-options-item>*[class^="j-"]:not(:first-child) {
     margin-left: 5px;
 }
