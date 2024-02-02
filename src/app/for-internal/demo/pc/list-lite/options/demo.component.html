@@ -16,6 +16,6 @@
     </li>
 </ul>
 
-<jigsaw-header [level]="2">基本用法</jigsaw-header>
+<jigsaw-header [level]="2">最大选项个数</jigsaw-header>
 <j-list-lite width="200" [data]="data" labelField="name" [multipleSelect]="multipleSelect"
-    [maxSelectionLimit]="maxSelectionLimit" (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>
+    [(maxSelectionLimit)]="maxSelectionLimit" (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>

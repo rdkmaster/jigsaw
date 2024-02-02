@@ -60,8 +60,8 @@
                     </div>
                 </div>
                 <div>
-                    <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item"
-                                        [disabled]="item.disabled" [height]="optionHeight" [maxSelectionReached]="_$maxSelectionReached">
+                    <jigsaw-list-option #listItem *ngFor="let item of _$viewData" [value]="item" [disabled]="item.disabled"
+                                        [height]="optionHeight" [maxSelectionReached]="_$maxSelectionReached">
                         <jigsaw-checkbox *ngIf="multipleSelect" [disabled]="item.disabled"
                                          [(checked)]="listItem.selected" mode="minimalist" [theme]="theme">
                         </jigsaw-checkbox>
