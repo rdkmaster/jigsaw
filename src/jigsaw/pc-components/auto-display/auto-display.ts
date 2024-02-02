@@ -14,7 +14,6 @@ import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../c
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawAutoDisplayContentComponent } from "./auto-display-inner-component";
 import { AutoDisplayRendererBase, JigsawAutoDisplayRendererModule } from "./renderer/auto-display-renderer";
-import { CommonUtils } from "jigsaw/public_api";
 
 export type AutoDisplay = {
     /**
@@ -85,7 +84,6 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
     public update() {
         this._converData();
-        console.log(this._$viewData);
         this._changeDetectorRef.markForCheck();
     }
 
