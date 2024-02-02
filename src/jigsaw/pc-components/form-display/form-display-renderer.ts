@@ -6,6 +6,7 @@ import {
     Component,
     Input,
     NgModule,
+    Injector,
 } from "@angular/core"
 import {CommonModule} from "@angular/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -15,6 +16,10 @@ import { DisplayRendererBase } from "../auto-display/renderer/auto-display-rende
 
 @Directive()
 export class FormDisplayRendererBase extends DisplayRendererBase implements OnInit, OnDestroy {
+    constructor(// @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+        super(_injector)
+    }
     @RequireMarkForCheck()
     @Input()
     public cellData: string | string[];
