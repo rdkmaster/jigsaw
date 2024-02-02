@@ -14,8 +14,7 @@ import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../c
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
 import { JigsawAutoDisplayContentComponent } from "./auto-display-inner-component";
 import { AutoDisplayRendererBase, JigsawAutoDisplayRendererModule } from "./renderer/auto-display-renderer";
-import { ArrayCollection } from "../../common/core/data/array-collection";
-import { CallbackRemoval } from "jigsaw/public_api";
+import { CommonUtils } from "jigsaw/public_api";
 
 export type AutoDisplay = {
     /**
@@ -65,6 +64,9 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
     private _converData(): void {
         this._$viewData = [];
+        if (this.data?.length) {
+            return;
+        }
         let chunkSize = 4;
 
         if (this.data.length == 1 || this.data.length == 2 || this.data.length == 3) {

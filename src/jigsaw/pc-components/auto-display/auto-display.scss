@@ -2,13 +2,14 @@ $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
 
 .#{$jigsaw-auto-display}-host {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     width: 100%;
     height: 100%;
 
     .#{$jigsaw-auto-display}-row {
         flex: 1;
         display: flex;
+        flex-direction: column;
         overflow: hidden;
 
         .#{$jigsaw-auto-display}-content-host {

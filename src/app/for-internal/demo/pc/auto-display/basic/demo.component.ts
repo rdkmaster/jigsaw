@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
 import { ArrayCollection, AutoDisplay, AutoDisplayGraphRenderer, AutoDisplayTableRenderer, JigsawAutoDisplayComponent } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
-    styleUrls: ['./../../assets/demo.common.css', './demo.component.css']
+    styleUrls: ['./../../assets/demo.common.css', './demo.component.css'],
+    encapsulation: ViewEncapsulation.None
 })
 export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
     @ViewChild('autoDisplay')
