@@ -2,7 +2,7 @@ $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
 
 .#{$jigsaw-auto-display}-host {
     display: grid;
-    grid-template-columns: repeat(4, 25%);
+    grid-template-columns: repeat(4, 1fr);
     width: 100%;
     height: 100%;
     overflow: hidden;
@@ -23,8 +23,9 @@ $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
     }
 
     &.jigsaw-auto-display-4 {
-        grid-template-columns: repeat(2, calc(100% / 2));
-        grid-template-rows: repeat(2, 50%);
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px; /* 设置间距为10px */
     }
 
     &.jigsaw-auto-display-5 {
