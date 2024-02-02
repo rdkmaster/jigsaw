@@ -15,6 +15,7 @@ import {
 import { AbstractJigsawViewBase, JigsawRendererHost } from "../../common/common";
 import { AutoDisplayGraphRenderer, AutoDisplayRendererBase, AutoDisplayTableRenderer } from "./renderer/auto-display-renderer";
 
+// ！！！！需要抽公共类TD！！！！！
 @Directive()
 export class JigsawAutoDisplayInnerBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,

@@ -64,7 +64,7 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
     private _converData(): void {
         this._$viewData = [];
-        if (this.data?.length) {
+        if (!this.data?.length) {
             return;
         }
         let chunkSize = 4;
