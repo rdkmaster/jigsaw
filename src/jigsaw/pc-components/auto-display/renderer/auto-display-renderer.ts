@@ -46,12 +46,12 @@ export class AutoDisplayRendererBase extends DisplayRendererBase implements OnIn
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutoDisplayTableRenderer extends AutoDisplayRendererBase {
-    public _$data: TableData;
+    public data: TableData;
 
     ngOnInit() {
         super.ngOnInit();
-        this._$data = new TableData();
-        this._$data.fromObject(this.initData);
+        this.data = new TableData();
+        this.data.fromObject(this.initData);
     }
 }
 
@@ -63,7 +63,7 @@ export class AutoDisplayTableRenderer extends AutoDisplayRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AutoDisplayGraphRenderer extends AutoDisplayRendererBase {
-    public _$data: AbstractGraphData;
+    public data: AbstractGraphData;
 
     ngOnInit() {
         super.ngOnInit();
@@ -79,26 +79,9 @@ export class AutoDisplayGraphRenderer extends AutoDisplayRendererBase {
         if (!this.initData.tooltip.hasOwnProperty('transitionDuration')) {
             this.initData.tooltip.transitionDuration = 0;
         }
-        this._$data = new GraphData(this.initData);
+        this.data = new GraphData(this.initData);
     }
 }
-
-/**
- * @internal
- * 默认使用html渲染组件
- */
-@Component({
-    templateUrl: './auto-display-html.html',
-    changeDetection: ChangeDetectionStrategy.OnPush
-})
-export class AutoDisplayHtmlRenderer extends AutoDisplayRendererBase {
-    public trustedHtml: string;
-
-    ngOnInit() {
-        super.ngOnInit();
-    }
-}
-
 
 @NgModule({
     declarations: [AutoDisplayTableRenderer, AutoDisplayGraphRenderer],

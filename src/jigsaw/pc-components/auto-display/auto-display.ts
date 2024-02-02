@@ -46,6 +46,9 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
         super();
     }
 
+    /**
+    * @internal
+    * */
     public _$viewData: AutoDisplay[][] = [];
 
     private _data: AutoDisplay[];
