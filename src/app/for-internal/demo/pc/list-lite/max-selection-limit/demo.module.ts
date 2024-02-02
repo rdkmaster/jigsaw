@@ -1,18 +1,14 @@
 import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {JigsawComboSelectModule, JigsawListLiteModule, JigsawNumericInputModule, JigsawSwitchModule} from "jigsaw/public_api";
+import {JigsawListLiteModule, JigsawNumericInputModule} from "jigsaw/public_api";
 import {JigsawDemoDescriptionModule} from "app/for-internal/description/demo-description";
-import {ListLiteOptionsDemoComponent} from "./demo.component";
-
+import {ListLiteMaxSelectionLimitDemoComponent} from "./demo.component";
 import {JigsawHeaderModule} from "jigsaw/public_api";
 
 @NgModule({
     imports: [
-        JigsawListLiteModule, CommonModule, JigsawComboSelectModule,
-        JigsawDemoDescriptionModule, JigsawNumericInputModule, JigsawSwitchModule
-    , JigsawHeaderModule],
-    declarations: [ListLiteOptionsDemoComponent],
-    exports: [ListLiteOptionsDemoComponent]
+        JigsawListLiteModule, JigsawDemoDescriptionModule, JigsawHeaderModule, JigsawNumericInputModule],
+    declarations: [ListLiteMaxSelectionLimitDemoComponent],
+    exports: [ListLiteMaxSelectionLimitDemoComponent]
 })
-export class ListLiteOptionsDemoModule {
+export class ListLiteMaxSelectionLimitDemoModule {
 }

@@ -6,10 +6,6 @@
 <jigsaw-header [level]="1">List lite</jigsaw-header>
 <ul class="demo-options">
     <li class="demo-options-item">
-        <span>多选：</span>
-        <jigsaw-switch [(checked)]="multipleSelect"></jigsaw-switch>
-    </li>
-    <li class="demo-options-item">
         <span>最大可选条数(0为非法值)：</span>
         <j-numeric-input [(value)]="maxSelectionLimit" min="0" max="200" placeholder="请输入最大可选条数">
         </j-numeric-input>
@@ -17,5 +13,5 @@
 </ul>
 
 <jigsaw-header [level]="2">最大可选项</jigsaw-header>
-<j-list-lite width="200" [data]="data" labelField="name" [multipleSelect]="multipleSelect"
-    [maxSelectionLimit]="maxSelectionLimit" (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>
+<j-list-lite width="200" [data]="data" labelField="name" [multipleSelect]="true" [maxSelectionLimit]="maxSelectionLimit"
+    (selectedItemsChange)="selectedItemsChange($event)"></j-list-lite>

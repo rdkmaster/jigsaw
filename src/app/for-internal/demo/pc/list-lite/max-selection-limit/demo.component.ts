@@ -1,13 +1,12 @@
 import { Component } from "@angular/core";
-import { ArrayCollection, GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
+import { GroupOptionValue, JigsawListLite } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
     styleUrls: ['./../../assets/demo.common.css']
 })
-export class ListLiteOptionsDemoComponent {
+export class ListLiteMaxSelectionLimitDemoComponent {
     public maxSelectionLimit = 2;
-    public multipleSelect = true;
 
     public data: GroupOptionValue[] = [
         {
