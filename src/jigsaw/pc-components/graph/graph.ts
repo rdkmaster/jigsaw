@@ -221,7 +221,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         }
         this._graph.resize({
             width: this._host.offsetWidth + 'px',
-            height: window.getComputedStyle(this._host).height + 'px',
+            height: this._host.offsetHeight + 'px',
             silence: true
         });
     }

@@ -37,16 +37,7 @@ export type AutoDisplay = {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]': 'theme',
-        '[class.jigsaw-auto-display-host]': 'true',
-        '[class.jigsaw-auto-display-1]': 'data.length == 1',
-        '[class.jigsaw-auto-display-2]': 'data.length == 2',
-        '[class.jigsaw-auto-display-3]': 'data.length == 3',
-        '[class.jigsaw-auto-display-4]': 'data.length == 4',
-        '[class.jigsaw-auto-display-5]': 'data.length == 5',
-        '[class.jigsaw-auto-display-6]': 'data.length == 6',
-        '[class.jigsaw-auto-display-7]': 'data.length == 7',
-        '[class.jigsaw-auto-display-8]': 'data.length == 8',
-        '[class.jigsaw-auto-display-9]': 'data.length == 9',
+        '[class.jigsaw-auto-display-host]': 'true'
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -56,6 +47,8 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
         private _injector: Injector) {
         super();
     }
+
+    public _$viewData: AutoDisplay[][] = [];
 
     private _data: AutoDisplay[];
 
@@ -67,9 +60,30 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
     public set data(data: AutoDisplay[]) {
         this._data = data;
+        this.update();
+    }
+
+    private _converData(): void {
+        this._$viewData = [];
+        let chunkSize = 4;
+
+        if (this.data.length == 1 || this.data.length == 2 || this.data.length == 3) {
+            chunkSize = 1;
+        } else if (this.data.length == 4) {
+            chunkSize = 2;
+        } else if (this.data.length == 5 || this.data.length == 6 || this.data.length == 9) {
+            chunkSize = 3;
+        }
+
+        for (let i = 0; i < this.data.length; i += chunkSize) {
+            const arr = this.data.slice(i, i + chunkSize);
+            this._$viewData.push(arr);
+        }
     }
 
     public update() {
+        this._converData();
+        console.log(this._$viewData);
         this._changeDetectorRef.markForCheck();
     }
 

@@ -1,64 +1,19 @@
 $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
 
 .#{$jigsaw-auto-display}-host {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100%;
-    overflow: hidden;
 
-    &.jigsaw-auto-display-1 {
-        grid-template-columns: 100%;
-        grid-template-rows: 100%;
-    }
-
-    &.jigsaw-auto-display-2 {
-        grid-template-columns: 100%;
-        grid-template-rows: repeat(2, 50%);
-    }
-
-    &.jigsaw-auto-display-3 {
-        grid-template-columns: 100%;
-        grid-template-rows: repeat(3, 33.33%);
-    }
-
-    &.jigsaw-auto-display-4 {
-        grid-template-rows: repeat(2, 1fr);
-        grid-template-columns: repeat(2, 1fr);
-        gap: 10px; /* 设置间距为10px */
-    }
-
-    &.jigsaw-auto-display-5 {
-        grid-template-columns: repeat(6, 16.66%);
-        grid-template-rows: repeat(2, 50%);
-
-        .jigsaw-auto-display-content-host:nth-child(1),
-        .jigsaw-auto-display-content-host:nth-child(2),
-        .jigsaw-auto-display-content-host:nth-child(3) {
-            grid-column: span 2;
-        }
-
-        .jigsaw-auto-display-content-host:nth-child(4),
-        .jigsaw-auto-display-content-host:nth-child(5) {
-            grid-column: span 3;
-        }
-    }
-
-    &.jigsaw-auto-display-6 {
-        grid-template-columns: repeat(3, 33.33%);
-        grid-template-rows: repeat(2, 50%);
-    }
-
-    &.jigsaw-auto-display-8 {
-        grid-template-rows: repeat(2, 50%);
-    }
-
-    &.jigsaw-auto-display-9 {
-        grid-template-columns: repeat(3, 33.33%);
-        grid-template-rows: repeat(3, 33.33%);
-    }
-
-    .jigsaw-auto-display-content-host {
+    .#{$jigsaw-auto-display}-row {
+        flex: 1;
+        display: flex;
         overflow: hidden;
+
+        .#{$jigsaw-auto-display}-content-host {
+            flex: 1;
+            overflow: hidden;
+        }
     }
 }
