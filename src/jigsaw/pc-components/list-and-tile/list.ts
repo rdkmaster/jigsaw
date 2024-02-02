@@ -30,8 +30,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
         '[style.height]': 'height',
         '[attr.data-theme]':'theme',
         '[class.jigsaw-list-host]': 'true',
-        '[class.jigsaw-list-error]': '!valid',
-        '[class.jigsaw-list-max-option-reached]': '_$maxSelectionReached',
+        '[class.jigsaw-list-error]': '!valid'
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
