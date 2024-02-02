@@ -250,6 +250,10 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
         this.autoDisplay.update();
     }
 
+    public clearData() {
+        this.data = [];
+    }
+
     ngOnInit(): void {
         // this.addTableData();
     }

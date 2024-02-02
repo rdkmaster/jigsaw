@@ -9,16 +9,15 @@ import {
     NgModule,
 } from "@angular/core"
 import { CommonModule } from "@angular/common";
-import { RequireMarkForCheck } from "../../../common/decorator/mark-for-check";
 import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/trusted-html";
-import { JigsawTagModule } from "../../tag/tag";
 import { JigsawTableModule } from "../../table/table";
 import { JigsawGraphModule } from "../../graph/index";
 import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-data";
 import { TableData } from "../../../common/core/data/table-data";
+import { CommonUtils } from "../../../common/core/utils/common-utils";
 
 @Directive()
-export class AutoDisplayRendererBase implements OnInit, OnDestroy {
+export class DisplayRendererBase implements OnInit, OnDestroy {
     constructor(// @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
     }
@@ -34,6 +33,10 @@ export class AutoDisplayRendererBase implements OnInit, OnDestroy {
 
     ngOnDestroy(): void {
     }
+}
+
+@Directive()
+export class AutoDisplayRendererBase extends DisplayRendererBase implements OnInit, OnDestroy {
 }
 
 /**
@@ -65,6 +68,18 @@ export class AutoDisplayGraphRenderer extends AutoDisplayRendererBase {
 
     ngOnInit() {
         super.ngOnInit();
+        if (CommonUtils.isUndefined(this.initData?.tooltip)) {
+            return;
+        }
+        if (!this.initData.tooltip.hasOwnProperty('showDelay')) {
+            this.initData.tooltip.showDelay = 0;
+        }
+        if (!this.initData.tooltip.hasOwnProperty('hideDelay')) {
+            this.initData.tooltip.hideDelay = 0;
+        }
+        if (!this.initData.tooltip.hasOwnProperty('transitionDuration')) {
+            this.initData.tooltip.transitionDuration = 0;
+        }
         this._$data = new GraphData(this.initData);
     }
 }
