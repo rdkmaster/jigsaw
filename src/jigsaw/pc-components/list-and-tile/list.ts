@@ -132,7 +132,7 @@ export class JigsawListModule {
     constructor() {
         TranslateHelper.initI18n("list", {
             zh: {
-                maxSelectionReached: "已达到选择上限"
+                maxSelectionReached: "已选条目数量已达上限"
             },
             en: {
                 maxSelectionReached: "Maximum selection reached"

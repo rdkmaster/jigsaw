@@ -195,20 +195,20 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
-        if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
             this._filterData(filterKey);
-        } else {
-            const data = new LocalPageableArray();
-            data.pagingInfo.pageSize = Infinity;
-            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
-                removeUpdateSubscriber.unsubscribe();
-                this._needCheckSelectedItems = false;
-                this._updateData(data, false);
-                this._filterData(filterKey);
-            });
-            data.fromArray(this.data);
+            return;
         }
+        const data = new LocalPageableArray();
+        data.pagingInfo.pageSize = Infinity;
+        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+            // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+            removeUpdateSubscriber.unsubscribe();
+            this._needCheckSelectedItems = false;
+            this._updateData(data, false);
+            this._filterData(filterKey);
+        });
+        data.fromArray(this.data);
     }
 
     private _filterData(filterKey?: string) {
@@ -253,6 +253,5 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     exports: [JigsawListLite]
 })
 export class JigsawListLiteModule {
-
 }
 

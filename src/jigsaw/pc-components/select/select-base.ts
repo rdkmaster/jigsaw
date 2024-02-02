@@ -447,11 +447,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             const availableOptions = this._getValidData().concat(disabledSelectedItems);
             if (!isNaN(this.maxSelectionLimit) && this.maxSelectionLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectionLimit) {
                 for (const element of availableOptions) {
-                    if (!this._$selectedItems.includes(element)) {
-                        this._$selectedItems.push(element);
-                        if (this._$selectedItems.length >= this.maxSelectionLimit) {
-                            break;
-                        }
+                    if (this._$selectedItems.includes(element)) {
+                        continue;
+                    }
+                    this._$selectedItems.push(element);
+                    if (this._$selectedItems.length >= this.maxSelectionLimit) {
+                        break;
                     }
                 }
                 (this._$selectedItems as ArrayCollection<SelectOption>).refresh();
