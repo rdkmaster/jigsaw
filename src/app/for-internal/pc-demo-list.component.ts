@@ -75,6 +75,7 @@ import {routerConfig as noviceGuideConfig} from "./demo/pc/novice-guide/demo-set
 import {routerConfig as chartIconConfig} from "./demo/pc/chart-icon/demo-set.module";
 import {routerConfig as largeTextConfig} from "./demo/pc/large-text/demo-set.module";
 import {routerConfig as fromDisplayConfig} from "./demo/pc/form-display/demo-set-module";
+import {routerConfig as autoDisplayConfig} from "./demo/pc/auto-display/demo-set.module";
 import {routerConfigPC} from "./router-config";
 
 @Component({
@@ -252,6 +253,7 @@ export class DemoListManager {
         this._addRouterConfig(routerConfig, 'chart-icon', chartIconConfig);
         this._addRouterConfig(routerConfig, 'large-text', largeTextConfig);
         this._addRouterConfig(routerConfig, 'form-display', fromDisplayConfig);
+        this._addRouterConfig(routerConfig, 'auto-display', autoDisplayConfig);
     }
 
     private static _addRouterConfig(routerConfig: any[], path: string, childConfig: any[]) {

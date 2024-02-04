@@ -1,35 +1,24 @@
 import {
     Component,
     Input,
-    ViewChild,
     ComponentRef,
     AfterViewInit,
     OnInit,
     Type,
-    ComponentFactoryResolver,
-    ChangeDetectorRef,
-    NgZone,
     OnDestroy,
     Directive
 } from "@angular/core"
-import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {
     FormDisplayHtmlCellRenderer,
     FormDisplayRendererBase,
     FormDisplayTagCellRenderer
 } from "./form-display-renderer";
+import { JigsawDisplayInnerBase } from "../auto-display/inner-component";
 
 @Directive()
-export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
-    constructor(protected componentFactoryResolver: ComponentFactoryResolver,
-                protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
-        super(_zone);
-    }
-
-    @ViewChild(JigsawRendererHost)
-    protected rendererHost: JigsawRendererHost;
+export class JigsawFormDisplayCellBase extends JigsawDisplayInnerBase implements AfterViewInit, OnInit {
     protected rendererRef: ComponentRef<FormDisplayRendererBase>;
-    protected _customRenderer: Type<FormDisplayRendererBase> | string;
+    protected customRenderer: Type<FormDisplayRendererBase> | string;
 
     private _cellData: string | string[];
 
@@ -50,32 +39,15 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
      */
     @Input()
     public get renderer(): Type<FormDisplayRendererBase> | string {
-        return this._customRenderer
+        return this.customRenderer
     }
 
     public set renderer(value: Type<FormDisplayRendererBase> | string) {
-        if (this._customRenderer == value || (!value && this._customRenderer instanceof FormDisplayHtmlCellRenderer)) {
+        if (this.customRenderer == value || (!value && this.customRenderer instanceof FormDisplayHtmlCellRenderer)) {
             return;
         }
-        this._customRenderer = value;
+        this.customRenderer = value;
         this.rendererHost?.viewContainerRef.clear();
-    }
-
-    private _rendererInitData: any;
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get rendererInitData() {
-        return this._rendererInitData;
-    }
-
-    public set rendererInitData(value: any) {
-        this._rendererInitData = value;
-        if (this.rendererRef instanceof ComponentRef) {
-            this.rendererRef.instance.initData = value;
-        }
     }
 
     protected rendererFactory(renderer: Type<FormDisplayRendererBase>, initData: any): ComponentRef<FormDisplayRendererBase> {
@@ -86,7 +58,7 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
         return componentRef;
     }
 
-    private _getRendererByType(renderer: string): Type<FormDisplayRendererBase> {
+    protected _getRendererByType(renderer: string): Type<FormDisplayRendererBase> {
         switch (renderer) {
             case 'html':
                 return FormDisplayHtmlCellRenderer;
@@ -95,22 +67,6 @@ export class JigsawFormDisplayCellBase extends AbstractJigsawViewBase implements
             default:
                 return FormDisplayHtmlCellRenderer
         }
-    }
-
-    ngAfterViewInit(): void {
-        if (typeof this.renderer == 'string') {
-            this.renderer = this._getRendererByType(this.renderer);
-        }
-        this.rendererRef = this.rendererFactory(this.renderer, this.rendererInitData);
-        this.changeDetector.detectChanges();
-    }
-
-    ngOnInit(): void {
-        super.ngOnInit();
-    }
-
-    ngOnDestroy() {
-        super.ngOnDestroy()
     }
 }
 

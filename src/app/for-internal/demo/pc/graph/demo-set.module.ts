@@ -45,6 +45,8 @@ import {GraphDownloadDirectiveModule} from "./download-directive/demo.module";
 import {GraphDownloadDirectiveComponent} from "./download-directive/demo.component";
 import {BubbleGraphModule} from "./bubble/demo.module";
 import {BubbleGraphComponent} from "./bubble/demo.component";
+import { GraphEchartOptionsComponent } from "./echart-options/demo.component";
+import { GraphEchartOptionsModule } from "./echart-options/demo.module";
 
 export const routerConfig = [
     {
@@ -112,6 +114,9 @@ export const routerConfig = [
     },
     {
         path: 'bubble', component: BubbleGraphComponent
+    },
+    {
+        path: 'echarts-options', component: GraphEchartOptionsComponent
     }
 ];
 
@@ -140,7 +145,8 @@ export const routerConfig = [
         GaugeGraphModule,
         BarGraphModule,
         GraphDownloadDirectiveModule,
-        BubbleGraphModule
+        BubbleGraphModule,
+        GraphEchartOptionsModule
     ]
 })
 export class GraphDemoModule {
