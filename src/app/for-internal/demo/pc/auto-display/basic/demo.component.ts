@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
-import { ArrayCollection, AutoDisplay, AutoDisplayGraphRenderer, AutoDisplayTableRenderer, JigsawAutoDisplayComponent } from "jigsaw/public_api";
+import {Component, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
+import {AutoDisplayData, JigsawAutoDisplayComponent} from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -10,7 +10,7 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
     @ViewChild('autoDisplay')
     public autoDisplay: JigsawAutoDisplayComponent
 
-    public data: AutoDisplay[] = [];
+    public data: AutoDisplayData[] = [];
 
     public addTableData() {
         this.data.push({
@@ -46,7 +46,7 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
 
     public addBarGraph() {
         this.data.push({
-            renderAs: 'graph',
+            renderAs: 'origin-echarts',
             initData: {
                 color: ['#3398DB'],
                 tooltip: {
@@ -90,7 +90,7 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
 
     public addGaugeGraph() {
         this.data.push({
-            renderAs: 'graph',
+            renderAs: 'origin-echarts',
             initData: {
                 tooltip: {
                     formatter: '{a} <br/>{b} : {c}%'
@@ -116,7 +116,7 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
 
     public addPieGraph() {
         this.data.push({
-            renderAs: 'graph',
+            renderAs: 'origin-echarts',
             initData: {
                 title: {
                     text: '某站点用户访问来源',
@@ -161,7 +161,7 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
 
     public addStackGraph() {
         this.data.push({
-            renderAs: 'graph',
+            renderAs: 'origin-echarts',
             initData: {
                 title: {
                     text: '堆叠区域图'

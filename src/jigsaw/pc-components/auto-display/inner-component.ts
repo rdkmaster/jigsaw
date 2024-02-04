@@ -1,19 +1,24 @@
 import {
-    Component,
-    Input,
-    ViewChild,
-    ComponentRef,
     AfterViewInit,
-    OnInit,
-    Type,
-    ComponentFactoryResolver,
     ChangeDetectorRef,
+    Component,
+    ComponentFactoryResolver,
+    ComponentRef,
+    Directive,
+    Input,
     NgZone,
     OnDestroy,
-    Directive
+    OnInit,
+    Type,
+    ViewChild
 } from "@angular/core"
-import { AbstractJigsawViewBase, JigsawRendererHost } from "../../common/common";
-import { AutoDisplayGraphRenderer, AutoDisplayRendererBase, AutoDisplayTableRenderer, DisplayRendererBase } from "./renderer/auto-display-renderer";
+import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
+import {
+    AutoDisplayGraphRenderer,
+    AutoDisplayRendererBase,
+    AutoDisplayTableRenderer,
+    DisplayRendererBase
+} from "./renderer/auto-display-renderer";
 
 export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
@@ -62,7 +67,7 @@ export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase impl
 
     protected abstract rendererFactory(renderer: Type<DisplayRendererBase>, initData: any): ComponentRef<DisplayRendererBase>;
 
-    protected abstract _getRendererByType(renderer: string): Type<DisplayRendererBase>;
+    protected abstract _getRendererByType(renderer: Type<DisplayRendererBase> | string): Type<DisplayRendererBase>;
 
     ngAfterViewInit(): void {
         if (typeof this.renderer == 'string') {
@@ -81,20 +86,34 @@ export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase impl
     }
 }
 
+export type AutoDisplayRenderer = Type<AutoDisplayRendererBase> | 'table' | 'origin-echarts' | 'modeled-echarts';
+
+export type AutoDisplayData = {
+    /**
+     * 指定单元格使用的渲染器
+     */
+    renderAs?: AutoDisplayRenderer,
+
+    /**
+     *  渲染器的数据
+     * */
+    initData?: any
+};
+
 @Directive()
 export class JigsawAutoDisplayInnerBase extends JigsawDisplayInnerBase implements AfterViewInit, OnInit {
     protected rendererRef: ComponentRef<AutoDisplayRendererBase>;
-    protected customRenderer: Type<AutoDisplayRendererBase> | string;
+    protected customRenderer: AutoDisplayRenderer;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get renderer(): Type<AutoDisplayRendererBase> | string {
+    public get renderer(): AutoDisplayRenderer {
         return this.customRenderer
     }
 
-    public set renderer(value: Type<AutoDisplayRendererBase> | string) {
+    public set renderer(value: AutoDisplayRenderer) {
         if (this.customRenderer == value) {
             return;
         }
@@ -109,14 +128,14 @@ export class JigsawAutoDisplayInnerBase extends JigsawDisplayInnerBase implement
         return componentRef;
     }
 
-    protected _getRendererByType(renderer: string): Type<AutoDisplayRendererBase> {
+    protected _getRendererByType(renderer: AutoDisplayRenderer): Type<AutoDisplayRendererBase> {
         switch (renderer) {
-            case 'graph':
+            case 'origin-echarts':
                 return AutoDisplayGraphRenderer;
             case 'table':
                 return AutoDisplayTableRenderer;
             default:
-                return AutoDisplayTableRenderer;
+                return <Type<AutoDisplayRendererBase>>renderer;
         }
     }
 }

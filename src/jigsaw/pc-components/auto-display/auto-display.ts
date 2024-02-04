@@ -1,31 +1,9 @@
-import {
-    ChangeDetectionStrategy,
-    Component,
-    Injector,
-    Input,
-    NgModule,
-    ChangeDetectorRef,
-    OnInit,
-    Type,
-    OnDestroy
-} from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
-import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { JigsawAutoDisplayContentComponent } from "./inner-component";
-import { AutoDisplayRendererBase, JigsawAutoDisplayRendererModule } from "./renderer/auto-display-renderer";
-
-export type AutoDisplay = {
-    /**
-     * 指定单元格使用的渲染器
-     */
-    renderAs?: Type<AutoDisplayRendererBase> | 'table' | 'graph',
-
-    /**
-     *  渲染器的数据
-     * */
-    initData?: any
-};
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Input, NgModule, OnDestroy, OnInit} from "@angular/core";
+import {CommonModule} from "@angular/common";
+import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
+import {AutoDisplayData, JigsawAutoDisplayContentComponent} from "./inner-component";
+import {JigsawAutoDisplayRendererModule} from "./renderer/auto-display-renderer";
 
 @WingsTheme('auto-display.scss')
 @Component({
@@ -49,17 +27,17 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
     /**
     * @internal
     * */
-    public _$viewData: AutoDisplay[][] = [];
+    public _$viewData: AutoDisplayData[][] = [];
 
-    private _data: AutoDisplay[];
+    private _data: AutoDisplayData[];
 
     @RequireMarkForCheck()
     @Input()
-    public get data(): AutoDisplay[] {
+    public get data(): AutoDisplayData[] {
         return this._data
     }
 
-    public set data(data: AutoDisplay[]) {
+    public set data(data: AutoDisplayData[]) {
         this._data = data;
         this.update();
     }
