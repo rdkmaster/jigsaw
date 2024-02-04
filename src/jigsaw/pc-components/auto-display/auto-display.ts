@@ -12,7 +12,7 @@ import {
 import { CommonModule } from "@angular/common";
 import { AbstractJigsawComponent, JigsawCommonModule, WingsTheme } from "../../common/common";
 import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
-import { JigsawAutoDisplayContentComponent } from "./auto-display-inner-component";
+import { JigsawAutoDisplayContentComponent } from "./inner-component";
 import { AutoDisplayRendererBase, JigsawAutoDisplayRendererModule } from "./renderer/auto-display-renderer";
 
 export type AutoDisplay = {
@@ -69,8 +69,8 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
         if (!this.data?.length) {
             return;
         }
-        let chunkSize = 4;
 
+        let chunkSize = 4;
         if (this.data.length == 1 || this.data.length == 2 || this.data.length == 3) {
             chunkSize = 1;
         } else if (this.data.length == 4) {

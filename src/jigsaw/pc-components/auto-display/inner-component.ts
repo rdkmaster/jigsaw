@@ -23,22 +23,23 @@ export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase impl
 
     @ViewChild(JigsawRendererHost)
     protected rendererHost: JigsawRendererHost;
+
     protected rendererRef: ComponentRef<DisplayRendererBase>;
-    protected _customRenderer: Type<DisplayRendererBase> | string;
+    protected customRenderer: Type<DisplayRendererBase> | string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public get renderer(): Type<DisplayRendererBase> | string {
-        return this._customRenderer
+        return this.customRenderer
     }
 
     public set renderer(value: Type<DisplayRendererBase> | string) {
-        if (this._customRenderer == value) {
+        if (this.customRenderer == value) {
             return;
         }
-        this._customRenderer = value;
+        this.customRenderer = value;
         this.rendererHost?.viewContainerRef.clear();
     }
 
@@ -83,21 +84,21 @@ export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase impl
 @Directive()
 export class JigsawAutoDisplayInnerBase extends JigsawDisplayInnerBase implements AfterViewInit, OnInit {
     protected rendererRef: ComponentRef<AutoDisplayRendererBase>;
-    protected _customRenderer: Type<AutoDisplayRendererBase> | string;
+    protected customRenderer: Type<AutoDisplayRendererBase> | string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
     public get renderer(): Type<AutoDisplayRendererBase> | string {
-        return this._customRenderer
+        return this.customRenderer
     }
 
     public set renderer(value: Type<AutoDisplayRendererBase> | string) {
-        if (this._customRenderer == value) {
+        if (this.customRenderer == value) {
             return;
         }
-        this._customRenderer = value;
+        this.customRenderer = value;
         this.rendererHost?.viewContainerRef.clear();
     }
 

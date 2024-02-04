@@ -100,7 +100,7 @@ export * from "./pc-components/chart-icon/chart-icon";
 export * from "./pc-components/large-text/large-text";
 export * from "./pc-components/form-display/form-display";
 export * from "./pc-components/auto-display/auto-display";
-export * from "./pc-components/auto-display/auto-display-inner-component";
+export * from "./pc-components/auto-display/inner-component";
 export * from "./pc-components/auto-display/renderer/auto-display-renderer";
 
 /* fallback components */

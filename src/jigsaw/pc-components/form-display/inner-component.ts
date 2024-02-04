@@ -13,12 +13,12 @@ import {
     FormDisplayRendererBase,
     FormDisplayTagCellRenderer
 } from "./form-display-renderer";
-import { JigsawDisplayInnerBase } from "../auto-display/auto-display-inner-component";
+import { JigsawDisplayInnerBase } from "../auto-display/inner-component";
 
 @Directive()
 export class JigsawFormDisplayCellBase extends JigsawDisplayInnerBase implements AfterViewInit, OnInit {
     protected rendererRef: ComponentRef<FormDisplayRendererBase>;
-    protected _customRenderer: Type<FormDisplayRendererBase> | string;
+    protected customRenderer: Type<FormDisplayRendererBase> | string;
 
     private _cellData: string | string[];
 
@@ -39,14 +39,14 @@ export class JigsawFormDisplayCellBase extends JigsawDisplayInnerBase implements
      */
     @Input()
     public get renderer(): Type<FormDisplayRendererBase> | string {
-        return this._customRenderer
+        return this.customRenderer
     }
 
     public set renderer(value: Type<FormDisplayRendererBase> | string) {
-        if (this._customRenderer == value || (!value && this._customRenderer instanceof FormDisplayHtmlCellRenderer)) {
+        if (this.customRenderer == value || (!value && this.customRenderer instanceof FormDisplayHtmlCellRenderer)) {
             return;
         }
-        this._customRenderer = value;
+        this.customRenderer = value;
         this.rendererHost?.viewContainerRef.clear();
     }
 
