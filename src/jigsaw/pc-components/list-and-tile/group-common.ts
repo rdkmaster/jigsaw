@@ -94,8 +94,8 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     /**
      * 判断是否达到最大已选项
      */
-    @Input()
     @RequireMarkForCheck()
+    @Input()
     public get maxSelectionReached(): boolean {
         return this._$maxSelectionReached;
     }
@@ -111,13 +111,22 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
     @Output()
     public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
         
-    /**
-     * 多选最大个数限制
-     *
-     * @NoMarkForCheckRequired
-     */
+    private _maxSelectionLimit: number = 0;
+
+    @RequireMarkForCheck()
     @Input()
-    public maxSelectionLimit: number = 0;
+    public get maxSelectionLimit(): number {
+        return this._maxSelectionLimit;
+    }
+
+    public set maxSelectionLimit(value: number) {
+        if (CommonUtils.isUndefined(value) || isNaN(value)) {
+            this._maxSelectionLimit = 0;
+            return;
+        }
+        this._maxSelectionLimit = value;
+        this._checkMaxSelectionLimit();
+    }
 
     private _checkMaxSelectionLimit(): void {
         if (!this.multipleSelect || isNaN(this.maxSelectionLimit) || this.maxSelectionLimit <= 0 || !this.selectedItems) {

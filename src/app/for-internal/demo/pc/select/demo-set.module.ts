@@ -39,6 +39,8 @@ import { SelectShowBorderDemoModule } from "./show-border/demo.module";
 import { SelectShowBorderDemoComponent } from "./show-border/demo.component";
 import { SelectOptionsDemoModule } from "./options/demo.module";
 import { SelectOptionsDemoComponent } from "./options/demo.component";
+import { SelectMaxSelectionLimitDemoComponent } from "./max-selection-limit/demo.component";
+import { SelectMaxSelectionLimitDemoModule } from "./max-selection-limit/demo.module";
 
 export const routerConfig = [
     {
@@ -97,6 +99,9 @@ export const routerConfig = [
     },
     {
         path: 'options', component: SelectOptionsDemoComponent
+    },
+    {
+        path: 'max-selection-limit', component: SelectMaxSelectionLimitDemoComponent
     }
 ];
 
@@ -121,7 +126,8 @@ export const routerConfig = [
         SelectInfiniteScrollDemoModule,
         SelectManualSearchDemoModule,
         SelectShowBorderDemoModule,
-        SelectOptionsDemoModule
+        SelectOptionsDemoModule,
+        SelectMaxSelectionLimitDemoModule
     ]
 })
 export class SelectDemoModule {

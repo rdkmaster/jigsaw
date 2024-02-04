@@ -15,7 +15,7 @@
         <jigsaw-button (click)="clearValue()">清空已选</jigsaw-button>
     </li>
     <li class="demo-options-item">
-        <span>禁用：</span>
+        <span>禁用：<jigsaw-icon title="perfectScrollbar指令与元素disabled属性存在不兼容的问题" icon="iconfont iconfont-e23f" iconSize="16"></jigsaw-icon></span>
         <jigsaw-switch [(checked)]="disabled"></jigsaw-switch>
         <span>多选：</span>
         <jigsaw-switch [(checked)]="multipleSelect" (checkedChange)="clearValue()"></jigsaw-switch>

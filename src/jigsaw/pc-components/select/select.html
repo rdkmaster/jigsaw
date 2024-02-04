@@ -40,6 +40,7 @@
                          [multipleSelect]="multipleSelect"
                          [theme]="theme"
                          [(maxSelectionReached)]="_$maxSelectionReached"
+                         (maxSelectionReachedChange)="maxSelectionReachedChange.emit($event)"
                          [maxSelectionLimit]="maxSelectionLimit"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">
                 <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">

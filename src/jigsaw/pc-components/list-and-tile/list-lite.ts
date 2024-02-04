@@ -170,6 +170,9 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      */
     public _$maxSelectionReached: boolean = false;
 
+    @Output()
+    public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 

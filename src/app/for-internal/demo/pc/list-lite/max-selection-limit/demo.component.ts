@@ -45,8 +45,13 @@ export class ListLiteMaxSelectionLimitDemoComponent {
     ];
 
     public selectedItemsChange($event) {
-        console.log($event);
+        console.log('selectedItemsChange ===>', $event);
     }
+
+    public maxSelectionReachedChange($event) {
+        console.log('maxSelectionReachedChange ===>', $event);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

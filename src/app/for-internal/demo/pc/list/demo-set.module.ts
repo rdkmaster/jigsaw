@@ -7,6 +7,8 @@ import { ListTrackItemByDemoComponent } from "./track-item-by/demo.component";
 import { ListTrackItemByDemoModule } from "./track-item-by/demo.module";
 import { ListOptionsDemoModule } from "./options/demo.module";
 import { ListOptionsDemoComponent } from "./options/demo.component";
+import { ListMaxSelectionLimitDemoComponent } from "./max-selection-limit/demo.component";
+import { ListMaxSelectionLimitDemoModule } from "./max-selection-limit/demo.module";
 
 export const routerConfig = [
     {
@@ -18,6 +20,9 @@ export const routerConfig = [
     {
         path: 'options', component: ListOptionsDemoComponent
     },
+    {
+        path: 'max-selection-limit', component: ListMaxSelectionLimitDemoComponent
+    }
 ];
 
 @NgModule({
@@ -25,7 +30,8 @@ export const routerConfig = [
         RouterModule.forChild(routerConfig),
         ListFullDemoModule,
         ListTrackItemByDemoModule,
-        ListOptionsDemoModule
+        ListOptionsDemoModule,
+        ListMaxSelectionLimitDemoModule
     ]
 })
 export class ListDemoModule{

@@ -6,7 +6,7 @@
     [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}" [style.max-height]="height">
     <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
         [(selectedItems)]="selectedItems" [(maxSelectionReached)]="_$maxSelectionReached" [maxSelectionLimit]="maxSelectionLimit"
-        (selectedItemsChange)="_$handleSelectChange($event)">
+        (selectedItemsChange)="_$handleSelectChange($event)" (maxSelectionReachedChange)="maxSelectionReachedChange.emit($event)">
         <j-list-option [theme]="theme" *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
             [disabled]="item?.disabled" [maxSelectionReached]="_$maxSelectionReached">
             <p j-title class="jigsaw-list-lite-text" [title]="_$getItemLabel(item, labelField)">
