@@ -206,6 +206,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 多选最大个数限制
      *
      */
+    @RequireMarkForCheck()
     @Input()
     public maxSelectionLimit: number = 0;
 
