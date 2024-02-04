@@ -19,7 +19,7 @@ export type AutoDisplay = {
     /**
      * 指定单元格使用的渲染器
      */
-    renderAs?: Type<AutoDisplayRendererBase> | 'table' | 'graph' | 'html',
+    renderAs?: Type<AutoDisplayRendererBase> | 'table' | 'graph',
 
     /**
      *  渲染器的数据

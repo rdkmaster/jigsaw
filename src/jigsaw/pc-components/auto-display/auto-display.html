@@ -1,9 +1,5 @@
-<!-- <jigsaw-auto-display-content *ngFor="let item of data; let i = index" [renderer]="item.renderAs"
-    [rendererInitData]="item.initData">
-</jigsaw-auto-display-content> -->
-
 <div class="jigsaw-auto-display-row" *ngFor="let row of _$viewData">
-    <jigsaw-auto-display-content *ngFor="let item of row; let i = index" [renderer]="item.renderAs"
+    <jigsaw-auto-display-content *ngFor="let item of row" [renderer]="item.renderAs"
         [rendererInitData]="item.initData">
     </jigsaw-auto-display-content>
 </div>

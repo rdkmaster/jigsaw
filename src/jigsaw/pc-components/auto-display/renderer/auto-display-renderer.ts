@@ -35,7 +35,7 @@ export abstract class DisplayRendererBase implements OnInit, OnDestroy {
 }
 
 @Directive()
-export class AutoDisplayRendererBase extends DisplayRendererBase implements OnInit, OnDestroy {
+export abstract class AutoDisplayRendererBase extends DisplayRendererBase implements OnInit, OnDestroy {
 }
 
 /**
