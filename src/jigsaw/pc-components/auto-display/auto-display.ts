@@ -64,7 +64,7 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
         this.update();
     }
 
-    private _converData(): void {
+    private _transformData(): void {
         this._$viewData = [];
         if (!this.data?.length) {
             return;
@@ -86,7 +86,7 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
     }
 
     public update() {
-        this._converData();
+        this._transformData();
         this._changeDetectorRef.markForCheck();
     }
 
