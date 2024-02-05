@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { TabStyleOptions } from "jigsaw/public_api";
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { JigsawTabBar, TabStyleOptions } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -7,6 +7,9 @@ import { TabStyleOptions } from "jigsaw/public_api";
 })
 export class TabBarStyleOptionsDemoComponent implements OnInit {
     public tabBarData: Array<string>;
+
+    @ViewChild('tab')
+    public tabBar: JigsawTabBar;
 
     public styleOptions: TabStyleOptions = {
         tabBarStyles: {
@@ -33,6 +36,10 @@ export class TabBarStyleOptionsDemoComponent implements OnInit {
         contentStyles: {
             backgroundFill: undefined
         }
+    }
+
+    public updateStyleOptions(){
+        this.tabBar.updateStyleOptions();
     }
 
     public backgroundColor: string;

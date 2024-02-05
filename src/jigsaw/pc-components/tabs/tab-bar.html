@@ -2,7 +2,7 @@
     <div class="jigsaw-tabs-nav-container" [style.background]="styleOptions?.barStyles?.backgroundFill">
         <div #tabsInkBar class="jigsaw-tabs-ink-bar" [ngStyle]="_$inkBarStyle"></div>
         <div #tabsNavWrap class="jigsaw-tabs-nav-wrap">
-            <div #tabsNav class="jigsaw-tabs-nav" [ngStyle]="_$selectTabStyle" (mouseout)="_$hoveredTab = null">
+            <div #tabsNav class="jigsaw-tabs-nav" [ngStyle]="_$selectTabStyle">
                 <jigsaw-tab-label class="jigsaw-tabs-tab"
                                   *ngFor="let tab of _$tabPanes; let i = index"
                                   [key]="i"
@@ -18,9 +18,7 @@
                                   [class.jigsaw-tabs-tab-editable]="editable"
                                   (click)="!tab.disabled && _$tabClick(i)"
                                   (remove)="_$handleRemove($event)"
-                                  (labelChange)="titleChange.emit($event)"
-                                  [ngStyle]="_$getTabLabelStyle(tab, i)"
-                                  (mouseover)="_$hoveredTab = i">
+                                  (labelChange)="titleChange.emit($event)">
                 </jigsaw-tab-label>
                 <span class="iconfont iconfont-ea1d jigsaw-tabs-add-bar" *ngIf="editable"
                       (click)="_$handleAdd()"></span>
