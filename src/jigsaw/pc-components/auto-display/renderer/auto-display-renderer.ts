@@ -16,6 +16,7 @@ import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-da
 import { TableData } from "../../../common/core/data/table-data";
 import { CommonUtils } from "../../../common/core/utils/common-utils";
 
+@Directive()
 export abstract class DisplayRendererBase implements OnInit, OnDestroy {
     constructor(// @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {

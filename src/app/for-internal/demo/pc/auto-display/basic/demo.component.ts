@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild, ViewEncapsulation} from "@angular/core";
-import {AutoDisplayData, JigsawAutoDisplayComponent} from "jigsaw/public_api";
+import { Component, OnInit, ViewChild, ViewEncapsulation } from "@angular/core";
+import { AutoDisplayData, JigsawAutoDisplay } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
@@ -8,7 +8,7 @@ import {AutoDisplayData, JigsawAutoDisplayComponent} from "jigsaw/public_api";
 })
 export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
     @ViewChild('autoDisplay')
-    public autoDisplay: JigsawAutoDisplayComponent
+    public autoDisplay: JigsawAutoDisplay
 
     public data: AutoDisplayData[] = [];
 
