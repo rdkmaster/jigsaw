@@ -17,7 +17,7 @@ import {JigsawAutoDisplayRendererModule} from "./renderer/auto-display-renderer"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawAutoDisplay extends AbstractJigsawComponent implements OnInit, OnDestroy {
     constructor(private _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
@@ -75,8 +75,8 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
 @NgModule({
     imports: [CommonModule, JigsawCommonModule, JigsawAutoDisplayRendererModule],
-    declarations: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent],
-    exports: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent]
+    declarations: [JigsawAutoDisplay, JigsawAutoDisplayContentComponent],
+    exports: [JigsawAutoDisplay, JigsawAutoDisplayContentComponent]
 })
 export class JigsawAutoDisplayModule {
 }

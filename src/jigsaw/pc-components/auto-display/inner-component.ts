@@ -20,6 +20,7 @@ import {
     DisplayRendererBase
 } from "./renderer/auto-display-renderer";
 
+@Directive()
 export abstract class JigsawDisplayInnerBase extends AbstractJigsawViewBase implements AfterViewInit, OnInit {
     constructor(protected componentFactoryResolver: ComponentFactoryResolver,
         protected changeDetector: ChangeDetectorRef, protected _zone: NgZone) {
