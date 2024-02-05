@@ -16,7 +16,7 @@ import {FormlyFieldConfig} from '@ngx-formly/core';
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {JigsawTooltipModule, TooltipWordBreak} from "../../common/directive/tooltip/tooltip";
 import {FloatPosition} from "../../common/directive/float/float";
-import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
+import {JigsawFormDisplayCellComponent} from "./inner-component";
 import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
 
 interface StyleCombos {
