@@ -1,15 +1,18 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { JigsawTabBar, TabStyleOptions } from "jigsaw/public_api";
+import { JigsawTab, JigsawTabBar, TabStyleOptions } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "./demo.component.html",
     styleUrls: ['./../../assets/demo.common.css', './demo.component.css']
 })
 export class TabBarStyleOptionsDemoComponent implements OnInit {
-    public tabBarData: Array<string>;
+    public tabBarData;
+
+    @ViewChild('tabBar')
+    public tabBar: JigsawTabBar;
 
     @ViewChild('tab')
-    public tabBar: JigsawTabBar;
+    public tab: JigsawTab;
 
     public styleOptions: TabStyleOptions = {
         tabBarStyles: {
@@ -38,8 +41,9 @@ export class TabBarStyleOptionsDemoComponent implements OnInit {
         }
     }
 
-    public updateStyleOptions(){
+    public updateStyleOptions() {
         this.tabBar.updateStyleOptions();
+        this.tab.updateStyleOptions();
     }
 
     public backgroundColor: string;
@@ -48,7 +52,19 @@ export class TabBarStyleOptionsDemoComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.tabBarData = ["Tab 1", "Tab 2", `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`, "Tab 4"];
+        this.tabBarData = [
+            "Tab 1",
+            "Tab 2",
+            `<div><span class="iconfont iconfont-e187"></span>Tab 3</div>`,
+            "Tab 4",
+            {
+                label: "Tab 5",
+                icon: "iconfont iconfont-e105"
+            },
+            {
+                label: "Tab 6",
+                disabled: true
+            }];
     }
 
     // ====================================================================

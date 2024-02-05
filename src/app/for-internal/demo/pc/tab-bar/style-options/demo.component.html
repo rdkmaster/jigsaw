@@ -110,11 +110,11 @@
 </div>
 <div class="demo-cntr">
     <div>
-        <jigsaw-tabs-bar #tab width="100%" [data]="tabBarData" [styleOptions]="styleOptions.tabBarStyles"
+        <jigsaw-tabs-bar #tabBar width="100%" [data]="tabBarData" [styleOptions]="styleOptions.tabBarStyles"
             [backgroundColor]="backgroundColor"></jigsaw-tabs-bar>
     </div>
     <div>
-        <jigsaw-tabs [backgroundColor]="backgroundColor" [styleOptions]="styleOptions">
+        <jigsaw-tabs #tab [backgroundColor]="backgroundColor" [styleOptions]="styleOptions">
             <jigsaw-tab-pane title="tab1">
                 <ng-template>
                     <p class="tab-content">tab content 1

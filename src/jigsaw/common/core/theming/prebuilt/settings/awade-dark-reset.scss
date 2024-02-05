@@ -89,6 +89,7 @@
 
     .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {
         background: $gray-4;
+        color: $font-color-default;
     }
 
     &.jigsaw-tabs-page .jigsaw-tabs-bar .jigsaw-tabs-nav-container .jigsaw-tabs-nav-wrap .jigsaw-tabs-nav .jigsaw-tabs-tab:not(.jigsaw-tabs-tab-disabled):hover {

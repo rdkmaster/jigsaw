@@ -583,6 +583,20 @@ export class JigsawTab extends JigsawTabBase {
             return;
         }
         this._styleOptions = value;
+        this._setTabStyle();
+        this._changeDetector.detectChanges();
+    }
+
+    private _setTabStyle() {
+        if (this.styleOptions.tabBarStyles && this._tabBar) {
+            this._tabBar.styleOptions = this.styleOptions.tabBarStyles;
+        }
+        this._changeDetector.detectChanges();
+    }
+
+    public updateStyleOptions() {
+        this._setTabStyle();
+        this._tabBar.updateStyleOptions();
         this._changeDetector.detectChanges();
     }
 
