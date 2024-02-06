@@ -218,6 +218,11 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    public _$maxSelectionReachedChange($event: boolean) {
+        this._$checkSelectAll();
+        this.maxSelectionReachedChange.emit($event);
+    }
+
     /**
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
@@ -481,7 +486,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._allSelectCheck()) {
+        if (this._allSelectCheck() || this._$maxSelectionReached) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else if (this._allDisabledCheck()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
