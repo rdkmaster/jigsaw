@@ -313,6 +313,8 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
                         }
                     ],
                     "name": "Sales of Current Month",
+                    "dimensionField": "vehicle_model",
+                    // 这两个属性和数据无关但是对于饼图来说必须有，也可以后期加
                     "radius": [
                         0,
                         75
@@ -321,7 +323,6 @@ export class JigsawAutoDisplayBasicDemoComponent implements OnInit {
                         50,
                         55
                     ],
-                    "dimensionField": "vehicle_model"
                 }]
             },
         }
