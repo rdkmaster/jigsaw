@@ -13,6 +13,7 @@ import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/
 import { JigsawTableModule } from "../../table/table";
 import { JigsawGraphModule } from "../../graph/index";
 import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-data";
+import { AbstractModeledGraphData, ModeledPieGraphData } from "../../../common/core/data/modeled-graph-data";
 import { TableData } from "../../../common/core/data/table-data";
 import { CommonUtils } from "../../../common/core/utils/common-utils";
 
@@ -84,8 +85,31 @@ export class AutoDisplayGraphRenderer extends AutoDisplayRendererBase {
     }
 }
 
+/**
+ * @internal
+ * */
+@Component({
+    templateUrl: './auto-display-graph.html',
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class AutoDisplayModeledGraphRenderer extends AutoDisplayRendererBase {
+    public data: AbstractModeledGraphData;
+
+    ngOnInit() {
+        super.ngOnInit();
+        this.data = new ModeledPieGraphData() as ModeledPieGraphData;
+        this.data.data = this.initData.data;
+        this.data.header = this.initData.header;
+        this.data.field = this.initData.field;
+        this.data['series'] = this.initData.series;
+        this.data.template.option = this.initData.templateOption;
+        console.log(this.data);
+        this.data.refresh();
+    }
+}
+
 @NgModule({
-    declarations: [AutoDisplayTableRenderer, AutoDisplayGraphRenderer],
+    declarations: [AutoDisplayTableRenderer, AutoDisplayGraphRenderer, AutoDisplayModeledGraphRenderer],
     imports: [CommonModule, JigsawTrustedHtmlModule, JigsawTableModule, JigsawGraphModule]
 })
 export class JigsawAutoDisplayRendererModule {
