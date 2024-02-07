@@ -26,8 +26,7 @@ export class TransFormCommonDemoComponent {
     public styleOptions = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [100, 200, 80],
-        columnWidthType: "fixed"
+        columnWidths: [{value: 100, unit: 'px'}, {value: 200, unit: 'px'}, {value: 80, unit: 'px'}]
     }
 
     public changeSource() {
@@ -67,8 +66,7 @@ export class TransFormCommonDemoComponent {
             {
                 trStyle: {'border-width': '2px'},
                 tdStyle: {'border-width': '2px', 'padding-left': '9px'},
-                columnWidths: [100, 150, 100],
-                columnWidthType: "fixed"
+                columnWidths: [{value: 100, unit: 'px'}, {value: 150, unit: 'px'}, {value: 100, unit: 'px'}]
             }
         ];
     }

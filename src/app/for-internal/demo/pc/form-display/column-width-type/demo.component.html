@@ -4,3 +4,10 @@
 <div class="form">
     <jigsaw-form-display #jigsawFormDisplayComponent [data]="formio" [styleOptions]="formStyleOption" [width]="'75%'"></jigsaw-form-display>
 </div>
+<div style="display: flex; width: 80%;">
+    <div style="margin: 10px 5px 10px 5px" *ngFor="let column of columnWidths; let index=index">
+        <label>第{{index+1}}列</label>
+        <jigsaw-numeric-input [(value)]="column.value" (valueChange)="_$valueChange()"
+                               [suffix]="_$icons" (suffixChange)="_$unitChange($event, index)" [suffixLabelField]="'unit'"></jigsaw-numeric-input>
+    </div>
+</div>

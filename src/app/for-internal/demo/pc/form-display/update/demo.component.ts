@@ -30,8 +30,7 @@ export class FormDisplayUpdateComponent {
     public styleOptions = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [100, 200, 80],
-        columnWidthType: "fixed"
+        columnWidths: [{value: 100, unit: 'px'}, {value: 200, unit: 'px'}, {value: 80, unit: 'px'}]
     }
 
     public changeSource1() {
@@ -39,11 +38,10 @@ export class FormDisplayUpdateComponent {
         this.formComponentInstance.formio.push({type: 'auto-input', templateOptions: {label: "字段33", title: "33"}});
         this.jigsawFormDisplayComponent.update(<TableDataConfig[]>this.formComponentInstance.formio);
         this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions[]>[
-            this.styleOptions,
             {
                 trStyle: {'border-width': '2px'},
                 tdStyle: {'border-width': '2px', 'padding-left': '9px'},
-                columnWidths: [100, 150, 100]
+                columnWidths: [50, 50]
             }
         ];
     }

@@ -1,9 +1,11 @@
-import {Component} from "@angular/core";
-import {FloatPosition} from "jigsaw/public_api";
+import {Component, ViewChild} from "@angular/core";
+import {FloatPosition, FormDisplayStyleOptions, JigsawFormDisplayComponent} from "jigsaw/public_api";
 @Component({
     templateUrl: './demo.component.html'
 })
 export class FormDisplayColumnWidthTypeDemoComponent {
+    @ViewChild('jigsawFormDisplayComponent')
+    jigsawFormDisplayComponent: JigsawFormDisplayComponent;
     public formio = [
         {
             title: '百分比列宽做到不同分辨率下自适应',
@@ -32,17 +34,17 @@ export class FormDisplayColumnWidthTypeDemoComponent {
                 ['edw_last_source', 'string', '300', '---', '是'],
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
                 ['edw_last-source', 'string', '300', '---', '否']
-
             ]
         }
     ]
+
+    public columnWidths = [{value: 20, unit: '%'}, {value: 20, unit: '%'}, {value: 30, unit: '%'}, {value: 10, unit: '%'}];
 
     public formStyleOption = [
         {
             trStyle: {'border-width': '1px'},
             tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
             columnWidths: [10, 40, 10, 40],
-            columnWidthType: "percentage",
             tooltipConfig: {
                 enableTooltip: true,
                 overflowOnly: true,
@@ -52,8 +54,7 @@ export class FormDisplayColumnWidthTypeDemoComponent {
         {
             trStyle: {'border-width': '1px'},
             tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [200, 100, 100, 100, 100],
-            columnWidthType: "fixed",
+            columnWidths: this.columnWidths,
             tooltipConfig: {
                 enableTooltip: true,
                 overflowOnly: true,
@@ -61,6 +62,21 @@ export class FormDisplayColumnWidthTypeDemoComponent {
             }
         }
     ]
+
+    public _$icons = ["%", "px"];
+
+    public _$valueChange() {
+        console.log(this.columnWidths);
+        this.formStyleOption[1].columnWidths = this.columnWidths;
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
+    }
+
+    public _$unitChange(event: string, index: number) {
+        this.columnWidths[index].unit = event;
+        console.log(this.columnWidths);
+        this.formStyleOption[1].columnWidths = this.columnWidths;
+        this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
+    }
 
     summary: string = "这个DEMO演示了form-display组件设置列宽";
     description: string = "columnWidths 设置有个规则： 当columnWidths的总和小于组件整体的宽度时，如果每列都设置了宽度此时其实是按照百分比分割宽度；" +

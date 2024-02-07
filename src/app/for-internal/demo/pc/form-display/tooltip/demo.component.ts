@@ -60,7 +60,6 @@ export class FormDisplayTooltipDemoComponent {
                 ['edw_last_source', 'string', '300', '---', '是'],
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
                 ['edw_last-source', 'string', '300', '---', '否']
-
             ]
         }
     ]
@@ -68,8 +67,7 @@ export class FormDisplayTooltipDemoComponent {
     public formStyleOption = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [300, 200, 100],
-        columnWidthType: "fixed",
+        columnWidths: [{value: 300, unit: 'px'}, {value: 200, unit: 'px'}, {value: 100, unit: 'px'}],
         tooltipConfig: {
             enableTooltip: this._$tooltipEnable,
             overflowOnly: true,

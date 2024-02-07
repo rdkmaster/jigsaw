@@ -18,7 +18,6 @@ import {JigsawTooltipModule, TooltipWordBreak} from "../../common/directive/tool
 import {FloatPosition} from "../../common/directive/float/float";
 import {JigsawFormDisplayCellComponent} from "./form-display-inner-component";
 import {FormDisplayRendererBase, JigsawTableRendererModule} from "./form-display-renderer";
-import {options} from "../../common/novice-guide/utils";
 
 interface StyleCombos {
     [property: string]: string | number;
@@ -130,6 +129,11 @@ export type TooltipConfig = {
     wordBreak?: TooltipWordBreak
 }
 
+type columnWithType = {
+    value: number,
+    unit: "%" | "px"
+}
+
 export type FormDisplayStyleOptions = {
     /**
      * 表标题的样式，可选类型为 SectionTitleStyle
@@ -150,13 +154,7 @@ export type FormDisplayStyleOptions = {
      *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
      *  如何没设置columnWidths，每列平均分配宽度
      */
-    columnWidths?: number[],
-
-    /**
-     *  列宽种类配置项，默认是百分比
-     *  fixed为固定尺寸，percentage为百分比尺寸
-     */
-    columnWidthType?: "fixed" | "percentage",
+    columnWidths?: (number | columnWithType)[],
 
     /**
      *  悬浮提示配置项
@@ -251,8 +249,18 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             value.push(lastValue);
         }
         this._styleOptions = value;
-        this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
-        this._$tablesColumnsType = this._styleOptions.map(options => options.columnWidthType == 'fixed' ? "px" : "%");
+        this._$tablesColumns = this._styleOptions.map(option => {
+            if(!option.columnWidths) {
+                return [];
+            }
+            return option.columnWidths.map(column => typeof column === 'number' ? column : column.value)
+        });
+        this._$tablesColumnsType = this._styleOptions.map(options => {
+            if (!options.columnWidths) {
+                return [];
+            }
+            return options.columnWidths.map(column => typeof column === 'number' ? "%" : column.unit)
+        });
         this._$toolTipConfig = this._styleOptions.map(option => {
             return {
                 enableTooltip: !!option.tooltipConfig?.enableTooltip,
@@ -273,7 +281,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
      * 用于储存数据每个表列宽的单位
      * @internal
      */
-    public _$tablesColumnsType: ("px" | "%")[];
+    public _$tablesColumnsType: ("px" | "%")[][];
 
     /**
      * 用于储存数据中每一个表的列数

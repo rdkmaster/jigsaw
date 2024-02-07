@@ -62,7 +62,6 @@ export class FormDisplayCellRendererDemoComponent {
                 ['edw_last_source', 'string', '300', '---', '是'],
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
                 ['edw_last-source', 'string', '300', '---', '否']
-
             ]
         }
     ]
@@ -70,13 +69,12 @@ export class FormDisplayCellRendererDemoComponent {
     public formStyleOption = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [200, 100, 100],
+        columnWidths: [{value: 200, unit: 'px'}, {value: 100, unit: 'px'}, {value: 100, unit: 'px'}],
         tooltipConfig: {
             enableTooltip: true,
             overflowOnly: true,
             position: <FloatPosition>'top'
-        },
-        columnWidthType: "fixed"
+        }
     }
 
 
