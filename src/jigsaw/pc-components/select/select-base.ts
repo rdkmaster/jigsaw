@@ -218,6 +218,9 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     @Output()
     public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+    /**
+     * @internal
+     */    
     public _$maxSelectionReachedChange($event: boolean) {
         this._$checkSelectAll();
         this.maxSelectionReachedChange.emit($event);
