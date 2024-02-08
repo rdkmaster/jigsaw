@@ -40,41 +40,29 @@ export class FormDisplayColumnWidthTypeDemoComponent {
 
     public columnWidths = [{value: 20, unit: '%'}, {value: 20, unit: '%'}, {value: 30, unit: '%'}, {value: 10, unit: '%'}];
 
-    public formStyleOption = [
-        {
-            trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: [10, 40, 10, 40],
-            tooltipConfig: {
-                enableTooltip: true,
-                overflowOnly: true,
-                position: <FloatPosition>'top'
-            }
-        },
-        {
-            trStyle: {'border-width': '1px'},
-            tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-            columnWidths: this.columnWidths,
-            tooltipConfig: {
-                enableTooltip: true,
-                overflowOnly: true,
-                position: <FloatPosition>'top'
-            }
+    public formStyleOption = {
+        trStyle: {'border-width': '1px'},
+        tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
+        columnWidths: this.columnWidths,
+        tooltipConfig: {
+            enableTooltip: true,
+            overflowOnly: true,
+            position: <FloatPosition>'top'
         }
-    ]
+    }
 
     public _$icons = ["%", "px"];
 
     public _$valueChange() {
         console.log(this.columnWidths);
-        this.formStyleOption[1].columnWidths = this.columnWidths;
+        this.formStyleOption.columnWidths = this.columnWidths;
         this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
     }
 
     public _$unitChange(event: string, index: number) {
         this.columnWidths[index].unit = event;
         console.log(this.columnWidths);
-        this.formStyleOption[1].columnWidths = this.columnWidths;
+        this.formStyleOption.columnWidths = this.columnWidths;
         this.jigsawFormDisplayComponent.styleOptions = <FormDisplayStyleOptions>this.formStyleOption;
     }
 
