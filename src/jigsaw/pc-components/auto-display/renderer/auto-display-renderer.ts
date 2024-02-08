@@ -101,8 +101,10 @@ export class AutoDisplayModeledGraphRenderer extends AutoDisplayRendererBase {
         this.data.data = this.initData.data;
         this.data.header = this.initData.header;
         this.data.field = this.initData.field;
+        this.data['legendSource'] = this.initData.legendSource;
         this.data['series'] = this.initData.series;
         this.data.template.option = this.initData.templateOption;
+        console.log(this.initData.templateOption);
         console.log(this.data);
         this.data.refresh();
     }
