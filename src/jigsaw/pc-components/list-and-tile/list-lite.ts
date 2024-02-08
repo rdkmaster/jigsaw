@@ -29,29 +29,7 @@ type SupportedDataType = ArrayCollection<GroupOptionValue> | LocalPageableArray<
 @WingsTheme('list-lite.scss')
 @Component({
     selector: 'jigsaw-list-lite, j-list-lite',
-    template: `
-        <j-input [theme]="theme" *ngIf="searchable" class="jigsaw-list-lite-search" width="100%"
-                 (valueChange)="_$handleSearching($event)" [placeholder]="placeholder">
-            <span jigsaw-prefix-icon class="iconfont iconfont-ea03"></span>
-        </j-input>
-        <div [class]="showBorder ? 'jigsaw-list-lite-wrapper' : 'jigsaw-list-lite-wrapper jigsaw-list-lite-wrapper-no-border'"
-             [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20}"
-             [style.max-height]="height">
-            <j-list [theme]="theme" width="100%" [trackItemBy]="trackItemBy" [multipleSelect]="multipleSelect" [valid]="valid"
-                    [(selectedItems)]="selectedItems" (selectedItemsChange)="_$handleSelectChange($event)">
-                <j-list-option [theme]="theme" *ngFor="let item of data; trackBy: _$trackByFn" [value]="item"
-                               [disabled]="item?.disabled">
-                    <p j-title class="jigsaw-list-lite-text" [title]="_$getItemLabel(item, labelField)">
-                        <span *ngIf="item?.icon" class="{{item?.icon}}" style="font-size:12px; margin-right:4px"></span>
-                        <span class="jigsaw-list-lite-text-content">{{_$getItemLabel(item, labelField)}}</span>
-                    </p>
-                    <p j-sub-title *ngIf="item?.suffixIcon">
-                        <i class="{{item?.suffixIcon}}"></i>
-                    </p>
-                </j-list-option>
-            </j-list>
-        </div>
-    `,
+    templateUrl: 'list-lite.html',
     host: {
         '[style.width]': 'width',
         '[attr.data-theme]': 'theme',
@@ -179,6 +157,22 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     @Input()
     public showBorder: boolean = true;
 
+    /**
+     * 多选最大个数限制
+     *
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public maxSelectionLimit: number = 0;
+
+    /**
+     * @internal
+     */
+    public _$maxSelectionReached: boolean = false;
+
+    @Output()
+    public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
     @ViewChild(PerfectScrollbarDirective)
     private _listScrollbar: PerfectScrollbarDirective;
 
@@ -204,20 +198,20 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
      * @internal
      */
     public _$handleSearching(filterKey?: string) {
-        if(this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
+        if (this.data instanceof LocalPageableArray || this.data instanceof PageableArray) {
             this._filterData(filterKey);
-        } else {
-            const data = new LocalPageableArray();
-            data.pagingInfo.pageSize = Infinity;
-            const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
-                // 在新建data准备好再赋值给组件data，防止出现闪动的情况
-                removeUpdateSubscriber.unsubscribe();
-                this._needCheckSelectedItems = false;
-                this._updateData(data, false);
-                this._filterData(filterKey);
-            });
-            data.fromArray(this.data);
+            return;
         }
+        const data = new LocalPageableArray();
+        data.pagingInfo.pageSize = Infinity;
+        const removeUpdateSubscriber = data.pagingInfo.subscribe(() => {
+            // 在新建data准备好再赋值给组件data，防止出现闪动的情况
+            removeUpdateSubscriber.unsubscribe();
+            this._needCheckSelectedItems = false;
+            this._updateData(data, false);
+            this._filterData(filterKey);
+        });
+        data.fromArray(this.data);
     }
 
     private _filterData(filterKey?: string) {
@@ -262,6 +256,5 @@ export class JigsawListLite extends AbstractJigsawGroupLiteComponent implements 
     exports: [JigsawListLite]
 })
 export class JigsawListLiteModule {
-
 }
 

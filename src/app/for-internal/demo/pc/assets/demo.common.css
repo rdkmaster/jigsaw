@@ -8,6 +8,10 @@
     margin-right: 5px;
 }
 
+.demo-options .demo-options-item>span:not(:first-of-type) {
+    padding-left: 10px;
+}
+
 .demo-options .demo-options-item>*[class^="jigsaw-"]:not(:first-child),
 .demo-options .demo-options-item>*[class^="j-"]:not(:first-child) {
     margin-left: 5px;

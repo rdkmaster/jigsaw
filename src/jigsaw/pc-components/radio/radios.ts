@@ -53,7 +53,7 @@ export class JigsawRadioGroup extends AbstractJigsawGroupComponent {
     @Output()
     public valueChange: EventEmitter<any> = new EventEmitter<any>();
 
-    // 默认多选
+    // 默认单选
     public multipleSelect: boolean = false;
 
     @ContentChildren(forwardRef(() => JigsawRadioOption))

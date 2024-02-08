@@ -21,13 +21,14 @@ import {WingsTheme} from "../../common/common";
 @WingsTheme('list.scss')
 @Component({
     selector: 'jigsaw-list, j-list',
-    template: '<div *ngIf="disabled" class="jigsaw-list-disabled"></div><ng-content></ng-content>',
+    template: '<ng-content></ng-content>',
     host: {
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[attr.data-theme]':'theme',
         '[class.jigsaw-list-host]': 'true',
         '[class.jigsaw-list-error]': '!valid',
+        '[class.jigsaw-list-disabled]': 'disabled',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawList), multi: true},
@@ -70,7 +71,7 @@ export class JigsawList extends AbstractJigsawGroupComponent implements AfterCon
         '[attr.data-theme]': 'theme',
         '[class.jigsaw-list-option-host]': 'true',
         '[class.jigsaw-list-option-active]': 'selected',
-        '[class.jigsaw-list-option-disabled]': 'disabled',
+        '[class.jigsaw-list-option-disabled]': 'disabled || (!selected && maxSelectionReached)',
         '[class.jigsaw-list-option-separator]': 'value ? false : (value == null)',
         '(click)': '_$handleClick()'
     },
@@ -99,12 +100,20 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
         this.selectedChange.emit(value);
     }
 
+    @RequireMarkForCheck()
+    @Input()
+    public maxSelectionReached: boolean = false;
+
     /**
      * 点击组件触发
      * @internal
      */
     public _$handleClick(): void {
         if (this.disabled || this.value == null) {
+            return;
+        }
+        // 达到最大已选项时不可选
+        if (!this.selected && this.maxSelectionReached) {
             return;
         }
         this.change.emit(this);
@@ -116,5 +125,4 @@ export class JigsawListOption extends AbstractJigsawOptionComponent {
     declarations: [JigsawList, JigsawListOption],
     exports: [JigsawList, JigsawListOption]
 })
-export class JigsawListModule {
-}
+export class JigsawListModule { }
