@@ -5,7 +5,6 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {AutoDisplayData, JigsawAutoDisplayContentComponent} from "./inner-component";
 import {JigsawAutoDisplayRendererModule} from "./renderer/auto-display-renderer";
 
-@WingsTheme('auto-display.scss')
 @Component({
     selector: 'jigsaw-auto-display',
     templateUrl: './auto-display.html',
