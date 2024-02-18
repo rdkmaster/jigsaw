@@ -15,7 +15,10 @@ $jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
         .#{$jigsaw-auto-display}-content-host {
             flex: 1;
             overflow: hidden;
-            margin: 0 0 0 16px;
+
+            &:not(:last-of-type) {
+                margin-right: 16px;
+            }
         }
     }
 
