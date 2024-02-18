@@ -1,0 +1,22 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>最大可选条数(0为非法值)：</span>
+        <j-numeric-input [(value)]="maxSelectionLimit" min="0" max="200" placeholder="请输入最大可选条数">
+        </j-numeric-input>
+    </li>
+</ul>
+<jigsaw-header>基本用法</jigsaw-header>
+<j-list width="200" height="400" [multipleSelect]="true"
+    [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}"
+    [maxSelectionLimit]="maxSelectionLimit" [selectedItems]="selectedItems"
+    (selectedItemsChange)="selectedItemsChange($event)" [(maxSelectionReached)]="maxSelectionReached"
+    trackItemBy="label" (maxSelectionReachedChange)="maxSelectionReachedChange($event)">
+    <j-list-option *ngFor="let item of data" [value]="item" [maxSelectionReached]="maxSelectionReached">
+        {{item.label}}
+    </j-list-option>
+</j-list>

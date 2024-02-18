@@ -77,12 +77,63 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
             return;
         }
         this._propagateChange(newValue);
+        this._checkMaxSelectionLimit();
+    }
+    
+    constructor(protected _cdr: ChangeDetectorRef,
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
+            super();
+        }
+
+    /**
+     * @internal
+     */
+    public _$maxSelectionReached: boolean = false;
+
+    /**
+     * 判断是否达到最大已选项
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get maxSelectionReached(): boolean {
+        return this._$maxSelectionReached;
     }
 
-    constructor(protected _cdr: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
-        super();
+    public set maxSelectionReached(value: boolean) {
+        if (CommonUtils.isUndefined(value) || value == this._$maxSelectionReached) {
+            return;
+        }
+        this._$maxSelectionReached = value;
+        this.maxSelectionReachedChange.emit(this.maxSelectionReached);
+    }
+
+    @Output()
+    public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+        
+    private _maxSelectionLimit: number = 0;
+
+    @RequireMarkForCheck()
+    @Input()
+    public get maxSelectionLimit(): number {
+        return this._maxSelectionLimit;
+    }
+
+    public set maxSelectionLimit(value: number) {
+        if (CommonUtils.isUndefined(value) || isNaN(value)) {
+            this._maxSelectionLimit = 0;
+            return;
+        }
+        this._maxSelectionLimit = value;
+        this._checkMaxSelectionLimit();
+    }
+
+    private _checkMaxSelectionLimit(): void {
+        if (!this.multipleSelect || isNaN(this.maxSelectionLimit) || this.maxSelectionLimit <= 0 || !this.selectedItems) {
+            this.maxSelectionReached = false;
+            return;
+        }
+        this.maxSelectionReached = this.selectedItems.length >= this.maxSelectionLimit;
     }
 
     /**
@@ -145,6 +196,7 @@ export class AbstractJigsawGroupComponent extends AbstractJigsawComponent implem
 
     //根据selectedItems设置选中的option
     protected _setItemState(items: QueryList<AbstractJigsawOptionComponent>): void {
+        this._checkMaxSelectionLimit();
         if (!(this.selectedItems instanceof ArrayCollection) || !items.length) {
             return;
         }

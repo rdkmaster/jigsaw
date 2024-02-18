@@ -2,6 +2,7 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
+<jigsaw-button width="150" colorType="primary" (click)="updateStyleOptions()">更新</jigsaw-button>
 <div class="demo-options-cntr">
     <jigsaw-header>标签栏样式</jigsaw-header>
     <ul class="demo-options">
@@ -109,11 +110,11 @@
 </div>
 <div class="demo-cntr">
     <div>
-        <jigsaw-tabs-bar width="100%" [data]="tabBarData" [styleOptions]="styleOptions.tabBarStyles"
+        <jigsaw-tabs-bar #tabBar width="100%" [data]="tabBarData" [styleOptions]="styleOptions.tabBarStyles"
             [backgroundColor]="backgroundColor"></jigsaw-tabs-bar>
     </div>
     <div>
-        <jigsaw-tabs [backgroundColor]="backgroundColor" [styleOptions]="styleOptions">
+        <jigsaw-tabs #tab [backgroundColor]="backgroundColor" [styleOptions]="styleOptions">
             <jigsaw-tab-pane title="tab1">
                 <ng-template>
                     <p class="tab-content">tab content 1

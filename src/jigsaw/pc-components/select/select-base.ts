@@ -203,6 +203,30 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public multipleSelect: boolean = false;
 
     /**
+     * 多选最大个数限制
+     *
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public maxSelectionLimit: number = 0;
+
+    /**
+     * @internal
+     */
+    public _$maxSelectionReached: boolean = false;
+
+    @Output()
+    public maxSelectionReachedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+    /**
+     * @internal
+     */    
+    public _$maxSelectionReachedChange($event: boolean) {
+        this._$checkSelectAll();
+        this.maxSelectionReachedChange.emit($event);
+    }
+
+    /**
      * 选择结果框的清除按钮的显示与隐藏
      * $demo = select/clearable
      *
@@ -424,14 +448,31 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      */
     public _$selectAll() {
         const disabledSelectedItems = [];
-        if (this._$selectedItems?.length > 0) {
+        if (CommonUtils.isUndefined(this._$selectedItems)) {
+            this._$selectedItems = new ArrayCollection([]);
+        }
+        if (this._$selectedItems.length > 0) {
             disabledSelectedItems.push(...this._$selectedItems.filter(item => item.disabled));
         }
-        if (this._allSelectCheck()) {
+        if (this._allSelectCheck() || this._$maxSelectionReached) {
             this._$selectedItems = new ArrayCollection(disabledSelectedItems);
             this._$selectAllChecked = CheckBoxStatus.unchecked;
         } else {
-            this._$selectedItems = new ArrayCollection(this._getValidData().concat(disabledSelectedItems));
+            const availableOptions = this._getValidData().concat(disabledSelectedItems);
+            if (!isNaN(this.maxSelectionLimit) && this.maxSelectionLimit > 0 && this.maxSelectionLimit < availableOptions.length && this._$selectedItems.length < this.maxSelectionLimit) {
+                for (const element of availableOptions) {
+                    if (this._$selectedItems.includes(element)) {
+                        continue;
+                    }
+                    this._$selectedItems.push(element);
+                    if (this._$selectedItems.length >= this.maxSelectionLimit) {
+                        break;
+                    }
+                }
+                (this._$selectedItems as ArrayCollection<SelectOption>).refresh();
+            } else {
+                this._$selectedItems = new ArrayCollection(availableOptions);
+            }
             this._$selectAllChecked = CheckBoxStatus.checked;
         }
         this._value = this._$selectedItems;
@@ -448,7 +489,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
             this._$selectAllChecked = CheckBoxStatus.unchecked;
             return;
         }
-        if (this._allSelectCheck()) {
+        if (this._allSelectCheck() || this._$maxSelectionReached) {
             this._$selectAllChecked = CheckBoxStatus.checked;
         } else if (this._allDisabledCheck()) {
             this._$selectAllChecked = CheckBoxStatus.unchecked;
@@ -461,13 +502,13 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
      * 全选按钮只考虑可选内容，不考虑disabled
      * 会存在当前已选不在当期列表中的情况(已选项默认disabled)
      */
-    protected _allSelectCheck(): boolean {
+    private _allSelectCheck(): boolean {
         const validData = this._getValidData();
         if (!this._$selectedItems || !validData.length) {
             return false;
         }
-        return validData.every(
-            data => !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)))
+        return validData.every(data =>
+            !!this._$selectedItems.find(item => CommonUtils.compareValue(item, data, this.trackItemBy)));
     }
 
     /**
@@ -481,9 +522,8 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
         if (!disabledData.length) {
             return false;
         }
-        return this._$selectedItems.every(
-            selectedItem => !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy))
-        );
+        return this._$selectedItems.every(selectedItem =>
+            !!disabledData.find(data => CommonUtils.compareValue(data, selectedItem, this.trackItemBy)));
     }
 
     /**
