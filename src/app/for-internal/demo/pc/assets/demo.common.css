@@ -1,6 +1,7 @@
 .demo-options .demo-options-item {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     margin-bottom: 5px;
 }
 
