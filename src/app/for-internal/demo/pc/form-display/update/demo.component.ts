@@ -30,7 +30,7 @@ export class FormDisplayUpdateComponent {
     public styleOptions = {
         trStyle: {'border-width': '1px'},
         tdStyle: {'text-align': 'left', 'border-width': '1px', 'padding-left': '9px'},
-        columnWidths: [{value: 100, unit: 'px'}, {value: 200, unit: 'px'}, {value: 80, unit: 'px'}]
+        columnWidths: [100, 200, 80]
     }
 
     public changeSource1() {
