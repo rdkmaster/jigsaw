@@ -259,7 +259,7 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             if (!options.columnWidths) {
                 return [];
             }
-            return options.columnWidths.map(column => typeof column === 'number' ? "%" : column.unit)
+            return options.columnWidths.map(column => typeof column === 'number' ? "px" : column.unit)
         });
         this._$toolTipConfig = this._styleOptions.map(option => {
             return {
