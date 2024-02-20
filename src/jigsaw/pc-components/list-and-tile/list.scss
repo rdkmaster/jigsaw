@@ -7,19 +7,23 @@ $list-prefix-cls: #{$jigsaw-prefix}-list;
     border-radius: $border-radius-base;
     background: $bg-transparent;
     position: relative;
-    
+
     &.#{$list-prefix-cls}-error {
         border-color: $error-default;
     }
 
-    .#{$list-prefix-cls}-disabled {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: $bg-disabled;
-        border-color: $border-color-default !important;
-        opacity: 0.6;
-        z-index: $zindex-level-2;
-        cursor: not-allowed;
+    &.#{$list-prefix-cls}-disabled {
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: $bg-disabled;
+            border-color: $border-color-default !important;
+            opacity: 0.6;
+            z-index: $zindex-level-2;
+            cursor: not-allowed;
+        }
     }
 }

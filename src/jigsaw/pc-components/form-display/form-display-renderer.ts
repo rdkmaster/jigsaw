@@ -1,39 +1,28 @@
 import {
     Directive,
-    Injector,
     OnInit,
     OnDestroy,
     ChangeDetectionStrategy,
     Component,
     Input,
     NgModule,
+    Injector,
 } from "@angular/core"
 import {CommonModule} from "@angular/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {JigsawTrustedHtmlModule} from "../../common/directive/trusted-html/trusted-html";
 import {JigsawTagModule} from "../tag/tag";
+import { DisplayRendererBase } from "../auto-display/renderer/auto-display-renderer";
 
 @Directive()
-export class FormDisplayRendererBase implements OnInit, OnDestroy {
+export class FormDisplayRendererBase extends DisplayRendererBase implements OnInit, OnDestroy {
     constructor(// @RequireMarkForCheck 需要用到，勿删
         protected _injector: Injector) {
+        super(_injector)
     }
-
     @RequireMarkForCheck()
     @Input()
     public cellData: string | string[];
-
-    /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public initData: any;
-
-    ngOnInit(): void {
-    }
-
-    ngOnDestroy(): void {
-    }
 }
 
 /**

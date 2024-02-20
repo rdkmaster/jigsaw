@@ -3,7 +3,7 @@
 </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<jigsaw-header [level]="1">date-picker</jigsaw-header>
+<jigsaw-header [level]="1">date-time-picker</jigsaw-header>
 
 <jigsaw-header [level]="2">相关配置</jigsaw-header>
 <ul class="demo-options">
@@ -29,9 +29,15 @@
         <jigsaw-button (click)="clear()">手动清空</jigsaw-button>
         <jigsaw-button (click)="console()">打印当前date</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>再次点击时清除数据：</span>
+        <jigsaw-switch [(checked)]="clearOnReselect"></jigsaw-switch>
+    </li>
 </ul>
+
+<jigsaw-header [level]="2">基本用法</jigsaw-header>
 <jigsaw-date-time-picker #dateTimePicker [(date)]="date" [gr]="gr[0]" [limitStart]="limitStart" [limitEnd]="limitEnd"
-    (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
+    [clearOnReselect]="clearOnReselect" (dateChange)="dateChange($event)"></jigsaw-date-time-picker>
 <div>
     <span>选择的时间是：{{date}}</span>
 </div>

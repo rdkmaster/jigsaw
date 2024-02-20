@@ -9,7 +9,7 @@
     <table class="form-display-table">
         <colgroup>
             <ng-container *ngFor="let _ of _$tablesColumnLengths[i]; let j = index">
-                <col [attr.width]="_$tablesColumns[i][j] ? _$tablesColumns[i][j] + 'px': 'auto'">
+                <col [attr.width]="_$tablesColumns[i][j] ? _$tablesColumns[i][j] + (_$tablesColumnsType[i][j] || 'px'): 'auto'">
             </ng-container>
         </colgroup>
         <tr [ngStyle]="styleOptions[i].trStyle" *ngFor="let row of form.data">

@@ -805,7 +805,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
      * @internal
      */
     public _$handleValueChange(selectedValue: { label: string }) {
-        if (!selectedValue || selectedValue.label == this.cellData) {
+        if (CommonUtils.isUndefined(selectedValue) || selectedValue.label == this.cellData) {
             return;
         }
         this.cellData = selectedValue.label;
@@ -907,7 +907,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     set cellData(value: any) {
         this._cellData = value;
-        if (CommonUtils.isDefined(value) && value !== '') {
+        if (CommonUtils.isDefined(value)) {
             this.selected = {label: value};
         }
     }

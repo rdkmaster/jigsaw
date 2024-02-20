@@ -22,7 +22,6 @@ export class TranslateHelper {
         this.languageChangEvent.subscribe(langInfo => this._translateService.use(langInfo.curLang));
         this.translateService.setTranslation('en', this._tempCache.en, true);
         this.translateService.setTranslation('zh', this._tempCache.zh, true);
-        this._tempCache = null;
     }
 
     public static changeLanguage(translateService: TranslateService, lang: string): void {
