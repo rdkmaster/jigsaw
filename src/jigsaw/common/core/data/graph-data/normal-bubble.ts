@@ -32,6 +32,14 @@ export type BubbleLabelConfig = {
     position?: string,
     show: boolean
 }
+export type BubbleSeries = {
+    label: string,
+    value: number,
+    itemStyle: BubbleItemStyle,
+    labelConfig: BubbleLabelConfig,
+    x: number,
+    y: number
+}
 export type EmphasisConfig = {
     itemStyle: BubbleItemStyle,
     label?: BubbleLabelConfig

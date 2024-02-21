@@ -153,6 +153,7 @@ export {FunnelPlotGraphData} from "./common/core/data/graph-data/normal-funnel-p
 export {BubbleChartGraphData} from "./common/core/data/graph-data/normal-bubble";
 export {EmphasisConfig} from "./common/core/data/graph-data/normal-bubble";
 export {BubbleLabelConfig} from "./common/core/data/graph-data/normal-bubble";
+export {BubbleSeries} from "./common/core/data/graph-data/normal-bubble";
 export {BubbleItemStyle} from "./common/core/data/graph-data/normal-bubble";
 export {GradientColor} from "./common/core/data/graph-data/normal-bubble";
 export {ColorStop} from "./common/core/data/graph-data/normal-bubble";

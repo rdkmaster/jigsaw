@@ -11,8 +11,8 @@ import {
 import { CommonModule } from "@angular/common";
 import { JigsawTrustedHtmlModule } from "../../../common/directive/trusted-html/trusted-html";
 import { JigsawTableModule } from "../../table/table";
-import { JigsawGraphModule } from "../../graph/index";
-import { AbstractGraphData, GraphData } from "../../../common/core/data/graph-data";
+import { JigsawGraphModule } from "../../graph";
+import { AbstractGraphData, GraphData} from "../../../common/core/data/graph-data/graph-data";
 import { TableData } from "../../../common/core/data/table-data";
 import { CommonUtils } from "../../../common/core/utils/common-utils";
 
