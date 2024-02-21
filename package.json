@@ -40,6 +40,7 @@
         "moment": "~2.22.2",
         "ngx-color-picker": "~8.0.0",
         "ngx-perfect-scrollbar": "~8.0.0",
+        "perfect-scrollbar": "~1.4.0",
         "peity": "~3.2.1",
         "rxjs": "~6.5.4",
         "tslib": "~1.10.0",
