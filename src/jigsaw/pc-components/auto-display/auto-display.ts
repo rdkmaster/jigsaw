@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Injector, Input, NgModule, OnDestroy, OnInit} from "@angular/core";
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Injector, Input, NgModule, OnDestroy, OnInit, ViewChild} from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -65,6 +65,19 @@ export class JigsawAutoDisplay extends AbstractJigsawComponent implements OnInit
     public update() {
         this._transformData();
         this._changeDetectorRef.markForCheck();
+        console.log(this.container);
+        const test = new this.directive(this.container);
+        console.log(test);
+    }
+
+    @Input()
+    public directive;
+
+    @ViewChild('container')
+    container: ElementRef;
+
+    ngOnInit(): void {
+        
     }
 
     ngOnDestroy() {

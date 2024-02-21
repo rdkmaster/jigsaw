@@ -1,0 +1,24 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<jigsaw-header [level]="1">Auto-display</jigsaw-header>
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>数据控制</span>
+        <jigsaw-button (click)="clearData()">清空数据</jigsaw-button>
+        <jigsaw-button (click)="addBarGraph()">添加柱状图</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>数据删除</span>
+        <div class="data-tags">
+            <jigsaw-tag *ngFor="let item of data; let i = index" [closable]="true" (close)="removeData(i)">数据源 - {{i +
+                1}}</jigsaw-tag>
+        </div>
+    </li>
+</ul>
+
+<jigsaw-header>基本用法</jigsaw-header>
+<div class="demo-container">
+    <jigsaw-auto-display #autoDisplay [data]="data" [directive]="directive"></jigsaw-auto-display>
+</div>
