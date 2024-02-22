@@ -2,7 +2,11 @@ const fs = require("fs");
 const glob = require('glob').sync;
 
 const excludesFiles = [
-    'common/core/data/graph-data.ts', 'common/core/theming/echarts-theme.ts'
+    'common/core/data/graph-data/graph-data.ts',
+    'common/core/data/graph-data/normal-funnel-plot.ts',
+    'common/core/data/graph-data/normal-line-bar-area.ts',
+    'common/core/data/graph-data/normal-pie-doughnut.ts',
+    'common/core/theming/echarts-theme.ts'
 ];
 
 process.chdir(`${__dirname}/../../src/jigsaw/`);
