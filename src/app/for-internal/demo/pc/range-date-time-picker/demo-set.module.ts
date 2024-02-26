@@ -18,6 +18,8 @@ import { RangeDateTimePickerOptionsDemoModule } from "./options/demo.module";
 import { RangeDatePickerTimeOptionsDemoComponent } from "./options/demo.component";
 import { RangeDateTimeSelectShowBorderComponent } from "./show-border/demo.component";
 import { RangeDateTimeSelectShowBorderModule } from "./show-border/demo.module";
+import {RangeDatePickerLimitSpanDemoComponent} from "./limitSpan/demo.component";
+import {RangeDatePickerLimitSpanDemoModule} from "./limitSpan/demo.module";
 
 export const routerConfig: any = [
     {
@@ -47,6 +49,9 @@ export const routerConfig: any = [
     {
         path: 'options', component: RangeDatePickerTimeOptionsDemoComponent
     },
+    {
+        path: 'limitSpan', component: RangeDatePickerLimitSpanDemoComponent
+    }
 ];
 
 @NgModule({
@@ -60,7 +65,8 @@ export const routerConfig: any = [
         RangeDateTimeSelectModule,
         RangeDateTimeWeekStartModule,
         RangeDateTimePickerOptionsDemoModule,
-        RangeDateTimeSelectShowBorderModule
+        RangeDateTimeSelectShowBorderModule,
+        RangeDatePickerLimitSpanDemoModule
     ]
 })
 export class RangeDateTimeDemoModule {
