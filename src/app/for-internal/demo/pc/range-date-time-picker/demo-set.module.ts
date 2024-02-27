@@ -18,8 +18,8 @@ import { RangeDateTimePickerOptionsDemoModule } from "./options/demo.module";
 import { RangeDatePickerTimeOptionsDemoComponent } from "./options/demo.component";
 import { RangeDateTimeSelectShowBorderComponent } from "./show-border/demo.component";
 import { RangeDateTimeSelectShowBorderModule } from "./show-border/demo.module";
-import {RangeDatePickerLimitSpanDemoComponent} from "./limitSpan/demo.component";
-import {RangeDatePickerLimitSpanDemoModule} from "./limitSpan/demo.module";
+import {RangeDatePickerLimitSpanDemoComponent} from "./limit-span/demo.component";
+import {RangeDatePickerLimitSpanDemoModule} from "./limit-span/demo.module";
 
 export const routerConfig: any = [
     {
@@ -50,7 +50,7 @@ export const routerConfig: any = [
         path: 'options', component: RangeDatePickerTimeOptionsDemoComponent
     },
     {
-        path: 'limitSpan', component: RangeDatePickerLimitSpanDemoComponent
+        path: 'limit-span', component: RangeDatePickerLimitSpanDemoComponent
     }
 ];
 
