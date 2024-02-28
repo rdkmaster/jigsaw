@@ -1,10 +1,11 @@
-@import "../../../common/core/theming/prebuilt/settings/paletx-pro-base.scss";
-@import "../../../common/core/theming/prebuilt/settings/vmax-pro-base.scss";
-@import "../../../common/core/theming/prebuilt/settings/vmax-pro-light.scss";
-@import "../../../common/core/theming/prebuilt/settings/zjcm-light-reset.scss";
+@import "../../../common/core/theming/prebuilt/settings/paletx-pro-base";
+@import "../../../common/core/theming/prebuilt/settings/vmax-pro-base";
+@import "../../../common/core/theming/prebuilt/settings/vmax-pro-light";
+@import "../../../common/core/theming/prebuilt/settings/components-light";
+@import "../../../common/core/theming/prebuilt/settings/zjcm-light-reset";
 @import "../all-theme";
-@import "../../../common/core/theming/prebuilt/settings/zjcm-reset.scss";
+@import "../../../common/core/theming/prebuilt/settings/zjcm-reset";
 // 下面这些文件使用npm start或者编译的时候，会自动被extract-theme-variables.js创建出来
-@import "../../../common/core/theming/prebuilt/extraction/paletx-pro-base.scss";
-@import "../../../common/core/theming/prebuilt/extraction/vmax-pro-base.scss";
-@import "../../../common/core/theming/prebuilt/extraction/vmax-pro-light.scss";
+@import "../../../common/core/theming/prebuilt/extraction/paletx-pro-base";
+@import "../../../common/core/theming/prebuilt/extraction/vmax-pro-base";
+@import "../../../common/core/theming/prebuilt/extraction/vmax-pro-light";

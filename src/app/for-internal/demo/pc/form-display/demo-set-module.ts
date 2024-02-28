@@ -14,6 +14,8 @@ import {FormDisplayPerformanceTestDemoModule} from "./common-data-test/demo.modu
 import {FormDisplayPerformanceTestDemoComponent} from "./common-data-test/demo.component";
 import {FormDisplayRendererDataTestDemoComponent} from "./renderer-data-test/demo.component";
 import {FormDisplayRendererDataTestDemoModule} from "./renderer-data-test/demo.module";
+import {FormDisplayColumnWidthTypeDemoComponent} from "./column-width-type/demo.component";
+import {FormDisplayColumnWidthTypeDemoModule} from "./column-width-type/demo.module";
 
 export const routerConfig = [
     {
@@ -36,13 +38,16 @@ export const routerConfig = [
     },
     {
         path: 'renderer-data-test', component: FormDisplayRendererDataTestDemoComponent
+    },
+    {
+        path: 'column-width-type', component: FormDisplayColumnWidthTypeDemoComponent
     }
 ];
 
 @NgModule({
     imports: [
         RouterModule.forChild(routerConfig), FormDisplayCommonDemoModule, TransformAwadeCommonDemoModule, FormDisplayUpdateDemoModule, FormDisplayTooltipDemoModule,
-        FormDisplayCellRendererDemoModule, FormDisplayPerformanceTestDemoModule, FormDisplayRendererDataTestDemoModule
+        FormDisplayCellRendererDemoModule, FormDisplayPerformanceTestDemoModule, FormDisplayRendererDataTestDemoModule, FormDisplayColumnWidthTypeDemoModule
     ]
 })
 export class FormDisplayDemoModule {

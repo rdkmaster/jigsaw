@@ -1,0 +1,13 @@
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+<jigsaw-header>时间粒度&跨度限制 控制范围选择</jigsaw-header>
+<div style="margin-bottom: 10px">
+    <label>时间粒度</label>
+    <jigsaw-button-bar [data]="['second','minute','hour','date','week','month']" [(selectedItems)]="gr">
+    </jigsaw-button-bar>
+</div>
+<div style="margin-bottom: 10px">
+    <label>跨度限制</label>
+    <jigsaw-numeric-input [(value)]="limitSpan"></jigsaw-numeric-input>
+</div>
+<jigsaw-range-date-time-select [gr]="gr[0]" [limitSpan]="limitSpan" (dateChange)="dateChange($event)"></jigsaw-range-date-time-select>

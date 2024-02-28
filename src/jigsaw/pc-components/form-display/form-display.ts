@@ -129,6 +129,11 @@ export type TooltipConfig = {
     wordBreak?: TooltipWordBreak
 }
 
+type columnWithType = {
+    value: number,
+    unit: "%" | "px"
+}
+
 export type FormDisplayStyleOptions = {
     /**
      * 表标题的样式，可选类型为 SectionTitleStyle
@@ -149,7 +154,7 @@ export type FormDisplayStyleOptions = {
      *  设置表格每列宽度，提供数组少于列数，剩余列数设为auto
      *  如何没设置columnWidths，每列平均分配宽度
      */
-    columnWidths?: number[],
+    columnWidths?: (number | columnWithType)[],
 
     /**
      *  悬浮提示配置项
@@ -244,13 +249,24 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
             value.push(lastValue);
         }
         this._styleOptions = value;
-        this._$tablesColumns = this._styleOptions.map(option => option.columnWidths || []);
+        this._$tablesColumns = this._styleOptions.map(option => {
+            if(!option.columnWidths) {
+                return [];
+            }
+            return option.columnWidths.map(column => typeof column === 'number' ? column : column.value)
+        });
+        this._$tablesColumnsType = this._styleOptions.map(options => {
+            if (!options.columnWidths) {
+                return [];
+            }
+            return options.columnWidths.map(column => typeof column === 'number' ? "px" : column.unit)
+        });
         this._$toolTipConfig = this._styleOptions.map(option => {
             return {
                 enableTooltip: !!option.tooltipConfig?.enableTooltip,
                 position: option.tooltipConfig?.position || 'top',
                 overflowOnly: !!option.tooltipConfig?.overflowOnly,
-                wordBreak: option.tooltipConfig?.wordBreak || 'break-all',
+                wordBreak: option.tooltipConfig?.wordBreak || 'break-all'
             }
         });
     }
@@ -260,6 +276,12 @@ export class JigsawFormDisplayComponent extends AbstractJigsawComponent implemen
      * @internal
      */
     public _$tablesColumns: number[][] = [[0, 0]];
+
+    /**
+     * 用于储存数据每个表列宽的单位
+     * @internal
+     */
+    public _$tablesColumnsType: ("px" | "%")[][];
 
     /**
      * 用于储存数据中每一个表的列数

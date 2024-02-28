@@ -5,7 +5,6 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 import {AutoDisplayData, JigsawAutoDisplayContentComponent} from "./inner-component";
 import {JigsawAutoDisplayRendererModule} from "./renderer/auto-display-renderer";
 
-@WingsTheme('auto-display.scss')
 @Component({
     selector: 'jigsaw-auto-display',
     templateUrl: './auto-display.html',
@@ -17,7 +16,7 @@ import {JigsawAutoDisplayRendererModule} from "./renderer/auto-display-renderer"
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implements OnInit, OnDestroy {
+export class JigsawAutoDisplay extends AbstractJigsawComponent implements OnInit, OnDestroy {
     constructor(private _changeDetectorRef: ChangeDetectorRef,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
@@ -75,8 +74,8 @@ export class JigsawAutoDisplayComponent extends AbstractJigsawComponent implemen
 
 @NgModule({
     imports: [CommonModule, JigsawCommonModule, JigsawAutoDisplayRendererModule],
-    declarations: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent],
-    exports: [JigsawAutoDisplayComponent, JigsawAutoDisplayContentComponent]
+    declarations: [JigsawAutoDisplay, JigsawAutoDisplayContentComponent],
+    exports: [JigsawAutoDisplay, JigsawAutoDisplayContentComponent]
 })
 export class JigsawAutoDisplayModule {
 }
