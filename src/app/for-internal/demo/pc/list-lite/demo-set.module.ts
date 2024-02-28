@@ -16,6 +16,8 @@ import {ListLiteLineEllipsisDemoComponent} from "./line-ellipsis/demo.component"
 import {ListLiteLineEllipsisDemoModule} from "./line-ellipsis/demo.module";
 import {ListLiteWithIconDemoComponent} from "./with-icon/demo.component";
 import {ListLiteWithIconDemoModule} from "./with-icon/demo.module";
+import { ListLiteMaxSelectionLimitDemoComponent } from "./max-selection-limit/demo.component";
+import { ListLiteMaxSelectionLimitDemoModule } from "./max-selection-limit/demo.module";
 
 export const routerConfig = [
     {
@@ -42,6 +44,9 @@ export const routerConfig = [
     {
         path: 'with-icon', component: ListLiteWithIconDemoComponent
     },
+    {
+        path: 'max-selection-limit', component: ListLiteMaxSelectionLimitDemoComponent
+    },
 ];
 
 @NgModule({
@@ -54,7 +59,8 @@ export const routerConfig = [
         ListLiteWithComboDemoModule,
         ListLiteFullDemoModule,
         ListLiteLineEllipsisDemoModule,
-        ListLiteWithIconDemoModule
+        ListLiteWithIconDemoModule,
+        ListLiteMaxSelectionLimitDemoModule
     ]
 })
 export class ListLiteDemoModule{

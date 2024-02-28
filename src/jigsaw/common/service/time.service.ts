@@ -197,7 +197,7 @@ export class TimeService {
      * @param unit  单位
      */
     public static addDate(date: Time, num: string | number, unit: TimeUnit): Moment {
-        const formatter = TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd);
+        const formatter = TimeService._timeFormatterConvert(TimeFormatters.yyyy_mm_dd_hh_mm_ss);
         return moment(date, formatter).add(num, TimeService._timeUnitMap.get(unit));
     }
 
