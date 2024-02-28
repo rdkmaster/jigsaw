@@ -79,6 +79,16 @@
                 "input": "src/jigsaw/common/core/theming/themes/awade-dark.scss",
                 "bundleName": "themes/awade-dark",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-light.scss",
+                "bundleName": "themes/copilot-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-dark.scss",
+                "bundleName": "themes/copilot-dark",
+                "inject": false
               }
             ],
             "scripts": [

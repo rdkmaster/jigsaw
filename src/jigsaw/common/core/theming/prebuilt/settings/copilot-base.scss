@@ -1,0 +1,26 @@
+/* font size */
+$font-size-base: var(--copilot-font-size-base);
+$font-size-sm: var(--copilot-font-size-sm);
+$font-size-med: var(--copilot-font-size-med);
+$font-size-lg: var(--copilot-font-size-lg);
+$font-size-text-base: var(--copilot-font-size-base);
+
+$font-family: “Microsoft YaHei”,Tahoma,”PingFang SC”,”Helvetica Neue”;
+
+:root {
+    --copilot-font-size-base: 12px;
+    --copilot-font-size-sm: 10px;
+    --copilot-font-size-med: 11px;
+    --copilot-font-size-lg: 14px;
+    --copilot-font-size-text-base: 12px;
+}
+
+@media screen and (min-width: 2400px) {
+    :root {
+        --copilot-font-size-base: 14px;
+        --copilot-font-size-sm: 12px;
+        --copilot-font-size-med: 13px;
+        --copilot-font-size-lg: 16px;
+        --copilot-font-size-text-base: 14px;
+    }
+}
