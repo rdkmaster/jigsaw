@@ -4,7 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {FormlyModule} from '@ngx-formly/core';
 import {JigsawTileLiteModule} from "@rdkmaster/jigsaw";
 
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 import {FormlyFieldTileLite} from "./tile-lite.type";
 
 @NgModule({

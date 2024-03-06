@@ -96,8 +96,7 @@ export async function publishPackage(packageName: string) {
     }
     console.log('');
 
-    const path = packageName == 'formly' ? '@ngx-formly/jigsaw' : `@rdkmaster/${packageName}`;
-    await _execNpmPublish(label, path);
+    await _execNpmPublish(label, `@rdkmaster/${packageName}`);
 
     process.chdir(currentDir);
 }

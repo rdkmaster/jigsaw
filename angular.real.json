@@ -440,7 +440,7 @@
         }
       }
     },
-    "@ngx-formly/jigsaw": {
+    "@rdkmaster/formly": {
       "root": "src/ngx-formly/jigsaw",
       "sourceRoot": "src/ngx-formly/jigsaw/src",
       "projectType": "library",
