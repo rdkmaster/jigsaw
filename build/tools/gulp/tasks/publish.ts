@@ -1,11 +1,12 @@
 import {spawn} from 'child_process';
-import {existsSync, statSync} from 'fs-extra';
+import {existsSync, statSync, writeFileSync} from 'fs-extra';
 import {join} from 'path';
 import {task} from 'gulp';
-import {execTask} from '../util/task_helpers';
-import {buildConfig} from './build-config';
 import {green, grey, yellow} from 'chalk';
 import * as minimist from 'minimist';
+import {readFileSync} from "fs";
+import {execTask} from '../util/task_helpers';
+import {buildConfig} from './build-config';
 
 /** Parse command-line arguments for release task. */
 const argv = minimist(process.argv.slice(3));
@@ -21,15 +22,27 @@ task(':publish:whoami', execTask(npm, ['whoami'], {
 task(':publish:logout', execTask(npm, ['logout']));
 
 function _execNpmPublish(label: string, packageName: string): Promise<{}> {
-    const packageDir = join(buildConfig.outputDir, '@rdkmaster', packageName);
+    const argv = require('yargs').argv;
+    const nextVersion = argv.nextVersion;
+    console.log('Next Version from command line:', nextVersion);
+    const nextVersionValue = toVersionValue(nextVersion);
+    if (isNaN(nextVersionValue)) {
+        throw new Error(`invalid next version: "${nextVersion}", usage: gulp publish:jigsaw --nextVersion 1.0.0`);
+    }
+
+    const packageDir = join(buildConfig.outputDir, packageName);
 
     if (!statSync(packageDir).isDirectory()) {
         return;
     }
 
-    if (!existsSync(join(packageDir, 'package.json'))) {
+    const packageJsonPath = join(packageDir, 'package.json');
+    if (!existsSync(packageJsonPath)) {
         throw new Error(`"${packageDir}" does not have a package.json.`);
     }
+    const packageJson = JSON.parse(readFileSync(packageJsonPath).toString());
+    packageJson.version = nextVersion;
+    writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     if (!existsSync(join(packageDir, 'LICENSE'))) {
         throw new Error(`"${packageDir}" does not have a LICENSE file`);
@@ -83,8 +96,23 @@ export async function publishPackage(packageName: string) {
     }
     console.log('');
 
-    await _execNpmPublish(label, packageName);
+    const path = packageName == 'formly' ? '@ngx-formly/jigsaw' : `@rdkmaster/${packageName}`;
+    await _execNpmPublish(label, path);
 
     process.chdir(currentDir);
 }
 
+function toVersionValue(version: string): number {
+    if (!version) {
+        return NaN;
+    }
+    const match = version.match(/^(\d+)\.(\d+)\.(\d+)(-beta(\d))?/);
+    if (!match) {
+        return NaN;
+    }
+    const mainVersion = parseInt(match[1]);
+    const subVersion = parseInt(match[2]);
+    const patchVersion = parseInt(match[3]);
+    const statusVersion = parseInt(match[5] || '9');
+    return mainVersion * 1000000000 + subVersion * 100000 + patchVersion * 10 + statusVersion;
+}
