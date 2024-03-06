@@ -951,7 +951,7 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
         if (!this.multipleSelect) {
             return;
         }
-        const data = this._value instanceof ArrayCollection ? (this._value as ArrayCollection<SelectOption>).toJSON() : this._value;
+        const data = (this._value as ArrayCollection<SelectOption>).toJSON();
         this._viewValue = this._getGroupedData(data);
     }
 
@@ -979,7 +979,6 @@ export abstract class JigsawSelectGroupBase extends JigsawSelectBase {
                 this._$selectedItems = new ArrayCollection([]);
             }
             this._$checkSelectAll();
-            this._updateViewValue();
             this._changeDetector.detectChanges();
         })
     }

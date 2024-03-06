@@ -1,10 +1,9 @@
 import {spawn} from 'child_process';
-import {existsSync, statSync, writeFileSync} from 'fs-extra';
+import {existsSync, statSync, writeFileSync, readFileSync} from 'fs-extra';
 import {join} from 'path';
 import {task} from 'gulp';
 import {green, grey, yellow} from 'chalk';
 import * as minimist from 'minimist';
-import {readFileSync} from "fs";
 import {execTask} from '../util/task_helpers';
 import {buildConfig} from './build-config';
 
@@ -25,8 +24,7 @@ function _execNpmPublish(label: string, packageName: string): Promise<{}> {
     const argv = require('yargs').argv;
     const nextVersion = argv.nextVersion;
     console.log('Next Version from command line:', nextVersion);
-    const nextVersionValue = toVersionValue(nextVersion);
-    if (isNaN(nextVersionValue)) {
+    if (!/^(\d+)\.(\d+)\.(\d+)(-beta(\d))?/.test(nextVersion)) {
         throw new Error(`invalid next version: "${nextVersion}", usage: gulp publish:jigsaw --nextVersion 1.0.0`);
     }
 
@@ -99,19 +97,4 @@ export async function publishPackage(packageName: string) {
     await _execNpmPublish(label, `@rdkmaster/${packageName}`);
 
     process.chdir(currentDir);
-}
-
-function toVersionValue(version: string): number {
-    if (!version) {
-        return NaN;
-    }
-    const match = version.match(/^(\d+)\.(\d+)\.(\d+)(-beta(\d))?/);
-    if (!match) {
-        return NaN;
-    }
-    const mainVersion = parseInt(match[1]);
-    const subVersion = parseInt(match[2]);
-    const patchVersion = parseInt(match[3]);
-    const statusVersion = parseInt(match[5] || '9');
-    return mainVersion * 1000000000 + subVersion * 100000 + patchVersion * 10 + statusVersion;
 }
