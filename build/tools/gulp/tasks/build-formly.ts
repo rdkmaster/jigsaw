@@ -16,5 +16,4 @@ task(':formly:build', execTask(node, ['--max_old_space_size=4096', './node_modul
  * Jigsaw适配ngx-formly的编译入口任务
  */
 task('build:formly:clean', sequenceTask('build:jigsaw:clean', ':formly:clean', ':formly:copy', ':formly:build'));
-task('publish:formly', sequenceTask(
-    ':publish:whoami', 'build:formly:clean', async () => publishPackage('formly')));
+task('publish:formly', sequenceTask(':publish:whoami', 'build:formly:clean', async () => publishPackage('formly')));
