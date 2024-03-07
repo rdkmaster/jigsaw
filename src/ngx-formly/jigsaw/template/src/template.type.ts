@@ -7,7 +7,8 @@ import {FieldType} from "@ngx-formly/core";
 @Component({
     selector: 'jigsaw-formly-template',
     template: `
-        <div class="jigsaw-formly-template" [trustedHtml]="to.innerHTML" [trustedHtmlContext]="to.context"></div>
+        <div class="jigsaw-formly-template" [trustedHtml]="to.innerHTML" [trustedHtmlContext]="to.context"
+             (click)="_$clickHandler($event)"></div>
     `,
     styles: [`
         .jigsaw-formly-template {
@@ -17,4 +18,10 @@ import {FieldType} from "@ngx-formly/core";
     `]
 })
 export class FormlyTemplateFieldType extends FieldType {
+    public _$clickHandler($event: MouseEvent): void {
+        if (typeof this.to.click != "function") {
+            return;
+        }
+        this.to.click($event);
+    }
 }
