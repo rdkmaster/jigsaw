@@ -26,7 +26,7 @@
         "ztree": "~3.5.24",
         "ngx-perfect-scrollbar": "~8.0.0",
         "ngx-color-picker": "~8.0.0",
-        "@rdkmaster/icon-font": "^1.0.6",
+        "@rdkmaster/icon-font": "^5.7.0",
         "@angular/animations": "~9.1.9",
         "@angular/common": "~9.1.9",
         "@angular/compiler": "~9.1.9",
