@@ -18,7 +18,7 @@ import {
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
-import {AbstractGraphData} from "../../common/core/data/graph-data";
+import {AbstractGraphData} from "../../common/core/data/graph-data/graph-data";
 import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils";
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";

@@ -292,10 +292,30 @@ export class BubbleGraphComponent {
         this.staticBubbleData = new BubbleChartGraphData();
         this.staticBubbleData.title = '位置固定气泡图';
         this.staticBubbleData.data = this.staticData;
+        this.staticBubbleData.emphasisConfig = {
+            itemStyle: {
+                borderWidth: 1,
+                borderColor: 'black',
+                shadowBlur: 5,
+                shadowColor: "red",
+                shadowOffsetX: 0,
+                shadowOffsetY: 5
+            },
+        }
 
         this.dynamicBubbleData = new BubbleChartGraphData();
         this.dynamicBubbleData.title = "引力布局气泡图";
         this.dynamicBubbleData.data = this.dynamicData;
+        this.dynamicBubbleData.emphasisConfig = {
+            itemStyle: {
+                borderWidth: 1,
+                borderColor: 'red',
+                shadowBlur: 5,
+                shadowColor: "pink",
+                shadowOffsetX: 0,
+                shadowOffsetY: 5
+            },
+        }
     }
 
     staticBubbleData: BubbleChartGraphData;
