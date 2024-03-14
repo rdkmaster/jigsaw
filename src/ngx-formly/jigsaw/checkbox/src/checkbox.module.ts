@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {JigsawCheckBoxModule} from "@rdkmaster/jigsaw";
 
 import {FormlyFieldCheckbox} from './checkbox.type';
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 
 @NgModule({
     declarations: [FormlyFieldCheckbox],

@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 
 import {FormlyFieldRadio} from './radio.type';
 import {JigsawRadioLiteModule} from "@rdkmaster/jigsaw";
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 
 @NgModule({
     declarations: [FormlyFieldRadio],

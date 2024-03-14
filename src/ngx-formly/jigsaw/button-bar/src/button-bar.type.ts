@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, ViewChild} from '@angular/core';
-import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
-import {ColorType} from "@ngx-formly/jigsaw/button";
+import {FormlyFieldType} from "@rdkmaster/formly/form-field";
+import {ColorType} from "@rdkmaster/formly/button";
 import {JigsawButtonBar} from "@rdkmaster/jigsaw";
 
 @Component({

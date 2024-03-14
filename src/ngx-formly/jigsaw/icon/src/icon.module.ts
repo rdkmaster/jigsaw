@@ -4,7 +4,7 @@ import {FormlyModule} from '@ngx-formly/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {JigsawIconModule} from "@rdkmaster/jigsaw";
 
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 import {FormlyFieldIcon} from "./icon.type";
 
 @NgModule({
