@@ -1,0 +1,60 @@
+.jigsaw-system-prompt-host {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 32px;
+    padding: 0 20px 0 16px;
+    margin-bottom: 2px;
+
+    .system-prompt-text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .system-prompt-icon {
+        flex-shrink: 0;
+        width: 24px;
+        font-size: 18px;
+    }
+
+    .system-prompt-remove {
+        position: absolute;
+        right: 8px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    &.jigsaw-system-prompt-error {
+        background: var(--error-disabled);
+
+        .system-prompt-icon {
+            color: var(--error-default);
+        }
+    }
+
+    &.jigsaw-system-prompt-info {
+        background: var(--primary-disabled);
+
+        .system-prompt-icon {
+            color: var(--primary-default);
+        }
+    }
+
+    &.jigsaw-system-prompt-warning {
+        background: var(--warning-disabled);
+
+        .system-prompt-icon {
+            color: var(--warning-default);
+        }
+    }
+
+    &.jigsaw-system-prompt-success {
+        background: var(--success-disabled);
+
+        .system-prompt-icon {
+            color: var(--success-default);
+        }
+    }
+}

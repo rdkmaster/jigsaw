@@ -102,6 +102,7 @@ export * from "./pc-components/form-display/form-display";
 export * from "./pc-components/auto-display/auto-display";
 export * from "./pc-components/auto-display/inner-component";
 export * from "./pc-components/auto-display/renderer/auto-display-renderer";
+export * from "./pc-components/system-prompt/system-prompt";
 
 /* fallback components */
 export * from "./pc-components/fallback/upload/index";
