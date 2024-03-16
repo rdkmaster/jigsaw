@@ -17,7 +17,7 @@ import { take } from "rxjs/operators";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { WingsTheme } from "../../common/common";
 import { NoticeLevel } from "../dialog/dialog";
-import { RequireMarkForCheck } from "jigsaw/common/decorator/mark-for-check";
+import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
 export class SystemPromptMessage {
     type?: NoticeLevel;
