@@ -25,7 +25,7 @@ export class SystemPromptMessage {
 }
 
 // @dynamic
-@WingsTheme('notification.scss')
+@WingsTheme('system-prompt.scss')
 @Component({
     selector: 'jigsaw-system-prompt, j-system-prompt',
     templateUrl: 'system-prompt.html',
