@@ -15,7 +15,6 @@ import { CommonModule } from "@angular/common";
 import { Subscription, timer } from "rxjs";
 import { take } from "rxjs/operators";
 import { CommonUtils } from "../../common/core/utils/common-utils";
-import { WingsTheme } from "../../common/common";
 import { NoticeLevel } from "../dialog/dialog";
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
 
@@ -24,8 +23,6 @@ export class SystemPromptMessage {
     timeout?: number;
 }
 
-// @dynamic
-@WingsTheme('system-prompt.scss')
 @Component({
     selector: 'jigsaw-system-prompt, j-system-prompt',
     templateUrl: 'system-prompt.html',

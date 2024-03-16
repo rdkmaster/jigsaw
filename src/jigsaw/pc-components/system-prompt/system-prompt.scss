@@ -1,4 +1,6 @@
-.jigsaw-system-prompt-host {
+$jigsaw-system-prompt: #{$jigsaw-prefix}-system-prompt;
+
+.#{$jigsaw-system-prompt}-host {
     position: relative;
     display: flex;
     align-items: center;
