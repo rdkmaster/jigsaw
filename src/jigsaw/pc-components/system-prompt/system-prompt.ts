@@ -101,6 +101,9 @@ export class JigsawSystemPrompt implements OnDestroy {
         }
     }
 
+    /**
+     * @internal
+     */
     public _$getIconClass() {
         switch (this.type) {
             case 'error':
