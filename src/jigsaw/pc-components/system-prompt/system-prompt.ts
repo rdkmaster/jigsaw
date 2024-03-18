@@ -6,14 +6,10 @@ import {
     Injector,
     Input,
     NgModule,
-    NgZone,
     OnDestroy,
-    Renderer2,
     ViewContainerRef
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { Subscription, timer } from "rxjs";
-import { take } from "rxjs/operators";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { NoticeLevel } from "../dialog/dialog";
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
@@ -36,14 +32,10 @@ export class SystemPromptMessage {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class JigsawSystemPrompt implements OnDestroy {
-    private timerSubscription: Subscription;
-
     constructor(
-        protected renderer: Renderer2,
-        protected elementRef: ElementRef,
-        protected _zone: NgZone,
+        private _elementRef: ElementRef,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector
+        private _injector: Injector
     ) { }
 
     @Input()
@@ -60,6 +52,8 @@ export class JigsawSystemPrompt implements OnDestroy {
     @Input()
     public timeout: number = 0;
 
+    private _timer: number;
+
     public static show(message: string, containerRef: ViewContainerRef, options?: SystemPromptMessage): JigsawSystemPrompt {
         const factory = containerRef.injector.get(ComponentFactoryResolver).resolveComponentFactory(JigsawSystemPrompt);
         const componentRef = containerRef.createComponent(factory);
@@ -67,7 +61,7 @@ export class JigsawSystemPrompt implements OnDestroy {
         instance.type = options?.type || 'error';
         instance.timeout = CommonUtils.isDefined(options?.timeout) ? options.timeout : 8000;
         instance.message = message;
-        instance.setupTimeout();
+        instance._setupTimeout();
         containerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
         return instance;
     }
@@ -92,23 +86,17 @@ export class JigsawSystemPrompt implements OnDestroy {
         return this.show(message, containerRef, options);
     }
 
-    public setupTimeout() {
-        if (this.timeout > 0) {
-            this.timerSubscription = timer(this.timeout).pipe(take(1)).subscribe(() => {
-                this.remove();
-            });
+    private _setupTimeout() {
+        if (isNaN(this.timeout) || this.timeout <= 0) {
+            return;
         }
-    }
-
-    private _$clearTimer() {
-        if (this.timerSubscription) {
-            this.timerSubscription.unsubscribe();
-        }
+        clearTimeout(this._timer);
+        this._timer = setTimeout(() => this.remove(), this.timeout) as any;
     }
 
     public remove() {
-        this._$clearTimer();
-        const componentNativeElement = this.elementRef.nativeElement;
+        clearTimeout(this._timer);
+        const componentNativeElement = this._elementRef.nativeElement;
         if (componentNativeElement && componentNativeElement.parentNode) {
             componentNativeElement.parentNode.removeChild(componentNativeElement);
         }
@@ -133,7 +121,7 @@ export class JigsawSystemPrompt implements OnDestroy {
     }
 
     ngOnDestroy() {
-        this._$clearTimer();
+        clearTimeout(this._timer);
     }
 }
 
