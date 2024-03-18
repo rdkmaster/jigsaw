@@ -15,13 +15,13 @@ export class JigsawSystemPromptBasicDemoComponent {
 
     public timeout = 8000;
 
-    public showSystemPromptInCntr1(message, type) {
+    public showSystemPrompt1(message, type) {
         JigsawSystemPrompt.show(message, this.container1, { type: type, timeout: this.timeout });
     }
-    public showSystemPromptInCntr2(message, type) {
+    public showSystemPrompt2(message, type) {
         JigsawSystemPrompt.show(message, this.container2, { type: type, timeout: this.timeout });
     }
-    public showSystemPromptInCntr3(message, type) {
+    public showSystemPrompt3(message, type) {
         JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout });
     }
 

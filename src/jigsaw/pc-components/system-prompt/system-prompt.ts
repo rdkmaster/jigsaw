@@ -43,8 +43,7 @@ export class JigsawSystemPrompt implements OnDestroy {
         protected elementRef: ElementRef,
         protected _zone: NgZone,
         // @RequireMarkForCheck 需要用到，勿删
-        protected _injector: Injector,
-        protected _viewContainerRef: ViewContainerRef
+        protected _injector: Injector
     ) { }
 
     @Input()
@@ -61,7 +60,7 @@ export class JigsawSystemPrompt implements OnDestroy {
     @Input()
     public timeout: number = 0;
 
-    public static show(message: string, containerRef: any, options?: SystemPromptMessage): JigsawSystemPrompt {
+    public static show(message: string, containerRef: ViewContainerRef, options?: SystemPromptMessage): JigsawSystemPrompt {
         const factory = containerRef.injector.get(ComponentFactoryResolver).resolveComponentFactory(JigsawSystemPrompt);
         const componentRef = containerRef.createComponent(factory);
         const instance = componentRef.instance;
@@ -69,11 +68,28 @@ export class JigsawSystemPrompt implements OnDestroy {
         instance.timeout = CommonUtils.isDefined(options?.timeout) ? options.timeout : 8000;
         instance.message = message;
         instance.setupTimeout();
-
         containerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
-
-        instance.componentRef = componentRef;
         return instance;
+    }
+
+    public static showSuccess(message: string, containerRef: ViewContainerRef, timeout: number = 8000): JigsawSystemPrompt {
+        const options: SystemPromptMessage = {type: "success", timeout};
+        return this.show(message, containerRef, options);
+    }
+
+    public static showError(message: string, containerRef: ViewContainerRef, timeout: number = 8000): JigsawSystemPrompt {
+        const options: SystemPromptMessage = {type: "error", timeout};
+        return this.show(message, containerRef, options);
+    }
+
+    public static showWarning(message: string, containerRef: ViewContainerRef, timeout: number = 8000): JigsawSystemPrompt {
+        const options: SystemPromptMessage = {type: "warning", timeout};
+        return this.show(message, containerRef, options);
+    }
+
+    public static showInfo(message: string, containerRef: ViewContainerRef, timeout: number = 8000): JigsawSystemPrompt {
+        const options: SystemPromptMessage = {type: "info", timeout};
+        return this.show(message, containerRef, options);
     }
 
     public setupTimeout() {
