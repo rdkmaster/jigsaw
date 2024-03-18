@@ -25,6 +25,19 @@ export class JigsawSystemPromptBasicDemoComponent {
         JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout });
     }
 
+    public showSuccess(message) {
+        JigsawSystemPrompt.showSuccess(message, this.container3, this.timeout);
+    }
+    public showError(message) {
+        JigsawSystemPrompt.showError(message, this.container3, this.timeout);
+    }
+    public showWarning(message) {
+        JigsawSystemPrompt.showWarning(message, this.container3, this.timeout);
+    }
+    public showInfo(message) {
+        JigsawSystemPrompt.showInfo(message, this.container3, this.timeout);
+    }
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================

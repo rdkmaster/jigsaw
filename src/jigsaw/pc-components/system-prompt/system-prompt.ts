@@ -6,6 +6,7 @@ import {
     Injector,
     Input,
     NgModule,
+    NgZone,
     OnDestroy,
     ViewContainerRef
 } from "@angular/core";
@@ -13,6 +14,7 @@ import { CommonModule } from "@angular/common";
 import { CommonUtils } from "../../common/core/utils/common-utils";
 import { NoticeLevel } from "../dialog/dialog";
 import { RequireMarkForCheck } from '../../common/decorator/mark-for-check';
+import { AbstractJigsawComponent} from "../../common/common";
 
 export class SystemPromptMessage {
     type?: NoticeLevel;
@@ -31,12 +33,13 @@ export class SystemPromptMessage {
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class JigsawSystemPrompt implements OnDestroy {
+export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDestroy {
     constructor(
         private _elementRef: ElementRef,
         // @RequireMarkForCheck 需要用到，勿删
-        private _injector: Injector
-    ) { }
+        private _injector: Injector) {
+        super();
+    }
 
     @Input()
     @RequireMarkForCheck()

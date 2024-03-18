@@ -31,6 +31,13 @@
         <jigsaw-button (click)="showSystemPrompt2('这是一条成功系统提示', 'success')">容器2</jigsaw-button>
         <jigsaw-button (click)="showSystemPrompt3('这是一条成功系统提示', 'success')">容器3</jigsaw-button>
     </li>
+    <li class="demo-options-item">
+        <span>快捷用法：</span>
+        <jigsaw-button (click)="showSuccess('这是一条成功系统提示')">showSuccess</jigsaw-button>
+        <jigsaw-button (click)="showError('这是一条错误系统提示')">showError</jigsaw-button>
+        <jigsaw-button (click)="showWarning('这是一条警告系统提示')">showWarning</jigsaw-button>
+        <jigsaw-button (click)="showInfo('这是一条基础系统提示')">showInfo</jigsaw-button>
+    </li>
 </ul>
 
 <ul class="demo-cntr">
