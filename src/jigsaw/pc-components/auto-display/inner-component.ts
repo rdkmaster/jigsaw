@@ -15,6 +15,7 @@ import {
 import {AbstractJigsawViewBase, JigsawRendererHost} from "../../common/common";
 import {
     AutoDisplayGraphRenderer,
+    AutoDisplayModeledGraphRenderer,
     AutoDisplayRendererBase,
     AutoDisplayTableRenderer,
     DisplayRendererBase
@@ -133,6 +134,8 @@ export class JigsawAutoDisplayInnerBase extends JigsawDisplayInnerBase implement
         switch (renderer) {
             case 'origin-echarts':
                 return AutoDisplayGraphRenderer;
+            case 'modeled-echarts':
+                return AutoDisplayModeledGraphRenderer;
             case 'table':
                 return AutoDisplayTableRenderer;
             default:
