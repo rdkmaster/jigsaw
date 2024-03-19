@@ -1,0 +1,59 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>延迟：</span>
+        <jigsaw-numeric-input [(value)]="timeout" step="1000" min="0" subfix="ms"></jigsaw-numeric-input>
+    </li>
+    <li class="demo-options-item">
+        <span>错误：</span>
+        <jigsaw-button (click)="showSystemPrompt1('重要提示，用于告知用户十分重要的信息', 'error')">容器1</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt2('重要提示，用于告知用户十分重要的信息', 'error')">容器2</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt3('重要提示，用于告知用户十分重要的信息', 'error')">容器3</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>通知：</span>
+        <jigsaw-button (click)="showSystemPrompt1('这是一条基础系统提示', 'info')">容器1</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt2('这是一条基础系统提示', 'info')">容器2</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt3('这是一条基础系统提示', 'info')">容器3</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>警告：</span>
+        <jigsaw-button (click)="showSystemPrompt1('这是一条警告系统提示', 'warning')">容器1</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt2('这是一条警告系统提示', 'warning')">容器2</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt3('这是一条警告系统提示', 'warning')">容器3</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>成功：</span>
+        <jigsaw-button (click)="showSystemPrompt1('这是一条成功系统提示', 'success')">容器1</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt2('这是一条成功系统提示', 'success')">容器2</jigsaw-button>
+        <jigsaw-button (click)="showSystemPrompt3('这是一条成功系统提示', 'success')">容器3</jigsaw-button>
+    </li>
+    <li class="demo-options-item">
+        <span>快捷用法：</span>
+        <jigsaw-button (click)="showSuccess('这是一条成功系统提示')">showSuccess</jigsaw-button>
+        <jigsaw-button (click)="showError('这是一条错误系统提示')">showError</jigsaw-button>
+        <jigsaw-button (click)="showWarning('这是一条警告系统提示')">showWarning</jigsaw-button>
+        <jigsaw-button (click)="showInfo('这是一条基础系统提示')">showInfo</jigsaw-button>
+    </li>
+</ul>
+
+<ul class="demo-cntr">
+    <li>
+        <div #container1
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}">
+        </div>
+    </li>
+    <li>
+        <div #container2
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}">
+        </div>
+    </li>
+    <li>
+        <div #container3
+            [perfectScrollbar]="{suppressScrollX: true, wheelSpeed: 0.5, minScrollbarLength: 20, wheelPropagation: false}">
+        </div>
+    </li>
+</ul>
