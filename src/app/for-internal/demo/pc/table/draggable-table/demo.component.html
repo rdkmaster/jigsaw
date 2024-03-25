@@ -2,8 +2,8 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<div class="demo-container">
-    <jigsaw-table [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns"
+<div class="demo-container" style="padding-top: 50px">
+    <jigsaw-table height="300" [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns"
     (cellStatusChange)="cellStatusChange($event)">
     </jigsaw-table>
     <p>选中行 {{selectedRow}}</p>
