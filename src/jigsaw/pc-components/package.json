@@ -26,7 +26,7 @@
         "ztree": "~3.5.24",
         "ngx-perfect-scrollbar": "~8.0.0",
         "ngx-color-picker": "~8.0.0",
-        "@rdkmaster/icon-font": "^5.7.0",
+        "@rdkmaster/icon-font": "^7.0.0",
         "@angular/animations": "~9.1.9",
         "@angular/common": "~9.1.9",
         "@angular/compiler": "~9.1.9",
@@ -39,5 +39,26 @@
         "zone.js": "~0.10.2",
         "core-js": "~3.0.1",
         "web-animations-js": "~2.3.2"
+    },
+    "peerDependenciesGovernance": {
+        "@rdkmaster/icon-font": "^7.0.0",
+        "@rdkmaster/ngx-translate-core": "^11.0.1-1",
+        "@rdkmaster/ztree": "^3.5.24-1",
+        "@rdkmaster/ngx-perfect-scrollbar": "^8.0.0-1",
+        "@rdkmaster/ngx-color-picker": "^8.0.1-1",
+        "@rdkmaster/zone.js": "^0.10.3-1",
+        "@rdkmaster/core-js": "^3.0.1-1",
+        "@rdkmaster/web-animations-js": "^2.3.2-2",
+        "echarts": "~4.9.0",
+        "jquery": "~3.5.1",
+        "@angular/animations": "~9.1.9",
+        "@angular/common": "~9.1.9",
+        "@angular/compiler": "~9.1.9",
+        "@angular/core": "~9.1.9",
+        "@angular/forms": "~9.1.9",
+        "@angular/platform-browser": "~9.1.9",
+        "@angular/platform-browser-dynamic": "~9.1.9",
+        "@angular/router": "~9.1.9",
+        "rxjs": "~6.5.3"
     }
 }
