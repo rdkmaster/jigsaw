@@ -7,7 +7,7 @@ import {TranslateModule} from "@ngx-translate/core";
 import { JigsawGraph } from './graph';
 import {JigsawGraphDownloadDirective} from "./graph-download.directive";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import { JigsawNoDataModule } from '../../common/directive/nodata';
+import { JigsawNoDataModule } from '../../common/directive/nodata/no-data';
 
 @NgModule({
     imports: [CommonModule, TranslateModule.forChild(), JigsawNoDataModule],
