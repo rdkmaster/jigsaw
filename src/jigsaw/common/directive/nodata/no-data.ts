@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, NgZone, Renderer2 } from "@angular/core";
+import { Directive, ElementRef, Input, NgModule, NgZone, Renderer2 } from "@angular/core";
 import { AbstractJigsawViewBase } from "../../common";
 
 export type noDataType = 'default' | 'file' | 'wait' | 'card' | 'graph' | 'add' | 'structure'
@@ -137,3 +137,9 @@ export class JigsawNoDataDirective extends AbstractJigsawViewBase {
     };
 }
 
+@NgModule({
+    declarations: [JigsawNoDataDirective],
+    exports: [JigsawNoDataDirective]
+})
+export class JigsawNoDataModule {
+}

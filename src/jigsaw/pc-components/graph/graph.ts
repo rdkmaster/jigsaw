@@ -23,7 +23,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawThemeService} from "../../common/core/theming/theme";
-import { noDataType } from "../../common/directive/nodata";
+import { noDataType } from "../../common/directive/nodata/no-data";
 
 declare const echarts: any;
 

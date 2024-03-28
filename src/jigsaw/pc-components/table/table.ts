@@ -52,8 +52,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
 import {JigsawThemeService} from "../../common/core/theming/theme";
-import { JigsawNoDataModule, noDataType } from "../../common/directive/nodata";
-
+import { JigsawNoDataModule, noDataType } from "../../common/directive/nodata/no-data";
 
 @WingsTheme('table.scss')
 @Component({
