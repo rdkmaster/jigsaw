@@ -188,24 +188,6 @@ export function createTask(packageName: string) {
     task(':create-component-wings-theme', () => {
         return gulpRun(`node build/scripts/create-component-wings-theme.js`, {}).exec();
     });
-
-    task(`publish:${packageName}-lui`, sequenceTask(
-        ':publish:whoami',
-        `:${packageName}-lui:import`,
-        // `build:${packageName}:clean`,
-        // `validate:check-${packageName}-bundles`,
-        // `:publish:${packageName}`,
-        `:${packageName}-lui:import:restore`,
-    ));
-
-    // 处理代码中的import，改为从@rdkmaster下面引入，用于LUI的专版
-    task(`:${packageName}-lui:import`, () => {
-        return gulpRun(`node build/scripts/lui-import.js`, {}).exec();
-    });
-
-    task(`:${packageName}-lui:import:restore`, () => {
-        return gulpRun(`node build/scripts/lui-import.js restore`, {}).exec();
-    });
 }
 
 
