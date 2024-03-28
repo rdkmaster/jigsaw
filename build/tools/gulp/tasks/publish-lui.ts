@@ -6,28 +6,28 @@ import {exec} from 'child_process';
 import {sequenceTask} from '../util/task_helpers';
 import {buildConfig} from './build-config';
 
-task(`publish:jigsaw-lui`, sequenceTask(
+task(`publish:lui:jigsaw`, sequenceTask(
     ':publish:whoami',
-    `:jigsaw-lui:import`,
+    `:lui:replace-import`,
     `build:jigsaw:clean`,
     `validate:check-jigsaw-bundles`,
     `:publish:jigsaw`,
-    `:jigsaw-lui:import:restore`,
+    `:lui:replace-import:restore`,
 ));
 
-task(`publish:formly-lui`, sequenceTask(
+task(`publish:lui:formly`, sequenceTask(
     ':publish:whoami',
-    `:jigsaw-lui:import`,
+    `:lui:replace-import`,
     `build:formly:clean`,
     `:build:formly-copy-files`,
     `:publish:formly`,
-    `:jigsaw-lui:import:restore`,
+    `:lui:replace-import:restore`,
 ));
 
 // 处理代码中的import，改为从@rdkmaster下面引入，用于LUI的专版
-task(`:jigsaw-lui:import`, async () => _replaceImport());
+task(`:lui:replace-import`, async () => _replaceImport());
 
-task(`:jigsaw-lui:import:restore`, async () => _replaceImport("restore"));
+task(`:lui:replace-import:restore`, async () => _replaceImport("restore"));
 
 // 需要替换的import包名
 // 这里只需要修改import包名，ztree和peity是在app的angular.json中引用的，无需处理
@@ -65,7 +65,6 @@ function _replaceFiles(folder: string) {
             if (!oldPkgRegex.test(code)) {
                 return;
             }
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> replace file: ", filePath, pkg);
             code = code.replace(oldPkgRegex, (temp, importExpr) => importExpr.replace(pkg.oldPkgName, pkg.newPkgName));
         })
         fs.writeFileSync(filePath, code);
