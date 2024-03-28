@@ -6,28 +6,28 @@ import {exec} from 'child_process';
 import {sequenceTask} from '../util/task_helpers';
 import {buildConfig} from './build-config';
 
-task(`publish:lui:jigsaw`, sequenceTask(
+task(`publish:governance:jigsaw`, sequenceTask(
     ':publish:whoami',
-    `:lui:replace-import`,
+    `:governance:replace-import`,
     `build:jigsaw:clean`,
     `validate:check-jigsaw-bundles`,
     `:publish:jigsaw`,
-    `:lui:replace-import:restore`,
+    `:governance:replace-import:restore`,
 ));
 
-task(`publish:lui:formly`, sequenceTask(
+task(`publish:governance:formly`, sequenceTask(
     ':publish:whoami',
-    `:lui:replace-import`,
+    `:governance:replace-import`,
     `build:formly:clean`,
     `:build:formly-copy-files`,
     `:publish:formly`,
-    `:lui:replace-import:restore`,
+    `:governance:replace-import:restore`,
 ));
 
 // 处理代码中的import，改为从@rdkmaster下面引入，用于LUI的专版
-task(`:lui:replace-import`, async () => _replaceImport());
+task(`:governance:replace-import`, async () => _replaceImport());
 
-task(`:lui:replace-import:restore`, async () => _replaceImport("restore"));
+task(`:governance:replace-import:restore`, async () => _replaceImport("restore"));
 
 // 需要替换的import包名
 // 这里只需要修改import包名，ztree和peity是在app的angular.json中引用的，无需处理
@@ -74,8 +74,8 @@ function _replaceFiles(folder: string) {
 function _replacePackageJson() {
     const pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
     const packageInfo = JSON.parse(fs.readFileSync(pkgPath).toString());
-    packageInfo.peerDependencies = packageInfo.peerDependenciesLui;
-    delete packageInfo.peerDependenciesLui;
+    packageInfo.peerDependencies = packageInfo.peerDependenciesInternal;
+    delete packageInfo.peerDependenciesInternal;
     fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '    '));
 }
 
@@ -93,7 +93,7 @@ function _prepareNodeModules(action: "restore") {
     }
 
     if (!fs.existsSync(path.join(jigsawHome, "node_modules_lui"))) {
-        console.error("There is no node_modules for building lui package, please prepare it and named 'node_modules_lui'!");
+        console.error("There is no node_modules for building governance package, please prepare it and named 'node_modules_lui'!");
         process.exit(1);
     }
 
