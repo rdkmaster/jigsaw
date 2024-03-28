@@ -32,6 +32,7 @@ export class JigsawNoDataDirective extends AbstractJigsawViewBase {
         this._renderer.setProperty(this._elementRef.nativeElement, 'innerHTML', this.noDataImages[this._type] || this.noDataImages.default);
     }
 
+    // @ignoring-i18n-check-start
     protected noDataImages = {
         file: `
         <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
