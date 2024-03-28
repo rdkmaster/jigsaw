@@ -72,7 +72,7 @@ function _replaceFiles(folder: string) {
 function _replacePackageJson() {
     const pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
     const packageInfo = JSON.parse(fs.readFileSync(pkgPath).toString());
-    packageInfo.peerDependencies = packageInfo.peerDependenciesInternal;
-    delete packageInfo.peerDependenciesInternal;
+    packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
+    delete packageInfo.peerDependenciesGovernance;
     fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '    '));
 }
