@@ -27,7 +27,7 @@ task(`publish:governance:formly`, sequenceTask(
 // 处理代码中的import，改为从@rdkmaster下面引入，用于开源治理
 task(`:governance:replace-import`, async () => _replaceImport());
 
-task(`:governance:replace-import:restore`, async () => _replaceImport("restore"));
+task(`:governance:replace-import:restore`, async () => _restoreImport());
 
 // 需要替换的import包名
 // 这里只需要修改import包名，ztree和peity是在app的angular.json中引用的，无需处理
@@ -42,16 +42,18 @@ const packages = [
 ];
 const jigsawHome = buildConfig.projectDir;
 
-async function _replaceImport(action?: "restore") {
-    if (action == "restore") {
-        // todo 恢复代码？可能不是 git 仓库？
-        exec(`git checkout .`, error => console.error("restore code error: ", error));
-    } else {
-        _replaceFiles(path.join(jigsawHome, "src/jigsaw"));
-        _replaceFiles(path.join(jigsawHome, "src/ngx-formly"));
-        _replacePackageJson();
-    }
+async function _replaceImport() {
+    console.log("replacing all imports ....");
+    _replaceFiles(path.join(jigsawHome, "src/jigsaw"));
+    _replaceFiles(path.join(jigsawHome, "src/ngx-formly"));
+    _replacePackageJson();
     console.log("replace import all done");
+}
+
+async function _restoreImport() {
+    console.log("restoring source ....");
+    exec(`git checkout .`, error => console.error("restore code error: ", error));
+    console.log("restore import all done");
 }
 
 function _replaceFiles(folder: string) {
