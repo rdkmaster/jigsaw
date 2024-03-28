@@ -136,6 +136,7 @@ export class JigsawNoDataDirective extends AbstractJigsawViewBase {
         </g>
     </svg>`
     };
+    // @ignoring-i18n-check-end
 }
 
 @NgModule({
