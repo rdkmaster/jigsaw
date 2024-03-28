@@ -24,7 +24,7 @@ task(`publish:governance:formly`, sequenceTask(
     `:governance:replace-import:restore`,
 ));
 
-// 处理代码中的import，改为从@rdkmaster下面引入，用于LUI的专版
+// 处理代码中的import，改为从@rdkmaster下面引入，用于开源治理
 task(`:governance:replace-import`, async () => _replaceImport());
 
 task(`:governance:replace-import:restore`, async () => _replaceImport("restore"));
@@ -43,8 +43,6 @@ const packages = [
 const jigsawHome = buildConfig.projectDir;
 
 async function _replaceImport(action?: "restore") {
-    _prepareNodeModules(action);
-
     if (action == "restore") {
         // todo 恢复代码？可能不是 git 仓库？
         exec(`git checkout .`, error => console.error("restore code error: ", error));
@@ -77,26 +75,4 @@ function _replacePackageJson() {
     packageInfo.peerDependencies = packageInfo.peerDependenciesInternal;
     delete packageInfo.peerDependenciesInternal;
     fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '    '));
-}
-
-// todo node_modules 处理
-function _prepareNodeModules(action: "restore") {
-    if (action == "restore") {
-        if (!fs.existsSync(path.join(jigsawHome, "node_modules_default"))) {
-            console.error("There is no default node_modules named node_modules_default, please confirm action!");
-            process.exit(1);
-        }
-
-        fs.renameSync(path.resolve(jigsawHome, "node_modules"), path.resolve(jigsawHome, "node_modules_lui"));
-        fs.renameSync(path.resolve(jigsawHome, "node_modules_default"), path.resolve(jigsawHome, "node_modules"));
-        return;
-    }
-
-    if (!fs.existsSync(path.join(jigsawHome, "node_modules_lui"))) {
-        console.error("There is no node_modules for building governance package, please prepare it and named 'node_modules_lui'!");
-        process.exit(1);
-    }
-
-    fs.renameSync(path.resolve(jigsawHome, "node_modules"), path.resolve(jigsawHome, "node_modules_default"));
-    fs.renameSync(path.resolve(jigsawHome, "node_modules_lui"), path.resolve(jigsawHome, "node_modules"));
 }
