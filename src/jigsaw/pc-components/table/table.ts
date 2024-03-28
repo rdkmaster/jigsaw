@@ -52,7 +52,7 @@ import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
 import {JigsawThemeService} from "../../common/core/theming/theme";
-
+import { JigsawNoDataModule, noDataType } from "../../common/directive/nodata/no-data";
 
 @WingsTheme('table.scss')
 @Component({
@@ -653,6 +653,12 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
     }
 
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataImage: noDataType = 'default';
+
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -1131,11 +1137,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     private _headerScrollbar: ElementRef;
 
     /**
-     * @internal
-     */
-    public _$noDataSrc = CommonUtils.noDataImageSrc;
-
-    /**
      * 根据内容计算自适应列宽
      *
      */
@@ -1492,7 +1493,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     declarations: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox],
     imports: [CommonModule, JigsawCommonModule, JigsawTableRendererModule, PerfectScrollbarModule, JigsawTrustedHtmlModule,
         TranslateModule.forChild(), JigsawFloatModule, JigsawButtonModule, JigsawListModule, JigsawCheckBoxModule, JigsawSearchInputModule,
-        JigsawLoadingModule],
+        JigsawLoadingModule, JigsawNoDataModule],
     exports: [JigsawTable, JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent],
 })
 export class JigsawTableModule {
