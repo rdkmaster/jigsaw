@@ -2,16 +2,22 @@
 <jigsaw-demo-description [summary]="summary" [content]="description">
 </jigsaw-demo-description>
 
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>无数据图片：</span>
+        <jigsaw-select [data]="imageData" [value]="imageValue" (valueChange)="selectImage($event)"></jigsaw-select>
+    </li>
+</ul>
 
 <!-- start to learn the demo from here -->
 <jigsaw-header>数据合法，data为空</jigsaw-header>
 <div class="tall-box">
-    <jigsaw-table [data]="tableData"></jigsaw-table>
+    <jigsaw-table [data]="tableData" [noDataImage]="noDataImage"></jigsaw-table>
 </div>
 
 <jigsaw-header>数据不合法</jigsaw-header>
 <div class="tall-box">
-    <jigsaw-table></jigsaw-table>
+    <jigsaw-table [noDataImage]="noDataImage"></jigsaw-table>
 </div>
 
 <jigsaw-header>在高度充足的情况下，无数据的表现</jigsaw-header>

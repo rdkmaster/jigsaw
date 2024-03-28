@@ -3,13 +3,14 @@
  */
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
 import { JigsawGraph } from './graph';
 import {JigsawGraphDownloadDirective} from "./graph-download.directive";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
-import {TranslateModule} from "@ngx-translate/core";
+import { JigsawNoDataModule } from '../../common/directive/nodata';
 
 @NgModule({
-    imports: [CommonModule, TranslateModule.forChild(),],
+    imports: [CommonModule, TranslateModule.forChild(), JigsawNoDataModule],
     exports: [JigsawGraph,JigsawGraphDownloadDirective],
     declarations: [JigsawGraph,JigsawGraphDownloadDirective],
 })

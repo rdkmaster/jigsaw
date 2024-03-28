@@ -23,6 +23,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawThemeService} from "../../common/core/theming/theme";
+import { noDataType } from "../../common/directive/nodata";
 
 declare const echarts: any;
 
@@ -76,11 +77,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     public get echarts(): any {
         return this._graph;
     }
-
-    /**
-     * @internal
-     */
-    public _$noDataSrc = CommonUtils.noDataImageSrc;
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
@@ -173,6 +169,12 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     }
 
     private _themeChangeSubscription: Subscription;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataImage: noDataType = 'graph';
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {

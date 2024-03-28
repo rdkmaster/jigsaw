@@ -3,7 +3,7 @@ import { ColumnDefine, TableData } from "jigsaw/public_api";
 
 @Component({
     templateUrl: './demo.component.html',
-    styleUrls: ['./demo.component.css']
+    styleUrls: ['./demo.component.css', './../../assets/demo.common.css']
 })
 export class TableNoDataDemoComponent {
     tableData: TableData;
@@ -155,11 +155,19 @@ export class TableNoDataDemoComponent {
         }
         return result;
     }
-    // ====================================================================
-    // ignore the following lines, they are not important to this demo
-    // ====================================================================
-    summary: string = '';
-    description: string = '';
+    public noDataImage = 'default';
+    public imageData = [{ label: "default" }, { label: "graph" }, { label: "file" }, { label: "wait" }, { label: "card" }, { label: "add" }, { label: "structure" }];
+    public imageValue = { label: "default" };
+
+    public selectImage($event) {
+    console.log($event);
+    this.noDataImage = $event.label;
+}
+// ====================================================================
+// ignore the following lines, they are not important to this demo
+// ====================================================================
+summary: string = '';
+description: string = '';
 }
 
 

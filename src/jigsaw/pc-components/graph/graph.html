@@ -1,5 +1,5 @@
 <div [style.display]="_$dataValid ? 'none' : 'flex'" class="no-data">
-    <img src="{{_$noDataSrc}}" alt="No data...">
+    <div jigsaw-no-data [jigsawNoDataType]="noDataImage"></div>
     <span class="jigsaw-graph-no-data-text">{{'jigsawGraph.noData' | translate}}</span>
 </div>
 <!-- class要是有改动，graph-download.directive.ts中_getChildren函数获取echarts实例的地方也需要改   -->
