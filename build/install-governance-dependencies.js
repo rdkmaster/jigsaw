@@ -1,17 +1,18 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const packageJsonPath = `${__dirname}/package.json`;
-const backupPackageJsonPath = `${__dirname}/package.json.backup`;
+process.chdir(`${__dirname}/../`);
 
 // Step 1: 备份 package.json
-fs.unlinkSync(backupPackageJsonPath);
-fs.copyFileSync(packageJsonPath, backupPackageJsonPath);
+if (fs.existsSync('package.json.backup')) {
+    fs.unlinkSync('package.json.backup');
+}
+fs.copyFileSync('package.json', 'package.json.backup');
 
 // Step 2: 修改 package.json
-const packageJson = require(packageJsonPath);
+const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
 packageJson.dependencies = packageJson.dependenciesGovernance;
-fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2));
+fs.writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
 
 try {
     // Step 3: 执行 npm install
@@ -21,5 +22,7 @@ try {
 }
 
 // Step 4: 恢复备份文件
-fs.unlinkSync(packageJsonPath);
-fs.renameSync(backupPackageJsonPath, packageJsonPath);
+fs.unlinkSync('package.json');
+fs.renameSync('package.json.backup', 'package.json');
+execSync('git checkout package-lock.json', { stdio: 'inherit' });
+

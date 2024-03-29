@@ -1,9 +1,13 @@
 {
-  "name": "@rdkmaster/formly",
-  "version": "0.0.0-FORMLY-VERSION",
-  "license": "MIT",
-  "peerDependencies": {
-    "@ngx-formly/core": ">=5.0.0",
-    "@rdkmaster/jigsaw": ">=9.0.0"
-  }
+    "name": "@rdkmaster/formly",
+    "version": "0.0.0-FORMLY-VERSION",
+    "license": "MIT",
+    "peerDependencies": {
+        "@ngx-formly/core": ">=5.0.0",
+        "@rdkmaster/jigsaw": ">=10.9.0"
+    },
+    "peerDependenciesGovernance": {
+        "@ngx-formly/core": ">=5.0.0",
+        "@rdkmaster/jigsaw": ">=10.9.46-g1"
+    }
 }

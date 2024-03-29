@@ -72,9 +72,15 @@ function _replaceFiles(folder: string) {
 }
 
 function _replacePackageJson() {
-    const pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
-    const packageInfo = JSON.parse(fs.readFileSync(pkgPath).toString());
+    let pkgPath = path.join(jigsawHome, "src/jigsaw/pc-components/package.json");
+    let packageInfo = JSON.parse(fs.readFileSync(pkgPath).toString());
     packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
     delete packageInfo.peerDependenciesGovernance;
-    fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '    '));
+    fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '  '));
+
+    pkgPath = path.join(jigsawHome, "src/ngx-formly/jigsaw/package.json");
+    packageInfo = JSON.parse(fs.readFileSync(pkgPath).toString());
+    packageInfo.peerDependencies = packageInfo.peerDependenciesGovernance;
+    delete packageInfo.peerDependenciesGovernance;
+    fs.writeFileSync(pkgPath, JSON.stringify(packageInfo, null, '  '));
 }
