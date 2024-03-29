@@ -9,7 +9,6 @@ function checkRepo() {
         exit 1
     fi
     cd $repo
-    local code=0
     git status | grep -P "(位于分支|On branch) master" > /dev/null
     if [ "$?" != "0" ]; then
         echo "Error: the repo $repo is not in branch master!"
