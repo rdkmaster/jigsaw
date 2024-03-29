@@ -7,12 +7,9 @@ export type noDataType = 'default' | 'file' | 'wait' | 'card' | 'graph' | 'add' 
     selector: '[jigsawNoData], [jigsaw-no-data]'
 })
 export class JigsawNoDataDirective extends AbstractJigsawViewBase {
-    constructor(protected _renderer: Renderer2, elementRef: ElementRef, zone?: NgZone) {
+    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, zone?: NgZone) {
         super(zone);
-        this._elementRef = elementRef;
     }
-
-    protected _elementRef: ElementRef;
 
     private _type: noDataType;
 
@@ -46,18 +43,18 @@ export class JigsawNoDataDirective extends AbstractJigsawViewBase {
         </svg>`,
         wait: `
         <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-            <g transform="translate(2.500000, 2.000000)">
-                <path d="M35.5,16 L37.5,16 C40.8137085,16 43.5,18.6862915 43.5,22 L43.5,24 C43.5,27.3137085 40.8137085,30 37.5,30 L35.5,30 L35.5,25 C35.5,32.1797017 29.6797017,38 22.5,38 L14.5,38 C7.32029825,38 1.5,32.1797017 1.5,25 L1.5,13 C1.5,12.4477153 1.94771525,12 2.5,12 L34.5,12 C35.0522847,12 35.5,12.4477153 35.5,13 L35.5,16 Z M35.5,17 L35.5,25" stroke="#A5A5A5" stroke-width="2" opacity="0.6" stroke-linecap="square"></path>
-                <line x1="0" y1="42.5" x2="42" y2="42.5" stroke="#A5A5A5" stroke-width="2" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></line>
-                <line x1="8.5" y1="8" x2="8.5" y2="4" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
-                <line x1="28.5" y1="8" x2="28.5" y2="4" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
-                <line x1="18.5" y1="8" x2="18.5" y2="0" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
-                <path d="M34,17.5 L34,18.5 L3,18.5 L3,17.5 L34,17.5 Z" stroke="#A5A5A5" opacity="0.6"></path>
-                <rect fill="#A5A5A5" opacity="0.15" x="2.5" y="13" width="32" height="4"></rect>
+        <g id="画板" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+            <g id="编组-20" transform="translate(2.500000, 2.000000)">
+                <path d="M35.5,16 L37.5,16 C40.8137085,16 43.5,18.6862915 43.5,22 L43.5,24 C43.5,27.3137085 40.8137085,30 37.5,30 L35.5,30 L35.5,25 C35.5,32.1797017 29.6797017,38 22.5,38 L14.5,38 C7.32029825,38 1.5,32.1797017 1.5,25 L1.5,13 C1.5,12.4477153 1.94771525,12 2.5,12 L34.5,12 C35.0522847,12 35.5,12.4477153 35.5,13 L35.5,16 Z M35.5,17 L35.5,25" id="形状结合备份" stroke="#A5A5A5" stroke-width="2" opacity="0.6" stroke-linecap="square"></path>
+                <line x1="0" y1="42.5" x2="42" y2="42.5" id="Line-10备份" stroke="#A5A5A5" stroke-width="2" opacity="0.6" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="8.5" y1="8" x2="8.5" y2="4" id="Line-11-Copy备份-3" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="28.5" y1="8" x2="28.5" y2="4" id="Line-11-Copy备份-4" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
+                <line x1="18.5" y1="8" x2="18.5" y2="0" id="Line-11-Copy备份-5" stroke="#A5A5A5" stroke-width="2" opacity="0.15" stroke-linecap="round" stroke-linejoin="round"></line>
+                <path d="M34,17.5 L34,18.5 L3,18.5 L3,17.5 L34,17.5 Z" id="Rectangle-12备份" stroke="#A5A5A5" opacity="0.6"></path>
+                <rect id="Rectangle-19备份" fill="#A5A5A5" opacity="0.15" x="2.5" y="13" width="32" height="4"></rect>
             </g>
         </g>
-        </svg>`,
+    </svg>`,
         card: `
         <svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
         <g id="画板备份-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
