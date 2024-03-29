@@ -160,12 +160,12 @@ function publishNpm() {
     echo "Publishing jigsaw & formly with next version: $nextVersion ..."
 
     echo "Publishing target: publish:jigsaw"
-    ./node_modules/.bin/gulp publish:jigsaw --nextVersion $nextVersion $dry || {
+    ./node_modules/.bin/gulp publish:jigsaw --tag latest --nextVersion $nextVersion $dry || {
         noticePublishError "Failed to publish publish:jigsaw"
         exit 1
     }
     echo "Publishing target: publish:formly"
-    ./node_modules/.bin/gulp publish:formly --nextVersion $nextVersion $dry || {
+    ./node_modules/.bin/gulp publish:formly --tag latest --nextVersion $nextVersion $dry || {
         noticePublishError "Failed to publish publish:formly"
         exit 1
     }
@@ -174,12 +174,12 @@ function publishNpm() {
         exit 1
     }
     echo "Publishing target: publish:governance:jigsaw"
-    ./node_modules/.bin/gulp publish:governance:jigsaw --nextVersion $nextVersion-g1 $dry || {
+    ./node_modules/.bin/gulp publish:governance:jigsaw --tag governance --nextVersion $nextVersion-g1 $dry || {
         noticePublishError "Failed to publish publish:governance:jigsaw"
         exit 1
     }
     echo "Publishing target: publish:governance:formly"
-    ./node_modules/.bin/gulp publish:governance:formly --nextVersion $nextVersion-g1 $dry || {
+    ./node_modules/.bin/gulp publish:governance:formly --tag governance --nextVersion $nextVersion-g1 $dry || {
         noticePublishError "Failed to publish publish:governance:formly"
         exit 1
     }
