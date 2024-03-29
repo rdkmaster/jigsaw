@@ -37,7 +37,7 @@
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
-            <div *ngIf="!_$hideImg" jigsaw-no-data [jigsawNoDataType]="noDataImage"></div>
+            <div *ngIf="!_$hideImg" jigsaw-no-data [jigsawNoDataImageType]="noDataImageType"></div>
             <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"

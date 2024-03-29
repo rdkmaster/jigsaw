@@ -23,7 +23,7 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawThemeService} from "../../common/core/theming/theme";
-import { noDataType } from "../../common/directive/nodata/no-data";
+import { NoDataImageType } from "../../common/directive/nodata/no-data";
 
 declare const echarts: any;
 
@@ -174,7 +174,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      * @NoMarkForCheckRequired
      */
     @Input()
-    public noDataImage: noDataType = 'graph';
+    public noDataImageType: NoDataImageType = 'graph';
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {

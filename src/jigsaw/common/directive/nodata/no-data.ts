@@ -1,7 +1,7 @@
 import { Directive, ElementRef, Input, NgModule, NgZone, Renderer2 } from "@angular/core";
 import { AbstractJigsawViewBase } from "../../common";
 
-export type noDataType = 'default' | 'file' | 'wait' | 'card' | 'graph' | 'add' | 'structure'
+export type NoDataImageType = 'default' | 'file' | 'wait' | 'card' | 'graph' | 'add' | 'structure'
 
 @Directive({
     selector: '[jigsawNoData], [jigsaw-no-data]'
@@ -11,22 +11,22 @@ export class JigsawNoDataDirective extends AbstractJigsawViewBase {
         super(zone);
     }
 
-    private _type: noDataType;
+    private _imageType: NoDataImageType;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public get jigsawNoDataType(): noDataType {
-        return this._type;
+    public get jigsawNoDataImageType(): NoDataImageType {
+        return this._imageType;
     }
 
-    public set jigsawNoDataType(value: noDataType) {
-        if (this._type == value) {
+    public set jigsawNoDataImageType(value: NoDataImageType) {
+        if (this._imageType == value) {
             return;
         }
-        this._type = value;
-        this._renderer.setProperty(this._elementRef.nativeElement, 'innerHTML', this.noDataImages[this._type] || this.noDataImages.default);
+        this._imageType = value;
+        this._renderer.setProperty(this._elementRef.nativeElement, 'innerHTML', this.noDataImages[this._imageType] || this.noDataImages.default);
     }
 
     // @ignoring-i18n-check-start

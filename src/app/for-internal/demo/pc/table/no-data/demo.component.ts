@@ -155,13 +155,13 @@ export class TableNoDataDemoComponent {
         }
         return result;
     }
-    public noDataImage = 'default';
+    public noDataImageType = 'default';
     public imageData = [{ label: "default" }, { label: "graph" }, { label: "file" }, { label: "wait" }, { label: "card" }, { label: "add" }, { label: "structure" }];
     public imageValue = { label: "default" };
 
     public selectImage($event) {
     console.log($event);
-    this.noDataImage = $event.label;
+    this.noDataImageType = $event.label;
 }
 // ====================================================================
 // ignore the following lines, they are not important to this demo
