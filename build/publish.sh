@@ -142,6 +142,12 @@ function getPublishedNpmChecksum() {
     echo $allMd5sum | md5sum
 }
 
+function noticePublishError() {
+    echo "----------------------------------------------------"
+    echo "$1"
+    echo "----------------------------------------------------"
+}
+
 function publishNpm() {
     npm whoami
     if [ "$?" != "0" ]; then
@@ -150,46 +156,31 @@ function publishNpm() {
     fi
 
     cd $jigsawRepo
-    ./node_modules/.bin/gulp build:jigsaw:clean
-    if [ "$?" != "0" ]; then
-        echo "Error: failed to build jigsaw lib!"
+    local nextVersion=$1
+    local dry=$2
+    echo "Publishing jigsaw & formly with next version: $nextVersion ..."
+
+    ./node_modules/.bin/gulp publish:jigsaw --nextVersion $nextVersion $dry || {
+        noticePublishError "Failed to publish publish:jigsaw"
         exit 1
-    fi
-
-    echo "downloading the published npm package from npm server...."
-    local publishedChecksum=`getPublishedNpmChecksum`
-    if [ "$?" != "0" ]; then
-        echo "Warn: failed to download published npm package!"
-        return
-    fi
-    cd dist/@rdkmaster/jigsaw/
-    allMd5sum="" && md5Dir .
-    local currentChecksum=`echo $allMd5sum | md5sum`
-    echo "The publishedChecksum: $publishedChecksum"
-    echo "The currentChecksum:   $currentChecksum"
-    if [ "$publishedChecksum" == "$currentChecksum" ]; then
-        echo "Info: there is nothing updated to the npm package!"
-        return
-    fi
-
-    cd $jigsawRepo
-    local newVersion=`getNewVersion`
-    if [ "$?" != "0" ]; then
-        echo "Error: failed to read the latest version num of jigsaw!"
+    }
+    ./node_modules/.bin/gulp publish:formly --nextVersion $nextVersion $dry || {
+        noticePublishError "Failed to publish publish:formly"
         exit 1
-    fi
-
-    echo "The next version to be used: $newVersion"
-    sed -i 's#"version":\s*".\+"#"version":"'$newVersion'"#' dist/@rdkmaster/jigsaw/package.json
-
-    echo "publishing jigsaw lib to npm registry with new version $newVersion ..."
-#    npm publish --dry-run --tag latest --access public dist/@rdkmaster/jigsaw
-    npm publish --tag latest --access public dist/@rdkmaster/jigsaw
-    if [ "$?" != "0" ]; then
-        echo "Error: failed to publish jigsaw lib to npm registry!"
+    }
+    node build/install-governance-dependencies.js || {
+        noticePublishError "Failed to install dependencies for governance version!"
         exit 1
-    fi
-    echo "Success to publish jigsaw lib to npm registry!"
+    }
+    ./node_modules/.bin/gulp publish:governance:jigsaw --nextVersion $nextVersion $dry || {
+        noticePublishError "Failed to publish publish:governance:jigsaw"
+        exit 1
+    }
+    ./node_modules/.bin/gulp publish:governance:formly --nextVersion $nextVersion $dry || {
+        noticePublishError "Failed to publish publish:governance:formly"
+        exit 1
+    }
+    echo "All targets published to npm !!!!!!!!!!"
 }
 
 function updateJigsawRepo() {
@@ -214,7 +205,7 @@ if [[ "$target" != "ued" &&  "$target" != "npm" ]]; then
     echo "Usage:"
     echo "  sh publish.sh ued rdk"
     echo "  sh publish.sh ued gitee"
-    echo "  sh publish.sh npm"
+    echo "  sh publish.sh npm \$nextVersion --dry"
     exit 1
 fi
 
@@ -230,5 +221,5 @@ if [ "$target" == "ued" ]; then
     server=$2
     publishUed
 elif [ "$target" == "npm" ]; then
-    publishNpm
+    publishNpm $2 $3
 fi
