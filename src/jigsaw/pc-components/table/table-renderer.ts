@@ -1051,6 +1051,29 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             field: this.field
         };
         this.cellStatusChange.emit(event);
+        document.addEventListener('dragover', this._dragOverHandle);
+    }
+
+    /**
+     * @internal
+     */
+    private _dragOverHandle = ($event) => {
+        const rect = this.hostInstance._elementRef.nativeElement.getBoundingClientRect();
+        if ($event.clientY >= rect.top && $event.clientY <= rect.bottom) {
+            // 在表格内，不操作滚动条
+            return;
+        }
+        const geometry = this.hostInstance.contentScrollbar.geometry();
+        if ($event.clientY < rect.top) {
+            // 往上滚动
+            this.hostInstance.contentScrollbar.scrollToY(geometry.y - 10);
+            return;
+        }
+        if ($event.clientY > rect.bottom) {
+            // 往下滚动
+            this.hostInstance.contentScrollbar.scrollToY(geometry.y + 10);
+            return;
+        }
     }
 
     /**
@@ -1058,6 +1081,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
      */
     public _$dragEndHandle() {
         this._resetSelectedRow();
+        document.removeEventListener('dragover', this._dragOverHandle);
     }
 
     /**

@@ -7,6 +7,7 @@ createTask('jigsaw');
 createTask('jigsaw-mobile');
 
 import './tasks/publish';
+import './tasks/publish-governance';
 
 import './tasks/ensure-url-matches-path'
 import './tasks/build-formly'

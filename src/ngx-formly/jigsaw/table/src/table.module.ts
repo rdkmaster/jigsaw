@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {FormlyModule} from '@ngx-formly/core';
 import {ReactiveFormsModule} from '@angular/forms';
 import {JigsawTableModule} from "@rdkmaster/jigsaw";
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 import {FormlyFieldTable} from './table.type';
 
 @NgModule({
