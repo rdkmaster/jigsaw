@@ -293,6 +293,7 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     /**
      * 设置多选时是否显示全选按钮
      * */
+    @RequireMarkForCheck()
     @Input()
     public showSelectAllCheckbox: boolean = true;
 
