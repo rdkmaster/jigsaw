@@ -22,6 +22,12 @@
                        [maxWidth]="enableMaxWidth ? maxWidth : undefined"
                        [maxHeight]="enableMaxHeight ? maxHeight : undefined">
         </jigsaw-select>
-        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p>
+        <p class="message">选择的城市是 <span>{{selectedCityName}}</span></p><br>
+
+        <span>配置多选并隐藏全选</span>
+        <jigsaw-select [(value)]="selectedCity1" (valueChange)="selectChange1($event)" (remove)="onItemRemove($event)" [clearable]="true"
+                       placeholder="请选择城市" [data]="cityList1" [useStatistics]="false" [multipleSelect]="true" [showSelectAllCheckbox]="false">
+        </jigsaw-select>
+        <p class="message">选择的城市是 <span>{{selectedCityName1}}</span></p>
     </div>
 </div>

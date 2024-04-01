@@ -291,6 +291,12 @@ export abstract class JigsawSelectBase extends AbstractJigsawComponent implement
     public selectListPositionType: PopupPositionType = PopupPositionType.absolute;
 
     /**
+     * 设置多选时是否显示全选按钮
+     * */
+    @Input()
+    public showSelectAllCheckbox: boolean = true;
+
+    /**
      * 搜索开关
      *
      * @NoMarkForCheckRequired
