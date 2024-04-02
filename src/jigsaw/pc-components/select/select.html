@@ -43,7 +43,7 @@
                          (maxSelectionReachedChange)="_$maxSelectionReachedChange($event)"
                          [maxSelectionLimit]="maxSelectionLimit"
                          [autoRemoveInvalidValue]="!_$infiniteScroll">
-                <div *ngIf="multipleSelect && data?.length > 0" class="jigsaw-select-select-all">
+                <div *ngIf="multipleSelect && data?.length > 0 && showSelectAll" class="jigsaw-select-select-all">
                     <jigsaw-checkbox
                         *ngIf="!_$showSelected"
                         [theme]="theme"
