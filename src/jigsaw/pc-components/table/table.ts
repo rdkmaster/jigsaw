@@ -51,8 +51,7 @@ import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
-import {JigsawTheme, JigsawThemeService} from "../../common/core/theming/theme";
-
+import {JigsawThemeService} from "../../common/core/theming/theme";
 
 @WingsTheme('table.scss')
 @Component({
