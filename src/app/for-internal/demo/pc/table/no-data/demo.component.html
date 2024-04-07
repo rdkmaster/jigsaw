@@ -39,3 +39,18 @@
 <div class="tall-box">
     <jigsaw-table [data]="tableData4" [columnDefines]="columnDefines"></jigsaw-table>
 </div>
+
+<jigsaw-header>配置noDataImgSrc 与 noDataDarkImgSrc</jigsaw-header>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData" [noDataImgSrc]="noDataImgSrc" [noDataDarkImgSrc]="noDataDarkImgSrc"></jigsaw-table>
+</div>
+
+<jigsaw-header>仅配置noDataImgSrc</jigsaw-header>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData" [noDataImgSrc]="noDataImgSrc"></jigsaw-table>
+</div>
+
+<jigsaw-header>仅配置noDataDarkImgSrc</jigsaw-header>
+<div class="tall-box">
+    <jigsaw-table [data]="tableData" [noDataDarkImgSrc]="noDataDarkImgSrc"></jigsaw-table>
+</div>

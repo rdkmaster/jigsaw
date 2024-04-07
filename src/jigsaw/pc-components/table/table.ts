@@ -51,7 +51,7 @@ import { JigsawSearchInputModule } from "../input/search-input";
 import {TranslateHelper} from "../../common/core/utils/translate-helper";
 import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
-import {JigsawThemeService} from "../../common/core/theming/theme";
+import {JigsawTheme, JigsawThemeService} from "../../common/core/theming/theme";
 
 
 @WingsTheme('table.scss')
@@ -653,6 +653,24 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
     }
 
+    private _updateNoDataImgSrc() {
+        if (!this.noDataImgSrc && !this.noDataDarkImgSrc) {
+            this._$noDataSrc = "";
+            return;
+        }
+        if (this.noDataImgSrc && this.noDataDarkImgSrc) {
+            this._$noDataSrc = this._themeService.majorStyle == 'dark' ? this.noDataDarkImgSrc : this.noDataImgSrc;
+            this._changeDetectorRef.detectChanges();
+            return;
+        }
+        if (this.noDataImgSrc) {
+            this._$noDataSrc = this.noDataImgSrc;
+        } else if (this.noDataDarkImgSrc) {
+            this._$noDataSrc = this.noDataDarkImgSrc;
+        }
+        this._changeDetectorRef.detectChanges();
+    }
+
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -790,6 +808,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._updateFrozenColumns();
             // 根据高度设置无数据图片是否显示
             this._updateNoDataImgHide();
+            // 根据图片src配置和皮肤主题来设置无数据图片
+            this._updateNoDataImgSrc();
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1009,6 +1029,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription?.unsubscribe();
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
+            console.log(this._themeService.majorStyle);
+            this._updateNoDataImgSrc();
         });
 
         const data: IPageable = <any>this.data;
@@ -1133,7 +1155,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$noDataSrc = CommonUtils.noDataImageSrc;
+    public _$noDataSrc: string = '';
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataImgSrc: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataDarkImgSrc: string;
 
     /**
      * 根据内容计算自适应列宽

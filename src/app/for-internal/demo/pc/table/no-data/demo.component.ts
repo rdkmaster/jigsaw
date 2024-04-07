@@ -13,6 +13,10 @@ export class TableNoDataDemoComponent {
 
     columnDefines: ColumnDefine[];
 
+    public noDataImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-light.png";
+
+    public noDataDarkImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-dark.png";
+
     constructor() {
         this.tableData = new TableData(
             [],

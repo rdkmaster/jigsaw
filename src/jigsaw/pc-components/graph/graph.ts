@@ -80,7 +80,37 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     /**
      * @internal
      */
-    public _$noDataSrc = CommonUtils.noDataImageSrc;
+    public _$noDataSrc: string = "";
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataImgSrc: string;
+    
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataDarkImgSrc: string;
+
+    private _updateNoDataImgSrc() {
+        if (!this.noDataImgSrc && !this.noDataDarkImgSrc) {
+            this._$noDataSrc = "";
+            return;
+        }
+        if (this.noDataImgSrc && this.noDataDarkImgSrc) {
+            this._$noDataSrc = this._themeService.majorStyle == 'dark' ? this.noDataDarkImgSrc : this.noDataImgSrc;
+            this._changeDetectorRef.detectChanges();
+            return;
+        }
+        if (this.noDataImgSrc) {
+            this._$noDataSrc = this.noDataImgSrc;
+        } else if (this.noDataDarkImgSrc) {
+            this._$noDataSrc = this.noDataDarkImgSrc;
+        }
+        this._changeDetectorRef.detectChanges();
+    }
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
@@ -179,6 +209,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
+            this._updateNoDataImgSrc();
             if (this._themeService.constructor != themeInfo.target) {
                 // 判断是否是同一个themeService发出的事件
                 return;
@@ -188,7 +219,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
                 return;
             }
             this._graph._theme = this._themeService.getGraphTheme(themeInfo.majorStyle);
-            this.data.refresh();
+            if (this.data) {
+                this.data.refresh();
+            }
         })
     }
 
@@ -275,6 +308,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this.data) {
             this._dataValid = this._isOptionsValid(this.data.options);
         }
+        this._updateNoDataImgSrc();
         this.init.emit();
     }
 

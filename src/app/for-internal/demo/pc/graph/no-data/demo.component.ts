@@ -8,6 +8,10 @@ import {AbstractGraphData} from "jigsaw/public_api";
 export class GraphWithNoDataComponent {
     data: AbstractGraphData;
 
+    public noDataImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-light.png";
+
+    public noDataDarkImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-dark.png";
+
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
