@@ -2,6 +2,30 @@ import {JigsawArray} from "./data-collection-utils";
 
 // @dynamic
 export class CommonUtils {
+
+    // to avoid compodoc generation error
+    private static _noDataImageSrc = 'data:image/png;base64,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';
+
+    public static noDataImageSrc = CommonUtils._noDataImageSrc;
+
     private static copy(source: Object, isDeep: boolean): Object {
         if (this.isUndefined(source) || typeof source !== 'object') {
             return source;
