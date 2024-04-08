@@ -1000,14 +1000,14 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
                   (jigsawDrop)="_$dropHandle($event)">
-                <i [class]="_$icon"></i>
-                <p>{{_$label}}</p>
             </span>
             <span class="drop-bottom"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
                   (jigsawDrop)="_$dropHandle($event)">
             </span>
+            <i [class]="_$icon"></i>
+            <p class="drag-label">{{_$label}}</p>
         </div>
     `
 })
@@ -1036,6 +1036,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     public _$dragStartHandle(dragInfo: DragDropInfo) {
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = "link";
+        this.hostInstance._$isDragging = true;
         if (!CommonUtils.isIE()) {
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
@@ -1081,6 +1082,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
      */
     public _$dragEndHandle() {
         this._resetSelectedRow();
+        this.hostInstance._$isDragging = false;
         document.removeEventListener('dragover', this._dragOverHandle);
     }
 

@@ -1,13 +1,9 @@
 import { Component, ElementRef, Renderer2, ViewEncapsulation } from "@angular/core";
-import { TableData, AdditionalColumnDefine, TableDragReplaceRow } from "jigsaw/public_api";
+import { TableData, AdditionalColumnDefine, TableDragReplaceRow, TableHeadCheckboxRenderer, TableCellCheckboxRenderer, ColumnDefine, TableCellSelectRenderer } from "jigsaw/public_api";
 
 @Component({
     templateUrl: "demo.component.html",
-    styles: [`
-        .demo-container p {
-            margin-top: 8px
-        }
-    `],
+    styleUrls: ['./../../assets/demo.common.css'],
     encapsulation: ViewEncapsulation.None
 })
 export class TableDraggableDemoComponent {
@@ -61,6 +57,47 @@ export class TableDraggableDemoComponent {
                 renderer: TableDragReplaceRow,
                 rendererInitData: this.rendererInitData,
                 alignment: "center"
+            }
+        }
+    ];
+
+    public additionalColumnDefines: AdditionalColumnDefine[] = [{
+        pos: 0,
+        width: 30,
+        header: {
+            renderer: TableHeadCheckboxRenderer
+        },
+        cell: {
+            renderer: TableCellCheckboxRenderer
+        }
+    },
+    {
+        pos: 4,
+        width: "100px",
+        header: {
+            text: "拖拽换行",
+        },
+        cell: {
+            renderer: TableDragReplaceRow,
+            rendererInitData: this.rendererInitData,
+            alignment: "center"
+        }
+    }
+    ];
+
+    public columnDefines: ColumnDefine[] = [
+        {
+            target: 'office', width: '180',
+            cell: {
+                editorRenderer: TableCellSelectRenderer,
+                editorRendererInitData: {
+                    initData: (td, row, col) => {
+                        return TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
+                    },
+                    searchable: true
+                },
+                editable: true,
+                alwaysShowEditor: true
             }
         }
     ];

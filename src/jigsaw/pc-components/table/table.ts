@@ -67,6 +67,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[class.jigsaw-table-column-resizable]': 'columnResizable',
         '[class.jigsaw-table-resizing]': '_$resizing',
         '[class.jigsaw-table-hide-column-dividers]': 'hideColumnDividers',
+        '[class.jigsaw-table-dragging]': '_$isDragging',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -1424,6 +1425,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         link.setAttribute("download", name);
         link.click();
     }
+
+    /**
+     * @internal
+     */
+    public _$isDragging: boolean = false;
 
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);
