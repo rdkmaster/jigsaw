@@ -791,7 +791,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 根据高度设置无数据图片是否显示
             this._updateNoDataImgHide();
             // 根据图片src配置和皮肤主题来设置无数据图片
-            InternalUtils.updateNoDataImage(this);
+            InternalUtils.updateNoDataImage(this as any);
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1011,7 +1011,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription?.unsubscribe();
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
-            InternalUtils.updateNoDataImage(this);
+            InternalUtils.updateNoDataImage(this as any);
         });
 
         const data: IPageable = <any>this.data;
@@ -1136,19 +1136,19 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$noDataSrc: string = '';
+    public _$noDataImage: string = '';
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public noDataImgSrc: string;
+    public noDataImage: string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public noDataDarkImgSrc: string;
+    public noDataDarkImage: string;
 
     private _noDataPrompt: string = this._translateService.instant("table.noData");
 

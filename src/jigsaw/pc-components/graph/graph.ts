@@ -84,19 +84,19 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     /**
      * @internal
      */
-    public _$noDataSrc: string = "";
+    public _$noDataImage: string = "";
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public noDataImgSrc: string;
+    public noDataImage: string;
 
     /**
      * @NoMarkForCheckRequired
      */
     @Input()
-    public noDataDarkImgSrc: string;
+    public noDataDarkImage: string;
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
@@ -198,7 +198,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
-            InternalUtils.updateNoDataImage(this);
+            InternalUtils.updateNoDataImage(this as any);
             if (this._themeService.constructor != themeInfo.target) {
                 // 判断是否是同一个themeService发出的事件
                 return;
@@ -315,7 +315,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
         if (this.data) {
             this._dataValid = this._isOptionsValid(this.data.options);
         }
-        InternalUtils.updateNoDataImage(this);
+        InternalUtils.updateNoDataImage(this as any);
         this.init.emit();
     }
 

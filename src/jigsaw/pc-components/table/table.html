@@ -37,8 +37,8 @@
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
-            <svg *ngIf="!_$hideImg && !_$noDataSrc" width="48px" height="48px" viewBox="0 0 48 48" version="1.1"
-                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <svg *ngIf="!_$hideImg && !_$noDataImage" width="48px" height="48px" viewBox="0 0 48 48" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                 <defs>
                     <polygon id="path-1" points="0 0 48 0 48 12.8849 0 12.8849"></polygon>
                     <polygon id="path-3" points="0 0 38 0 38 24.9996 0 24.9996"></polygon>
@@ -72,7 +72,7 @@
                     </g>
                 </g>
             </svg>
-            <img *ngIf="!_$hideImg && !!_$noDataSrc" src="{{_$noDataSrc}}" alt="No data...">
+            <img *ngIf="!_$hideImg && !!_$noDataImage" src="{{_$noDataImage}}" alt="No data...">
             <span class="jigsaw-table-no-data-text">{{noDataPrompt}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
