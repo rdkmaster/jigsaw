@@ -2,19 +2,6 @@ $table-prefix-cls: #{$jigsaw-prefix}-table;
 $table-drag-active-height: 30%;
 
 .#{$table-prefix-cls}-host {
-    table tbody tr {
-        // draggable tr bg
-        &.drop-active-top {
-            background: linear-gradient(to bottom, $primary-default $table-drag-active-height, transparent $table-drag-active-height, transparent) !important;
-        }
-        &.drop-active-mid {
-            background: linear-gradient(to bottom, transparent $table-drag-active-height, $primary-default $table-drag-active-height, $primary-default (100% - $table-drag-active-height), transparent (100% - $table-drag-active-height), transparent) !important;
-        }
-        &.drop-active-bottom {
-            background: linear-gradient(to top, $primary-default $table-drag-active-height, transparent $table-drag-active-height, transparent) !important;
-        }
-    }
-
     &.#{$jigsaw-table}-dragging {
         table tr {
             position: relative;
@@ -22,6 +9,12 @@ $table-drag-active-height: 30%;
 
         .#{$table-prefix-cls}-option-box {
             position: unset;
+
+            .drop-top.active,
+            .drop-mid.active,
+            .drop-bottom.active {
+                background: $brand-default;
+            }
         }
     }
 
@@ -53,7 +46,7 @@ $table-drag-active-height: 30%;
         top: 30%;
         left: 0;
         width: 100%;
-        height: $table-drag-active-height;
+        height: (100% - $table-drag-active-height - $table-drag-active-height);
     }
 
     .drop-bottom {
@@ -61,7 +54,7 @@ $table-drag-active-height: 30%;
         left: 0;
         bottom: 0;
         width: 100%;
-        height: (100% - $table-drag-active-height - $table-drag-active-height);
+        height: $table-drag-active-height;
     }
 
     .drag-label {
