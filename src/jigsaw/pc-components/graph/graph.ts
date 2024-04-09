@@ -13,7 +13,8 @@ import {
     Output,
     Renderer2,
     ChangeDetectionStrategy,
-    ChangeDetectorRef
+    ChangeDetectorRef,
+    Injector
 } from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {debounceTime} from 'rxjs/operators';
@@ -191,7 +192,9 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService,
-                protected _translateService: TranslateService) {
+                protected _translateService: TranslateService, 
+                // @RequireMarkForCheck 需要用到，勿删
+                private _injector: Injector) {
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
