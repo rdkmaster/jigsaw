@@ -73,7 +73,7 @@
                 </g>
             </svg>
             <img *ngIf="!_$hideImg && !!_$noDataSrc" src="{{_$noDataSrc}}" alt="No data...">
-            <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
+            <span class="jigsaw-table-no-data-text">{{_$noDataText}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
             [style.borderSpacing]="_$getTableBorderSpacing()" [style.color]="styleOptions?.cellStyles?.textColor"

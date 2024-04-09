@@ -78,6 +78,24 @@ export class InternalUtils {
         r += min;
         return r;
     }
+
+    public static updateNoDataImgSrc(component: any) {
+        if (!component.noDataImgSrc && !component.noDataDarkImgSrc) {
+            component._$noDataSrc = "";
+            return;
+        }
+        if (component.noDataImgSrc && component.noDataDarkImgSrc) {
+            component._$noDataSrc = component._themeService.majorStyle == 'dark' ? component.noDataDarkImgSrc : component.noDataImgSrc;
+            component._changeDetectorRef.detectChanges();
+            return;
+        }
+        if (component.noDataImgSrc) {
+            component._$noDataSrc = component.noDataImgSrc;
+        } else if (component.noDataDarkImgSrc) {
+            component._$noDataSrc = component.noDataDarkImgSrc;
+        }
+        component._changeDetectorRef.detectChanges();
+    }
 }
 
 /**

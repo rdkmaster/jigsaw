@@ -15,6 +15,7 @@ import {
     ChangeDetectionStrategy,
     ChangeDetectorRef
 } from "@angular/core";
+import {TranslateService} from "@ngx-translate/core";
 import {debounceTime} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
 
@@ -23,6 +24,8 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
 import {AbstractJigsawComponent, WingsTheme} from "../../common/common";
 import {EchartOptions} from "../../common/core/data/echart-types";
 import {JigsawThemeService} from "../../common/core/theming/theme";
+import {InternalUtils} from "../../common/core/utils/internal-utils";
+import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
 
 declare const echarts: any;
 
@@ -93,24 +96,6 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public noDataDarkImgSrc: string;
-
-    private _updateNoDataImgSrc() {
-        if (!this.noDataImgSrc && !this.noDataDarkImgSrc) {
-            this._$noDataSrc = "";
-            return;
-        }
-        if (this.noDataImgSrc && this.noDataDarkImgSrc) {
-            this._$noDataSrc = this._themeService.majorStyle == 'dark' ? this.noDataDarkImgSrc : this.noDataImgSrc;
-            this._changeDetectorRef.detectChanges();
-            return;
-        }
-        if (this.noDataImgSrc) {
-            this._$noDataSrc = this.noDataImgSrc;
-        } else if (this.noDataDarkImgSrc) {
-            this._$noDataSrc = this.noDataDarkImgSrc;
-        }
-        this._changeDetectorRef.detectChanges();
-    }
 
     // 由数据服务提供的数据.
     private _data: AbstractGraphData;
@@ -205,11 +190,12 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private _themeChangeSubscription: Subscription;
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
-                private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService) {
+                private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService,
+                protected _translateService: TranslateService) {
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
-            this._updateNoDataImgSrc();
+            InternalUtils.updateNoDataImgSrc(this);
             if (this._themeService.constructor != themeInfo.target) {
                 // 判断是否是同一个themeService发出的事件
                 return;
@@ -303,12 +289,36 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private readonly _host: HTMLElement;
     private _graphContainer: HTMLElement;
 
+    /**
+     * @internal
+     */
+    public _$noDataText: string = this._translateService.instant("jigsawGraph.noData");
+
+    private _noDataText: string;
+    
+    /**
+     * 无数据时显示的文本
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get noDataText(): string {
+        return this._noDataText;
+    }
+    
+    public set noDataText(newValue: string) {
+        if (this._noDataText == newValue) {
+            return;
+        }
+        this._noDataText = newValue;
+        this._$noDataText = this._noDataText || this._translateService.instant("jigsawGraph.noData");
+    }    
+
     ngOnInit() {
         super.ngOnInit();
         if (this.data) {
             this._dataValid = this._isOptionsValid(this.data.options);
         }
-        this._updateNoDataImgSrc();
+        InternalUtils.updateNoDataImgSrc(this);
         this.init.emit();
     }
 

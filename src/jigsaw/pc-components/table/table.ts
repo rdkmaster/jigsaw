@@ -19,12 +19,12 @@
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
 import {BigTableData, LocalPageableTableData, TableData} from "../../common/core/data/table-data";
-import {AffixUtils} from "../../common/core/utils/internal-utils";
+import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -74,7 +74,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector, private _themeService: JigsawThemeService) {
+                private _injector: Injector, private _themeService: JigsawThemeService,
+                protected _translateService: TranslateService) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -652,24 +653,6 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._changeDetectorRef.detectChanges();
     }
 
-    private _updateNoDataImgSrc() {
-        if (!this.noDataImgSrc && !this.noDataDarkImgSrc) {
-            this._$noDataSrc = "";
-            return;
-        }
-        if (this.noDataImgSrc && this.noDataDarkImgSrc) {
-            this._$noDataSrc = this._themeService.majorStyle == 'dark' ? this.noDataDarkImgSrc : this.noDataImgSrc;
-            this._changeDetectorRef.detectChanges();
-            return;
-        }
-        if (this.noDataImgSrc) {
-            this._$noDataSrc = this.noDataImgSrc;
-        } else if (this.noDataDarkImgSrc) {
-            this._$noDataSrc = this.noDataDarkImgSrc;
-        }
-        this._changeDetectorRef.detectChanges();
-    }
-
     private _updateFrozenColumns() {
         this._clearFreezeStyle();
         this._setHeaderScrollLeft();
@@ -808,7 +791,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 根据高度设置无数据图片是否显示
             this._updateNoDataImgHide();
             // 根据图片src配置和皮肤主题来设置无数据图片
-            this._updateNoDataImgSrc();
+            InternalUtils.updateNoDataImgSrc(this);
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1028,8 +1011,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription?.unsubscribe();
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
-            console.log(this._themeService.majorStyle);
-            this._updateNoDataImgSrc();
+            InternalUtils.updateNoDataImgSrc(this);
         });
 
         const data: IPageable = <any>this.data;
@@ -1167,6 +1149,30 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
      */
     @Input()
     public noDataDarkImgSrc: string;
+
+    /**
+     * @internal
+     */
+    public _$noDataText: string = this._translateService.instant("table.noData");
+
+    private _noDataText: string;
+    
+    /**
+     * 无数据时显示的文本
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get noDataText(): string {
+        return this._noDataText;
+    }
+    
+    public set noDataText(newValue: string) {
+        if (this._noDataText == newValue) {
+            return;
+        }
+        this._noDataText = newValue;
+        this._$noDataText = this._noDataText || this._translateService.instant("table.noData");
+    }
 
     /**
      * 根据内容计算自适应列宽
