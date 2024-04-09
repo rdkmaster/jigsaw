@@ -23,7 +23,7 @@
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
                             [defaultSortOrder]="head.defaultSortOrder" (sort)="_$onSort($event)" [headerTrustedHtml]="head.cellData"
-                            [filterable]="head.filterable" [filterHistoryStorageSize]="head.filterHistoryStorageSize" 
+                            [filterable]="head.filterable" [filterHistoryStorageSize]="head.filterHistoryStorageSize"
                             [headerTrustedHtmlContext]="head.innerHtmlContext" [hostInstance]="this">
                         </jigsaw-table-header>
                         <div *ngIf="columnResizable && !last" class="column-resize-handler"
@@ -73,7 +73,7 @@
                 </g>
             </svg>
             <img *ngIf="!_$hideImg && !!_$noDataSrc" src="{{_$noDataSrc}}" alt="No data...">
-            <span class="jigsaw-table-no-data-text">{{_$noDataText}}</span>
+            <span class="jigsaw-table-no-data-text">{{noDataPrompt}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
             [style.borderSpacing]="_$getTableBorderSpacing()" [style.color]="styleOptions?.cellStyles?.textColor"

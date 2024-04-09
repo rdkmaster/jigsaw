@@ -79,7 +79,7 @@ export class InternalUtils {
         return r;
     }
 
-    public static updateNoDataImgSrc(component: any) {
+    public static updateNoDataImage(component: any) {
         if (!component.noDataImgSrc && !component.noDataDarkImgSrc) {
             component._$noDataSrc = "";
             return;

@@ -86,7 +86,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$isFFBrowser;
+    public _$isFFBrowser: boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -359,7 +359,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return _getColumnIndex(this.data, this._additionalData, field);
     }
 
-    private _getHeaderValueByField(field): string {
+    private _getHeaderValueByField(field: string): string {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
             console.error('no header value found, unknown field: ' + field);
@@ -791,7 +791,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             // 根据高度设置无数据图片是否显示
             this._updateNoDataImgHide();
             // 根据图片src配置和皮肤主题来设置无数据图片
-            InternalUtils.updateNoDataImgSrc(this);
+            InternalUtils.updateNoDataImage(this);
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1011,7 +1011,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription?.unsubscribe();
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
-            InternalUtils.updateNoDataImgSrc(this);
+            InternalUtils.updateNoDataImage(this);
         });
 
         const data: IPageable = <any>this.data;
@@ -1150,28 +1150,22 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     @Input()
     public noDataDarkImgSrc: string;
 
-    /**
-     * @internal
-     */
-    public _$noDataText: string = this._translateService.instant("table.noData");
+    private _noDataPrompt: string = this._translateService.instant("table.noData");
 
-    private _noDataText: string;
-    
     /**
      * 无数据时显示的文本
      */
     @RequireMarkForCheck()
     @Input()
-    public get noDataText(): string {
-        return this._noDataText;
+    public get noDataPrompt(): string {
+        return this._noDataPrompt;
     }
-    
-    public set noDataText(newValue: string) {
-        if (this._noDataText == newValue) {
+
+    public set noDataPrompt(newValue: string) {
+        if (this._noDataPrompt == newValue) {
             return;
         }
-        this._noDataText = newValue;
-        this._$noDataText = this._noDataText || this._translateService.instant("table.noData");
+        this._noDataPrompt = newValue;
     }
 
     /**

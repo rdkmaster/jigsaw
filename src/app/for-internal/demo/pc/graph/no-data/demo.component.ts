@@ -10,7 +10,7 @@ export class GraphWithNoDataComponent {
 
     public noDataImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-light.png";
     public noDataDarkImgSrc = "/app/for-internal/demo/pc/table/no-data/assets/default-dark.png";
-    public noDataText = "自定义的空数据文本"
+    public noDataPrompt = "自定义的空数据文本";
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

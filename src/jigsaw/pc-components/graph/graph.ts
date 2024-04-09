@@ -91,7 +91,7 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
      */
     @Input()
     public noDataImgSrc: string;
-    
+
     /**
      * @NoMarkForCheckRequired
      */
@@ -192,13 +192,13 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
 
     constructor(private _elementRef: ElementRef, private _renderer: Renderer2, protected _zone: NgZone,
                 private _changeDetectorRef: ChangeDetectorRef, private _themeService : JigsawThemeService,
-                protected _translateService: TranslateService, 
+                protected _translateService: TranslateService,
                 // @RequireMarkForCheck 需要用到，勿删
                 private _injector: Injector) {
         super();
         this._host = this._elementRef.nativeElement;
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(themeInfo => {
-            InternalUtils.updateNoDataImgSrc(this);
+            InternalUtils.updateNoDataImage(this);
             if (this._themeService.constructor != themeInfo.target) {
                 // 判断是否是同一个themeService发出的事件
                 return;
@@ -292,36 +292,30 @@ export class JigsawGraph extends AbstractJigsawComponent implements OnInit, OnDe
     private readonly _host: HTMLElement;
     private _graphContainer: HTMLElement;
 
-    /**
-     * @internal
-     */
-    public _$noDataText: string = this._translateService.instant("jigsawGraph.noData");
+    private _noDataPrompt: string = this._translateService.instant("jigsawGraph.noData");
 
-    private _noDataText: string;
-    
     /**
      * 无数据时显示的文本
      */
     @RequireMarkForCheck()
     @Input()
-    public get noDataText(): string {
-        return this._noDataText;
+    public get noDataPrompt(): string {
+        return this._noDataPrompt;
     }
-    
-    public set noDataText(newValue: string) {
-        if (this._noDataText == newValue) {
+
+    public set noDataPrompt(newValue: string) {
+        if (this._noDataPrompt == newValue) {
             return;
         }
-        this._noDataText = newValue;
-        this._$noDataText = this._noDataText || this._translateService.instant("jigsawGraph.noData");
-    }    
+        this._noDataPrompt = newValue;
+    }
 
     ngOnInit() {
         super.ngOnInit();
         if (this.data) {
             this._dataValid = this._isOptionsValid(this.data.options);
         }
-        InternalUtils.updateNoDataImgSrc(this);
+        InternalUtils.updateNoDataImage(this);
         this.init.emit();
     }
 
