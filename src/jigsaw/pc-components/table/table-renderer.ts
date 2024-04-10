@@ -1153,7 +1153,7 @@ export class TableDragReplaceRow extends TableCellRendererBase {
     }
 }
 
-class DragEnterDebounceService {
+export class DragEnterDebounceService {
     private _dragEnterHandleSubscription: Subscription;
     private _dragEnter = new EventEmitter();
     private _activeElement: HTMLElement;
