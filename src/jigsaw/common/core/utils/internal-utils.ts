@@ -88,9 +88,9 @@ export class InternalUtils {
         return r;
     }
 
-    public static updateNoDataImage(component: NoDataImageComponent) {
+    public static updateNoDataImage(component: NoDataImageComponent, defaultImage: string) {
         if (!component.noDataImage && !component.noDataDarkImage) {
-            component._$noDataImage = "";
+            component._$noDataImage = defaultImage;
             return;
         }
         if (component.noDataImage && component.noDataDarkImage) {

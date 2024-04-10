@@ -37,42 +37,7 @@
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
-            <svg *ngIf="!_$hideImg && !_$noDataImage" width="48px" height="48px" viewBox="0 0 48 48" version="1.1"
-                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                <defs>
-                    <polygon id="path-1" points="0 0 48 0 48 12.8849 0 12.8849"></polygon>
-                    <polygon id="path-3" points="0 0 38 0 38 24.9996 0 24.9996"></polygon>
-                </defs>
-                <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(0.500000, 2.000000)">
-                        <rect x="0" y="0" width="48" height="48"></rect>
-                        <g transform="translate(0.000000, 8.000000)">
-                            <path
-                                d="M30.7063,11 C29.8453,13.891 27.1703,16 24.0003,16 C20.8293,16 18.1543,13.891 17.2933,11 L7.0003,11 L7.0003,23 L41.0003,23 L41.0003,11 L30.7063,11 Z"
-                                id="Fill-1" fill="#B2B2B2" opacity="0.2"></path>
-                            <g transform="translate(0.000000, 19.115100)">
-                                <mask id="mask-2" fill="white">
-                                    <use xlink:href="#path-1"></use>
-                                </mask>
-                                <g id="Clip-4"></g>
-                                <path
-                                    d="M43,0 L43,1.987 C43,4.136 41.251,5.885 39.102,5.885 L8.898,5.885 C6.749,5.885 5,4.136 5,1.987 L5,0 C1.868,1.352 0,3.045 0,4.885 C0,9.303 10.745,12.885 24,12.885 C37.255,12.885 48,9.303 48,4.885 C48,3.045 46.132,1.352 43,0"
-                                    id="Fill-3" fill="#B2B2B2" opacity="0.2" mask="url(#mask-2)"></path>
-                            </g>
-                            <g transform="translate(5.000000, 0.000000)">
-                                <mask id="mask-4" fill="white">
-                                    <use xlink:href="#path-3"></use>
-                                </mask>
-                                <g id="Clip-6"></g>
-                                <path
-                                    d="M36,21.1016 C36,22.1486 35.148,22.9996 34.102,22.9996 L3.898,22.9996 C2.852,22.9996 2,22.1486 2,21.1016 L2,10.9996 L12.295,10.9996 C13.158,13.8876 15.835,15.9996 19,15.9996 C22.164,15.9996 24.842,13.8876 25.705,10.9996 L36,10.9996 L36,21.1016 Z M8.852,2.6726 C9.231,2.2456 9.777,1.9996 10.349,1.9996 L27.649,1.9996 C28.223,1.9996 28.77,2.2456 29.15,2.6736 L34.773,8.9996 L26,8.9996 L25,8.9996 L24,8.9996 C24,11.7566 21.757,13.9996 19,13.9996 C16.243,13.9996 14,11.7566 14,8.9996 L13,8.9996 L12,8.9996 L3.227,8.9996 L8.852,2.6726 Z M37.99,10.0486 C37.991,10.0316 38,10.0176 38,9.9996 C38,9.9806 37.99,9.9656 37.989,9.9466 C37.984,9.8496 37.965,9.7546 37.932,9.6636 C37.924,9.6406 37.921,9.6176 37.912,9.5966 C37.871,9.5026 37.817,9.4146 37.747,9.3356 L30.645,1.3446 C29.885,0.4906 28.793,-0.0004 27.649,-0.0004 L10.349,-0.0004 C9.206,-0.0004 8.115,0.4896 7.356,1.3436 L0.252,9.3356 C0.182,9.4146 0.129,9.5036 0.088,9.5976 C0.079,9.6176 0.076,9.6396 0.069,9.6596 C0.035,9.7526 0.016,9.8486 0.011,9.9476 C0.01,9.9656 0,9.9816 0,9.9996 C0,10.0166 0.009,10.0306 0.01,10.0476 C0.011,10.0786 0.007,10.1086 0.011,10.1396 C0.01,10.1586 0,10.1746 0,10.1936 L0,21.1016 C0,23.2506 1.749,24.9996 3.898,24.9996 L34.102,24.9996 C36.251,24.9996 38,23.2506 38,21.1016 L38,10.1936 C38,10.1746 37.99,10.1576 37.989,10.1386 C37.993,10.1086 37.989,10.0786 37.99,10.0486 L37.99,10.0486 Z"
-                                    id="Fill-5" fill="#A5A5A5" opacity="0.6" mask="url(#mask-4)"></path>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </svg>
-            <img *ngIf="!_$hideImg && !!_$noDataImage" src="{{_$noDataImage}}" alt="No data...">
+            <img *ngIf="!_$hideImg" src="{{_$noDataImage}}" alt="No data...">
             <span class="jigsaw-table-no-data-text">{{noDataPrompt}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
