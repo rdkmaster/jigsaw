@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
-import {take} from 'rxjs/operators';
+import {debounceTime, take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -981,7 +981,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
 
 /**
  * @internal
- * 换行
+ * 表格拖拽功能
  */
 @Component({
     template: `
@@ -994,19 +994,16 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
             <span class="drop-top"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDragLeave)="_$dragLeaveHandle($event)"
                   (jigsawDrop)="_$dropHandle($event, 'drop-top')">
             </span>
             <span class="drop-mid"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDragLeave)="_$dragLeaveHandle($event)"
                   (jigsawDrop)="_$dropHandle($event, 'drop-mid')">
             </span>
             <span class="drop-bottom"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDragLeave)="_$dragLeaveHandle($event)"
                   (jigsawDrop)="_$dropHandle($event, 'drop-bottom')">
             </span>
             <i [class]="_$icon"></i>
@@ -1015,7 +1012,8 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     `
 })
 export class TableDragReplaceRow extends TableCellRendererBase {
-    constructor(private _renderer: Renderer2, protected _injector: Injector) {
+    constructor(private _renderer: Renderer2, protected _injector: Injector,
+        private _dragEnterDebounceService: DragEnterDebounceService) {
         super(_injector);
     }
 
@@ -1090,16 +1088,7 @@ export class TableDragReplaceRow extends TableCellRendererBase {
      * @internal
      */
     public _$dragEnterHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "link";
-        this._renderer.addClass(dragInfo.element, "active");
-    }
-
-    /**
-     * @internal
-     */
-    public _$dragLeaveHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "link";
-        this._renderer.removeClass(dragInfo.element, "active");
+        this._dragEnterDebounceService.dragEnterDebounce(dragInfo);
     }
 
     /**
@@ -1164,6 +1153,31 @@ export class TableDragReplaceRow extends TableCellRendererBase {
     }
 }
 
+class DragEnterDebounceService {
+    private _dragEnterHandleSubscription: Subscription;
+    private _dragEnter = new EventEmitter();
+    private _activeElement: HTMLElement;
+
+    constructor() {
+        if (this._dragEnterHandleSubscription) {
+            this._dragEnterHandleSubscription.unsubscribe();
+            this._dragEnterHandleSubscription = null;
+        }
+
+        this._dragEnterHandleSubscription = this._dragEnter.pipe(debounceTime(50)).subscribe((dragInfo: DragDropInfo) => {
+            if (this._activeElement) {
+                this._activeElement.classList.remove("active");
+            }
+            dragInfo.element.classList.add("active");
+            this._activeElement = dragInfo.element;
+        });
+    }
+
+    public dragEnterDebounce(dragInfo: DragDropInfo) {
+        this._dragEnter.emit(dragInfo)
+    }
+}
+
 @NgModule({
     declarations: [
         DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
@@ -1174,7 +1188,8 @@ export class TableDragReplaceRow extends TableCellRendererBase {
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
         JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule, JigsawIconModule
-    ]
+    ],
+    providers: [DragEnterDebounceService]
 })
 export class JigsawTableRendererModule {
 }
