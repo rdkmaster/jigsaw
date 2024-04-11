@@ -128,15 +128,9 @@ export class JigsawRangeDateTimePicker extends AbstractJigsawComponent implement
      */
     public _$dateChange(key: string, value: WeekTime) {
         if (key == 'beginDate') {
-            if (!value && !this.endDate) {
-                return;
-            }
             this._beginDate = value;
             this._updateEndDateLimit();
         } else if (key == 'endDate') {
-            if (!value && !this.beginDate) {
-                return;
-            }
             this._endDate = value;
             this._updateBeginDateLimit();
         }
