@@ -1153,27 +1153,21 @@ export class TableDragReplaceRow extends TableCellRendererBase {
 }
 
 class DragDebounceHelper {
-    private readonly _dragEnterHandleSubscription: Subscription;
     private _dragEnterEvent = new EventEmitter();
     private _draggingElement: HTMLElement;
 
     constructor() {
-        this._dragEnterHandleSubscription = this._dragEnterEvent.pipe(debounceTime(50))
-            .subscribe((dragInfo: DragDropInfo) => {
-                if (this._draggingElement) {
-                    this._draggingElement.classList.remove("active");
-                }
-                this._draggingElement = dragInfo.element;
-                this._draggingElement.classList.add("active");
-            });
+        this._dragEnterEvent.pipe(debounceTime(50)).subscribe((dragInfo: DragDropInfo) => {
+            if (this._draggingElement) {
+                this._draggingElement.classList.remove("active");
+            }
+            this._draggingElement = dragInfo.element;
+            this._draggingElement.classList.add("active");
+        });
     }
 
     public debounce(dragInfo: DragDropInfo) {
         this._dragEnterEvent.emit(dragInfo)
-    }
-
-    public clear() {
-        this._dragEnterHandleSubscription?.unsubscribe();
     }
 }
 const dragDebounceHelper: DragDebounceHelper = new DragDebounceHelper();
