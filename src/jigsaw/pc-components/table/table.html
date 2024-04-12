@@ -23,7 +23,7 @@
                             [cellData]="head.cellData" [field]="head.field" [row]="0" [renderer]="head.renderer"
                             [rendererInitData]="head.rendererInitData" [sortable]="head.sortable" [sortAs]="head.sortAs"
                             [defaultSortOrder]="head.defaultSortOrder" (sort)="_$onSort($event)" [headerTrustedHtml]="head.cellData"
-                            [filterable]="head.filterable" [filterHistoryStorageSize]="head.filterHistoryStorageSize" 
+                            [filterable]="head.filterable" [filterHistoryStorageSize]="head.filterHistoryStorageSize"
                             [headerTrustedHtmlContext]="head.innerHtmlContext" [hostInstance]="this">
                         </jigsaw-table-header>
                         <div *ngIf="columnResizable && !last" class="column-resize-handler"
@@ -37,8 +37,8 @@
         [class.jigsaw-table-no-data]="!_$cellSettings.length"
         [perfectScrollbar]="{wheelSpeed: 0.5, wheelPropagation: true, minScrollbarLength: 20}">
         <div [style.display]="!!_$cellSettings.length ? 'none' : 'flex'" class="jigsaw-table-no-data-img">
-            <img *ngIf="!_$hideImg" src="{{_$noDataSrc}}" alt="No data...">
-            <span class="jigsaw-table-no-data-text">{{'table.noData' | translate}}</span>
+            <img *ngIf="!_$hideImg" src="{{_$noDataImage}}" alt="No data...">
+            <span class="jigsaw-table-no-data-text">{{noDataPrompt}}</span>
         </div>
         <table #tableBody class="jigsaw-table-body" [style.borderCollapse]="_$getTableBorderCollapse()"
             [style.borderSpacing]="_$getTableBorderSpacing()" [style.color]="styleOptions?.cellStyles?.textColor"
