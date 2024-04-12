@@ -1012,8 +1012,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
     `
 })
 export class TableDragReplaceRow extends TableCellRendererBase {
-    constructor(private _renderer: Renderer2, protected _injector: Injector,
-        private _dragEnterDebounceService: DragEnterDebounceService) {
+    constructor(private _renderer: Renderer2, protected _injector: Injector) {
         super(_injector);
     }
 
@@ -1088,7 +1087,7 @@ export class TableDragReplaceRow extends TableCellRendererBase {
      * @internal
      */
     public _$dragEnterHandle(dragInfo: DragDropInfo) {
-        this._dragEnterDebounceService.dragEnterDebounce(dragInfo);
+        dragDebounceHelper.debounce(dragInfo);
     }
 
     /**
@@ -1153,30 +1152,31 @@ export class TableDragReplaceRow extends TableCellRendererBase {
     }
 }
 
-export class DragEnterDebounceService {
-    private _dragEnterHandleSubscription: Subscription;
-    private _dragEnter = new EventEmitter();
-    private _activeElement: HTMLElement;
+class DragDebounceHelper {
+    private readonly _dragEnterHandleSubscription: Subscription;
+    private _dragEnterEvent = new EventEmitter();
+    private _draggingElement: HTMLElement;
 
     constructor() {
-        if (this._dragEnterHandleSubscription) {
-            this._dragEnterHandleSubscription.unsubscribe();
-            this._dragEnterHandleSubscription = null;
-        }
-
-        this._dragEnterHandleSubscription = this._dragEnter.pipe(debounceTime(50)).subscribe((dragInfo: DragDropInfo) => {
-            if (this._activeElement) {
-                this._activeElement.classList.remove("active");
-            }
-            dragInfo.element.classList.add("active");
-            this._activeElement = dragInfo.element;
-        });
+        this._dragEnterHandleSubscription = this._dragEnterEvent.pipe(debounceTime(50))
+            .subscribe((dragInfo: DragDropInfo) => {
+                if (this._draggingElement) {
+                    this._draggingElement.classList.remove("active");
+                }
+                this._draggingElement = dragInfo.element;
+                this._draggingElement.classList.add("active");
+            });
     }
 
-    public dragEnterDebounce(dragInfo: DragDropInfo) {
-        this._dragEnter.emit(dragInfo)
+    public debounce(dragInfo: DragDropInfo) {
+        this._dragEnterEvent.emit(dragInfo)
+    }
+
+    public clear() {
+        this._dragEnterHandleSubscription?.unsubscribe();
     }
 }
+const dragDebounceHelper: DragDebounceHelper = new DragDebounceHelper();
 
 @NgModule({
     declarations: [
@@ -1188,8 +1188,7 @@ export class DragEnterDebounceService {
     imports: [
         CommonModule, JigsawCheckBoxModule, JigsawInputModule, JigsawSwitchModule, JigsawSelectModule, JigsawNumericInputModule,
         JigsawAutoCompleteInputModule, JigsawDraggableModule, JigsawDroppableModule, JigsawProgressModule, JigsawIconModule
-    ],
-    providers: [DragEnterDebounceService]
+    ]
 })
 export class JigsawTableRendererModule {
 }
