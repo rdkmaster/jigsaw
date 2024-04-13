@@ -134,19 +134,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     /**
      * @internal
      */
-    public _$showResizeLine: boolean;
-
-    /**
-     * @internal
-     */
-    public set showResizeLine(value: boolean) {
-        this._$showResizeLine = value;
-        this._removeAllResizeLineListener();
-        if (!value) {
-            return;
-        }
-        //this._listenResizeLineEvent();
-    }
+    public showResizeLine: boolean;
 
     /**
      * @internal
@@ -342,49 +330,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
     }
 
-    private _listenResizeLineEvent() {
-        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
-            if (this._isCurrentResizingBox || !this._resizeLineParent || !this._resizeLine) return;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
-            // 设置成0，防止出现滚动条
-            this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', 0);
-        });
-
-        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
-            this._computeResizeLineWidth();
-            if (!this._resizeLineParent) {
-                return;
-            }
-            const resizeLineWrapper: HTMLElement = this._resizeLineParent.nativeElement;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            if (this._isCurrentResizingBox) {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
-            }
-            this.runMicrotask(() => {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
-            });
-        });
-    }
-
-    private _removeAllResizeLineListener() {
-        if (this._removeResizeStartListener) {
-            this._removeResizeStartListener.unsubscribe();
-            this._removeResizeStartListener = null;
-        }
-        if (this._removeResizeEndListener) {
-            this._removeResizeEndListener.unsubscribe();
-            this._removeResizeEndListener = null;
-        }
-        if (this._removeWindowResizeListener) {
-            this._removeWindowResizeListener();
-            this._removeWindowResizeListener = null;
-        }
-    }
-
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._removeAllResizeLineListener();
         if (this._resizeLineParent) {
             this._resizeLineParent.nativeElement.remove();
         }
