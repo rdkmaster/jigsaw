@@ -31,6 +31,76 @@
         </j-box>
         <j-box [ngStyle]="{display: showBox ? '' : 'none'}">Box3</j-box>
     </j-box>
+
+    <div style="display: flex; height: 800px; margin: 10px;">
+        <div style="border: 1px solid red; margin: 10px; padding: 10px;  width: 500px">
+            <j-button (click)="showBox1 = !showBox1"  style="margin-bottom: 10px;">显示/隐藏box</j-button>
+            <span>默认显示</span>
+
+            <j-box #chatBox class="chat-window" [resizable]="true" style="height: 700px"
+                   [hidden]="!showBox1">
+                <j-box class="left-box" [ngStyle]="{'display': showList ? 'block' : 'none'}">
+                    <div class="chats-box" style="height: 100%; display: flex; flex-direction: column">
+                        <div class="title">
+                            title
+                        </div>
+                        <j-box class="chats" [resizable]="true" direction="v" style="flex: 1">
+                            <j-box class="chat-tool">
+                                <div>top</div>
+                            </j-box>
+                            <j-box class="chat-tool">
+                                <div>bottom</div>
+                            </j-box>
+                        </j-box>
+                    </div>
+                </j-box>
+                <j-box class="right-box">
+                    <div class="messages-box">
+                        content
+                    </div>
+                </j-box>
+            </j-box>
+
+            <div class="chat-sphere" #sphere [ngStyle]="{'display': !showBox1 ? 'flex' : 'none'}" >
+                hello box
+            </div>
+        </div>
+
+        <div style="border: 1px solid yellow; margin: 10px; padding: 10px; width: 500px">
+            <j-button (click)="showBox2 = !showBox2" style="margin-bottom: 10px;">显示/隐藏box</j-button>
+            <span>默认隐藏</span>
+
+            <j-box #chatBox class="chat-window" [resizable]="true" style="height: 700px"
+                   [hidden]="!showBox2">
+                <j-box class="left-box" [ngStyle]="{'display': showList ? 'block' : 'none'}">
+                    <div class="chats-box" style="height: 100%; display: flex; flex-direction: column">
+                        <div class="title">
+                            title
+                        </div>
+                        <j-box class="chats" [resizable]="true" direction="v" style="flex: 1">
+                            <j-box class="chat-tool">
+                                <div>top</div>
+                            </j-box>
+                            <j-box class="chat-tool">
+                                <div>bottom</div>
+                            </j-box>
+                        </j-box>
+                    </div>
+                </j-box>
+                <j-box class="right-box">
+                    <div class="messages-box">
+                        content
+                    </div>
+                </j-box>
+            </j-box>
+
+            <div class="chat-sphere" #sphere [ngStyle]="{'display': !showBox2 ? 'flex' : 'none'}" >
+                hello box
+            </div>
+        </div>
+    </div>
+
+
 </div>
 
 

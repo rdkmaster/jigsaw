@@ -145,7 +145,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         if (!value) {
             return;
         }
-        this._listenResizeLineEvent();
+        //this._listenResizeLineEvent();
     }
 
     /**
@@ -188,20 +188,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     private _isCurrentResizingBox: boolean;
 
     protected _computeResizeLineWidth() {
-        if (!this._resizeLine) return;
-        this.zone.runOutsideAngular(() => {
-            if (this.parent.direction == 'column') {
-                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                    // 2px用于消除四舍五入的偏差
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth - 2 + 'px');
-                }
-            } else {
-                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                    // 2px用于消除四舍五入的偏差
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight - 2 + 'px');
-                }
-            }
-        })
+        if (!this._resizeLine) {
+            return;
+        }
+        this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', '100%');
     }
 
     /**
@@ -251,9 +241,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             this._setChildrenBox();
             this.runAfterMicrotasks(() => {
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
-                if (!this.parent) {
-                    this.setResizeLineSize();
-                } else {
+                if (this.parent) {
                     this.setDisableGrowBoxStyle();
                 }
             });
@@ -262,13 +250,10 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             this._zone.run(() => {
                 this._$isFlicker = false;
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
-                if (!this.parent) {
-                    JigsawBox.viewInit.emit();
-                    this.runAfterMicrotasks(() => {
-                        this.setResizeLineSize();
-                    });
-                } else {
+                if (this.parent) {
                     this.setDisableGrowBoxStyle();
+                } else {
+                    JigsawBox.viewInit.emit();
                 }
                 this._cdr.markForCheck();
             });
@@ -334,20 +319,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         box._resizeLineParent.nativeElement.style[offsetParam] = - (gapSize + resizeLineWidth) / 2 + 'px';
     }
 
-    /**
-     * @internal
-     * 页面初始化之后从根节点开始向下递归修改 resize line 的尺寸
-     */
-    public setResizeLineSize() {
-        this._computeResizeLineWidth();
-        if (!this._$childrenBox) {
-            return;
-        }
-        this._$childrenBox.forEach(box => {
-            box.setResizeLineSize();
-        });
-    }
-
     public setDisableGrowBoxStyle(): void {
         this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
             this._setDisableGrowStyle(item.element);
@@ -392,12 +363,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             }
             this.runMicrotask(() => {
                 this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
-            });
-        });
-
-        this._zone.runOutsideAngular(() => {
-            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
-                this._computeResizeLineWidth();
             });
         });
     }

@@ -6,6 +6,9 @@ import {Component} from "@angular/core";
 })
 export class BoxHiddenDemoComponent {
     showBox = true;
+    showBox1 = true;
+    showBox2 = false;
+    showList = true;
 
     // ====================================================================
     // ignore the following lines, they are not important to this demo

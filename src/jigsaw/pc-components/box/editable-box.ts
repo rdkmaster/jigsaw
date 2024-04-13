@@ -128,14 +128,6 @@ export class JigsawEditableBox extends JigsawBox {
         this._setResizeLineAsync(box, index);
     }
 
-    protected _computeResizeLineWidth() {
-        this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', '100%');
-    }
-
-    public setResizeLineSize() {
-        return;
-    }
-
     private _insertTimer: number;
 
     public showInertLine(inserting: boolean, mousePos?: { x: number, y: number }): BoxInsertPosition {
