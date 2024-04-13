@@ -47,7 +47,6 @@ export function getBoxRealRect(box: JigsawEditableBox) {
         '[class.jigsaw-editable-box]': 'true',
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.padding]': 'padding'

@@ -24,7 +24,6 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.padding]': 'padding'
@@ -38,6 +37,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                  */
                 public _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
+        // 直接添加class比绑定变量添加class要快
+        this.renderer.addClass(this.element, 'jigsaw-box-flicker');
     }
 
     public static resizeEnd = new EventEmitter();
@@ -125,11 +126,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
         this._computeResizeLineWidth();
     }
-
-    /**
-     * @internal
-     */
-    public _$isFlicker: boolean = true;
 
     /**
      * @internal
@@ -236,7 +232,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         });
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
-                this._$isFlicker = false;
+                this.renderer.removeClass(this.element, 'jigsaw-box-flicker');
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
                 if (this.parent) {
                     this.setDisableGrowBoxStyle();
