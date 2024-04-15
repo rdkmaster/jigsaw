@@ -165,10 +165,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         return this._$childrenBox?.filter(box => !box.hidden) || [];
     }
 
-    private _removeResizeStartListener: Subscription;
-    private _removeResizeEndListener: Subscription;
-    private _removeWindowResizeListener: CallbackRemoval;
-
     private _isCurrentResizingBox: boolean;
 
     protected _computeResizeLineWidth() {
