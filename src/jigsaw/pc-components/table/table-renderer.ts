@@ -228,30 +228,55 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-    <div style="width:100%" [style.backgroundColor]="_$getBgColor(cellData)">{{cellData}}</div>
+    <div style="width:100%" [valueMap]="valueMap" [style.backgroundColor]="_$bgColor">{{cellData}}</div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TableCellbackgroundColorRenderer extends TableCellRendererBase {
+export class TableCellbackgroundColorRenderer extends TableCellRendererBase implements OnInit {
     constructor(protected _injector: Injector) {
         super(_injector);
     }
+    // 测试效果,暂时写死
+    private _valueMap: { [valueEnum: string]: [number, number] } = {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'var(--border-color-default)': [200, 1000]};
+    public _$bgColor: string;
 
-    _$getBgColor(value) {
-        if (typeof value !== 'number' || isNaN(value)) {
-            return "none";
+
+    // /**
+    //  * @NoMarkForCheckRequired
+    //  */
+    // @Input()
+    // public initData: any;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public get valueMap(): { [valueEnum: string]: [number, number] } {
+        console.log(this.initData);
+        return this._calcInitProperty('valueMap', this._valueMap);;
+    }
+
+    public set valueMap(value: { [valueEnum: string]: [number, number] }) {
+        this._valueMap = value;
+    }
+
+    private _getBgColor(value: number | string): string {
+        if (typeof value !== "number" || isNaN(value)) {
+            return this._$bgColor = "none";
         }
-        if (value < 0) {
-            return "red";
-        } else if (value >= 0 && value <= 100) {
-            return "orange";
-        } else if (value > 100 && value <= 200) {
-            return "blue";
-        } else if (value > 200) {
-            return "green";
-        } else {
-            return "none";
+        value = parseFloat(value.toString());
+        // 测试效果,暂时使用_valueMap
+        for (const map in this._valueMap) {
+            const valueMap = this.valueMap[map];
+            if (value >= valueMap[0] && value <= valueMap[1]) {
+                this._$bgColor = map;
+            }
         }
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._getBgColor(this.cellData);
     }
 }
 
