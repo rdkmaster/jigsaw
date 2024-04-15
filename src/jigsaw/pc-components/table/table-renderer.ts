@@ -224,6 +224,39 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 
 /**
  * @internal
+ * 表格单元格底色渲染器
+ */
+@Component({
+    template: `
+    <div style="width:100%" [style.backgroundColor]="_$getBgColor(cellData)">{{cellData}}</div>
+    `,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellbackgroundColorRenderer extends TableCellRendererBase {
+    constructor(protected _injector: Injector) {
+        super(_injector);
+    }
+
+    _$getBgColor(value) {
+        if (typeof value !== 'number' || isNaN(value)) {
+            return "none";
+        }
+        if (value < 0) {
+            return "red";
+        } else if (value >= 0 && value <= 100) {
+            return "orange";
+        } else if (value > 100 && value <= 200) {
+            return "blue";
+        } else if (value > 200) {
+            return "green";
+        } else {
+            return "none";
+        }
+    }
+}
+
+/**
+ * @internal
  * 编辑单元格渲染器
  */
 @Component({
@@ -1174,7 +1207,7 @@ const dragDebounceHelper: DragDebounceHelper = new DragDebounceHelper();
 
 @NgModule({
     declarations: [
-        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
+        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer, TableCellbackgroundColorRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
         TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow,
         TableCellProgressRenderer
