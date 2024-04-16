@@ -24,7 +24,6 @@ import {CallbackRemoval, CommonUtils} from "../../common/core/utils/common-utils
     host: {
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.padding]': 'padding'
@@ -38,6 +37,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
                  */
                 public _cdr: ChangeDetectorRef) {
         super(elementRef, renderer, zone);
+        // 直接添加class比绑定变量添加class要快
+        this.renderer.addClass(this.element, 'jigsaw-box-flicker');
     }
 
     public static resizeEnd = new EventEmitter();
@@ -129,24 +130,7 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
     /**
      * @internal
      */
-    public _$isFlicker: boolean = true;
-
-    /**
-     * @internal
-     */
-    public _$showResizeLine: boolean;
-
-    /**
-     * @internal
-     */
-    public set showResizeLine(value: boolean) {
-        this._$showResizeLine = value;
-        this._removeAllResizeLineListener();
-        if (!value) {
-            return;
-        }
-        this._listenResizeLineEvent();
-    }
+    public showResizeLine: boolean;
 
     /**
      * @internal
@@ -181,27 +165,13 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         return this._$childrenBox?.filter(box => !box.hidden) || [];
     }
 
-    private _removeResizeStartListener: Subscription;
-    private _removeResizeEndListener: Subscription;
-    private _removeWindowResizeListener: CallbackRemoval;
-
     private _isCurrentResizingBox: boolean;
 
     protected _computeResizeLineWidth() {
-        if (!this._resizeLine) return;
-        this.zone.runOutsideAngular(() => {
-            if (this.parent.direction == 'column') {
-                if (this.element.clientWidth != this._resizeLine.nativeElement.offsetWidth) {
-                    // 2px用于消除四舍五入的偏差
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'width', this.element.clientWidth - 2 + 'px');
-                }
-            } else {
-                if (this.element.clientHeight != this._resizeLine.nativeElement.offsetHeight) {
-                    // 2px用于消除四舍五入的偏差
-                    this.renderer.setStyle(this._resizeLine.nativeElement, 'height', this.element.clientHeight - 2 + 'px');
-                }
-            }
-        })
+        if (!this._resizeLine) {
+            return;
+        }
+        this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', '100%');
     }
 
     /**
@@ -251,24 +221,19 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
             this._setChildrenBox();
             this.runAfterMicrotasks(() => {
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
-                if (!this.parent) {
-                    this.setResizeLineSize();
-                } else {
+                if (this.parent) {
                     this.setDisableGrowBoxStyle();
                 }
             });
         });
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
-                this._$isFlicker = false;
+                this.renderer.removeClass(this.element, 'jigsaw-box-flicker');
                 // 根据是否有parent判断当前是否根节点，这里需要异步才能判断
-                if (!this.parent) {
-                    JigsawBox.viewInit.emit();
-                    this.runAfterMicrotasks(() => {
-                        this.setResizeLineSize();
-                    });
-                } else {
+                if (this.parent) {
                     this.setDisableGrowBoxStyle();
+                } else {
+                    JigsawBox.viewInit.emit();
                 }
                 this._cdr.markForCheck();
             });
@@ -334,20 +299,6 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         box._resizeLineParent.nativeElement.style[offsetParam] = - (gapSize + resizeLineWidth) / 2 + 'px';
     }
 
-    /**
-     * @internal
-     * 页面初始化之后从根节点开始向下递归修改 resize line 的尺寸
-     */
-    public setResizeLineSize() {
-        this._computeResizeLineWidth();
-        if (!this._$childrenBox) {
-            return;
-        }
-        this._$childrenBox.forEach(box => {
-            box.setResizeLineSize();
-        });
-    }
-
     public setDisableGrowBoxStyle(): void {
         this.parent.getShownChildrenBox().filter(item => item.disableGrow).forEach(item => {
             this._setDisableGrowStyle(item.element);
@@ -371,55 +322,8 @@ export class JigsawBox extends JigsawResizableBoxBase implements AfterContentIni
         }
     }
 
-    private _listenResizeLineEvent() {
-        this._removeResizeStartListener = JigsawBox.resizeStart.subscribe(() => {
-            if (this._isCurrentResizingBox || !this._resizeLineParent || !this._resizeLine) return;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            this.renderer.setStyle(this._resizeLineParent.nativeElement, 'display', 'none');
-            // 设置成0，防止出现滚动条
-            this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', 0);
-        });
-
-        this._removeResizeEndListener = JigsawBox.resizeEnd.subscribe(() => {
-            this._computeResizeLineWidth();
-            if (!this._resizeLineParent) {
-                return;
-            }
-            const resizeLineWrapper: HTMLElement = this._resizeLineParent.nativeElement;
-            // 兼容IE,去掉resize过程中产生的莫名滚动条
-            if (this._isCurrentResizingBox) {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'none');
-            }
-            this.runMicrotask(() => {
-                this.renderer.setStyle(resizeLineWrapper, 'display', 'block');
-            });
-        });
-
-        this._zone.runOutsideAngular(() => {
-            this._removeWindowResizeListener = this.renderer.listen('window', 'resize', () => {
-                this._computeResizeLineWidth();
-            });
-        });
-    }
-
-    private _removeAllResizeLineListener() {
-        if (this._removeResizeStartListener) {
-            this._removeResizeStartListener.unsubscribe();
-            this._removeResizeStartListener = null;
-        }
-        if (this._removeResizeEndListener) {
-            this._removeResizeEndListener.unsubscribe();
-            this._removeResizeEndListener = null;
-        }
-        if (this._removeWindowResizeListener) {
-            this._removeWindowResizeListener();
-            this._removeWindowResizeListener = null;
-        }
-    }
-
     ngOnDestroy() {
         super.ngOnDestroy();
-        this._removeAllResizeLineListener();
         if (this._resizeLineParent) {
             this._resizeLineParent.nativeElement.remove();
         }

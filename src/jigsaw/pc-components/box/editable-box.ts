@@ -47,7 +47,6 @@ export function getBoxRealRect(box: JigsawEditableBox) {
         '[class.jigsaw-editable-box]': 'true',
         '[class.jigsaw-box]': 'true',
         '[class.jigsaw-flex]': 'type == "flex"',
-        '[class.jigsaw-box-flicker]': '_$isFlicker',
         '[style.width]': 'width',
         '[style.height]': 'height',
         '[style.padding]': 'padding'
@@ -126,14 +125,6 @@ export class JigsawEditableBox extends JigsawBox {
             return;
         }
         this._setResizeLineAsync(box, index);
-    }
-
-    protected _computeResizeLineWidth() {
-        this.renderer.setStyle(this._resizeLine.nativeElement, this.parent.direction == 'column' ? 'width' : 'height', '100%');
-    }
-
-    public setResizeLineSize() {
-        return;
     }
 
     private _insertTimer: number;
