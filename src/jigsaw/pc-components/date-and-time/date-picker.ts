@@ -649,7 +649,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.date) {
             this.writeValue(this.date);
         } else {
-            this._createCalendar();
+            this._createCalendar(this._$curYear, this._$curMonth?.month);
         }
     }
 
@@ -675,7 +675,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
         if (this.date) {
             this.writeValue(this.date);
         } else {
-            this._createCalendar();
+            this._createCalendar(this._$curYear, this._$curMonth?.month);
         }
     }
 
@@ -724,7 +724,7 @@ export class JigsawDatePicker extends AbstractJigsawComponent implements Control
     public set rangeDate(date: string) {
         if (date == this._rangeDate) return;
         this._rangeDate = date;
-        this._createCalendar();
+        this._createCalendar(this._$curYear, this._$curMonth?.month);
     }
 
     private _handleLimit(value: Time): Time {

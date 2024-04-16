@@ -2,21 +2,28 @@
 <jigsaw-demo-description [summary]="summary" [content]="description"> </jigsaw-demo-description>
 
 <!-- start to learn the demo from here -->
-<div class="demo-container" style="padding-top: 50px">
-    <jigsaw-table height="300" [data]="tableData" [(selectedRow)]="selectedRow" [additionalColumnDefines]="additionalColumns"
-    (cellStatusChange)="cellStatusChange($event)">
-    </jigsaw-table>
-    <p>选中行 {{selectedRow}}</p>
-    <p>图标
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>图标</span>
         <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.icon" [filterOnFocus]="false"
-                                    [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515']">
+            [data]="['iconfont iconfont-ea03', 'iconfont iconfont-e9b8', 'iconfont iconfont-e515']">
         </jigsaw-auto-complete-input>
-    </p>
-    <p>提示
+    </li>
+    <li class="demo-options-item">
+        <span>提示</span>
         <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.title"></jigsaw-auto-complete-input>
-    </p>
-    <p>文本
+    </li>
+    <li class="demo-options-item">
+        <span>文本</span>
         <jigsaw-auto-complete-input width="150px" [(value)]="rendererInitData.label"></jigsaw-auto-complete-input>
-    </p>
-    <a (click)="tableData.refresh()">更新</a>
-</div>
+    </li>
+</ul>
+<a (click)="tableData.refresh()">更新</a>
+
+<jigsaw-table height="300" [data]="tableData" [(selectedRow)]="selectedRow"
+    [additionalColumnDefines]="additionalColumns" (cellStatusChange)="cellStatusChange($event)">
+</jigsaw-table>
+<p>选中行 {{selectedRow}}</p>
+
+<jigsaw-table height="300" [data]="tableData" [columnDefines]="columnDefines" [additionalColumnDefines]="additionalColumnDefines">
+</jigsaw-table>
