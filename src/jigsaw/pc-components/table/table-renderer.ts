@@ -228,7 +228,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-    <div style="width:100%" [valueMap]="valueMap" [style.backgroundColor]="_$bgColor">{{cellData}}</div>
+    <div style="width:100%" [style.backgroundColor]="_$bgColor">{{cellData}}</div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -236,28 +236,14 @@ export class TableCellbackgroundColorRenderer extends TableCellRendererBase impl
     constructor(protected _injector: Injector) {
         super(_injector);
     }
-    // 测试效果,暂时写死
-    private _valueMap: { [valueEnum: string]: [number, number] } = {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'var(--border-color-default)': [200, 1000]};
-    public _$bgColor: string;
-
-
-    // /**
-    //  * @NoMarkForCheckRequired
-    //  */
-    // @Input()
-    // public initData: any;
 
     /**
-     * @NoMarkForCheckRequired
-     */
-    @Input()
-    public get valueMap(): { [valueEnum: string]: [number, number] } {
-        console.log(this.initData);
-        return this._calcInitProperty('valueMap', this._valueMap);;
-    }
+    * @NoMarkForCheckRequired
+    */
+    public _$bgColor: string;
 
-    public set valueMap(value: { [valueEnum: string]: [number, number] }) {
-        this._valueMap = value;
+    public get valueMap(): { [valueEnum: string]: [number, number] } {
+        return this._calcInitProperty('valueMap', { '': [0, 0] });
     }
 
     private _getBgColor(value: number | string): string {
@@ -265,8 +251,7 @@ export class TableCellbackgroundColorRenderer extends TableCellRendererBase impl
             return this._$bgColor = "none";
         }
         value = parseFloat(value.toString());
-        // 测试效果,暂时使用_valueMap
-        for (const map in this._valueMap) {
+        for (const map in this.valueMap) {
             const valueMap = this.valueMap[map];
             if (value >= valueMap[0] && value <= valueMap[1]) {
                 this._$bgColor = map;
