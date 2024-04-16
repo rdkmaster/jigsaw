@@ -236,23 +236,22 @@ export class TableCellbackgroundColorRenderer extends TableCellRendererBase impl
     constructor(protected _injector: Injector) {
         super(_injector);
     }
+    private _valueMap: { [valueEnum: string]: [number, number] } = null;
 
     /**
-    * @NoMarkForCheckRequired
+    * @internal
     */
     public _$bgColor: string;
 
-    public get valueMap(): { [valueEnum: string]: [number, number] } {
-        return this._calcInitProperty('valueMap', { '': [0, 0] });
-    }
 
     private _getBgColor(value: number | string): string {
+        this._valueMap = this._calcInitProperty('valueMap', { '': [0, 0] });
         if (typeof value !== "number" || isNaN(value)) {
             return this._$bgColor = "none";
         }
         value = parseFloat(value.toString());
-        for (const map in this.valueMap) {
-            const valueMap = this.valueMap[map];
+        for (const map in this._valueMap) {
+            const valueMap = this._valueMap[map];
             if (value >= valueMap[0] && value <= valueMap[1]) {
                 this._$bgColor = map;
             }
