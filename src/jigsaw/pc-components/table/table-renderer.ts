@@ -235,34 +235,65 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
         super(_injector);
     }
 
-    private _valueMap: { [valueEnum: string]: [number, number] } = null;
+    /**
+     * 尽可能找出单元格值中的数字部分，这样可以自动处理类似 $30 30% 这样的带单位的值
+     */
+    private _autoParseNumber: boolean = true;
+    private _valueMap: { [color: string]: [number, number] } = null;
 
     /**
     * @internal
     */
     public _$fontColor: string;
 
-    private _updateBgColor(value: number | string, element: any): void {
-        if (typeof value !== "number") {
+    private _cellData: string | number;
+
+    public get cellData(): string | number {
+        return this._cellData;
+    }
+
+    public set cellData(value: string | number) {
+        this._cellData = value;
+        this._updateColor(value);
+    }
+
+    private _updateColor(value: string | number): void {
+        const element = this._elementRef.nativeElement.closest('td');
+        if (typeof value !== "number" && typeof value !== "string") {
+            this._resetColor(element);
+            return;
+        }
+        if (typeof value === "string") {
+            if (this._autoParseNumber) {
+                value = value.match(/[\d-.].*$/)?.[0];
+            }
             value = parseFloat(value);
         }
         if (isNaN(value)) {
+            this._resetColor(element);
             return;
         }
-        this._valueMap = this._calcInitProperty('valueMap', { '': [0, 0] });
         for (const color in this._valueMap) {
             const valueMap = this._valueMap[color];
             if (value >= valueMap[0] && value < valueMap[1]) {
                 element.style.backgroundColor = color;
                 this._$fontColor = CommonUtils.adjustFontColor(color) === "light" ? "#000" : "#fff";
-                break;
+                return;
             }
         }
+        this._resetColor(element);
+    }
+
+    private _resetColor(element: HTMLElement) {
+        element.style.backgroundColor = '';
+        this._$fontColor = undefined;
     }
 
     ngOnInit() {
         super.ngOnInit();
-        this._updateBgColor(this.cellData, this._elementRef.nativeElement.closest('td'));
+        this._valueMap = this._calcInitProperty('valueMap', {});
+        this._autoParseNumber = this._calcInitProperty('autoParseNumber', true);
+        this._updateColor(this.cellData);
     }
 }
 
