@@ -7,7 +7,7 @@ import {
     TableCellNumericEditorRenderer,
     TableCellPasswordRenderer,
     TableCellSelectRenderer, TableCellSwitchRenderer,
-    TableCellTextEditorRenderer, TableCellbackgroundColorRenderer,
+    TableCellTextEditorRenderer, TableCellBackgroundColorRenderer,
     TableData, TableDataChangeEvent, TableDragReplaceRow
 } from "jigsaw/public_api";
 
@@ -179,7 +179,7 @@ export class TableCellRenderFullComponent {
             target: 'TableCellbackgroundColorRenderer',
             width: "100",
             cell: {
-                renderer: TableCellbackgroundColorRenderer,
+                renderer: TableCellBackgroundColorRenderer,
                 rendererInitData: {
                     valueMap: {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'yellow': [200, 1000]},
                 }
