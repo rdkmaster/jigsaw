@@ -228,12 +228,12 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
  */
 @Component({
     template: `
-    <div style="width:100%" [style.backgroundColor]="_$bgColor">{{cellData}}</div>
+    <div style="width:100%" [style.color]="_$fontColor">{{cellData}}</div>
     `,
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellbackgroundColorRenderer extends TableCellRendererBase implements OnInit {
-    constructor(protected _injector: Injector) {
+    constructor(protected _injector: Injector, private _elementRef: ElementRef) {
         super(_injector);
     }
     private _valueMap: { [valueEnum: string]: [number, number] } = null;
@@ -241,25 +241,26 @@ export class TableCellbackgroundColorRenderer extends TableCellRendererBase impl
     /**
     * @internal
     */
-    public _$bgColor: string;
+    public _$fontColor: string;
 
-    private _getBgColor(value: number | string): string {
+    private _getBgColor(value: number | string, element: any): void {
         if (typeof value !== "number" || isNaN(value)) {
-            return this._$bgColor = "none";
+            return;
         }
         this._valueMap = this._calcInitProperty('valueMap', { '': [0, 0] });
         value = parseFloat(value.toString());
         for (const map in this._valueMap) {
             const valueMap = this._valueMap[map];
             if (value >= valueMap[0] && value <= valueMap[1]) {
-                this._$bgColor = map;
+                element.style.backgroundColor = map;
+                this._$fontColor = CommonUtils.adjustFontColor(map) === "light" ? "#000000" : "#FFFFFF";
             }
         }
     }
 
     ngOnInit() {
         super.ngOnInit();
-        this._getBgColor(this.cellData);
+        this._getBgColor(this.cellData, this._elementRef.nativeElement.closest('td'));
     }
 }
 

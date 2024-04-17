@@ -181,7 +181,7 @@ export class TableCellRenderFullComponent {
             cell: {
                 renderer: TableCellbackgroundColorRenderer,
                 rendererInitData: {
-                    valueMap: {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'var(--border-color-default)': [200, 1000]},
+                    valueMap: {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'yellow': [200, 1000]},
                 }
             }
         }
