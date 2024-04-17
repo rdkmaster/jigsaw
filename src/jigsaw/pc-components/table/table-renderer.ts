@@ -244,10 +244,10 @@ export class TableCellbackgroundColorRenderer extends TableCellRendererBase impl
     public _$bgColor: string;
 
     private _getBgColor(value: number | string): string {
-        this._valueMap = this._calcInitProperty('valueMap', { '': [0, 0] });
         if (typeof value !== "number" || isNaN(value)) {
             return this._$bgColor = "none";
         }
+        this._valueMap = this._calcInitProperty('valueMap', { '': [0, 0] });
         value = parseFloat(value.toString());
         for (const map in this._valueMap) {
             const valueMap = this._valueMap[map];

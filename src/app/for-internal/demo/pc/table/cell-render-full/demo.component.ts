@@ -180,6 +180,9 @@ export class TableCellRenderFullComponent {
             width: "100",
             cell: {
                 renderer: TableCellbackgroundColorRenderer,
+                rendererInitData: {
+                    valueMap: {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'var(--border-color-default)': [200, 1000]},
+                }
             }
         }
     ];
