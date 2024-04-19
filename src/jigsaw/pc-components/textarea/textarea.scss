@@ -33,10 +33,31 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
         color: $font-color-default;
         background: $bg-transparent;
         border-radius: $border-radius-base;
+
+        &::-webkit-scrollbar-button {
+            display: none;
+        }
+
+        &::-webkit-scrollbar {
+            width: 7px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: $bg-scrollbar;
+            border-radius: 10px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: $bg-scrollbar-lighten;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
     }
 
     &.#{$jigsaw-textarea}-resize-vertical {
         height: auto !important;
+
         textarea {
             resize: vertical;
         }
@@ -44,6 +65,7 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
 
     &.#{$jigsaw-textarea}-resize-horizontal {
         width: auto !important;
+
         textarea {
             resize: horizontal;
         }
@@ -52,6 +74,7 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
     &.#{$jigsaw-textarea}-resize-both {
         width: auto !important;
         height: auto !important;
+
         textarea {
             resize: both;
         }
