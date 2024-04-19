@@ -43,19 +43,15 @@ $jigsaw-textarea: #{$jigsaw-prefix}-textarea;
         }
 
         &::-webkit-scrollbar-track {
-            background: transparent;
+            background: $bg-scrollbar;
             border-radius: 10px;
         }
 
         &::-webkit-scrollbar-thumb {
-            background: $bg-scrollbar;
+            background: $bg-scrollbar-lighten;
             border-radius: 10px;
             border: 2px solid transparent;
             cursor: pointer;
-
-            &:hover {
-                background: $bg-scrollbar-lighten;
-            }
         }
     }
 
