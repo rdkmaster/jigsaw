@@ -4,7 +4,6 @@ import './tasks/clean';
 import './tasks/default';
 
 import './tasks/publish';
-import './tasks/publish-governance';
 
 import './tasks/ensure-url-matches-path';
 import './tasks/build-formly';
