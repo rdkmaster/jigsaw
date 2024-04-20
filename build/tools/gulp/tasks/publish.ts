@@ -127,12 +127,11 @@ function _npmInstall(target: 'normal' | 'governance') {
         writeFileSync('package.json', JSON.stringify(packageJson, null, 2));
     }
     try {
-        // Step 2: 执行 npm install
         execSync('npm install', { stdio: 'inherit' });
     } catch (error) {
         console.error("An error occurred:", error);
     }
-    // Step 3: 恢复文件
+    // 恢复npm install过程所修改的文件
     execSync('git checkout package.json package-lock.json', { stdio: 'inherit' });
     process.chdir(currentDir);
 }
