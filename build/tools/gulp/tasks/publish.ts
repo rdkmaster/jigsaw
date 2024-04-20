@@ -44,8 +44,12 @@ export async function publishPackage(packageName: string) {
 
 async function publishAll() {
     _checkEnv();
+    let error = await runTasks([':publish:whoami']);
+    if (error) {
+        process.exit(1);
+    }
     _npmInstall('normal');
-    let error = await runTasks(['publish:jigsaw', 'publish:formly']);
+    error = await runTasks(['publish:jigsaw', 'publish:formly']);
     if (error) {
         process.exit(1);
     }

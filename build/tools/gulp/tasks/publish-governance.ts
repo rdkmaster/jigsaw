@@ -52,7 +52,7 @@ async function _replaceImport() {
 
 async function _restoreImport() {
     console.log("restoring source ....");
-    exec(`git checkout .`, error => console.error("restore code error: ", error));
+    exec(`git checkout src`, error => console.error("restore code error: ", error));
     console.log("restore import all done");
 }
 
