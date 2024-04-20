@@ -2,22 +2,10 @@ import * as child_process from 'child_process';
 import * as fs from 'fs';
 import * as gulp from 'gulp';
 import * as path from 'path';
-import {yellow} from 'chalk';
-import {buildConfig} from '../tasks/build-config';
 
 /* Those imports lack typings. */
 const gulpClean = require('gulp-clean');
 const gulpRunSequence = require('run-sequence');
-const gulpSass = require('gulp-sass');
-const gulpConnect = require('gulp-connect');
-const gulpIf = require('gulp-if');
-const gulpCleanCss = require('gulp-clean-css');
-const rename = require("gulp-rename");
-// There are no type definitions available for these imports.
-const resolveBin = require('resolve-bin');
-const httpRewrite = require('http-rewrite-middleware');
-
-const {projectDir} = buildConfig;
 
 /** If the string passed in is a glob, returns it, otherwise append '**\/*' to it. */
 function _globify(maybeGlob: string, suffix = '**/*') {
@@ -32,27 +20,6 @@ function _globify(maybeGlob: string, suffix = '**/*') {
     } catch (e) {
     }
     return path.join(maybeGlob, suffix);
-}
-
-
-/** Creates a task that runs the TypeScript compiler */
-export function tsBuildTask(tsConfigPath: string) {
-    return execNodeTask('typescript', 'tsc', ['-p', tsConfigPath]);
-}
-
-/** Creates a task that runs the Angular Compiler CLI. */
-export function ngcBuildTask(tsConfigPath: string) {
-    return execNodeTask('@angular/compiler-cli', 'ngc', ['-p', tsConfigPath]);
-}
-
-/** Create a SASS Build Task. */
-export function sassBuildTask(dest: string, root: string, minify = false) {
-    return () => {
-        return gulp.src(_globify(root, '**/*.scss'))
-            .pipe(gulpSass().on('error', gulpSass.logError))
-            .pipe(gulpIf(minify, gulpCleanCss()))
-            .pipe(gulp.dest(dest));
-    };
 }
 
 
@@ -96,33 +63,6 @@ export function execTask(binPath: string, args: string[], options: ExecTaskOptio
     };
 }
 
-/**
- * Create a task that executes an NPM Bin, by resolving the binary path then executing it. These are
- * binaries that are normally in the `./node_modules/.bin` directory, but their name might differ
- * from the package. Examples are typescript, ngc and gulp itself.
- */
-export function execNodeTask(packageName: string, executable: string | string[], args?: string[],
-                             options: ExecTaskOptions = {}) {
-    if (!args) {
-        args = <string[]>executable;
-        executable = undefined;
-    }
-
-    return (done: (err: any) => void) => {
-        resolveBin(packageName, {executable: executable}, (err: any, binPath: string) => {
-            if (err) {
-                done(err);
-            } else {
-                // Execute the node binary within a new child process using spawn.
-                // The binary needs to be `node` because on Windows the shell cannot determine the correct
-                // interpreter from the shebang.
-                execTask('node', [binPath].concat(args), options)(done);
-            }
-        });
-    };
-}
-
-
 /** Copy files from a glob to a destination. */
 export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
     if (typeof srcGlobOrDir === 'string') {
@@ -132,59 +72,10 @@ export function copyTask(srcGlobOrDir: string | string[], outRoot: string) {
     }
 }
 
-
 /** Delete files. */
 export function cleanTask(glob: string) {
     return () => gulp.src(glob, {read: false}).pipe(gulpClean(null));
 }
-
-
-/** Build an task that depends on all application build tasks. */
-// export function buildAppTask(appName: string) {
-//     const buildTasks = ['ts', 'scss', 'assets']
-//         .map(taskName => `:build:${appName}:${taskName}`)
-//         .filter(taskName => gulp.hasTask(taskName));
-//
-//     return (done: () => void) => {
-//         gulpRunSequence(
-//             'jigsaw:clean-build',
-//             [...buildTasks],
-//             done
-//         );
-//     };
-// }
-
-/**
- * Create a task that serves a given directory in the project.
- * The server rewrites all node_module/ or dist/ requests to the correct directory.
- */
-// export function serverTask(packagePath: string, livereload = true) {
-//     // The http-rewrite-middlware only supports relative paths as rewrite destinations.
-//     const relativePath = path.relative(projectDir, packagePath);
-//
-//     return () => {
-//         gulpConnect.server({
-//             root: projectDir,
-//             livereload: livereload,
-//             port: 4200,
-//             fallback: path.join(packagePath, 'index.html'),
-//             middleware: () => {
-//                 return [httpRewrite.getMiddleware([
-//                     {from: '^/node_modules/(.*)$', to: '/node_modules/$1'},
-//                     {from: '^/dist/(.*)$', to: '/dist/$1'},
-//                     {from: '^(.*)$', to: `/${relativePath}/$1`}
-//                 ])];
-//             }
-//         });
-//     };
-// }
-
-/** Triggers a reload when livereload is enabled and a gulp-connect server is running. */
-export function triggerLivereload() {
-    console.log(yellow('Server: Changes were detected and a livereload was triggered.'));
-    return gulp.src('dist').pipe(gulpConnect.reload());
-}
-
 
 /** Create a task that's a sequence of other tasks. */
 export function sequenceTask(...args: any[]) {
@@ -194,4 +85,8 @@ export function sequenceTask(...args: any[]) {
             done
         );
     };
+}
+
+export function runTasks(tasks: string[]) {
+    return new Promise(resolve => gulpRunSequence(...tasks, resolve))
 }
