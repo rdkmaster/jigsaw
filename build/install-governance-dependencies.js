@@ -21,8 +21,8 @@ try {
     console.error("An error occurred:", error);
 }
 
-// Step 4: 恢复备份文件
-fs.unlinkSync('package.json');
-fs.renameSync('package.json.backup', 'package.json');
-execSync('git checkout package-lock.json', { stdio: 'inherit' });
+// // Step 4: 恢复备份文件
+// fs.unlinkSync('package.json');
+// fs.renameSync('package.json.backup', 'package.json');
+// execSync('git checkout package-lock.json', { stdio: 'inherit' });
 
