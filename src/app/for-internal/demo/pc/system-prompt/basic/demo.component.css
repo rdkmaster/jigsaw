@@ -1,0 +1,38 @@
+.demo-cntr {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 95vw;
+    height: 80vh;
+    margin: 0 auto;
+}
+
+.demo-cntr li {
+    position: relative;
+    width: calc(50% - 5px);
+    margin-bottom: 10px;
+}
+
+.demo-cntr li div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.demo-cntr li:nth-child(3) {
+    width: 100%;
+}
+
+.demo-cntr li:nth-of-type(3n) {
+    background: #7fe3de;
+}
+
+.demo-cntr li:nth-of-type(3n-1) {
+    background: #ffaaa6;
+}
+
+.demo-cntr li:nth-of-type(3n-2) {
+    background: #acb9fa;
+}

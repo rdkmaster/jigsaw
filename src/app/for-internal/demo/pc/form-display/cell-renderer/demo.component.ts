@@ -62,7 +62,6 @@ export class FormDisplayCellRendererDemoComponent {
                 ['edw_last_source', 'string', '300', '---', '是'],
                 ['edw_valid_flag', 'bigint', '---', '---', '否'],
                 ['edw_last-source', 'string', '300', '---', '否']
-
             ]
         }
     ]

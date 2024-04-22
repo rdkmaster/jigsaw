@@ -1,0 +1,15 @@
+<!-- ignore the following lines, they are not important to this demo -->
+<jigsaw-demo-description [summary]="summary" [content]="description">
+</jigsaw-demo-description>
+
+<!-- start to learn the demo from here -->
+<ul class="demo-options">
+    <li class="demo-options-item">
+        <span>选项宽度</span>
+        <jigsaw-numeric-input [(value)]="optionWidth" step="5"></jigsaw-numeric-input>
+    </li>
+</ul>
+
+<jigsaw-header>基本用法</jigsaw-header>
+<jigsaw-button-bar [(selectedItems)]="selectedItems" [data]="data" [optionWidth]=optionWidth>
+</jigsaw-button-bar>

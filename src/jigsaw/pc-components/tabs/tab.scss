@@ -120,17 +120,19 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         position: relative;
                         padding: 8px 16px;
                         height: 100%;
-                        color: $font-color-tag;
+                        background: var(--jigsaw-tab-bar-label-normal-bg, 'unset');
+                        color: var(--jigsaw-tab-bar-label-normal-color, $font-color-tag);
                         transition: color 0.3s $ease-in-out;
                         cursor: pointer;
                         text-decoration: none;
 
                         &:not(.#{$jigsaw-tabs}-tab-disabled):hover {
-                            background: $brand-lighten;
+                            background: var(--jigsaw-tab-bar-label-hover-bg, $brand-lighten);
+                            color: var(--jigsaw-tab-bar-label-hover-color, $font-color-tag);
                         }
 
                         &:active {
-                            color: $brand-active;
+                            color: var(--jigsaw-tab-bar-label-active-color, $brand-active);
                         }
 
                         &.#{$jigsaw-tabs}-tab-hidden {
@@ -143,16 +145,18 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                         }
 
                         &.#{$jigsaw-tabs}-tab-disabled {
-                            color: $font-color-disabled-spec;
+                            background: var(--jigsaw-tab-bar-label-disabled-bg, 'unset');
+                            color: var(--jigsaw-tab-bar-label-disabled-color, $font-color-disabled-spec);
                             cursor: not-allowed;
 
-                            .#{$jigsaw-tabs}-remove-bar{
+                            .#{$jigsaw-tabs}-remove-bar {
                                 pointer-events: none;
                             }
                         }
 
                         &.#{$jigsaw-tabs}-tab-active {
-                            color: $brand-default;
+                            background: var(--jigsaw-tab-bar-label-active-bg, 'unset');
+                            color: var(--jigsaw-tab-bar-label-active-color, $brand-default);
                         }
 
                         .#{$jigsaw-tabs}-remove-bar {
@@ -169,7 +173,7 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                                 color: $brand-default;
                             }
 
-                            &.#{$jigsaw-tabs}-remove-bar{
+                            &.#{$jigsaw-tabs}-remove-bar {
                                 user-select: none;
                             }
                         }
@@ -297,8 +301,10 @@ $jigsaw-list: #{$jigsaw-prefix}-list;
                             }
 
                             &.#{$jigsaw-tabs}-tab-disabled {
-                                background: $bg-disabled;
-                                color: $font-color-disabled-spec;
+                                // background: $bg-disabled;
+                                // color: $font-color-disabled-spec;
+                                background: var(--jigsaw-tab-bar-label-disabled-bg, $bg-disabled);
+                                color: var(--jigsaw-tab-bar-label-disabled-color, $font-color-disabled-spec);
                             }
 
                             &.#{$jigsaw-tabs}-tab-editable {

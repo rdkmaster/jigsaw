@@ -1,7 +1,16 @@
-import {NgZone, Renderer2, ViewContainerRef} from "@angular/core";
+import {ChangeDetectorRef, NgZone, Renderer2, ViewContainerRef} from "@angular/core";
 import {TranslateService} from "@ngx-translate/core";
 import {CallbackRemoval, CommonUtils} from "./common-utils";
 import {LanguageTranslations, TranslateHelper} from "./translate-helper";
+import {JigsawThemeService} from "../theming/theme";
+
+type NoDataImageComponent = {
+    noDataImage: string;
+    noDataDarkImage: string;
+    _$noDataImage: string;
+    _themeService: JigsawThemeService;
+    _changeDetectorRef: ChangeDetectorRef
+};
 
 /**
  * @internal
@@ -77,6 +86,24 @@ export class InternalUtils {
         }
         r += min;
         return r;
+    }
+
+    public static updateNoDataImage(component: NoDataImageComponent, defaultImage: string) {
+        if (!component.noDataImage && !component.noDataDarkImage) {
+            component._$noDataImage = defaultImage;
+            return;
+        }
+        if (component.noDataImage && component.noDataDarkImage) {
+            component._$noDataImage = component._themeService.majorStyle == 'dark' ? component.noDataDarkImage : component.noDataImage;
+            component._changeDetectorRef.detectChanges();
+            return;
+        }
+        if (component.noDataImage) {
+            component._$noDataImage = component.noDataImage;
+        } else if (component.noDataDarkImage) {
+            component._$noDataImage = component.noDataDarkImage;
+        }
+        component._changeDetectorRef.detectChanges();
     }
 }
 

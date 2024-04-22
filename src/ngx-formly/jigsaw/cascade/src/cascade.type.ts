@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
-import {FormlyFieldType} from "@ngx-formly/jigsaw/form-field";
+import {FormlyFieldType} from "@rdkmaster/formly/form-field";
 import {ArrayCollection, JigsawCascade, JigsawComboSelect} from "@rdkmaster/jigsaw";
 
 @Component({

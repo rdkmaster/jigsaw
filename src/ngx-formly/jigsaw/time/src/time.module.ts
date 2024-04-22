@@ -10,7 +10,7 @@ import {
     JigsawTimePickerModule,
     JigsawTimeSectionModule
 } from "@rdkmaster/jigsaw";
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 import {FormlyFieldTimePicker} from './time-picker.type';
 import {FormlyFieldDateTimePicker} from "./date-time-picker.type";
 import {FormlyFieldDateTimeSelect} from "./date-time-select.type";

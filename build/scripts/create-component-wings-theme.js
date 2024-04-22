@@ -13,7 +13,8 @@ const invalidComponents = [];
 const ignoredComponents = [
     'JigsawBox', 'JigsawBreadcrumbItem', 'JigsawTileOption', 'JigsawRadioOption', 'JigsawRoot', 'JigsawEditableBox',
     'JigsawTabPane', 'JigsawViewport', 'JigsawBlock', 'JigsawScrollbar', 'JigsawUploadFileInfoListFallback',
-    'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon'
+    'JigsawCollapsePane', 'JigsawPieChartIcon', 'JigsawDonutChartIcon', 'JigsawLineChartIcon', 'JigsawBarChartIcon', 'JigsawAutoDisplay',
+    'JigsawSystemPrompt'
 ];
 let wingsThemeIds = [];
 tsFiles.forEach(file => {

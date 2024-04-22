@@ -1,7 +1,6 @@
 <div [style.display]="_$dataValid ? 'none' : 'flex'" class="no-data">
-    <img src="{{_$noDataSrc}}" alt="No data...">
-    <span class="jigsaw-graph-no-data-text">{{'jigsawGraph.noData' | translate}}</span>
+    <img src="{{_$noDataImage}}" alt="No data...">
+    <span class="jigsaw-graph-no-data-text">{{noDataPrompt}}</span>
 </div>
 <!-- class要是有改动，graph-download.directive.ts中_getChildren函数获取echarts实例的地方也需要改   -->
 <div class="jigsaw-graph" [style.display]="_$dataValid ? 'block': 'none'"></div>
-

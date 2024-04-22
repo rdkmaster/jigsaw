@@ -1,0 +1,34 @@
+$jigsaw-auto-display: #{$jigsaw-prefix}-auto-display;
+
+.#{$jigsaw-auto-display}-host {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    gap: 16px;
+
+    .#{$jigsaw-auto-display}-row {
+        flex: 1;
+        display: flex;
+        overflow: hidden;
+
+        .#{$jigsaw-auto-display}-content-host {
+            flex: 1;
+            overflow: hidden;
+
+            &:not(:last-of-type) {
+                margin-right: 16px;
+            }
+        }
+    }
+
+    .jigsaw-table-host,
+    .jigsaw-graph-host {
+        background: $jigsaw-auto-display-content-background;
+        border: 20px solid transparent;
+        border-width: 1px !important;
+        border-radius: 5px;
+        box-sizing: border-box;
+        border-image: $jigsaw-auto-display-content-border-image;
+    }
+}

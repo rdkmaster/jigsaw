@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {JigsawAutoCompleteInputModule, JigsawInputModule, JigsawNumericInputModule} from "@rdkmaster/jigsaw";
 
 import {FormlyFieldInput} from './input.type';
-import {FormlyJigsawFormFieldModule} from "@ngx-formly/jigsaw/form-field";
+import {FormlyJigsawFormFieldModule} from "@rdkmaster/formly/form-field";
 import {FormlyFieldAutoInput} from "./auto-input.type";
 
 @NgModule({

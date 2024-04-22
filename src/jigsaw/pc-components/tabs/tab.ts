@@ -440,6 +440,7 @@ export class JigsawTabBar extends JigsawTabBase {
             return;
         }
         this._styleOptions = value;
+        this._setTabLabelStyle();
         this._changeDetector.detectChanges();
     }
 
@@ -448,31 +449,40 @@ export class JigsawTabBar extends JigsawTabBase {
      */
     public _$hoveredTab: number;
 
-    /**
-     * @internal
-     */
-    public _$getTabLabelStyle(tab: TabBarData, index: number) {
-        if (tab.disabled) {
-            return {
-                background: this.styleOptions?.disabledStyles?.backgroundFill || 'var(--bg-disabled)',
-                color: this.styleOptions?.disabledStyles?.textColor || 'var(--font-color-disabled-spec)',
+    private _setTabLabelStyle() {
+        const styles = [
+            this.styleOptions?.normalStyles?.backgroundFill, 
+            this.styleOptions?.normalStyles?.textColor,
+            this.styleOptions?.hoverStyles?.backgroundFill,
+            this.styleOptions?.hoverStyles?.textColor,
+            this.styleOptions?.selectedStyles?.backgroundFill,
+            this.styleOptions?.selectedStyles?.textColor,
+            this.styleOptions?.disabledStyles?.backgroundFill,
+            this.styleOptions?.disabledStyles?.textColor
+        ]
+        const stylesPara = [
+            '--jigsaw-tab-bar-label-normal-bg',
+            '--jigsaw-tab-bar-label-normal-color',
+            '--jigsaw-tab-bar-label-hover-bg',
+            '--jigsaw-tab-bar-label-hover-color',
+            '--jigsaw-tab-bar-label-active-bg',
+            '--jigsaw-tab-bar-label-active-color',
+            '--jigsaw-tab-bar-label-disabled-bg',
+            '--jigsaw-tab-bar-label-disabled-color'
+        ]
+        const elementStyle = this._elementRef.nativeElement.style;
+        
+        styles.forEach((style, i) => {
+            if (CommonUtils.isUndefined(style)) {
+                return;
             }
-        } else if (this._$selectedIndex == index) {
-            return {
-                background: this.styleOptions?.selectedStyles?.backgroundFill || 'unset',
-                color: this.styleOptions?.selectedStyles?.textColor || 'var(--brand-default)'
-            }
-        } else if (this._$hoveredTab == index) {
-            return {
-                background: this.styleOptions?.hoverStyles?.backgroundFill || 'var(--brand-lighten)',
-                color: this.styleOptions?.hoverStyles?.textColor || 'var(--font-color-tag)'
-            }
-        } else {
-            return {
-                background: this.styleOptions?.normalStyles?.backgroundFill || 'unset',
-                color: this.styleOptions?.normalStyles?.textColor || 'var(--font-color-tag)'
-            }
-        }
+            elementStyle.setProperty(stylesPara[i], style.trim());
+        })
+    }
+
+    public updateStyleOptions() {
+        this._setTabLabelStyle();
+        this._changeDetector.detectChanges();
     }
 
     /**
@@ -573,6 +583,20 @@ export class JigsawTab extends JigsawTabBase {
             return;
         }
         this._styleOptions = value;
+        this._setTabStyle();
+        this._changeDetector.detectChanges();
+    }
+
+    private _setTabStyle() {
+        if (this.styleOptions.tabBarStyles && this._tabBar) {
+            this._tabBar.styleOptions = this.styleOptions.tabBarStyles;
+        }
+        this._changeDetector.detectChanges();
+    }
+
+    public updateStyleOptions() {
+        this._setTabStyle();
+        this._tabBar.updateStyleOptions();
         this._changeDetector.detectChanges();
     }
 

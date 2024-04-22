@@ -27,6 +27,7 @@
             "assets": [
               "src/app/libs/favicon.ico",
               "src/app/for-internal/demo/pc/tree/icon/assets",
+              "src/app/for-internal/demo/pc/table/no-data/assets",
               "src/app/for-internal/demo/pc/navigation-bar/basic/assets",
               "src/app/for-internal/demo/pc/large-text/image-icon/assets"
             ],
@@ -78,6 +79,16 @@
               {
                 "input": "src/jigsaw/common/core/theming/themes/awade-dark.scss",
                 "bundleName": "themes/awade-dark",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-light.scss",
+                "bundleName": "themes/copilot-light",
+                "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/copilot-dark.scss",
+                "bundleName": "themes/copilot-dark",
                 "inject": false
               },
               {
@@ -435,7 +446,7 @@
         }
       }
     },
-    "@ngx-formly/jigsaw": {
+    "@rdkmaster/formly": {
       "root": "src/ngx-formly/jigsaw",
       "sourceRoot": "src/ngx-formly/jigsaw/src",
       "projectType": "library",

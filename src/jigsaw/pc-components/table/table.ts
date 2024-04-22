@@ -19,12 +19,12 @@
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Subscription} from "rxjs";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {PerfectScrollbarDirective, PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {AbstractJigsawComponent, JigsawCommonModule, WingsTheme} from "../../common/common";
 import {JigsawTableCellInternalComponent, JigsawTableHeaderInternalComponent, JigsawTableHeaderFilterBox} from "./table-inner.components";
 import {BigTableData, LocalPageableTableData, TableData} from "../../common/core/data/table-data";
-import {AffixUtils} from "../../common/core/utils/internal-utils";
+import {AffixUtils, InternalUtils} from "../../common/core/utils/internal-utils";
 import {
     _getColumnIndex,
     AdditionalColumnDefine,
@@ -53,7 +53,6 @@ import { JigsawLoadingModule } from "../../common/components/loading/loading";
 import {HeaderFilter} from "../../common/core/data/unified-paging/paging";
 import {JigsawThemeService} from "../../common/core/theming/theme";
 
-
 @WingsTheme('table.scss')
 @Component({
     selector: 'jigsaw-table, j-table',
@@ -67,6 +66,7 @@ import {JigsawThemeService} from "../../common/core/theming/theme";
         '[class.jigsaw-table-column-resizable]': 'columnResizable',
         '[class.jigsaw-table-resizing]': '_$resizing',
         '[class.jigsaw-table-hide-column-dividers]': 'hideColumnDividers',
+        '[class.jigsaw-table-dragging]': '_$isDragging',
     },
     changeDetection: ChangeDetectionStrategy.OnPush
 })
@@ -75,7 +75,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     constructor(private _renderer: Renderer2, private _elementRef: ElementRef,
                 protected _zone: NgZone, private _changeDetectorRef: ChangeDetectorRef,
                 // @RequireMarkForCheck 需要用到，勿删
-                private _injector: Injector, private _themeService: JigsawThemeService) {
+                private _injector: Injector, private _themeService: JigsawThemeService,
+                protected _translateService: TranslateService) {
         super();
         if (CommonUtils.getBrowserType() == 'Firefox') {
             this._$isFFBrowser = true;
@@ -86,7 +87,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$isFFBrowser;
+    public _$isFFBrowser: boolean;
 
     /**
      * @NoMarkForCheckRequired
@@ -359,7 +360,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         return _getColumnIndex(this.data, this._additionalData, field);
     }
 
-    private _getHeaderValueByField(field): string {
+    private _getHeaderValueByField(field: string): string {
         let [index, tableData] = this._getColumnIndex(field);
         if (index == -1) {
             console.error('no header value found, unknown field: ' + field);
@@ -790,6 +791,8 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
             this._updateFrozenColumns();
             // 根据高度设置无数据图片是否显示
             this._updateNoDataImgHide();
+            // 根据图片src配置和皮肤主题来设置无数据图片
+            InternalUtils.updateNoDataImage(this as any, CommonUtils.noDataImageSrc);
             // 关闭所有展开行
             if (isFromAdditional) {
                 return;
@@ -1009,6 +1012,7 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         this._themeChangeSubscription?.unsubscribe();
         this._themeChangeSubscription = this._themeService.themeChange.subscribe(() => {
             this._handleScrollBar();
+            InternalUtils.updateNoDataImage(this as any, CommonUtils.noDataImageSrc);
         });
 
         const data: IPageable = <any>this.data;
@@ -1133,7 +1137,37 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
     /**
      * @internal
      */
-    public _$noDataSrc = CommonUtils.noDataImageSrc;
+    public _$noDataImage: string = CommonUtils.noDataImageSrc;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataImage: string;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
+    public noDataDarkImage: string;
+
+    private _noDataPrompt: string = this._translateService.instant("table.noData");
+
+    /**
+     * 无数据时显示的文本
+     */
+    @RequireMarkForCheck()
+    @Input()
+    public get noDataPrompt(): string {
+        return this._noDataPrompt;
+    }
+
+    public set noDataPrompt(newValue: string) {
+        if (this._noDataPrompt == newValue) {
+            return;
+        }
+        this._noDataPrompt = newValue;
+    }
 
     /**
      * 根据内容计算自适应列宽
@@ -1424,6 +1458,11 @@ export class JigsawTable extends AbstractJigsawComponent implements OnInit, Afte
         link.setAttribute("download", name);
         link.click();
     }
+
+    /**
+     * @internal
+     */
+    public _$isDragging: boolean = false;
 
     ngAfterViewInit() {
         this._selectRow(this.selectedRow, true);

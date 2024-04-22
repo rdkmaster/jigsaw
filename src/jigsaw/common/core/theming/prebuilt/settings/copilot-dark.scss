@@ -1,0 +1,278 @@
+/* copilot-dark */
+$blue-1: #011b51;
+$blue-2: #012774;
+$blue-3: #023497;
+$blue-4: #023eb6;
+$blue-5: #0348d4;
+$blue-6: #0099FE;
+$blue-7: #1a7cf8;
+$blue-8: #3b94fa;
+$blue-9: #5caaf9;
+$blue-10: #7dbff9;
+
+$cyan-1: #102426;
+$cyan-2: #143a3d;
+$cyan-3: #135154;
+$cyan-4: #11686b;
+$cyan-5: #0e8082;
+$cyan-6: #0c9999;
+$cyan-7: #2ab0ae;
+$cyan-8: #50c7c3;
+$cyan-9: #7cded9;
+$cyan-10: #b0f5f0;
+
+$green-1: #19291c;
+$green-2: #204026;
+$green-3: #24572d;
+$green-4: #256e31;
+$green-5: #268535;
+$green-6: #289c38;
+$green-7: #45b051;
+$green-8: #66c470;
+$green-9: #8dd993;
+$green-10: #b9edbc;
+
+$lime-1: #202916;
+$lime-2: #30401b;
+$lime-3: #3f571d;
+$lime-4: #4f6e1d;
+$lime-5: #5e851c;
+$lime-6: #6f9c1c;
+$lime-7: #88b038;
+$lime-8: #a3c45a;
+$lime-9: #bfd982;
+$lime-10: #dcedaf;
+
+$yellow-1: #332c15;
+$yellow-2: #524518;
+$yellow-3: #705e18;
+$yellow-4: #8f7814;
+$yellow-5: #ad9310;
+$yellow-6: #ccaf0c;
+$yellow-7: #d9c230;
+$yellow-8: #e6d557;
+$yellow-9: #f2e783;
+$yellow-10: #fff9b3;
+
+$orange-1: #382619;
+$orange-2: #57361d;
+$orange-3: #75441c;
+$orange-4: #945219;
+$orange-5: #b36115;
+$orange-6: #d17213;
+$orange-7: #db8c37;
+$orange-8: #e6a65e;
+$orange-9: #f0c189;
+$orange-10: #faddb6;
+
+$red-1: #382426;
+$red-2: #572e31;
+$red-3: #753437;
+$red-4: #94373a;
+$red-5: #b3393b;
+$red-6: #d13d3d;
+$red-7: #db5c5a;
+$red-8: #e67d7a;
+$red-9: #f0a09c;
+$red-10: #fac4c0;
+
+$magenta-1: #2b1a27;
+$magenta-2: #4a2440;
+$magenta-3: #692a57;
+$magenta-4: #872d6c;
+$magenta-5: #a62e80;
+$magenta-6: #c43193;
+$magenta-7: #d14fa4;
+$magenta-8: #de71b6;
+$magenta-9: #eb96ca;
+$magenta-10: #f7bee1;
+
+$purple-1: #2a2336;
+$purple-2: #3d2e54;
+$purple-3: #4f3573;
+$purple-4: #5f3991;
+$purple-5: #703cb0;
+$purple-6: #8340cf;
+$purple-7: #995dd9;
+$purple-8: #b07de3;
+$purple-9: #c79fed;
+$purple-10: #dfc3f7;
+
+$navy-1: #21212e;
+$navy-2: #2e2f4d;
+$navy-3: #373a6b;
+$navy-4: #3d438a;
+$navy-5: #424ca8;
+$navy-6: #4856c7;
+$navy-7: #6372d4;
+$navy-8: #8290e0;
+$navy-9: #a4b0ed;
+$navy-10: #c8d1fa;
+
+$gray-1: #0f111a;
+$gray-2: #1b1d26;
+$gray-3: #22242e;
+$gray-4: #2a2c38;
+$gray-5: #323543;
+$gray-6: #474a59;
+$gray-7: #7b7e8c;
+$gray-8: #a4a7b3;
+$gray-9: #d9d9d9;
+$gray-10: #ffffff;
+
+/* 线型色 */
+$line-blue: $blue-6;
+$line-green: $green-5;
+$line-yellow: $yellow-6;
+$line-red: $red-6;
+$line-cyan: $cyan-5;
+$line-purple: $purple-6;
+$line-orange: $orange-6;
+$line-navy: $navy-6;
+$line-lime: $lime-5;
+$line-magenta: $magenta-6;
+
+/* 面型色 */
+$surf-blue: $blue-5;
+$surf-green: $green-4;
+$surf-yellow: $yellow-5;
+$surf-red: $red-5;
+$surf-cyan: $cyan-4;
+$surf-purple: $purple-4;
+$surf-orange: $orange-5;
+$surf-navy: $navy-5;
+$surf-lime: $lime-4;
+$surf-magenta: $magenta-5;
+
+/* 面透明（基本用于hover） */
+$surf-tp-blue: $blue-1;
+$surf-tp-green: $green-1;
+$surf-tp-yellow: $yellow-1;
+$surf-tp-red: $red-1;
+$surf-tp-cyan: $cyan-1;
+$surf-tp-purple: $purple-1;
+$surf-tp-orange: $orange-1;
+$surf-tp-navy: $navy-1;
+$surf-tp-lime: $lime-1;
+$surf-tp-magenta: $magenta-1;
+
+/* 功能色-基础 */
+$status-primary: $blue-6;
+$status-success: $green-6;
+$status-warning: $yellow-6;
+$status-danger: $orange-6;
+$status-error: $red-6;
+
+/* ******************************************************************* */
+
+/* 功能色-primary */
+/*@public*/ $primary-default: $blue-6;
+/*@public*/ $primary-hover: $blue-7;
+/*@public*/ $primary-active: $blue-8;
+/*@public*/ $primary-disabled: $blue-2;
+
+/* 功能色-success */
+/*@public*/ $success-default: $green-6;
+/*@public*/ $success-hover: $green-7;
+/*@public*/ $success-active: $green-8;
+/*@public*/ $success-disabled: $green-2;
+
+/* 功能色-warning */
+/*@public*/ $warning-default: $yellow-6;
+/*@public*/ $warning-hover: $yellow-7;
+/*@public*/ $warning-active: $yellow-8;
+/*@public*/ $warning-disabled: $yellow-2;
+
+/* 功能色-error */
+/*@public*/ $error-default: $red-6;
+/*@public*/ $error-hover: $red-7;
+/*@public*/ $error-active: $red-8;
+/*@public*/ $error-disabled: $red-2;
+
+/* 功能色-danger */
+/*@public*/ $danger-default: $orange-6;
+/*@public*/ $danger-hover: $orange-7;
+/*@public*/ $danger-active: $orange-8;
+/*@public*/ $danger-disabled: $orange-2;
+
+/* 功能色-process */
+/*@public*/ $process-default: $navy-6;
+/*@public*/ $process-hover: $navy-7;
+/*@public*/ $process-active: $navy-8;
+/*@public*/ $process-disabled: $navy-2;
+
+/* brand 品牌色 */
+/*@public*/ $brand-default: $blue-6;
+/*@public*/ $brand-hover: $blue-7;
+/*@public*/ $brand-active: $blue-8;
+/*@public*/ $brand-disabled: $blue-2;
+/*@public*/ $brand-lighten: $blue-1;
+/*@public*/ $brand-active-lighten: $blue-2;
+
+/* background 背景色 */
+/*@public*/ $bg-body: $gray-1;
+/*@public*/ $bg-app: #12131C;
+/*@public*/ $bg-container: #071739;
+/*@public*/ $bg-component: #071739;
+/*@public*/ $bg-component-darken: $gray-4;
+/*@public*/ $bg-disabled: $gray-6;
+/*@public*/ $bg-hover: #05325d;
+/*@public*/ $bg-active: #05325d;
+$bg-transparent: transparent;
+$bg-popup: $gray-2;
+/*@public*/ $bg-gray: $gray-3;
+$bg-gray-spec: $gray-9;
+$bg-scrollbar: $gray-5;
+$bg-scrollbar-lighten: $gray-7;
+
+/* font 字体颜色 */
+/*@public*/ $font-color-default: $gray-10;
+/*@public*/ $font-color-disabled: $gray-6;
+/*@public*/ $font-color-heading: $gray-10;
+/*@public*/ $font-color-disabled-spec: $gray-7;
+/*@public*/ $font-color-hint: $gray-7;
+$font-color-watermark: $gray-7;
+$font-color-heading-bold: $gray-9;
+$font-color-heading-bold-lighten: hsl(0, 0%, 100%);
+/*@public*/ $font-color-tag: $gray-8;
+/*@public*/ $font-color-white: hsl(0, 0%, 100%);
+/*@public*/ $font-color-black: hsl(0, 0%, 0%);
+$font-color-white-darken: $gray-6;
+/*@public*/ $font-color-brand: #bfbfbf;
+/*@public*/ $font-color-brand-hover: hsl(0, 0%, 100%);
+
+/* border 边框 */
+/*@public*/ $border-color-default: #3B4F79;
+/*@public*/ $border-color-disabled: $gray-5;
+$border-color-popup: $gray-5;
+$border-color-shadow-cntr: $gray-5;
+
+/* split line 分割线 */
+/*@public*/ $splitline-default: $gray-4;
+
+/* icon 图标 */
+/*@public*/ $icon-color-default: $gray-7;
+/*@public*/ $icon-color-disabled: $gray-4;
+/*@public*/ $icon-color-stress: $gray-10;
+$icon-color-inactive: $gray-4;
+
+/* box-shadow 阴影（基于altitude）*/
+/*@public*/ $box-shadow-lv0: none;
+/*@public*/ $box-shadow-lv1: 0px 1px 2px hsla(0, 0%, 0%, 0.12);
+/*@public*/ $box-shadow-lv2: 0px 2px 8px hsla(0, 0%, 0%, 0.08);
+/*@public*/ $box-shadow-lv3: 0px 5px 12px hsla(0, 0%, 0%, 0.06);
+
+/* 导航色 */
+/*@public*/ $nav-header: $gray-2;
+/*@public*/ $nav-navigation: $gray-2;
+/*@public*/ $nav-navigation-darken: $gray-3;
+/*@public*/ $nav-hover: $gray-5;
+/*@public*/ $nav-active: $gray-4;
+$nav-color: $font-color-default;
+$nav-color-disabled: $font-color-disabled;
+$nav-color-active: $brand-default;
+$nav-border: $border-color-default;
+
+/* 蒙版色 */
+/*@public*/ $mask-default: rgba(#fff, 0.6);
+/*@public*/ $mask-lighten: hsla(255, 255, 255, 0.1);

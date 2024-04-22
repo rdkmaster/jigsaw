@@ -135,6 +135,8 @@ import { TableOverflowDemoComponent } from "./overflow/demo.component";
 import { TableOverflowDemoModule } from "./overflow/demo.module";
 import { TablePerformanceDemoComponent } from "./performance/demo.component";
 import { TablePerformanceDemoModule } from "./performance/demo.module";
+import { TableAlwaysShowEditorDemoComponent } from "./always-show-editor/demo.component";
+import { TableAlwaysShowEditorDemoModule } from "./always-show-editor/demo.module";
 
 export const routerConfig = [
     {
@@ -339,6 +341,9 @@ export const routerConfig = [
         path: 'performance', component: TablePerformanceDemoComponent
     },
     {
+        path: 'always-show-editor', component: TableAlwaysShowEditorDemoComponent
+    },
+    {
         desc: "chart-icon", url: '/pc/chart-icon/with-table'
     }
 ];
@@ -360,7 +365,7 @@ export const routerConfig = [
         TableCellRenderFullDemoModule, TableAutoFillUpDemoModule, TableAutoPageableDemoModule, TableColumnWidthDemoModule, TableProgressDemoModule, TableExpandDemoModule,
         TableAlignContentDemoModule, TableExpandPageableDemoModule, TableUpdateAdditionalColumnDefineDemoModule, TableSetHeaderFilterDemoModule, TableColumnResizableDemoModule,
         TableMaxWidthDemoModule, HideColumnDividersDemoModule, TableDownloadDemoModule, TableFreezeColumnDemoModule, TableSetStyleDemoModule, TableOverflowDemoModule,
-        TablePerformanceDemoModule
+        TablePerformanceDemoModule, TableAlwaysShowEditorDemoModule
     ]
 })
 export class TableDemoModule {

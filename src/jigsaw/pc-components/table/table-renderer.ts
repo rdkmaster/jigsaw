@@ -5,7 +5,7 @@ import {
 } from "@angular/core";
 import {CommonModule} from "@angular/common";
 import {Observable, Subscription} from "rxjs";
-import {take} from 'rxjs/operators';
+import {debounceTime, take} from 'rxjs/operators';
 import {JigsawInput, JigsawInputModule} from "../input/input";
 import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
 import {JigsawCheckBoxModule} from "../checkbox/index";
@@ -805,7 +805,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
      * @internal
      */
     public _$handleValueChange(selectedValue: { label: string }) {
-        if (!selectedValue || selectedValue.label == this.cellData) {
+        if (CommonUtils.isUndefined(selectedValue) || selectedValue.label == this.cellData) {
             return;
         }
         this.cellData = selectedValue.label;
@@ -907,7 +907,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
 
     set cellData(value: any) {
         this._cellData = value;
-        if (CommonUtils.isDefined(value) && value !== '') {
+        if (CommonUtils.isDefined(value)) {
             this.selected = {label: value};
         }
     }
@@ -981,7 +981,7 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
 
 /**
  * @internal
- * 换行
+ * 表格拖拽功能
  */
 @Component({
     template: `
@@ -994,27 +994,25 @@ export class TreeTableCellRenderer extends TableCellRendererBase {
             <span class="drop-top"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDrop)="_$dropHandle($event)">
+                  (jigsawDrop)="_$dropHandle($event, 'drop-top')">
             </span>
             <span class="drop-mid"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDrop)="_$dropHandle($event)">
-                <i [class]="_$icon"></i>
-                <p>{{_$label}}</p>
+                  (jigsawDrop)="_$dropHandle($event, 'drop-mid')">
             </span>
             <span class="drop-bottom"
                   jigsaw-droppable
                   (jigsawDragEnter)="_$dragEnterHandle($event)"
-                  (jigsawDrop)="_$dropHandle($event)">
+                  (jigsawDrop)="_$dropHandle($event, 'drop-bottom')">
             </span>
+            <i [class]="_$icon"></i>
+            <p class="drag-label">{{_$label}}</p>
         </div>
     `
 })
-export class TableDragReplaceRow extends TableCellRendererBase implements AfterViewInit {
-    private _allRows: NodeListOf<any>;
-
-    constructor(private _renderer: Renderer2, private _elementRef: ElementRef, protected _injector: Injector) {
+export class TableDragReplaceRow extends TableCellRendererBase {
+    constructor(private _renderer: Renderer2, protected _injector: Injector) {
         super(_injector);
     }
 
@@ -1036,6 +1034,7 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
     public _$dragStartHandle(dragInfo: DragDropInfo) {
         dragInfo.dragDropData = this.row;
         dragInfo.event.dataTransfer.effectAllowed = "link";
+        this.hostInstance._$isDragging = true;
         if (!CommonUtils.isIE()) {
             const img = CommonUtils.getParentNodeBySelector(dragInfo.element, "tr");
             dragInfo.event.dataTransfer.setDragImage(img, 50, 10);
@@ -1051,48 +1050,56 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
             field: this.field
         };
         this.cellStatusChange.emit(event);
+        document.addEventListener('dragover', this._dragOverHandle);
+    }
+
+    /**
+     * @internal
+     */
+    private _dragOverHandle = ($event) => {
+        const rect = this.hostInstance._elementRef.nativeElement.getBoundingClientRect();
+        if ($event.clientY >= rect.top && $event.clientY <= rect.bottom) {
+            // 在表格内，不操作滚动条
+            return;
+        }
+        const geometry = this.hostInstance.contentScrollbar.geometry();
+        if ($event.clientY < rect.top) {
+            // 往上滚动
+            this.hostInstance.contentScrollbar.scrollToY(geometry.y - 10);
+            return;
+        }
+        if ($event.clientY > rect.bottom) {
+            // 往下滚动
+            this.hostInstance.contentScrollbar.scrollToY(geometry.y + 10);
+            return;
+        }
     }
 
     /**
      * @internal
      */
     public _$dragEndHandle() {
-        this._resetSelectedRow();
+        this.hostInstance._$isDragging = false;
+        document.removeEventListener('dragover', this._dragOverHandle);
     }
 
     /**
      * @internal
      */
     public _$dragEnterHandle(dragInfo: DragDropInfo) {
-        dragInfo.event.dataTransfer.dropEffect = "link";
-        this._resetSelectedRow();
-        if (dragInfo.event.dataTransfer.effectAllowed == "link") {
-            let _dropClass = "";
-            if (dragInfo.element.className.indexOf("drop-top") !== -1) {
-                _dropClass = "drop-active-top";
-            } else if (dragInfo.element.className.indexOf("drop-mid") !== -1) {
-                _dropClass = "drop-active-mid";
-            } else if (dragInfo.element.className.indexOf("drop-bottom") !== -1) {
-                _dropClass = "drop-active-bottom";
-            }
-            this._renderer.addClass(CommonUtils.getParentNodeBySelector(dragInfo.element, "tr"), _dropClass);
-        }
+        dragDebounceHelper.debounce(dragInfo);
     }
 
     /**
      * @internal
      */
-    public _$dropHandle(dragInfo: DragDropInfo) {
+    public _$dropHandle(dragInfo: DragDropInfo, dropType: 'drop-top' | 'drop-mid' | 'drop-bottom') {
+        this._renderer.removeClass(dragInfo.element, "active");
         const draggingRowIndex = +dragInfo.dragDropData;
         if (draggingRowIndex === this.row) {
             return;
         }
 
-        const match = dragInfo.element.className.match(/drop-(top|mid|bottom)/);
-        if (!match) {
-            return;
-        }
-        const dropType = match[0];
         if (dropType == 'drop-top') {
             if (draggingRowIndex < this.row) {
                 this._arrayMove(this.tableData.data, draggingRowIndex, this.row - 1);
@@ -1134,14 +1141,6 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         this.tableData.refresh();
     }
 
-    private _resetSelectedRow() {
-        for (let i = 0; i < this._allRows.length; ++i) {
-            this._renderer.removeClass(this._allRows[i], "drop-active-top");
-            this._renderer.removeClass(this._allRows[i], "drop-active-mid");
-            this._renderer.removeClass(this._allRows[i], "drop-active-bottom");
-        }
-    }
-
     private _arrayMove(arr: any[], oldIndex: number, newIndex: number) {
         if (newIndex >= arr.length) {
             let k = newIndex - arr.length + 1;
@@ -1151,12 +1150,27 @@ export class TableDragReplaceRow extends TableCellRendererBase implements AfterV
         }
         arr.splice(newIndex, 0, arr.splice(oldIndex, 1)[0]);
     }
+}
 
-    ngAfterViewInit() {
-        this._allRows = CommonUtils.getParentNodeBySelector(this._elementRef.nativeElement, "table").querySelectorAll("tr");
-        this._renderer.setStyle(this._elementRef.nativeElement.parentElement.parentElement, "padding", "0px");
+class DragDebounceHelper {
+    private _dragEnterEvent = new EventEmitter();
+    private _draggingElement: HTMLElement;
+
+    constructor() {
+        this._dragEnterEvent.pipe(debounceTime(50)).subscribe((dragInfo: DragDropInfo) => {
+            if (this._draggingElement) {
+                this._draggingElement.classList.remove("active");
+            }
+            this._draggingElement = dragInfo.element;
+            this._draggingElement.classList.add("active");
+        });
+    }
+
+    public debounce(dragInfo: DragDropInfo) {
+        this._dragEnterEvent.emit(dragInfo)
     }
 }
+const dragDebounceHelper: DragDebounceHelper = new DragDebounceHelper();
 
 @NgModule({
     declarations: [

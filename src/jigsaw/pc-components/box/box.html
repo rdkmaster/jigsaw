@@ -1,4 +1,5 @@
-<i class="jigsaw-box-resize-line-wrapper" #resizeLineParent *ngIf="_$showResizeLine">
+<i class="jigsaw-box-resize-line-wrapper" #resizeLineParent *ngIf="showResizeLine"
+   [class.jigsaw-box-resize-line-wrapper-column]="parent?.direction == 'column'">
     <b #resizeLine
        class="jigsaw-box-resize-line"
        [class.jigsaw-box-resize-line-column]="parent?.direction == 'column'"
