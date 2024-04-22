@@ -20,7 +20,7 @@
     <div class="demo-control-bar">
         <p>切换皮肤</p>
         <div>
-            <jigsaw-button-bar optionWidth="110" [(selectedItems)]="selectedTheme" trackItemBy="name,majorStyle" [data]="themes"
+            <jigsaw-button-bar optionWidth="110" [(selectedItems)]="selectedTheme" trackItemBy="name, majorStyle" [data]="themes"
                 [multipleSelect]="false" (selectedItemsChange)="themeSelectChange($event)">
             </jigsaw-button-bar>
         </div>
