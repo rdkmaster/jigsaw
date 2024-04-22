@@ -120,7 +120,7 @@ export function _filterByHeaderFilter(data: TableDataMatrix, allFields: TableDat
         for (let i = 0; i < headerFilters.length; i++) {
             const colIndex = allFields.findIndex(item => item === headerFilters[i].field);
             const selectKeys = headerFilters[i].selectKeys;
-            keep = !!selectKeys.find(key => String(item[colIndex]) == key);
+            keep = selectKeys.some(x => String(item[colIndex]) == x);
             if (!keep) {
                 break;
             }
