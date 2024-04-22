@@ -231,7 +231,7 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableCellBackgroundColorRenderer extends TableCellRendererBase implements OnInit {
-    constructor(protected _injector: Injector, private _elementRef: ElementRef) {
+    constructor(protected _injector: Injector, private _elementRef: ElementRef, private _cdr: ChangeDetectorRef) {
         super(_injector);
     }
 
@@ -255,6 +255,7 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
     public set cellData(value: string | number) {
         this._cellData = value;
         this._updateColor(value);
+        this._cdr.detectChanges();
     }
 
     private _updateColor(value: string | number): void {
