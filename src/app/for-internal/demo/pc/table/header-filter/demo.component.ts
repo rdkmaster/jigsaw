@@ -276,7 +276,7 @@ export class TableSetHeaderFilterDemoComponent {
                 [
                     "Mignon",
                     "女",
-                    "System-Architect",
+                    "System Architect",
                     13218,
                     "2116/4/16",
                     "Platform III",
@@ -285,27 +285,27 @@ export class TableSetHeaderFilterDemoComponent {
                 [
                     "Edwina",
                     "女",
-                    "Test-Engineer",
+                    "Test Engineer",
                     19668,
-                    "2117/12/11",
+                    "2017/12/11",
                     "Online Prod I",
                     "艾德文娜，有价值的朋友;财产的获得者。"
                 ],
                 [
                     "Bartley",
                     "男",
-                    "System-Architect",
-                    15141,
-                    "2115/1/6",
+                    "System Architect",
+                    15041,
+                    "2015/1/6",
                     "Platform II",
                     "巴特莱，看管牧草地的人。"
                 ],
                 [
                     "Alston",
                     "男",
-                    "System-Architect",
+                    "System Architect",
                     12611,
-                    "2011/9/23",
+                    "2010/9/23",
                     "Platform II",
                     "奥斯顿，出身高贵的人。"
                 ],
@@ -314,8 +314,8 @@ export class TableSetHeaderFilterDemoComponent {
                     "女",
                     "Developer",
                     17516,
-                    "2111/11/26",
-                    "PlatformII",
+                    "2010/10/26",
+                    "Platform II",
                     "西格莉德，最被喜爱的人;胜利的。"
                 ]
             ],
