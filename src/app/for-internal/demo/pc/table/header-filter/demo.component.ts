@@ -266,19 +266,19 @@ export class TableSetHeaderFilterDemoComponent {
             [
                 [
                     "Michelle",
-                    "女",
+                    "",
                     "Developer",
-                    19850,
-                    "2015/2/18",
-                    "Platform II",
+                    0,
+                    null,
+                    undefined,
                     "蜜雪儿，紫菀花。"
                 ],
                 [
                     "Mignon",
                     "女",
                     "System Architect",
-                    13208,
-                    "2016/4/16",
+                    13218,
+                    "2116/4/16",
                     "Platform III",
                     "蜜妮安，细致而优雅。"
                 ],
