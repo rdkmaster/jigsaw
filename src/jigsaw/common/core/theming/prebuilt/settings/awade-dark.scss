@@ -222,8 +222,8 @@ $bg-transparent: transparent;
 $bg-popup: $gray-5;
 /*@public*/ $bg-gray: $gray-3;
 $bg-gray-spec: $gray-9;
-$bg-scrollbar: $gray-6;
-$bg-scrollbar-lighten: $gray-8;
+/*@public*/ $bg-scrollbar: $gray-6;
+/*@public*/ $bg-scrollbar-lighten: $gray-8;
 
 /* font 字体颜色 */
 /*@public*/ $font-color-default: hsl(0, 0%, 100%);
