@@ -255,7 +255,7 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
     public set cellData(value: string | number) {
         this._cellData = value;
         this._updateColor(value);
-        this._cdr.detectChanges();
+        this._cdr.markForCheck();
     }
 
     private _updateColor(value: string | number): void {
@@ -280,7 +280,7 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
             if (value >= valueMap[0] && value < valueMap[1]) {
                 element.style.backgroundColor = color;
                 this._$fontColor = CommonUtils.adjustFontColor(color) === "light" ? "#000" : "#fff";
-                this._cdr.detectChanges();
+                this._cdr.markForCheck();
                 return;
             }
         }
