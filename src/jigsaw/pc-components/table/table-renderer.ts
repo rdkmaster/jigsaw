@@ -280,6 +280,7 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
             if (value >= valueMap[0] && value < valueMap[1]) {
                 element.style.backgroundColor = color;
                 this._$fontColor = CommonUtils.adjustFontColor(color) === "light" ? "#000" : "#fff";
+                this._cdr.detectChanges();
                 return;
             }
         }
