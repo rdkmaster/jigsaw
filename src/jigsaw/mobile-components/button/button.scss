@@ -5,16 +5,16 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
     justify-content: center;
     align-items: center;
     position: relative;
-    padding: 0 16rem;
-    min-width: 80rem;
-    height: 32rem;
+    padding: 0 1rem;
+    min-width: 5rem;
+    height: 2rem;
     border-radius: $border-radius-base;
     background-color: $bg-transparent;
     border-width: 1px;
     border-style: solid;
     border-color: $border-color-disabled;
     color: $brand-default;
-    font-size: 12rem;
+    font-size: .75rem;
     user-select: none;
     box-sizing: border-box;
     vertical-align: middle;
@@ -146,18 +146,18 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
     }
 
     &.#{$jigsaw-button}-size-small {
-        height: 24rem;
-        font-size: 10rem;
+        height: 1.5rem;
+        font-size: .625rem;
     }
 
     &.#{$jigsaw-button}-size-medium {
-        height: 28rem;
-        font-size: 11rem;
+        height: 1.75rem;
+        font-size: .6875rem;
     }
 
     &.#{$jigsaw-button}-size-large {
-        height: 36rem;
-        font-size: 14rem;
+        height: 2.25rem;
+        font-size: .875rem;
     }
 
     &.#{$jigsaw-button}-color-none {
@@ -219,13 +219,13 @@ $jigsaw-button: #{$jigsaw-prefix}-button;
 }
 
 a[#{$jigsaw-button}] {
-    padding: 0 10rem;
+    padding: 0 .625rem;
     outline: none;
     text-decoration: none !important;
 }
 
 button[#{$jigsaw-button}] {
-    padding: 0 10rem;
+    padding: 0 .625rem;
     outline: none;
     text-decoration: none !important;
 }

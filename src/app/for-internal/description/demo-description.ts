@@ -28,13 +28,16 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
         private _activatedRoute: ActivatedRoute, private _router: Router, private _renderer: Renderer2) {
     }
 
+    // 设计稿的大小，比如我设计稿大小450，此时的按钮高度为32px
     public width = 450;
+    // rem比率，大部分情况下为1rem = 16px
+    public ratio = 16;
 
     private _removeWindowResizeListener: Function;
 
     resize() {
         document.getElementsByTagName('html')[0].style.fontSize =
-            (document.documentElement.clientWidth / Number(this.width)) + 'px';
+            (document.documentElement.clientWidth / this.width * this.ratio) + 'px';
     }
 
     selectedLanguage = [{ label: '中文', value: 'zh' }];
