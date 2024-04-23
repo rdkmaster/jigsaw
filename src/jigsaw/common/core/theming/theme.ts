@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, Type} from "@angular/core";
 import {darkGraphTheme, lightGraphTheme} from "./echarts-theme";
 import {ScopedThemeUtils, ScopedThemeInfo} from "../utils/scoped-theme-utils";
 
-export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm" | "awade" | "copilot";
+export type SupportedTheme = "paletx-pro" | "vmax-pro" | "idea" | "masbd" | "zjcm" | "awade" | "copilot" | "paletx-pro-mobile";
 export type MajorStyle = "dark" | "light";
 export type PopupBackgroundColor = "var(--bg-container)" | "#ffffff";
 

@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, Input, NgModule, OnInit } from "@angular/core";
+import { Component, Input, NgModule, OnDestroy, OnInit, Renderer2 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { TranslateService } from "@ngx-translate/core";
 import {
@@ -11,39 +11,36 @@ import {
     JigsawThemeService
 } from "jigsaw/public_api";
 import { JigsawMarkdownModule } from "../../libs/markdown/markdown";
+import { ActivatedRoute, Router } from "@angular/router";
 
 const urlParams = CommonUtils.parseUrlParam(location.search.substr(1));
-
 
 @Component({
     selector: 'jigsaw-demo-description, j-demo-description',
     styleUrls: ['./demo-description.css'],
-    templateUrl:'./demo-description.html'
+    templateUrl: './demo-description.html'
 })
-export class JigsawDemoDescription implements OnInit, AfterContentInit {
+export class JigsawDemoDescription implements OnInit, OnDestroy {
     public selectedTheme: any[];
-    public themes = new ArrayCollection([
-        { label: "VMax Light", name: 'vmax-pro', majorStyle: 'light' },
-        { label: "VMax Dark", name: 'vmax-pro', majorStyle: 'dark' },
-        { label: "OES Light", name: 'paletx-pro', majorStyle: 'light' },
-        { label: "OES Dark", name: 'paletx-pro', majorStyle: 'dark' },
-        { label: "Ux2.0 Light", name: 'idea', majorStyle: 'light' },
-        { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
-        { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' },
-        { label: "AWADE Light", name: 'awade', majorStyle: 'light' },
-        { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' },
-        { label: "COPILOT Light", name: 'copilot', majorStyle: 'light' },
-        { label: "COPILOT Dark", name: 'copilot', majorStyle: 'dark' }
-    ]);
+    public themes;
 
-    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService) {
+    constructor(private _translateService: TranslateService, private _themeService: JigsawThemeService,
+        private _activatedRoute: ActivatedRoute, private _router: Router, private _renderer: Renderer2) {
     }
 
-    ngAfterContentInit() {
-        this.themeInit();
+    // 设计稿的大小，比如我设计稿大小450，此时的按钮高度为32px
+    public width = 450;
+    // rem比率，大部分情况下为1rem = 16px
+    public ratio = 16;
+
+    private _removeWindowResizeListener: Function;
+
+    resize() {
+        document.getElementsByTagName('html')[0].style.fontSize =
+            (document.documentElement.clientWidth / this.width * this.ratio) + 'px';
     }
 
-    selectedLanguage = [{label: '中文', value: 'zh'}];
+    selectedLanguage = [{ label: '中文', value: 'zh' }];
 
     changeLanguage(lang: { value: 'zh' | 'en' }) {
         TranslateHelper.changeLanguage(this._translateService, lang.value);
@@ -54,7 +51,7 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
 
     themeSelectChange(themeArr: ArrayCollection<any>) {
         const themeName = themeArr[0].name, majorStyle = themeArr[0].majorStyle;
-        localStorage.setItem("jigsawDemoTheme", JSON.stringify({name: themeName, majorStyle: majorStyle}));
+        localStorage.setItem("jigsawDemoTheme", JSON.stringify({ name: themeName, majorStyle: majorStyle }));
         this._themeService.changeTheme(themeName, majorStyle);
     }
 
@@ -97,6 +94,55 @@ export class JigsawDemoDescription implements OnInit, AfterContentInit {
     ngOnInit() {
         if (this.showDetail === undefined) {
             this.showDetail = urlParams['open-desc'] == 'true';
+        }
+        this._activatedRoute.url.subscribe(() => {
+            const isPc = this._router.url.startsWith('/pc');
+            if (this._removeWindowResizeListener) {
+                this._removeWindowResizeListener();
+                this._removeWindowResizeListener = null;
+            }
+            this.themes = isPc ? new ArrayCollection([
+                { label: "VMax Light", name: 'vmax-pro', majorStyle: 'light' },
+                { label: "VMax Dark", name: 'vmax-pro', majorStyle: 'dark' },
+                { label: "OES Light", name: 'paletx-pro', majorStyle: 'light' },
+                { label: "OES Dark", name: 'paletx-pro', majorStyle: 'dark' },
+                { label: "Ux2.0 Light", name: 'idea', majorStyle: 'light' },
+                { label: "MASBD Light", name: 'masbd', majorStyle: 'light' },
+                { label: "ZJCM Light", name: 'zjcm', majorStyle: 'light' },
+                { label: "AWADE Light", name: 'awade', majorStyle: 'light' },
+                { label: "AWADE Dark", name: 'awade', majorStyle: 'dark' },
+                { label: "COPILOT Light", name: 'copilot', majorStyle: 'light' },
+                { label: "COPILOT Dark", name: 'copilot', majorStyle: 'dark' }
+            ]) : new ArrayCollection([
+                { label: "OES Mobile Light", name: 'paletx-pro-mobile', majorStyle: 'light' }
+            ])
+            if (!isPc) {
+                this._removeWindowResizeListener = this._renderer.listen(
+                    'window', 'resize', () => this.resize());
+                this.resize();
+            }
+            const themeString = localStorage.getItem("jigsawDemoTheme");
+            if (themeString != null) {
+                const themeData = JSON.parse(themeString);
+                if (this.themes.some((theme) => {
+                    return theme.name == themeData.name
+                })) {
+                    this.selectedTheme = [themeData];
+                    this._themeService.changeTheme(themeData.name, themeData.majorStyle);
+                    return
+                }
+            }
+            const themeName = isPc ? "paletx-pro" : "paletx-pro-mobile";
+            this.selectedTheme = [{ name: themeName, majorStyle: 'light' }];
+            this._themeService.changeTheme(themeName, "light")
+            localStorage.setItem("jigsawDemoTheme", JSON.stringify({ name: themeName, majorStyle: 'light' }));
+        });
+    }
+
+    ngOnDestroy() {
+        if (this._removeWindowResizeListener) {
+            this._removeWindowResizeListener();
+            this._removeWindowResizeListener = null;
         }
     }
 }

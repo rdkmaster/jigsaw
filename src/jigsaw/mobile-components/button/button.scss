@@ -1,139 +1,231 @@
-@import "../../common/assets/scss/core/base";
+$jigsaw-button: #{$jigsaw-prefix}-button;
 
-$btn-prefix-cls: #{$jigsaw-prefix}-button;
-
-.#{$btn-prefix-cls} {
-    @include inline-block();
-    padding: 0 10px;
-    min-width: 80px;
-    height: $height-base;
-    font-size: $font-size-base;
-    line-height: 1;
-    text-align: center;
+.#{$jigsaw-button}-host {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     position: relative;
+    padding: 0 1rem;
+    min-width: 5rem;
+    height: 2rem;
     border-radius: $border-radius-base;
-    cursor: pointer;
-    box-shadow: $btn-box-shadow;
-    font-weight: $btn-font-weight;
+    background-color: $bg-transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: $border-color-disabled;
+    color: $brand-default;
+    font-size: .75rem;
     user-select: none;
-    @include prefixer(transition, all .3s $ease-in-out);
-    background-color: $component-background;
-    border: 1px solid $border-color-base;
-    color: $text-color;
+    box-sizing: border-box;
+    vertical-align: middle;
+    cursor: pointer;
+
     &:before {
-        content: '';
+        content: "";
         display: inline-block;
         height: 100%;
         vertical-align: middle;
     }
+
     &:hover {
-        color: $primary-5;
-        border: 1px solid $primary-5;
+        color: $brand-default;
+        border-color: $brand-hover;
+        @include prefixer(transition, animation 0.3s $ease-in-out);
     }
 
     &:active {
-        color: $primary-7;
-        border: 1px solid $primary-7;
+        color: $brand-active;
+        border-color: $brand-active;
     }
 
-    &#{&}-clicked:after {
-        content: '';
+    &.#{$jigsaw-button}-clicked:after {
+        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
+        content: "";
         position: absolute;
         top: -1px;
         left: -1px;
         bottom: -1px;
         right: -1px;
-        border-radius: inherit;
-        border: 1px solid $primary-7;
-        opacity: 0.4;
-        @include prefixer(animation, buttonEffect 0.36s $ease-out forwards);
         display: block;
+        opacity: 0.4;
+        border-radius: inherit;
+        border: 1px solid $brand-active;
     }
 
-    &-content {
-        @include inline-block;
-    }
+    .#{$jigsaw-button}-content {
+        display: inline-flex;
+        align-items: center;
 
-    &-icon {
-        @include inline-block();
-        img {
-            vertical-align: top;
-            height: 20px;
-        }
-    }
-
-    &#{&}-color-primary {
-        background-color: $primary-color;
-        color: $text-color-of-bg;
-        border: 1px solid $primary-color;
-        &:hover {
-            background: $primary-7;
-        }
-        &:active {
-            background: $primary-8;
-        }
-        &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid $primary-7;
+        .#{$jigsaw-button}-text {
+            display: inline-flex;
+            align-items: center;
         }
     }
 
-    &#{&}-color-warning {
-        background-color: $warning-color;
-        color: $text-color-of-bg;
-        border: 1px solid $warning-color;
-        &:hover {
-            background: mix(#000, $warning-color, 10%);
-        }
-        &:active {
-            background: mix(#000, $warning-color, 20%);
-        }
-        &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $warning-color, 10%);
+    &.#{$jigsaw-button}-icon-left {
+        .#{$jigsaw-button}-content .iconfont {
+            margin-right: 4px;
         }
     }
 
-    &#{&}-color-error {
-        background-color: $error-color;
-        color: $text-color-of-bg;
-        border: 1px solid $error-color;
-        &:hover {
-            background: mix(#000, $error-color, 10%);
-        }
-        &:active {
-            background: mix(#000, $error-color, 20%);
-        }
-        &.#{$btn-prefix-cls}-clicked:after {
-            border: 1px solid mix(#000, $error-color, 10%);
+    &.#{$jigsaw-button}-icon-right {
+        .#{$jigsaw-button}-content {
+            flex-direction: row-reverse;
+
+            .iconfont {
+                margin-left: 4px;
+            }
         }
     }
 
-    &#{&}-size-large {
-        height: $height-lg;
-        font-size: $font-size-lg;
+    .#{$jigsaw-button}-content .iconfont {
+        font-size: $icon-size-sm;
     }
 
-    &#{&}-size-small {
-        height: $height-sm;
-        font-size: $font-size-sm;
-    }
-
-    &#{&}-disabled {
+    &.#{$jigsaw-button}-disabled {
         pointer-events: none;
-        cursor: default;
-        @include compatible(color, $disabled-color, $disabled-color-ie11);
-        background-color: $disabled-bg;
-        border-color: $border-color-base;
+        color: $font-color-disabled;
+        border-color: $border-color-disabled;
+    }
+
+    &.#{$jigsaw-button}-color-primary {
+        background-color: $primary-default;
+        color: $font-color-white;
+        border-color: $primary-default;
+        &:hover {
+            background: $primary-hover;
+        }
+        &:active {
+            background: $primary-active;
+        }
+        &.#{$jigsaw-button}-clicked:after {
+            border-color: $primary-default;
+        }
+        &.#{$jigsaw-button}-disabled {
+            background: $primary-disabled;
+            border-color: $primary-disabled;
+        }
+    }
+
+    &.#{$jigsaw-button}-color-warning {
+        background-color: $warning-default;
+        color: $font-color-white;
+        border-color: $warning-default;
+        &:hover {
+            background: $warning-hover;
+        }
+        &:active {
+            background: $warning-active;
+        }
+        &.#{$jigsaw-button}-clicked:after {
+            border-color: $warning-default;
+        }
+        &.#{$jigsaw-button}-disabled {
+            background: $warning-disabled;
+            border-color: $warning-disabled;
+        }
+    }
+
+    &.#{$jigsaw-button}-color-error {
+        background-color: $error-default;
+        color: $font-color-white;
+        border-color: $error-default;
+        &:hover {
+            background: $error-hover;
+        }
+        &:active {
+            background: $error-active;
+        }
+        &.#{$jigsaw-button}-clicked:after {
+            border-color: $error-default;
+        }
+        &.#{$jigsaw-button}-disabled {
+            background: $error-disabled;
+            border-color: $error-disabled;
+        }
+    }
+
+    &.#{$jigsaw-button}-size-small {
+        height: 1.5rem;
+        font-size: .625rem;
+    }
+
+    &.#{$jigsaw-button}-size-medium {
+        height: 1.75rem;
+        font-size: .6875rem;
+    }
+
+    &.#{$jigsaw-button}-size-large {
+        height: 2.25rem;
+        font-size: .875rem;
+    }
+
+    &.#{$jigsaw-button}-color-none {
+        min-width: 0;
+        border: none;
+        padding: 0;
+
+        &:hover {
+            .#{$jigsaw-button}-text {
+                text-decoration: underline;
+            }
+        }
+        &.#{$jigsaw-button}-clicked:after {
+            content: none;
+        }
+    }
+
+    &.#{$jigsaw-button}-icon {
+        width: $height-base;
+        min-width: 0;
+        padding: 0;
+        color: $font-color-default;
+
+        .#{$jigsaw-button}-content .iconfont {
+            margin-right: 0;
+        }
+
+        &.#{$jigsaw-button}-size-small {
+            width: $height-sm;
+        }
+
+        &.#{$jigsaw-button}-size-medium {
+            width: $height-med;
+        }
+
+        &.#{$jigsaw-button}-size-large {
+            width: $height-lg;
+        }
+
+        &.#{$jigsaw-button}-disabled {
+            background: $bg-disabled;
+            border-color: $border-color-disabled;
+            color: $font-color-disabled;
+
+            &.#{$jigsaw-button}-color-none {
+                background: none;
+                border: none;
+            }
+        }
+
+        &:hover {
+            color: $brand-hover;
+        }
+
+        &:active {
+            color: $brand-active;
+        }
     }
 }
 
-a[#{$btn-prefix-cls}] {
-    padding: 0 10px;
+a[#{$jigsaw-button}] {
+    padding: 0 .625rem;
     outline: none;
     text-decoration: none !important;
 }
 
-button[#{$btn-prefix-cls}] {
-    padding: 0 10px;
+button[#{$jigsaw-button}] {
+    padding: 0 .625rem;
     outline: none;
     text-decoration: none !important;
 }

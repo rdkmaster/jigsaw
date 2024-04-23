@@ -90,6 +90,11 @@
                 "input": "src/jigsaw/common/core/theming/themes/copilot-dark.scss",
                 "bundleName": "themes/copilot-dark",
                 "inject": false
+              },
+              {
+                "input": "src/jigsaw/common/core/theming/themes/paletx-pro-mobile-light.scss",
+                "bundleName": "themes/paletx-pro-mobile-light",
+                "inject": false
               }
             ],
             "scripts": [
