@@ -1,5 +1,5 @@
 import {AfterViewInit, Directive, ElementRef, Input, NgZone, Renderer2, ViewChild} from "@angular/core";
-import {AbstractJigsawComponent} from "./common";
+import {AbstractJigsawComponent} from "../../common";
 
 @Directive()
 export abstract class AbstractJigsawButtonBase extends AbstractJigsawComponent implements AfterViewInit {

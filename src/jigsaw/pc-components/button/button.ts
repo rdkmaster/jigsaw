@@ -1,7 +1,7 @@
 import {AfterViewInit, ChangeDetectionStrategy, Component, NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {WingsTheme} from '../../common/common';
-import {AbstractJigsawButtonBase} from "../../common/common-button";
+import {AbstractJigsawButtonBase} from "../../common/components/base/button";
 
 /**
  * 在界面上显示一个按钮，最常见最简单的组件。
