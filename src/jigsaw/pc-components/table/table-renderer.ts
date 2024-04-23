@@ -224,6 +224,84 @@ export class TableCellPasswordRenderer extends TableCellRendererBase {
 
 /**
  * @internal
+ * 表格单元格底色渲染器
+ */
+@Component({
+    template: `<div style="width:100%" [style.color]="_$fontColor">{{cellData}}</div>`,
+    changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class TableCellBackgroundColorRenderer extends TableCellRendererBase implements OnInit {
+    constructor(protected _injector: Injector, private _elementRef: ElementRef, private _cdr: ChangeDetectorRef) {
+        super(_injector);
+    }
+
+    /**
+     * 尽可能找出单元格值中的数字部分，这样可以自动处理类似 $30 30% 这样的带单位的值
+     */
+    private _autoParseNumber: boolean = true;
+    private _valueMap: { [color: string]: [number, number] } = null;
+
+    /**
+     * @internal
+     */
+    public _$fontColor: string;
+
+    private _cellData: string | number;
+
+    public get cellData(): string | number {
+        return this._cellData;
+    }
+
+    public set cellData(value: string | number) {
+        this._cellData = value;
+        this._updateColor(value);
+        this._cdr.markForCheck();
+    }
+
+    private _updateColor(value: string | number): void {
+        const element = this._elementRef.nativeElement.closest('td');
+        if (typeof value !== "number" && typeof value !== "string") {
+            this._resetColor(element);
+            return;
+        }
+        if (typeof value === "string") {
+            if (!this._autoParseNumber && !/^\s*-?\d+(\.\d+)?\s*$/.test(value)) {
+                this._resetColor(element);
+                return;
+            }
+            value = parseFloat(value.match(/[\d-.].*$/)?.[0]);
+        }
+        if (isNaN(value)) {
+            this._resetColor(element);
+            return;
+        }
+        for (const color in this._valueMap) {
+            const valueMap = this._valueMap[color];
+            if (value >= valueMap[0] && value < valueMap[1]) {
+                element.style.backgroundColor = color;
+                this._$fontColor = CommonUtils.adjustFontColor(color) === "light" ? "#000" : "#fff";
+                this._cdr.markForCheck();
+                return;
+            }
+        }
+        this._resetColor(element);
+    }
+
+    private _resetColor(element: HTMLElement) {
+        element.style.backgroundColor = '';
+        this._$fontColor = undefined;
+    }
+
+    ngOnInit() {
+        super.ngOnInit();
+        this._valueMap = this._calcInitProperty('valueMap', {});
+        this._autoParseNumber = this._calcInitProperty('autoParseNumber', true);
+        this._updateColor(this.cellData);
+    }
+}
+
+/**
+ * @internal
  * 编辑单元格渲染器
  */
 @Component({
@@ -1174,7 +1252,7 @@ const dragDebounceHelper: DragDebounceHelper = new DragDebounceHelper();
 
 @NgModule({
     declarations: [
-        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer,
+        DefaultCellRenderer, TableCellTextEditorRenderer, TableHeadCheckboxRenderer, TableCellBackgroundColorRenderer,
         TableCellCheckboxRenderer, TableCellSwitchRenderer, TableCellSelectRenderer, TableCellNumericEditorRenderer,
         TableCellAutoCompleteEditorRenderer, TreeTableCellRenderer, TableCellPasswordRenderer, TableDragReplaceRow,
         TableCellProgressRenderer
