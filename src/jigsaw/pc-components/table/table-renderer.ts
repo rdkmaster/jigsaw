@@ -3,26 +3,26 @@ import {
     OnDestroy, OnInit, Output, Renderer2, ViewChild, ElementRef, ChangeDetectionStrategy,
     Injector, ViewEncapsulation, NgZone
 } from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {Observable, Subscription} from "rxjs";
-import {debounceTime, take} from 'rxjs/operators';
-import {JigsawInput, JigsawInputModule} from "../input/input";
-import {JigsawNumericInput, JigsawNumericInputModule} from "../input/numeric-input";
-import {JigsawCheckBoxModule} from "../checkbox/index";
-import {CheckBoxStatus} from "../checkbox/typings";
-import {TableData, PageableTreeTableData} from "../../common/core/data/table-data";
-import {_getColumnIndex, AdditionalTableData, CellRendererEvent} from "./table-typings";
-import {CommonUtils} from "../../common/core/utils/common-utils";
-import {JigsawSwitchModule} from "../switch/switch";
-import {JigsawSelectModule} from "../select/index";
-import {JigsawProgressModule} from "../progress/progress";
-import {ArrayCollection} from "../../common/core/data/array-collection";
-import {JigsawAutoCompleteInput, JigsawAutoCompleteInputModule} from "../input/auto-complete-input";
-import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
-import {DragDropInfo} from "../../common/directive/dragdrop/types";
-import {JigsawDraggableModule, JigsawDroppableModule} from "../../common/directive/dragdrop/index";
-import {JigsawIcon, JigsawIconModule, StatusType} from "../icon/icon";
-import {LabelPosition, Status} from "../progress/base";
+import { CommonModule } from "@angular/common";
+import { Observable, Subscription } from "rxjs";
+import { debounceTime, take } from 'rxjs/operators';
+import { JigsawInput, JigsawInputModule } from "../input/input";
+import { JigsawNumericInput, JigsawNumericInputModule } from "../input/numeric-input";
+import { JigsawCheckBoxModule } from "../checkbox/index";
+import { CheckBoxStatus } from "../checkbox/typings";
+import { TableData, PageableTreeTableData } from "../../common/core/data/table-data";
+import { _getColumnIndex, AdditionalTableData, CellRendererEvent } from "./table-typings";
+import { CommonUtils } from "../../common/core/utils/common-utils";
+import { JigsawSwitchModule } from "../switch/switch";
+import { JigsawSelectModule } from "../select/index";
+import { JigsawProgressModule } from "../progress/progress";
+import { ArrayCollection } from "../../common/core/data/array-collection";
+import { JigsawAutoCompleteInput, JigsawAutoCompleteInputModule } from "../input/auto-complete-input";
+import { RequireMarkForCheck } from "../../common/decorator/mark-for-check";
+import { DragDropInfo } from "../../common/directive/dragdrop/types";
+import { JigsawDraggableModule, JigsawDroppableModule } from "../../common/directive/dragdrop/index";
+import { JigsawIcon, JigsawIconModule, StatusType } from "../icon/icon";
+import { LabelPosition, Status } from "../progress/base";
 
 @Directive()
 export class TableCellRendererBase implements OnInit, OnDestroy {
@@ -319,7 +319,7 @@ export class TableCellTextEditorRenderer extends TableCellRendererBase implement
     @ViewChild(JigsawInput)
     private _input: JigsawInput;
 
-    @ViewChild('input', {read: ElementRef})
+    @ViewChild('input', { read: ElementRef })
     private _inputEl: ElementRef;
 
     public get _$icon(): string {
@@ -493,8 +493,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
     private _checked: CheckBoxStatus = CheckBoxStatus.unchecked;
 
     constructor(private _elementRef: ElementRef, private _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_injector);
     }
 
@@ -585,8 +585,8 @@ export class TableHeadCheckboxRenderer extends TableCellRendererBase {
  */
 export class TableCellToggleRendererBase extends TableCellRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, protected _zone: NgZone) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector, protected _zone: NgZone) {
         super(_injector);
     }
 
@@ -682,7 +682,7 @@ export class TableCellToggleRendererBase extends TableCellRendererBase {
 })
 export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                protected _injector: Injector, protected _zone: NgZone) {
+        protected _injector: Injector, protected _zone: NgZone) {
         super(_changeDetectorRef, _injector, _zone);
     }
 }
@@ -700,7 +700,7 @@ export class TableCellCheckboxRenderer extends TableCellToggleRendererBase {
 })
 export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                protected _injector: Injector, protected _zone: NgZone) {
+        protected _injector: Injector, protected _zone: NgZone) {
         super(_changeDetectorRef, _injector, _zone);
     }
 
@@ -737,7 +737,7 @@ export class TableCellSwitchRenderer extends TableCellToggleRendererBase {
  * key值必须是 `StatusType` 类型
  */
 export type ProgressStatusConfig = {
-    [status: string]: {text: string, icon: string}
+    [status: string]: { text: string, icon: string }
 };
 
 /**
@@ -759,8 +759,8 @@ export type ProgressStatusConfig = {
 })
 export class TableCellProgressRenderer extends TableCellRendererBase implements AfterViewInit {
     constructor(protected _changeDetectorRef: ChangeDetectorRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector, protected _zone: NgZone) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector, protected _zone: NgZone) {
         super(_injector);
     }
 
@@ -788,7 +788,7 @@ export class TableCellProgressRenderer extends TableCellRendererBase implements 
      * @NoMarkForCheckRequired
      */
     @Input()
-    public initData: {animate?: boolean, status?: Status, labelPosition?: LabelPosition, statusConfig: ProgressStatusConfig};
+    public initData: { animate?: boolean, status?: Status, labelPosition?: LabelPosition, statusConfig: ProgressStatusConfig };
 
     public get _$animate(): boolean {
         return !!this._calcInitProperty('animate', false);
@@ -853,8 +853,8 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     public data: ArrayCollection<any> | any[];
 
     constructor(private _changeDetector: ChangeDetectorRef, private _renderer: Renderer2, private _elementRef: ElementRef,
-                // @RequireMarkForCheck 需要用到，勿删
-                protected _injector: Injector) {
+        // @RequireMarkForCheck 需要用到，勿删
+        protected _injector: Injector) {
         super(_injector);
         this._removeKeyDownHandler = this._renderer.listen('document', 'keydown.esc', this._onKeyDown.bind(this));
     }
@@ -927,7 +927,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
                 console.error('the data of table select renderer must be type of Array<{label: string} | string>');
                 return item;
             }
-            return {label: item};
+            return { label: item };
         });
     }
 
@@ -967,7 +967,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
         return tableData.data.reduce(
             (items, row) => {
                 if (items.findIndex(office => office.label == row[col]) == -1) {
-                    items.push({label: row[col]})
+                    items.push({ label: row[col] })
                 }
                 return items;
             }, []);
@@ -984,7 +984,7 @@ export class TableCellSelectRenderer extends TableCellRendererBase implements On
     set cellData(value: any) {
         this._cellData = value;
         if (CommonUtils.isDefined(value)) {
-            this.selected = {label: value};
+            this.selected = { label: value };
         }
     }
 

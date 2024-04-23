@@ -39,10 +39,10 @@ export class TableCellRenderFullComponent {
         );
     }
 
-    public changeData(){
+    public changeData() {
         console.log("通过fromObject的方式修改数据");
         this.tableData.fromObject({
-            data:[
+            data: [
                 ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true, '$300'],
                 ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false, null],
                 ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true, 'xx 200'],
@@ -50,11 +50,11 @@ export class TableCellRenderFullComponent {
                 ["Garrett2", "123456", "二Tokyo", "2011/02/25", "System Architect2", "2000", true, -20],
                 ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false, -Infinity],
             ],
-            field:[
+            field: [
                 "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
                 "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
             ],
-            header:[
+            header: [
                 "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
                 "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
             ]
@@ -116,7 +116,7 @@ export class TableCellRenderFullComponent {
             cell: {
                 editorRenderer: TableCellSelectRenderer,
                 editorRendererInitData: {
-                    initData:(td, row, col) => {
+                    initData: (td, row, col) => {
                         if (!this.dates) {
                             this.dates = TableCellSelectRenderer.defaultInitDataGenerator(td, row, col);
                         }
@@ -181,7 +181,7 @@ export class TableCellRenderFullComponent {
             cell: {
                 renderer: TableCellBackgroundColorRenderer,
                 rendererInitData: {
-                    valueMap: {'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'purple': [200, 1000]},
+                    valueMap: { 'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'purple': [200, 1000] },
                 }
             }
         }
