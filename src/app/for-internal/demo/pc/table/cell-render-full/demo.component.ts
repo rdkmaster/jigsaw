@@ -27,11 +27,11 @@ export class TableCellRenderFullComponent {
         ],
         [
             "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
-            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
+            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellBackgroundColorRenderer"
         ],
         [
             "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
-            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
+            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellBackgroundColorRenderer"
         ]);
     private _data2: TableData = new TableData(
         [
@@ -44,11 +44,11 @@ export class TableCellRenderFullComponent {
         ],
         [
             "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
-            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
+            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellBackgroundColorRenderer"
         ],
         [
             "DefaultCellRenderer", "TableCellPasswordRenderer", "TableCellTextEditorRenderer", "TableCellSelectRenderer",
-            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellbackgroundColorRenderer"
+            "TableCellAutoCompleteEditorRenderer", "TableCellNumericEditorRenderer", "TableCellSwitchRenderer", "TableCellBackgroundColorRenderer"
         ]);
     tableData: TableData = this._data1;
 
@@ -172,12 +172,12 @@ export class TableCellRenderFullComponent {
             }
         },
         {
-            target: 'TableCellbackgroundColorRenderer',
+            target: 'TableCellBackgroundColorRenderer',
             width: "100",
             cell: {
                 renderer: TableCellBackgroundColorRenderer,
                 rendererInitData: {
-                    valueMap: { 'red': [-1000, 0], 'orange': [0, 100], 'blue': [100, 200], 'purple': [200, 1000] },
+                    valueMap: { 'red': [-Infinity, 0], 'orange': [0, 100], 'blue': [100, 200], 'purple': [200, 1000] },
                 }
             }
         }
