@@ -265,10 +265,11 @@ export class TableCellBackgroundColorRenderer extends TableCellRendererBase impl
             return;
         }
         if (typeof value === "string") {
-            if (this._autoParseNumber) {
-                value = value.match(/[\d-.].*$/)?.[0];
+            if (!this._autoParseNumber && !/^\s*-?\d+(\.\d+)?\s*$/.test(value)) {
+                this._resetColor(element);
+                return;
             }
-            value = parseFloat(value);
+            value = parseFloat(value.match(/[\d-.].*$/)?.[0]);
         }
         if (isNaN(value)) {
             this._resetColor(element);

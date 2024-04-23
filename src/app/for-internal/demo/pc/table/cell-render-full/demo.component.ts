@@ -37,7 +37,7 @@ export class TableCellRenderFullComponent {
         [
             ["Garrett6", "123456", "六Tokyo", "2011/06/25", "Test Engineer6", "6000", true, '$300'],
             ["Garrett5", "123456", "五Edinburgh", "", "System Architect5", "5000", false, null],
-            ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true, 'xx 200'],
+            ["Garrett4", "123456", "四Tokyo", "2011/04/25", "Developer4", "4000", true, 'xx199.99'],
             ["Tiger3", "123456", "三Edinburgh", "2011/03/25", "Test Engineer3", "3000", false, '10%'],
             ["Garrett2", "123456", "二Tokyo", "2011/02/25", "System Architect2", "2000", true, -20],
             ["Tiger1", "123456", "一Edinburgh", "2011/01/25", "Developer1", "1000", false, -Infinity],
