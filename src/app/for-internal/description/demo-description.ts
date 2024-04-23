@@ -33,7 +33,6 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
     private _removeWindowResizeListener: Function;
 
     resize() {
-        console.log((document.documentElement.clientWidth / Number(this.width)) * 100);
         document.getElementsByTagName('html')[0].style.fontSize =
             (document.documentElement.clientWidth / Number(this.width)) + 'px';
     }
@@ -132,7 +131,6 @@ export class JigsawDemoDescription implements OnInit, OnDestroy {
             }
             const themeName = isPc ? "paletx-pro" : "paletx-pro-mobile";
             this.selectedTheme = [{ name: themeName, majorStyle: 'light' }];
-            console.log(this.selectedTheme);
             this._themeService.changeTheme(themeName, "light")
             localStorage.setItem("jigsawDemoTheme", JSON.stringify({ name: themeName, majorStyle: 'light' }));
         });
