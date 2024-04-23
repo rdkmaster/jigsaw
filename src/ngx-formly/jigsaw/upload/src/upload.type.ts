@@ -30,6 +30,7 @@ import {FormlyUploadComponent} from "./upload.component";
             [uploadMinSize]="to.uploadMinSize"
             [uploadMaxSize]="to.uploadMaxSize"
             [uploadImmediately]="to.uploadImmediately"
+            [uploadBatchMode]="to.batchMode"
             (uploadProgress)="to.uploadProgress && to.uploadProgress($event)"
             (uploadDataSendProgress)="to.uploadDataSendProgress && to.uploadDataSendProgress($event)"
             (uploadComplete)="to.uploadComplete && to.uploadComplete($event)"
@@ -62,6 +63,7 @@ export class FormlyFieldUpload extends FormlyFieldType<FormlyUploadComponent> {
             uploadContentField: 'file',
             uploadFileNameField: 'filename',
             uploadImmediately: false,
+            batchMode: false,
             uploadMaxSize: 1024,
             uploadMinSize: 0
         },

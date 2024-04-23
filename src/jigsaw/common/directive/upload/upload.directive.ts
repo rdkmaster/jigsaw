@@ -110,6 +110,12 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     public offline: boolean = false;
 
     /**
+     * 标识是否批量模式
+     */
+    @Input('uploadBatchMode')
+    public batchMode: boolean = false;
+
+    /**
      * 每个文件上传完成（无论成功还是失败）之后发出，此事件给出的进度为文件个数来计算
      */
     @Output('uploadProgress')
@@ -272,10 +278,23 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     this.complete.emit(this.files);
                     return;
                 }
-                for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
-                    // 最多前maxConcurrencyUpload个文件同时上传给服务器
-                    this._sequenceUpload(pendingFiles[i]);
-                }
+                if (true) {
+                    this.files.forEach((item:any) => {
+                        item.state = 'loading';
+                        item.message = this._translateService.instant(`upload.uploading`)
+                    })
+                    const formData = new FormData();
+                    pendingFiles.forEach(fileInfo => {
+                        formData.append(this.contentField, fileInfo.file);
+                    });
+                    this._sequenceUpload({}, formData);
+                } 
+                // else {
+                //     for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+                //         // 最多前maxConcurrencyUpload个文件同时上传给服务器
+                //         this._sequenceUpload(pendingFiles[i]);
+                //     }
+                // }
             })
         });
     }
@@ -329,13 +348,17 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         return fileInfo.state !== 'loading' && fileInfo.state !== 'pause'
     }
 
-    private _sequenceUpload(fileInfo: UploadFileInfo) {
+    private _sequenceUpload(fileInfo: UploadFileInfo | any, fileData?: FormData) {
         fileInfo.state = 'loading';
         fileInfo.message = this._translateService.instant(`upload.uploading`);
         this._statusLog(fileInfo, fileInfo.message);
-        const formData = new FormData();
-        formData.append(this.contentField, fileInfo.file);
-        this._appendAdditionalFields(formData, fileInfo.file.name);
+        const formData = fileData || new FormData();
+        if (!fileData) {
+            formData.append(this.contentField, fileInfo.file);
+            this._appendAdditionalFields(formData, fileInfo.file.name)
+        } else {
+            this._appendAdditionalFields(formData, '合并上传');
+        }
         this._http.post(this.targetUrl, formData,
             {
                 responseType: 'text',
