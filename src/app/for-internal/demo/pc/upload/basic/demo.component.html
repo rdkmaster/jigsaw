@@ -39,15 +39,17 @@
 
         <div class="demo-4">
             <jigsaw-header>配置文件类型</jigsaw-header>
-            <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg', '.txt']">
+            <jigsaw-radios-lite [(value)]="_$fileType" [data]="['.png', '.docx', '.json', '.png, .jpg', '.txt']">
             </jigsaw-radios-lite>
-            <jigsaw-upload width="300px" [uploadFileType]="fileType"></jigsaw-upload>
+            <jigsaw-upload width="300px" [uploadFileType]="_$fileType"></jigsaw-upload>
         </div>
 
         <div class="demo-6">
             <jigsaw-header>手动上传</jigsaw-header>
             <a (click)="uploader6.upload()">点击上传</a>
-            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false"></jigsaw-upload>
+            <span>批量模式</span>
+            <jigsaw-switch [(checked)]="_$batchMode"></jigsaw-switch>
+            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false" [uploadBatchMode] = "_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-7">

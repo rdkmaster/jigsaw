@@ -183,6 +183,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         const uploadingCount = this.files.filter(file => file.state == 'loading').length;
         if (uploadingCount < maxConcurrencyUpload) {
+            if (this.batchMode) {
+                this.upload();
+                return;
+            }
             this._sequenceUpload(fileInfo);
         } else {
             // 排队，后面上传线程有空了，会再来上传它的。
@@ -278,8 +282,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     this.complete.emit(this.files);
                     return;
                 }
-                if (true) {
-                    this.files.forEach((item:any) => {
+                if (this.batchMode) {
+                    this.files.forEach((item: any) => {
                         item.state = 'loading';
                         item.message = this._translateService.instant(`upload.uploading`)
                     })
@@ -288,13 +292,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                         formData.append(this.contentField, fileInfo.file);
                     });
                     this._sequenceUpload({}, formData);
-                } 
-                // else {
-                //     for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
-                //         // 最多前maxConcurrencyUpload个文件同时上传给服务器
-                //         this._sequenceUpload(pendingFiles[i]);
-                //     }
-                // }
+                }
+                else {
+                    for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
+                        // 最多前maxConcurrencyUpload个文件同时上传给服务器
+                        this._sequenceUpload(pendingFiles[i]);
+                    }
+                }
             })
         });
     }
@@ -349,11 +353,11 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo | any, fileData?: FormData) {
-        fileInfo.state = 'loading';
-        fileInfo.message = this._translateService.instant(`upload.uploading`);
-        this._statusLog(fileInfo, fileInfo.message);
         const formData = fileData || new FormData();
-        if (!fileData) {
+        if (!this.batchMode) {
+            fileInfo.state = 'loading';
+            fileInfo.message = this._translateService.instant(`upload.uploading`);
+            this._statusLog(fileInfo, fileInfo.message);
             formData.append(this.contentField, fileInfo.file);
             this._appendAdditionalFields(formData, fileInfo.file.name)
         } else {
@@ -365,30 +369,53 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 reportProgress: true,
                 observe: 'events'
             }).subscribe((res: any) => {
-            if (res.type === 1) {
-                fileInfo.progress = res.loaded / res.total * 100;
-                this.dataSendProgress.emit(fileInfo);
-                return;
-            }
-            if (res.type === 3) {
-                fileInfo.url = res.partialText;
-                return;
-            }
-            if (res.type === 4) {
-                fileInfo.state = 'success';
-                fileInfo.message = '';
-                const resp: HttpResponse<string> = <HttpResponse<string>>res;
-                fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
-                this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
-                this._afterCurFileUploaded(fileInfo);
-            }
-        }, (e) => {
-            fileInfo.state = 'error';
-            const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
-            this._statusLog(fileInfo, message);
-            fileInfo.message = message;
-            this._afterCurFileUploaded(fileInfo);
-        });
+                if (res.type === 1) {
+                    fileInfo.progress = res.loaded / res.total * 100;
+                    this.dataSendProgress.emit(fileInfo);
+                    return;
+                }
+                if (res.type === 3) {
+                    fileInfo.url = res.partialText;
+                    return;
+                }
+                if (res.type === 4) {
+                    const resp: HttpResponse<string> = <HttpResponse<string>>res;
+                    if (!this.batchMode) {
+                        fileInfo.state = 'success';
+                        fileInfo.message = '';
+                        fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
+                        this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
+                        this._afterCurFileUploaded(fileInfo);
+                    } else {
+                        this.files.forEach((item: any) => {
+                            item.state = 'success';
+                            item.message = "";
+                            item.url = resp.body && typeof resp.body == 'string' ? resp.body : item.url;
+                            item.progress = 100;
+                            this._statusLog(item, this._translateService.instant(`upload.done`));
+                        })
+                        if (!this.multiple || this._isAllFilesUploaded()) {
+                            this.complete.emit(this.files);
+                            this._cdr.markForCheck();
+                        }
+                    }
+                }
+            }, (e) => {
+                const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
+                if (!this.batchMode) {
+                    fileInfo.state = 'error';
+                    this._statusLog(fileInfo, message);
+                    fileInfo.message = message;
+                    this._afterCurFileUploaded(fileInfo);
+                }
+                else {
+                    this.files.forEach((item: any) => {
+                        item.state = 'error';
+                        item.message = message;
+                        this._statusLog(item, message);
+                    })
+                }
+            });
     }
 
     private _appendAdditionalFields(formData: FormData, fileName: string): void {

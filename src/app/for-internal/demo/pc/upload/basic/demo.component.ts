@@ -6,7 +6,8 @@ import { JigsawUpload } from 'jigsaw/public_api';
     styleUrls: ['./demo.component.css']
 })
 export class UploadBasicDemoComponent {
-    fileType = '.txt';
+    public _$fileType = '.txt';
+    public _$batchMode: boolean;
 
     uploadStart($event) {
         console.log("uploadStart触发了", $event)
