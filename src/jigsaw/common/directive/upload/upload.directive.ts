@@ -365,7 +365,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             formData.append(this.contentField, fileInfo.file);
             this._appendAdditionalFields(formData, fileInfo.file.name)
         } else {
-            this._appendAdditionalFields(formData, '合并上传');
+            this._appendAdditionalFields(formData, 'Merge upload');
         }
         this._http.post(this.targetUrl, formData,
             {
