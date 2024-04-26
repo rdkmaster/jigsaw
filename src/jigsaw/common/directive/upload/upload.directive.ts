@@ -164,6 +164,11 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
+        if (this.batchMode) {
+            this._batchMode();
+            return;
+        }
+
         if (this.offline) {
             return;
         }
@@ -180,13 +185,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             console.error('invalid retry upload file, this file is still pending:', fileInfo);
             return;
         }
-
         const uploadingCount = this.files.filter(file => file.state == 'loading').length;
         if (uploadingCount < maxConcurrencyUpload) {
-            if (this.batchMode) {
-                this.upload();
-                return;
-            }
             this._sequenceUpload(fileInfo);
         } else {
             // 排队，后面上传线程有空了，会再来上传它的。
@@ -267,6 +267,18 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         this.change.emit(this.files);
     }
 
+    private _batchMode() {
+        this.files.forEach((item: any) => {
+            item.state = 'loading';
+            item.message = this._translateService.instant(`upload.uploading`)
+        })
+        const formData = new FormData();
+        this.files.forEach(fileInfo => {
+            formData.append(this.contentField, fileInfo.file);
+        });
+        this._sequenceUpload({}, formData);
+    }
+
     public upload() {
         this.runAfterMicrotasks(() => {
             this._zone.run(() => {
@@ -283,15 +295,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     return;
                 }
                 if (this.batchMode) {
-                    this.files.forEach((item: any) => {
-                        item.state = 'loading';
-                        item.message = this._translateService.instant(`upload.uploading`)
-                    })
-                    const formData = new FormData();
-                    this.files.forEach(fileInfo => {
-                        formData.append(this.contentField, fileInfo.file);
-                    });
-                    this._sequenceUpload({}, formData);
+                    this._batchMode();
                 }
                 else {
                     for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
