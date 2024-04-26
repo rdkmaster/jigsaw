@@ -288,7 +288,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                         item.message = this._translateService.instant(`upload.uploading`)
                     })
                     const formData = new FormData();
-                    pendingFiles.forEach(fileInfo => {
+                    this.files.forEach(fileInfo => {
                         formData.append(this.contentField, fileInfo.file);
                     });
                     this._sequenceUpload({}, formData);
