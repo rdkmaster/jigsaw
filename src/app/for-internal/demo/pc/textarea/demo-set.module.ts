@@ -21,6 +21,8 @@ import { TextareaResizeDemoComponent } from './resize/demo.component';
 import { TextareaResizeDemoModule } from './resize/demo.module';
 import { TextareaShowBorderDemoComponent } from "./show-border/demo.component";
 import { TextareaShowBorderDemoModule } from "./show-border/demo.module";
+import {TextareaAutoHeightComponent} from "./auto-height/demo.component";
+import {TextareaAutoHeightModule} from "./auto-height/demo.module";
 
 export const routerConfig = [
     {
@@ -52,6 +54,9 @@ export const routerConfig = [
     },
     {
         path: 'resize', component: TextareaResizeDemoComponent
+    },
+    {
+        path: 'auto-height', component: TextareaAutoHeightComponent
     }
 ];
 
@@ -67,7 +72,8 @@ export const routerConfig = [
         TextareaValidModule,
         TextareaSelectDemoModule,
         TextareaMaxLengthDemoModule,
-        TextareaResizeDemoModule
+        TextareaResizeDemoModule,
+        TextareaAutoHeightModule,
     ]
 })
 export class TextareaDemoModule {

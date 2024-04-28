@@ -99,6 +99,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Input()
     public valid: boolean = true;
 
+    @Input()
+    public autoHeight: boolean;
+
     @Output() public blur: EventEmitter<Event> = new EventEmitter<Event>();
 
     @Output('focus')
@@ -157,6 +160,9 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (this.initialized && (this.maxLength === 0 || (this.maxLength !== 0 && this._value !== currentValue))) {
             // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
+        }
+        if (this.autoHeight) {
+            this._textareaElement.nativeElement.style.height = this._textareaElement.nativeElement.scrollHeight + 'px';
         }
     }
 
