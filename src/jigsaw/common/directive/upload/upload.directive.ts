@@ -164,13 +164,16 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
-        if (this.batchMode){
+        if (this.batchMode) {
+            const pendingFiles = this.files.filter(file => file.state == 'error');
+            const files = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null);
+            const pendingFile = { ...pendingFiles[0], files: files };
             this.files.forEach(item => {
                 item.state = 'loading';
                 item.message = this._translateService.instant(`upload.uploading`);
                 this._statusLog(item, item.message);
             })
-            this._sequenceUpload(this.files[0]);
+            this._sequenceUpload(pendingFile);
             return;
         }
         if (this.offline) {
@@ -288,9 +291,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     return;
                 }
                 if (this.batchMode) {
-                    const files: File[] = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null) as File[];
-                    pendingFiles[0].file = files;
-                    this._sequenceUpload(pendingFiles[0]);
+                    const files = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null);
+                    const pendingFile = { ...pendingFiles[0], files: files };
+                    this._sequenceUpload(pendingFile);
                     return;
                 }
                 for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
@@ -355,10 +358,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         fileInfo.message = this._translateService.instant(`upload.uploading`);
         this._statusLog(fileInfo, fileInfo.message);
         let formData: FormData;
-        if (fileInfo.file instanceof Array) {
+        if (fileInfo.files) {
             // 把多个file凑成一个formData
             formData = new FormData();
-            fileInfo.file.forEach(item => {
+            fileInfo.files.forEach(item => {
                 formData.append(this.contentField, item);
             })
         } else {
@@ -382,7 +385,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 return;
             }
             const resp: HttpResponse<string> = <HttpResponse<string>>res;
-            if (res.type === 4 && this.batchMode) {
+            if (res.type === 4 && fileInfo.files) {
                 this.files.forEach(item => {
                     item.state = 'success';
                     item.message = '';
