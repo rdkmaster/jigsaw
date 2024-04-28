@@ -165,10 +165,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
     public retryUpload(fileInfo: UploadFileInfo) {
         if (this.batchMode){
-            const pendingFiles = this.files.filter(file => file.state == 'error');
-            const files: File[] = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null) as File[];
-            pendingFiles[0].file = files
-            this._sequenceUpload(pendingFiles[0]);
+            this.files.forEach(item => {
+                item.state = 'loading';
+                item.message = this._translateService.instant(`upload.uploading`);
+                this._statusLog(item, item.message);
+            })
+            this._sequenceUpload(this.files[0]);
             return;
         }
         if (this.offline) {
@@ -387,8 +389,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     item.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
                     item.progress = 100;
                     this._statusLog(item, this._translateService.instant(`upload.done`));
-                    return;
                 })
+                return;
             }
             if (res.type === 4) {
                 fileInfo.state = 'success';
