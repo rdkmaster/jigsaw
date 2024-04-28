@@ -34,7 +34,7 @@ export class TableSetHeaderSortDemoComponent {
                 "Michelle",
                 "女",
                 "Developer",
-                19850,
+                '-',
                 "2015/2/18",
                 "Platform II",
                 "蜜雪儿，紫菀花。"
@@ -70,7 +70,7 @@ export class TableSetHeaderSortDemoComponent {
                 "Alston",
                 "男",
                 "System Architect",
-                '-',
+                12611,
                 "2010/9/23",
                 "Platform II",
                 "奥斯顿，出身高贵的人。"
