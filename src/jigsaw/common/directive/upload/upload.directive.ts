@@ -166,7 +166,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public retryUpload(fileInfo: UploadFileInfo) {
         if (this.batchMode){
             const pendingFiles = this.files.filter(file => file.state == 'error');
-            const files = pendingFiles.map((item) => item.file);
+            const files: File[] = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null) as File[];
             pendingFiles[0].file = files
             this._sequenceUpload(pendingFiles[0]);
             return;
@@ -286,8 +286,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     return;
                 }
                 if (this.batchMode) {
-                    const files = pendingFiles.map((item) => item.file);
-                    pendingFiles[0].file = files
+                    const files: File[] = pendingFiles.map((item) => item.file).filter((file) => file !== undefined && file !== null) as File[];
+                    pendingFiles[0].file = files;
                     this._sequenceUpload(pendingFiles[0]);
                     return;
                 }
