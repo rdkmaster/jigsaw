@@ -333,9 +333,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         fileInfo.state = 'loading';
         fileInfo.message = this._translateService.instant(`upload.uploading`);
         this._statusLog(fileInfo, fileInfo.message);
-        const formData = new FormData();
-        formData.append(this.contentField, fileInfo.file);
-        this._appendAdditionalFields(formData, fileInfo.file.name);
+        let formData: FormData;
+        if (fileInfo.formData) {
+            formData = fileInfo.formData;
+        } else {
+            formData = new FormData();
+            formData.append(this.contentField, fileInfo.file);
+            this._appendAdditionalFields(formData, fileInfo.file.name);
+        }
         this._http.post(this.targetUrl, formData,
             {
                 responseType: 'text',

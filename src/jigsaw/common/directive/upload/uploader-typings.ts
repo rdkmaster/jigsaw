@@ -6,7 +6,7 @@ export type UploadingFileLog = {
 }
 
 export type UploadFileInfo = {
-    name: string, url: string, file: File,
+    name: string, url: string, file?: File, formData?: FormData,
     state: 'pause' | 'loading' | 'success' | 'error',
     progress?: number, log?: UploadingFileLog[], message?: string,
     errorType?: "fileTypeError" | "fileMinSizeError" | "fileMaxSizeError"
