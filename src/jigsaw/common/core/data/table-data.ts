@@ -356,7 +356,19 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
             field = typeof this.sortInfo.field === 'string' ? this.field.indexOf(this.sortInfo.field) : this.sortInfo.field;
             const orderFlag = this.sortInfo.order == SortOrder.asc ? 1 : -1;
             if (this.sortInfo.as == SortAs.number) {
-                data.sort((a, b) => orderFlag * (Number(a[field]) - Number(b[field])));
+                data.sort((a, b) => {
+                    const aValue = Number(a[field]);
+                    const bValue = Number(b[field]);
+                    if (isNaN(aValue) && isNaN(bValue)) {
+                        return 0;
+                    } else if (isNaN(aValue)) {
+                        return 1;
+                    } else if (isNaN(bValue)) {
+                        return -1;
+                    } else {
+                        return orderFlag * (aValue - bValue);
+                    }
+                });
             } else {
                 data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
             }
