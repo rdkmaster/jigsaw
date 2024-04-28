@@ -106,6 +106,12 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadImmediately')
     public uploadImmediately: boolean = true;
 
+    /**
+     * 标识是否批量模式
+     */
+    @Input('uploadBatchMode')
+    public batchMode: boolean = false;
+
     @Input('uploadOffline')
     public offline: boolean = false;
 
@@ -177,7 +183,15 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         const uploadingCount = this.files.filter(file => file.state == 'loading').length;
         if (uploadingCount < maxConcurrencyUpload) {
-            this._sequenceUpload(fileInfo);
+            if (this.batchMode){
+                const pendingFiles = this.files.filter(file => file.state == 'error');
+                const files = pendingFiles.map((item) => item.file);
+                pendingFiles[0].file = files
+                this._sequenceUpload(pendingFiles[0]);
+            } else {
+                this._sequenceUpload(fileInfo);
+            }
+            
         } else {
             // 排队，后面上传线程有空了，会再来上传它的。
             fileInfo.state = 'pause';
@@ -272,6 +286,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                     this.complete.emit(this.files);
                     return;
                 }
+                if (this.batchMode) {
+                    const files = pendingFiles.map((item) => item.file);
+                    pendingFiles[0].file = files
+                    this._sequenceUpload(pendingFiles[0]);
+                    return;
+                }
                 for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
                     // 最多前maxConcurrencyUpload个文件同时上传给服务器
                     this._sequenceUpload(pendingFiles[i]);
@@ -336,7 +356,10 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         let formData: FormData;
         if (fileInfo.file instanceof Array) {
             // 把多个file凑成一个formData
-            formData = fileInfo.formData;
+            formData = new FormData();
+            fileInfo.file.forEach(item => {
+                formData.append(this.contentField, item);
+            })
         } else {
             formData = new FormData();
             formData.append(this.contentField, fileInfo.file);
@@ -357,17 +380,35 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 fileInfo.url = res.partialText;
                 return;
             }
+            const resp: HttpResponse<string> = <HttpResponse<string>>res;
+            if (res.type === 4 && this.batchMode) {
+                this.files.forEach(item => {
+                    item.state = 'success';
+                    item.message = '';
+                    item.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
+                    item.progress = 100;
+                    this._statusLog(item, this._translateService.instant(`upload.done`));
+                    return;
+                })
+            }
             if (res.type === 4) {
                 fileInfo.state = 'success';
                 fileInfo.message = '';
-                const resp: HttpResponse<string> = <HttpResponse<string>>res;
                 fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
                 this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
                 this._afterCurFileUploaded(fileInfo);
             }
         }, (e) => {
-            fileInfo.state = 'error';
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
+            if (this.batchMode) {
+                this.files.forEach((item: any) => {
+                    item.state = 'error';
+                    item.message = message;
+                    this._statusLog(item, message);
+                })
+                return;
+            }
+            fileInfo.state = 'error';
             this._statusLog(fileInfo, message);
             fileInfo.message = message;
             this._afterCurFileUploaded(fileInfo);

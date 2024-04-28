@@ -47,7 +47,9 @@
         <div class="demo-6">
             <jigsaw-header>手动上传</jigsaw-header>
             <a (click)="uploader6.upload()">点击上传</a>
-            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false"></jigsaw-upload>
+            <span>批量模式</span>
+            <jigsaw-switch [(checked)]="_$batchMode"></jigsaw-switch>
+            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false" [uploadBatchMode] = "_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-7">

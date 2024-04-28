@@ -11,7 +11,7 @@
                     [uploadMultiple]="multiple" [uploadContentField]="contentField"
                     [uploadFileNameField]="fileNameField" [uploadFileVerify]="fileVerify" [uploadOffline]="offline"
                     [uploadAdditionalFields]="additionalFields" [uploadMinSize]="minSize" [uploadMaxSize]="maxSize"
-                    [uploadImmediately]="uploadImmediately" (uploadProgress)="progress.emit($event)"
+                    [uploadImmediately]="uploadImmediately" (uploadProgress)="progress.emit($event)" [uploadBatchMode]="batchMode"
                     (uploadDataSendProgress)="dataSendProgress.emit($event)" (uploadComplete)="complete.emit($event)"
                     (uploadStart)="start.emit($event)" (uploadChange)="change.emit($event)">{{'upload.select' |
                     translate}}</a>
