@@ -334,7 +334,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         fileInfo.message = this._translateService.instant(`upload.uploading`);
         this._statusLog(fileInfo, fileInfo.message);
         let formData: FormData;
-        if (fileInfo.formData) {
+        if (fileInfo.file instanceof Array) {
+            // 把多个file凑成一个formData
             formData = fileInfo.formData;
         } else {
             formData = new FormData();
