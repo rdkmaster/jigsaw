@@ -164,6 +164,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
+        if (this.batchMode){
+            const pendingFiles = this.files.filter(file => file.state == 'error');
+            const files = pendingFiles.map((item) => item.file);
+            pendingFiles[0].file = files
+            this._sequenceUpload(pendingFiles[0]);
+            return;
+        }
         if (this.offline) {
             return;
         }
@@ -183,15 +190,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         const uploadingCount = this.files.filter(file => file.state == 'loading').length;
         if (uploadingCount < maxConcurrencyUpload) {
-            if (this.batchMode){
-                const pendingFiles = this.files.filter(file => file.state == 'error');
-                const files = pendingFiles.map((item) => item.file);
-                pendingFiles[0].file = files
-                this._sequenceUpload(pendingFiles[0]);
-            } else {
-                this._sequenceUpload(fileInfo);
-            }
-            
+            this._sequenceUpload(fileInfo);
         } else {
             // 排队，后面上传线程有空了，会再来上传它的。
             fileInfo.state = 'pause';
