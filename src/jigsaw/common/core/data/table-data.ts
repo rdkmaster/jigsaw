@@ -365,8 +365,9 @@ export class TableData extends TableDataBase implements ISortable, IFilterable {
                         return 1;
                     } else if (isNaN(bValue)) {
                         return -1;
+                    } else {
+                        return orderFlag * (aValue - bValue);
                     }
-                    return orderFlag * (aValue - bValue);
                 });
             } else {
                 data.sort((a, b) => orderFlag * String(a[field]).localeCompare(String(b[field])));
