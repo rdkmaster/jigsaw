@@ -4,7 +4,8 @@
 
 
 <!-- start to learn the demo from here -->
-<jigsaw-textarea #textarea width="400px" [autoHeight]="true"></jigsaw-textarea>
+<jigsaw-button (click)="changeValue()">改变文本</jigsaw-button>
+<jigsaw-textarea #textarea width="400px" [autoHeight]="true" [(value)]="value"></jigsaw-textarea>
 
 
 

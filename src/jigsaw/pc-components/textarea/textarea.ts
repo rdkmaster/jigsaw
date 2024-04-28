@@ -161,9 +161,19 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
         }
-        if (this.autoHeight && this._textareaElement) {
-            this._textareaElement.nativeElement.style.height = this._textareaElement.nativeElement.scrollHeight + 'px';
+        this.updateHeight();
+    }
+
+    private updateHeight() {
+        if (!this.autoHeight || !this._textareaElement) {
+            return;
         }
+        setTimeout(() => {
+            // 等待textarea适应文本，使用runMicrotask和runAfterMicrotasks有些情况没有效果
+            const textareaElement = this._textareaElement.nativeElement;
+            textareaElement.style.height = 'auto';
+            textareaElement.style.height = textareaElement.scrollHeight + 'px';
+        })
     }
 
     private _updateCurrentLength(value: string): string {
@@ -359,5 +369,6 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
                 console.warn("Resizeable JigsawTextarea only accepts width in 'px' and 'vh' format.")
             }
         }
+        this.updateHeight();
     }
 }
