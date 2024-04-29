@@ -73,6 +73,6 @@ export class TextareaAutoHeightComponent {
     // ====================================================================
     // ignore the following lines, they are not important to this demo
     // ====================================================================
-    summary: string = '';
+    summary: string = '支持有初始化数据时高度自适应；初始化后通过设置value改变文本时高度自适应；手写文本时高度自适应。';
     description: string = '';
 }
