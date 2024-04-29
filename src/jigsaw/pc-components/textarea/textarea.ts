@@ -9,7 +9,8 @@ import {
     Input,
     Output,
     ViewChild,
-    AfterViewInit
+    AfterViewInit,
+    NgZone
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {AbstractJigsawComponent, IJigsawFormControl, WingsTheme} from "../../common/common";
@@ -109,9 +110,10 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
 
     constructor(
         private _cdr: ChangeDetectorRef,
+        protected _zone: NgZone,
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
-        super();
+        super(_zone);
     }
 
     private _propagateChange: any = () => {
@@ -168,9 +170,10 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         if (!this.autoHeight || !this._textareaElement) {
             return;
         }
-        setTimeout(() => {
-            // 等待textarea适应文本，使用runMicrotask和runAfterMicrotasks有些情况没有效果
+        this.runAfterMicrotasks(() => {
+            // 等待textarea更新文本
             const textareaElement = this._textareaElement.nativeElement;
+            // 先还原textarea高度，再获取滚动高度
             textareaElement.style.height = 'auto';
             textareaElement.style.height = textareaElement.scrollHeight + 'px';
         })
