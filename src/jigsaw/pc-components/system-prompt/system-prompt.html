@@ -1,3 +1,3 @@
 <i class="iconfont system-prompt-icon" [ngClass]="'iconfont-' + _$getIconClass()"></i>
 <span class="system-prompt-text">{{message}}</span>
-<i class="iconfont iconfont-e14b system-prompt-remove" (click)="remove()"></i>
+<i *ngIf="clearable" class="iconfont iconfont-e14b system-prompt-remove" (click)="remove()"></i>

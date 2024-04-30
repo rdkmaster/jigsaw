@@ -14,15 +14,16 @@ export class JigsawSystemPromptBasicDemoComponent {
     public container3: ViewContainerRef;
 
     public timeout = 8000;
+    public clearable = true;
 
     public showSystemPrompt1(message, type) {
-        JigsawSystemPrompt.show(message, this.container1, { type: type, timeout: this.timeout });
+        JigsawSystemPrompt.show(message, this.container1, { type: type, timeout: this.timeout, clearable: this.clearable });
     }
     public showSystemPrompt2(message, type) {
-        JigsawSystemPrompt.show(message, this.container2, { type: type, timeout: this.timeout });
+        JigsawSystemPrompt.show(message, this.container2, { type: type, timeout: this.timeout, clearable: this.clearable });
     }
     public showSystemPrompt3(message, type) {
-        JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout });
+        JigsawSystemPrompt.show(message, this.container3, { type: type, timeout: this.timeout, clearable: this.clearable });
     }
 
     public showSuccess(message) {

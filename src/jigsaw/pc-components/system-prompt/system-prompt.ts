@@ -19,6 +19,7 @@ import { AbstractJigsawComponent} from "../../common/common";
 export class SystemPromptMessage {
     type?: NoticeLevel;
     timeout?: number;
+    clearable?: boolean;
 }
 
 @Component({
@@ -53,6 +54,12 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
      * @NoMarkForCheckRequired
      */
     @Input()
+    public clearable: boolean = true;
+
+    /**
+     * @NoMarkForCheckRequired
+     */
+    @Input()
     public timeout: number = 0;
 
     private _timer: number;
@@ -63,6 +70,7 @@ export class JigsawSystemPrompt extends AbstractJigsawComponent implements OnDes
         const instance = componentRef.instance;
         instance.type = options?.type || 'error';
         instance.timeout = CommonUtils.isDefined(options?.timeout) ? options.timeout : 8000;
+        instance.clearable = CommonUtils.isDefined(options?.clearable) ? options?.clearable : true;
         instance.message = message;
         instance._setupTimeout();
         containerRef.element.nativeElement.appendChild(componentRef.location.nativeElement);
