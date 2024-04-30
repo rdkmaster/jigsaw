@@ -74,11 +74,14 @@ async function publishAll() {
         process.exit(1);
     }
     _npmInstall('normal');
+    argv.tag = 'latest';
     error = await runTasks(['publish:jigsaw', 'publish:formly']);
     if (error) {
         process.exit(1);
     }
+
     argv.nextVersion = argv.nextVersion + '-g1';
+    argv.tag = 'governance';
     _npmInstall('governance');
     error = await runTasks(['publish:governance:jigsaw', 'publish:governance:formly']);
     if (error) {
