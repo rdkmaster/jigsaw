@@ -156,7 +156,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public files: UploadFileInfo[] = [];
 
     @HostListener('click', ['$event'])
-    onClick($event: MouseEvent) {
+    onClick($event) {
         $event.preventDefault();
         $event.stopPropagation();
         if (!this._http) {
