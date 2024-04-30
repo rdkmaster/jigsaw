@@ -357,24 +357,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             fileInfo.message = this._translateService.instant(`upload.uploading`);
             this._statusLog(fileInfo, fileInfo.message);
         }
-        let formData: FormData;
+        const formData: FormData = new FormData();
         if (fileInfo.files) {
             // 把多个file凑成一个formData
             this.files.filter(file => file.url == "").forEach((item: any) => updateState(item));
-            formData = new FormData();
-            fileInfo.files.forEach(item => formData.append(this.contentField, item));
+            fileInfo.files.forEach(file => formData.append(this.contentField, file, file.name));
+            this._appendAdditionalFields(formData, 'multiple-files-combined');
         } else {
             updateState(fileInfo);
-            formData = new FormData();
-            formData.append(this.contentField, fileInfo.file);
+            formData.append(this.contentField, fileInfo.file, fileInfo.file.name);
             this._appendAdditionalFields(formData, fileInfo.file.name);
         }
-        this._http.post(this.targetUrl, formData,
-            {
-                responseType: 'text',
-                reportProgress: true,
-                observe: 'events'
-            }).subscribe((res: any) => {
+        const options: any = {responseType: 'text', reportProgress: true, observe: 'events'};
+        this._http.post(this.targetUrl, formData, options).subscribe((res: any) => {
             if (res.type === 1) {
                 fileInfo.progress = res.loaded / res.total * 100;
                 this.dataSendProgress.emit(fileInfo);
@@ -387,7 +382,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             if (res.type !== 4) {
                 return;
             }
-            
+
             const resp: HttpResponse<string> = <HttpResponse<string>>res;
             const update = (fileInfo: UploadFileInfo) => {
                 fileInfo.state = 'success';
