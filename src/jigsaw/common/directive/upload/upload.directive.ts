@@ -357,15 +357,19 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
-        fileInfo.state = 'loading';
-        fileInfo.message = this._translateService.instant(`upload.uploading`);
-        this._statusLog(fileInfo, fileInfo.message);
+        const updateState = (fileInfo: UploadFileInfo) => {
+            fileInfo.state = 'loading';
+            fileInfo.message = this._translateService.instant(`upload.uploading`);
+            this._statusLog(fileInfo, fileInfo.message);
+        }
         let formData: FormData;
         if (fileInfo.files) {
             // 把多个file凑成一个formData
+            this.files.forEach((item: any) => updateState(item));
             formData = new FormData();
             fileInfo.files.forEach(item => formData.append(this.contentField, item));
         } else {
+            updateState(fileInfo);
             formData = new FormData();
             formData.append(this.contentField, fileInfo.file);
             this._appendAdditionalFields(formData, fileInfo.file.name);
