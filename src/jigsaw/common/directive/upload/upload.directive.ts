@@ -238,11 +238,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             const files = errorFiles.map(info => info.file).filter(file => !!file);
             uploadFileInfo = { ...errorFiles[0], files };
         }
-        this.files.forEach(item => {
-            item.state = 'loading';
-            item.message = this._translateService.instant(`upload.uploading`);
-            this._statusLog(item, item.message);
-        })
         this._sequenceUpload(uploadFileInfo);
     }
 
@@ -365,7 +360,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         let formData: FormData;
         if (fileInfo.files) {
             // 把多个file凑成一个formData
-            this.files.forEach((item: any) => updateState(item));
+            this.files.filter(file => file.url == "").forEach((item: any) => updateState(item));
             formData = new FormData();
             fileInfo.files.forEach(item => formData.append(this.contentField, item));
         } else {
@@ -417,7 +412,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             }
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
             if (this.batchMode) {
-                this.files.forEach((item: any) => update(item));
+                this.files.filter(file => file.url == "").forEach((item: any) => update(item));
                 return;
             }
             update(fileInfo);
