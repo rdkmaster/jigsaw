@@ -156,7 +156,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public files: UploadFileInfo[] = [];
 
     @HostListener('click', ['$event'])
-    onClick($event: MouseEvent) {
+    onClick($event) {
+        this._selectFile($event);
+    }
+
+    private _fileInputElement: HTMLElement;
+    private _removeFileChangeEvent: Function;
+
+    private _selectFile($event) {
         $event.preventDefault();
         $event.stopPropagation();
         if (!this._http) {
@@ -194,9 +201,6 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 
         this._fileInputElement.dispatchEvent(e);
     }
-
-    private _fileInputElement: HTMLElement;
-    private _removeFileChangeEvent: Function;
 
     public retryUpload(fileInfo: UploadFileInfo) {
         if (this.offline) {
