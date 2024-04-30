@@ -18,49 +18,51 @@
             详情请 <a href="/#/pc/upload/upload-result">参考这个demo</a>。
         </p>
     </section>
+    <div>
+        <jigsaw-header>批量模式</jigsaw-header>
+        <jigsaw-switch [(checked)]="_$batchMode"></jigsaw-switch>
+    </div>
     <section class="demo-cntr">
         <div class="demo-1">
             <jigsaw-header>上传组件</jigsaw-header>
-            <jigsaw-upload width="300px" (start)="uploadStart($event)"
-                (dataSendProgress)="uploadDataSendProgress($event)" (progress)="uploadProgress($event)"
-                (complete)="uploadComplete($event)" (change)="uploadChange($event)" (remove)="uploadRemove($event)">
+            <jigsaw-upload width="300px" (start)="uploadStart($event)" [uploadBatchMode]="_$batchMode"
+                           (dataSendProgress)="uploadDataSendProgress($event)" (progress)="uploadProgress($event)"
+                           (complete)="uploadComplete($event)" (change)="uploadChange($event)" (remove)="uploadRemove($event)">
             </jigsaw-upload>
         </div>
 
         <div class="demo-2">
             <jigsaw-header>仅支持单个文件</jigsaw-header>
-            <jigsaw-upload width="300px" [uploadMultiple]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" [uploadMultiple]="false" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-3">
             <jigsaw-header>不显示结果</jigsaw-header>
-            <jigsaw-upload width="300px" [showResult]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" [showResult]="false" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-4">
             <jigsaw-header>配置文件类型</jigsaw-header>
             <jigsaw-radios-lite [(value)]="fileType" [data]="['.png', '.docx', '.json', '.png, .jpg', '.txt']">
             </jigsaw-radios-lite>
-            <jigsaw-upload width="300px" [uploadFileType]="fileType"></jigsaw-upload>
+            <jigsaw-upload width="300px" [uploadFileType]="fileType" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-6">
             <jigsaw-header>手动上传</jigsaw-header>
             <a (click)="uploader6.upload()">点击上传</a>
-            <span>批量模式</span>
-            <jigsaw-switch [(checked)]="_$batchMode"></jigsaw-switch>
-            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false" [uploadBatchMode] = "_$batchMode"></jigsaw-upload>
+            <jigsaw-upload width="300px" #demo6 [uploadImmediately]="false" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-7">
             <jigsaw-header>手动清空</jigsaw-header>
             <a (click)="uploader7.clear()">点击清空</a>
-            <jigsaw-upload width="300px" #demo7 [uploadImmediately]="false"></jigsaw-upload>
+            <jigsaw-upload width="300px" #demo7 [uploadImmediately]="false" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
 
         <div class="demo-5">
             <jigsaw-header>自定义宽高</jigsaw-header>
-            <jigsaw-upload width="100%" height="400px"></jigsaw-upload>
+            <jigsaw-upload width="100%" height="400px" [uploadBatchMode]="_$batchMode"></jigsaw-upload>
         </div>
     </section>
 </div>

@@ -389,23 +389,25 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 fileInfo.url = res.partialText;
                 return;
             }
+            if (res.type !== 4) {
+                return;
+            }
+            
             const resp: HttpResponse<string> = <HttpResponse<string>>res;
-            if (res.type === 4) {
-                const update = (fileInfo: UploadFileInfo) => {
-                    fileInfo.state = 'success';
-                    fileInfo.message = '';
-                    fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
-                    this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
-                }
-                if (fileInfo.files) {
-                    this.files.forEach(item => {
-                        update(item);
-                        item.progress = 100;
-                    });
-                } else {
-                    update(fileInfo);
-                    this._afterCurFileUploaded(fileInfo);
-                }
+            const update = (fileInfo: UploadFileInfo) => {
+                fileInfo.state = 'success';
+                fileInfo.message = '';
+                fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
+                this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
+            }
+            if (fileInfo.files) {
+                this.files.forEach(item => {
+                    update(item);
+                    item.progress = 100;
+                });
+            } else {
+                update(fileInfo);
+                this._afterCurFileUploaded(fileInfo);
             }
         }, (e) => {
             const update = (fileInfo: UploadFileInfo) => {
