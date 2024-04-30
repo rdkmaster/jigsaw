@@ -158,7 +158,7 @@ export class JigsawUploadResult extends AbstractJigsawComponent implements OnDes
      * @internal
      *
      */
-    public _$retryUpload(file) {
+    public _$retryUpload(file: UploadFileInfo) {
         file.progress = 0;
         this.uploader.retryUpload(file);
         this.retry.emit(file);

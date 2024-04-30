@@ -43,7 +43,7 @@ export class UploadOfflineDemoComponent {
         if (!this._check()) {
             return;
         }
-        const file = this.uploader.files[0].file;
+        const file: File = this.uploader.files[0].file as File;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
         reader.onload = () => {
@@ -59,7 +59,7 @@ export class UploadOfflineDemoComponent {
         if (!this._check()) {
             return;
         }
-        const file = this.uploader.files[0].file;
+        const file: File = this.uploader.files[0].file as File;
         const reader = new FileReader();
         reader.readAsText(file, 'UTF-8');
         reader.onload = () => {

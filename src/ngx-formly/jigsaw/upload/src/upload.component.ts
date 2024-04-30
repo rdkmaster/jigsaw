@@ -27,6 +27,7 @@ import {IJigsawFormControl, JigsawUploadBase, JigsawUploadDirective, JigsawUploa
                 [uploadTargetUrl]="targetUrl"
                 [uploadFileType]="fileType"
                 [uploadMultiple]="multiple"
+                [uploadBatchMode]="batchMode"
                 [uploadContentField]="contentField"
                 [uploadFileNameField]="fileNameField"
                 [uploadFileVerify]="fileVerify"

@@ -30,6 +30,7 @@ import {FormlyUploadComponent} from "./upload.component";
             [uploadMinSize]="to.uploadMinSize"
             [uploadMaxSize]="to.uploadMaxSize"
             [uploadImmediately]="to.uploadImmediately"
+            [uploadBatchMode]="to.batchMode"
             (uploadProgress)="to.uploadProgress && to.uploadProgress($event)"
             (uploadDataSendProgress)="to.uploadDataSendProgress && to.uploadDataSendProgress($event)"
             (uploadComplete)="to.uploadComplete && to.uploadComplete($event)"

@@ -106,6 +106,12 @@ export abstract class JigsawUploadBase extends AbstractJigsawComponent {
     @Input('uploadImmediately')
     public uploadImmediately: boolean = true;
 
+    /**
+     * 标识是否批量模式
+     */
+    @Input('uploadBatchMode')
+    public batchMode: boolean = false;
+
     @Input('uploadOffline')
     public offline: boolean = false;
 
@@ -150,53 +156,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     public files: UploadFileInfo[] = [];
 
     @HostListener('click', ['$event'])
-    onClick($event) {
-        this._selectFile($event);
-    }
-
-    private _fileInputElement: HTMLElement;
-    private _removeFileChangeEvent: Function;
-
-    public retryUpload(fileInfo: UploadFileInfo) {
-        if (this.offline) {
-            return;
-        }
-
-        if (!fileInfo || !fileInfo.file) {
-            console.error('invalid retry upload file:', fileInfo);
-            return;
-        }
-        if (!this.files.find(file => file === fileInfo)) {
-            console.error('invalid retry upload file: the file is in our file list, maybe it was removed from our file list:', fileInfo);
-            return;
-        }
-        if (!this._isFileUploaded(fileInfo)) {
-            console.error('invalid retry upload file, this file is still pending:', fileInfo);
-            return;
-        }
-
-        const uploadingCount = this.files.filter(file => file.state == 'loading').length;
-        if (uploadingCount < maxConcurrencyUpload) {
-            this._sequenceUpload(fileInfo);
-        } else {
-            // 排队，后面上传线程有空了，会再来上传它的。
-            fileInfo.state = 'pause';
-            fileInfo.message = this._translateService.instant(`upload.waiting`);
-        }
-    }
-
-    /**
-     * 清空所有已上传的文件
-     */
-    public clear() {
-        this.files.splice(0, this.files.length);
-        this._cdr.markForCheck();
-    }
-
-    private _selectFile($event) {
+    onClick($event: MouseEvent) {
         $event.preventDefault();
         $event.stopPropagation();
-
         if (!this._http) {
             console.error('Jigsaw upload pc-components must inject HttpClientModule, please import it to the module!');
             return;
@@ -233,6 +195,60 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         this._fileInputElement.dispatchEvent(e);
     }
 
+    private _fileInputElement: HTMLElement;
+    private _removeFileChangeEvent: Function;
+
+    public retryUpload(fileInfo: UploadFileInfo) {
+        if (this.offline) {
+            return;
+        }
+        if (this.batchMode) {
+            this._retryBatchUpload(fileInfo);
+            return;
+        }
+        if (!fileInfo || !fileInfo.file) {
+            console.error('invalid retry upload file:', fileInfo);
+            return;
+        }
+        if (!this.files.find(file => file === fileInfo)) {
+            console.error('invalid retry upload file: the file is in our file list, maybe it was removed from our file list:', fileInfo);
+            return;
+        }
+        if (!this._isFileUploaded(fileInfo)) {
+            console.error('invalid retry upload file, this file is still pending:', fileInfo);
+            return;
+        }
+
+        const uploadingCount = this.files.filter(file => file.state == 'loading').length;
+        if (uploadingCount < maxConcurrencyUpload) {
+            this._sequenceUpload(fileInfo);
+        } else {
+            // 排队，后面上传线程有空了，会再来上传它的。
+            fileInfo.state = 'pause';
+            fileInfo.message = this._translateService.instant(`upload.waiting`);
+        }
+    }
+
+    private _retryBatchUpload(fileInfo: UploadFileInfo) {
+        let uploadFileInfo: UploadFileInfo;
+        if (fileInfo.files) {
+            uploadFileInfo = fileInfo;
+        } else {
+            const errorFiles = this.files.filter(file => file.state == 'error');
+            const files = errorFiles.map(info => info.file).filter(file => !!file);
+            uploadFileInfo = { ...errorFiles[0], files };
+        }
+        this._sequenceUpload(uploadFileInfo);
+    }
+
+    /**
+     * 清空所有已上传的文件
+     */
+    public clear() {
+        this.files.splice(0, this.files.length);
+        this._cdr.markForCheck();
+    }
+
     private _appendFiles(): boolean {
         const fileInput: any = this._fileInputElement;
         if (!fileInput) {
@@ -251,7 +267,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         return this.files.length > 0;
     }
 
-    public appendFiles(fileList) {
+    public appendFiles(fileList: FileList) {
         const files = this._checkFiles(Array.from(fileList || []));
         this.files.push(...files);
         this.change.emit(this.files);
@@ -270,6 +286,12 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 const pendingFiles = this.files.filter(file => file.state == 'pause');
                 if (pendingFiles.length == 0) {
                     this.complete.emit(this.files);
+                    return;
+                }
+                if (this.batchMode) {
+                    const files = pendingFiles.map((item) => item.file).filter((file) => !!file);
+                    const pendingFile = { ...pendingFiles[0], files: files };
+                    this._sequenceUpload(pendingFile);
                     return;
                 }
                 for (let i = 0, len = Math.min(maxConcurrencyUpload, pendingFiles.length); i < len; i++) {
@@ -330,18 +352,24 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
     }
 
     private _sequenceUpload(fileInfo: UploadFileInfo) {
-        fileInfo.state = 'loading';
-        fileInfo.message = this._translateService.instant(`upload.uploading`);
-        this._statusLog(fileInfo, fileInfo.message);
-        const formData = new FormData();
-        formData.append(this.contentField, fileInfo.file);
-        this._appendAdditionalFields(formData, fileInfo.file.name);
-        this._http.post(this.targetUrl, formData,
-            {
-                responseType: 'text',
-                reportProgress: true,
-                observe: 'events'
-            }).subscribe((res: any) => {
+        const updateState = (fileInfo: UploadFileInfo) => {
+            fileInfo.state = 'loading';
+            fileInfo.message = this._translateService.instant(`upload.uploading`);
+            this._statusLog(fileInfo, fileInfo.message);
+        }
+        const formData: FormData = new FormData();
+        if (fileInfo.files) {
+            // 把多个file凑成一个formData
+            this.files.filter(file => file.url == "").forEach((item: any) => updateState(item));
+            fileInfo.files.forEach(file => formData.append(this.contentField, file, file.name));
+            this._appendAdditionalFields(formData, 'multiple-files-combined');
+        } else {
+            updateState(fileInfo);
+            formData.append(this.contentField, fileInfo.file, fileInfo.file.name);
+            this._appendAdditionalFields(formData, fileInfo.file.name);
+        }
+        const options: any = {responseType: 'text', reportProgress: true, observe: 'events'};
+        this._http.post(this.targetUrl, formData, options).subscribe((res: any) => {
             if (res.type === 1) {
                 fileInfo.progress = res.loaded / res.total * 100;
                 this.dataSendProgress.emit(fileInfo);
@@ -351,19 +379,38 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 fileInfo.url = res.partialText;
                 return;
             }
-            if (res.type === 4) {
+            if (res.type !== 4) {
+                return;
+            }
+
+            const resp: HttpResponse<string> = <HttpResponse<string>>res;
+            const update = (fileInfo: UploadFileInfo) => {
                 fileInfo.state = 'success';
                 fileInfo.message = '';
-                const resp: HttpResponse<string> = <HttpResponse<string>>res;
                 fileInfo.url = resp.body && typeof resp.body == 'string' ? resp.body : fileInfo.url;
                 this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
+            }
+            if (fileInfo.files) {
+                this.files.forEach(item => {
+                    update(item);
+                    item.progress = 100;
+                });
+            } else {
+                update(fileInfo);
                 this._afterCurFileUploaded(fileInfo);
             }
         }, (e) => {
-            fileInfo.state = 'error';
+            const update = (fileInfo: UploadFileInfo) => {
+                fileInfo.state = 'error';
+                fileInfo.message = message;
+                this._statusLog(fileInfo, message);
+            }
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
-            this._statusLog(fileInfo, message);
-            fileInfo.message = message;
+            if (this.batchMode) {
+                this.files.filter(file => file.url == "").forEach((item: any) => update(item));
+                return;
+            }
+            update(fileInfo);
             this._afterCurFileUploaded(fileInfo);
         });
     }
@@ -435,7 +482,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
 const PUBLIC_KEY = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDNsaW+pHR7tipUGYt+ZpYz+lLlep5le40PDFKrRXkjbFXjemTIGW0s1MRdtwXouHnn8a8gucNs6peFdy3kzFe2pfxIXmNLkkzV2vSZslQEHpCsDlibgoF9KSWDYJVC5Jb1AgTxOd5/Ay/ub58SgrOcbbAq2WCT0TCDQSpUZGB9LQIDAQAB";
 
 function encrypt(data: string): string {
-    const encryptor = new JSEncrypt();
+    const encryptor: { setPublicKey: Function, encrypt: Function } = new JSEncrypt();
     encryptor.setPublicKey(PUBLIC_KEY);
     return encryptor.encrypt(data);
 }
