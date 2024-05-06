@@ -13,6 +13,8 @@ import {
     NgZone
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {Subject, Subscription} from 'rxjs';
+import {throttleTime} from 'rxjs/operators';
 import {AbstractJigsawComponent, IJigsawFormControl, WingsTheme} from "../../common/common";
 import {CommonUtils} from "../../common/core/utils/common-utils";
 import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
@@ -34,9 +36,9 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
         '[class.jigsaw-textarea-hide-border]': '!showBorder && !focused',
         '[class.jigsaw-textarea-error]': '!valid',
         '[class.jigsaw-textarea-disabled]': 'disabled',
-        '[class.jigsaw-textarea-resize-vertical]':'resize === "vertical"',
-        '[class.jigsaw-textarea-resize-horizontal]':'resize === "horizontal"',
-        '[class.jigsaw-textarea-resize-both]':'resize === "both"',
+        '[class.jigsaw-textarea-resize-vertical]': 'resize === "vertical"',
+        '[class.jigsaw-textarea-resize-horizontal]': 'resize === "horizontal"',
+        '[class.jigsaw-textarea-resize-both]': 'resize === "both"',
     },
     providers: [
         {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => JigsawTextarea), multi: true},
@@ -114,6 +116,7 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super(_zone);
+        this._subscribeUpdateHeight();
     }
 
     private _propagateChange: any = () => {
@@ -163,16 +166,33 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             // 长度为0说明无字符数限制；或者就是在有字符数限制，但是值改变的时候
             this.valueChange.emit(this._value);
         }
-        this.updateHeight();
+        this._updateHeightSubject.next();
     }
 
-    private updateHeight() {
+    private _updateHeightSubject = new Subject();
+    private _updateHeightSubscription: Subscription;
+
+    private _subscribeUpdateHeight() {
+        if (this._updateHeightSubscription) {
+            this._updateHeightSubscription.unsubscribe();
+            this._updateHeightSubscription = null;
+        }
+        this._updateHeightSubscription = this._updateHeightSubject.pipe(throttleTime(200)).subscribe(() => {
+            this._updateHeight();
+        })
+    }
+
+    private _updateHeight() {
         if (!this.autoHeight || !this._textareaElement) {
             return;
         }
         this.runAfterMicrotasks(() => {
             // 等待textarea更新文本
             const textareaElement = this._textareaElement.nativeElement;
+            // 更新高度的过程中隐藏滚动条
+            textareaElement.style.overflow = 'hidden';
+            // 父节点高度不够时，文本溢出设置成隐藏
+            textareaElement.parentElement.style.overflow = 'hidden';
             // 先还原textarea高度，再获取滚动高度
             textareaElement.style.height = 'auto';
             textareaElement.style.height = textareaElement.scrollHeight + 'px';
@@ -372,6 +392,14 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
                 console.warn("Resizeable JigsawTextarea only accepts width in 'px' and 'vh' format.")
             }
         }
-        this.updateHeight();
+        this._updateHeight();
+    }
+
+    ngOnDestroy() {
+        super.ngOnDestroy();
+        if (this._updateHeightSubscription) {
+            this._updateHeightSubscription.unsubscribe();
+            this._updateHeightSubscription = null;
+        }
     }
 }
