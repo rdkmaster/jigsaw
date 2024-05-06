@@ -397,8 +397,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 });
             } else {
                 update(fileInfo);
-                this._afterCurFileUploaded(fileInfo);
             }
+            this._afterCurFileUploaded(fileInfo);
         }, (e) => {
             const update = (fileInfo: UploadFileInfo) => {
                 fileInfo.state = 'error';
@@ -408,9 +408,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
             if (this.batchMode) {
                 this.files.filter(file => file.url == "").forEach((item: any) => update(item));
-                return;
+            } else {
+                update(fileInfo);
             }
-            update(fileInfo);
             this._afterCurFileUploaded(fileInfo);
         });
     }
@@ -449,10 +449,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return;
         }
 
-        const waitingFile = this.files.find(f => f.state == 'pause');
-        if (waitingFile) {
-            this._sequenceUpload(waitingFile)
-        } else if (this._isAllFilesUploaded()) {
+        if (!this.batchMode) {
+            const waitingFile = this.files.find(f => f.state == 'pause');
+            if (waitingFile) {
+                this._sequenceUpload(waitingFile)
+            }
+        }
+        if (this._isAllFilesUploaded()) {
             this.complete.emit(this.files);
         }
         this._cdr.markForCheck();
