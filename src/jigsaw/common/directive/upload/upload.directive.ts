@@ -371,14 +371,15 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         const options: any = {responseType: 'text', reportProgress: true, observe: 'events'};
         this._http.post(this.targetUrl, formData, options).subscribe((res: any) => {
             if (res.type === 1) {
-                const updateProgress = (fileInfo: UploadFileInfo) => {
+                if (fileInfo.files) {
+                    const totalBytes = this.files.filter(file => file.url == "").reduce((acc, item) => acc + item.file.size, 0);
+                    this.files.filter(file => file.url == "").forEach(item => {
+                        const fileBytes = item.file.size;
+                    })
+                    console.log(this.files[0].file.size, this.files[1].file.size)
+                } else {
                     fileInfo.progress = res.loaded / res.total * 100;
                     this.dataSendProgress.emit(fileInfo);
-                }
-                if (fileInfo.files) {
-                    this.files.forEach(item => updateProgress(item));
-                } else {
-                    updateProgress(fileInfo)
                 }
                 return;
             }
