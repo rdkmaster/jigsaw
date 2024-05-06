@@ -102,6 +102,13 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Input()
     public valid: boolean = true;
 
+    /**
+     * 设置文本输入框是否根据文本适应高度。
+     *
+     * @NoMarkForCheckRequired
+     *
+     * $demo = textarea/auto-height
+     */
     @Input()
     public autoHeight: boolean;
 
