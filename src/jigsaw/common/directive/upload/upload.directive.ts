@@ -361,6 +361,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         if (fileInfo.files) {
             // 把多个file凑成一个formData
             this.files.filter(file => file.url == "").forEach((item: any) => updateState(item));
+            fileInfo.name = 'multiple-files-combined';
+            fileInfo.state = 'loading';
             fileInfo.files.forEach(file => formData.append(this.contentField, file, file.name));
             this._appendAdditionalFields(formData, 'multiple-files-combined');
         } else {
@@ -391,13 +393,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
             }
             if (fileInfo.files) {
-                this.files.forEach(item => {
+                this.files.filter(file => file.url == "").forEach(item => {
                     update(item);
                     item.progress = 100;
                 });
-            } else {
-                update(fileInfo);
+                fileInfo.name = "multiple-files-combined";
             }
+            update(fileInfo);
             this._afterCurFileUploaded(fileInfo);
         }, (e) => {
             const update = (fileInfo: UploadFileInfo) => {
@@ -408,9 +410,9 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
             if (this.batchMode) {
                 this.files.filter(file => file.url == "").forEach((item: any) => update(item));
-            } else {
-                update(fileInfo);
+                fileInfo.name = "multiple-files-combined";
             }
+            update(fileInfo);
             this._afterCurFileUploaded(fileInfo);
         });
     }
