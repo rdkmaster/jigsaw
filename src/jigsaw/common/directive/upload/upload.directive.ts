@@ -371,8 +371,15 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         const options: any = {responseType: 'text', reportProgress: true, observe: 'events'};
         this._http.post(this.targetUrl, formData, options).subscribe((res: any) => {
             if (res.type === 1) {
-                fileInfo.progress = res.loaded / res.total * 100;
-                this.dataSendProgress.emit(fileInfo);
+                const updateProgress = (fileInfo: UploadFileInfo) => {
+                    fileInfo.progress = res.loaded / res.total * 100;
+                    this.dataSendProgress.emit(fileInfo);
+                }
+                if (fileInfo.files) {
+                    this.files.forEach(item => updateProgress(item));
+                } else {
+                    updateProgress(fileInfo)
+                }
                 return;
             }
             if (res.type === 3) {
@@ -391,10 +398,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
             }
             if (fileInfo.files) {
-                this.files.forEach(item => {
-                    update(item);
-                    item.progress = 100;
-                });
+                this.files.forEach(item => update(item));
             } else {
                 update(fileInfo);
                 this._afterCurFileUploaded(fileInfo);
