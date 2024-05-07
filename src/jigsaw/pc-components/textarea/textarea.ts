@@ -10,7 +10,8 @@ import {
     Output,
     ViewChild,
     AfterViewInit,
-    NgZone
+    NgZone,
+    OnDestroy
 } from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Subject, Subscription} from 'rxjs';
@@ -45,8 +46,7 @@ import {RequireMarkForCheck} from "../../common/decorator/mark-for-check";
     ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
-
-export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, AfterViewInit {
+export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFormControl, ControlValueAccessor, AfterViewInit, OnDestroy {
     /**
      * 在文本框里的文本非空时，是否显示快速清除按钮，默认为显示。用户单击了清除按钮时，文本框里的文本立即被清空。
      *
@@ -112,10 +112,14 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
     @Input()
     public autoHeight: boolean;
 
-    @Output() public blur: EventEmitter<Event> = new EventEmitter<Event>();
+    @Output()
+    public blur: EventEmitter<Event> = new EventEmitter<Event>();
 
     @Output('focus')
     private _focusEmitter: EventEmitter<FocusEvent> = new EventEmitter<FocusEvent>();
+
+    private _updateHeightSubject = new Subject();
+    private _updateHeightSubscription: Subscription;
 
     constructor(
         private _cdr: ChangeDetectorRef,
@@ -123,7 +127,8 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
         // @RequireMarkForCheck 需要用到，勿删
         private _injector: Injector) {
         super(_zone);
-        this._subscribeUpdateHeight();
+
+        this._updateHeightSubscription = this._updateHeightSubject.pipe(throttleTime(200)).subscribe(() => this._updateHeight())
     }
 
     private _propagateChange: any = () => {
@@ -174,19 +179,6 @@ export class JigsawTextarea extends AbstractJigsawComponent implements IJigsawFo
             this.valueChange.emit(this._value);
         }
         this._updateHeightSubject.next();
-    }
-
-    private _updateHeightSubject = new Subject();
-    private _updateHeightSubscription: Subscription;
-
-    private _subscribeUpdateHeight() {
-        if (this._updateHeightSubscription) {
-            this._updateHeightSubscription.unsubscribe();
-            this._updateHeightSubscription = null;
-        }
-        this._updateHeightSubscription = this._updateHeightSubject.pipe(throttleTime(200)).subscribe(() => {
-            this._updateHeight();
-        })
     }
 
     private _updateHeight() {
