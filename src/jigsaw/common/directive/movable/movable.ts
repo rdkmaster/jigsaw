@@ -40,8 +40,6 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _isFixed: boolean;
 
-    private _isMobile: boolean = false;
-
     private _checkFixed() {
         return this._movableTarget.style.position == 'fixed' || getComputedStyle(this._movableTarget)['position'] == 'fixed';
     }
@@ -50,15 +48,15 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
         event.preventDefault();
         event.stopPropagation();
         this._isFixed = this._checkFixed();
-        this._isMobile = event.touches && event.touches.length == 1;
+        const isMobile = event.touches?.length == 1;
         let scale = CommonUtils.getScale(this._movableTarget, NaN);
         // 有缩放时，fixed失效，按照absolute的运行
         const targetRect = this._isFixed && isNaN(scale) ? this._movableTarget.getBoundingClientRect() : AffixUtils.offset(this._movableTarget);
         if (isNaN(scale)) {
             scale = 1;
         }
-        const clientX = this._isMobile ? event.touches[0].clientX : event.clientX;
-        const clientY = this._isMobile ? event.touches[0].clientY : event.clientY;
+        const clientX = isMobile ? event.touches[0].clientX : event.clientX;
+        const clientY = isMobile ? event.touches[0].clientY : event.clientY;
         this._position = [clientX - targetRect.left, clientY - targetRect.top];
         this._moving = true;
 
@@ -66,8 +64,8 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
             this._removeWindowMouseMoveListener();
         }
         const offset = this.moveOffset.apply(this);
-        const moveEventName = this._isMobile ? 'touchmove' : 'mousemove';
-        const endEventName = this._isMobile ? 'touchend' : 'mouseup';
+        const moveEventName = isMobile ? 'touchmove' : 'mousemove';
+        const endEventName = isMobile ? 'touchend' : 'mouseup';
         this._zone.runOutsideAngular(() => {
             this._removeWindowMouseMoveListener = this._renderer.listen(document, moveEventName, (event) => {
                 this._dragMove(event, offset, scale)
@@ -82,8 +80,9 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
 
     private _dragMove = (event, offset, scale) => {
         if (this._moving) {
-            const clientX = this._isMobile ? event.touches[0].clientX : event.clientX;
-            const clientY = this._isMobile ? event.touches[0].clientY : event.clientY;
+            const isMobile = event.touches?.length == 1;
+            const clientX = isMobile ? event.touches[0].clientX : event.clientX;
+            const clientY = isMobile ? event.touches[0].clientY : event.clientY;
     
             const ox = clientX - this._position[0] - offset.left;
             const oy = clientY - this._position[1] - offset.top;
@@ -113,13 +112,7 @@ export class JigsawMovable extends AbstractJigsawViewBase implements OnInit, OnD
                 this._renderer.setStyle(this._movableTarget, 'position', this.affixType);
             }
             if (this._isElementAffixed(this._movableTarget)) {
-                if (this._removeHostMouseDownListener) {
-                    this._removeHostMouseDownListener();
-                }
                 this._removeHostMouseDownListener = this._renderer.listen(this._host, 'mousedown', this._dragStart);
-                if (this._removeHostTouchStartListener) {
-                    this._removeHostTouchStartListener();
-                }
                 this._removeHostTouchStartListener = this._renderer.listen(this._host, 'touchstart', this._dragStart);
             }
         })
