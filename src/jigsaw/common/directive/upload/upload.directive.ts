@@ -361,6 +361,8 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
         if (fileInfo.files) {
             // 把多个file凑成一个formData
             this.files.filter(file => file.url == "").forEach((item: any) => updateState(item));
+            fileInfo.name = 'multiple-files-combined';
+            fileInfo.state = 'loading';
             fileInfo.files.forEach(file => formData.append(this.contentField, file, file.name));
             this._appendAdditionalFields(formData, 'multiple-files-combined');
         } else {
@@ -391,14 +393,14 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
                 this._statusLog(fileInfo, this._translateService.instant(`upload.done`));
             }
             if (fileInfo.files) {
-                this.files.forEach(item => {
+                this.files.filter(file => file.url == "").forEach(item => {
                     update(item);
                     item.progress = 100;
                 });
-            } else {
-                update(fileInfo);
-                this._afterCurFileUploaded(fileInfo);
+                fileInfo.name = "multiple-files-combined";
             }
+            update(fileInfo);
+            this._afterCurFileUploaded(fileInfo);
         }, (e) => {
             const update = (fileInfo: UploadFileInfo) => {
                 fileInfo.state = 'error';
@@ -408,7 +410,7 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             const message = this._translateService.instant(`upload.${e.statusText}`) || e.statusText;
             if (this.batchMode) {
                 this.files.filter(file => file.url == "").forEach((item: any) => update(item));
-                return;
+                fileInfo.name = "multiple-files-combined";
             }
             update(fileInfo);
             this._afterCurFileUploaded(fileInfo);
@@ -449,10 +451,13 @@ export class JigsawUploadDirective extends JigsawUploadBase implements IUploader
             return;
         }
 
-        const waitingFile = this.files.find(f => f.state == 'pause');
-        if (waitingFile) {
-            this._sequenceUpload(waitingFile)
-        } else if (this._isAllFilesUploaded()) {
+        if (!this.batchMode) {
+            const waitingFile = this.files.find(f => f.state == 'pause');
+            if (waitingFile) {
+                this._sequenceUpload(waitingFile)
+            }
+        }
+        if (this._isAllFilesUploaded()) {
             this.complete.emit(this.files);
         }
         this._cdr.markForCheck();
