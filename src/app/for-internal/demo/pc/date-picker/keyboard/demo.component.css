@@ -1,0 +1,4 @@
+.demo-cntr {
+    display: flex;
+    justify-content: space-between;
+}

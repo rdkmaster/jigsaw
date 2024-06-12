@@ -309,6 +309,7 @@ export class JigsawDateTimeSelect extends AbstractJigsawComponent implements Con
      * @internal
      */
     public _$closeComboSelect(cellType: DateTimeCellType) {
+        console.log(cellType);
         if (!this._comboSelect || !(this.gr == TimeGr.date || this.gr == TimeGr.month || this.gr == TimeGr.week)) {
             return;
         }
