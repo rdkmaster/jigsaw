@@ -8,6 +8,10 @@
         <jigsaw-numeric-input [(value)]="timeout" step="1000" min="0" subfix="ms"></jigsaw-numeric-input>
     </li>
     <li class="demo-options-item">
+        <span>可清空：</span>
+        <jigsaw-switch [(checked)]="clearable"></jigsaw-switch>
+    </li>
+    <li class="demo-options-item">
         <span>错误：</span>
         <jigsaw-button (click)="showSystemPrompt1('重要提示，用于告知用户十分重要的信息', 'error')">容器1</jigsaw-button>
         <jigsaw-button (click)="showSystemPrompt2('重要提示，用于告知用户十分重要的信息', 'error')">容器2</jigsaw-button>
