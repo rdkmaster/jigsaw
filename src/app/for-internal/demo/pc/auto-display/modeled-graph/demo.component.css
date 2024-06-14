@@ -1,0 +1,15 @@
+.data-tags {
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+}
+
+.data-tags>.jigsaw-tag-host {
+    margin-right: 4px;
+    margin-bottom: 2px;
+}
+
+.demo-container {
+    width: 100%;
+    height: 600px;
+}
