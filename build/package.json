@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@compodoc/compodoc": "1.0.9",
+    "@compodoc/compodoc": "1.1.25",
     "puppeteer": "18.1.0"
   }
 }
