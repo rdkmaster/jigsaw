@@ -1,4 +1,4 @@
-<div class="jigsaw-auto-display-row" *ngFor="let row of _$viewData">
+<div #container class="jigsaw-auto-display-row" *ngFor="let row of _$viewData">
     <jigsaw-auto-display-content *ngFor="let item of row" [renderer]="item.renderAs"
         [rendererInitData]="item.initData">
     </jigsaw-auto-display-content>
