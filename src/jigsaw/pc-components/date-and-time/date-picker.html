@@ -34,7 +34,7 @@
         </thead>
         <tbody>
         <tr *ngFor="let row of _$dayList">
-            <td *ngFor="let dayCell of row" class="jigsaw-date-picker-content-day-cell"
+            <td #cell *ngFor="let dayCell of row" class="jigsaw-date-picker-content-day-cell"
                 [class.jigsaw-date-picker-content-day-cell-prev-next]="dayCell.isOwnPrevMonth || dayCell.isOwnNextMonth"
                 [class.jigsaw-date-picker-content-day-cell-today]="dayCell.isToday"
                 [class.jigsaw-date-picker-content-day-cell-selected]="dayCell.isSelected"
@@ -52,7 +52,7 @@
     <table class="jigsaw-date-picker-content-month" *ngIf="_$selectMode == 'month'">
         <tbody>
         <tr *ngFor="let row of _$monthList">
-            <td *ngFor="let monthCell of row" class="jigsaw-date-picker-content-month-cell"
+            <td #cell *ngFor="let monthCell of row" class="jigsaw-date-picker-content-month-cell"
                 [class.jigsaw-date-picker-content-month-cell-selected]="monthCell.isSelected"
                 [class.jigsaw-date-picker-content-month-cell-disabled]="monthCell.isDisabled"
                 (click)="_$selectMonth(monthCell)">
@@ -64,7 +64,7 @@
     <table class="jigsaw-date-picker-content-year" *ngIf="_$selectMode == 'year'">
         <tbody>
         <tr *ngFor="let row of _$yearList">
-            <td *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
+            <td #cell *ngFor="let yearCell of row" class="jigsaw-date-picker-content-year-cell"
                 [class.jigsaw-date-picker-content-year-cell-selected]="yearCell.isSelected"
                 [class.jigsaw-date-picker-content-year-cell-disabled]="yearCell.isDisabled"
                 [class.jigsaw-date-picker-content-year-cell-prev-next]="yearCell.isOwnPrevOrNext"
